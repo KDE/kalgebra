@@ -1,0 +1,7 @@
+- Moving on small viewport step is too large.
+- Add support for x²
+- Shared functions Console <-> 2D
+- Delete 2D functions
+- Sort 2D functions
+- LOCK until qt4.3: SVG export
+- KeyBindings for zooming out
