@@ -1,7 +1,7 @@
 #include "algebrahighlighter.h"
 
 
-AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc) : QSyntaxHighlighter(doc), wrong(false), m_mode(Autodetect)
+AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc) : QSyntaxHighlighter(doc), wrong(false), m_mode(Autodetect), m_pos(0)
 {
 	negreta.setFontWeight(QFont::Bold);
 }
