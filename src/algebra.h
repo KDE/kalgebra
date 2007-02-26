@@ -45,11 +45,11 @@ public slots:
 	void loadScript();
 	void saveLog();
 	
-	void afegeix();
+	void new_func3d();
 	void new_func();
 	void edit_func(const QModelIndex &);
 	void edit_var(const QModelIndex &);
-	void canvi(QTreeWidgetItem * item, QTreeWidgetItem * ant);
+	void change(QTreeWidgetItem * item, QTreeWidgetItem * ant);
 	void toggleSquares();
 	void set_res_low();
 	void set_res_std();

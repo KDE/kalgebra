@@ -53,11 +53,13 @@ class Container : public Object
 	bool hasVars() const;
 	Operator firstOperator() const;
 	QList<Object*>::iterator firstValue();
+	QList<Object*>::const_iterator firstValue() const;
 	QList<Object*> copyParams() const;
 	QString toString() const;
 	QString toMathML() const;
 	Container* ulimit() const;
 	Container* dlimit() const;
+	bool isUnary() const;
 	
 	//Monomials
 	Container(Cn* base, Object* var, Ci* degree);

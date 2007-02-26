@@ -17,10 +17,10 @@ bool Console::addOperation(const QString& op, bool mathml)
 	if(a.isCorrect()) {
 		res=a.evaluate();
 		
-		val=a.calculate();
+		/*val=a.calculate();
 		
 		if(!a.isCorrect())
-			a.flushErrors();
+			a.flushErrors();*/
 	}
 	
 	QListWidgetItem *item = new QListWidgetItem(this);

@@ -315,23 +315,24 @@ void Graph2D::mouseMoveEvent(QMouseEvent *e)
 
 void Graph2D::keyPressEvent(QKeyEvent * e)
 {
-	const double step = 1.; //TODO: Make step relative to viewport
+	const double xstep=viewport.width()/12., ystep=viewport.height()/10.;
+	
 	switch(e->key()) {
 		case Qt::Key_Right:
-			viewport.setLeft(viewport.left() +step);
-			viewport.setRight(viewport.right() +step);
+			viewport.setLeft(viewport.left() +xstep);
+			viewport.setRight(viewport.right() +xstep);
 			break;
 		case Qt::Key_Left:
-			viewport.setLeft(viewport.left() -step);
-			viewport.setRight(viewport.right() -step);
+			viewport.setLeft(viewport.left() -xstep);
+			viewport.setRight(viewport.right() -xstep);
 			break;
 		case Qt::Key_Down:
-			viewport.setTop(viewport.top() -step);
-			viewport.setBottom(viewport.bottom() -step);
+			viewport.setTop(viewport.top() -ystep);
+			viewport.setBottom(viewport.bottom() -ystep);
 			break;
 		case Qt::Key_Up:
-			viewport.setTop(viewport.top() +step);
-			viewport.setBottom(viewport.bottom() +step);
+			viewport.setTop(viewport.top() +ystep);
+			viewport.setBottom(viewport.bottom() +ystep);
 			break;
 		case Qt::Key_Minus:
 // 			resolucio=(resolucio*viewport.width())/(viewport.width()+2.);

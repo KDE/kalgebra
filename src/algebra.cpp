@@ -94,7 +94,7 @@ QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
 	
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
 	connect(b_funcs, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
-		this, SLOT(canvi(QTreeWidgetItem*, QTreeWidgetItem*)));
+		this, SLOT(change(QTreeWidgetItem*, QTreeWidgetItem*)));
 	
 	connect(b_funcs, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(different(QTreeWidgetItem *, int)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
@@ -138,7 +138,7 @@ QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
 	t_layo->addWidget(grafic3d);
 	t_layo->addWidget(t_exp);
 	
-	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(afegeix()));
+	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(new_func3d()));
 	connect(grafic3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	
 	////////menu
@@ -174,7 +174,7 @@ QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
 	tabChanged(0);
 }
 
-void QAlgebra::afegeix()
+void QAlgebra::new_func3d()
 {
 	grafic3d->setFunc(t_exp->text());
 	grafic3d->setFocus();
@@ -311,7 +311,7 @@ void QAlgebra::saveGraph()
 		grafic->toImage(path);
 }
 
-void QAlgebra::canvi(QTreeWidgetItem *current, QTreeWidgetItem *)
+void QAlgebra::change(QTreeWidgetItem *current, QTreeWidgetItem *)
 {
 	grafic->setSelected(current->text(0));
 }

@@ -493,11 +493,25 @@ void print_dom(QDomNode in, int ind)
 QList<Object *>::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin());
-	if(m_cont_type==apply)
-		++it;
 	for(; it!=m_params.end(); ++it) {
 		if((*it)->type()==Object::value || (*it)->type()==Object::variable || ((*it)->type()==Object::container && ((Container*) *it)->m_cont_type==apply))
 			break;
 	}
 	return it;
+}
+
+QList<Object *>::const_iterator Container::firstValue() const
+{
+	QList<Object *>::const_iterator it(m_params.constBegin());
+	for(; it!=m_params.constEnd(); ++it) {
+		if((*it)->type()==Object::value || (*it)->type()==Object::variable || ((*it)->type()==Object::container && ((Container*) *it)->m_cont_type==apply))
+			break;
+	}
+	return it;
+}
+
+bool Container::isUnary() const
+{
+	QList<Object*>::const_iterator it(firstValue());
+	return ++it==m_params.end();
 }
