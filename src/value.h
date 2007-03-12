@@ -50,6 +50,7 @@ class Cn : public Object
 		bool operator<=(const Cn& d) const { return m_value<=d.value(); }
 		bool operator<=(double d) const { return m_value<=d; }
 		Cn operator=(double d) { m_value=d; return *this; }
+		void negate() { m_value*=-1; }
 		
 		Cn operator++() { m_value++; return this; }
 		Cn operator++(int) { m_value++; return this; }

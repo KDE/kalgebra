@@ -437,6 +437,7 @@ void objectWalker(const Object* root, int ind)
 		qDebug() << "This is an null object";
 		return;
 	}
+	
 	if(ind>100) return;
 	
 	for(int i=0; i<ind; i++)

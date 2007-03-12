@@ -93,10 +93,11 @@ enum Object::OperatorType Operator::toOperatorType(QString e)
 	return ret;
 }
 
-Operator::OperatorType Operator::multiplicityOperator(Operator::OperatorType t)
+Operator::OperatorType Operator::multiplicityOperator(const Operator::OperatorType& t)
 {
 	OperatorType r;
 	switch(t) {
+		case minus:
 		case plus:
 			r=times;
 			break;

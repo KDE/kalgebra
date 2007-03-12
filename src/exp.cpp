@@ -97,9 +97,16 @@ TOKEN Exp::pillatoken(QString &a){
 // 	printf("%s\n", a.ascii());
 	TOKEN ret;
 	ret.tipus = tMaxOp;
+	
 	if(a.isEmpty())
 		ret.tipus = tEof;
-	else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
+	else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
+		if(a[0].decompositionTag()==QChar::Super)
+			ret.tipus = tPow;
+		
+		a[0]=a[0].decomposition()[0];
+		a.prepend(" ");
+	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
 		int coma=0;
 		if(a[0]=='.') {
 			ret.val += "0";
@@ -122,7 +129,7 @@ TOKEN Exp::pillatoken(QString &a){
 		ret.tipus= tVal;
 	} else if(a[0].isLetter()) {//es una variable o func
 		ret.val += a[0];
-		for(i=1; a[i].isLetterOrNumber(); i++){
+		for(i=1; a[i].isLetterOrNumber() && a[i].decompositionTag()==QChar::NoDecomposition; i++){
 			ret.val += a[i];
 			a[i]=' ';
 		}

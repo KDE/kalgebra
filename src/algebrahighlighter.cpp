@@ -119,11 +119,13 @@ TOKEN AlgebraHighlighter::getToken(QString &a, int &l)
 	
 	TOKEN ret;
 	ret.tipus = tMaxOp;
-	if(a==""){
+	if(a.isEmpty()){
 		ret.tipus = tEof;
 		l=1;
-	}
-	else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
+	} else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
+		a[0]=a[0].decomposition()[0];
+		a.prepend(" ");
+	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
 		ret.val += a[0];
 		a[0]=' ';
 		for(i=1; a[i].isDigit() || (a[i]=='.' && a[i+1]!='.'); i++){

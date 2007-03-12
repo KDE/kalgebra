@@ -63,7 +63,7 @@ public:
 	enum ObjectType type() const { return m_type; }
 	bool isCorrect() const { return m_correct && m_type!=none; }
 	void setCorrect(bool c) { m_correct=c; }
-	bool isContainer() { return m_type==container; }
+	bool isContainer() const { return m_type==container; }
 	virtual QString toString() const { return "object"; };
 	virtual QString toMathML() const { return "object"; };
 	static enum ObjectType whatType(const QString& tag);

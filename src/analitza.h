@@ -46,7 +46,7 @@ public:
 	Expression* expression() { return &m_exp; }
 	
 	Cn calc(Object* e);
-	Object* eval(Object* e);
+	Object* eval(const Object* e);
 	Cn calculate();
 	Expression evaluate();
 	Cn operate(Container*);
@@ -59,15 +59,15 @@ public:
 	QStringList bvarList() const;
 	void flushErrors() { m_err = QStringList(); }
 	
-	void simplify();
+	void simplify(); //FIXME: Should return an Expression
 	Object* simp(Object* root);
 	void simpScalar(Container* c);
 	void simpPolynomials(Container* c);
 	
-	static bool hasVars(Object*, QString var=QString());
+	static bool hasVars(const Object*, QString var=QString());
 private:
-	Object* derivative(const QString &var, Object*);
-	Object* derivative(const QString &var, Container*);
+	Object* derivative(const QString &var, const Object*);
+	Object* derivative(const QString &var, const Container*);
 	void reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary);
 	Object* removeDependencies(Object* o) const;
 // private:

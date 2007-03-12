@@ -62,6 +62,8 @@ class Expression
 		Object* m_tree;
 	private:
 		QStringList m_err;
+// 		bool m_attach; //TODO: Copy on Write :)
+// 		int m_attached;
 };
 
 #endif

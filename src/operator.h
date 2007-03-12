@@ -27,7 +27,8 @@ class Operator : public Object
 		bool operator==(const Operator& o) { return m_optype==o.m_optype; }
 		Operator operator=(const Operator &a) { setType(a.type()); m_optype=a.operatorType(); return *this;}
 		static const OperatorsModel m_words;
-		static OperatorType multiplicityOperator(OperatorType t); //When we have n t's, we got one rn
+		static OperatorType multiplicityOperator(const OperatorType& t); //When we have n t's, we got one rn
+		OperatorType multiplicityOperator() const { return multiplicityOperator(m_optype); }
 		bool isBounded() const;
 	private:
 		enum OperatorType m_optype;

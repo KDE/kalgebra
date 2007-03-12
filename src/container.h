@@ -60,6 +60,7 @@ class Container : public Object
 	Container* ulimit() const;
 	Container* dlimit() const;
 	bool isUnary() const;
+	bool isEmpty() const { return firstValue()==m_params.end(); }
 	
 	//Monomials
 	Container(Cn* base, Object* var, Ci* degree);
