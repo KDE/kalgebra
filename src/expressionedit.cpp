@@ -80,7 +80,7 @@ void ExpressionEdit::completed(const QString& newText)
 	int c = newText.length() - lastWord(textCursor().selectionStart()).length();
 	QString toInsert=newText.right(c);
 	if(Expression::whatType(newText) == Object::oper)
-		toInsert += "(";
+		toInsert += '(';
 	insertPlainText(toInsert);
 }
 
@@ -302,7 +302,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 				if(i<op-1)
 					sample += ", ";
 			}
-			emit signalHelper(sample+")");
+			emit signalHelper(sample+')');
 		}
 	} else if(a!=NULL && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
 		Container *c = (Container*) a->m_vars->value(funcname);
@@ -320,7 +320,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			if(i<params.count()-1)
 				sample+= ", ";
 		}
-		emit signalHelper(sample+")");
+		emit signalHelper(sample+')');
 	} else
 		emit signalHelper("");
 }

@@ -52,7 +52,7 @@ public:
 	virtual void initializeGL() ;
 	virtual void resizeGL( int width, int height ) ;
 	virtual void paintGL() ;
-	void setFunc(QString Text);
+	void setFunc(const QString& Text);
 	int setFuncMML(QString TextMML);
 	void dibuixa_eixos();
 	void setTransparency(bool tr) { trans = tr; glDraw(); }

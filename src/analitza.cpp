@@ -291,9 +291,9 @@ Cn Analitza::calc(Object* root)
 			if(m_vars->contains(a->name()))
 				ret = calc(m_vars->value(a->name()));
 			else if(a->isFunction())
-				m_err << i18n("The function <em>%1</em> doesn't exist").arg(a->name());
+				m_err << i18n("The function <em>%1</em> does not exist").arg(a->name());
 			else
-				m_err << i18n("The variable <em>%1</em> doesn't exist").arg(a->name());
+				m_err << i18n("The variable <em>%1</em> does not exist").arg(a->name());
 			
 			break;
 		case Object::oper:
@@ -466,7 +466,7 @@ Cn Analitza::func(const Container& n)
 	Ci funct(n.m_params[0]);
 	
 	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
-		m_err << i18n("The function <em>%1</em> doesn't exist").arg(funct.name());
+		m_err << i18n("The function <em>%1</em> does not exist").arg(funct.name());
 		return ret;
 	}
 	
@@ -692,7 +692,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 			break;
 			
 		default:
-			m_err << i18n("The operator <em>%1</em> hasn't been implemented").arg(op);
+			m_err << i18n("The operator <em>%1</em> has not been implemented").arg(op);
 			break;
 	}
 // 	
@@ -832,6 +832,18 @@ Object* Analitza::simp(Object* root)
 						delete c->m_params[2];
 						c->m_params.clear();
 						delete c;
+					}
+				} else if(c->m_params[1]->isContainer()) {
+					Container *cp = (Container*) c->m_params[1];
+					if(cp->firstOperator()==Object::power) {
+						c->m_params[1] = Expression::objectCopy(cp->m_params[1]);
+						
+						Container *cm = new Container(Object::apply);
+						cm->m_params.append(new Operator(Object::times));
+						cm->m_params.append(Expression::objectCopy(c->m_params[2]));
+						cm->m_params.append(Expression::objectCopy(cp->m_params[2]));
+						c->m_params[2] = cm;
+						delete cp;
 					}
 				}
 			} break;
@@ -1017,7 +1029,7 @@ void Analitza::simpPolynomials(Container* c)
 }
 
 
-bool Analitza::hasVars(const Object *o, QString var)
+bool Analitza::hasVars(const Object *o, const QString &var)
 {
 	Q_ASSERT(o); //FIXME: Must recognize bvars
 	bool r=false;

@@ -141,7 +141,7 @@ QString Expression::toMathML() const
 	if(isCorrect())
 		return m_tree->toMathML();
 	else
-		return QString::null;
+		return QString();
 }
 
 QString Expression::toString() const
@@ -149,7 +149,7 @@ QString Expression::toString() const
 	if(isCorrect())
 		return m_tree->toString();
 	else
-		return QString::null;
+		return QString();
 }
 
 enum Object::ObjectType Expression::whatType(const QString& tag)

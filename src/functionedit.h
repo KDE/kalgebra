@@ -35,7 +35,7 @@ class FunctionEdit : public QWidget
 {
 Q_OBJECT
 public:
-	FunctionEdit(QWidget *parent=0, Qt::WFlags f = 0 );
+	explicit FunctionEdit(QWidget *parent=0, Qt::WFlags f = 0 );
 	~FunctionEdit();
 	QString text() const { return m_func->toPlainText(); }
 	void setText(const QString &newText);

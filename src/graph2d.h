@@ -32,7 +32,7 @@ public:
 	bool editFunction(int num, const function& func);
 	bool editFunction(const QString& name, const function& func);
 	function* editFunction(int num);
-	bool toImage(QString path);
+	bool toImage(const QString &path);
 	
 	QSizePolicy sizePolicy() const;
 	

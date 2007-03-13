@@ -88,7 +88,7 @@ void VarEdit::edit()
 	
 	if(m_exp->text().isEmpty()) {
 		m_exp->setCorrect(true);
-		m_valid->setText(QString::null);
+		m_valid->setText(QString());
 		return;
 	}
 	
@@ -116,7 +116,7 @@ void VarEdit::edit()
 				m_correct=false;
 			} else {
 				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>").arg(m_var).arg(val));
-				m_valid->setToolTip(QString::null);
+				m_valid->setToolTip(QString());
 				m_correct=true;
 			}
 		}

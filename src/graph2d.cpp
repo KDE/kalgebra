@@ -78,9 +78,9 @@ void Graph2D::drawPolarAxes(QPainter *w)
 	QPen ceixos;
 	ceixos.setColor(m_axeColor);
 	w->setPen(ceixos);
-	const QPointF centre = toWidget(QPointF(0.,0.));
+	const QPointF center = toWidget(QPointF(0.,0.));
 	bool zero=false;
-	zero= centre.x()>0. && centre.y()>0. && centre.x()<width() && centre.y()<height();
+	zero= center.x()>0. && center.y()>0. && center.x()<width() && center.y()<height();
 	double thmin = zero ? 0. : fmin(floor(fmin(viewport.left(), viewport.bottom())), ceil(fmax(viewport.right(), viewport.top())));
 	double thmax = ceil(fmax(
 				sqrt(pow(viewport.topRight().x(), 2.) + pow(viewport.topRight().y(), 2.)),
@@ -103,14 +103,14 @@ void Graph2D::drawPolarAxes(QPainter *w)
 	ceixos.setColor(m_axeColor);
 	ceixos.setStyle(Qt::SolidLine);
 	w->setPen(ceixos);
-	w->drawLine(QPointF(0., centre.y()), QPointF(this->width(), centre.y()));
-	w->drawLine(QPointF(centre.x(), 0.), QPointF(centre.x(),this->height()));
+	w->drawLine(QPointF(0., center.y()), QPointF(this->width(), center.y()));
+	w->drawLine(QPointF(center.x(), 0.), QPointF(center.x(),this->height()));
 }
 
 void Graph2D::drawCartesianAxes(QPainter *finestra)
 {
 	QPen ceixos;
-	const QPointF centre = toWidget(QPointF(0.,0.));
+	const QPointF center = toWidget(QPointF(0.,0.));
 	QPointF p;
 	double x;
 	
@@ -139,8 +139,8 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	finestra->setPen(ceixos);
 	
 	//dibuixa eixos viewport
-	finestra->drawLine(QPointF(0., centre.y()), QPointF(this->width(), centre.y()));
-	finestra->drawLine(QPointF(centre.x(), 0.), QPointF(centre.x(),this->height()));
+	finestra->drawLine(QPointF(0., center.y()), QPointF(this->width(), center.y()));
+	finestra->drawLine(QPointF(center.x(), 0.), QPointF(center.x(),this->height()));
 	//EO dibuixa eixos viewport
 }
 
@@ -526,7 +526,7 @@ QRect Graph2D::toBiggerRect(const QRectF& ent)
 }
 
 //////////////////////////////////////////////////////////////
-bool Graph2D::toImage(QString path)
+bool Graph2D::toImage(const QString &path)
 {
 	bool b=false;
 	

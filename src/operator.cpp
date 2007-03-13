@@ -15,7 +15,7 @@ QString Operator::toMathML() const
 }
 
 
-enum Object::OperatorType Operator::toOperatorType(QString e)
+enum Object::OperatorType Operator::toOperatorType(const QString &e)
 {
 	//qDebug() << "lol";
 	enum OperatorType ret=onone;

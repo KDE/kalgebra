@@ -20,7 +20,7 @@ class ExpressionEdit : public QTextEdit
 {
 Q_OBJECT
 public:
-	ExpressionEdit(QWidget *parent = 0, AlgebraHighlighter::Mode ini=AlgebraHighlighter::Autodetect);
+	explicit ExpressionEdit(QWidget *parent = 0, AlgebraHighlighter::Mode ini=AlgebraHighlighter::Autodetect);
 	~ExpressionEdit();
 	bool mode() { return m_highlight->mode(); }
 	void setMode(AlgebraHighlighter::Mode en);

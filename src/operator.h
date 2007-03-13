@@ -18,7 +18,7 @@ class Operator : public Object
 		static int nparams(enum OperatorType);
 		int nparams() const { return nparams(m_optype); }
 		enum OperatorType operatorType() const { return m_optype; }
-		static enum OperatorType toOperatorType(QString s);
+		static enum OperatorType toOperatorType(const QString &s);
 		unsigned int weight() const { return operatorWeight(m_optype); }
 		static unsigned int operatorWeight(OperatorType);
 		QString toString() const;

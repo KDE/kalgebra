@@ -109,7 +109,7 @@ TOKEN Exp::pillatoken(QString &a){
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
 		int coma=0;
 		if(a[0]=='.') {
-			ret.val += "0";
+			ret.val += '0';
 			coma++;
 		}
 		ret.val += a[0];

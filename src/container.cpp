@@ -124,7 +124,7 @@ QString Container::toString() const
 			Container *c = (Container*) m_params[i];
 			QString s = c->toString();
 			Operator child_op = c->firstOperator();
-			if(op!=0 && op->weight()>child_op.weight() && child_op.nparams()!=1)
+			if(op!=0 && op->weight()>=child_op.weight() && child_op.nparams()!=1)
 				s=QString("(%1)").arg(s);
 			
 			if(c->containerType() == Object::bvar) {
@@ -173,7 +173,7 @@ QString Container::toString() const
 					break;
 				case Object::minus:
 					if(ret.count()==1)
-						toret += "-"+ret[0];
+						toret += '-'+ret[0];
 					else
 						toret += ret.join("-");
 					break;

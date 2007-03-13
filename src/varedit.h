@@ -1,4 +1,4 @@
-#ifndef VAREDIT_H
+	#ifndef VAREDIT_H
 #define VAREDIT_H
 
 #include <QToolTip>
@@ -20,7 +20,7 @@ class VarEdit : public QDialog
 {
 Q_OBJECT
 public:
-	VarEdit(QWidget *parent = 0, bool modal = FALSE);
+	explicit VarEdit(QWidget *parent = 0, bool modal = false);
 	~VarEdit();
 	QString text() const { return m_exp->text(); }
 	void setVar(const QString& newVar);	//This should edit the variable name

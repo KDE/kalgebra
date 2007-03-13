@@ -64,7 +64,7 @@ public:
 	void simpScalar(Container* c);
 	void simpPolynomials(Container* c);
 	
-	static bool hasVars(const Object*, QString var=QString());
+	static bool hasVars(const Object*, const QString &var=QString());
 private:
 	Object* derivative(const QString &var, const Object*);
 	Object* derivative(const QString &var, const Container*);

@@ -352,7 +352,7 @@ void Graph3D::timeOut(){
 	this->repaint();
 }
 
-void Graph3D::setFunc(QString Text) //FIXME:Must pass bool ismathml
+void Graph3D::setFunc(const QString& Text) //FIXME:Must pass bool ismathml
 {
 	bool ismathml = Expression::isMathML(Text);
 	func3d = Expression(Text, ismathml);

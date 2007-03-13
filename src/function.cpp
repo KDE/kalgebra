@@ -72,7 +72,7 @@ void function::update_points(QRect viewport, unsigned int max_res)
 		else if(m_firstlambda=="q")
 			update_pointsPolar(viewport, max_res);
 		else
-			err << i18n("Don't know how to represent f(%1)").arg(m_firstlambda);
+			err << i18n("Do not know how to represent f(%1)").arg(m_firstlambda);
 	} else
 		err << i18n("Too much lambda for a 2D Graph");
 }
