@@ -1092,6 +1092,7 @@ Object* Analitza::removeDependencies(Object * o) const
 				for(; iBvars!=bvars.constEnd(); ++iBvars)
 					m_vars->stack(*iBvars, c->m_params[++i]);
 				delete c;
+				c = 0;
 			}
 			
 			QList<Object*>::iterator fval(cbody->firstValue());
