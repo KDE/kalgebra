@@ -36,7 +36,6 @@ function::~function()
 
 int function::setFunction(const QString& name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
 {
-	int ret;
 	m_last_max_res=0;
 	m_last_resolution=0;
 	m_color = color;
@@ -52,7 +51,8 @@ int function::setFunction(const QString& name, const Expression& newFunc, const 
 		delete [] points;
 		points=0;
 	}
-	return ret;
+#warning why returning a constant?
+	return 0;
 }
 
 void function::update_points(QRect viewport, unsigned int max_res)
