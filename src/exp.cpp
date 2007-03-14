@@ -1,27 +1,26 @@
- /***************************************************************************
- *   Copyright (C) 2005 by aleix                                           *
- *   aleixpol@gmail.com                                                    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*************************************************************************************
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "exp.h"
 #include "operator.h"
 using namespace std;
 
-#if 0
+#if 1
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 
@@ -91,20 +90,22 @@ Exp::Exp(QString exp) : str(exp)
 
 Exp::~Exp(){}
 
-TOKEN Exp::pillatoken(QString &a){
+TOKEN Exp::pillatoken(QString &a, int &l)
+{
 	int i=0;
+	l=a.length();
 	a = a.trimmed();
-// 	printf("%s\n", a.ascii());
+	
 	TOKEN ret;
 	ret.tipus = tMaxOp;
 	
 	if(a.isEmpty())
 		ret.tipus = tEof;
 	else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
-		if(a[0].decompositionTag()==QChar::Super)
+		for(int i; a[i].decompositionTag()==QChar::Super; i++) {
 			ret.tipus = tPow;
-		
-		a[0]=a[0].decomposition()[0];
+			a[i]=a[i].decomposition()[0];
+		}
 		a.prepend(" ");
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
 		int coma=0;
@@ -122,8 +123,8 @@ TOKEN Exp::pillatoken(QString &a){
 		if(a[i] == '(' || a[i].isLetter())
 			a.prepend(" *");
 		
-		if(coma>1)
-			err << i18n("Too much comma in %1").arg(ret.val);
+// 		if(coma>1)
+// 			err << i18n("Too much comma in %1").arg(ret.val);
 		
 		ret.val = QString::QString("<cn>%1</cn>").arg(ret.val);
 		ret.tipus= tVal;
@@ -136,7 +137,7 @@ TOKEN Exp::pillatoken(QString &a){
 		
 		for(;a[i].isSpace();i++);
 		
-		if(a[i]=='(' || a[i].isLetterOrNumber()) {
+		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.tipus=tFunc;
 		} else {
 			ret.val = QString::QString("<ci>%1</ci>").arg(ret.val);
@@ -154,7 +155,7 @@ TOKEN Exp::pillatoken(QString &a){
 	} else if(a[0]=='+')
 		ret.tipus = tAdd;
 	else if(a[0]=='-')
-		ret.tipus = (antnum == tVal || antnum==tRpr) ? tSub : tUmi;
+		ret.tipus = /*(antnum == tVal || antnum==tRpr) ? tSub :*/ tUmi; //FIXME: NOW NOW
 	else if(a[0]=='/')
 		ret.tipus = tDiv;
 	else if(a[0]=='^')
@@ -170,24 +171,29 @@ TOKEN Exp::pillatoken(QString &a){
 		ret.tipus = tRpr;
 	else if(a[0]==',')
 		ret.tipus = tComa;
-	else
-		err << i18n("Unknown token %1").arg(a[0]);
 	
 	a[0]=' ';
-	antnum = ret.tipus;
-	//qDebug() << ret.val;
-	if(antnum==tok && tok<tLpr)
-		err << i18n("Value remaining");
+	a=a.trimmed();
+	l-=a.length();
 	return ret;
 }
 
-int Exp::getTok(){
+int Exp::getTok()
+{
 	QString s;
+	int ignored;
 	TOKEN t;
 	if(firsttok)
 		firsttok=false;
 	
-	t=pillatoken(str);
+	t=pillatoken(str, ignored);
+	
+	qDebug() << "tipus: " << opr2str(t.tipus);
+	if(!t.val.isEmpty()) qDebug() << "jaja: " <<t.val;
+	
+	if(t.tipus==tMaxOp)
+		err << i18n("Unknown token");
+	antnum = t.tipus;
 	tok = t.tipus;
 	tokval = t.val;
 	

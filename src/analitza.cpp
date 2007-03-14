@@ -1,22 +1,21 @@
-/***************************************************************************
- *   Copyright (C) 2006 by Aleix Pol                                       *
- *   aleixpol@gmail.com                                                    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*************************************************************************************
+ *  one line to give the program's name and an idea of what it does.                 *
+ *  Copyright (C) 2007  Aleix Pol                                                    *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
 
 #include "analitza.h"
 
@@ -827,13 +826,16 @@ Object* Analitza::simp(Object* root)
 						delete root;
 						root = new Cn(1.);
 						break;
-					} else if(n->value()==1.) {
+					} else if(n->value()==1.) { 
 						root = c->m_params[1];
 						delete c->m_params[2];
 						c->m_params.clear();
 						delete c;
+						break;
 					}
-				} else if(c->m_params[1]->isContainer()) {
+				}
+				
+				if(c->m_params[1]->isContainer()) {
 					Container *cp = (Container*) c->m_params[1];
 					if(cp->firstOperator()==Object::power) {
 						c->m_params[1] = Expression::objectCopy(cp->m_params[1]);
@@ -845,6 +847,7 @@ Object* Analitza::simp(Object* root)
 						c->m_params[2] = cm;
 						delete cp;
 					}
+					c->m_params[2]=simp(c->m_params[2]);
 				}
 			} break;
 			case Object::ln:

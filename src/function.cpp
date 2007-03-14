@@ -1,3 +1,21 @@
+/*************************************************************************************
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "function.h"
 #include "exp.h"
 
@@ -34,7 +52,7 @@ function::~function()
 		delete [] points;
 }
 
-int function::setFunction(const QString& name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
+void function::setFunction(const QString& name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
 {
 	m_last_max_res=0;
 	m_last_resolution=0;
@@ -51,8 +69,6 @@ int function::setFunction(const QString& name, const Expression& newFunc, const 
 		delete [] points;
 		points=0;
 	}
-#warning why returning a constant?
-	return 0;
 }
 
 void function::update_points(QRect viewport, unsigned int max_res)

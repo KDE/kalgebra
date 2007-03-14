@@ -1,3 +1,21 @@
+/*************************************************************************************
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "varedit.h"
 #include "analitza.h"
 #include "expression.h"
@@ -83,8 +101,7 @@ Object* VarEdit::val()
 void VarEdit::edit()
 {
 	double val;
-#warning leak (CID 3287)
-	Analitza *a = new Analitza;
+	Analitza a;
 	QString funct = m_exp->text();
 	
 	if(m_exp->text().isEmpty()) {
@@ -100,20 +117,20 @@ void VarEdit::edit()
 		e.setText(m_exp->text());
 	
 	if(!e.isCorrect()) {
-		a->m_err << i18n("From parser:") << e.error();
+		a.m_err << i18n("From parser:") << e.error();
 		return;
 	} else
-		a->setExpression(e);
+		a.setExpression(e);
 	
-	if(a->isCorrect()) {
-		if(a->bvarList().count()>0)
+	if(a.isCorrect()) {
+		if(a.bvarList().count()>0)
 			m_valid->setText(i18n("%1:=%2").arg(m_var).arg(m_exp->text()));
 		else {
-			val = a->calculate().value();
+			val = a.calculate().value();
 			
-			if(!a->isCorrect()) {
+			if(!a.isCorrect()) {
 				m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-				m_valid->setToolTip(a->m_err.join("\n"));
+				m_valid->setToolTip(a.m_err.join("\n"));
 				m_correct=false;
 			} else {
 				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>").arg(m_var).arg(val));

@@ -1,5 +1,23 @@
-#include "algebrahighlighter.h"
+/*************************************************************************************
+ *  one line to give the program's name and an idea of what it does.                 *
+ *  Copyright (C) 2007  Aleix Pol                                                    *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
 
+#include "algebrahighlighter.h"
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc) : QSyntaxHighlighter(doc), wrong(false), m_mode(Autodetect), m_pos(0)
 {
@@ -15,7 +33,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		QString lasttag;
 		for(int i=0; i<text.length(); i++){
 			if(text[i]=='<') { //We enter in a tag
-				lasttag=QString();
+				lasttag.clear();
 				int j=i+1, k=0;
 				for(k=i+1; k<text.length() && text[k]!='>'; k++){
 					lasttag.append(text[k]);
@@ -48,7 +66,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		int pos=0, len=0;
 		
 		QString op=text.trimmed();
-		TOKEN t=getToken(op, len);
+		TOKEN t=Exp::pillatoken(op, len);
 		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++);
 		
 		while(pos < text.length() && t.tipus!=tEof){
@@ -61,6 +79,9 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					break;
 				case tVar:
 					setFormat(pos, len, QColor(100,0,0));
+					break;
+				case tMaxOp:
+					setFormat(pos, len, QColor(255,0,0));
 					break;
 				default:
 					setFormat(pos, len, negreta);
@@ -111,7 +132,7 @@ int AlgebraHighlighter::complementary(const QString& t, int p)
 	return p;
 }
 
-TOKEN AlgebraHighlighter::getToken(QString &a, int &l)
+TOKEN AlgebraHighlighter::getToken(QString &a, int &l) //FIXME: delete me
 {
 	int i=0;
 	l=a.length();
@@ -134,14 +155,14 @@ TOKEN AlgebraHighlighter::getToken(QString &a, int &l)
 		ret.tipus= tVal;
 	} else if(a[0].isLetter()) {//es una variable o func
 		ret.val += a[0];
-		for(i=1; a[i].isLetterOrNumber(); i++){
+		for(i=1; a[i].isLetterOrNumber() && a[i].decompositionTag()==QChar::NoDecomposition; i++){
 			ret.val += a[i];
 			a[i]=' ';
 		}
 		
 		for(;a[i].isSpace();i++);
 
-		if((a[i]=='(' || a[i].isLetterOrNumber()) && (Expression::whatType(ret.val)==Object::oper))
+		if(a[i].decompositionTag()!=QChar::NoDecomposition && (a[i]=='(' || a[i].isLetterOrNumber()) && (Expression::whatType(ret.val)==Object::oper))
 			ret.tipus=tFunc;
 		else 
 			ret.tipus= tVar;

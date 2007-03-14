@@ -1,3 +1,21 @@
+/*************************************************************************************
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "functionedit.h"
 
 #include <QVBoxLayout>
@@ -77,7 +95,7 @@ FunctionEdit::~FunctionEdit()
 
 void FunctionEdit::clear()
 {
-	m_func->setText(QString::null);
+	m_func->setText(QString());
 	edit();
 }
 
@@ -107,7 +125,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	if(m_func->text().isEmpty()) {
 		m_func->setCorrect(true);
 		m_ok->setEnabled(false);
-		m_valid->setText(QString::null);
+		m_valid->setText(QString());
 		return;
 	}
 	
@@ -129,7 +147,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	if(m_correct) {
 		m_graph->clear();
 		m_graph->addFunction(function(m_name->text(), Expression(m_func->toPlainText(), m_func->isMathML()), m_color->color(), true));
-		m_valid->setToolTip(QString::null);
+		m_valid->setToolTip(QString());
 	} else {
 		m_graph->clear();
 		m_graph->forceRepaint();
@@ -170,7 +188,7 @@ void ColorCombo::setColor(const QColor &color)
 	if(pos==-1) {
 		QPixmap p(iconSize());
 		p.fill(color);
-		addItem(p, QString::null, color.name());
+		addItem(p, QString(), color.name());
 		setCurrentIndex(count()-1);
 	} else {
 		setCurrentIndex(pos);
