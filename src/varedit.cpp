@@ -83,6 +83,7 @@ Object* VarEdit::val()
 void VarEdit::edit()
 {
 	double val;
+#warning leak (CID 3287)
 	Analitza *a = new Analitza;
 	QString funct = m_exp->text();
 	
