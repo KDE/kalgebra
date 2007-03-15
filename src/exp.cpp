@@ -44,7 +44,6 @@ QString opr2str(int in)
 		case tEof:	ret="tEof";	break;
 		case tMaxOp:	ret="tMaxOp";	break;
 		case tVal:	ret="tVal";	break;
-		case tVar:	ret="tVar";	break;
 		default:	ret="chalaoooooooooo";
 	}
 	return ret;
@@ -90,24 +89,24 @@ Exp::Exp(QString exp) : str(exp)
 
 Exp::~Exp(){}
 
-TOKEN Exp::pillatoken(QString &a, int &l)
+TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 {
+	bool exp= (l==-1);
 	int i=0;
 	l=a.length();
 	a = a.trimmed();
-	
 	TOKEN ret;
 	ret.tipus = tMaxOp;
 	
 	if(a.isEmpty())
 		ret.tipus = tEof;
 	else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
-		for(int i; a[i].decompositionTag()==QChar::Super; i++) {
+		for(int i=0; i<a.count() && a[i].decompositionTag()==QChar::Super; i++) {
 			ret.tipus = tPow;
 			a[i]=a[i].decomposition()[0];
 		}
 		a.prepend(" ");
-	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {//es un numero
+	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
 		int coma=0;
 		if(a[0]=='.') {
 			ret.val += '0';
@@ -120,13 +119,13 @@ TOKEN Exp::pillatoken(QString &a, int &l)
 			ret.val += a[i];
 			a[i]=' ';
 		}
-		if(a[i] == '(' || a[i].isLetter())
+		if(exp && (a[i] == '(' || a[i].isLetter()))
 			a.prepend(" *");
 		
-// 		if(coma>1)
-// 			err << i18n("Too much comma in %1").arg(ret.val);
-		
-		ret.val = QString::QString("<cn>%1</cn>").arg(ret.val);
+		if(coma>1)
+			ret.val="<cn>%error;</cn>";
+		else
+			ret.val = QString::QString("<cn>%1</cn>").arg(ret.val);
 		ret.tipus= tVal;
 	} else if(a[0].isLetter()) {//es una variable o func
 		ret.val += a[0];
@@ -155,7 +154,7 @@ TOKEN Exp::pillatoken(QString &a, int &l)
 	} else if(a[0]=='+')
 		ret.tipus = tAdd;
 	else if(a[0]=='-')
-		ret.tipus = /*(antnum == tVal || antnum==tRpr) ? tSub :*/ tUmi; //FIXME: NOW NOW
+		ret.tipus = (prevtok == tVal || prevtok==tRpr) ? tSub : tUmi;
 	else if(a[0]=='/')
 		ret.tipus = tDiv;
 	else if(a[0]=='^')
@@ -181,18 +180,16 @@ TOKEN Exp::pillatoken(QString &a, int &l)
 int Exp::getTok()
 {
 	QString s;
-	int ignored;
+	int ignored=-1;
 	TOKEN t;
 	if(firsttok)
 		firsttok=false;
 	
-	t=pillatoken(str, ignored);
-	
-	qDebug() << "tipus: " << opr2str(t.tipus);
-	if(!t.val.isEmpty()) qDebug() << "jaja: " <<t.val;
+	t=getToken(str, ignored, antnum);
 	
 	if(t.tipus==tMaxOp)
 		err << i18n("Unknown token");
+	
 	antnum = t.tipus;
 	tok = t.tipus;
 	tokval = t.val;
@@ -200,7 +197,8 @@ int Exp::getTok()
 	return 0;
 }
 
-int Exp::shift(){
+int Exp::shift()
+{
 // 	cout << "------>" << tokval.ascii() << "'" << endl;
 	if(tok==tVal)
 		val.push(tokval);

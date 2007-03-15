@@ -28,7 +28,7 @@
 #include "operator.h"
 
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
-	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(NULL), m_check(true), m_correct(true), m_ans("ans")
+	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_check(true), m_correct(true), m_ans("ans")
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	this->setFixedHeight(QFontMetrics(this->currentFont()).height()+12);
@@ -74,12 +74,14 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	setMode(inimode);
 }
 
+ExpressionEdit::~ExpressionEdit() {}
+
 void ExpressionEdit::updateCompleter()
 {
 	if(!isMathML()) {
 		OperatorsModel *m_ops = new OperatorsModel(m_completer);
 		
-		if(a!=NULL) {
+		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
 			for(int i=m_ops->count(); it != a->m_vars->end(); ++it) {
 				m_ops->setData(m_ops->index(i, 0), it.key());
@@ -97,23 +99,10 @@ void ExpressionEdit::completed(const QString& newText)
 {
 	int c = newText.length() - lastWord(textCursor().selectionStart()).length();
 	QString toInsert=newText.right(c);
-	if(Expression::whatType(newText) == Object::oper)
+	if(Expression::whatType(newText) == Object::oper && !isMathML())
 		toInsert += '(';
 	insertPlainText(toInsert);
 }
-
-/*void ExpressionEdit::completed(const QModelIndex& index)
-{
-	QStandardItem *it = m_words->itemFromIndex(index);
-	qDebug() << it;
-	if(it!=NULL) {
-		QString newText = it->data(0).toString();
-		int c = newText.length() - lastWord(textCursor().selectionStart()).length();
-		insertPlainText(newText.right(c));
-	}
-}*/
-
-ExpressionEdit::~ExpressionEdit() {}
 
 bool ExpressionEdit::isMathML() const
 {
@@ -173,18 +162,21 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			return;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
-// 			qDebug() << m_completer->popup()->isVisible();
-			emit returnPressed();
+			if(!m_completer->popup()->isVisible())
+				emit returnPressed();
+			else
+				completed(m_completer->currentCompletion());
+			m_completer->popup()->hide();
 			return;
-		case Qt::Key_Up: //FIXME: Fix navegation, a bit fuzzy sometimes.
+		case Qt::Key_Up:
 			if(!m_completer->popup()->isVisible()) {
-				m_histPos++;
+				m_histPos--;
 				ch=true;
 			}
 			break;
 		case Qt::Key_Down:
 			if(!m_completer->popup()->isVisible()) {
-				m_histPos--;
+				m_histPos++;
 				ch=true;
 			}
 			break;
@@ -210,7 +202,6 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				QRect r = QRect(pos, QSize(200, 100));
 				m_completer->setCompletionPrefix(last);
 				m_completer->complete();
-// 				qDebug() << last << r;
 			} else {
 				m_completer->popup()->hide();
 			}
@@ -322,7 +313,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			}
 			emit signalHelper(sample+')');
 		}
-	} else if(a!=NULL && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
+	} else if(a && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
 		Container *c = (Container*) a->m_vars->value(funcname);
 		QStringList params = c->bvarList();
 		

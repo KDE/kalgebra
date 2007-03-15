@@ -1,6 +1,5 @@
 /*************************************************************************************
- *  one line to give the program's name and an idea of what it does.                 *
- *  Copyright (C) 2007  Aleix Pol                                                    *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -46,7 +45,7 @@ Expression Analitza::evaluate()
 		Object *aux=e.m_tree;
 		e.m_tree=eval(aux);
 		delete aux;
-		e.m_tree=simp(e.m_tree);
+// 		e.m_tree=simp(e.m_tree);
 		objectWalker(e.m_tree);
 		return e;
 	} else {
@@ -234,16 +233,16 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			
 			Container *cmin1 =new Container(Object::apply);
 			cmin1->m_params.append(new Operator(Object::times));
-			cmin1->m_params.append(Expression::objectCopy(f));
-			cmin1->m_params.append(derivative(var, Expression::objectCopy(g)));
+			cmin1->m_params.append(derivative(var, Expression::objectCopy(f)));
+			cmin1->m_params.append(Expression::objectCopy(g));
 			cmin->m_params.append(cmin1);
+			nc->m_params.append(cmin);
 			
 			Container *cmin2 =new Container(Object::apply);
 			cmin2->m_params.append(new Operator(Object::times));
-			cmin2->m_params.append(derivative(var, Expression::objectCopy(f)));
-			cmin2->m_params.append(Expression::objectCopy(g));
+			cmin2->m_params.append(Expression::objectCopy(f));
+			cmin2->m_params.append(derivative(var, Expression::objectCopy(g)));
 			cmin->m_params.append(cmin2);
-			nc->m_params.append(cmin);
 			
 			Container *cquad = new Container(Object::apply);
 			cquad->m_params.append(new Operator(Object::power));
@@ -775,9 +774,13 @@ Object* Analitza::simp(Object* root)
 				}
 				break;
 			case Object::minus:
-			case Object::plus:
+			case Object::plus: {
+				Object *f=0;
+				bool somed=false;
 				for(it=c->firstValue(); it!=c->m_params.end();) {
 					*it = simp(*it);
+					if(f==0) f=*it;
+					
 					d=false;
 					
 					if((*it)->type() == Object::value) {
@@ -790,22 +793,24 @@ Object* Analitza::simp(Object* root)
 					
 					if(!d)
 						++it;
-					else
+					else {
+						somed=true;
 						it = c->m_params.erase(it);
+					}
 				}
 				
-				objectWalker(c);
 				if(c->isUnary() && c->firstOperator()==Object::plus) {
 					Container *aux=c;
 					root=*c->firstValue();
 					*aux->firstValue()=0;
 					delete aux;
 					c=0;
-				} else if(c->isUnary() && c->firstOperator()==Object::minus) {
-					/*Container *aux=c; //FIXME: Must do that only when x-0
+				} else if(somed && c->isUnary() && c->firstOperator()==Object::minus && *c->firstValue()==f) {
+					Container *aux=c;
 					root=*c->firstValue();
 					*aux->firstValue()=0;
-					delete aux;*/
+					delete aux;
+					break;
 				} else {
 					simpScalar(c);
 					simpPolynomials(c);
@@ -815,7 +820,7 @@ Object* Analitza::simp(Object* root)
 					delete root;
 					root = new Cn(0.);
 				}
-				break;
+			} break;
 			case Object::power: {
 				c->m_params[1] = simp(c->m_params[1]);
 				c->m_params[2] = simp(c->m_params[2]);

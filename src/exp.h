@@ -57,8 +57,7 @@ typedef enum {
 	tRpr,		//)
 	tEof,
 	tMaxOp,
-	tVal,
-	tVar
+	tVal
 } tokEnum;
 
 struct TOKEN {
@@ -79,7 +78,7 @@ public:
 	QStringList error();
 	QString mathML();
 	
-	static TOKEN pillatoken(QString &a, int &l);
+	static TOKEN getToken(QString &a, int &l, tokEnum prev);
 private:
 	QString mml;
 	QString str; //Auxiliar pel parsing

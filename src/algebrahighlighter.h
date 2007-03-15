@@ -1,6 +1,5 @@
 /*************************************************************************************
- *  one line to give the program's name and an idea of what it does.                 *
- *  Copyright (C) 2007  Aleix Pol                                                    *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -48,7 +47,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		bool isWrong() const { return wrong; }
 		void setPos(int p) { m_pos=p; }
 	private:
-		TOKEN getToken(QString &a, int &l);
+// 		TOKEN getToken(QString &a, int &l);
 		//TOKEN getTokenMML(QString &a, unsigned int &l);
 		bool wrong;
 		tokEnum antnum;
