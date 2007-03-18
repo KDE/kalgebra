@@ -69,8 +69,9 @@ private:
 	Object* derivative(const QString &var, const Container*);
 	void reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary);
 	Object* removeDependencies(Object* o) const;
-// private:
-	public: //FIXME:Shame on me
+	void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
+	
+public: //FIXME:Shame on me
 	Expression m_exp;
 	Variables *m_vars;
 	QStringList m_err;

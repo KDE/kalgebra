@@ -66,7 +66,10 @@ QString Container::toMathML() const
 	QString ret;
 	QList<Object*>::const_iterator i;
 	for(i=m_params.constBegin(); i!=m_params.constEnd(); ++i) {
-		ret += (*i)->toMathML();
+		if(*i==0)
+			ret += "error;";
+		else
+			ret += (*i)->toMathML();
 	}
 	
 	QString tag;
@@ -122,7 +125,7 @@ QString Container::toString() const
 			Container *c = (Container*) m_params[i];
 			QString s = c->toString();
 			Operator child_op = c->firstOperator();
-			if(op!=0 && op->weight()>=child_op.weight() && child_op.nparams()!=1)
+			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
 				s=QString("(%1)").arg(s);
 			
 			if(c->containerType() == Object::bvar) {

@@ -225,14 +225,11 @@ unsigned int Operator::operatorWeight(OperatorType op)
 		case leq:
 		case geq:
 			return 1;
-		case sin:
-		case cos:
-		case tan:
-			return 2;
 		case minus:
 		case plus:
-			return 3;
+			return 2;
 		case times:
+			return 3;
 		case divide:
 			return 4;
 		case _and:
@@ -240,7 +237,7 @@ unsigned int Operator::operatorWeight(OperatorType op)
 		case _xor:
 			return 6;
 		case power:
-			return 5;
+			return 7;
 		default:
 			return 1000;
 	}

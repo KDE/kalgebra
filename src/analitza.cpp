@@ -45,7 +45,8 @@ Expression Analitza::evaluate()
 		Object *aux=e.m_tree;
 		e.m_tree=eval(aux);
 		delete aux;
-// 		e.m_tree=simp(e.m_tree);
+		objectWalker(e.m_tree);
+		e.m_tree=simp(e.m_tree);
 		objectWalker(e.m_tree);
 		return e;
 	} else {
@@ -92,7 +93,7 @@ Object* Analitza::eval(const Object* branch)
 Object* Analitza::derivative(const QString &var, const Object* o)
 {
 	Q_ASSERT(o);
-	Object *ret;
+	Object *ret=0;
 	if(o->type()!=Object::oper && !hasVars(o, var))
 		ret = new Cn(0.);
 	else switch(o->type()) {
@@ -199,17 +200,17 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 		case Object::sin: {
 			Container *ncChain = new Container(Object::apply);
 			ncChain->m_params.append(new Operator(Object::times));
-			ncChain->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
+			ncChain->m_params.append(derivative(var, *c->firstValue()));
 			Container *nc = new Container(Object::apply);
 			nc->m_params.append(new Operator(Object::cos));
 			nc->m_params.append(Expression::objectCopy(*c->firstValue()));
 			ncChain->m_params.append(nc);
 			return ncChain;
 		} break;
-		case Object::cos: {
+		case Object::cos: { //FIXME: diff(sin(x**2)) is not right
 			Container *ncChain = new Container(Object::apply);
 			ncChain->m_params.append(new Operator(Object::times));
-			ncChain->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
+			ncChain->m_params.append(derivative(var, *c->firstValue()));
 			
 			Container *nc = new Container(Object::apply);
 			nc->m_params.append(new Operator(Object::sin));
@@ -720,6 +721,16 @@ void Analitza::simplify()
 		m_exp.m_tree = simp(m_exp.m_tree);
 }
 
+void Analitza::levelOut(Container *c, Container *ob, QList<Object*>::iterator &pos)
+{
+	QList<Object*>::iterator it = ob->firstValue();
+	for(; it!=ob->m_params.end();) {
+		pos=c->m_params.insert(pos, *it);
+		pos++;
+		it=ob->m_params.erase(it);
+	}
+}
+
 Object* Analitza::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
@@ -733,17 +744,24 @@ Object* Analitza::simp(Object* root)
 	} else if(root->isContainer()) {
 		Container *c= (Container*) root;
 		QList<Object*>::iterator it;
+		Operator o = c->firstOperator();
 		bool d;
-		switch(c->firstOperator().operatorType()) {
+		switch(o.operatorType()) {
 			case Object::times:
 				for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
-					*it = simp(*it);
 					d=false;
+					*it = simp(*it);
+					if((*it)->isContainer()) {
+						Container *intr = (Container*) *it;
+						if(intr->firstOperator()==o.operatorType()) {
+							levelOut(c, intr, it);
+							d=true;
+						}
+					}
 					
-					if((*it)->type() == Object::value) {
+					if(!d && (*it)->type() == Object::value) {
 						Cn* n = (Cn*) (*it);
 						if(n->value()==1. && c->m_params.count()>2) { //1*exp=exp
-							delete n;
 							d=true;
 						} else if(n->value()==0.) { //0*exp=0
 							delete root;
@@ -754,8 +772,10 @@ Object* Analitza::simp(Object* root)
 					
 					if(!d)
 						++it;
-					else
+					else {
+						delete *it;
 						it = c->m_params.erase(it);
+					}
 				}
 				
 				if(c->isUnary()) {
@@ -780,21 +800,26 @@ Object* Analitza::simp(Object* root)
 				for(it=c->firstValue(); it!=c->m_params.end();) {
 					*it = simp(*it);
 					if(f==0) f=*it;
-					
 					d=false;
+					if((*it)->isContainer()) {
+						Container *intr = (Container*) *it;
+						if(intr->firstOperator()==Object::plus) {
+							levelOut(c, intr, it);
+							d=true;
+						}
+					}
 					
 					if((*it)->type() == Object::value) {
 						Cn* n = (Cn*) (*it);
-						if(n->value()==0.) { //0+-exp=exp
-							delete n;
+						if(n->value()==0.) //0+-exp=exp
 							d=true;
-						}
 					}
 					
 					if(!d)
 						++it;
 					else {
 						somed=true;
+						delete *it;
 						it = c->m_params.erase(it);
 					}
 				}
@@ -813,7 +838,7 @@ Object* Analitza::simp(Object* root)
 					break;
 				} else {
 					simpScalar(c);
-					simpPolynomials(c);
+					simpPolynomials(c); //FIXME: x--y
 				}
 				
 				if(c && c->firstValue()==c->m_params.end()) {
@@ -851,8 +876,8 @@ Object* Analitza::simp(Object* root)
 						cm->m_params.append(Expression::objectCopy(cp->m_params[2]));
 						c->m_params[2] = cm;
 						delete cp;
+						c->m_params[2]=simp(c->m_params[2]);
 					}
-					c->m_params[2]=simp(c->m_params[2]);
 				}
 			} break;
 			case Object::ln:
