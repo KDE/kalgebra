@@ -31,26 +31,8 @@ Variables::Variables() : QHash<QString, Object*>()
 Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)
 {
 	QHash<QString, Object*>::iterator i;
-	for (i = this->begin(); i != this->end(); i++) {
-		Object *ant = *i;
-		switch(ant->type()) {
-			case Object::variable:
-				*i = new Ci(ant);
-				break;
-			case Object::value:
-				*i = new Cn(ant);
-				break;
-			case Object::oper:
-				*i = new Operator(ant);
-				break;
-			case Object::container:
-				*i = new Container(ant);
-				break;
-			case Object::none:
-				qDebug() << "Error in a Variables copy";
-				break;
-		}
-	}
+	for (i = this->begin(); i != this->end(); i++)
+		*i = Expression::objectCopy(*i);
 }
 
 Variables::~Variables()
@@ -61,12 +43,12 @@ Variables::~Variables()
 }
 
 
-void Variables::modify(const QString& key, const Object* o)
+void Variables::modify(const QString& name, const Object* o)
 {
-	if(contains(key))
-		delete value(key);
+	if(contains(name))
+		delete value(name);
 	
-	insert(key, Expression::objectCopy(o));
+	insert(name, Expression::objectCopy(o));
 }
 
 

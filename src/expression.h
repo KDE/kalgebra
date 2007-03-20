@@ -24,41 +24,124 @@
 
 
 /**
-	@author Aleix Pol <aleixpol@gmail.com>
-*/
+ *	This class represents an expression.
+ *	Expression let to convert it to string, MathML and make some little queries to it, without calculating anything.
+ *
+ *	@author Aleix Pol <aleixpol@gmail.com>
+ */
+
 class Expression
 {
 	friend class Analitza;
 	friend class VarEdit;
 	
 	public:
+		
+		/**
+		 *	Constructs an empty Expression.
+		 */
 		Expression();
+		
+		/**
+		 *	Copy constructor, copies the whole object to the constructed one.
+		 */
 		Expression(const Expression& e);
+		
+		/**
+		 *	Constructor. Parses an expression and creates the object.
+		 *	@param exp expression to be assigned
+		 *	@param mathml format of the expression
+		 */
 		Expression(const QString& exp, bool mathml);
+		
+		/** Destructor */
 		~Expression();
 		
+		/**
+		 *	Sets an expression @p exp which is not in MathML format. Returns whether it was correctly assigned or not.
+		 */
 		bool setText(const QString &exp);
+		
+		/**
+		 *	Sets an expression @p exp which is in MathML format. Returns whether it was correctly assigned or not.
+		 */
 		bool setMathML(const QString &exp);
+		
+		/**
+		 *	Returns the list of errors that had experienced while building the expression.
+		 */
 		QStringList error() const { return m_err; }
+		
+		/**
+		 *	Returns whether this is a correct expression.
+		 */
 		bool isCorrect() const { return m_tree && m_err.isEmpty(); }
-		Object* branch(const QDomElement& elem);
+		
+		/**
+		 *	Returns whether the @p e is equal.
+		 */
 		bool operator==(const Expression& e) const;
+		
+		/**
+		 *	Copy assignment. Copies the @p e expression here.
+		 */
 		Expression operator=(const Expression& e);
+		
+		/**
+		 *	Returns the uplimit field. If is not a Cn a not correct Cn will be returned.
+		 */
 		Cn uplimit() const;
+		
+		/**
+		 *	Returns the downlimit field. If is not a Cn a not correct Cn will be returned.
+		 */
 		Cn downlimit() const;
+		
+		/**
+		 *	Returns the tree associated to this object.
+		 */
 		const Object* tree() const { return m_tree; }
 		
+		/**
+		 *	Converts the expression to a string expression.
+		 */
 		QString toString() const;
+		
+		/**
+		 *	Converts the expression to MathML.
+		 */
 		QString toMathML() const;
 		
+		
+		/**
+		 *	Converts a @p tag to an object type.
+		 */
 		static enum Object::ObjectType whatType(const QString& tag);
+		
+		/**
+		 *	Returns whether @p s is MathML or not. Very simple.
+		 */
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
+		
+		/**
+		 *	Returns the uplimit of a given @p c container. If it doesn't exist a not correct Cn will be returned.
+		 */
 		static Cn uplimit(const Container& c);
+		
+		/**
+		 *	Returns the uplimit of a given @p c container. If it doesn't exist a not correct Cn will be returned.
+		 */
 		static Cn downlimit(const Container& c);
-		static Object* objectCopy(const Object *);
+		
+		/**
+		 *	Copies an object @p o to a new object.
+		 */
+		static Object* objectCopy(const Object * o);
 // 	protected:
 		Object* m_tree;
 	private:
+		Object* branch(const QDomElement& elem);
+		
 		QStringList m_err;
 // 		bool m_attach; //TODO: Copy on Write :)
 // 		int m_attached;

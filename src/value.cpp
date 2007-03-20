@@ -44,7 +44,7 @@ QString Cn::toMathML() const
 	return ret;
 }
 
-enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)
+/*enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)
 {
 	enum ValueFormat ret= none;
 	QString tag = val.tagName();
@@ -72,12 +72,12 @@ enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)
 	else if(tag=="eulergamma")	ret = real;
 	
 	return ret;
-}
+}*/
 
 void Cn::setValue(const QDomElement& val)
 {
 	double ret=0.0;
-	this->m_vformat=whatValueFormat(val);
+// 	this->m_vformat=whatValueFormat(val);
 	bool wrong;
 	QString tag = val.tagName();
 	

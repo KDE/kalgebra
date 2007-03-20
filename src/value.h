@@ -29,37 +29,107 @@
 class Cn : public Object
 {
 	public:
-		enum ValueFormat { none, nan, real, integer, boolean };
+// 		enum ValueFormat { none, nan, real, integer, boolean };
 		Cn(const Cn& v) : Object(Object::value), m_value(v.value()), m_boolean(v.isBoolean()) { setCorrect(v.isCorrect()); }
 		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
 		Cn(Object const * o);
 		virtual ~Cn() {}
-		void setValue(const QDomElement& e);
-		void setValue(const double& v) { m_value=v; }
-		double value() const { return m_value; }
-		int intValue() const { return (int) m_value; }
-		bool isBoolean() const { return m_boolean; }
-		static double toNum(const QString& num, const QString& type, int base);
-		static enum ValueFormat whatValueFormat(const QDomElement&);
 		
+		/**
+		 *	Extracts the number from the @p e Dom element and saves it.
+		 */
+		void setValue(const QDomElement& e);
+		
+		/**
+		 *	Sets the new value of this function
+		 *	@param v the new value
+		 */
+		void setValue(const double& v) { m_value=v; }
+		
+		/**
+		 *	Returns the value.
+		 */
+		double value() const { return m_value; }
+		
+		/**
+		 *	Returns the value as an int.
+		 */
+		int intValue() const { return static_cast<int>(m_value); }
+		
+		/**
+		 *	Returns whether it is a boolean value or not.
+		 */
+		bool isBoolean() const { return m_boolean; }
+		
+		/**
+		 *	
+		 */
+// 		static double toNum(const QString& num, const QString& type, int base);
+// 		static enum ValueFormat whatValueFormat(const QDomElement&);
+		
+		/**
+		 *	Returns whether it is an integer value or not.
+		 */
 		bool isInteger() const { return std::floor(m_value)==m_value; }
+		
+		/**
+		 *	Returns whether @p d is equal than this object.
+		 */
 		bool operator==(const Cn& d) const { return m_value==d.value(); }
+		
+		/**
+		 *	Returns whether @p d is less than this object.
+		 */
 		bool operator<(const Cn& d) const { return m_value<d.value(); }
+		
+		/**
+		 *	Returns whether @p d is less than this object's value.
+		 */
 		bool operator<(double d) const { return m_value<d; }
+		
+		/**
+		 *	Returns whether @p d is less or equal than this object.
+		 */
 		bool operator<=(const Cn& d) const { return m_value<=d.value(); }
+		
+		/**
+		 *	Returns whether @p d is less or equal than this object's value.
+		 */
 		bool operator<=(double d) const { return m_value<=d; }
+		
+		/**
+		 *	Sets the new value to @p d.
+		 */
 		Cn operator=(double d) { m_value=d; return *this; }
+		
+		/**
+		 *	The sign of the value will be inverted.
+		 */
 		void negate() { m_value*=-1; }
 		
+		/**
+		 *	Increments by one the value.
+		 */
 		Cn operator++() { m_value++; return this; }
+		
+		/**
+		 *	Increments by one the value.
+		 */
 		Cn operator++(int) { m_value++; return this; }
 		
+		/**
+		 *	Returns a string representation of the value.
+		 */
 		QString toString() const;
+		
+		/**
+		 *	Returns a MathML representation of the value.
+		 */
 		QString toMathML() const;
 	private:
 		double m_value;
 		bool m_boolean;
-		enum ValueFormat m_vformat;
+// 		enum ValueFormat m_vformat;
 };
 
 #endif

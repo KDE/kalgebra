@@ -23,20 +23,51 @@
 #include "container.h"
 
 /**
-	@author Aleix Pol <aleixpol@gmail.com>
+*	Stores the variables in a hash map and make them available 
+*	@author Aleix Pol <aleixpol@gmail.com>
 */
+
 class Variables : public QHash<QString, Object*>
 {
 public:
+	/** 
+	*	Creates an empty variable hash table with the usual constants
+	*/
 	Variables();
+	
+	/**
+	*	Copy constructor, copies the old one, a bit heavy, be careful.
+	*/
 	Variables(const Variables& v);
+	
+	/** Destroys the object */
 	~Variables();
 	
-	void modify(const QString&, const Object*);
-	void stack(const QString&, const Object*);
-	void modify(const QString& s, const double& d) { modify(s, new Cn(d)); }
-	bool rename(const QString&, const QString&);
-	bool destroy(const QString&);
+	/**
+	*	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p o value.
+	*/
+	void modify(const QString& name, const Object* o);
+	
+	/**
+	 *	The same as the last one but having @p d as a value for @p name.
+	 */
+	void modify(const QString& name, const double& d) { modify(name, new Cn(d)); }
+	
+	/**
+	 *	If the variable @p name didn't exist it takes @p o value, if not @p name variable takes
+	 *	@p o value until it is destroyed, when it is going to recover the previous value.
+	 */
+	void stack(const QString& name, const Object* o);
+	
+	/**
+	 *	The @p orig named variable will be called @p dest , then @p orig will be deleted.
+	 */
+	bool rename(const QString& orig, const QString& dest);
+	
+	/**
+	 *	The variable @p name will no longer exist.
+	 */
+	bool destroy(const QString& name);
 	
 };
 
