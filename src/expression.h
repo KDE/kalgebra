@@ -137,7 +137,8 @@ class Expression
 		 *	Copies an object @p o to a new object.
 		 */
 		static Object* objectCopy(const Object * o);
-// 	protected:
+	protected:
+		/** The real container of the class, has all the expression tree inside. */
 		Object* m_tree;
 	private:
 		Object* branch(const QDomElement& elem);

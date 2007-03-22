@@ -444,14 +444,13 @@ function* Graph2D::editFunction(int num)
 	return &funclist[num];
 }
 
-bool Graph2D::editFunction(int num, const function& func)
+void Graph2D::editFunction(int num, const function& func)
 {
 	Q_ASSERT(num<funclist.count());
 	funclist[num]=func;
 	
 	update_points();
 	this->repaint();
-	return true;
 }
 
 bool Graph2D::setSelected(const QString& exp){

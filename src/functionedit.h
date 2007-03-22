@@ -33,38 +33,81 @@
 #include "algebrahighlighter.h"
 
 /**
-@author Aleix Pol i Gonzalez
-*/
+ *	The color combo shows a different colors list.
+ *	@author Aleix Pol i Gonzalez
+ */
 
 class ColorCombo : public QComboBox
 {
 Q_OBJECT
 public:
+	/** Constructor. Creates a new ColorCombo. */
 	ColorCombo(QWidget* parent=0);
+	
+	/** Destructor. */
 	~ColorCombo(){}
 	
+	/** Returns the selected Color. */
 	QColor color() const;
-	void setColor(const QColor &);
 	
+	/** Sets a color to the selected color. If it didn't exist, it is added to the list. */
+	void setColor(const QColor &);
+private:
 	void resizeEvent(QResizeEvent * event);
 };
+
+/**
+ *	The FunctionEdit dialog provides a way to specify functions.
+ *	@author Aleix Pol i Gonzalez
+ */
 
 class FunctionEdit : public QWidget
 {
 Q_OBJECT
 public:
+	/** Constructor. */
 	explicit FunctionEdit(QWidget *parent=0, Qt::WFlags f = 0 );
+	
+	/** Destructor. */
 	~FunctionEdit();
+	
+	/** Retrieves the resulting expression text. */
 	QString text() const { return m_func->toPlainText(); }
+	
+	/** Sets an expression text to the ExpressionEdit widget. */
 	void setText(const QString &newText);
+	
+	/** Retrieves the selected color for the function */
 	QColor color() const { return m_color->color(); }
+	
+	/** Sets the selected color for the function.*/
 	void setColor(const QColor &newColor);
+	
+	/** Returns whether there is a correct function. */
 	bool isCorrect() const { return m_correct; }
+	
+	/** Returns whether it is a MathML function. */
 	bool isMathML() const { return m_func->isMathML();}
+	
+	/** Returns whether we are editing or adding a function. */
 	bool editing() const { return m_modmode; }
-	void setEditing(bool m) { m_modmode=m; m_valid->setText("editing"); }
+	
+	/** Sets whether we are editing or adding a function. */
+	void setEditing(bool m) { m_modmode=m; }
+	
+	/** Sets a name to the function. (Not used YET) */
 	void setName(const QString& name) { m_name->setText(name); }
+	
+	/** Retrieves a name for the function. (Not used YET) */
 	QString name() const { return m_name->text(); }
+	
+public slots:
+	/** Clears the dialog. */
+	void clear();
+	
+signals:
+	/** Tells that the result has been accepted. */
+	void accept();
 private:
 	ExpressionEdit *m_func;
 	QLineEdit *m_name;
@@ -81,12 +124,6 @@ private slots:
 	void edit();
 	void ok();
 	void colorChange(int);
-	
-public slots:
-	void clear();
-	
-signals:
-	void accept();
 };
 
 #endif

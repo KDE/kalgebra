@@ -31,35 +31,46 @@
 #include "expressionedit.h"
 
 /**
-@author Aleix Pol i Gonzalez
-*/
+ *	The VarEdit provides a dialog to allow users to edit/create a variable.
+ *	@author Aleix Pol i Gonzalez
+ */
 
 class VarEdit : public QDialog
 {
-Q_OBJECT
-public:
-	explicit VarEdit(QWidget *parent = 0, bool modal = false);
-	~VarEdit();
-	QString text() const { return m_exp->text(); }
-	void setVar(const QString& newVar);	//This should edit the variable name
-	void setMode(int mode);			//This should select what Option we need
-	void setAnalitza(Analitza *na) { vars= na->m_vars; m_exp->setAnalitza(na); }
-	Object* val();
-private:
-	ExpressionEdit *m_exp;
-	
-	QRadioButton *m_opt_calc;		//Per escollir guardar calcul
-	QRadioButton *m_opt_exp;		//Per escollir guardar expressio
-	
-	QLabel *m_valid;
-	Variables *vars;
-	bool m_correct;
-	QString m_var;
-	
-	QDialogButtonBox *buttonBox;
-private slots:
-	void edit();
-	void ok();
+	Q_OBJECT
+	public:
+		/** Constructor. Creates a variable editing dialog. */
+		explicit VarEdit(QWidget *parent = 0, bool modal = false);
+		
+		/** Destructor. */
+		~VarEdit();
+		
+		/** Returns the variable expression */
+		QString text() const { return m_exp->text(); }
+		
+		/** Sets the editing variable name */
+		void setVar(const QString& newVar);	//This should edit the variable name
+		
+		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
+		void setAnalitza(Analitza *na) { vars= na->m_vars; m_exp->setAnalitza(na); }
+		
+		/** Returns the resulting variable expression */
+		Object* val();
+	private:
+		ExpressionEdit *m_exp;
+		
+		QRadioButton *m_opt_calc;		//Per escollir guardar calcul
+		QRadioButton *m_opt_exp;		//Per escollir guardar expressio
+		
+		QLabel *m_valid;
+		Variables *vars;
+		bool m_correct;
+		QString m_var;
+		
+		QDialogButtonBox *buttonBox;
+	private slots:
+		void edit();
+		void ok();
 };
 
 #endif

@@ -374,7 +374,6 @@ void Graph3D::setFunc(const QString& Text) //FIXME:Must pass bool ismathml
 {
 	bool ismathml = Expression::isMathML(Text);
 	func3d = Expression(Text, ismathml);
-	objectWalker(func3d.m_tree);
 	if(func3d.isCorrect())
 		load();
 	else

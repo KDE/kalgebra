@@ -28,7 +28,7 @@
 #include "operator.h"
 
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
-	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_check(true), m_correct(true), m_ans("ans")
+	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	this->setFixedHeight(QFontMetrics(this->currentFont()).height()+12);
@@ -298,7 +298,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 	int op = Operator::nparams(Operator::toOperatorType(funcname));
 	if(op) {
 		if(op == -1) {
-			emit signalHelper(QString("<em>%1</em>(..., <b>par%2</b>, ...)").arg(funcname).arg(param+1));
+			ajudant(QString("<em>%1</em>(..., <b>par%2</b>, ...)").arg(funcname).arg(param+1));
 		} else {
 			QString sample = (param < op) ?
 						QString("<em>%1</em>(").arg(funcname) :
@@ -311,7 +311,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 				if(i<op-1)
 					sample += ", ";
 			}
-			emit signalHelper(sample+')');
+			ajudant(sample+')');
 		}
 	} else if(a && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
 		Container *c = (Container*) a->m_vars->value(funcname);
@@ -329,9 +329,9 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			if(i<params.count()-1)
 				sample+= ", ";
 		}
-		emit signalHelper(sample+')');
+		ajudant(sample+')');
 	} else
-		emit signalHelper("");
+		ajudant("");
 }
 
 void ExpressionEdit::setAutocomplete(bool a)

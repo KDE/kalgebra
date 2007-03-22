@@ -19,21 +19,44 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-/**
-	@author Aleix Pol <aleixpol@gmail.com>
-*/
-
 #include <QList>
 #include <QtCore>
 
 #define i18n QString
 
 // OperatorsModel m_words;
+/**
+ *	\internal
+ *	The atomic mean of the expression trees. Should never used alone, always inherited.
+ *	@author Aleix Pol <aleixpol@gmail.com>
+ */
+
+//FIXME: Check for public -> protected on some members
 class Object
 {
 public:
-	enum ObjectType { none=0, value, variable, oper, container };
-	enum ContainerType { cnone=0, math, apply, declare, lambda, bvar, uplimit, downlimit };
+	/** ObjectType is used to describe objects. */
+	enum ObjectType {
+		none=0,		/**< No object type, usually means an error. */
+		value,		/**< Describes an object as a value. */
+		variable,	/**< Describes an object as a variable. */
+		oper,		/**< Describes an object as an operator. */
+		container	/**< Describes an object as a container. */
+	};
+	
+	/** Is used to describe Container objects in reference to the MathML standard*/
+	enum ContainerType {
+		cnone=0, 	/**< No container type, usually means an error */
+		math,		/**< Describes a container as a %lt;math&gt; tag */
+		apply,		/**< Describes a container as a %lt;apply&gt; tag */
+		declare,	/**< Describes a container as a %lt;declare&gt; tag */
+		lambda,		/**< Describes a container as a %lt;lambda&gt; tag */
+		bvar,		/**< Describes a container as a %lt;bvar&gt; tag */
+		uplimit,	/**< Describes a container as a %lt;uplimit&gt; tag */
+		downlimit	/**< Describes a container as a %lt;downlimit&gt; tag */
+	};
+	
+	/** Specifies the type of an operator */
 	enum OperatorType {
 		onone=0,
 		plus, times, minus, divide, quotient,
@@ -56,36 +79,68 @@ public:
 		sum, product, diff, function //FIXME: <- ????
 	};
 	
+	/** Object destructor. Does nothing. */
 	virtual ~Object(){}
 	
+	/** Assigns a type @p t value to the object */
 	void setType(enum ObjectType t) { m_type=t; }
+	
+	/** Returns the object type of the object */
 	enum ObjectType type() const { return m_type; }
-	bool isCorrect() const { return m_correct && m_type!=none; }
-	void setCorrect(bool c) { m_correct=c; }
+	
+	/** Returns whether it is a correct object or not */
+	bool isCorrect() const { return m_correct && m_type!=none; } //FIXME: Would be nice to be virtual
+	
+	/** Returns whether it is a container or not. */
 	bool isContainer() const { return m_type==container; }
+	
+	/** Returns the string representation of the object. */
 	virtual QString toString() const { return "object"; };
+	
+	/** Returns the MathML representation of the object. */
 	virtual QString toMathML() const { return "object"; };
-	static enum ObjectType whatType(const QString& tag);
+	
+	/** Converts a @p tag to a type. */
+	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
 protected:
-	Object(enum ObjectType t) : m_type(t), m_correct(true) {}
+	/** Creates an object with a @p t type */
+	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
+	bool m_correct;
+	
 private:
 	enum ObjectType m_type;
-	bool m_correct;
 	QString err;
 };
 
+/** A variable object, name refers to MathML standard. */
 class Ci : public Object
 {
 	public:
-		Ci(const Object *);
+		/** Constructor. Builds a @p o variable */
+		Ci(const Object *o);
+		
+		/** Constructor. Creates a variable with a @p b name */
 		Ci(QString b=QString()) : Object(variable), m_name(b) {}
+		
+		/** Sets a @p n name to a variable */
 		void setName(const QString& n) { m_name=n; }
+		
+		/** Returns the variable name */
 		QString name() const { return m_name; }
 		
+		/** Returns whether @p var name is equal to this variable one. */
 		bool operator==(const Ci& var) { return var.m_name==m_name; }
-		bool isFunction() const { return m_function; }
+		
+		/** Sets whether it is a function. */
 		void setFunction(bool f) { m_function=f; }
+		
+		/** Returns whether it is a variable that has to be a function */
+		bool isFunction() const { return m_function; }
+		
+		/** Returns the string expression representation of the variable */
 		QString toString() const { return m_name; }
+		
+		/** Returns the MathML representation of the variable */
 		QString toMathML() const { return QString("<ci>%1</ci>").arg(m_name);}
 	private:
 		QString m_name;

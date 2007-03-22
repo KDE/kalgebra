@@ -30,7 +30,7 @@ class Cn : public Object
 {
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
-		Cn(const Cn& v) : Object(Object::value), m_value(v.value()), m_boolean(v.isBoolean()) { setCorrect(v.isCorrect()); }
+		Cn(const Cn& v) : Object(Object::value), m_value(v.value()), m_boolean(v.isBoolean()) {}
 		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
 		Cn(Object const * o);
 		virtual ~Cn() {}
@@ -126,6 +126,12 @@ class Cn : public Object
 		 *	Returns a MathML representation of the value.
 		 */
 		QString toMathML() const;
+		
+		/** Sets whether it is a correct Cn. */
+		void setCorrect(bool b) {m_correct = b; }
+		
+		/** Returns whether it is a correct Cn. */
+		bool isCorrect() const { return m_correct;}
 	private:
 		double m_value;
 		bool m_boolean;

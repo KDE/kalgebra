@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software                      *
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
-
+#include "expression.h"
 #include "container.h"
 #include "value.h"
 
@@ -204,22 +204,7 @@ QList<Object*> Container::copyParams() const
 	QList<Object*> ret;
 	
 	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); it++) {
-		switch((*it)->type()) {
-			case Object::variable:
-				ret.append(new Ci(*it));
-				break;
-			case Object::value:
-				ret.append(new Cn(*it));
-				break;
-			case Object::oper:
-				ret.append(new Operator(*it));
-				break;
-			case Object::container:
-				ret.append(new Container(*it));
-				break;
-			case Object::none:
-				break;
-		}
+		ret.append(Expression::objectCopy(*it));
 	}
 	return ret;
 }

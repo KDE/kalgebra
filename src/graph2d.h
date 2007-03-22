@@ -34,35 +34,80 @@
 
 #include "function.h"
 
-/** @author aleix */
+/**
+ *	This class lets you create a widget that can draw multiple 2D graphs.
+ *	@author aleix
+ */
 
 class Graph2D : public QWidget
 {
 Q_OBJECT
 public:
-	enum GraphMode {None=0, Pan, Selection};
+	/** The graph mode will especify the selection mode we are using at the moment */
+	enum GraphMode {
+		None=0,		/**< Normal behaviour */
+		Pan,		/**< Panning, translates the viewport. */
+		Selection	/**< There is a rectangle delimiting a region, for zooming. */
+	};
 	
+	/** Constructor. Constructs a new Graph2D. */
 	Graph2D(QWidget *parent = 0);
+	
+	/** Destructor. */
 	~Graph2D();
-	bool addFunction(const function&);
-	bool setSelected(const QString&);
-	bool setShown(const QString&, bool shown);
-	bool editFunction(int num, const function& func);
+	
+	/** Adds another function @p f. Returns whether another function like @p f existed. */
+	bool addFunction(const function& f);
+	
+	/** Sets the function selected to @p exp. Returns whether another function like @p exp existed. */
+	bool setSelected(const QString& exp);
+	
+	/** Specifies that the @p exp function is shown. Returns whether another function like @p exp existed. */
+	bool setShown(const QString& exp, bool shown);
+	
+	/** Edits the @p num nth function. The @p num should be less than the number of functions, because you are editing. */
+	void editFunction(int num, const function& func);
+	
+	/** Edits the @p exp function. Returns whether another function like @p exp existed. */
 	bool editFunction(const QString& name, const function& func);
+	
+	/** Returns a pointer to the @p num nth function. */
 	function* editFunction(int num);
-	bool toImage(const QString &path);
 	
-	QSizePolicy sizePolicy() const;
+	/** Saves the graphs to a file located at @p path. */
+	bool toImage(const QString& path);
 	
+	/** Specifies the widget size policy. To know more about it, read the Qt documentation */
+	virtual QSizePolicy sizePolicy() const;
+	
+	/** Sets whether we will see a grid or only the axes. */
 	void setSquares(bool newSquare) {m_squares=newSquare; valid=false; }
+	
+	/** Returns whether we have choosen to see the grid. */
 	bool squares() const {return m_squares;}
+	
+	/** Makes that no function is selected. */
 	void unselect();
-	void setViewport(const QRectF&);
+	
+	/** Sets the graph's viewport to @p v. */
+	void setViewport(const QRectF& v);
+	
+	/** Sets the desired maximum resolution to @p res. */
 	void setResolution(int res);
+	
+	/** Removes all graphs. */
 	void clear();
+	
+	/** Returns whether it has a little border frame. */
 	bool isFramed() const { return m_framed; }
+	
+	/** Sets whether it has a little border frame. */
 	void setFramed(bool fr) { m_framed=fr; }
+	
+	/** Returns whether it is a read-only widget. */
 	bool isReadOnly() const { return m_readonly; }
+	
+	/** Sets whether it is a read-only widget. */
 	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
 private:
 	static const QColor m_axeColor;
@@ -112,9 +157,13 @@ private:
 	QString m_posText;
 	static QRect toBiggerRect(const QRectF&);
 public slots:
+	/** Makes the image as dirty and repaints everything. */
 	void forceRepaint() { valid=false; repaint(); }
+	
+	/** Sets the viewport to a default viewport. */
 	void resetViewport() { setViewport(defViewport); }
 signals:
+	/** Emits a status when it changes. */
 	void status(const QString &msg);
 };
 
