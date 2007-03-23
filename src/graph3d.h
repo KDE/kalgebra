@@ -39,14 +39,26 @@
 
 
 /**
-@author Aleix Pol i Gonzalez
-*/
+ *	Used to calculate 3D Graphs in parallel.
+ *	@author Aleix Pol i Gonzalez<aleixpol@gmail.com>
+ */
 
 class Calculate3D : public QThread
 {
 public:
-	Calculate3D(QObject *p, const Analitza &na, double** poi, int f, int t, double m, double s) : 
-		QThread(p), a(na), punts(poi), from(f), to(t), mida(m), step(s) {}
+	/** Constructor. Creates a Calculate3D thread.
+		@param p	parent object.
+		@param na	Analitza module used fot the calculations.
+		@param poi	memory space where the results will be located.
+		@param fr	Begining of the calculated values.
+		@param to	End of the calculated values.
+		@param m	Distance of each dimension from the (0, 0) to be calculated.
+		@param s	Step between each 2 values.
+	*/
+	Calculate3D(QObject *p, const Analitza &na, double** poi, int fr, int to, double m, double s) : 
+		QThread(p), a(na), punts(poi), from(fr), to(to), size(m), step(s) {}
+	
+	/** Runs the thread. */
 	void run();
 	
 private:
@@ -55,62 +67,94 @@ private:
 	int from;
 	int to;
 	
-	double mida;
+	double size;
 	double step;
 };
 
-class Graph3D : public QGLWidget {
-Q_OBJECT
-public:
-	enum Type { Dots=0, Lines=1, Solid=2 };
-	
-	Graph3D(QWidget *parent = 0);
-	~Graph3D();
+/**
+ *	The Graph3D provides a 3D OpenGL graph representation.
+ *	@author Aleix Pol i Gonzalez
+ */
 
-	virtual void initializeGL() ;
-	virtual void resizeGL( int width, int height ) ;
-	virtual void paintGL() ;
-	void setFunc(const QString& Text);
-	int setFuncMML(QString TextMML);
-	void dibuixa_eixos();
-	void setTransparency(bool tr) { trans = tr; glDraw(); }
-	bool transparency() const { return trans; }
-	QPixmap toPixmap();
-// 	bool save(const KURL& url);
-	
-	void setMida(double max);
-	void setStep(double res);
-	void setZ(float coord_z);
-	void setMethod(enum Type m);
-public slots:
-	void resetView();
-private:
-	void keyPressEvent(QKeyEvent *e);
-	void keyReleaseEvent(QKeyEvent *e);
-	void timeOut();
-	void mousePressEvent(QMouseEvent *e); QPoint press;
-	void mouseReleaseEvent(QMouseEvent *e);
-	void mouseMoveEvent(QMouseEvent *e);
-	int load();
-	void mem();
-	bool crea();
-	void sendStatus(const QString& msg) { emit status(msg); }
-	
-	Expression func3d;
-	double default_step;
-	double default_size;
-	double zoom;
-	double **punts;
-	float graus[3];
-	float z;
-	enum Type method;
-	bool trans;
-	bool tefunc;
-	unsigned short keyspressed;
-	
-	int m_n;
-signals:
-	void status(const QString &msg);
+class Graph3D : public QGLWidget {
+	Q_OBJECT
+	public:
+		/** Defines how will be the graph representated. */
+		enum Type {
+			Dots=0,	/**< Dots will be drawn. */
+			Lines=1,/**< Lines will be drawn. */
+			Solid=2	/**< A solid graph will be drawn with a line texture. */
+		};
+		
+		/** Constructor. Creates a new Graph3D widget. */
+		Graph3D(QWidget *parent = 0);
+		
+		/** Destructor. */
+		~Graph3D();
+		
+		/** Sets a function text expression. */
+		void setFunc(const QString& Text); //FIXME: Should be passing an Expression
+		
+		/** Sets a MathML function expression. */
+		int setFuncMML(QString TextMML);
+		
+		/** Toggles the transparency for Solid graphs. */
+		void setTransparency(bool tr) { trans = tr; glDraw(); }
+		
+		/** Returns whether there is transparency. */
+		bool transparency() const { return trans; }
+		
+		/** Returns the pixmap painting. */
+		QPixmap toPixmap();
+		
+		/** Sets the @p max maximum size. */
+		void setSize(double max);
+		
+		/** Sets the interval between two points. */
+		void setStep(double res);
+		
+		/** Sets the Z coordinate. */
+		void setZ(float coord_z);
+		
+		/** Sets the showed method. */
+		void setMethod(enum Type m);
+	public slots:
+		/** Resets the view coordinates. */
+		void resetView();
+	signals:
+		/** Emits a status message. */
+		void status(const QString &msg);
+	private:
+		void drawAxes();
+		
+		virtual void initializeGL() ;
+		virtual void resizeGL( int width, int height ) ;
+		virtual void paintGL() ;
+		
+		void keyPressEvent(QKeyEvent *e);
+		void keyReleaseEvent(QKeyEvent *e);
+		void timeOut();
+		void mousePressEvent(QMouseEvent *e); QPoint press;
+		void mouseReleaseEvent(QMouseEvent *e);
+		void mouseMoveEvent(QMouseEvent *e);
+		int load();
+		void mem();
+		bool crea();
+		void sendStatus(const QString& msg) { emit status(msg); }
+		
+		Expression func3d;
+		double default_step;
+		double default_size;
+		double zoom;
+		double **punts;
+		float graus[3];
+		float z;
+		enum Type method;
+		bool trans;
+		bool tefunc;
+		unsigned short keyspressed;
+		
+		int m_n;
 };
 
 #endif

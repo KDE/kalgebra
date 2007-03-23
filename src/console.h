@@ -30,47 +30,73 @@
 #include "expressionedit.h"
 #include "analitza.h"
 
-/** @author Aleix Pol Gonzalez */
+/**
+ *	The Console widget is able to receive an operation, solve it and show the value.
+ *	It also is able to load scripts and save logs.
+ *	@author Aleix Pol Gonzalez
+ */
 
 class Console : public QListWidget
 {
-
-Q_OBJECT
-public:
-	Console(QWidget *parent = 0);
-	~Console();
-	Analitza* analitza() { return &a; }
+	Q_OBJECT
+	public:
+		/** Constructor. Creates a console widget. */
+		Console(QWidget *parent = 0);
+		
+		/** Destructor. */
+		~Console();
+		
+		/** Retrieves a pointer to the Analitza calculator associated. */
+		Analitza* analitza() { return &a; }
+		
+	public slots:
+		/** Adds an operation @p op with the format @p mathml to the log. */
+		bool addOperation(const QString& op, bool mathml);
+		
+		/** Adds an operation @p op and tries to guess the format to the log. */
+		bool addOperation(const QString& op) { return addOperation(op, Expression::isMathML(op)); }
+		
+		/** Loads a script from @p path. */
+		bool loadScript(const QString& path);
+		
+		/** Saves a log to @p path. */
+		bool saveLog(const QString& path);
+	signals:
+		/** Emits a notification that tells that the widget status. */
+		void status(const QString &msg);
+		
+		/** Emits that something has changed. */
+		void changed();
+		
+	private:
+		int outs;
+		Analitza a;
 	
-private:
-	int outs;
-	Analitza a;
-	
-	void sendStatus(const QString& msg) { emit status(msg); }
+		void sendStatus(const QString& msg) { emit status(msg); }
 
-public slots:
-	bool addOperation(const QString& op, bool mathml);
-	bool addOperation(const QString& op) { return addOperation(op, Expression::isMathML(op)); }
-	bool loadScript(const QString& path);
-	bool saveLog(const QString& path);
-signals:
-	void status(const QString &msg);
-	void changed();
 };
 
+/** The VariableView is a widget that shows all variables with their values. */
 class VariableView : public QTreeWidget
 {
 Q_OBJECT
 public:
+	/** Constructor. Creates a new VariableView widget. */
 	VariableView(QWidget *parent=0);
-	~VariableView();
-	Analitza* analitza() const { return a; }
-	void setAnalitza(Analitza *na) { a=na; updateVariables(); }
 	
+	/** Destructor. */
+	~VariableView();
+	
+	/** Retrieves the used Analitza module. */
+	Analitza* analitza() const { return a; }
+	
+	/** Sets the used Analitza module. */
+	void setAnalitza(Analitza *na) { a=na; updateVariables(); }
+public slots:
+	/** Rechecks the Variables for the view. */
+	void updateVariables();
 private:
 	Analitza *a;
-	
-public slots:
-	void updateVariables();
 };
 
 #endif

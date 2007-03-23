@@ -23,15 +23,21 @@
 #include <QtXml>
 #include <cmath>
 /**
-	@author Aleix Pol <aleixpol@gmail.com>
+*	The Cn class is the one that represents a value in the expression trees.
+*	@author Aleix Pol <aleixpol@gmail.com>
 */
 
 class Cn : public Object
 {
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
+		/** Copy constructor. Creates a Cn from another one. */
 		Cn(const Cn& v) : Object(Object::value), m_value(v.value()), m_boolean(v.isBoolean()) {}
+		
+		/** Constructor. Creates a value with values @p v. */
 		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
+		
+		/** Constructor. Creates a value from @p o. If @p o is not a Cn, a not correct Cn will be returned. */
 		Cn(Object const * o);
 		virtual ~Cn() {}
 		

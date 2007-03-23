@@ -23,41 +23,59 @@
 #ifndef ALGEBRAHIGHLIGHTER_H
 #define ALGEBRAHIGHLIGHTER_H
 
+/**
+ *	The AlgebraHighlighter class is used to highlight the ExpressionEdit text.
+ *	@author <aleixpol@gmail.com>
+ */
+
 class AlgebraHighlighter : public QSyntaxHighlighter
 {
 	public:
+		/** Defines the format status that could be used. */
 		typedef enum {
-			Disabled,
-			Expression,
-			MathML,
-			Autodetect
+			Disabled,	/**< No highlighting. */
+			Expression,	/**< String expression format. */
+			MathML,		/**< MathML format. */
+			Autodetect	/**< Try to guess which format is being used. */
 		} Mode;
 		
+		/** Constructor. Creates an AlgebraHighlighter from a QTextDocument @p doc. */
+		AlgebraHighlighter(QTextDocument *doc);
+		//int highlightParagraph(const QString &text, int endStateOfLastPara);
+		
+		/** Returns the currently highlight mode. */
+		Mode mode() { return m_mode; }
+		
+		/** Sets the highlight mode. */
+		void setMode(const Mode& newMode){ m_mode=newMode; rehighlight(); }
+		
+		/** 
+		 *	Returns whether something wrong has been found. It is an uncomplete way
+		 *	to know if it is correct because doesn't do any recursive check, but could be useful.
+		 */
+		bool isWrong() const { return m_wrong; }
+		
+		/** Sets the cursor position. */
+		void setPos(int p) { m_pos=p; }
+	private:
+		void highlightBlock(const QString &text);
+		
 		typedef enum { //For mathml highlighting
-			gt,
+			gt,	
 			lt,
 			tag,
 			value
 		} MMLtokEnum;
 		
-		AlgebraHighlighter(QTextDocument *doc);
-		//int highlightParagraph(const QString &text, int endStateOfLastPara);
-		Mode mode() { return m_mode; }
-		void setMode(const Mode& newMode){ m_mode=newMode; rehighlight(); }
-		bool isWrong() const { return wrong; }
-		void setPos(int p) { m_pos=p; }
-	private:
 // 		TOKEN getToken(QString &a, int &l);
 		//TOKEN getTokenMML(QString &a, unsigned int &l);
-		bool wrong;
+		bool m_wrong;
 		tokEnum antnum;
 		Mode m_mode;
 		int m_pos;
 		
 		QTextCharFormat negreta;
 		int complementary(const QString&, int p);
-	protected:
-		void highlightBlock(const QString &text);
 };
 
 #endif

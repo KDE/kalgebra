@@ -18,14 +18,15 @@
 
 #include "algebrahighlighter.h"
 
-AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc) : QSyntaxHighlighter(doc), wrong(false), m_mode(Autodetect), m_pos(0)
+AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc)
+	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0)
 {
 	negreta.setFontWeight(QFont::Bold);
 }
 
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
-	wrong=false;
+	m_wrong=false;
 	if(m_pos>=text.length())
 		m_pos=text.length();
 	if(Expression::isMathML(text)) {
@@ -80,6 +81,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					setFormat(pos, len, QColor(0,50,0));
 					break;
 				case tMaxOp:
+					m_wrong = true;
 					setFormat(pos, len, QColor(255,0,0));
 					break;
 				default:

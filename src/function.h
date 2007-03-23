@@ -23,41 +23,87 @@
 #include "analitza.h"
 #include "expression.h"
 
-/**
-@author Aleix Pol i Gonzalez
-*/
-
+/** Defines a function axe type. */
 enum Axe { Cartesian=0, Polar};
+
+/**
+ *	Calculates 2D functions.
+ *	@author Aleix Pol i Gonzalez
+ */
 class function
 {
 	friend class Graph2D;
 public:
+	/** Constructor. Create an empty function. */
 	function();
+	
+	/** Copy constructor. */
 	function(const function& f);
+	
+	/** Constructor. Creates a new function.
+		@param name the function name.
+		@param newExp the function expression tree.
+		@param color the function representation color.
+		@param selec defines if the function is selected.
+	*/
 	function(const QString& name, const Expression& newExp, const QColor& color, bool selec=false);
+	
+	/** Destructor. */
 	~function();
 	
-	Analitza *func;
+	/** Constructor. Creates a new function.
+		@param name the function name.
+		@param newExp the function expression tree.
+		@param color the function representation color.
+		@param selec defines if the function is selected.
+	 */
+	void setFunction(const QString& name, const Expression& newExp, const QColor& color, bool selec=false);
 	
-	void setFunction(const QString& name, const Expression& newExp, const QColor&, bool selec=false);
-	void update_points(QRect viewport, unsigned int resolucio);
+	/** Defines a new function behaviour.
+		@param viewport sets the coordinates the function will fit to.
+		@param resolution sets how many points will the function have.
+	*/
+	void update_points(QRect viewport, unsigned int resolution);
 	
+	/** Retrieves the color of the function. */
 	QColor color() const { return m_color; }
+	
+	/** Sets the color of the function. */
 	void setColor(const QColor& newColor) { m_color=newColor; }
+	
+	/** Returns the number of points it has. */
 	unsigned int npoints() const { return m_last_resolution; }
+	
+	/** Sets whether it is selected. */
 	void setSelected(bool newSelec) { m_selected=newSelec; }
+	
+	/** Retrieves whether it is selected. */
 	bool selected() const { return m_selected; }
+	
+	/** Sets whether the function has to be shown. */
 	void setShown(bool newShow) { m_show=newShow; }
+	
+	/** Returns whether the function can be drawn. */
 	bool isShown() const { return m_show && func->isCorrect(); }
-	QPair<QPointF, QString> calc(const QPointF& dp);
+	
+	/** Equal operator. */
 	bool operator==(const function& f) const { return f.m_name==m_name; }
+	
+	/** Retrieves the function's name. */
 	QString name() const { return m_name; }
 	
+	/** Copies a function */
 	function operator=(const function& f);
+	
+	/** Retrieves the function evaluator. */
 	Analitza* analitza() const { return func; }
 	
 	Axe axeType() const;
+protected:
+	/** Here we store the calculated points of the function. */
+	QPointF *points;
 private:
+	Analitza *func;
 	bool m_show;
 	bool m_selected;
 	QString m_firstlambda;
@@ -69,11 +115,10 @@ private:
 	void update_pointsY(QRect viewport, unsigned int resolucio); //for functions such as y=f(x)
 	void update_pointsX(QRect viewport, unsigned int resolucio); //for functions such as x=f(y)
 	void update_pointsPolar(QRect viewport, unsigned int resolucio); //for functions such as r=f(sigma)
+	QPair<QPointF, QString> calc(const QPointF& dp);
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*cos(th), r*sin(th)); }
 	QString m_name;
-protected:
-	QPointF *points;
 };
 
 #endif

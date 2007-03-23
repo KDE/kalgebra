@@ -121,9 +121,10 @@ public:
 	
 	/** Returns the base of a monomial. */
 	static Object* monomialVar(const Container&);
-// private:
-	enum ContainerType m_cont_type;
+// protected:
 	QList<Object*> m_params;
+private:
+	enum ContainerType m_cont_type;
 };
 
 

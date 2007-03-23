@@ -83,7 +83,7 @@ public:
 	/** Sets whether we will see a grid or only the axes. */
 	void setSquares(bool newSquare) {m_squares=newSquare; valid=false; }
 	
-	/** Returns whether we have choosen to see the grid. */
+	/** Returns whether we have chosen to see the grid. */
 	bool squares() const {return m_squares;}
 	
 	/** Makes that no function is selected. */

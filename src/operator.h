@@ -25,6 +25,7 @@
 class Operator;
 class OperatorsModel;
 
+/** The Operator class is the operator representation in the trees. */
 class Operator : public Object
 {
 	public:
@@ -83,6 +84,7 @@ class Operator : public Object
 		enum OperatorType m_optype;
 };
 
+/** Operators model is a model class that has a relation of all operators string with their OperatorType. */
 class OperatorsModel : public QStandardItemModel
 {
 public:

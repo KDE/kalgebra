@@ -121,7 +121,8 @@ void Graph3D::mouseMoveEvent(QMouseEvent *e)
 	}
 }
 
-void Graph3D::dibuixa_eixos(){
+void Graph3D::drawAxes()
+{
 	glColor3f(0.8, 0.8, 0.4);
 	this->renderText(11.0, 0.0, 0.0, "X");
 	this->renderText(0.0, 0.0,-11.0, "Z");
@@ -166,7 +167,7 @@ void Graph3D::paintGL()
 	glRotatef(graus[2], 0.0, 0.0, 2.0);
 	
 	double mida=default_size*zoom, step=default_step*zoom;
-	dibuixa_eixos();
+	drawAxes();
 	int i,j;
 	if(punts==NULL)
 		return;
@@ -273,16 +274,16 @@ void Calculate3D::run()
 	Q_CHECK_PTR(punts);
 	Q_CHECK_PTR(a.m_vars);
 	
-	const int k= static_cast<int>(mida/step)*2;
+	const int k= static_cast<int>(size/step)*2;
 	a.m_vars->modify("x", 0.);
 	a.m_vars->modify("y", 0.);
 	
 	Cn *x=(Cn*)a.m_vars->value("x"), *y=(Cn*)a.m_vars->value("y");
 	
 	for(int i=from; a.isCorrect() && i<to; i++) {
-		x->setValue(i*step-mida);
+		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
-			y->setValue(j*step-mida);
+			y->setValue(j*step-size);
 			punts[i][j] = -a.calculate().value();
 		}
 	}
@@ -425,7 +426,7 @@ void Graph3D::mem()
 	qDebug() << "Mida: " << midadelgrafo;
 }
 
-void Graph3D::setMida(double newSize)
+void Graph3D::setSize(double newSize)
 {
 	default_size = newSize;
 	this->repaint();

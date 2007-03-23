@@ -32,6 +32,7 @@
  */
 
 //FIXME: Check for public -> protected on some members
+/** Object is everything but nothing. */
 class Object
 {
 public:
@@ -105,6 +106,7 @@ public:
 protected:
 	/** Creates an object with a @p t type */
 	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
+	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
 	bool m_correct;
 	
 private:

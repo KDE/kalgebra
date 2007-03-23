@@ -141,7 +141,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));
 		a.calculate();
 	} else
-		a.m_err << i18n("From parser:") << a.expression()->error();
+		a.errors() << i18n("From parser:") << a.expression()->error();
 	
 	m_correct=a.isCorrect();
 	if(m_correct) {
@@ -152,7 +152,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_graph->clear();
 		m_graph->forceRepaint();
 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		m_valid->setToolTip(a.m_err.join("\n"));
+		m_valid->setToolTip(a.errors().join("\n"));
 	}
 	m_func->setCorrect(m_correct);
 	m_ok->setEnabled(m_correct);
