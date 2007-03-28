@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   width="210mm"
+   height="297mm"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   id="svg1"
+   sodipodi:version="0.32"
+   inkscape:version="0.40"
+   sodipodi:docbase="/home/aleix/kalgebra"
+   sodipodi:docname="kalgebra.svg"
+   inkscape:export-filename="/home/aleix/kalgebra.png"
+   inkscape:export-xdpi="73.023033"
+   inkscape:export-ydpi="73.023033">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="13.090901"
+     inkscape:cx="124.65209"
+     inkscape:cy="559.62634"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1392"
+     inkscape:window-height="975"
+     inkscape:window-x="0"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF
+       id="RDF5">
+      <cc:Work
+         rdf:about=""
+         id="Work6">
+        <dc:format
+           id="format7">image/svg+xml</dc:format>
+        <dc:type
+           id="type9"
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#c76978;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#605151;stroke-width:1.2500000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000;stroke-dasharray:none;"
+       id="rect2317"
+       width="41.954369"
+       height="3.6776788"
+       x="152.72816"
+       y="325.00705" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#c76978;fill-opacity:1.0000000;stroke:#605151;stroke-width:0.56731516;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10.400000;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr;stroke-dasharray:none;"
+       x="307.71603"
+       y="347.67914"
+       id="text1064"
+       transform="matrix(5.537615,0.000000,0.000000,5.479343,-1564.302,-1518.507)"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan1065"
+         x="307.71603"
+         y="347.67914"
+         style="stroke-width:0.56731516;stroke-miterlimit:10.400000;stroke-dasharray:none;stroke:#605151;stroke-opacity:1.0000000;">A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.000000;font-style:normal;font-weight:normal;fill:#c76978;fill-opacity:1.0000000;stroke:#605151;stroke-width:0.21629546;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans;stroke-dasharray:none;"
+       x="113.22884"
+       y="390.30649"
+       id="text1067"
+       transform="matrix(5.081284,0.000000,0.000000,6.572820,-460.8414,-2176.447)"><tspan
+         sodipodi:role="line"
+         id="tspan1068"
+         x="113.22884"
+         y="390.30649"
+         style="stroke-width:0.21629546;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke:#605151;stroke-opacity:1.0000000;">√</tspan></text>
+    <rect
+       style="fill:#c76978;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#605151;stroke-width:0.0000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000;"
+       id="rect5427"
+       width="6.2313414"
+       height="2.4350035"
+       x="150.15868"
+       y="325.62576" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#afb4d6;fill-opacity:1.0000000;stroke:#605151;stroke-width:0.94371229;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr;"
+       x="80.615746"
+       y="295.14999"
+       id="text1061"
+       transform="matrix(2.183043,-0.708713,0.562573,2.139974,-221.4842,-233.7994)"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan1062"
+         x="80.615746"
+         y="295.14999">K</tspan></text>
+  </g>
+</svg>

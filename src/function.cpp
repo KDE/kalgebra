@@ -19,28 +19,38 @@
 #include "function.h"
 #include "exp.h"
 
+#include <klocale.h>
 function::function()
-	: func(0), m_show(true), m_selected(false),m_last_max_res(0), points(0)
+	: points(0), func(0), m_show(true), m_selected(false), m_last_max_res(0)
 {}
 
 function::function(const QString &name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
-	: func(0), m_show(true), m_selected(selec), m_last_max_res(0), points(0)
+	: points(0), func(new Analitza), m_show(true), m_selected(selec), m_color(color), m_last_viewport(QRect()),
+	       m_last_resolution(0), m_last_max_res(0), m_name(name)
 {
-	setFunction(name, newFunc, color, selec);
+	func->setExpression(newFunc);
 }
 
-
 function::function(const function& f)
-	: func(0), m_show(true), m_selected(false),m_last_max_res(0), points(0)
+	: points(0), func(new Analitza), m_show(f.m_show), m_selected(f.m_selected), m_color(f.m_color), m_last_viewport(QRect()),
+		m_last_resolution(0), m_last_max_res(0), m_name(f.m_name)
 {
-	setFunction(f.m_name, *f.func->expression(), f.color(), f.selected());
+	func->setExpression(*f.func->expression());
 }
 
 function function::operator=(const function& f)
 {
-	m_show=true; func=0; points=0; m_selected=f.selected(); m_last_max_res=0;
-	
-	setFunction(f.m_name, *f.func->expression(), f.color(), f.selected());
+	if(&f!=this) {
+		points=0;
+		func=new Analitza;
+		m_show=f.m_show;
+		m_selected=f.m_selected;
+		m_color=f.m_color;
+		m_last_viewport=QRect();
+		m_last_resolution=0;
+		m_last_max_res=0;
+		m_name=f.m_name;
+	}
 	return *this;
 }
 
@@ -52,30 +62,13 @@ function::~function()
 		delete [] points;
 }
 
-void function::setFunction(const QString& name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
-{
-	m_last_max_res=0;
-	m_last_resolution=0;
-	m_color = color;
-	m_selected = selec;
-	m_show=true;
-	m_last_viewport=QRect();
-	m_name=name;
-	if(!func)
-		func = new Analitza;
-	func->setExpression(newFunc);
-	
-	if(points!=0) {
-		delete [] points;
-		points=0;
-	}
-}
-
 void function::update_points(QRect viewport, unsigned int max_res)
 {
-	Q_ASSERT(func!=0);
-	if(!m_show)
+	Q_ASSERT(func);
+	if(!m_show || !func->isCorrect()) {
+		qDebug() << "not correct" << func->expression()->toString();
 		return;
+	}
 	QStringList lambdas = func->bvarList();
 	
 	if(lambdas.count() <= 1){ //2D Graph only support 1 lambda, must recheck when add parametric functions
@@ -200,9 +193,8 @@ void function::update_pointsPolar(QRect viewport, unsigned int max_res)
 	unsigned int resolucio=max_res;
 	double pi=2.*acos(0.);
 	double r=0., th=0.;
-	Cn ulimit = func->expression()->uplimit(), dlimit=func->expression()->downlimit();
-	
-// 	objectWalker(func->tree());
+	Expression *e = func->expression();
+	Cn ulimit = e->uplimit(), dlimit=e->downlimit();
 	
 	if(!ulimit.isCorrect())
 		ulimit = 2.*pi;
@@ -210,9 +202,8 @@ void function::update_pointsPolar(QRect viewport, unsigned int max_res)
 	if(!dlimit.isCorrect())
 		dlimit = 0.;
 	
-// 	qDebug() << "polar u:" << u25limit.value() << " d: " << dlimit.value();
-	
 	if(ulimit<dlimit) {
+		qDebug() << "can't have uplimit<downlimit";
 		return;
 	}
 	

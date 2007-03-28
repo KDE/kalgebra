@@ -103,6 +103,9 @@ class ExpressionEdit : public QTextEdit
 	signals:
 		/** Emits that a return has been pressed. */
 		void returnPressed();
+		
+		/** Deprecated. */
+		void signalHelper(QString);
 	private:
 		QLabel *m_helptip;
 		AlgebraHighlighter *m_highlight;

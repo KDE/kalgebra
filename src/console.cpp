@@ -20,6 +20,8 @@
 #include <QFile>
 #include <QHeaderView>
 
+#include <klocale.h>
+
 #include "expression.h"
 
 Console::Console(QWidget *parent) : QListWidget(parent), outs(0) {}

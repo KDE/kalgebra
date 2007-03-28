@@ -109,6 +109,9 @@ public:
 	/** Returns whether it is an empty container. */
 	bool isEmpty() const { return firstValue()==m_params.end(); }
 	
+	/** Returns whether it is correct container. */
+	bool isCorrect() const { return m_correct && m_type==Object::container && m_cont_type!=Object::cnone; }
+	
 	//Monomials
 	/** Creates a monomial, just to ease the construction. */
 	Container(Cn* base, Object* var, Ci* degree);

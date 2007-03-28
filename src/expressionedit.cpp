@@ -160,6 +160,9 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 		case Qt::Key_F3:
 			setMode(isMathML() ? AlgebraHighlighter::Expression : AlgebraHighlighter::MathML);
 			return;
+		case Qt::Key_Escape:
+			m_completer->popup()->hide();
+			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
 			if(!m_completer->popup()->isVisible())

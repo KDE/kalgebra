@@ -24,6 +24,8 @@
 	#include <GL/glu.h>
 #endif
 
+#include <klocale.h>
+
 #include <QImage>
 #include <QMouseEvent>
 #include <QKeyEvent>

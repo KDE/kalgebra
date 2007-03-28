@@ -15,6 +15,7 @@
  *  along with this program; if not, write to the Free Software                      *
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
+#include "klocale.h"
 
 #include "expression.h"
 #include "exp.h"
@@ -196,11 +197,12 @@ bool Expression::operator==(const Expression & e) const
 
 Cn Expression::uplimit() const
 {
+	Cn ret(0.);
 	if(m_tree->type() == Object::container) {
 		Container *c= (Container*) m_tree;
-		return uplimit(c->m_params[0]);
+		ret=uplimit(c->m_params[0]);
 	}
-	return Cn(0.);
+	return ret;
 }
 
 Cn Expression::downlimit() const

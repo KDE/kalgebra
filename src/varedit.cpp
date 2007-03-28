@@ -20,6 +20,8 @@
 #include "analitza.h"
 #include "expression.h"
 
+#include <klocale.h>
+
 #include <QPushButton>
 #include <QLabel>
 

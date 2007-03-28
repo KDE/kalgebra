@@ -29,6 +29,8 @@
 #include <QKeyEvent>
 #include <QFrame>
 
+#include <klocale.h>
+
 #include <cmath>
 
 using namespace std;
@@ -62,18 +64,9 @@ QSizePolicy Graph2D::sizePolicy() const
 	return QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }
 
-void Graph2D::drawAxes(QPainter *f)
+void Graph2D::drawAxes(QPainter *f, Axe a)
 {
 	finestra.setRenderHint(QPainter::Antialiasing, false);
-	Axe a = Cartesian;
-	if(!funclist.isEmpty()){
-		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
-			if((*it).selected() && (*it).isShown()) {
-				a = (*it).axeType();
-				break;
-			}
-		}
-	}
 	
 	switch(a) {
 		case Polar:
@@ -160,6 +153,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	finestra->drawLine(QPointF(0., center.y()), QPointF(this->width(), center.y()));
 	finestra->drawLine(QPointF(center.x(), 0.), QPointF(center.x(),this->height()));
 	//EO dibuixa eixos viewport
+	finestra->setRenderHint(QPainter::Antialiasing, true);
 }
 
 void Graph2D::pintafunc(QPaintDevice *qpd)
@@ -181,12 +175,23 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	} else
 		qDebug("!!!!!!!!!!");
 	
-	drawAxes(&finestra);
-	
-	finestra.setRenderHint(QPainter::Antialiasing, true);
+// 	drawAxes(&finestra);
 	
 	QRectF panorama(QPoint(0,0), size());
 	finestra.setPen(pfunc);
+	
+	finestra.setRenderHint(QPainter::Antialiasing, true);
+	
+	Axe t = Cartesian;
+	for (QList<function>::iterator it=funclist.begin(); it!=funclist.end(); ++it ){
+		if(it->selected()) {
+			t = it->axeType();
+			break;
+		}
+	}
+	
+	drawAxes(&finestra, t);
+	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
 	if(!funclist.isEmpty()) {
 		for (QList<function>::iterator it=funclist.begin(); it!=funclist.end(); ++it ){
@@ -210,6 +215,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 			}
 		}
 	}
+	
 	finestra.end();
 	valid=true;
 }
@@ -392,19 +398,18 @@ QPointF Graph2D::calcImage(QPointF dp)
 
 void Graph2D::unselect(){
 	if(!funclist.isEmpty()){
-		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
+		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it) {
 			(*it).setSelected(false);
 		}
 	}
 }
 
 void Graph2D::update_points(){
-	if(!funclist.isEmpty()){
-// 		qDebug() << "res:" << resolucio;
+	if(!funclist.isEmpty()) {
 		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it )
 			(*it).update_points(toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 		
-		valid=false;
+		forceRepaint();
 	}
 }
 
@@ -424,14 +429,17 @@ bool Graph2D::addFunction(const function& func)
 	return exist;
 }
 
-bool Graph2D::editFunction(const QString& tochange, const function& func){
+bool Graph2D::editFunction(const QString& toChange, const function& func)
+{
+	qDebug() << toChange;
 	bool exist=false;
 	
 	for (QList<function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it ){
-		if((*it).name() == tochange){
+		if(it->name() == toChange){
 			exist=true;
-			(*it)=func;
+			*it = func;
 		}
+		qDebug() << "ddsdas" << it->name();
 	}
 	
 	update_points();
@@ -526,9 +534,10 @@ void Graph2D::resizeEvent(QResizeEvent *)
 
 void Graph2D::clear()
 {
-	funclist.clear();
-	valid=false;
-	repaint();
+	if(!funclist.isEmpty()) {
+		funclist.clear();
+// 		forceRepaint();
+	}
 }
 
 QRect Graph2D::toBiggerRect(const QRectF& ent)

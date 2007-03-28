@@ -65,8 +65,11 @@ class Operator : public Object
 		/** Returns the multiplicity operator. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		OperatorType multiplicityOperator() const { return multiplicityOperator(m_optype); }
 		
-		/** Returns whether this operator needs bounding or not. */
+		/** Returns whether this operator needs bounding. */
 		bool isBounded() const;
+		
+		/** Returns whether it is a correct object. */
+		bool isCorrect() const { return m_correct && m_type==Object::oper && m_optype!=Object::onone;}
 		
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);

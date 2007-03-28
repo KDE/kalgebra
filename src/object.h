@@ -22,8 +22,6 @@
 #include <QList>
 #include <QtCore>
 
-#define i18n QString
-
 // OperatorsModel m_words;
 /**
  *	\internal
@@ -80,6 +78,8 @@ public:
 		sum, product, diff, function //FIXME: <- ????
 	};
 	
+	Object(const Object& o) : m_correct(o.m_correct), m_type(o.m_type) {}
+	
 	/** Object destructor. Does nothing. */
 	virtual ~Object(){}
 	
@@ -88,9 +88,6 @@ public:
 	
 	/** Returns the object type of the object */
 	enum ObjectType type() const { return m_type; }
-	
-	/** Returns whether it is a correct object or not */
-	bool isCorrect() const { return m_correct && m_type!=none; } //FIXME: Would be nice to be virtual
 	
 	/** Returns whether it is a container or not. */
 	bool isContainer() const { return m_type==container; }
@@ -103,15 +100,19 @@ public:
 	
 	/** Converts a @p tag to a type. */
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
+	
+	/** Returns whether it is a correct object or not */
+	virtual bool isCorrect() const = 0;
+	
+	void setCorrect(bool b) { m_correct = b; }
 protected:
 	/** Creates an object with a @p t type */
 	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
 	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
 	bool m_correct;
 	
-private:
+	/** Specifies the Object type. */
 	enum ObjectType m_type;
-	QString err;
 };
 
 /** A variable object, name refers to MathML standard. */
@@ -143,7 +144,10 @@ class Ci : public Object
 		QString toString() const { return m_name; }
 		
 		/** Returns the MathML representation of the variable */
-		QString toMathML() const { return QString("<ci>%1</ci>").arg(m_name);}
+		QString toMathML() const { return QString("<ci>%1</ci>").arg(m_name); }
+		
+		/** Returns whether it is a correct object. */
+		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
 	private:
 		QString m_name;
 		bool m_function;

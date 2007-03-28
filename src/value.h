@@ -32,7 +32,7 @@ class Cn : public Object
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(Object::value), m_value(v.value()), m_boolean(v.isBoolean()) {}
+		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.isBoolean()) {}
 		
 		/** Constructor. Creates a value with values @p v. */
 		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
@@ -67,9 +67,6 @@ class Cn : public Object
 		 */
 		bool isBoolean() const { return m_boolean; }
 		
-		/**
-		 *	
-		 */
 // 		static double toNum(const QString& num, const QString& type, int base);
 // 		static enum ValueFormat whatValueFormat(const QDomElement&);
 		
@@ -111,7 +108,7 @@ class Cn : public Object
 		/**
 		 *	The sign of the value will be inverted.
 		 */
-		void negate() { m_value*=-1; }
+		void negate() { m_value*=-1.; }
 		
 		/**
 		 *	Increments by one the value.
@@ -133,8 +130,8 @@ class Cn : public Object
 		 */
 		QString toMathML() const;
 		
-		/** Sets whether it is a correct Cn. */
-		void setCorrect(bool b) {m_correct = b; }
+		/*/** Sets whether it is a correct Cn. 
+		void setCorrect(bool b) {m_correct = b; }*/
 		
 		/** Returns whether it is a correct Cn. */
 		bool isCorrect() const { return m_correct;}

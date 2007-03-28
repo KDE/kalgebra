@@ -51,14 +51,6 @@ public:
 	/** Destructor. */
 	~function();
 	
-	/** Constructor. Creates a new function.
-		@param name the function name.
-		@param newExp the function expression tree.
-		@param color the function representation color.
-		@param selec defines if the function is selected.
-	 */
-	void setFunction(const QString& name, const Expression& newExp, const QColor& color, bool selec=false);
-	
 	/** Defines a new function behaviour.
 		@param viewport sets the coordinates the function will fit to.
 		@param resolution sets how many points will the function have.
@@ -98,6 +90,7 @@ public:
 	/** Retrieves the function evaluator. */
 	Analitza* analitza() const { return func; }
 	
+	/** Returns the type of axe that the function has. */
 	Axe axeType() const;
 protected:
 	/** Here we store the calculated points of the function. */

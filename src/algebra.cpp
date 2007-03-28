@@ -19,22 +19,24 @@
 #include <QVBoxLayout>
 #include <QLayout>
 #include <QSplitter>
-#include <QStatusBar>
-#include <QMenuBar>
 #include <QApplication>
-#include <QAction>
-#include <QMenu>
 #include <QFileDialog>
 #include <QHeaderView>
 #include <QSplitter>
 #include <QDockWidget>
 #include <QMessageBox>
 
+#include <kmenu.h>
+#include <kmenubar.h>
+#include <kstatusbar.h>
+#include <kaction.h>
+#include <klocale.h>
+
 #include "algebra.h"
 #include "varedit.h"
 #include "functionedit.h"
 
-QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
+KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {
 	this->setMinimumHeight(500);
 	this->setMinimumWidth(900);
@@ -43,7 +45,7 @@ QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
 	this->setCentralWidget(tabs);
 	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	
-	setStatusBar(new QStatusBar(this));
+	setStatusBar(new KStatusBar(this));
 	setMenuBar(new QMenuBar(this));
 	
 	///////Consola
@@ -184,21 +186,18 @@ QAlgebra::QAlgebra(QWidget *p) : QMainWindow(p)
 	//////EO3D Graph
 	
 	//Ego's reminder
-	QMenu *h_menu = menuBar()->addMenu(i18n("&Help"));
-// 	h_menu->addAction(i18n("&Help"), c_results, SLOT(clear()));
-	h_menu->addSeparator();
-	h_menu->addAction(i18n("&About"), this, SLOT(about()));
+	menuBar()->addMenu(helpMenu());
 	
 	tabChanged(0);
 }
 
-void QAlgebra::new_func3d()
+void KAlgebra::new_func3d()
 {
 	grafic3d->setFunc(t_exp->text());
 	grafic3d->setFocus();
 }
 
-void QAlgebra::new_func()
+void KAlgebra::new_func()
 {
 	QTreeWidgetItem *item;
 	if(!b_funced->editing()) {
@@ -206,6 +205,7 @@ void QAlgebra::new_func()
 		item = new QTreeWidgetItem(b_funcs);
 		item->setFlags(Qt::ItemIsSelectable| Qt::ItemIsUserCheckable| Qt::ItemIsEnabled| Qt::ItemIsTristate);
 	} else {
+		//FIXME: Comparison is wrong on editing
 		item = b_funcs->currentItem();
 		grafic->editFunction(item->text(0),
 				     function(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
@@ -225,7 +225,7 @@ void QAlgebra::new_func()
 	grafic->setFocus();
 }
 
-void QAlgebra::edit_func(const QModelIndex &)
+void KAlgebra::edit_func(const QModelIndex &)
 {
 	b_tools->setTabText(1, i18n("&Editing"));
 	b_tools->setCurrentIndex(1);
@@ -234,7 +234,7 @@ void QAlgebra::edit_func(const QModelIndex &)
 	b_funced->setFocus();
 }
 
-void QAlgebra::functools(int i)
+void KAlgebra::functools(int i)
 {
 	if(i==0)
 		b_tools->setTabText(1, i18n("&Add"));
@@ -245,12 +245,12 @@ void QAlgebra::functools(int i)
 	}
 }
 
-void QAlgebra::different(QTreeWidgetItem * item, int)
+void KAlgebra::different(QTreeWidgetItem * item, int)
 {
 	grafic->setShown(item->text(0), item->checkState(0) == Qt::Checked);
 }
 
-void QAlgebra::edit_var(const QModelIndex &)
+void KAlgebra::edit_var(const QModelIndex &)
 {
 	VarEdit e(this, false);
 	QString var(c_variables->currentItem()->text(0));
@@ -262,7 +262,7 @@ void QAlgebra::edit_var(const QModelIndex &)
 	c_variables->updateVariables();
 }
 
-void QAlgebra::operate()
+void KAlgebra::operate()
 {
 	if(!c_exp->text().isEmpty()){
 		c_exp->setCorrect(c_results->addOperation(c_exp->text(), c_exp->isMathML()));
@@ -270,25 +270,25 @@ void QAlgebra::operate()
 	}
 }
 
-void QAlgebra::insert(QListWidgetItem * item)
+void KAlgebra::insert(QListWidgetItem * item)
 {
 	c_exp->insertPlainText(item->toolTip());
 	c_exp->setFocus();
 }
 
-void QAlgebra::changeStatusBar(const QString& msg)
+void KAlgebra::changeStatusBar(const QString& msg)
 {
 	statusBar()->showMessage(msg);
 }
 
-void QAlgebra::loadScript()
+void KAlgebra::loadScript()
 {
 	QString path = QFileDialog::getOpenFileName(this, i18n("Choose a script"), NULL, "Script (*.kal)");
 	if(!path.isEmpty())
 		c_results->loadScript(path);
 }
 
-void QAlgebra::saveLog()
+void KAlgebra::saveLog()
 {
 	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, "Text File (*)");
 	if(!path.isEmpty())
@@ -296,45 +296,45 @@ void QAlgebra::saveLog()
 }
 
 
-void QAlgebra::set_res_low()	{ grafic->setResolution(416); }
-void QAlgebra::set_res_std()	{ grafic->setResolution(832); }
-void QAlgebra::set_res_fine()	{ grafic->setResolution(1664);}
-void QAlgebra::set_res_vfine()	{ grafic->setResolution(3328);}
+void KAlgebra::set_res_low()	{ grafic->setResolution(416); }
+void KAlgebra::set_res_std()	{ grafic->setResolution(832); }
+void KAlgebra::set_res_fine()	{ grafic->setResolution(1664);}
+void KAlgebra::set_res_vfine()	{ grafic->setResolution(3328);}
 
-void QAlgebra::set_dots()	{ grafic3d->setMethod(Graph3D::Dots);  }
-void QAlgebra::set_lines()	{ grafic3d->setMethod(Graph3D::Lines); }
-void QAlgebra::set_solid()	{ grafic3d->setMethod(Graph3D::Solid); }
+void KAlgebra::set_dots()	{ grafic3d->setMethod(Graph3D::Dots);  }
+void KAlgebra::set_lines()	{ grafic3d->setMethod(Graph3D::Lines); }
+void KAlgebra::set_solid()	{ grafic3d->setMethod(Graph3D::Solid); }
 
-void QAlgebra::toggleTransparency()
+void KAlgebra::toggleTransparency()
 {
 	grafic3d->setTransparency(!grafic3d->transparency());
 }
 
-void QAlgebra::save3DGraph()
+void KAlgebra::save3DGraph()
 {
 	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, i18n("Image File (*.png)"));
 	if(!path.isEmpty())
 		grafic3d->toPixmap().save(path, "PNG");
 }
 
-void QAlgebra::toggleSquares()
+void KAlgebra::toggleSquares()
 {
 	grafic->setSquares(!grafic->squares());
 }
 
-void QAlgebra::saveGraph()
+void KAlgebra::saveGraph()
 {
 	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, i18n("Image File (*.png)"));//;;Vector image file (*.svg)"));
 	if(!path.isEmpty())
 		grafic->toImage(path);
 }
 
-void QAlgebra::change(QTreeWidgetItem *current, QTreeWidgetItem *)
+void KAlgebra::change(QTreeWidgetItem *current, QTreeWidgetItem *)
 {
 	grafic->setSelected(current->text(0));
 }
 
-void QAlgebra::tabChanged(int n)
+void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
@@ -358,7 +358,7 @@ void QAlgebra::tabChanged(int n)
 	changeStatusBar(i18n("Ready"));
 }
 
-void QAlgebra::about()
+void KAlgebra::about()
 {
 	QMessageBox::warning(this, i18n("KAlgebra"), 
 			     i18n("KAlgebra (c) 2005-2006\n"

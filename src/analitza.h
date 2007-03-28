@@ -90,6 +90,10 @@ class Analitza
 		
 		/** Return an error list. */
 		QStringList errors() const { return m_err; }
+// 	protected: //FIXME:Shame on me
+		Expression m_exp;
+		Variables *m_vars;
+		QStringList m_err;
 	private:
 		Cn calc(Object* e);
 		Cn operate(Container*);
@@ -108,11 +112,6 @@ class Analitza
 		void reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary);
 		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
-		
-	protected: //FIXME:Shame on me
-		Expression m_exp;
-		Variables *m_vars;
-		QStringList m_err;
 };
 
 #endif

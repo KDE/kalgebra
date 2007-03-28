@@ -109,6 +109,9 @@ public:
 	
 	/** Sets whether it is a read-only widget. */
 	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
+	
+	/** Returns how many function there are in the widget. */
+	int count() const { return funclist.count(); }
 private:
 	static const QColor m_axeColor;
 	static const QColor m_axe2Color;
@@ -121,7 +124,7 @@ private:
 	QLabel *micepos;
 	QList<function> funclist;
 	QPointF mark;
-	void drawAxes(QPainter*);
+	void drawAxes(QPainter*, Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
 	void update_points();

@@ -27,9 +27,6 @@
 	@author Aleix Pol i Gonzalez
 */
 
-#define i18n QString
-
-
 typedef enum {
 	S,
 	R,

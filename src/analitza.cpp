@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 #include "analitza.h"
+#include "klocale.h"
 
 Analitza::Analitza() : m_vars(new Variables) { }
 
@@ -700,6 +701,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 
 QStringList Analitza::bvarList() const //FIXME: if
 {
+	Q_ASSERT(m_exp.m_tree);
 	Container *c = (Container*) m_exp.m_tree;
 	if(c!=0 && c->type()==Object::container) {
 		c = (Container*) c->m_params[0];

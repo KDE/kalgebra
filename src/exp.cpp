@@ -18,9 +18,11 @@
 
 #include "exp.h"
 #include "operator.h"
+
+#include <klocale.h>
 using namespace std;
 
-#if 1
+#if 0
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 

@@ -16,10 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef ALGEBRA_H
-#define ALGEBRA_H
+#ifndef KALGEBRA_H
+#define KALGEBRA_H
 
-#include <QMainWindow>
+#include <kmainwindow.h>
+
 #include <QPushButton>
 #include <QListWidget>
 #include <QTreeWidget>
@@ -32,11 +33,11 @@
 #include "graph2d.h"
 #include "graph3d.h"
 
-class QAlgebra : public QMainWindow {
+class KAlgebra : public KMainWindow {
 Q_OBJECT
 public:
-	QAlgebra(QWidget *parent);
-	~QAlgebra(){}
+	KAlgebra(QWidget *parent=0);
+	~KAlgebra(){}
 	QString calculate(QString exp);
 private:
 	//console

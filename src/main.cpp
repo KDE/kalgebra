@@ -16,15 +16,25 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <QApplication>
-
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kcmdlineargs.h>
 #include "algebra.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
+	KAboutData about("kalgebra", ("KAlgebra"), "0.7", "A calculator",
+			 KAboutData::License_GPL, "(C) 2006 Aleix Pol Gonzalez", 0, 0, "aleixpol@gmail.com");
+	about.addAuthor( "Aleix Pol Gonzalez", 0, "aleixpol@gmail.com" );
+	KCmdLineArgs::init(argc, argv, &about);
+	KApplication app;
 	
-	QAlgebra main(NULL);
-	main.show();
+	KAlgebra *widget = new KAlgebra;
+// 	if(app.isSessionRestored())
+// 		RESTORE(KAlgebra);
+// 	else
+		widget->show();
+	
+
 	return app.exec();
 }
