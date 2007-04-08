@@ -398,7 +398,7 @@ int Graph3D::load()
 		mem();
 		tefunc=true;
 		crea();
-		sendStatus(i18n("Done: %1ms").arg(t.elapsed()));
+		sendStatus(i18n("Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
 	} else {

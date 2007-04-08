@@ -18,7 +18,7 @@
 
 #include "graph2d.h"
 
-#include <QPicture>
+#include <QSvgGenerator>
 #include <QWheelEvent>
 #include <QPaintEvent>
 #include <QResizeEvent>
@@ -551,25 +551,22 @@ QRect Graph2D::toBiggerRect(const QRectF& ent)
 	return ret;
 }
 
-//////////////////////////////////////////////////////////////
 bool Graph2D::toImage(const QString &path)
 {
 	bool b=false;
 	
-	/*if(!path.isEmpty() && path.endsWith(".svg")) {
-		QPicture pic;
-		pintafunc(&pic);
-		pic.save(path, "SVG");
-	} else */if(!path.isEmpty() && path.endsWith(".png")) {
+	if(!path.isEmpty() && path.endsWith(".svg")) {
+		QSvgGenerator gen;//FIXME: Not working
+		pintafunc(&gen);
+		gen.setFileName(path);
+		b=true;
+	} else if(!path.isEmpty() && path.endsWith(".png")) {
 		this->repaint();
 		b=buffer.save(path, "PNG");
-	} else
-		return false;
+	}
 	
-	qDebug() << "toImage:" << path << b << front.isNull() << QPicture::outputFormatList();
-	return true;
+	return b;
 }
-//////////////////////////////////////////////////////////////
 
 void Graph2D::update_scale()
 {

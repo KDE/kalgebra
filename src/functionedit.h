@@ -28,6 +28,8 @@
 #include <QComboBox>
 #include <QList>
 
+#include "kcolorcombo.h"
+
 #include "graph2d.h"
 #include "expressionedit.h"
 #include "algebrahighlighter.h"
@@ -114,7 +116,7 @@ private:
 	QPushButton *m_ok;
 	QLabel *m_valid;
 	Graph2D *m_graph;
-	ColorCombo *m_color;
+	KColorCombo *m_color;
 	
 	bool m_correct;
 	bool m_modmode;

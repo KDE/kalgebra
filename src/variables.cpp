@@ -17,8 +17,6 @@
  *************************************************************************************/
 
 #include "variables.h"
-#include "expression.h"
-
 Variables::Variables() : QHash<QString, Object*>()
 {
 	insert("true", new Cn(1.));
@@ -26,6 +24,7 @@ Variables::Variables() : QHash<QString, Object*>()
 	insert("pi", new Cn(3.1415926535897932384626433));
 	insert("e", new Cn(2.718281828));
 	insert("euler", new Cn(0.5772156649));
+// 	modify("perimeter", Expression("r->2*pi*r", false));
 }
 
 Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)
@@ -42,6 +41,10 @@ Variables::~Variables()
 		delete *i;
 }
 
+void Variables::modify(const QString & name, const Expression & o)
+{
+	modify(name, o.m_tree);
+}
 
 void Variables::modify(const QString& name, const Object* o)
 {

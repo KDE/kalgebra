@@ -40,6 +40,12 @@ class Console : public QListWidget
 {
 	Q_OBJECT
 	public:
+		/** This enumeration controles the way the console will calculate and show his results. */
+		enum ConsoleMode {
+			Evaluation, /**< Simplifies the expression, doesn't resolve variables (yet?). */
+			Calculation /**< Calculates everything, if it finds a not defined variable shows an error. */
+		};
+		
 		/** Constructor. Creates a console widget. */
 		Console(QWidget *parent = 0);
 		
@@ -48,6 +54,12 @@ class Console : public QListWidget
 		
 		/** Retrieves a pointer to the Analitza calculator associated. */
 		Analitza* analitza() { return &a; }
+		
+		/** Sets a @p newMode console mode. */
+		void setMode(ConsoleMode newMode) { m_mode = newMode; }
+		
+		/** Retrieves the console mode. */
+		ConsoleMode mode() const { return m_mode; }
 		
 	public slots:
 		/** Adds an operation @p op with the format @p mathml to the log. */
@@ -59,21 +71,26 @@ class Console : public QListWidget
 		/** Loads a script from @p path. */
 		bool loadScript(const QString& path);
 		
+		/** Save a script yo @p path. */
+		bool saveScript(const QString& path) const;
+		
 		/** Saves a log to @p path. */
-		bool saveLog(const QString& path);
+		bool saveLog(const QString& path) const;
 	signals:
 		/** Emits a notification that tells that the widget status. */
 		void status(const QString &msg);
 		
 		/** Emits that something has changed. */
 		void changed();
-		
 	private:
 		int outs;
 		Analitza a;
-	
 		void sendStatus(const QString& msg) { emit status(msg); }
-
+		ConsoleMode m_mode;
+		QStringList m_script;
+		
+		bool addEvaluation(Expression&);
+		bool addCalculation(Expression&);
 };
 
 /** The VariableView is a widget that shows all variables with their values. */

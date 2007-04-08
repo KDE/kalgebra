@@ -64,6 +64,8 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 // 	treeView->header()->setResizeMode(2, QHeaderView::ResizeToContents);
 	treeView->setColumnHidden(1, true);
 	treeView->setColumnHidden(2, true);
+	treeView->setColumnHidden(3, false);
+// 	treeView->setColumnHidden(2, true);
 	
 	connect(this, SIGNAL(returnPressed()), this, SLOT(returnP()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMov()));
@@ -83,12 +85,10 @@ void ExpressionEdit::updateCompleter()
 		
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
-			for(int i=m_ops->count(); it != a->m_vars->end(); ++it) {
+			for(int i=m_ops->count(); it != a->m_vars->end(); ++it, i++) {
 				m_ops->setData(m_ops->index(i, 0), it.key());
-// 				m_ops->setData(m_ops->index(i, 1), Analitza::treu_tags(a->str(it.value())));
-				m_ops->setData(m_ops->index(i, 2), "var");
-				
-				i++;
+				m_ops->setData(m_ops->index(i, 1), Object::variable);
+				m_ops->setData(m_ops->index(i, 3), (*it)->toString());
 			}
 		}
 		m_completer->setModel(m_ops);

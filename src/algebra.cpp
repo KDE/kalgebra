@@ -20,12 +20,12 @@
 #include <QLayout>
 #include <QSplitter>
 #include <QApplication>
-#include <QFileDialog>
 #include <QHeaderView>
 #include <QSplitter>
 #include <QDockWidget>
 #include <QMessageBox>
 
+#include <kfiledialog.h>
 #include <kmenu.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
@@ -78,6 +78,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	c_menu->addAction(i18n("&New"), c_results, SLOT(clear()), QKeySequence::New);
 	c_menu->addAction(i18n("&Load Script"), this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
+	c_menu->addAction(i18n("&Save Script"), this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
 	c_menu->addAction(i18n("&Save Log"), this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
 	c_menu->addAction(i18n("&Quit"), this, SLOT(close()), Qt::CTRL+Qt::Key_Q);
@@ -283,14 +284,21 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	QString path = QFileDialog::getOpenFileName(this, i18n("Choose a script"), NULL, "Script (*.kal)");
+	QString path = KFileDialog::getOpenFileName(KUrl(), i18n("Script (*.kal)"), this, i18n("Choose a script"));
 	if(!path.isEmpty())
 		c_results->loadScript(path);
 }
 
+void KAlgebra::saveScript()
+{
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Script (*.kal)"), this);
+	if(!path.isEmpty())
+		c_results->saveScript(path);
+}
+
 void KAlgebra::saveLog()
 {
-	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, "Text File (*)");
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Text File (*)"),  this);
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
@@ -312,7 +320,7 @@ void KAlgebra::toggleTransparency()
 
 void KAlgebra::save3DGraph()
 {
-	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, i18n("Image File (*.png)"));
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Image File (*.png)"), this);
 	if(!path.isEmpty())
 		grafic3d->toPixmap().save(path, "PNG");
 }
@@ -324,7 +332,7 @@ void KAlgebra::toggleSquares()
 
 void KAlgebra::saveGraph()
 {
-	QString path = QFileDialog::getSaveFileName(this, NULL, NULL, i18n("Image File (*.png)"));//;;Vector image file (*.svg)"));
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);//;;Vector image file (*.svg)"));
 	if(!path.isEmpty())
 		grafic->toImage(path);
 }
@@ -356,14 +364,6 @@ void KAlgebra::tabChanged(int n)
 			break;
 	}
 	changeStatusBar(i18n("Ready"));
-}
-
-void KAlgebra::about()
-{
-	QMessageBox::warning(this, i18n("KAlgebra"), 
-			     i18n("KAlgebra (c) 2005-2006\n"
-				"Author: Aleix Pol i Gonzalez (aleixpol@gmail.com)\n"
-				"Licensed under GPLv2 terms."));
 }
 
 #include "algebra.moc"

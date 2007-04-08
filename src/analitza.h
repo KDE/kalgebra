@@ -95,9 +95,9 @@ class Analitza
 		Variables *m_vars;
 		QStringList m_err;
 	private:
-		Cn calc(Object* e);
+		Cn calc(const Object* e);
 		Cn operate(Container*);
-		Object* eval(const Object* e);
+		Object* eval(const Object* e, bool vars);
 		
 		Cn sum(const Container& c);
 		Cn product(const Container& c);

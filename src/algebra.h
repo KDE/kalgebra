@@ -62,6 +62,7 @@ public slots:
 	void operate();
 	void insert(QListWidgetItem * item);
 	void loadScript();
+	void saveScript();
 	void saveLog();
 	
 	void new_func3d();
@@ -85,8 +86,6 @@ public slots:
 	void set_solid();
 	void toggleTransparency();
 	void save3DGraph();
-	
-	void about();
 };
 
 #endif

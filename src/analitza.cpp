@@ -44,7 +44,7 @@ Expression Analitza::evaluate()
 	if(m_exp.isCorrect()) {
 		Expression e(m_exp); //FIXME: That's a strange trick, wouldn't have to copy
 		Object *aux=e.m_tree;
-		e.m_tree=eval(aux);
+		e.m_tree=eval(aux, true);
 		delete aux;
 		objectWalker(e.m_tree);
 		e.m_tree=simp(e.m_tree);
@@ -66,7 +66,7 @@ Cn Analitza::calculate()
 	}
 }
 
-Object* Analitza::eval(const Object* branch)
+Object* Analitza::eval(const Object* branch, bool resolve)
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
@@ -74,16 +74,81 @@ Object* Analitza::eval(const Object* branch)
 	if(branch->isContainer()) {
 		const Container* c = (Container*) branch;
 		Operator op = c->firstOperator();
-		switch(op.operatorType()) {
+		if(c->containerType()==Object::declare) {
+			calc(c); //FIXME: I have to think if it is correct
+			ret = Expression::objectCopy(c->m_params[1]);
+		}switch(op.operatorType()) {
 			case Object::diff:
 				ret = derivative("x", c->m_params[1]);
 				break;
 			case Object::onone:
-				ret = eval(c->m_params[0]);
+				ret = eval(c->m_params[0], resolve);
 				break;
-			default:
-				break;
+			default: { //FIXME: Make sure it works (which doesn't) f:=x->x+1;f(x)
+				const Container *c = (Container*) branch;
+				Operator op(c->firstOperator());
+				if(c->containerType()==Object::apply && op.isBounded()) { //it is a function
+					const Container *cbody = c;
+					QStringList bvars;
+					if(op.operatorType()==Object::function) {
+						Ci *func= (Ci*) c->m_params[0];
+						Object* body= (Object*) m_vars->value(func->name()); //body is the value
+						if(body->type()!=Object::container) { //if it is a value variable
+							ret = eval(body, resolve);
+							break;
+						}
+						cbody = (Container*) body;
+						
+						QList<Object*>::const_iterator bv = cbody->m_params.begin();
+						for(; bv!=cbody->m_params.end(); ++bv) {
+							const Container *ibv;
+							if((*bv)->isContainer()) {
+								ibv = (Container*) *bv;
+								if(ibv->containerType()==Object::bvar) {
+									const Ci* ivar;
+									if(ibv->m_params[0]) {
+										ivar = (Ci*) ibv->m_params[0];
+										bvars.append(ivar->name());
+									}
+								}
+							}
+						}
+						
+						QStringList::const_iterator iBvars = bvars.constBegin();
+						int i=0;
+						for(; iBvars!=bvars.constEnd(); ++iBvars)
+							m_vars->stack(*iBvars, c->m_params[++i]);
+						
+					}
+			
+					QList<Object*>::const_iterator fval = cbody->firstValue();
+					ret = eval(*fval, resolve);
+			
+					QStringList::const_iterator iBvars(bvars.constBegin());
+					for(; iBvars!=bvars.constEnd(); ++iBvars)
+						m_vars->destroy(*iBvars);
+					
+					if(op.operatorType()!=Object::function) {
+						Container *nc = new Container(c);
+						QList<Object*>::iterator fval = nc->firstValue();
+						delete *fval;
+						*fval=ret;
+						ret = nc;
+					}
+				} else {
+					Container *r = new Container(c);
+					QList<Object*>::iterator it(r->firstValue());
+					for(; it!=r->m_params.end(); ++it)
+						*it = eval(*it, resolve);
+					ret=r;
+				}
+			} break;
 		}
+	} else if(resolve && branch->type()==Object::variable) {
+		Ci* var=(Ci*) branch;
+		
+		if(m_vars->contains(var->name()) && m_vars->value(var->name()))
+			ret = eval(m_vars->value(var->name()), resolve);
 	}
 	if(!ret)
 		return Expression::objectCopy(branch);
@@ -272,7 +337,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	return 0;
 }
 
-Cn Analitza::calc(Object* root)
+Cn Analitza::calc(const Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
 	Cn ret=Cn(0.);
@@ -1097,7 +1162,6 @@ Object* Analitza::removeDependencies(Object * o) const
 	Q_ASSERT(o);
 	if(o->type()==Object::variable) {
 		Ci* var=(Ci*) o;
-		qDebug() << "Wanna remove" << var->name() << m_vars->value(var->name());
 		if(m_vars->contains(var->name()) && m_vars->value(var->name())) {
 			Object *value=Expression::objectCopy(m_vars->value(var->name()));
 			Object *no = removeDependencies(value);
@@ -1118,9 +1182,6 @@ Object* Analitza::removeDependencies(Object * o) const
 				cbody = (Container*) body;
 			}
 			
-			bvars = cbody->bvarList();
-			qDebug() << bvars;
-			
 			if(op.operatorType()==Object::function) {
 				QStringList::const_iterator iBvars(bvars.constBegin());
 				int i=0;
@@ -1131,7 +1192,6 @@ Object* Analitza::removeDependencies(Object * o) const
 			}
 			
 			QList<Object*>::iterator fval(cbody->firstValue());
-			qDebug() << "removing: " << (*fval)->toString();
 			Object *ret= removeDependencies(Expression::objectCopy(*fval));
 			
 			QStringList::const_iterator iBvars(bvars.constBegin());
@@ -1147,7 +1207,7 @@ Object* Analitza::removeDependencies(Object * o) const
 				return c;
 			}
 		} else {
-			QList<Object*>::iterator it(c->m_params.begin());
+			QList<Object*>::iterator it(c->firstValue());
 			for(; it!=c->m_params.end(); ++it)
 				*it = removeDependencies(*it);
 		}

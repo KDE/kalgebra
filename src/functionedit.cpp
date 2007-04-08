@@ -55,7 +55,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_valid = new QLabel(this);
 	m_valid->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	
-	m_color = new ColorCombo(this);
+	m_color = new KColorCombo(this);
 	m_color->setColor(QColor(0,150,0));
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	

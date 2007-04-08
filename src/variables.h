@@ -21,6 +21,7 @@
 
 #include <QHash>
 #include "container.h"
+#include "expression.h"
 
 /**
 *	Stores the variables in a hash map and make them available 
@@ -44,9 +45,14 @@ public:
 	~Variables();
 	
 	/**
-	*	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p o value.
-	*/
+	 *	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p o value.
+	 */
 	void modify(const QString& name, const Object* o);
+	
+	/**
+	 *	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p e expression.
+	 */
+	void modify(const QString& name, const Expression& o);
 	
 	/**
 	 *	The same as the last one but having @p d as a value for @p name.

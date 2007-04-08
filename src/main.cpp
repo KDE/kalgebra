@@ -29,12 +29,12 @@ int main(int argc, char *argv[])
 	KCmdLineArgs::init(argc, argv, &about);
 	KApplication app;
 	
-	KAlgebra *widget = new KAlgebra;
-// 	if(app.isSessionRestored())
-// 		RESTORE(KAlgebra);
-// 	else
-		widget->show();
+	if(app.isSessionRestored()) {
+		RESTORE(KAlgebra);
+	} else {
+		KAlgebra widget;
+		widget.show();
+	}
 	
-
 	return app.exec();
 }

@@ -24,32 +24,32 @@
 
 #include "expression.h"
 
-Console::Console(QWidget *parent) : QListWidget(parent), outs(0) {}
+Console::Console(QWidget *parent) : QListWidget(parent), outs(0), m_mode(Evaluation) {}
 
 Console::~Console() {}
 
 bool Console::addOperation(const QString& op, bool mathml)
 {
-	Expression res;
-	Cn val;
-	
+	QString result;
 	a.setExpression(Expression(op, mathml));
 	if(a.isCorrect()) {
-		res=a.evaluate();
-		
-		/*val=a.calculate();
-		
-		if(!a.isCorrect())
-			a.flushErrors();*/
+		if(m_mode==Evaluation) {
+			Expression res=a.evaluate();
+			result = res.toString();
+			a.m_vars->modify("ans", res.tree());
+		} else {
+			Cn val=a.calculate();
+			result = val.toString();
+			a.m_vars->modify("ans", &val);
+		}
 	}
 	
 	QListWidgetItem *item = new QListWidgetItem(this);
 	QFont f = item->font();
 	if(a.isCorrect()) {
-		a.m_vars->modify("ans", res.tree());
-		item->setText(QString("%1 = %2 = %3").arg(a.expression()->toString()).arg(res.toString()).arg(val.toString()));
-// 		item->setText(QString("%1\n%2").arg(op).arg(res.value(), 0, 'g', 12));
-		item->setToolTip(res.toString());
+		m_script += op; //Script won't have errors
+		item->setText(QString("%1 = %2").arg(a.expression()->toString()).arg(result));
+		item->setToolTip(result);
 		if(++outs % 2)
 			item->setBackgroundColor(QColor(233,233,222));
 		else
@@ -80,7 +80,9 @@ bool Console::loadScript(const QString& path)
 			correct=true;
 			while (!stream.atEnd()) {
 				line = stream.readLine(); // line of text excluding '\n'
-				correct &= addOperation(line);
+				line = line.trimmed();
+				if(!line.isEmpty())
+					correct &= addOperation(line);
 			}
 			file.close();
 		}
@@ -89,7 +91,27 @@ bool Console::loadScript(const QString& path)
 	return correct;
 }
 
-bool Console::saveLog(const QString& path)
+bool Console::saveScript(const QString & path) const
+{
+	bool correct=false;
+	if(!path.isEmpty()) {
+		QFile file(path);
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+			correct=false;
+		else {
+			QTextStream out(&file);
+			QStringList::const_iterator it = m_script.begin();
+			for(; it!=m_script.end(); it++)
+				out << *it << endl;
+			
+			correct=true;
+		}
+		file.close();
+	}
+	return correct;
+}
+
+bool Console::saveLog(const QString& path) const
 {
 	bool correct=false;
 	if(!path.isEmpty()) {
@@ -103,6 +125,7 @@ bool Console::saveLog(const QString& path)
 			
 			correct=true;
 		}
+		file.close();
 	}
 	return correct;
 }

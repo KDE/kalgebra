@@ -256,7 +256,7 @@ bool Operator::isBounded() const
 	}
 }
 
-OperatorsModel::OperatorsModel(QObject *parent) : QStandardItemModel(KEYWORDNUM, 3, parent)
+OperatorsModel::OperatorsModel(QObject *parent) : QStandardItemModel(KEYWORDNUM, 4, parent)
 {
 	QStringList ops; //FIXME: The big fixme, I don't like this way
 	ops << "plus" << "times" << "minus" << "divide" << "quotient";
