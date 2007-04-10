@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KAlgebra
+GenericName=Graph Calculator
+GenericName[es]=Calculadora gráfica
+GenericName[ca]=Calculadora gràfica
+GenericName[fr]=Calculatrice grafique
+Comment=Math Expression Solver and Plotter
+Comment[ca]=Traçador i solucionador d'expressions matemàtiques
+Comment[es]=Trazador y solucionador de expresiones matemáticas
+Comment[fr]=Traceur et résoluteur d'expressions mathématiques
+Exec=kalgebra
+MimeType=application/x-kalgebra
+Icon=kalgebra
+Type=Application
+#DocPath=kig/index.html
+Terminal=false
+Categories=Qt;KDE;Education;Math;
