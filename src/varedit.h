@@ -28,7 +28,11 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 
-#include "expressionedit.h"
+#include "analitza.h"
+
+class Object;
+class Variables;
+class ExpressionEdit;
 
 /**
  *	The VarEdit provides a dialog to allow users to edit/create a variable.
@@ -46,13 +50,13 @@ class VarEdit : public QDialog
 		~VarEdit();
 		
 		/** Returns the variable expression */
-		QString text() const { return m_exp->text(); }
+		QString text() const;
 		
 		/** Sets the editing variable name */
 		void setVar(const QString& newVar);	//This should edit the variable name
 		
 		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
-		void setAnalitza(Analitza *na) { vars= na->m_vars; m_exp->setAnalitza(na); }
+		void setAnalitza(Analitza *na);
 		
 		/** Returns the resulting variable expression */
 		Object* val();

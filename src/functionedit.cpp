@@ -25,7 +25,11 @@
 
 #include <klocale.h>
 
+#include "analitza.h"
 #include "expression.h"
+#include "graph2d.h"
+#include "algebrahighlighter.h"
+#include "variables.h"
 
 FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 		QWidget(parent, f), m_correct(false)

@@ -17,6 +17,8 @@
  *************************************************************************************/
 
 #include "algebrahighlighter.h"
+#include "expression.h"
+#include "expressionedit.h"
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc)
 	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0)

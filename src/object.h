@@ -20,7 +20,8 @@
 #define OBJECT_H
 
 #include <QList>
-#include <QtCore>
+#include <QString>
+#include <QDebug>
 
 // OperatorsModel m_words;
 /**

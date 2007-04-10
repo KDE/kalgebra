@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 
+#include "variables.h"
 #include "expression.h"
 
 Console::Console(QWidget *parent) : QListWidget(parent), outs(0), m_mode(Evaluation) {}

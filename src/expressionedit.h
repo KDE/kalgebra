@@ -24,11 +24,9 @@
 #include <QCompleter>
 #include <QLabel>
 #include <QStandardItemModel>
-
 #include "algebrahighlighter.h"
-#include "analitza.h"
-#include "exp.h"
 
+class Analitza;
 
 /**
 *	The expression edit widget is the one where we will input our expressions.

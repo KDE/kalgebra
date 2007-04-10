@@ -20,8 +20,9 @@
 #define VARIABLES_H
 
 #include <QHash>
-#include "container.h"
-#include "expression.h"
+#include "value.h"
+
+class Expression;
 
 /**
 *	Stores the variables in a hash map and make them available 

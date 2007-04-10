@@ -20,6 +20,10 @@
 #include "exp.h"
 
 #include <klocale.h>
+#include "variables.h"
+#include "analitza.h"
+#include "expression.h"
+
 function::function()
 	: points(0), func(0), m_show(true), m_selected(false), m_last_max_res(0)
 {}
@@ -62,7 +66,7 @@ function::~function()
 		delete [] points;
 }
 
-void function::update_points(QRect viewport, unsigned int max_res)
+void function::update_points(const QRect& viewport, unsigned int max_res)
 {
 	Q_ASSERT(func);
 	if(!m_show || !func->isCorrect()) {
@@ -293,4 +297,9 @@ Axe function::axeType() const
 		return Polar;
 	else
 		return Cartesian;
+}
+
+bool function::isShown() const
+{
+	return m_show && func->isCorrect();
 }

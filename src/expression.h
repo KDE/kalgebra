@@ -19,9 +19,11 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include <QtXml>
-#include "container.h"
+#include <QStringList>
+#include <QDomElement>
+#include "value.h"
 
+class Container;
 
 /**
  *	This class represents an expression.

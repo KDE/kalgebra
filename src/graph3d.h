@@ -20,6 +20,7 @@
 #define Q3DGRAPH_H
 
 #include <QGLWidget>
+#include <QThread>
 
 #include "analitza.h"
 

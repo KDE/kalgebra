@@ -28,10 +28,12 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QFrame>
+#include <QFile>
 
 #include <klocale.h>
-
 #include <cmath>
+
+#include "analitza.h"
 
 using namespace std;
 
@@ -167,15 +169,8 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	pfunc.setColor(QColor(0,150,0));
 	pfunc.setWidth(2);
 	
-	if(qpd)
-		finestra.begin(qpd);
-	else if(!buffer.isNull()) {
-		finestra.begin(&buffer);
-		finestra.initFrom(this);
-	} else
-		qDebug("!!!!!!!!!!");
-	
-// 	drawAxes(&finestra);
+	finestra.begin(qpd);
+//	finestra.initFrom(this);
 	
 	QRectF panorama(QPoint(0,0), size());
 	finestra.setPen(pfunc);
@@ -223,7 +218,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 void Graph2D::paintEvent( QPaintEvent * )
 {
 	if(!valid) 
-		pintafunc(NULL);
+		pintafunc(&buffer);
 	
 	front = buffer;
 	finestra.begin(&front);
@@ -556,9 +551,12 @@ bool Graph2D::toImage(const QString &path)
 	bool b=false;
 	
 	if(!path.isEmpty() && path.endsWith(".svg")) {
-		QSvgGenerator gen;//FIXME: Not working
+		QFile f(path);
+		QSvgGenerator gen;
+		gen.setOutputDevice(&f);
+		gen.setSize(this->size());
+//		gen.setResolution(100);
 		pintafunc(&gen);
-		gen.setFileName(path);
 		b=true;
 	} else if(!path.isEmpty() && path.endsWith(".png")) {
 		this->repaint();

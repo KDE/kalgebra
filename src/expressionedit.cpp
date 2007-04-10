@@ -26,6 +26,10 @@
 #include <QHeaderView>
 
 #include "operator.h"
+#include "exp.h"
+#include "analitza.h"
+#include "variables.h"
+#include "container.h"
 
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
 	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")

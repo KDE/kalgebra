@@ -21,11 +21,15 @@
 #define ANALITZA_H
 
 #include <cmath>
+#include <QString>
+#include <QStringList>
 
-#include "expression.h"
-#include "container.h"
 #include "value.h"
-#include "variables.h"
+#include "expression.h"
+
+class Object;
+class Variables;
+class Container;
 
 //FIXME: Explain that better and with examples.
 /**
@@ -56,7 +60,7 @@ class Analitza
 		~Analitza();
 		
 		/** Sets another Variable module so that it is used in further calculations. */
-		void setVariables(Variables* v) { if(m_vars!=NULL) delete m_vars; m_vars = v; } //FIXME: Copy me!
+		void setVariables(Variables* v);
 		
 		/** Sets an expression to calculate. */
 		void setExpression(const Expression &e);

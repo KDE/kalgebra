@@ -19,6 +19,8 @@
 #include "varedit.h"
 #include "analitza.h"
 #include "expression.h"
+#include "variables.h"
+#include "expressionedit.h"
 
 #include <klocale.h>
 
@@ -149,6 +151,17 @@ void VarEdit::edit()
 void VarEdit::ok(){
 	if(m_correct)
 		accept();
+}
+
+QString VarEdit::text() const
+{
+	return m_exp->text();
+}
+
+void VarEdit::setAnalitza(Analitza * na)
+{
+	vars= na->m_vars;
+	m_exp->setAnalitza(na);
 }
 
 #include "varedit.moc"

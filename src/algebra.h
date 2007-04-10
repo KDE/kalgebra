@@ -27,11 +27,12 @@
 #include <QToolBox>
 #include <QTabWidget>
 
-#include "functionedit.h"
-#include "console.h"
-#include "expressionedit.h"
-#include "graph2d.h"
-#include "graph3d.h"
+class ExpressionEdit;
+class Console;
+class VariableView;
+class FunctionEdit;
+class Graph2D;
+class Graph3D;
 
 class KAlgebra : public KMainWindow {
 Q_OBJECT

@@ -321,6 +321,7 @@ bool Container::equalTree(Object const* o1, Object const * o2)
 	return eq;
 }
 
+#if 0
 Container::Container(Cn* base, Object* var, Ci* degree) : Object(Object::container)
 {
 	if(!var)
@@ -414,6 +415,7 @@ Object* Container::monomialVar(const Container& c) //FIXME: Must improve these v
 	
 	return 0;
 }
+#endif
 
 void objectWalker(const Object* root, int ind)
 {
@@ -454,7 +456,7 @@ void objectWalker(const Object* root, int ind)
 	}
 }
 
-void print_dom(QDomNode in, int ind)
+void print_dom(const QDomNode& in, int ind)
 {
 	QString a;
 

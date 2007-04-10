@@ -33,7 +33,9 @@
 #include <QProgressDialog>
 #include <QApplication>
 
+#include "analitza.h"
 #include "exp.h"
+#include "variables.h"
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), z(-35.),

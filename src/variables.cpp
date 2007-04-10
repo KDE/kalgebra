@@ -17,6 +17,9 @@
  *************************************************************************************/
 
 #include "variables.h"
+#include "container.h"
+#include "expression.h"
+
 Variables::Variables() : QHash<QString, Object*>()
 {
 	insert("true", new Cn(1.));

@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include <QSyntaxHighlighter>
-#include "expressionedit.h"
 #include "exp.h"
 
 #ifndef ALGEBRAHIGHLIGHTER_H

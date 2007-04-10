@@ -19,10 +19,10 @@
 #ifndef EXP_H
 #define EXP_H
 
-#include <QtCore>
+#include <QStack>
+#include <QString>
+#include <QStringList>
 
-#include <cstdlib>
-#include <iostream>
 /**
 	@author Aleix Pol i Gonzalez
 */

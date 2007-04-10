@@ -21,7 +21,6 @@
 #include <QSplitter>
 #include <QApplication>
 #include <QHeaderView>
-#include <QSplitter>
 #include <QDockWidget>
 #include <QMessageBox>
 
@@ -35,6 +34,11 @@
 #include "algebra.h"
 #include "varedit.h"
 #include "functionedit.h"
+#include "console.h"
+#include "expressionedit.h"
+#include "graph2d.h"
+#include "graph3d.h"
+#include "variables.h"
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {

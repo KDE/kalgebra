@@ -28,11 +28,13 @@
 #include <QComboBox>
 #include <QList>
 
-#include "kcolorcombo.h"
+#include <kcolorcombo.h>
 
-#include "graph2d.h"
 #include "expressionedit.h"
-#include "algebrahighlighter.h"
+
+class Graph2D;
+class ExpressionEdit;
+class AlgebraHighlighter;
 
 /**
  *	The color combo shows a different colors list.

@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QScrollBar>
 
-#include "expressionedit.h"
 #include "analitza.h"
 
 /**

@@ -17,8 +17,11 @@
  *************************************************************************************/
 
 #include "analitza.h"
-#include "klocale.h"
+#include <klocale.h>
 
+#include "value.h"
+#include "variables.h"
+#include "container.h"
 Analitza::Analitza() : m_vars(new Variables) { }
 
 Analitza::Analitza(const Analitza& a) : m_exp(a.m_exp), m_err(a.m_err)
@@ -1213,5 +1216,12 @@ Object* Analitza::removeDependencies(Object * o) const
 		}
 	}
 	return o;
+}
+
+void Analitza::setVariables(Variables * v)//FIXME: Copy me!
+{
+	if(m_vars!=NULL)
+		delete m_vars;
+	m_vars = v;
 }
 

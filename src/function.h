@@ -20,8 +20,13 @@
 #define FUNCTION_H
 
 #include <QColor>
-#include "analitza.h"
-#include "expression.h"
+#include <QRect>
+#include <QPair>
+
+#include <cmath>
+
+class Analitza;
+class Expression;
 
 /** Defines a function axe type. */
 enum Axe { Cartesian=0, Polar};
@@ -55,7 +60,7 @@ public:
 		@param viewport sets the coordinates the function will fit to.
 		@param resolution sets how many points will the function have.
 	*/
-	void update_points(QRect viewport, unsigned int resolution);
+	void update_points(const QRect& viewport, unsigned int resolution);
 	
 	/** Retrieves the color of the function. */
 	QColor color() const { return m_color; }
@@ -76,7 +81,7 @@ public:
 	void setShown(bool newShow) { m_show=newShow; }
 	
 	/** Returns whether the function can be drawn. */
-	bool isShown() const { return m_show && func->isCorrect(); }
+	bool isShown() const;
 	
 	/** Equal operator. */
 	bool operator==(const function& f) const { return f.m_name==m_name; }

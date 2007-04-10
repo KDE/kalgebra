@@ -17,6 +17,7 @@
  *************************************************************************************/
 #include "klocale.h"
 
+#include "container.h"
 #include "expression.h"
 #include "exp.h"
 

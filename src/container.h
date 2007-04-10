@@ -19,14 +19,14 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-#include <QtXml>
+#include <QDomNode>
 
 #include "object.h"
-#include "value.h"
 #include "operator.h"
 
+//FIXME: Must move it somewhere
 /** Prints a dom tree from a dom node @p in indenting it by @p ind */
-void print_dom(QDomNode in, int ind);
+void print_dom(const QDomNode& in, int ind);
 
 /** Prints an expression tree from a node @p o indenting it by @p ind */
 void objectWalker(const Object* o, int ind=0);
@@ -112,6 +112,7 @@ public:
 	/** Returns whether it is correct container. */
 	bool isCorrect() const { return m_correct && m_type==Object::container && m_cont_type!=Object::cnone; }
 	
+#if 0 //not used
 	//Monomials
 	/** Creates a monomial, just to ease the construction. */
 	Container(Cn* base, Object* var, Ci* degree);
@@ -124,6 +125,7 @@ public:
 	
 	/** Returns the base of a monomial. */
 	static Object* monomialVar(const Container&);
+#endif
 // protected:
 	QList<Object*> m_params;
 private:

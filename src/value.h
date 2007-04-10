@@ -19,8 +19,8 @@
 #ifndef VALUE_H
 #define VALUE_H
 
-#include <object.h>
-#include <QtXml>
+#include "object.h"
+#include <QDomElement>
 #include <cmath>
 /**
 *	The Cn class is the one that represents a value in the expression trees.
