@@ -15,10 +15,11 @@
  *  along with this program; if not, write to the Free Software                      *
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
-#include "klocale.h"
+#include "expression.h"
+
+#include <KLocale>
 
 #include "container.h"
-#include "expression.h"
 #include "exp.h"
 
 Expression::Expression() : m_tree(0)

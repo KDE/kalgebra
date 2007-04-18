@@ -16,21 +16,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <QVBoxLayout>
-#include <QLayout>
-#include <QSplitter>
-#include <QApplication>
-#include <QHeaderView>
-#include <QDockWidget>
-#include <QMessageBox>
-
-#include <kfiledialog.h>
-#include <kmenu.h>
-#include <kmenubar.h>
-#include <kstatusbar.h>
-#include <kaction.h>
-#include <klocale.h>
-
 #include "algebra.h"
 #include "varedit.h"
 #include "functionedit.h"
@@ -39,6 +24,21 @@
 #include "graph2d.h"
 #include "graph3d.h"
 #include "variables.h"
+
+#include <QVBoxLayout>
+#include <QLayout>
+#include <QSplitter>
+#include <QApplication>
+#include <QHeaderView>
+#include <QDockWidget>
+#include <QMessageBox>
+
+#include <KFileDialog>
+#include <KMenu>
+#include <KMenuBar>
+#include <KStatusBar>
+#include <KAction>
+#include <KLocale>
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {

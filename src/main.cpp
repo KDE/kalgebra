@@ -16,9 +16,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <KApplication>
+#include <KAboutData>
+#include <KCmdLineArgs>
 #include "algebra.h"
 
 int main(int argc, char *argv[])
@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
 	/*if(app.isSessionRestored()) {
 		RESTORE(KAlgebra);
 	} else {*/
-		KAlgebra widget;
-		widget.show();
+		KAlgebra* widget = new KAlgebra;
+		widget->show();
 	//}
 	
 	return app.exec();
