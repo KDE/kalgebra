@@ -49,9 +49,9 @@ Expression Analitza::evaluate()
 		Object *aux=e.m_tree;
 		e.m_tree=eval(aux, true);
 		delete aux;
-		objectWalker(e.m_tree);
+// 		objectWalker(e.m_tree);
 		e.m_tree=simp(e.m_tree);
-		objectWalker(e.m_tree);
+// 		objectWalker(e.m_tree);
 		return e;
 	} else {
 		m_err << i18n("Must specify an operation");
@@ -90,7 +90,8 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 			default: { //FIXME: Make sure it works (which doesn't) f:=x->x+1;f(x)
 				const Container *c = (Container*) branch;
 				Operator op(c->firstOperator());
-				if(c->containerType()==Object::apply && op.isBounded()) { //it is a function
+				if(op.operatorType()==Object::function && c->containerType()==Object::apply && op.isBounded()) {
+					//it is a function. I'll take only this case for the moment
 					const Container *cbody = c;
 					QStringList bvars;
 					if(op.operatorType()==Object::function) {
@@ -115,14 +116,14 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 									}
 								}
 							}
+							
+							QStringList::const_iterator iBvars = bvars.constBegin();
+							int i=0;
+							for(; iBvars!=bvars.constEnd(); ++iBvars)
+								m_vars->stack(*iBvars, c->m_params[++i]);
 						}
-						
-						QStringList::const_iterator iBvars = bvars.constBegin();
-						int i=0;
-						for(; iBvars!=bvars.constEnd(); ++iBvars)
-							m_vars->stack(*iBvars, c->m_params[++i]);
-						
 					}
+					
 			
 					QList<Object*>::const_iterator fval = cbody->firstValue();
 					ret = eval(*fval, resolve);
@@ -519,7 +520,7 @@ Cn Analitza::product(const Container& n)
 	return ret;
 }
 
-bool Analitza::isFunction(Ci func) const
+bool Analitza::isFunction(const Ci& func) const
 {
 	if(!m_vars->contains(func.name()))
 		return false;
@@ -1131,25 +1132,44 @@ void Analitza::simpPolynomials(Container* c)
 	}
 }
 
-
-bool Analitza::hasVars(const Object *o, const QString &var)
+bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& bvars)
 {
-	Q_ASSERT(o); //FIXME: Must recognize bvars
+	Q_ASSERT(o);
+	
 	bool r=false;
 	switch(o->type()) {
-		case Object::variable:
+		case Object::variable: {
+			Ci *i = (Ci*) o;
 			if(!var.isEmpty()) {
-				Ci *i = (Ci*) o;
 				r=i->name()==var;
 			} else
 				r=true;
-			break;
+			
+			if(r && bvars.contains(i->name()))
+				r=false;
+		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
+			Object *first = *c->firstValue();
+			bool firstFound=false;
 			QList<Object*>::iterator it = c->m_params.begin();
 			
-			for(; !r && it!=c->m_params.end(); it++)
-				r |= hasVars(*it);
+			QStringList scope=bvars;
+			
+			for(; !r && it!=c->m_params.end(); it++) {
+				if(*it==first)
+					firstFound=true;
+				
+				if(!firstFound && (*it)->isContainer()) {
+					Container *cont= (Container*) *it;
+					if(cont->containerType()==Object::bvar) {
+						Ci* bvar=(Ci*) cont->m_params[0];
+						if(bvar->isCorrect())
+							scope += bvar->name();
+					}
+				} else if(firstFound)
+					r |= hasVars(*it, var, scope);
+			}
 			
 		} break;
 		case Object::none:
@@ -1157,6 +1177,7 @@ bool Analitza::hasVars(const Object *o, const QString &var)
 		case Object::oper:
 			r=false;
 	}
+	
 	return r;
 }
 
@@ -1224,4 +1245,5 @@ void Analitza::setVariables(Variables * v)//FIXME: Copy me!
 		delete m_vars;
 	m_vars = v;
 }
+
 

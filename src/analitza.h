@@ -78,7 +78,7 @@ class Analitza
 		bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
 		
 		/** Returns whether @p var is a function. */
-		bool isFunction(Ci var) const;
+		bool isFunction(const Ci& var) const;
 		
 		/** Returns a list of expression's bounded variable names. */
 		QStringList bvarList() const;
@@ -89,8 +89,8 @@ class Analitza
 		/** simplifies the expression. */
 		void simplify(); //FIXME: Should return an Expression
 		
-		/** Returns whether there is any @p var variable in the @p o tree. */
-		static bool hasVars(const Object* o, const QString &var=QString());
+		/** Returns whether there is any @p var variable in the @p o tree. @p vars tells the already defined variables (which won't return false). */
+		static bool hasVars(const Object* o, const QString &var=QString(), const QStringList& bvars=QStringList());
 		
 		/** Return an error list. */
 		QStringList errors() const { return m_err; }
