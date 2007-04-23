@@ -110,7 +110,7 @@ void function::update_pointsY(QRect viewport, unsigned int max_res)
 	double inv_res= (double) (-l_lim+r_lim)/resolucio;
 	register int i=0;
 	
-	if(viewport.width() == m_last_viewport.width()) { //FIXME: resolucio diferent
+	if(viewport.width() == m_last_viewport.width()) { //Perhaps these optimizations could be removed now, calculator is fast enough
 		int cacho = static_cast<int>(round(resolucio/(-l_lim+r_lim)));
 		
 		if(viewport.right()<m_last_viewport.right()) {

@@ -176,6 +176,8 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 	a[0]=' ';
 	a=a.trimmed();
 	l-=a.length();
+	if(l==0)
+		l=1;
 	return ret;
 }
 

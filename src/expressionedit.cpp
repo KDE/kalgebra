@@ -324,7 +324,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 		Container *c = (Container*) a->m_vars->value(funcname);
 		QStringList params = c->bvarList();
 		
-		QString sample = (param < params.count()) ?
+		QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
 				QString("<em>%1</em>(").arg(funcname) :
 				QString("<em style='color:red'>%1</em>(").arg(funcname);
 		
@@ -338,7 +338,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 		}
 		ajudant(sample+')');
 	} else
-		ajudant("");
+		ajudant(QString());
 }
 
 void ExpressionEdit::setAutocomplete(bool a)

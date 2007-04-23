@@ -2,6 +2,8 @@ project(kalgebra)
 
 include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
+add_subdirectory(tests)
+
 set(kalgebra_SRCS
 	expression.cpp
 	algebra.cpp
@@ -28,5 +30,5 @@ kde4_add_executable(kalgebra ${kalgebra_SRCS} )
 target_link_libraries(kalgebra ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${QT_QTOPENGL_LIBRARY})
 
 install(TARGETS kalgebra DESTINATION bin)
-install(FILES kalgebra.desktop  DESTINATION  ${XDG_APPS_DIR} )
+install(FILES kalgebra.desktop DESTINATION ${XDG_APPS_DIR} )
 
