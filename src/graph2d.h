@@ -129,9 +129,10 @@ private:
 	void drawCartesianAxes(QPainter*);
 	void update_points();
 	QPointF toWidget(const QPointF &) const;
-	QPointF fromWidget(const QPoint& p) const;
-	QPointF toViewport(const QPoint &mv) const;
-	QPointF calcImage(QPointF dp);
+	QPointF fromWidget(const QPointF& p) const;
+	QPointF toViewport(const QPoint& mv) const;
+	QPointF calcImage(const QPointF& dp);
+	double pendent(const QPointF& dp) const;
 	
 	//events
 	void paintEvent( QPaintEvent * );

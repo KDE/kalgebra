@@ -231,6 +231,21 @@ void Graph2D::paintEvent( QPaintEvent * )
 	if(!m_readonly && mode==None) {
 		ultim = toWidget(mark);
 		
+		//Draw derivative
+		QPointF from, to;
+		ccursor.setColor(QColor(90,90,160));
+		ccursor.setStyle(Qt::SolidLine);
+		finestra.setPen(ccursor);
+		double der = pendent(fromWidget(ultim)), arcder = atan(der);
+		const double len=3.*der;
+		from.setX(mark.x()+len*cos(arcder));
+		from.setY(mark.y()+len*sin(arcder));
+		
+		to.setX(mark.x()-len*cos(arcder));
+		to.setY(mark.y()-len*sin(arcder));
+		finestra.drawLine(toWidget(from), toWidget(to));
+		//EOderivative
+		
 		ccursor.setColor(QColor(0xc0,0,0));
 		ccursor.setStyle(Qt::SolidLine);
 		
@@ -249,7 +264,6 @@ void Graph2D::paintEvent( QPaintEvent * )
 		
 		finestra.setPen(QPen(QColor(0,0,0)));
 		finestra.drawText(QPointF(ultim.x()+15., ultim.y()+15.), m_posText);
-
 	} else if(!m_readonly && mode==Selection) {
 		ccursor.setColor(QColor(0xc0,0,0));
 		ccursor.setStyle(Qt::SolidLine);
@@ -374,13 +388,14 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 	this->repaint();
 }
 
-QPointF Graph2D::calcImage(QPointF dp)
+QPointF Graph2D::calcImage(const QPointF& ndp)
 {
+	QPointF dp = ndp;
 	m_posText="";
 	if(!funclist.isEmpty()){
 		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
-			if((*it).selected() && (*it).isShown()) {
-				QPair<QPointF, QString> o = (*it).calc(dp);
+			if(it->selected() && it->isShown()) {
+				QPair<QPointF, QString> o = it->calc(dp);
 				dp=o.first;
 				m_posText = o.second;
 				break;
@@ -390,6 +405,19 @@ QPointF Graph2D::calcImage(QPointF dp)
 	return dp;
 }
 
+double Graph2D::pendent(const QPointF & dp) const
+{
+	double ret=0.;
+	if(!funclist.isEmpty()){
+		for (QList<function>::const_iterator it = funclist.begin(); it != funclist.end(); ++it ){
+			if(it->selected() && it->isShown()) {
+				ret = it->derivative(dp);
+				break;
+			}
+		}
+	}
+	return ret;
+}
 
 void Graph2D::unselect(){
 	if(!funclist.isEmpty()){
@@ -434,7 +462,6 @@ bool Graph2D::editFunction(const QString& toChange, const function& func)
 			exist=true;
 			*it = func;
 		}
-		qDebug() << "ddsdas" << it->name();
 	}
 	
 	update_points();
@@ -483,7 +510,7 @@ QPointF Graph2D::toWidget(const QPointF& p) const
 	return QPointF((-viewport.left() + p.x()) * rang_x,  (-viewport.top() + p.y()) * rang_y);
 }
 
-QPointF Graph2D::fromWidget(const QPoint& p) const
+QPointF Graph2D::fromWidget(const QPointF& p) const
 {
 	double part_negativa_x = -viewport.left();
 	double part_negativa_y = -viewport.top();

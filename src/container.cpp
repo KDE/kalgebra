@@ -484,7 +484,21 @@ QList<Object *>::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin());
 	for(; it!=m_params.end(); ++it) {
-		if((*it)->type()==Object::value || (*it)->type()==Object::variable || ((*it)->type()==Object::container && ((Container*) *it)->m_cont_type==apply))
+		bool found=false;
+		
+		switch((*it)->type()) {
+			case Object::value:
+			case Object::variable:
+				found=true;
+				break;
+			case Object::container: {
+				ContainerType t=((Container*) *it)->m_cont_type;
+				if(t==apply || t==math || t==lambda)
+					found=true;
+			} default:
+				break;
+		}
+		if(found)
 			break;
 	}
 	return it;
@@ -492,9 +506,23 @@ QList<Object *>::iterator Container::firstValue()
 
 QList<Object *>::const_iterator Container::firstValue() const
 {
-	QList<Object *>::const_iterator it(m_params.constBegin());
-	for(; it!=m_params.constEnd(); ++it) {
-		if((*it)->type()==Object::value || (*it)->type()==Object::variable || ((*it)->type()==Object::container && ((Container*) *it)->m_cont_type==apply))
+	QList<Object *>::const_iterator it(m_params.begin());
+	for(; it!=m_params.end(); ++it) {
+		bool found=false;
+		
+		switch((*it)->type()) {
+			case Object::value:
+			case Object::variable:
+				found=true;
+				break;
+				case Object::container: {
+					ContainerType t=((Container*) *it)->m_cont_type;
+					if(t==apply || t==math || t==lambda)
+						found=true;
+				} default:
+						break;
+		}
+		if(found)
 			break;
 	}
 	return it;

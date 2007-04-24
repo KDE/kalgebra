@@ -86,10 +86,11 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 
-	QTest::newRow("simple polynomial") << "diff(x^2+1)" << "2*x";
-	QTest::newRow("power and sinus") << "diff(x^2+sin(x))" << "2*x+cos(x)";
-	QTest::newRow("e**x") << "diff(e^x)" << "e^x";
-	QTest::newRow("chain rule") << "diff(sin(x**2))" << "2*x*cos(x^2)";
+	QTest::newRow("simple polynomial") << "x^2+1" << "2*x";
+	QTest::newRow("power and sinus") << "x^2+sin(x)" << "2*x+cos(x)";
+	QTest::newRow("power derivative and logarithm simplification") << "e^x" << "e^x";
+	QTest::newRow("chain rule") << "sin(x**2)" << "2*x*cos(x^2)";
+	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
 }
 
 void AnalitzaTest::testDerivativeSimple()
@@ -98,7 +99,7 @@ void AnalitzaTest::testDerivativeSimple()
 	QFETCH(QString, result);
 	
 	a->setExpression(Expression(expression, false));
-	QCOMPARE(a->evaluate().toString(), QString(result));
+	QCOMPARE(a->derivative().toString(), QString(result));
 }
 
 #include "analitzatest.moc"

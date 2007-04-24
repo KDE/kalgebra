@@ -25,28 +25,31 @@
 #include "expression.h"
 
 function::function()
-	: points(0), func(0), m_show(true), m_selected(false), m_last_max_res(0)
+	: points(0), func(0), m_deriv(0), m_show(true), m_selected(false), m_last_max_res(0)
 {}
 
 function::function(const QString &name, const Expression& newFunc, const QColor& color=Qt::red, bool selec)
-	: points(0), func(new Analitza), m_show(true), m_selected(selec), m_color(color), m_last_viewport(QRect()),
+	: points(0), func(new Analitza), m_deriv(0), m_show(true), m_selected(selec), m_color(color), m_last_viewport(QRect()),
 	       m_last_resolution(0), m_last_max_res(0), m_name(name)
 {
 	func->setExpression(newFunc);
 }
 
 function::function(const function& f)
-	: points(0), func(new Analitza), m_show(f.m_show), m_selected(f.m_selected), m_color(f.m_color), m_last_viewport(QRect()),
+	: points(0), func(new Analitza), m_deriv(0), m_show(f.m_show), m_selected(f.m_selected), m_color(f.m_color), m_last_viewport(QRect()),
 		m_last_resolution(0), m_last_max_res(0), m_name(f.m_name)
 {
 	func->setExpression(*f.func->expression());
+	m_deriv = new Expression(func->derivative());
 }
 
 function function::operator=(const function& f)
 {
 	if(&f!=this) {
+		//Do I need to delete ptrs?
 		points=0;
 		func=new Analitza;
+		func->setExpression(*f.func->expression());
 		m_show=f.m_show;
 		m_selected=f.m_selected;
 		m_color=f.m_color;
@@ -54,6 +57,7 @@ function function::operator=(const function& f)
 		m_last_resolution=0;
 		m_last_max_res=0;
 		m_name=f.m_name;
+		m_deriv = new Expression(func->derivative());
 	}
 	return *this;
 }
@@ -62,17 +66,20 @@ function::~function()
 {
 	if(func!=0)
 		delete func;
+	
 	if(points!=0)
 		delete [] points;
+	
+	if(m_deriv!=0)
+		delete m_deriv;
 }
 
 void function::update_points(const QRect& viewport, unsigned int max_res)
 {
 	Q_ASSERT(func);
-	if(!m_show || !func->isCorrect()) {
-		qDebug() << "not correct" << func->expression()->toString();
+	if(!m_show || !func->isCorrect())
 		return;
-	}
+	
 	QStringList lambdas = func->bvarList();
 	
 	if(lambdas.count() <= 1){ //2D Graph only support 1 lambda, must recheck when add parametric functions
@@ -302,4 +309,28 @@ Axe function::axeType() const
 bool function::isShown() const
 {
 	return m_show && func->isCorrect();
+}
+
+double function::derivative(const QPointF & p) const
+{
+	Analitza a;
+	Cn ret=0.;
+	a.setExpression(*m_deriv);
+	
+	if(m_firstlambda=="x") {
+		a.m_vars->modify("x", p.x());
+	} else if(m_firstlambda=="y") {
+		a.m_vars->modify("y", p.y());
+	} else if(m_firstlambda=="x") {
+		//TODO: Not yet implemented, copy from function::calc
+	} else
+		qDebug() << "sacre bleu!";
+	
+	if(a.isCorrect())
+		ret = a.calculate().value();
+	
+	if(a.isCorrect())
+		return ret.value();
+	else
+		return 0.; //FIXME:Must improve that
 }

@@ -35,15 +35,15 @@ Q_OBJECT
 	
 	private slots:
 		void initTestCase();
+		void testTrivialEvaluate_data();
+		void testTrivialEvaluate();
+		void testTrivialCalculate_data();
+		void testTrivialCalculate();
 		void testDerivativeSimple_data();
 		void testDerivativeSimple();
 		void cleanupTestCase();
 		
 	private:
-		void testTrivialEvaluate_data();
-		void testTrivialEvaluate();
-		void testTrivialCalculate_data();
-		void testTrivialCalculate();
 		
 	private:
 		Analitza *a;

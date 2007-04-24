@@ -114,6 +114,10 @@ class Expression
 		 */
 		QString toMathML() const;
 		
+		/**
+		 * Invalidates the data of the expression.
+		 */
+		void clear();
 		
 		/**
 		 *	Converts a @p tag to an object type.
@@ -139,6 +143,7 @@ class Expression
 		 *	Copies an object @p o to a new object.
 		 */
 		static Object* objectCopy(const Object * o);
+		
 	protected:
 		/** The real container of the class, has all the expression tree inside. */
 		Object* m_tree;

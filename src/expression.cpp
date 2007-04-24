@@ -30,6 +30,7 @@ Expression::Expression(const Expression & e) : m_tree(0), m_err(e.m_err)
 {
 	if(e.isCorrect())
 		m_tree = objectCopy(e.m_tree);
+	m_err = e.m_err;
 }
 
 Expression::Expression(const QString & exp, bool mathml) : m_tree(0), m_err()
@@ -238,6 +239,12 @@ Object* Expression::objectCopy(const Object * old)
 			qDebug() << "Oops!";
 	}
 	return o;
+}
+
+void Expression::clear()
+{
+	delete m_tree;
+	m_err.clear();
 }
 
 

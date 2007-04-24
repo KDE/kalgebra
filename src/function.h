@@ -97,11 +97,16 @@ public:
 	
 	/** Returns the type of axe that the function has. */
 	Axe axeType() const;
+	
+	/** Returns the "pendent" of the current function related to the function. */ //FIXME: this doc
+	double derivative(const QPointF& p) const; 
+	
 protected:
 	/** Here we store the calculated points of the function. */
 	QPointF *points;
 private:
 	Analitza *func;
+	Expression *m_deriv;
 	bool m_show;
 	bool m_selected;
 	QString m_firstlambda;

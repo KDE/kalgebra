@@ -74,6 +74,9 @@ class Analitza
 		/** Evaluates an expression, like calculate() but returns a tree. */
 		Expression evaluate();
 		
+		/** Evaluates the derivative of an expression expression, like expression() but sorrounded with a diff(). */
+		Expression derivative(/*QStringList vars*/);
+		
 		/** Returns whether there has been a problem in the last calculation. */
 		bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
 		
@@ -100,7 +103,7 @@ class Analitza
 		QStringList m_err;
 	private:
 		Cn calc(const Object* e);
-		Cn operate(Container*);
+		Cn operate(const Container*);
 		Object* eval(const Object* e, bool vars);
 		
 		Cn sum(const Container& c);

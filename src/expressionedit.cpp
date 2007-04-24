@@ -64,7 +64,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	treeView->setMinimumWidth(300);
 	updateCompleter();
 	
-	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+// 	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
 // 	treeView->header()->setResizeMode(2, QHeaderView::ResizeToContents);
 	treeView->setColumnHidden(1, true);
 	treeView->setColumnHidden(2, true);
