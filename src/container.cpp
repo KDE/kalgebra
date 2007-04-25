@@ -435,7 +435,7 @@ void objectWalker(const Object* root, int ind)
 	switch(root->type()) { //TODO: include the function into a module and use toString
 		case Object::container:
 			c= (Container*) root;
-			qDebug() << qPrintable(s) << "| cont: " << c->toMathML();
+			qDebug() << qPrintable(s) << "| cont: " << c->toString();
 			for(int i=0; i<c->m_params.count(); i++)
 				objectWalker(c->m_params[i], ind+1);
 			
@@ -452,7 +452,8 @@ void objectWalker(const Object* root, int ind)
 			var = (Ci*) root;
 			qDebug() << qPrintable(s) << "| variable: " << var->name() << "Func:" << var->isFunction();
 			break;
-		default:			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type();
+		default:
+			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type();
 			break;
 	}
 }

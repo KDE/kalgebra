@@ -337,7 +337,7 @@ void Graph2D::mouseMoveEvent(QMouseEvent *e)
 		setViewport(viewport);
 		
 		press = e->pos();
-		valid=false;
+		update_points();
 	} else if(e->buttons()&Qt::LeftButton) {
 		last = e->pos();
 	} else if(e->buttons()==0)

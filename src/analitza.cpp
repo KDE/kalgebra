@@ -422,15 +422,14 @@ Cn Analitza::operate(const Container* c)
 		ret = sum(*c);
 	else if(op!= 0 && op->operatorType()==Object::product)
 		ret = product(*c);
-	else switch(c->containerType()) {
+	else switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Object::apply:
 		case Object::math:
 		case Object::bvar:
 		case Object::uplimit:
 		case Object::downlimit:
 		{
-			if(c->isEmpty()) { //FIXME: x->sin x hangs
-				qDebug() << "puto" << c->toString();
+			if(c->isEmpty()) {
 				m_err << i18n("Container without values found.");
 			} else if(c->m_params[0]->type() == Object::variable) {
 				Ci* var= (Ci*) c->m_params[0];
@@ -614,7 +613,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 			if(floor(b)!=0.)
 				a = static_cast<int>(floor(a)) % static_cast<int>(floor(b));
 			else
-				m_err << i18n("Can't calculator the <em>reminder</em> of 0.");
+				m_err << i18n("Cannot calculate the <em>reminder</em> of 0.");
 			break;
 		case Object::quotient:
 			a = floor(a / b);
@@ -624,7 +623,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 				a = (((int)a % (int)b)==0) ? 1.0 : 0.0;
 			else {
 				a = 0.;
-				m_err << i18n("Can't calculate the <em>factor</em> of 0.");
+				m_err << i18n("Cannot calculate the <em>factor</em> of 0.");
 			}
 			boolean = true;
 			break;
@@ -1310,6 +1309,8 @@ Expression Analitza::derivative()
 	if(m_exp.isCorrect()) {
 		exp.m_tree = derivative("x", m_exp.m_tree);
 		exp.m_tree = simp(exp.m_tree);
+		
+// 		objectWalker(exp.m_tree);
 	}
 	return exp;
 }

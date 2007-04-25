@@ -22,13 +22,13 @@
 #include "variables.h"
 #include "expressionedit.h"
 
-#include <klocale.h>
+#include <KLocale>
 
 #include <QPushButton>
 #include <QLabel>
 
 VarEdit::VarEdit(QWidget *parent, bool modal) :
-	QDialog (parent), vars(NULL), m_correct(false), m_var("x")
+	KDialog (parent), vars(NULL), m_correct(false), m_var("x")
 {
 	this->setWindowTitle(i18n("Add/Edit a variable"));
 	this->setModal(modal);

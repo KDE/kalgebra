@@ -19,8 +19,9 @@
 #ifndef VAREDIT_H
 #define VAREDIT_H
 
+#include <KDialog>
+
 #include <QToolTip>
-#include <QDialog>
 #include <QLayout>
 #include <QRadioButton>
 #include <QLineEdit>
@@ -28,8 +29,7 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 
-#include "analitza.h"
-
+class Analitza;
 class Object;
 class Variables;
 class ExpressionEdit;
@@ -39,7 +39,7 @@ class ExpressionEdit;
  *	@author Aleix Pol i Gonzalez
  */
 
-class VarEdit : public QDialog
+class VarEdit : public KDialog
 {
 	Q_OBJECT
 	public:

@@ -321,7 +321,7 @@ double function::derivative(const QPointF & p) const
 		a.m_vars->modify("x", p.x());
 	} else if(m_firstlambda=="y") {
 		a.m_vars->modify("y", p.y());
-	} else if(m_firstlambda=="x") {
+	} else if(m_firstlambda=="q") {
 		//TODO: Not yet implemented, copy from function::calc
 	} else
 		qDebug() << "sacre bleu!";
