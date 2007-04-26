@@ -28,25 +28,27 @@
 #include <QLabel>
 
 VarEdit::VarEdit(QWidget *parent, bool modal) :
-	KDialog (parent), vars(NULL), m_correct(false), m_var("x")
+	KDialog(parent), vars(NULL), m_correct(false), m_var("x")
 {
-	this->setWindowTitle(i18n("Add/Edit a variable"));
+	QWidget *widget = new QWidget( this );
+	this->setCaption(i18n("Add/Edit a variable"));
 	this->setModal(modal);
 	this->setMinimumSize(200, 200);
+	this->setButtons(KDialog::Ok | KDialog::Cancel);
+	this->enableButtonApply( false );
+	this->setMainWidget( widget );
 	
-	buttonBox = new QDialogButtonBox(this);
-	buttonBox->setOrientation(Qt::Horizontal);
-	buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok);
-	QObject::connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	QObject::connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	connect( this, SIGNAL( applyClicked() ), this, SLOT( accept() ) );
+	connect( this, SIGNAL( okClicked() ), this, SLOT( reject() ) );
 	
-	QVBoxLayout *topLayout = new QVBoxLayout(this);
+	QVBoxLayout *topLayout = new QVBoxLayout(widget);
 	
-	m_exp = new ExpressionEdit(this);
+	m_exp = new ExpressionEdit(widget);
 	connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_exp, SIGNAL(returnPressed()), this, SLOT(ok()));
 	
-	m_valid = new QLabel(this);
+	m_valid = new QLabel(widget);
 	
 	QGroupBox *buttons = new QGroupBox(i18n("Mode"));
 	
@@ -54,7 +56,7 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	m_opt_calc = new QRadioButton(i18n("Calculate the expression"));
 	m_opt_calc->setChecked(true);
 	
-	QVBoxLayout *vbox = new QVBoxLayout;
+	QVBoxLayout *vbox = new QVBoxLayout(buttons);
 	vbox->addWidget(m_opt_calc);
 	vbox->addWidget(m_opt_exp);
 	buttons->setLayout(vbox);
@@ -62,7 +64,6 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	topLayout->addWidget(m_exp);
 	topLayout->addWidget(m_valid);
 	topLayout->addWidget(buttons);
-	topLayout->addWidget(buttonBox);
 	
 	m_exp->setFocus();
 }
@@ -83,23 +84,18 @@ void VarEdit::setVar(const QString& newVar)
 	}
 }
 
-Object* VarEdit::val()
+Expression VarEdit::val()
 {
-	Analitza a;
-	Object* ret;
 	
-	Expression e;
-	if(m_exp->isMathML())
-		e.setMathML(m_exp->text());
-	else
-		e.setText(m_exp->text());
+	Expression e(m_exp->text(), m_exp->isMathML());
 	
-	if(m_opt_calc->isChecked())
-		ret = new Cn(a.calculate());
-	else
-		ret = Expression::objectCopy(a.expression()->m_tree);
 	
-	return ret;
+	if(m_opt_calc->isChecked()) {
+		Analitza a;
+		a.setExpression(e);
+		return Expression(a.calculate());
+	} else
+		return e;
 }
 
 void VarEdit::edit()
@@ -145,7 +141,7 @@ void VarEdit::edit()
 	}
 	
 	m_exp->setCorrect(m_correct);
-	buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_correct);
+	enableButtonApply(m_correct);
 }
 
 void VarEdit::ok(){

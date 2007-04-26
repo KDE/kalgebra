@@ -50,6 +50,11 @@ class Expression
 		Expression(const Expression& e);
 		
 		/**
+		 *	Creates an expression from a value
+		 */
+		Expression(const Cn& e);
+		
+		/**
 		 *	Constructor. Parses an expression and creates the object.
 		 *	@param exp expression to be assigned
 		 *	@param mathml format of the expression

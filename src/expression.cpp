@@ -22,8 +22,14 @@
 #include "container.h"
 #include "exp.h"
 
-Expression::Expression() : m_tree(0)
+Expression::Expression() : m_tree(0), m_err()
 {
+}
+
+Expression::Expression(const Cn & e) : m_tree(0), m_err()
+{
+	if(e.isCorrect())
+		m_tree = new Cn(e);
 }
 
 Expression::Expression(const Expression & e) : m_tree(0), m_err(e.m_err)

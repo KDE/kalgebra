@@ -28,7 +28,6 @@
 #include <QVBoxLayout>
 #include <QLayout>
 #include <QSplitter>
-#include <QApplication>
 #include <QHeaderView>
 #include <QDockWidget>
 #include <QMessageBox>
@@ -258,12 +257,14 @@ void KAlgebra::different(QTreeWidgetItem * item, int)
 void KAlgebra::edit_var(const QModelIndex &)
 {
 	VarEdit e(this, false);
-	QString var(c_variables->currentItem()->text(0));
+	QString varname = c_variables->currentItem()->text(0);
+	QString var(varname);
 	e.setAnalitza(c_results->analitza());
 	e.setVar(var);
 	
 	if(e.exec() == QDialog::Accepted)
-		c_results->analitza()->m_vars->modify(c_variables->currentItem()->text(0), e.val());
+		c_results->analitza()->m_vars->modify(varname, e.val());
+	
 	c_variables->updateVariables();
 }
 

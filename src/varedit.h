@@ -29,6 +29,8 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 
+#include <expression.h>
+
 class Analitza;
 class Object;
 class Variables;
@@ -59,7 +61,7 @@ class VarEdit : public KDialog
 		void setAnalitza(Analitza *na);
 		
 		/** Returns the resulting variable expression */
-		Object* val();
+		Expression val();
 	private:
 		ExpressionEdit *m_exp;
 		
@@ -70,8 +72,6 @@ class VarEdit : public KDialog
 		Variables *vars;
 		bool m_correct;
 		QString m_var;
-		
-		QDialogButtonBox *buttonBox;
 	private slots:
 		void edit();
 		void ok();
