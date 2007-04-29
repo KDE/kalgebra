@@ -1,10 +1,5 @@
-find_package(KDE4 REQUIRED)
+project(kalgebra)
+
 add_subdirectory(src)
 add_subdirectory(icons)
-
-########### install files ###############
-
-
-
-
 
