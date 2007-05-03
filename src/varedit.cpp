@@ -73,7 +73,7 @@ VarEdit::~VarEdit(){}
 void VarEdit::setVar(const QString& newVar)
 {
 	m_var=newVar;
-	this->setWindowTitle(i18n("Edit '%1' value").arg(newVar));
+	this->setWindowTitle(i18n("Edit '%1' value", newVar));
 	if(vars==NULL)
 		m_exp->setText("not available");
 	else {
@@ -124,7 +124,7 @@ void VarEdit::edit()
 	
 	if(a.isCorrect()) {
 		if(a.bvarList().count()>0)
-			m_valid->setText(i18n("%1:=%2").arg(m_var).arg(m_exp->text()));
+			m_valid->setText(i18n("%1:=%2", m_var, m_exp->text()));
 		else {
 			val = a.calculate().value();
 			

@@ -86,7 +86,7 @@ bool Expression::setMathML(const QString & s)
 	QDomDocument doc;
 	
 	if (!doc.setContent(s)) {
-		m_err << i18n("Error while parsing: %1").arg(s);
+		m_err << i18n("Error while parsing: %1", s);
 		return false;
 	}
 	

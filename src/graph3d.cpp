@@ -382,7 +382,7 @@ void Graph3D::setFunc(const QString& Text) //FIXME:Must pass bool ismathml
 	if(func3d.isCorrect())
 		load();
 	else
-		sendStatus(i18n("Error: %1").arg(func3d.error().join(", ")));
+		sendStatus(i18n("Error: %1", func3d.error().join(", ")));
 }
 
 int Graph3D::load() 
@@ -404,7 +404,7 @@ int Graph3D::load()
 		this->repaint();
 		return 0;
 	} else {
-		sendStatus(i18n("Error: %1").arg(f3d.m_err.join(", ")));
+		sendStatus(i18n("Error: %1", f3d.m_err.join(", ")));
 		tefunc=false;
 		this->repaint();
 		return -1;

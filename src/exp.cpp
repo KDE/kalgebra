@@ -311,7 +311,7 @@ int Exp::parse()
 				if(val.count()==1)
 					mml = QString("<math>%1</math>").arg(val.pop());
 				else if(val.count()>1)
-					err << i18n("Wrong stack result: %1").arg(val.pop());
+					err << i18n("Wrong stack result: %1", val.pop());
 				else
 					err << i18n("Wrong stack result");
 				return 0;

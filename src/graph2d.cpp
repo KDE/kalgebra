@@ -445,7 +445,7 @@ bool Graph2D::addFunction(const function& func)
 	
 	if(!exist) {
 		funclist.append(func);
-		sendStatus(i18n("%1 function added").arg(func.func->expression()->toString()));
+		sendStatus(i18n("%1 function added", func.func->expression()->toString()));
 	}
 	
 	update_points();

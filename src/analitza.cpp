@@ -411,7 +411,7 @@ Cn Analitza::operate(const Container* c)
 		qDebug() << "wow";
 	
 	if(c->m_params.isEmpty()) {
-		m_err << i18n("Empty container: %1").arg(c->containerType());
+		m_err << i18n("Empty container: %1", c->containerType());
 		return Cn(0.);
 	}
 	
@@ -449,7 +449,7 @@ Cn Analitza::operate(const Container* c)
 				if(op==0) {
 					ret = numbers.first();
 				} else if(op->nparams()>-1 && numbers.count()!=op->nparams() && op->operatorType()!=Object::minus) {
-					m_err << i18n("Too much operators for <em>%1</em>").arg(op->operatorType());
+					m_err << i18n("Too much operators for <em>%1</em>", op->operatorType());
 					ret = Cn(0.);
 				} else if(numbers.count()>=1 && op->type()==Object::oper) {
 					if(numbers.count()>=2) {
@@ -561,12 +561,12 @@ Cn Analitza::func(const Container& n)
 	Ci funct(n.m_params[0]);
 	
 	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
-		m_err << i18n("The function <em>%1</em> does not exist").arg(funct.name());
+		m_err << i18n("The function <em>%1</em> does not exist", funct.name());
 		return ret;
 	}
 	
 	if(!isFunction(funct)) {
-		m_err << i18n("<em>%1</em> is not a function").arg(funct.name());
+		m_err << i18n("<em>%1</em> is not a function", funct.name());
 		return ret;
 	}
 	
@@ -789,7 +789,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 			break;
 			
 		default:
-			m_err << i18n("The operator <em>%1</em> has not been implemented").arg(op);
+			m_err << i18n("The operator <em>%1</em> has not been implemented", op);
 			break;
 	}
 // 	
