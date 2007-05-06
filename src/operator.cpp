@@ -18,24 +18,44 @@
 
 #include "operator.h"
 
-#define KEYWORDNUM 200
-
-const OperatorsModel Operator::m_words;
+char* Operator::m_words[Object::nOfOps] = {
+	"onone",
+	"plus", "times", "minus", "divide", "quotient",
+	"power", "root", "factorial",
+	"_and", "_or", "_xor", "_not",
+	"gcd", "lcm", "rem", "factorof",
+	"max", "min",
+	"lt", "gt", "eq", "neq", "leq", "geq", "implies",
+	"approx", "abs", "floor", "ceiling",
+	"sin", "cos", "tan",
+	"sec", "csc", "cot",
+	"sinh", "cosh", "tanh",
+	"sech", "csch", "coth",
+	"arcsin", "arccos", "arctan",
+	"arccot", "arcoth",
+	"arccosh", "arccsc", "arccsch",
+	"arcsec", "arcsech", "arcsinh", "arctanh",
+	"exp", "ln", "log",
+	"conjugate", "arg", "real", "imaginary",
+	"sum", "product", "diff", "function"
+};
 
 QString Operator::toString() const
 {
-	return QString("%1").arg(m_words.operToString(m_optype));
+	Q_ASSERT(m_optype<Object::nOfOps);
+	return QString("%1").arg(m_words[m_optype]);
 }
 
 QString Operator::toMathML() const
 {
-	return QString("<%1 />").arg(m_words.operToString(m_optype));
+	Q_ASSERT(m_optype<Object::nOfOps);
+	return QString("<%1 />").arg(m_words[m_optype]);
 }
 
 
 enum Object::OperatorType Operator::toOperatorType(const QString &e)
 {
-	//qDebug() << "lol";
+	//qDebug(), "lol";
 	enum OperatorType ret=onone;
 	
 	if(e=="plus") ret=plus;
@@ -199,6 +219,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case product:
 		case diff:
 			return 1;
+		case nOfOps:
 		case none:
 			break;
 	}
@@ -256,47 +277,4 @@ bool Operator::isBounded() const
 	}
 }
 
-OperatorsModel::OperatorsModel(QObject *parent) : QStandardItemModel(KEYWORDNUM, 4, parent)
-{
-	QStringList ops; //FIXME: The big fixme, I don't like this way
-	ops << "plus" << "times" << "minus" << "divide" << "quotient";
-	ops << "power" << "root" << "factorial";
-	ops << "_and" << "_or" << "_xor" << "_not";
-	ops << "gcd" << "lcm" << "rem" << "factorof";
-	ops << "max" << "min";
-	ops << "lt" << "gt" << "eq" << "neq" << "leq" << "geq" << "implies";
-	ops << "approx" << "abs" << "floor" << "ceiling";
-	ops << "sin" << "cos" << "tan";
-	ops << "sec" << "csc" << "cot";
-	ops << "sinh" << "cosh" << "tanh";
-	ops << "sech" << "csch" << "coth";
-	ops << "arcsin" << "arccos" << "arctan";
-	ops << "arccot" << "arcoth";
-	ops << "arccosh" << "arccsc" << "arccsch";
-	ops << "arcsec" << "arcsech" << "arcsinh" << "arctanh";
-	ops << "exp" << "ln" << "log";
-	ops << "conjugate" << "arg" << "real" << "imaginary";
-	ops << "sum" << "product" << "diff";
-	
-	m_count = ops.count();
-	
-	for (int i=0; i<m_count; ++i) {
-		setData(index(i, 0), ops[i]);
-		setData(index(i, 1), Object::oper);
-		setData(index(i, 2), Operator::toOperatorType(ops[i]));
-	}
-}
-
-QString OperatorsModel::operToString(const Operator& op) const
-{
-	QStandardItem *it;
-	
-	for(int i=0; i<KEYWORDNUM; i++) {
-		it=item(i,2);
-		if(it!=NULL && it->data(Qt::EditRole).toInt()==op.operatorType()) {
-			return item(i,0)->data(Qt::EditRole).toString();
-		}
-	}
-	return QString();
-}
 

@@ -19,6 +19,7 @@ set(kalgebra_SRCS
 	value.cpp
 	variables.cpp
 	graph2d.cpp
+	operatorsmodel.cpp
 )
 
 kde4_automoc( ${kalgebra_SRCS} )

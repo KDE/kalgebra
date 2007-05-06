@@ -76,7 +76,8 @@ public:
 		arcsec, arcsech, arcsinh, arctanh,
 		exp, ln, log,
 		conjugate, arg, real, imaginary,
-		sum, product, diff, function //FIXME: <- ????
+		sum, product, diff, function,
+		nOfOps
 	};
 	
 	Object(const Object& o) : m_correct(o.m_correct), m_type(o.m_type) {}

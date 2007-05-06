@@ -133,7 +133,7 @@ void VarEdit::edit()
 				m_valid->setToolTip(a.m_err.join("\n"));
 				m_correct=false;
 			} else {
-				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>").arg(m_var).arg(val));
+				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val));
 				m_valid->setToolTip(QString());
 				m_correct=true;
 			}

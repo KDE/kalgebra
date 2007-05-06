@@ -25,6 +25,7 @@
 #include <QStandardItemModel>
 #include <QHeaderView>
 
+#include "operatorsmodel.h"
 #include "operator.h"
 #include "exp.h"
 #include "analitza.h"

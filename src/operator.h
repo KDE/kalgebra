@@ -22,9 +22,6 @@
 #include <QStandardItemModel>
 #include "object.h"
 
-class Operator;
-class OperatorsModel;
-
 /** The Operator class is the operator representation in the trees. */
 class Operator : public Object
 {
@@ -74,7 +71,8 @@ class Operator : public Object
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);
 		
-		static const OperatorsModel m_words; //FIXME now
+		static char* m_words[Object::nOfOps];
+		
 		/** Returns this operator @p o precedence. */
 		static unsigned int operatorWeight(OperatorType o);
 		
@@ -85,22 +83,6 @@ class Operator : public Object
 		static int nparams(enum OperatorType);
 	private:
 		enum OperatorType m_optype;
-};
-
-/** Operators model is a model class that has a relation of all operators string with their OperatorType. */
-class OperatorsModel : public QStandardItemModel
-{
-public:
-	/** Constructor. Creates a new Operator Model. */
-	OperatorsModel(QObject *parent=NULL);
-	
-	/** Returns a String from an operator. e.g. "times", "plus", "root" */
-	QString operToString(const Operator& op) const;
-	
-	/** Returns how many operators we have. */
-	int count() const { return m_count; }
-private:
-	int m_count;
 };
 
 #endif
