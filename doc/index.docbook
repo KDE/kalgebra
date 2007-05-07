@@ -1,0 +1,224 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY kappname "&kalgebra;">
+  <!ENTITY package "kdeedu">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<book lang="&language;">
+
+<bookinfo>
+<title>The &kalgebra; Handbook</title>
+
+<authorgroup>
+<author>
+<firstname>Aleix</firstname>
+<surname>Pol</surname>
+<affiliation>
+<address>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2007</year>
+<holder>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+
+<date>2007-05-07</date>
+<releaseinfo>1.4</releaseinfo>
+
+<abstract>
+<para>
+&kalgebra; is a mathematical calculator based content markup MathML language.
+Nowadays it is capable to make simple MathML operations (arithmetic and logical)
+and representate 2D and 3D graphs. It is actually not necessary to know MathML
+to use &kalgebra;.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>kdeedu</keyword>
+<keyword>graph</keyword>
+<keyword>mathematics</keyword>
+<keyword>2D</keyword>
+<keyword>3D</keyword>
+<keyword>mathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction"> 
+<title>Introduction</title> 
+<para>
+&kalgebra; is a MathML-based graph calculator. Although it was initially
+MathML oriented it can now be used by everyone with little mathematic
+knowledge.</para> 
+
+<screenshot>
+<screeninfo>Here's a screenshot of &kalgebra; main window</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase>&kalgebra; main window</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para>
+&kalgebra; main window consists in a console tab, a 2D tab and a 3D tab. Below
+these tabs you will find an input field to type your functions or do your
+calculations.
+</para>
+
+</chapter>
+
+<chapter id="syntax">
+<title>Syntax</title>
+
+<para>If we want to understand how does it work, the best thing we can do is to
+realize that our input is being converted into MathML, it is not necessary to
+know it by the way. I’ve based the syntax basically on common sense, shouldn’t
+be hard for anyone, I’ve looked closely to maxima and maple’s syntax to use it
+so they look very similar.</para>
+<para>I’ll make a list about the operators we have by now:</para>
+<itemizedlist>
+<listitem><para>+ - * / : Add, substract, multiplication and
+division.</para> </listitem>
+<listitem><para>^, **: Power, you can use them both. Also it is possible to use
+the unicode ² characters. Powers are one way to make roots too, you can do it
+like: a**(1/b)</para></listitem>
+<listitem><para>-&gt; : lambda. It’s the way to specify the bounded variable in
+a function.</para></listitem>
+<listitem><para>x-&gt;a..b : This is used when we need to delimitate a range
+(bvar+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
+<listitem><para>() : It is used to specify a higher priority.</para></listitem>
+<listitem><para>abc(params) : Functions. When parser finds a function, it checks
+if abc is an operator. If it is, it will be treated as an operator, if it is
+not, it will be treated as a user function.</para></listitem>
+<listitem><para>:= : Definition. It is used to define a variable value. You can
+do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
+</para></listitem>
+</itemizedlist>
+<para>Now you could ask me, why should the user mind about MathML? That’s easy.
+With this, we can operate with functions like cos(), sin(), any other
+trigonometrical functions, sum() or product(). Doesn’t matter what kind it is.
+We can use plus(), times() and everyone which has its operator. Boolean
+functions are implemented as well, so we can do something like or(1,0,0,0,0) or
+so.</para>
+
+</chapter>
+
+<chapter id="using-console">
+<title>Using the console</title>
+<para>&kalgebra;'s console is useful as a calculator. There you
+have a list of the declared variables. By double clicking them you will see a
+dialog that lets you change de value of it (just a way to trick the log).
+Menu options:</para>
+<itemizedlist>
+<listitem><para>New: flushes the log.</para></listitem>
+<listitem><para>Load script: Executes the instructions in a file sequentially.
+Nice if you want to define some libraries or something like
+this.</para></listitem>
+<listitem><para>Save script: Saves the instructions you've typed since the
+session began.</para></listitem>
+<listitem><para>Save Log: Saves the log into a file, with results and
+so.</para></listitem>
+<listitem><para>Exit: Shuts the program down.</para></listitem>
+</itemizedlist>
+
+</chapter>
+
+<chapter id="two-D-graphs">
+<title>2D Graphs</title>
+<para>To add a new 2D graph on KAlgebra, what you have to do is to go to the 2D
+Graphs tab and click in the "Add" tab to add the new function. Then your focus
+will go to an input text box where type your function.</para>
+
+<para>If you want to use a typical f(x) function it is not necessary to specify
+it, but if you want a f(y) or a polar function, you will have to add y-> and q->
+as the bounded variables.</para>
+
+<para>Examples:</para>
+<itemizedlist>
+<listitem><para>sin(x)</para></listitem>
+<listitem><para>x²</para></listitem>
+<listitem><para>y->sin(y)</para></listitem>
+<listitem><para>q->(0..100, q)</para></listitem>
+<listitem><para>q->3*sin(7q)</para></listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="three-D-graphs">
+<title>3D Graphs</title>
+
+<para>To draw a 3D Graph with KAlgebra you will have to go to the 3D Graphs tab
+and there you will see a text edit, there you will introduce your input. For the
+moment KAlgebra only supports functions that fit f(x,y) that will define the
+Z.</para>
+
+<para>Examples:</para>
+<itemizedlist>
+<listitem><para>sin(x)*sin(y)</para></listitem>
+<listitem><para>x/y</para></listitem>
+</itemizedlist>
+</chapter>
+
+
+<chapter id="credits">
+<title>Credits and License</title>
+
+<itemizedlist>
+<listitem><para>Program copyright 2005-2007 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para>
+Documentation copyright 2007 &Aleix.Pol; &Aleix.Pol.mail;
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+&underFDL;               <!-- FDL: do not remove -->
+&underGPL;        	 <!-- GPL License -->
+
+</chapter>
+
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-kapptemplate">
+<title>How to obtain &kalgebra;</title>
+
+&install.intro.documentation;
+
+</sect1>
+
+<sect1 id="compilation">
+<title>Compilation and installation</title>
+
+&install.compile.documentation;
+
+</sect1>
+
+</appendix>
+&documentation.index; 
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
