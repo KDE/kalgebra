@@ -37,6 +37,8 @@ Q_OBJECT
 		void initTestCase();
 		void testConversion_data();
 		void testConversion();
+		void testExp();
+		void testExp_data();
 		void cleanupTestCase();
 		
 	private:

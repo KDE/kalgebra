@@ -232,6 +232,7 @@ void Graph2D::paintEvent( QPaintEvent * )
 		ultim = toWidget(mark);
 		
 		//Draw derivative
+		finestra.setRenderHint(QPainter::Antialiasing, true);
 		QPointF from, to;
 		ccursor.setColor(QColor(90,90,160));
 		ccursor.setStyle(Qt::SolidLine);
@@ -244,6 +245,7 @@ void Graph2D::paintEvent( QPaintEvent * )
 		to.setX(mark.x()-len*cos(arcder));
 		to.setY(mark.y()-len*sin(arcder));
 		finestra.drawLine(toWidget(from), toWidget(to));
+		finestra.setRenderHint(QPainter::Antialiasing, false);
 		//EOderivative
 		
 		ccursor.setColor(QColor(0xc0,0,0));

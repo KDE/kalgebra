@@ -34,59 +34,60 @@ class FunctionEdit;
 class Graph2D;
 class Graph3D;
 
-class KAlgebra : public KMainWindow {
-Q_OBJECT
-public:
-	KAlgebra(QWidget *parent=0);
-	~KAlgebra(){}
-	QString calculate(QString exp);
-private:
-	//console
-	ExpressionEdit *c_exp;
-	Console *c_results;
-	VariableView *c_variables;
-	int outs;
-	QDockWidget *c_dock_vars;
-	
-	//graf 2d
-	QTreeWidget *b_funcs;
-	QTabWidget *b_tools;
-	Graph2D *grafic;
-	QDockWidget *b_dock_funcs;
-	FunctionEdit *b_funced;
-	
-	//graph 3d
-	ExpressionEdit *t_exp;
-	Graph3D *grafic3d;
-	
-public slots:
-	void operate();
-	void insert(QListWidgetItem * item);
-	void loadScript();
-	void saveScript();
-	void saveLog();
-	
-	void new_func3d();
-	void new_func();
-	void edit_func(const QModelIndex &);
-	void edit_var(const QModelIndex &);
-	void change(QTreeWidgetItem * item, QTreeWidgetItem * ant);
-	void toggleSquares();
-	void set_res_low();
-	void set_res_std();
-	void set_res_fine();
-	void set_res_vfine();
-	void different(QTreeWidgetItem * item, int column);
-	void saveGraph();
-	void functools(int);
-	
-	void changeStatusBar(const QString &);
-	void tabChanged(int);
-	void set_dots();
-	void set_lines();
-	void set_solid();
-	void toggleTransparency();
-	void save3DGraph();
+class KAlgebra : public KMainWindow
+{
+	Q_OBJECT
+	public:
+		KAlgebra ( QWidget *parent=0 );
+		~KAlgebra() {}
+		QString calculate ( QString exp );
+	private:
+		//console
+		ExpressionEdit *c_exp;
+		Console *c_results;
+		VariableView *c_variables;
+		int outs;
+		QDockWidget *c_dock_vars;
+		
+		//graf 2d
+		QTreeWidget *b_funcs;
+		QTabWidget *b_tools;
+		Graph2D *grafic;
+		QDockWidget *b_dock_funcs;
+		FunctionEdit *b_funced;
+		
+		//graph 3d
+		ExpressionEdit *t_exp;
+		Graph3D *grafic3d;
+		
+	public slots:
+		void operate();
+		void insert ( QListWidgetItem * item );
+		void loadScript();
+		void saveScript();
+		void saveLog();
+		
+		void new_func3d();
+		void new_func();
+		void edit_func ( const QModelIndex & );
+		void edit_var ( const QModelIndex & );
+		void change ( QTreeWidgetItem * item, QTreeWidgetItem * ant );
+		void toggleSquares();
+		void set_res_low();
+		void set_res_std();
+		void set_res_fine();
+		void set_res_vfine();
+		void different ( QTreeWidgetItem * item, int column );
+		void saveGraph();
+		void functools ( int );
+		
+		void changeStatusBar ( const QString & );
+		void tabChanged ( int );
+		void set_dots();
+		void set_lines();
+		void set_solid();
+		void toggleTransparency();
+		void save3DGraph();
 };
 
 #endif

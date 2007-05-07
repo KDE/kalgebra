@@ -20,6 +20,8 @@
 #include "expression.h"
 #include "value.h"
 
+#include <kdebug.h>
+
 Container::Container(const Container& c) : Object(Object::container)
 {
 	Q_ASSERT(c.type()==Object::container);
@@ -533,4 +535,9 @@ bool Container::isUnary() const
 {
 	QList<Object*>::const_iterator it(firstValue());
 	return ++it==m_params.end();
+}
+
+bool Container::isCorrect() const
+{
+	return m_correct && m_type==Object::container && m_cont_type!=Object::cnone/* && !isEmpty()*/;
 }

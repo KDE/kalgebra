@@ -253,4 +253,8 @@ void Expression::clear()
 	m_err.clear();
 }
 
+bool Expression::isCorrect() const
+{
+	return m_tree && m_err.isEmpty() && m_tree->isCorrect();
+}
 

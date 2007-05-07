@@ -82,7 +82,7 @@ class Expression
 		/**
 		 *	Returns whether this is a correct expression.
 		 */
-		bool isCorrect() const { return m_tree && m_err.isEmpty(); }
+		bool isCorrect() const;
 		
 		/**
 		 *	Returns whether the @p e is equal.

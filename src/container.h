@@ -110,7 +110,7 @@ public:
 	bool isEmpty() const { return firstValue()==m_params.end(); }
 	
 	/** Returns whether it is correct container. */
-	bool isCorrect() const { return m_correct && m_type==Object::container && m_cont_type!=Object::cnone; }
+	bool isCorrect() const;
 	
 #if 0 //not used
 	//Monomials

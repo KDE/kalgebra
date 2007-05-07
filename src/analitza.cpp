@@ -407,10 +407,7 @@ Cn Analitza::operate(const Container* c)
 	Cn ret(0.);
 	QList<Cn> numbers;
 	
-	if(c->containerType() > 100)
-		qDebug() << "wow";
-	
-	if(c->m_params.isEmpty()) {
+	if(c->isEmpty()) {
 		m_err << i18n("Empty container: %1", c->containerType());
 		return Cn(0.);
 	}
