@@ -134,7 +134,8 @@ session began.</para></listitem>
 so.</para></listitem>
 <listitem><para>Exit: Shuts the program down.</para></listitem>
 </itemizedlist>
-
+<!--<variablelist><varlistentry><term>Word</><listitem><para>Definition</></></>
+< / > --> 
 </chapter>
 
 <chapter id="two-D-graphs">
@@ -143,6 +144,8 @@ so.</para></listitem>
 Graphs tab and click in the "Add" tab to add the new function. Then your focus
 will go to an input text box where type your function.</para>
 
+<sect1 id="two-D-syntax">
+<title>Syntax</title>
 <para>If you want to use a typical f(x) function it is not necessary to specify
 it, but if you want a f(y) or a polar function, you will have to add y-> and q->
 as the bounded variables.</para>
@@ -155,6 +158,22 @@ as the bounded variables.</para>
 <listitem><para>q->(0..100, q)</para></listitem>
 <listitem><para>q->3*sin(7q)</para></listitem>
 </itemizedlist>
+</sect1>
+
+<sect1 id="two-D-features">
+<title>Features</title>
+<para>You can set several graphs on the same view. Just use the Add button when
+you are in List mode. You can set each graph its own color.</para>
+
+<para>The view can be zoomed and moved with the mouse. Using the wheel
+you can zoom in and out. You can also select an area with the left button
+of the mouse and this area will be zoomed in.</para>
+
+<para>In the List tab, you can uncheck the checkbox if you don't want to
+show a graph anymore.</para>
+
+</sect1>
+
 </chapter>
 
 <chapter id="three-D-graphs">
@@ -170,6 +189,7 @@ Z.</para>
 <listitem><para>sin(x)*sin(y)</para></listitem>
 <listitem><para>x/y</para></listitem>
 </itemizedlist>
+
 </chapter>
 
 
