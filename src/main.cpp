@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
 	KAboutData about("kalgebra", ("KAlgebra"), "0.7", "A calculator",
-			 KAboutData::License_GPL, "(C) 2006 Aleix Pol Gonzalez", 0, 0, "aleixpol@gmail.com");
+			 KAboutData::License_GPL, "(C) 2006 Aleix Pol Gonzalez");
 	about.addAuthor( "Aleix Pol Gonzalez", 0, "aleixpol@gmail.com" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KApplication app;
