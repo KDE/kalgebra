@@ -80,8 +80,6 @@ public:
 		nOfOps
 	};
 	
-	Object(const Object& o) : m_correct(o.m_correct), m_type(o.m_type) {}
-	
 	/** Object destructor. Does nothing. */
 	virtual ~Object(){}
 	
@@ -108,8 +106,9 @@ public:
 	
 	void setCorrect(bool b) { m_correct = b; }
 protected:
+// 	static int ocount;
 	/** Creates an object with a @p t type */
-	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
+	Object(enum ObjectType t) : m_correct(true), m_type(t) { /*ocount++; qDebug() << ocount;*/ }
 	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
 	bool m_correct;
 	

@@ -19,6 +19,8 @@
 #include "object.h"
 #include "container.h"
 
+// int Object::ocount=0;
+
 Ci::Ci(const Object * o) : Object(o->type())
 {
 	if(type() == Object::variable) {

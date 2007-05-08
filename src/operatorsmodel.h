@@ -20,7 +20,6 @@
 #define OPERATORSMODEL_H
 
 #include <QStandardItemModel>
-#include "object.h"
 
 class Operator;
 
@@ -29,10 +28,7 @@ class OperatorsModel : public QStandardItemModel
 {
 public:
 	/** Constructor. Creates a new Operator Model. */
-	OperatorsModel(QObject *parent=NULL);
-	
-	/** Returns a String from an operator. e.g. "times", "plus", "root" */
-	QString operToString(const Operator& op) const;
+	OperatorsModel(int num, QObject *parent=NULL);
 	
 	/** Returns how many operators we have. */
 	int count() const { return m_count; }

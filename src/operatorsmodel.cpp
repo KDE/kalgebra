@@ -4,18 +4,14 @@
 
 #define KEYWORDNUM 200
 
-OperatorsModel::OperatorsModel(QObject *parent) : QStandardItemModel(KEYWORDNUM, 4, parent)
+OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 4, parent), m_count(Object::nOfOps)
 {
-	
-	m_count = Object::nOfOps;
 	for (int i=0; i<m_count; ++i) {
 		setData(index(i, 0), Operator::m_words[i]);
-		setData(index(i, 1), Object::oper);
-		setData(index(i, 2), i);
 	}
 }
 
-QString OperatorsModel::operToString(const Operator& op) const
+/*QString OperatorsModel::operToString(const Operator& op) const
 {
 	QStandardItem *it;
 	
@@ -26,4 +22,4 @@ QString OperatorsModel::operToString(const Operator& op) const
 		}
 	}
 	return QString();
-}
+}*/

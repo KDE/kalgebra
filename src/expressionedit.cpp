@@ -60,17 +60,16 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	m_completer->setPopup(treeView);
 	treeView->setRootIsDecorated(false);
 	treeView->header()->hide();
-	treeView->resizeColumnToContents(1);
+// 	treeView->resizeColumnToContents(1);
 	treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	treeView->setMinimumWidth(300);
 	updateCompleter();
 	
-// 	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
-// 	treeView->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-	treeView->setColumnHidden(1, true);
-	treeView->setColumnHidden(2, true);
-	treeView->setColumnHidden(3, false);
-// 	treeView->setColumnHidden(2, true);
+	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+	treeView->showColumn(0);
+	treeView->showColumn(1);
+	treeView->hideColumn(2);
+	treeView->hideColumn(3);
 	
 	connect(this, SIGNAL(returnPressed()), this, SLOT(returnP()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMov()));
@@ -86,14 +85,13 @@ ExpressionEdit::~ExpressionEdit() {}
 void ExpressionEdit::updateCompleter()
 {
 	if(!isMathML()) {
-		OperatorsModel *m_ops = new OperatorsModel(m_completer);
+		OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps+a? 100 : 0, m_completer); //FIXME: change the 100
 		
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
 			for(int i=m_ops->count(); it != a->m_vars->end(); ++it, i++) {
 				m_ops->setData(m_ops->index(i, 0), it.key());
-				m_ops->setData(m_ops->index(i, 1), Object::variable);
-				m_ops->setData(m_ops->index(i, 3), (*it)->toString());
+				m_ops->setData(m_ops->index(i, 1), (*it)->toString());
 			}
 		}
 		m_completer->setModel(m_ops);
