@@ -97,7 +97,7 @@ void function::update_points(const QRect& viewport, unsigned int max_res)
 		err << i18n("Too much lambda for a 2D Graph");
 }
 
-void function::update_pointsY(QRect viewport, unsigned int max_res)
+void function::update_pointsY(const QRect& viewport, unsigned int max_res)
 {
 	if(viewport.left()==m_last_viewport.left() && viewport.right()==m_last_viewport.right() && max_res==m_last_max_res/* || max_res<=viewport.width()*/)
 		return;
@@ -148,7 +148,7 @@ void function::update_pointsY(QRect viewport, unsigned int max_res)
 	m_last_max_res = max_res;
 }
 
-void function::update_pointsX(QRect viewport, unsigned int max_res)
+void function::update_pointsX(const QRect& viewport, unsigned int max_res)
 {
 	if(viewport.top()==m_last_viewport.top() && viewport.bottom()==m_last_viewport.bottom() && max_res==m_last_max_res || max_res<=static_cast<unsigned int>(-viewport.height()))
 		return;
@@ -196,7 +196,7 @@ void function::update_pointsX(QRect viewport, unsigned int max_res)
 }
 
 
-void function::update_pointsPolar(QRect viewport, unsigned int max_res)
+void function::update_pointsPolar(const QRect& viewport, unsigned int max_res)
 {
 	Q_ASSERT(func->expression()->isCorrect());
 	if(max_res==m_last_max_res && !m_last_viewport.isNull())

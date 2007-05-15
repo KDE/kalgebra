@@ -93,10 +93,10 @@ public:
 	bool isContainer() const { return m_type==container; }
 	
 	/** Returns the string representation of the object. */
-	virtual QString toString() const { return "object"; };
+	virtual QString toString() const = 0;
 	
 	/** Returns the MathML representation of the object. */
-	virtual QString toMathML() const { return "object"; };
+	virtual QString toMathML() const = 0;
 	
 	/** Converts a @p tag to a type. */
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?

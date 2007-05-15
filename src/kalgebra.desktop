@@ -18,6 +18,6 @@ Exec=kalgebra
 MimeType=application/x-kalgebra
 Icon=kalgebra
 Type=Application
-#DocPath=kig/index.html
+DocPath=kalgebra/index.html
 Terminal=false
 Categories=Qt;KDE;Education;Math;

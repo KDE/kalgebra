@@ -115,9 +115,9 @@ private:
 	unsigned int m_last_resolution;
 	unsigned int m_last_max_res;
 	QStringList err; //function errors
-	void update_pointsY(QRect viewport, unsigned int resolucio); //for functions such as y=f(x)
-	void update_pointsX(QRect viewport, unsigned int resolucio); //for functions such as x=f(y)
-	void update_pointsPolar(QRect viewport, unsigned int resolucio); //for functions such as r=f(sigma)
+	void update_pointsY(const QRect& viewport, unsigned int resolucio); //for functions such as y=f(x)
+	void update_pointsX(const QRect& viewport, unsigned int resolucio); //for functions such as x=f(y)
+	void update_pointsPolar(const QRect& viewport, unsigned int resolucio); //for functions such as r=f(sigma)
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*cos(th), r*sin(th)); }

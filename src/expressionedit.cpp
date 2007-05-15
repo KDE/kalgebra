@@ -367,7 +367,7 @@ void ExpressionEdit::ajudant(const QString& msg)
 	ajudant(msg, pos-QPoint(0, 50));
 }
 
-void ExpressionEdit::ajudant(const QString& msg, QPoint p)
+void ExpressionEdit::ajudant(const QString& msg, const QPoint& p)
 {
 	if(!msg.isEmpty()){
 		QFontMetrics fm(m_helptip->font());

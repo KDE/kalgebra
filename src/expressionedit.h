@@ -110,7 +110,7 @@ class ExpressionEdit : public QTextEdit
 		
 		void helpShow(const QString& funcname, int param=0);
 		static QString findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit);
-		void ajudant(const QString&, QPoint p);
+		void ajudant(const QString&, const QPoint& p);
 		QString lastWord(int);
 		QString editingWord(int pos, int &param);
 		void focusInEvent (QFocusEvent * event);
