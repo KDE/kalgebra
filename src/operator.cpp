@@ -22,7 +22,7 @@ char* Operator::m_words[Object::nOfOps] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",
 	"power", "root", "factorial",
-	"_and", "_or", "_xor", "_not",
+	"and", "or", "xor", "not",
 	"gcd", "lcm", "rem", "factorof",
 	"max", "min",
 	"lt", "gt", "eq", "neq", "leq", "geq", "implies",
@@ -103,7 +103,7 @@ enum Object::OperatorType Operator::toOperatorType(const QString &e)
 	else if(e=="arctan") ret=arctan;
 	else if(e=="arccos") ret=arccos;
 	else if(e=="arccot") ret=arccot;
-	else if(e=="arcoth") ret=arcoth;
+	else if(e=="arccoth") ret=arccoth;
 	else if(e=="arccosh") ret=arccosh;
 	else if(e=="arccsc" ) ret=arccsc;
 	else if(e=="arccsch") ret=arccsch;
@@ -196,7 +196,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case arccos:
 		case arctan:
 		case arccot:
-		case arcoth:
+		case arccoth:
 		case arccosh:
 		case arccsc:
 		case arccsch:

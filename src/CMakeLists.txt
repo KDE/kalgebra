@@ -20,6 +20,7 @@ set(kalgebra_SRCS
 	variables.cpp
 	graph2d.cpp
 	operatorsmodel.cpp
+	dictionary.cpp
 )
 
 kde4_automoc( ${kalgebra_SRCS} )

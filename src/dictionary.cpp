@@ -16,29 +16,20 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef OPERATORSMODEL_H
-#define OPERATORSMODEL_H
+#include "dictionary.h"
+#include "operatorsmodel.h"
 
-#include <QStandardItemModel>
-#include "object.h"
+#include <QHeaderView>
 
-/** Operators model is a model class that has a relation of all operators string with their OperatorType. */
-class OperatorsModel : public QStandardItemModel
+Dictionary::Dictionary(QWidget *p) : QTreeView(p)
 {
-public:
-	/** Constructor. Creates a new Operator Model. */
-	OperatorsModel(int num, QObject *parent=NULL);
+	setRootIsDecorated(false);
+	OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps, this); //FIXME: change the 100
 	
-	/** Returns how many operators we have. */
-	int count() const { return m_count; }
+// 	header()->setResizeMode(2, QHeaderView::ResizeToContents);
+	resizeColumnToContents(2);
 	
-	/** Returns the description of the @p o operator. */
-	static QString description(Object::OperatorType o);
-	
-	/** Returns the description of the @p o operator. */
-	static QString example(Object::OperatorType o);
-private:
-	int m_count;
-};
+	setModel(m_ops);
+}
 
-#endif
+#include "dictionary.moc"

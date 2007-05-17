@@ -24,6 +24,7 @@
 #include "graph2d.h"
 #include "graph3d.h"
 #include "variables.h"
+#include "dictionary.h"
 
 #include <QVBoxLayout>
 #include <QLayout>
@@ -189,6 +190,11 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	////////////
 	//////EO3D Graph
 	
+	
+	//Dictionary tab
+	Dictionary *dic = new Dictionary(tabs);
+	tabs->addTab(dic, i18n("&Dictionary"));
+	//EODictionary
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
@@ -365,6 +371,7 @@ void KAlgebra::tabChanged(int n)
 		case 2:
 			t_exp->setFocus();
 			break;
+		case 3:
 		default:
 			break;
 	}

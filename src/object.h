@@ -71,7 +71,7 @@ public:
 		sinh, cosh, tanh,
 		sech, csch, coth,
 		arcsin, arccos, arctan,
-		arccot, arcoth,
+		arccot, arccoth,
 		arccosh, arccsc, arccsch,
 		arcsec, arcsech, arcsinh, arctanh,
 		exp, ln, log,
