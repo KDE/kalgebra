@@ -67,11 +67,11 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setResolution(200);
 	m_graph->setFocusPolicy(Qt::NoFocus);
-	m_graph->addFunction(function(m_name->text(), Expression(m_func->text(), m_func->isMathML()), m_color->color(), true));
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
+	m_graph->addFunction(function(m_name->text(), Expression(m_func->text(), m_func->isMathML()), m_color->color(), true));
 	
 	QHBoxLayout *m_butts = new QHBoxLayout(0);
 	m_ok = new QPushButton(i18n("OK"), this);

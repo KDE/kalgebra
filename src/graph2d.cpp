@@ -456,18 +456,20 @@ bool Graph2D::addFunction(const function& func)
 
 bool Graph2D::editFunction(const QString& toChange, const function& func)
 {
-	qDebug() << toChange;
 	bool exist=false;
 	
 	for (QList<function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it ){
 		if(it->name() == toChange){
 			exist=true;
 			*it = func;
+			it->setName(toChange);
 		}
 	}
 	
-	update_points();
-	this->repaint();
+	if(exist) {
+		update_points();
+		this->repaint();
+	}
 	return exist;
 }
 

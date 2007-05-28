@@ -89,6 +89,9 @@ public:
 	/** Retrieves the function's name. */
 	QString name() const { return m_name; }
 	
+	/** Sets @p newName the new name of the function. */
+	void setName(const QString &newName) { m_name = newName; }
+	
 	/** Copies a function */
 	function operator=(const function& f);
 	

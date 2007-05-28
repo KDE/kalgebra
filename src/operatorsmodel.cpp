@@ -19,7 +19,7 @@
 #include "operatorsmodel.h"
 #include "operator.h"
 #include <KLocale>
-
+#include <KApplication>
 
 OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 3, parent), m_count(Object::nOfOps)
 {
@@ -28,10 +28,21 @@ OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(nu
 	setHeaderData(2, Qt::Horizontal, i18n("Parameters"));
 	
 	for (int i=1; i<m_count; ++i) {
-		setData(index(i-1, 0), Operator::m_words[i]);
-		setData(index(i-1, 1), description((Object::OperatorType) i));
-		setData(index(i-1, 2), example((Object::OperatorType) i));
+		addEntry(i, Operator::m_words[i], description((Object::OperatorType) i), example((Object::OperatorType) i));
 	}
+}
+
+
+void OperatorsModel::addEntry(int i, const QString &name, const QString &value, const QString &ex)
+{
+	QFont f = KApplication::font();
+	f.setItalic(true);
+	QStandardItem *descr = new QStandardItem(value);
+	descr->setFont(f);
+		
+	setData(index(i-1, 0), name);
+	setItem(i-1, 1, descr);
+	setData(index(i-1, 2), ex);
 }
 
 QString OperatorsModel::example(Object::OperatorType o)
@@ -263,3 +274,4 @@ QString OperatorsModel::description(Object::OperatorType o)
 }
 	return QString();
 }*/
+

@@ -27,7 +27,6 @@ Dictionary::Dictionary(QWidget *p) : QTreeView(p)
 	OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps, this); //FIXME: change the 100
 	
 // 	header()->setResizeMode(2, QHeaderView::ResizeToContents);
-	resizeColumnToContents(2);
 	
 	setModel(m_ops);
 }

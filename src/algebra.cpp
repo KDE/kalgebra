@@ -210,22 +210,23 @@ void KAlgebra::new_func3d()
 void KAlgebra::new_func()
 {
 	QTreeWidgetItem *item;
+	QString name;
 	if(!b_funced->editing()) {
+		name = b_funced->name();
 		grafic->addFunction(function(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
 		item = new QTreeWidgetItem(b_funcs);
 		item->setFlags(Qt::ItemIsSelectable| Qt::ItemIsUserCheckable| Qt::ItemIsEnabled| Qt::ItemIsTristate);
 	} else {
-		//FIXME: Comparison is wrong on editing
 		item = b_funcs->currentItem();
 		grafic->editFunction(item->text(0),
-				     function(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
-// 		grafic->setSelected(b_funcs->currentItem()->text(1));
+                                     function(item->text(0), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
+		name = item->text(0);
 	}
 	QPixmap ico(15, 15);
 	ico.fill(b_funced->color());
 
 	item->setIcon(0, ico);
-	item->setText(0, b_funced->name());
+	item->setText(0, name);
 	item->setText(1, b_funced->text());
 	item->setTextColor(1, b_funced->color());
 	item->setCheckState(0, Qt::Checked);
@@ -233,6 +234,7 @@ void KAlgebra::new_func()
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
 	grafic->setFocus();
+	grafic->setSelected(name);
 }
 
 void KAlgebra::edit_func(const QModelIndex &)

@@ -90,8 +90,7 @@ void ExpressionEdit::updateCompleter()
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
 			for(int i=m_ops->count(); it != a->m_vars->end(); ++it, i++) {
-				m_ops->setData(m_ops->index(i, 0), it.key());
-				m_ops->setData(m_ops->index(i, 1), (*it)->toString());
+				m_ops->addEntry(i, it.key(), (*it)->toString());
 			}
 		}
 		m_completer->setModel(m_ops);
@@ -166,12 +165,14 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 		case Qt::Key_Escape:
 			m_completer->popup()->hide();
 			break;
-		case Qt::Key_Return:
-		case Qt::Key_Enter:
-			if(!m_completer->popup()->isVisible())
-				emit returnPressed();
-			else
+			case Qt::Key_Return:
+			//FIXME: have to find a way that if the focus is not in the textedit completes, otherwise don't complete.
+			case Qt::Key_Enter:
+			if(m_completer->popup()->isVisible()) 
 				completed(m_completer->currentCompletion());
+			else
+				emit returnPressed();
+			
 			m_completer->popup()->hide();
 			return;
 		case Qt::Key_Up:

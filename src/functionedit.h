@@ -38,6 +38,7 @@ class AlgebraHighlighter;
 
 /**
  *	The color combo shows a different colors list.
+ *	\deprecated
  *	@author Aleix Pol i Gonzalez
  */
 
