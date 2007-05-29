@@ -17,7 +17,8 @@
  *************************************************************************************/
 
 #include "analitza.h"
-#include <klocale.h>
+#include <KLocale>
+#include <kdemacros.h>
 
 #include "value.h"
 #include "variables.h"
@@ -385,7 +386,7 @@ Cn Analitza::calc(const Object* root)
 		case Object::variable:
 			a=(Ci*) root;
 			
-			if(m_vars->contains(a->name()))
+                        if(KDE_ISLIKELY(m_vars->contains(a->name())))
 				ret = calc(m_vars->value(a->name()));
 			else if(a->isFunction())
 				m_err << i18n("The function <em>%1</em> does not exist", a->name());
@@ -407,7 +408,7 @@ Cn Analitza::operate(const Container* c)
 	Cn ret(0.);
 	QList<Cn> numbers;
 	
-	if(c->isEmpty()) {
+        if(KDE_ISUNLIKELY(c->isEmpty())) {
 		m_err << i18n("Empty container: %1", c->containerType());
 		return Cn(0.);
 	}
@@ -426,7 +427,7 @@ Cn Analitza::operate(const Container* c)
 		case Object::uplimit:
 		case Object::downlimit:
 		{
-			if(c->isEmpty()) {
+                        if(KDE_ISUNLIKELY(c->isEmpty())) {
 				m_err << i18n("Container without values found.");
 			} else if(c->m_params[0]->type() == Object::variable) {
 				Ci* var= (Ci*) c->m_params[0];
@@ -448,7 +449,7 @@ Cn Analitza::operate(const Container* c)
 				} else if(op->nparams()>-1 && numbers.count()!=op->nparams() && op->operatorType()!=Object::minus) {
 					m_err << i18n("Too much operators for <em>%1</em>", op->operatorType());
 					ret = Cn(0.);
-				} else if(numbers.count()>=1 && op->type()==Object::oper) {
+                                } else if(KDE_ISLIKELY(numbers.count()>=1 && op->type()==Object::oper)) {
 					if(numbers.count()>=2) {
 						QList<Cn>::iterator it = numbers.begin();
 						ret = *it;
