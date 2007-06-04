@@ -32,7 +32,6 @@
 #include <expression.h>
 
 class Analitza;
-class Object;
 class Variables;
 class ExpressionEdit;
 

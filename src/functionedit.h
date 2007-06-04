@@ -34,7 +34,6 @@
 
 class Graph2D;
 class ExpressionEdit;
-class AlgebraHighlighter;
 
 /**
  *	The color combo shows a different colors list.
