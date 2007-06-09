@@ -83,8 +83,6 @@ class ExpressionEdit : public QTextEdit
 		/** Returns the string that will be entered when an operator is pressed. */
 		QString ans() const { return m_ans; }
 	public slots:
-		/** Is the execution function, when return is pressed. */
-		void returnP(); //FIXME: Change my name please
 		
 		/** Notifies that the cursor has moved. */
 		void cursorMov();
@@ -98,13 +96,29 @@ class ExpressionEdit : public QTextEdit
 		
 		/** Updates the completer text list. */
 		void updateCompleter();
+		
+		/** Simplify the current expression. */
+		void simplify();
+		
+		/** Sets the Mode to MathML */
+		void toMathML() { setMode(AlgebraHighlighter::MathML); }
+		
+		/** Sets the Mode to Expression */
+		void toExpression() { setMode(AlgebraHighlighter::Expression); }
 	signals:
 		/** Emits that a return has been pressed. */
 		void returnPressed();
 		
 		/** Deprecated. */
 		void signalHelper(QString);
+	protected:
+		/** Inherited from QTextEdit, just deals with the menu. */
+		void contextMenuEvent(QContextMenuEvent * e);
+	
 	private:
+		/** Is the execution function, when return is pressed. */
+		void returnP(); //FIXME: Change my name please
+		
 		QLabel *m_helptip;
 		AlgebraHighlighter *m_highlight;
 		

@@ -24,6 +24,9 @@
 #include <QStringListModel>
 #include <QStandardItemModel>
 #include <QHeaderView>
+#include <QMenu>
+
+#include <KLocale>
 
 #include "operatorsmodel.h"
 #include "operator.h"
@@ -157,14 +160,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	
 	switch(e->key()){
 		case Qt::Key_F2: {
-			Analitza a;
-			a.setExpression(Expression(toPlainText(), isMathML()));
-			a.simplify();
-			if(isMathML())
-				this->setPlainText(a.expression()->toMathML());
-			else
-				this->setPlainText(a.expression()->toString());
-			this->selectAll();
+			simplify();
 			return;
 		}
 		case Qt::Key_F3:
@@ -417,6 +413,33 @@ void ExpressionEdit::focusInEvent ( QFocusEvent * event )
 		default:
 			break;
 	}
+}
+
+void ExpressionEdit::simplify()
+{
+	Analitza a;
+	a.setExpression(Expression(toPlainText(), isMathML()));
+	a.simplify();
+	if(isMathML())
+		this->setPlainText(a.expression()->toMathML());
+	else
+		this->setPlainText(a.expression()->toString());
+	this->selectAll();
+}
+
+void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
+{
+	QMenu *popup = createStandardContextMenu();
+	popup->addSeparator();
+	if(isMathML())
+		popup->addAction(i18n("To Expression"), this, SLOT(toExpression()));
+	else
+		popup->addAction(i18n("To MathML"), this, SLOT(toMathML()));
+	
+	popup->addAction(i18n("Simplify"), this, SLOT(simplify()));
+	
+	popup->exec(e->globalPos());
+	delete popup;
 }
 
 #include "expressionedit.moc"
