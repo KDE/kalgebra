@@ -20,12 +20,12 @@
 #include "operator.h"
 
 Cn::Cn(Object const *o)
-	: Object(Object::value), m_value(0.), m_boolean(false)
+	: Object(Object::value), m_value(0.)/*, m_boolean(false)*/
 {
 	if(o->type()==Operator::value){
 		Cn *v = (Cn*) o;
 		m_value = v->value();
-		m_boolean = v->isBoolean();
+// 		m_boolean = v->isBoolean();
 		setCorrect(v->isCorrect());
 	} else {
 		setCorrect(false);
@@ -82,10 +82,11 @@ void Cn::setValue(const QDomElement& val)
 	QString tag = val.tagName();
 	
 	if(tag == "cn"){ // a is a number
-		if(val.attribute("type","real") == "real"){
+		if(val.attribute("type", "integer") == "real") {
 			ret= val.text().trimmed().toDouble(&wrong); //TODO: Base on double not implemented
-		} else if(val.attribute("type") == "integer"){
-			ret= val.text().trimmed().toInt(&wrong, val.attribute("base", "10").toInt(NULL, 10));
+		} else if(val.attribute("type", "integer") == "integer"){
+			int base = val.attribute("base", "10").toInt(NULL, 10);
+			ret= val.text().trimmed().toInt(&wrong, base);
 		}
 #if 0
 		else if(val.attribute("type") == "e-notation")	{ /*TODO: Not implemented */ }
@@ -106,8 +107,8 @@ void Cn::setValue(const QDomElement& val)
 	}/* else if(tag=="true")		ret = toNum(vars.value("true"));
 	else if(tag=="false")		ret = toNum(vars.value("false"));
 	else if(tag=="pi")		ret = toNum(vars.value("pi"));
-	else if(tag=="exponentiale")	ret = std::exp(1.);*/
-	else if(tag=="eulergamma")	ret = 0.5772156649;
+	else if(tag=="exponentiale")	ret = std::exp(1.);
+	else if(tag=="eulergamma")	ret = 0.5772156649;*/
 	
 	m_value = ret;
 }

@@ -158,8 +158,8 @@ void Graph3D::paintGL()
 	if(keyspressed & KEYRIGHT)	graus[2]-=3.f;
 	if(keyspressed & KEYW)		z/=1.1f;
 	if(keyspressed & KEYS)		z= z!=0. ? z*1.1f : .1f;
-	if(keyspressed & KEYQ)		{ zoom/=2.0f; crea(); }
-	if(keyspressed & KEYE)		{ zoom*=2.0f; crea(); }
+	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(); }
+	if(keyspressed & KEYE)		{ zoom*=2.0f; create(); }
 	
 	graus[0] = graus[0]>=360.f ? graus[0]-360.f : graus[0];
 	graus[1] = graus[1]>=360.f ? graus[1]-360.f : graus[1];
@@ -237,7 +237,7 @@ void Graph3D::paintGL()
 	glFlush();
 }
 
-bool Graph3D::crea()
+bool Graph3D::create()
 {
 	double mida=default_size*zoom, step=default_step*zoom;
 	const int k=static_cast<int>(mida/step)*2;
@@ -399,7 +399,7 @@ int Graph3D::load()
 		sendStatus(i18n("Generating... Please wait"));
 		mem();
 		tefunc=true;
-		crea();
+		create();
 		sendStatus(i18n("Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
@@ -465,7 +465,7 @@ void Graph3D::resetView()
 	default_size=8.0f;
 	if(zoom!=1.0f) {
 		zoom=1.0f;
-		crea();
+		create();
 	}
 	z=-35.;
 	

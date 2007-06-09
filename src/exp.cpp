@@ -109,7 +109,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		}
 		a.prepend(" ");
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
-		int coma=0;
+		int coma=0, base=10;
 		if(a[0]=='.') {
 			ret.val += '0';
 			coma++;
@@ -117,17 +117,34 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		ret.val += a[0];
 		a[0]=' ';
 		for(i=1; a[i].isDigit() || (a[i]=='.' && a[i+1]!='.'); i++){
-			coma = (a[i]=='.')? coma+1 : coma;
+			if(a[i]=='.')
+				coma++;
 			ret.val += a[i];
 			a[i]=' ';
 		}
+		
+		char suffix[][2] = { {'h', 16}, {'d', 10}, {'o', 8}, {'b', 2}, {0, -1} };
+		for(int j=0; a[i].isLetter() && suffix[j][0] != 0; j++) {
+			if(a[i]==suffix[j][0]) {
+				a[i++]=' ';
+				base=suffix[j][1];
+				break;
+			}
+		}
+		
 		if(exp && (a[i] == '(' || a[i].isLetter()))
 			a.prepend(" *");
+		
+		QStringList attrib;
+		if(base!=10)
+			attrib+=QString("base='%1'").arg(base); //FIXME: Initial support for bases. Don't support ffh, 0ffh
+		else if(coma)
+			attrib+=QString("type='real'");
 		
 		if(coma>1)
 			ret.val="<cn>%error;</cn>";
 		else
-			ret.val = QString::QString("<cn>%1</cn>").arg(ret.val);
+			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
 		ret.tipus= tVal;
 	} else if(a[0].isLetter()) {//es una variable o func
 		ret.val += a[0];

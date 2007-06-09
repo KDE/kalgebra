@@ -23,6 +23,8 @@
 #include "value.h"
 #include "variables.h"
 #include "container.h"
+#include "object.h"
+
 Analitza::Analitza() : m_vars(new Variables) { }
 
 Analitza::Analitza(const Analitza& a) : m_exp(a.m_exp), m_err(a.m_err)
@@ -78,14 +80,16 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 	if(branch->isContainer()) {
 		const Container* c = (Container*) branch;
 		Operator op = c->firstOperator();
+// 		Q_ASSERT(!c->isEmpty());
 		if(c->containerType()==Object::declare) {
-			calc(c);
-			ret = new Cn(0.); //FIXME need to have something to return
+			ret = new Cn(calc(c));
 		} else switch(op.operatorType()) {
-			case Object::diff:
-				ret = derivative("x", c->m_params[1]);
+			case Object::diff: {
+				//FIXME: Must support multiple bvars
+				QStringList bvars = c->bvarList();
+				ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
 				break;
-			case Object::onone:
+			} case Object::onone:
 				ret = eval(c->m_params[0], resolve);
 				break;
 			default: { //FIXME: Should we replace the function? the only problem appears if undeclared var in func
@@ -156,8 +160,9 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 			ret = eval(m_vars->value(var->name()), resolve);
 	}
 	if(!ret)
-		return Expression::objectCopy(branch);
+		ret=Expression::objectCopy(branch);
 	
+	Q_ASSERT(ret);
 	return ret;
 }
 
@@ -166,6 +171,7 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 	Q_ASSERT(o);
 	Object *ret=0;
 	const Container *c=0;
+	const Ci* v=0;
 	if(o->type()!=Object::oper && !hasVars(o, var))
 		ret = new Cn(0.);
 	else switch(o->type()) {
@@ -184,7 +190,9 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 				
 			break;
 		case Object::variable:
-			ret = new Cn(1.);
+			v = (Ci*) o;
+			if(v->name()==var)
+				ret = new Cn(1.);
 			break;
 		case Object::value:
 		case Object::oper:
@@ -1302,10 +1310,14 @@ void Analitza::setVariables(Variables * v)//FIXME: Copy me!
 
 Expression Analitza::derivative()
 {
-	/* TODO: bvars, entrer to lambda. */
+	/* FIXME: Must support multiple bvars */
 	Expression exp;
 	if(m_exp.isCorrect()) {
-		exp.m_tree = derivative("x", m_exp.m_tree);
+		QStringList vars = bvarList();
+		if(vars.empty())
+			exp.m_tree = derivative("x", m_exp.m_tree);
+		else
+			exp.m_tree = derivative(vars.first(), m_exp.m_tree);
 		exp.m_tree = simp(exp.m_tree);
 		
 // 		objectWalker(exp.m_tree);

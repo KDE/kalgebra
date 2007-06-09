@@ -275,7 +275,7 @@ bool Container::hasVars() const
 					break;
 				case Object::container:
 				{
-					Container *c = (Container*) (*i);
+					Container *c = (Container*) *i;
 					ret |= c->hasVars();
 					break;
 				}

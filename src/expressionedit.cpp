@@ -85,7 +85,11 @@ ExpressionEdit::~ExpressionEdit() {}
 void ExpressionEdit::updateCompleter()
 {
 	if(!isMathML()) {
-		OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps+a? 100 : 0, m_completer); //FIXME: change the 100
+		int nvars=0;
+		if(a)
+			nvars=a->m_vars->count();
+		
+		OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps+nvars, m_completer);
 		
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
@@ -125,8 +129,12 @@ void ExpressionEdit::setMode(AlgebraHighlighter::Mode en)
 			Expression e(toPlainText(), true);
 			this->setPlainText(e.toString());
 		} else if(!isMathML() && en==AlgebraHighlighter::MathML) {
-			Expression e(toPlainText(), false);
-			this->setPlainText(e.toMathML());
+			/*Expression e(toPlainText(), false);
+			this->setPlainText(e.toMathML());*/
+			
+			Exp e(toPlainText());
+			e.parse();
+			this->setPlainText(e.mathML());
 		}
 	}
 	m_highlight->setMode(en);

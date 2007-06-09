@@ -32,10 +32,10 @@ class Cn : public Object
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.isBoolean()) {}
+		Cn(const Cn& v) : Object(v), m_value(v.value())/*, m_boolean(v.isBoolean())*/ {}
 		
 		/** Constructor. Creates a value with values @p v. */
-		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
+		Cn(const double &b=0.) : Object(Object::value), m_value(b)/*, m_boolean(false)*/ {}
 		
 		/** Constructor. Creates a value from @p o. If @p o is not a Cn, a not correct Cn will be returned. */
 		Cn(Object const * o);
@@ -50,22 +50,24 @@ class Cn : public Object
 		 *	Sets the new value of this function
 		 *	@param v the new value
 		 */
-		void setValue(const double& v) { m_value=v; }
+		inline void setValue(const double& v) { m_value=v; }
 		
 		/**
 		 *	Returns the value.
 		 */
-		double value() const { return m_value; }
+		inline double value() const { return m_value; }
 		
 		/**
 		 *	Returns the value as an int.
 		 */
 		int intValue() const { return static_cast<int>(m_value); }
 		
+#if 0
 		/**
 		 *	Returns whether it is a boolean value or not.
 		 */
 		bool isBoolean() const { return m_boolean; }
+#endif
 		
 // 		static double toNum(const QString& num, const QString& type, int base);
 // 		static enum ValueFormat whatValueFormat(const QDomElement&);
@@ -137,7 +139,7 @@ class Cn : public Object
 		bool isCorrect() const { return m_correct;}
 	private:
 		double m_value;
-		bool m_boolean;
+// 		bool m_boolean;
 // 		enum ValueFormat m_vformat;
 };
 

@@ -46,7 +46,7 @@ Variables::~Variables()
 
 void Variables::modify(const QString & name, const Expression & o)
 {
-	modify(name, o.m_tree);
+	modify(name, o.tree());
 }
 
 void Variables::modify(const QString& name, const Object* o)

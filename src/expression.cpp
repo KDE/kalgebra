@@ -113,7 +113,6 @@ Object* Expression::branch(const QDomElement& elem)
 			}
 			
 			//Error collection
-			QList<Object*>::iterator i=c->m_params.begin();
 			Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
 			bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
 			if(dGreaterU)

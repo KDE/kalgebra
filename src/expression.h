@@ -35,8 +35,6 @@ class Container;
 class Expression
 {
 	friend class Analitza;
-	friend class VarEdit;
-	friend class Variables;
 	public:
 		
 		/**

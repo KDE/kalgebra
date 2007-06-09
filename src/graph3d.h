@@ -140,7 +140,7 @@ class Graph3D : public QGLWidget {
 		void mouseMoveEvent(QMouseEvent *e);
 		int load();
 		void mem();
-		bool crea();
+		bool create();
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
 		Expression func3d;
