@@ -97,6 +97,9 @@ public:
 	/** Returns a MathML representation of the container. */
 	QString toMathML() const;
 	
+	/** Returns a Html representation of the container. */
+	QString toHtml() const;
+	
 	/** Returns the container's uplimit. */
 	Container* ulimit() const;
 	

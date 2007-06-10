@@ -105,6 +105,9 @@ class ExpressionEdit : public QTextEdit
 		
 		/** Sets the Mode to Expression */
 		void toExpression() { setMode(AlgebraHighlighter::Expression); }
+		
+		/** Is the execution function, when return is pressed. */
+		void returnP(); //FIXME: Change my name please
 	signals:
 		/** Emits that a return has been pressed. */
 		void returnPressed();
@@ -116,8 +119,6 @@ class ExpressionEdit : public QTextEdit
 		void contextMenuEvent(QContextMenuEvent * e);
 	
 	private:
-		/** Is the execution function, when return is pressed. */
-		void returnP(); //FIXME: Change my name please
 		
 		QLabel *m_helptip;
 		AlgebraHighlighter *m_highlight;

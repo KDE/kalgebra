@@ -34,14 +34,17 @@ Cn::Cn(Object const *o)
 
 QString Cn::toString() const
 {
-	QString ret = QString("%1").arg(m_value, 0, 'g', 12);
-	return ret;
+	return QString("%1").arg(m_value, 0, 'g', 12);;
 }
 
 QString Cn::toMathML() const
 {
-	QString ret = QString("<cn>%1</cn>").arg(m_value, 0, 'g', 12);
-	return ret;
+	return QString("<cn>%1</cn>").arg(m_value, 0, 'g', 12);
+}
+
+QString Cn::toHtml() const
+{
+	return QString("<span class='num'>%1</span>").arg(m_value, 0, 'g', 12);;
 }
 
 /*enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)

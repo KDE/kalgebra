@@ -28,7 +28,7 @@
 #include <QTabWidget>
 
 class ExpressionEdit;
-class Console;
+class ConsoleHtml;
 class VariableView;
 class FunctionEdit;
 class Graph2D;
@@ -44,7 +44,7 @@ class KAlgebra : public KMainWindow
 	private:
 		//console
 		ExpressionEdit *c_exp;
-		Console *c_results;
+		ConsoleHtml *c_results;
 		VariableView *c_variables;
 		int outs;
 		QDockWidget *c_dock_vars;

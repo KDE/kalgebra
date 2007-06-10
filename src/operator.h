@@ -53,6 +53,9 @@ class Operator : public Object
 		/** Returns the MathML representation of the operator. */
 		QString toMathML() const;
 		
+		/** Returns the MathML representation of the operator. */
+		QString toHtml() const { return toString(); }
+		
 		/** Returns whether @p o is equal to this operator. */
 		bool operator==(const Operator& o) { return m_optype==o.m_optype; }
 		

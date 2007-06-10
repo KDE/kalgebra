@@ -118,6 +118,11 @@ class Expression
 		QString toMathML() const;
 		
 		/**
+		 *	Exports the expression to HTML.
+		 */
+		QString toHtml() const;
+		
+		/**
 		 * Invalidates the data of the expression.
 		 */
 		void clear();

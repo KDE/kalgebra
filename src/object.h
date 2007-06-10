@@ -98,6 +98,9 @@ public:
 	/** Returns the MathML representation of the object. */
 	virtual QString toMathML() const = 0;
 	
+	/** Returns a HTML representation of the object. */
+	virtual QString toHtml() const = 0;
+	
 	/** Converts a @p tag to a type. */
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
 	
@@ -146,6 +149,9 @@ class Ci : public Object
 		
 		/** Returns the MathML representation of the variable */
 		QString toMathML() const { return QString("<ci>%1</ci>").arg(m_name); }
+		
+		/** Returns the HTML representation of the variable */
+		QString toHtml() const { return QString("<span class='var'>%1</span>").arg(m_name); }
 		
 		/** Returns whether it is a correct object. */
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }

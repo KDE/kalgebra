@@ -112,17 +112,13 @@ QString Container::toString() const
 	
 	Operator *op=0;
 	for(int i=0; i<m_params.count(); i++) {
-		if(m_params[i]==0) {
-			qDebug() << "kkk";
-			return "<<kk>>";
-		}
+		Q_ASSERT(m_params[i]!=0);
 		
 		if(m_params[i]->type() == Object::oper)
 			op = (Operator*) m_params[i];
 		else if(m_params[i]->type() == Object::variable) {
 			Ci *b = (Ci*) m_params[i];
-			if(b->isFunction())
-				func=true;
+			func=b->isFunction();
 			ret << b->toString();
 		} else if(m_params[i]->type() == Object::container) {
 			Container *c = (Container*) m_params[i];
@@ -194,6 +190,100 @@ QString Container::toString() const
 			break;
 		case Object::bvar:
 			toret += ret.join("->")+"->";
+			break;
+		default:
+			toret += ret.join(" ?? ");
+			break;
+	}
+	return toret;
+}
+
+
+QString Container::toHtml() const
+{
+	QStringList ret;
+	bool func=false;
+	
+	Operator *op=0;
+	for(int i=0; i<m_params.count(); i++) {
+		Q_ASSERT(m_params[i]!=0);
+		
+		if(m_params[i]->type() == Object::oper)
+			op = (Operator*) m_params[i];
+		else if(m_params[i]->type() == Object::variable) {
+			Ci *b = (Ci*) m_params[i];
+			func=b->isFunction();
+			ret << b->toHtml();
+		} else if(m_params[i]->type() == Object::container) {
+			Container *c = (Container*) m_params[i];
+			QString s = c->toHtml();
+			Operator child_op = c->firstOperator();
+			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
+				s=QString("<span class='op'>(</span>%1<span class='op'>)</span>").arg(s);
+			
+			if(c->containerType() == Object::bvar) {
+				Container *ul = ulimit(), *dl = dlimit();
+				if(ul!=0 || dl!=0) {
+					if(dl!=0)
+						s += dl->toHtml();
+					s += "<span class='op'>..</span>";
+					if(ul!=0)
+						s += ul->toHtml();
+				}
+			}
+			
+			if(c->containerType()!=Object::uplimit && c->containerType()!=Object::downlimit)
+				ret << s;
+		} else 
+			ret << m_params[i]->toHtml();
+	}
+	
+	QString toret;
+	switch(containerType()) {
+		case Object::declare:
+			toret += ret.join("<span class='op'>:=</span>");
+			break;
+		case Object::lambda:
+			toret += ret.join("");
+			break;
+		case Object::math:
+			toret += ret.join("<span class='op'>;</span> ");
+			break;
+		case Object::apply:
+			if(func){
+				QString n = ret.takeFirst();
+				toret += QString("%1<span class='op'>(</span>%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
+			} else if(op==0)
+				toret += ret.join(" ");
+				else switch(op->operatorType()) {
+					case Object::plus:
+						toret += ret.join("<span class='op'>+</span>");
+						break;
+					case Object::times:
+						toret += ret.join("<span class='op'>*</span>");
+						break;
+					case Object::divide:
+						toret += ret.join("<span class='op'>/<span>");
+						break;
+					case Object::minus:
+						if(ret.count()==1)
+							toret += "<span class='op'>-</span>"+ret[0];
+						else
+							toret += ret.join("<span class='op'>-</span>");
+						break;
+					case Object::power:
+						toret += ret.join("<span class='op'>^</span>");
+						break;
+					default:
+						toret += QString("%1<span class='op'>(</span>%2<span class='op'>)</span>").arg(op->toString()).arg(ret.join(", "));
+						break;
+				}
+				break;
+				case Object::uplimit: //x->(n1..n2) is put at the same time
+		case Object::downlimit:
+			break;
+		case Object::bvar:
+			toret += ret.join("<span class='op'>-&gt;</span>")+"<span class='op'>-&gt;</span>";
 			break;
 		default:
 			toret += ret.join(" ?? ");
@@ -541,3 +631,4 @@ bool Container::isCorrect() const
 {
 	return m_correct && m_type==Object::container && m_cont_type!=Object::cnone/* && !isEmpty()*/;
 }
+

@@ -142,6 +142,13 @@ Object* Expression::branch(const QDomElement& elem)
 	return ret;
 }
 
+QString Expression::toHtml() const
+{
+	if(isCorrect())
+		return m_tree->toHtml();
+	else
+		return QString();
+}
 
 QString Expression::toMathML() const
 {

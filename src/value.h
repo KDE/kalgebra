@@ -132,6 +132,11 @@ class Cn : public Object
 		 */
 		QString toMathML() const;
 		
+		/**
+		 *	Returns a html representation of the value.
+		 */
+		QString toHtml() const;
+		
 		/*/** Sets whether it is a correct Cn. 
 		void setCorrect(bool b) {m_correct = b; }*/
 		
