@@ -112,10 +112,10 @@ QString OperatorsModel::description(Object::OperatorType o)
 			s = i18n("Cotangent");
 			break;
 		case Object::sinh:
-			s = i18n("Hyperbolic sinus");
+			s = i18n("Hyperbolic sine");
 			break;
 		case Object::cosh:
-			s = i18n("Hyperbolic sinus");
+			s = i18n("Hyperbolic cosine");
 			break;
 		case Object::tanh:
 			s = i18n("Hyperbolic tangent");
@@ -202,7 +202,7 @@ QString OperatorsModel::description(Object::OperatorType o)
 			s = i18n("Floor value. floor(n)=⌊n⌋");
 			break;
 		case Object::ceiling:
-			s = i18n("Ceil value. abs(n)=⌈n⌉");
+			s = i18n("Ceil value. ceil(n)=⌈n⌉");
 			break;
 		case Object::min:
 			s = i18n("Minimum");
@@ -223,13 +223,13 @@ QString OperatorsModel::description(Object::OperatorType o)
 			s = i18n("Approximation approx(a)=a±n");
 			break;
 		case Object::neq:
-			s = i18n("Greater than. neq(a,b)=a≠b");
+			s = i18n("Not equal. neq(a,b)=a≠b");
 			break;
 		case Object::geq:
-			s = i18n("Greater or equal. gt(a,b)=a>b");
+			s = i18n("Greater or equal. geq(a,b)=a≥b");
 			break;
 		case Object::leq:
-			s = i18n("Less or equal. gt(a,b)=a>b");
+                        s = i18n("Less or equal. leq(a,b)=a≤b");
 			break;
 		case Object::_and:
 			s = i18n("Boolean and");
