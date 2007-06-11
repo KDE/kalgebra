@@ -38,6 +38,20 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	
 	//FIXME: Should check if it is connected
 	//if it is connect to a kalgebra page that doesn't exist, if not I don't know
+	
+	m_css ="<style type=\"text/css\">\n";
+	m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
+	m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
+	m_css +="\t.before { text-align:right; }\n";
+	m_css +="\t.op  { font-weight: bold; }\n";
+// 	m_css +="\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
+	m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
+	m_css +="\t.sep { font-weight: bold; }\n";
+	m_css +="\t.num { color: #0000C4; }\n";
+	m_css +="\t.var { color: #640000; }\n";
+	m_css +="\t.func{ color: #003600; }\n";
+	m_css +="</style>\n";
+	
 	begin();
 	write("<html>Make me useful, please!!!</html>");
 	end();
@@ -64,7 +78,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 	
 	if(a.isCorrect()) {
 		m_script += op; //Script won't have the errors
-		newEntry = QString("%1 = %2").arg(a.expression()->toHtml()).arg(result);
+		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(a.expression()->toHtml()).arg(result);
 	} else
 		m_htmlLog += QString("<span class='error'>Error: %1 <br />%2</span>").arg(op).arg(a.m_err.join("<br />\n"));
 	
@@ -132,24 +146,15 @@ bool ConsoleHtml::saveLog(const QString& path) const
 
 void ConsoleHtml::updateView(const QString& newEntry)
 {
-	QString log("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
-	log +="<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
-	//log +="\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://math.nist.gov/~BMiller/mathml-css/style/mathml.css\"/>\n";
-	log +="<style type=\"text/css\">\n";
-	log +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
-	log +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n"	;
-	log +="\t.before { text-align:right; }\n";
-	log +="\t.op  { font-weight: bold; }\n";
-	log +="\t.sep { font-weight: bold; }\n";
-	log +="\t.num { color: #0000C4; }\n";
-	log +="\t.var { color: #640000; }\n";
-	log +="\t.func{ color: #003600; }\n";
-	log +="</style>\n</head>\n<body>\n";
-	
+	//FIXME: Check that the output html is not correct
 	begin();
-	write(log);
+	write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
+	write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n");
+	write(m_css);
+	write("</head>\n<body>");
+	write(m_css);
 	foreach(QString entry, m_htmlLog) {
-		write("<p>"+entry+"</p>");
+		write("<p class='normal'>"+entry+"</p>");
 	}
 	if(!newEntry.isEmpty()) {
 		m_htmlLog += newEntry;

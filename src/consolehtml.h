@@ -94,6 +94,8 @@ class ConsoleHtml : public KHTMLPart
 		bool addCalculation(Expression&);
 		
 		void updateView(const QString& e=QString());
+		
+		QString m_css;
 };
 
 /** The VariableView is a widget that shows all variables with their values. */
