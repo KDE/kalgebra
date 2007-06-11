@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Name=KAlgebra
 GenericName=Graph Calculator
+GenericName[es]=Calculadora gráfica
 Comment=Math Expression Solver and Plotter
+Comment[es]=Resuelve y dibuja expresiones matemáticas
 Exec=kalgebra
 MimeType=application/x-kalgebra
 Icon=kalgebra
