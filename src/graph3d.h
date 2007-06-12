@@ -61,7 +61,7 @@ public:
 	
 	/** Runs the thread. */
 	void run();
-	
+	void setTo(int nto) { to = nto; }
 private:
 	Analitza a;
 	double **punts;

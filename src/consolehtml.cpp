@@ -165,9 +165,9 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	
 // 	qDebug() << "puto!" << m_htmlLog.join("<p />\n");
 	
+        qApp->processEvents();
 	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
 	emit changed();
-	qApp->processEvents();
 }
 
 void ConsoleHtml::clear()

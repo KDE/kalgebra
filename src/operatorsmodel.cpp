@@ -82,7 +82,7 @@ QString OperatorsModel::description(Object::OperatorType o)
 			s = i18n("Power");
 			break;
 		case Object::rem:
-			s = i18n("Reminder");
+			s = i18n("Remainder");
 			break;
 		case Object::quotient:
 			s = i18n("Quotient");

@@ -51,8 +51,11 @@ Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 
 Graph3D::~Graph3D()
 {
-	if(punts!=NULL)
-		delete [] punts;
+	const int j= 2*static_cast<int>(default_size/default_step);
+	
+	for(int i=0; i<j; i++)
+		delete [] punts[i];
+	delete [] punts;
 }
 
 void Graph3D::initializeGL() {
@@ -245,22 +248,23 @@ bool Graph3D::create()
 	int part = k/m_n;
 	QList<Calculate3D*> threads;
 	
-	Analitza *a = new Analitza();
-	a->setExpression(func3d);
+	Analitza a;
+	a.setExpression(func3d);
 	
 	QTime t;
 	t.restart();
 	
 	for(int i=0; i<m_n; ++i) {
-		Calculate3D *r = new Calculate3D(this, Analitza(*a), punts, part*i, part*(i+1), mida, step);
+		Calculate3D *r = new Calculate3D(this, Analitza(a), punts, part*i, part*(i+1), mida, step);
 		threads << r;
 		r->start();
 	}
+	threads.last()->setTo(2*static_cast<int>(default_size/default_step));
 	
 	bool ret=true;
 	QList<Calculate3D*>::iterator it = threads.begin();
 	for(; it!=threads.end(); ++it) {
-		if(!(*it)->wait(3000)) {
+		if(!(*it)->wait(1000)) {
 			ret=false;
 			(*it)->terminate();
 		}
@@ -269,7 +273,6 @@ bool Graph3D::create()
 	qDebug() << "Elapsed time" << t.elapsed();
 	
 	qDeleteAll(threads);
-	delete a;
 	return ret;
 }
 
@@ -375,7 +378,7 @@ void Graph3D::timeOut(){
 	this->repaint();
 }
 
-void Graph3D::setFunc(const QString& Text) //FIXME:Must pass bool ismathml
+void Graph3D::setFunc(const QString& Text) //FIXME: Must pass an Expression
 {
 	bool ismathml = Expression::isMathML(Text);
 	func3d = Expression(Text, ismathml);
@@ -413,11 +416,11 @@ int Graph3D::load()
 
 void Graph3D::mem()
 {
-	int j= static_cast<int>(2*default_size/default_step);
-	if(punts!=NULL){
+	const int j= 2*static_cast<int>(default_size/default_step);
+	if(punts!=0){
 		for(int i=0; i<j; i++)
-			delete punts[i];
-		delete punts;
+			delete [] punts[i];
+		delete [] punts;
 	}
 	
 	int midadelgrafo=0;

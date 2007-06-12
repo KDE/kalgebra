@@ -499,7 +499,7 @@ Cn Analitza::operate(const Container* c)
 					m_vars->modify(var->name(), new Container(c->m_params[1]));
 					break;
 				case Object::none:
-					m_err << i18n("Unvalid var type");
+					m_err << i18n("Invalid var type");
 					break;
 			}
 		} break;
@@ -619,7 +619,7 @@ void Analitza::reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary
 			if(floor(b)!=0.)
 				a = static_cast<int>(floor(a)) % static_cast<int>(floor(b));
 			else
-				m_err << i18n("Cannot calculate the <em>reminder</em> of 0.");
+				m_err << i18n("Cannot calculate the <em>remainder</em> of 0.");
 			break;
 		case Object::quotient:
 			a = floor(a / b);
