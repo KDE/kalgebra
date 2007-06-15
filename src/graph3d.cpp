@@ -51,11 +51,13 @@ Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 
 Graph3D::~Graph3D()
 {
-	const int j= 2*static_cast<int>(default_size/default_step);
-	
-	for(int i=0; i<j; i++)
-		delete [] punts[i];
-	delete [] punts;
+	if(punts) {
+		const int j= 2*static_cast<int>(default_size/default_step);
+		
+		for(int i=0; i<j; i++)
+			delete [] punts[i];
+		delete [] punts;
+	}
 }
 
 void Graph3D::initializeGL() {
@@ -259,6 +261,7 @@ bool Graph3D::create()
 		threads << r;
 		r->start();
 	}
+	
 	threads.last()->setTo(2*static_cast<int>(default_size/default_step));
 	
 	bool ret=true;
@@ -278,8 +281,7 @@ bool Graph3D::create()
 
 void Calculate3D::run()
 {
-	Q_CHECK_PTR(punts);
-	Q_CHECK_PTR(a.m_vars);
+	Q_ASSERT(punts && a.m_vars);
 	
 	const int k= static_cast<int>(size/step)*2;
 	a.m_vars->modify("x", 0.);
@@ -378,14 +380,13 @@ void Graph3D::timeOut(){
 	this->repaint();
 }
 
-void Graph3D::setFunc(const QString& Text) //FIXME: Must pass an Expression
+void Graph3D::setFunc(const Expression& exp) //FIXME: Must pass an Expression
 {
-	bool ismathml = Expression::isMathML(Text);
-	func3d = Expression(Text, ismathml);
-	if(func3d.isCorrect())
+	if(exp.isCorrect()) {
+		func3d = exp;
 		load();
-	else
-		sendStatus(i18n("Error: %1", func3d.error().join(", ")));
+	} else
+		sendStatus(i18n("Error: %1", exp.error().join(", ")));
 }
 
 int Graph3D::load() 
@@ -425,11 +426,12 @@ void Graph3D::mem()
 	
 	int midadelgrafo=0;
 	punts = new double* [j];
+	Q_CHECK_PTR(punts);
 	for(int i=0; i<j; i++){
 		midadelgrafo+=sizeof(double)*j;
 		punts[i] = new double[j];
+		Q_CHECK_PTR(punts[i]);
 	}
-	Q_CHECK_PTR(punts);
 	qDebug() << "Mida: " << midadelgrafo;
 }
 

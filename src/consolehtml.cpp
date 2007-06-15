@@ -49,11 +49,12 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.sep { font-weight: bold; }\n";
 	m_css +="\t.num { color: #0000C4; }\n";
 	m_css +="\t.var { color: #640000; }\n";
-	m_css +="\t.func{ color: #003600; }\n";
+	m_css +="\t.func { color: #003600; }\n";
+	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
 	begin();
-	write("<html>Make me useful, please!!!</html>");
+	write("<html></html>");
 	end();
 }
 
@@ -61,9 +62,9 @@ ConsoleHtml::~ConsoleHtml() {}
 
 bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 {
-	
 	QString result, newEntry;
-	a.setExpression(Expression(op, mathml));
+	Expression e(op, mathml);
+	a.setExpression(e);
 	if(a.isCorrect()) {
 		if(m_mode==Evaluation) {
 			Expression res=a.evaluate();
@@ -80,7 +81,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 		m_script += op; //Script won't have the errors
 		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(a.expression()->toHtml()).arg(result);
 	} else
-		m_htmlLog += QString("<span class='error'>Error: %1 <br />%2</span>").arg(op).arg(a.m_err.join("<br />\n"));
+		m_htmlLog += QString("<ul class='error'>Error: %1<li>%2</li></ul>").arg(op).arg(a.errors().join("</li>\n<li>"));
 	
 	updateView(newEntry);
 	

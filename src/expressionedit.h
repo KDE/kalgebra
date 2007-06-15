@@ -63,7 +63,7 @@ class ExpressionEdit : public QTextEdit
 		bool isMathML() const;
 		
 		/** Sets an Analitza @p in module associated to the ExpressionEdit. It is used to autocomplete variables. */
-		void setAnalitza(Analitza* in) {a=in; updateCompleter(); }
+		void setAnalitza(Analitza* in);
 		
 		/** Returns the expression string that we have. */
 		QString text() const { return this->toPlainText();}

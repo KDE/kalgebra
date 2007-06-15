@@ -42,6 +42,7 @@ Analitza::~Analitza()
 void Analitza::setExpression(const Expression & e)
 {
 	m_exp=e;
+	flushErrors();
 }
 
 Expression Analitza::evaluate()

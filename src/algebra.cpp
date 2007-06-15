@@ -204,7 +204,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 
 void KAlgebra::new_func3d()
 {
-	grafic3d->setFunc(t_exp->text());
+	grafic3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
 	grafic3d->setFocus();
 }
 

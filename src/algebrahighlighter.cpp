@@ -19,12 +19,34 @@
 #include "algebrahighlighter.h"
 #include "expression.h"
 #include "expressionedit.h"
+#include "analitza.h"
+#include "variables.h"
 
-AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc)
-	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0)
+AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
+	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0), a(na)
 {
 	negreta.setFontWeight(QFont::Bold);
 }
+
+QString removeTags(const QString& in){
+	bool tag=false;
+	QString out;
+	for(unsigned int i=0; i<in.length(); i++){
+		if(in[i]=='<')
+			tag=true;
+		else if(in[i]=='>')
+			tag=false;
+		else if(!tag) {
+			if(in.mid(i,4)=="&gt;"){
+				out += '>';
+				i+=3;
+			} else
+				out += in[i];
+		}
+	}
+	return out;
+}
+
 
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
@@ -74,10 +96,14 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		while(pos < text.length() && t.tipus!=tEof){
 			switch(t.tipus){
 				case tVal:
-					if(t.val.mid(1,2)=="cn")
+					if(t.val.mid(1,2)=="cn") //if it is a number
 						setFormat(pos, len, QColor(0,0,200));
-					else
-						setFormat(pos, len, QColor(100,0,0));
+					else { //if it is a variable
+						if(a && a->variables()->contains(removeTags(t.val)))
+							setFormat(pos, len, QColor(0,0,200));
+						else
+							setFormat(pos, len, QColor(100,0,0));
+					}
 					break;
 				case tFunc:
 					setFormat(pos, len, QColor(0,50,0));

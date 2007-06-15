@@ -55,7 +55,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	palette.setColor(m_helptip->backgroundRole(), QColor(255,230,255));
 	m_helptip->setPalette(palette);
 	
-	m_highlight= new AlgebraHighlighter(this->document());
+	m_highlight= new AlgebraHighlighter(this->document(), a);
 	
 	m_completer = new QCompleter(this);
 	m_completer->setWidget(this);
@@ -440,6 +440,13 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	
 	popup->exec(e->globalPos());
 	delete popup;
+}
+
+void ExpressionEdit::setAnalitza(Analitza * in)
+{
+	m_highlight->setAnalitza(in);
+	a=in;
+	updateCompleter();
 }
 
 #include "expressionedit.moc"

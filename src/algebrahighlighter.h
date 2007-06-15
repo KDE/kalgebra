@@ -27,6 +27,8 @@
  *	@author <aleixpol@gmail.com>
  */
 
+class Analitza;
+
 class AlgebraHighlighter : public QSyntaxHighlighter
 {
 	public:
@@ -39,7 +41,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		} Mode;
 		
 		/** Constructor. Creates an AlgebraHighlighter from a QTextDocument @p doc. */
-		AlgebraHighlighter(QTextDocument *doc);
+		AlgebraHighlighter(QTextDocument *doc, const Analitza* na=0);
 		//int highlightParagraph(const QString &text, int endStateOfLastPara);
 		
 		/** Returns the currently highlight mode. */
@@ -56,6 +58,9 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		
 		/** Sets the cursor position. */
 		void setPos(int p) { m_pos=p; }
+		
+		/** Sets the corresponding Analitza class. */
+		void setAnalitza(const Analitza* na) { a = na; }
 	private:
 		void highlightBlock(const QString &text);
 		
@@ -75,6 +80,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		
 		QTextCharFormat negreta;
 		int complementary(const QString&, int p);
+		const Analitza* a;
 };
 
 #endif

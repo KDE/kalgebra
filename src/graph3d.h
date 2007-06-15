@@ -61,6 +61,8 @@ public:
 	
 	/** Runs the thread. */
 	void run();
+	
+	/** Sets the end of the segment to calculate. */
 	void setTo(int nto) { to = nto; }
 private:
 	Analitza a;
@@ -93,11 +95,8 @@ class Graph3D : public QGLWidget {
 		/** Destructor. */
 		~Graph3D();
 		
-		/** Sets a function text expression. */
-		void setFunc(const QString& Text); //FIXME: Should be passing an Expression
-		
-		/** Sets a MathML function expression. */
-		int setFuncMML(QString TextMML);
+		/** Sets @p exp as the function's expression. */
+		void setFunc(const Expression& exp);
 		
 		/** Toggles the transparency for Solid graphs. */
 		void setTransparency(bool tr) { trans = tr; glDraw(); }
