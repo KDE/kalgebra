@@ -953,8 +953,8 @@ Object* Analitza::simp(Object* root)
 				}
 			} break;
 			case Object::power: {
-				c->m_params[1] = simp(c->m_params[1]);
-				c->m_params[2] = simp(c->m_params[2]);
+				for(it = c->firstValue(); it!=c->m_params.end(); it++)
+					*it = simp(*it);
 				
 				if(c->m_params[2]->type()==Object::value) {
 					Cn *n = (Cn*) c->m_params[2];
@@ -987,14 +987,27 @@ Object* Analitza::simp(Object* root)
 				}
 			} break;
 			case Object::divide:
-				if(Container::equalTree(*c->firstValue(), *(c->firstValue()+1))) {
+				for(it = c->firstValue(); it!=c->m_params.end(); it++)
+					*it = simp(*it);
+				
+				Object *f, *g; //f/g
+				f=*c->firstValue();
+				g=*(c->firstValue()+1);
+				
+				if(Container::equalTree(f, g)) {
 					delete root;
 					root = new Cn(1.);
 					break;
-				} else {
-					for(it = c->firstValue(); it!=c->m_params.end(); it++)
-						*it = simp(*it);
+				} else if(g->type()==Object::value) {
+					Cn* gnum=(Cn*) g;
+					if(gnum->value()==1.) {
+						*c->firstValue()=0;
+						delete root;
+						root=f;
+						break;
+					}
 				}
+				
 				break;
 			case Object::ln:
 				if(c->m_params[1]->type()==Object::variable) {

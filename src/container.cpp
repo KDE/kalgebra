@@ -263,7 +263,7 @@ QString Container::toHtml() const
 						toret += ret.join("<span class='op'>*</span>");
 						break;
 					case Object::divide:
-						toret += ret.join("<span class='op'>/<span>");
+						toret += ret.join("<span class='op'>/</span>");
 						break;
 					case Object::minus:
 						if(ret.count()==1)
