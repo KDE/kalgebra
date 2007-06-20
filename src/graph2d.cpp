@@ -244,7 +244,8 @@ void Graph2D::paintEvent( QPaintEvent * )
 		
 		to.setX(mark.x()-len*cos(arcder));
 		to.setY(mark.y()-len*sin(arcder));
-		finestra.drawLine(toWidget(from), toWidget(to));
+		if(!isnan(from.x()) && !isnan(from.y()) && !isnan(to.x()) && !isnan(to.y()))
+			finestra.drawLine(toWidget(from), toWidget(to));
 		finestra.setRenderHint(QPainter::Antialiasing, false);
 		//EOderivative
 		

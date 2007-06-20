@@ -331,6 +331,8 @@ double function::derivative(const QPointF & p) const
 	
 	if(a.isCorrect())
 		return ret.value();
-	else
+	else {
+		kDebug(0) << "Derivative error: " <<  a.errors() << endl;
 		return 0.; //FIXME:Must improve that
+	}
 }

@@ -24,6 +24,7 @@
 #include <QCompleter>
 #include <QLabel>
 #include <QStandardItemModel>
+#include <QTreeView>
 #include "algebrahighlighter.h"
 
 class Analitza;
@@ -142,6 +143,7 @@ class ExpressionEdit : public QTextEdit
 		bool m_correct;
 		QString m_ans;
 		QCompleter *m_completer;
+		QTreeView *treeView;
 		//QStandardItemModel *m_words;
 };
 

@@ -59,7 +59,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	
 	m_completer = new QCompleter(this);
 	m_completer->setWidget(this);
-	QTreeView *treeView = new QTreeView;
+	treeView = new QTreeView;
 	m_completer->setPopup(treeView);
 	treeView->setRootIsDecorated(false);
 	treeView->header()->hide();
@@ -159,19 +159,18 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	bool ch=false;
 	
 	switch(e->key()){
-		case Qt::Key_F2: {
+		case Qt::Key_F2:
 			simplify();
-			return;
-		}
+			break;
 		case Qt::Key_F3:
 			setMode(isMathML() ? AlgebraHighlighter::Expression : AlgebraHighlighter::MathML);
-			return;
+			break;
 		case Qt::Key_Escape:
 			m_completer->popup()->hide();
 			break;
-			case Qt::Key_Return:
+		case Qt::Key_Return:
+		case Qt::Key_Enter:
 			//FIXME: have to find a way that if the focus is not in the textedit completes, otherwise don't complete.
-			case Qt::Key_Enter:
 			if(m_completer->popup()->isVisible()) 
 				completed(m_completer->currentCompletion());
 			else
@@ -208,9 +207,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				QFontMetrics fm(font());
 				int curPos = this->textCursor().position();
 				int pixelsOffset = fm.width(toPlainText(), curPos);
-				QPoint pos = QPoint(pixelsOffset+10, height());
-				
-				QRect r = QRect(pos, QSize(200, 100));
+				QPoint pos(pixelsOffset+10, height());
 				m_completer->setCompletionPrefix(last);
 				m_completer->complete();
 			} else {

@@ -242,7 +242,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 		} break;
 		case Object::power: {
 			if(hasVars(c->m_params[2], var)) {
-				//TODO: http://en.wikipedia.org/wiki/Table_of_derivatives
+				//http://en.wikipedia.org/wiki/Table_of_derivatives
 				//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
 				Container *nc = new Container(Object::apply);
 				nc->m_params.append(new Operator(Object::times));
@@ -253,21 +253,21 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				
 				Container *nChain1 = new Container(Object::apply);
 				nChain1->m_params.append(new Operator(Object::times));
-				nChain1->m_params.append(derivative(var, Expression::objectCopy(c->m_params[1])));
+				nChain1->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
 				
 				Container *cDiv = new Container(Object::apply);
 				cDiv->m_params.append(new Operator(Object::divide));
-				cDiv->m_params.append(Expression::objectCopy(c->m_params[0]));
-				cDiv->m_params.append(Expression::objectCopy(c->m_params[1]));
+				cDiv->m_params.append(Expression::objectCopy(*(c->firstValue()+1)));
+				cDiv->m_params.append(Expression::objectCopy(*c->firstValue()));
 				nChain1->m_params.append(cDiv);
 				
 				Container *nChain2 = new Container(Object::apply);
 				nChain2->m_params.append(new Operator(Object::times));
-				nChain2->m_params.append(derivative(var, Expression::objectCopy(c->m_params[2])));
+				nChain2->m_params.append(derivative(var, Expression::objectCopy(*(c->firstValue()+1))));
 				
 				Container *cLog = new Container(Object::apply);
 				cLog->m_params.append(new Operator(Object::ln));
-				cLog->m_params.append(Expression::objectCopy(c->m_params[1]));
+				cLog->m_params.append(Expression::objectCopy(*c->firstValue()));
 				nChain2->m_params.append(cLog);
 				
 				nAss->m_params.append(nChain1);
@@ -277,7 +277,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container *cx = new Container(Object::apply);
 				cx->m_params.append(new Operator(Object::times));
 				cx->m_params.append(Expression::objectCopy(c->m_params[2]));
-				cx->m_params.append(derivative(var, Expression::objectCopy(c->m_params[1])));
+				cx->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
 				Container* nc= new Container(c);
 				cx->m_params.append(nc);
 				
@@ -359,7 +359,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			cquad->m_params.append(new Cn(2.));
 			nc->m_params.append(cquad);
 			
-			qDebug() << "iei!" << cmin->toString();
+// 			qDebug() << "iei!" << cmin->toString();
 			return nc;
 		} break;
 		case Object::ln: {
@@ -456,7 +456,7 @@ Cn Analitza::operate(const Container* c)
 				if(op==0) {
 					ret = numbers.first();
 				} else if(op->nparams()>-1 && numbers.count()!=op->nparams() && op->operatorType()!=Object::minus) {
-					m_err << i18n("Too much operators for <em>%1</em>", op->operatorType());
+					m_err << i18n("Too much operators for <em>%1</em>", op->toString());
 					ret = Cn(0.);
                                 } else if(KDE_ISLIKELY(numbers.count()>=1 && op->type()==Object::oper)) {
 					if(numbers.count()>=2) {
@@ -986,6 +986,16 @@ Object* Analitza::simp(Object* root)
 					}
 				}
 			} break;
+			case Object::divide:
+				if(Container::equalTree(*c->firstValue(), *(c->firstValue()+1))) {
+					delete root;
+					root = new Cn(1.);
+					break;
+				} else {
+					for(it = c->firstValue(); it!=c->m_params.end(); it++)
+						*it = simp(*it);
+				}
+				break;
 			case Object::ln:
 				if(c->m_params[1]->type()==Object::variable) {
 					Ci *val = (Ci*) c->m_params[1];
