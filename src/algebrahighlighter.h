@@ -41,7 +41,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		} Mode;
 		
 		/** Constructor. Creates an AlgebraHighlighter from a QTextDocument @p doc. */
-		AlgebraHighlighter(QTextDocument *doc, const Analitza* na=0);
+		explicit AlgebraHighlighter(QTextDocument *doc, const Analitza* na=0);
 		//int highlightParagraph(const QString &text, int endStateOfLastPara);
 		
 		/** Returns the currently highlight mode. */

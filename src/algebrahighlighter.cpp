@@ -31,7 +31,7 @@ AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
 QString removeTags(const QString& in){
 	bool tag=false;
 	QString out;
-	for(unsigned int i=0; i<in.length(); i++){
+	for(int i=0; i<in.length(); i++){
 		if(in[i]=='<')
 			tag=true;
 		else if(in[i]=='>')
@@ -68,10 +68,10 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				
 				setFormat(i, 1, negreta);
 				setFormat(j, 1, negreta);
-				if(lasttag.startsWith("/")){
+				if(lasttag.startsWith(QChar('/'))){
 					setFormat(i+1, j-i-1, QColor(100,0,0));
 					setFormat(i+1, 1, negreta);
-				} else if(lasttag.endsWith("/")) {
+				} else if(lasttag.endsWith(QChar('/'))) {
 					setFormat(i+1, j-i-1, QColor(0,50,0));
 					setFormat(j+1, 2, negreta);
 				} else if(j!=k) {
