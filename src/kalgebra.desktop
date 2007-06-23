@@ -1,10 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KAlgebra
+Name[sv]=Kalgebra
 GenericName=Graph Calculator
 GenericName[es]=Calculadora gráfica
+GenericName[sv]=Grafräknare
+GenericName[zh_TW]=圖形計算器
 Comment=Math Expression Solver and Plotter
 Comment[es]=Resuelve y dibuja expresiones matemáticas
+Comment[sv]=Lösning och uppritning av matematiska uttryck
+Comment[zh_TW]=數學解題與繪圖
 Exec=kalgebra
 MimeType=application/x-kalgebra;
 Icon=kalgebra
