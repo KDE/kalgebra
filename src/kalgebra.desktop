@@ -2,9 +2,11 @@
 Encoding=UTF-8
 Name=KAlgebra
 Name[sv]=Kalgebra
+Name[uk]=KАлгебра
 GenericName=Graph Calculator
 GenericName[es]=Calculadora gráfica
 GenericName[sv]=Grafräknare
+GenericName[uk]=Графічний калькулятор
 GenericName[zh_TW]=圖形計算器
 Comment=Math Expression Solver and Plotter
 Comment[es]=Resuelve y dibuja expresiones matemáticas
