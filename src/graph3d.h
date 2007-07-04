@@ -19,7 +19,7 @@
 #ifndef Q3DGRAPH_H
 #define Q3DGRAPH_H
 
-#include <QtOpenGl/QGLWidget>
+#include <QGLWidget>
 #include <QtCore/QThread>
 
 #include "analitza.h"
