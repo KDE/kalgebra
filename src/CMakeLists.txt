@@ -25,7 +25,7 @@ set(kalgebra_SRCS
 )
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS} )
-target_link_libraries(kalgebra  ${KDE4_KIO_LIBS} ${KDE4_KHTML_LIBS} ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
+target_link_libraries(kalgebra  ${KDE4_KHTML_LIBS} ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
 
 install(TARGETS kalgebra DESTINATION ${BIN_INSTALL_DIR})
 install(FILES kalgebra.desktop DESTINATION ${XDG_APPS_DIR} )
