@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef Q3DGRAPH_H
-#define Q3DGRAPH_H
+#ifndef GRAPH3D_H
+#define GRAPH3D_H
 
 #include <QGLWidget>
 #include <QtCore/QThread>
