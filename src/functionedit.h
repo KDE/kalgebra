@@ -123,7 +123,7 @@ private:
 	bool m_correct;
 	bool m_modmode;
 	
-	void focusInEvent(QFocusEvent*){ m_func->setFocus(); }
+	void focusInEvent(QFocusEvent*);
 private slots:
 	void edit();
 	void ok();

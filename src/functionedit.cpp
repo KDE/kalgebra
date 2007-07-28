@@ -71,7 +71,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
-	m_graph->addFunction(function(m_name->text(), Expression(m_func->text(), m_func->isMathML()), m_color->color(), true));
+	m_graph->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
 	
 	QHBoxLayout *m_butts = new QHBoxLayout(0);
 	m_ok = new QPushButton(i18n("OK"), this);
@@ -152,7 +152,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	m_correct=a.isCorrect();
 	if(m_correct) {
 		m_graph->clear();
-		m_graph->addFunction(function(m_name->text(), Expression(m_func->toPlainText(), m_func->isMathML()), m_color->color(), true));
+		m_graph->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
 		m_valid->setToolTip(QString());
 	} else {
 		m_graph->clear();
@@ -170,7 +170,13 @@ void FunctionEdit::ok()
 		emit accept();
 }
 
-///////////////////////////////////////
+void FunctionEdit::focusInEvent(QFocusEvent *)
+{
+	m_func->setFocus();
+}
+
+//////////////////////////////////////////
+///////////ColorCombo is deprecated.//////
 ColorCombo::ColorCombo(QWidget* parent) : QComboBox(parent)
 {
 	setIconSize(QSize(width()*2, QFontMetrics(font()).height()));

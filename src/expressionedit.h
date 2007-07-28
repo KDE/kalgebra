@@ -26,6 +26,7 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 #include "algebrahighlighter.h"
+#include "expression.h"
 
 class Analitza;
 
@@ -81,8 +82,11 @@ class ExpressionEdit : public QTextEdit
 		/** Sets the string @p ans that will be entered when an operator is pressed. */
 		void setAns(const QString &ans) { m_ans=ans; }
 		
-		/** Returns the string that will be entered when an operator is pressed. */
+		/** Returns the string that will be entered when the first operator is pressed. */
 		QString ans() const { return m_ans; }
+		
+		/** Returns the expression we have in the text. */
+		Expression expression() const { return Expression(text(), isMathML()); }
 	public slots:
 		
 		/** Notifies that the cursor has moved. */

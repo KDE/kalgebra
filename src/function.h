@@ -104,6 +104,8 @@ public:
 	/** Returns the "pendent" of the current function related to the function. */ //FIXME: this doc
 	double derivative(const QPointF& p) const; 
 	
+	/** Returns the bounded variables of the function. */
+	QStringList bvars() const;
 protected:
 	/** Here we store the calculated points of the function. */
 	QPointF *points;

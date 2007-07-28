@@ -575,8 +575,8 @@ void print_dom(const QDomNode& in, int ind)
 
 QList<Object *>::iterator Container::firstValue()
 {
-	QList<Object *>::iterator it(m_params.begin());
-	for(; it!=m_params.end(); ++it) {
+	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
+	for(; it!=itEnd; ++it) {
 		bool found=false;
 		
 		switch((*it)->type()) {
@@ -599,8 +599,8 @@ QList<Object *>::iterator Container::firstValue()
 
 QList<Object *>::const_iterator Container::firstValue() const
 {
-	QList<Object *>::const_iterator it(m_params.begin());
-	for(; it!=m_params.end(); ++it) {
+	QList<Object *>::const_iterator it(m_params.constBegin()), itEnd(m_params.constEnd());
+	for(; it!=itEnd; ++it) {
 		bool found=false;
 		
 		switch((*it)->type()) {

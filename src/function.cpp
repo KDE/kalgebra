@@ -336,3 +336,9 @@ double function::derivative(const QPointF & p) const
 		return 0.; //FIXME:Must improve that
 	}
 }
+
+
+QStringList function::bvars() const
+{
+	return func->bvarList();
+}

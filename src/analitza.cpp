@@ -485,24 +485,14 @@ Cn Analitza::operate(const Container* c)
 			}
 			
 			Ci *var = (Ci*) c->m_params[0];
+                        //NOTE: Should not procrastinate the variable resolution... I think :)
+// 			m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
 			
-			switch(c->m_params[1]->type()) {
-				case Object::variable:
-					m_vars->modify(var->name(), new Ci(c->m_params[1]));
-					break;
-				case Object::value:
-					m_vars->modify(var->name(), new Cn(c->m_params[1]));
-					break;
-				case Object::oper:
-					m_vars->modify(var->name(), new Operator(c->m_params[1]));
-					break;
-				case Object::container:
-					m_vars->modify(var->name(), new Container(c->m_params[1]));
-					break;
-				case Object::none:
-					m_err << i18n("Invalid var type");
-					break;
-			}
+			Object* o = eval(c->m_params[1], true);
+			o=simp(o);
+			ret=calc(o);
+			m_vars->modify(var->name(), o);
+			delete o;
 		} break;
 		case Object::lambda:
 			ret = calc(*c->firstValue());
