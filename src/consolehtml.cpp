@@ -69,7 +69,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 		if(m_mode==Evaluation) {
 			Expression res=a.evaluate();
 			result = res.toHtml();
-			kDebug(0)<< "mathml result:" << res.toHtml() << endl;
+			kDebug(0)<< "mathml result:" << res.toHtml();
 			a.m_vars->modify("ans", res.tree());
 		} else {
 			Cn val=a.calculate();
