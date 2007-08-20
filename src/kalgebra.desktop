@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KAlgebra
+Name[ne]=केडीई बीजगणित
 Name[sv]=Kalgebra
 Name[uk]=KАлгебра
 GenericName=Graph Calculator
@@ -10,6 +11,7 @@ GenericName[es]=Calculadora gráfica
 GenericName[fa]=ماشین حساب گراف
 GenericName[ga]=Áireamhán Grafach
 GenericName[ja]=グラフ計算機
+GenericName[ne]=ग्राफ गणकयन्त्र
 GenericName[pt]=Calculadora Gráfica
 GenericName[pt_BR]=Calculadora Gráfica
 GenericName[sv]=Grafräknare
@@ -21,6 +23,7 @@ Comment[el]=Σχεδιαστής και επιλυτής μαθηματικών 
 Comment[es]=Resuelve y dibuja expresiones matemáticas
 Comment[fa]=حل‌کننده و رسام عبارت ریاضی
 Comment[ja]=数式ソルバ＆プロッタ
+Comment[ne]=म्याथ अभिव्यक्ति समाधानकर्ता र प्लोटर
 Comment[pt]=Resolução e Desenho de Expressões Matemáticas
 Comment[pt_BR]=Resolução e Desenho de Expressões Matemáticas
 Comment[sv]=Lösning och uppritning av matematiska uttryck
