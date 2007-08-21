@@ -186,8 +186,8 @@ void ConsoleHtml::clear()
 VariableView::VariableView(QWidget *parent) : QTreeWidget(parent), a(NULL)
 {
 	setColumnCount(2);
-	headerItem()->setText(0, i18n("Name"));
-	headerItem()->setText(1, i18n("Value"));
+	headerItem()->setText(0, i18nc("@title:column", "Name"));
+	headerItem()->setText(1, i18nc("@title:column", "Value"));
 	clear();
 	header()->setResizeMode(0, QHeaderView::ResizeToContents);
 	setRootIsDecorated(false);

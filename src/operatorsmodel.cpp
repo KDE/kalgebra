@@ -23,9 +23,9 @@
 
 OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 3, parent), m_count(Object::nOfOps)
 {
-	setHeaderData(0, Qt::Horizontal, i18n("Name"));
-	setHeaderData(1, Qt::Horizontal, i18n("Description"));
-	setHeaderData(2, Qt::Horizontal, i18n("Parameters"));
+	setHeaderData(0, Qt::Horizontal, i18nc("@title:column", "Name"));
+	setHeaderData(1, Qt::Horizontal, i18nc("@title:column", "Description"));
+	setHeaderData(2, Qt::Horizontal, i18nc("@title:column", "Parameters"));
 	
 	for (int i=1; i<m_count; ++i) {
 		addEntry(i, Operator::m_words[i], description((Object::OperatorType) i), example((Object::OperatorType) i));
@@ -39,7 +39,7 @@ void OperatorsModel::addEntry(int i, const QString &name, const QString &value, 
 	f.setItalic(true);
 	QStandardItem *descr = new QStandardItem(value);
 	descr->setFont(f);
-		
+	
 	setData(index(i-1, 0), name);
 	setItem(i-1, 1, descr);
 	setData(index(i-1, 2), ex);
@@ -94,13 +94,13 @@ QString OperatorsModel::description(Object::OperatorType o)
 			s = i18n("Factorial. factorial(n)=n!");
 			break;
 		case Object::sin:
-			s = i18n("Sine");
+			s = i18n("Function to calculate the sine of a given angle");
 			break;
 		case Object::cos:
-			s = i18n("Cosine");
+			s = i18n("Function to calculate the cosine of a given angle");
 			break;
 		case Object::tan:
-			s = i18n("Tangent");
+			s = i18n("Function to calculate the tangent of a given angle");
 			break;
 		case Object::sec:
 			s = i18n("Secant");

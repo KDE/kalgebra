@@ -75,7 +75,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	
 	QHBoxLayout *m_butts = new QHBoxLayout(0);
 	m_ok = new QPushButton(i18n("OK"), this);
-	QPushButton *m_clear = new QPushButton(i18n("Clear"), this);
+	QPushButton *m_clear = new QPushButton(i18nc("@action:button", "Clear"), this);
 	connect(m_ok, SIGNAL(clicked()), this, SLOT(ok()));
 	connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
 	

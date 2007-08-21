@@ -81,12 +81,12 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	////////menu
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
-	c_menu->addAction(i18n("&New"), c_results, SLOT(clear()), QKeySequence::New);
-	c_menu->addAction(i18n("&Load Script"), this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
-	c_menu->addAction(i18n("&Save Script"), this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
-	c_menu->addAction(i18n("&Save Log"), this, SLOT(saveLog()), QKeySequence::Save);
+	c_menu->addAction(i18nc("@item:inmenu", "&New"), c_results, SLOT(clear()), QKeySequence::New);
+	c_menu->addAction(i18nc("@item:inmenu", "&Load Script"), this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
+	c_menu->addAction(i18nc("@item:inmenu", "&Save Script"), this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
+	c_menu->addAction(i18nc("@item:inmenu", "&Save Log"), this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
-	c_menu->addAction(i18n("&Quit"), this, SLOT(close()), Qt::CTRL+Qt::Key_Q);
+	c_menu->addAction(i18nc("@item:inmenu", "&Quit"), this, SLOT(close()), Qt::CTRL+Qt::Key_Q);
 	////////////
 	//////EOConsola
 	
@@ -100,8 +100,8 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	this->addDockWidget(static_cast<Qt::DockWidgetArea>(2), b_dock_funcs);
 	
 	b_funcs = new QTreeWidget(b_tools);
-	b_funcs->headerItem()->setText(0, i18n("Name"));
-	b_funcs->headerItem()->setText(1, i18n("Function"));
+	b_funcs->headerItem()->setText(0, i18nc("@title:column", "Name"));
+	b_funcs->headerItem()->setText(1, i18nc("@title:column", "Function"));
 	b_funcs->header()->setResizeMode(0, QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
 	b_funcs->setRootIsDecorated(false);
@@ -133,10 +133,10 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_menu->addAction(i18n("&Save"), this, SLOT(saveGraph()));
 	b_menu->addAction(i18n("&Reset View"), grafic, SLOT(resetViewport()));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
-	b_actions[2] = b_menu->addAction(i18n("Poor"), this, SLOT(set_res_low()));
-	b_actions[3] = b_menu->addAction(i18n("Normal"), this, SLOT(set_res_std()));
-	b_actions[4] = b_menu->addAction(i18n("Fine"), this, SLOT(set_res_fine()));
-	b_actions[5] = b_menu->addAction(i18n("Very Fine"), this, SLOT(set_res_vfine()));
+	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
+	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
+	b_actions[4] = b_menu->addAction(i18nc("@item:inmenu", "Fine"), this, SLOT(set_res_fine()));
+	b_actions[5] = b_menu->addAction(i18nc("@item:inmenu", "Very Fine"), this, SLOT(set_res_vfine()));
 	
 	QActionGroup *res = new QActionGroup(b_menu);
 	res->addAction(b_actions[2]);
@@ -378,7 +378,7 @@ void KAlgebra::tabChanged(int n)
 		default:
 			break;
 	}
-	changeStatusBar(i18n("Ready"));
+	changeStatusBar(i18nc("@info:status", "Ready"));
 }
 
 #include "algebra.moc"
