@@ -23,6 +23,7 @@
 
 #include "object.h"
 #include "operator.h"
+#include "analitzaexport.h"
 
 //FIXME: Must move it somewhere
 /** Prints a dom tree from a dom node @p in indenting it by @p ind */
@@ -37,7 +38,7 @@ void objectWalker(const Object* o, int ind=0);
  *	@author Aleix Pol <aleixpol@gmail.com>
  */
 
-class Container : public Object
+class ANALITZA_EXPORT Container : public Object
 {
 public:
 	/** Constructor. Creates an empty container with no type. */

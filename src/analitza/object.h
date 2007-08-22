@@ -23,6 +23,8 @@
 #include <QString>
 #include <QDebug>
 
+#include "analitzaexport.h"
+
 // OperatorsModel m_words;
 /**
  *	\internal
@@ -32,7 +34,7 @@
 
 //FIXME: Check for public -> protected on some members
 /** Object is everything but nothing. */
-class Object
+class ANALITZA_EXPORT Object
 {
 public:
 	/** ObjectType is used to describe objects. */

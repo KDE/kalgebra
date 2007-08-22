@@ -20,6 +20,8 @@
 #define VALUE_H
 
 #include "object.h"
+#include "analitzaexport.h"
+
 #include <QDomElement>
 #include <cmath>
 /**
@@ -27,7 +29,7 @@
 *	@author Aleix Pol <aleixpol@gmail.com>
 */
 
-class Cn : public Object
+class ANALITZA_EXPORT Cn : public Object
 {
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };

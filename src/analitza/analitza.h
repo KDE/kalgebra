@@ -26,6 +26,7 @@
 
 #include "value.h"
 #include "expression.h"
+#include "analitzaexport.h"
 
 class Object;
 class Variables;
@@ -37,7 +38,7 @@ class Container;
  *	@author Aleix Pol <aleixpol@gmail.com>
  */
 
-class Analitza
+class ANALITZA_EXPORT Analitza
 {
 	//FIXME: Remove all friends. Most solved with variables getter.
 	friend class VarEdit;

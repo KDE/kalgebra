@@ -20,7 +20,9 @@
 #define VARIABLES_H
 
 #include <QHash>
+
 #include "value.h"
+#include "analitzaexport.h"
 
 class Expression;
 
@@ -29,7 +31,7 @@ class Expression;
 *	@author Aleix Pol <aleixpol@gmail.com>
 */
 
-class Variables : public QHash<QString, Object*>
+class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 {
 public:
 	/** 

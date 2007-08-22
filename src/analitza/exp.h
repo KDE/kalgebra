@@ -23,6 +23,8 @@
 #include <QString>
 #include <QStringList>
 
+#include "analitzaexport.h"
+
 /**
 	@author Aleix Pol i Gonzalez
 */
@@ -65,7 +67,7 @@ struct TOKEN {
 // void printPilaOpr(QValueStack<int> opr);
 // QString opr2str(int);
 
-class Exp
+class ANALITZA_EXPORT Exp
 {
 public:
 	Exp(QString);

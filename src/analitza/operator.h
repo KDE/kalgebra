@@ -20,10 +20,12 @@
 #define OPERATOR_H
 
 #include <QStandardItemModel>
+
 #include "object.h"
+#include "analitzaexport.h"
 
 /** The Operator class is the operator representation in the trees. */
-class Operator : public Object
+class ANALITZA_EXPORT Operator : public Object
 {
 	public:
 		/** Constructor. Creates an operator with @p t type .*/

@@ -21,7 +21,9 @@
 
 #include <QStringList>
 #include <QDomElement>
+
 #include "value.h"
+#include "analitzaexport.h"
 
 class Container;
 
@@ -32,7 +34,7 @@ class Container;
  *	@author Aleix Pol <aleixpol@gmail.com>
  */
 
-class Expression
+class ANALITZA_EXPORT Expression
 {
 	friend class Analitza;
 	public:
