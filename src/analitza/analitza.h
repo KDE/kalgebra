@@ -92,11 +92,17 @@ class ANALITZA_EXPORT Analitza
 		/** Returns whether there is any @p var variable in the @p o tree. @p vars tells the already defined variables (which won't return false). */
 		static bool hasVars(const Object* o, const QString &var=QString(), const QStringList& bvars=QStringList());
 		
-		/** Return an error list. */
+		/** @returns Return an error list. */
 		QStringList errors() const { return m_exp.error() + m_err; }
 		
-		/** Returns a way to query variables. */
+		/** @returns Returns a way to query variables. */
 		const Variables *variables() const { return m_vars; }
+		
+		/** Adds a variable entry */
+		void insertVariable(const QString& name, const Expression& value);
+		
+		/** Adds a variable entry */
+		void insertVariable(const QString& name, const Object* value);
 // 	protected: //FIXME:Shame on me
 		Expression m_exp;
 		Variables *m_vars;

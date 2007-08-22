@@ -1,4 +1,7 @@
 add_subdirectory(tests)
+if(HAVE_READLINE)
+	macro_optional_add_subdirectory(calgebra)
+endif(HAVE_READLINE)
 
 include_directories(analitza)
 

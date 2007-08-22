@@ -70,11 +70,11 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 			Expression res=a.evaluate();
 			result = res.toHtml();
 			kDebug(0)<< "mathml result:" << res.toHtml();
-			a.m_vars->modify("ans", res.tree());
+			a.insertVariable("ans", res);
 		} else {
 			Cn val=a.calculate();
 			result = val.toHtml();
-			a.m_vars->modify("ans", &val);
+			a.insertVariable("ans", &val);
 		}
 	}
 	

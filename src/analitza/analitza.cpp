@@ -1338,3 +1338,13 @@ Expression Analitza::derivative()
 	}
 	return exp;
 }
+
+void Analitza::insertVariable(const QString & name, const Expression & value)
+{
+	m_vars->modify(name, value);
+}
+
+void Analitza::insertVariable(const QString & name, const Object * value)
+{
+	m_vars->modify(name, value);
+}
