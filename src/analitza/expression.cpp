@@ -231,8 +231,7 @@ Cn Expression::downlimit() const
 
 Object* Expression::objectCopy(const Object * old)
 {
-	if(old==0)
-		return 0;
+	Q_ASSERT(old);
 	Object *o=0;
 	switch(old->type()) {
 		case Object::oper:

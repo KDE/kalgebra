@@ -29,20 +29,35 @@ int main(int argc, char *argv[])
 {
 	Analitza a;
 	bool done=false;
+	
+	using_history();
 	while(!done) {
 		char * expr=readline(">>> ");
 		if(!expr)
 			done=true;
 		else {
 			Expression e(expr, false);
-			
-			free(expr);
 			a.setExpression(e);
 			
 			Expression ans=a.evaluate();
-			qDebug() << qPrintable(ans.toString());
-			a.insertVariable("ans", ans);
+			if(a.isCorrect()) {
+				qDebug() << qPrintable(ans.toString());
+				a.insertVariable("ans", ans);
+				
+				add_history(expr);
+			} else {
+				QStringList errors = a.errors();
+				qDebug() << "Error:";
+				foreach(QString err, errors)
+					qDebug() << " -" << qPrintable(err);
+			}
 		}
+	}
+	
+	for(int i=0; i<history_get_history_state()->length; i++) {
+		HIST_ENTRY *he = remove_history(i);
+// 		free(he->line);
+		free_history_entry(he);
 	}
 	return 0;
 }
