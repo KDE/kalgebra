@@ -50,8 +50,10 @@ typedef enum {
 	tDiv,		// /
 	tPow,		//^
 	tUmi,		//-a
+	tUqm,		//?a
 	tFunc,		//f(x)
 	tBlock,		//b{x}
+	tQm,		//?
 	tComa,		//,
 	tLpr,		//(
 	tRpr,		//)

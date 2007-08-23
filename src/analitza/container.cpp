@@ -97,10 +97,9 @@ QString Container::toString() const
 			Container *c = (Container*) m_params[i];
 			QString s = c->toString();
 			Operator child_op = c->firstOperator();
-			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
+			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1) //apply
 				s=QString("(%1)").arg(s);
-			
-			if(c->containerType() == Container::bvar) {
+			else if(c->containerType() == Container::bvar) { //bvar
 				Container *ul = ulimit(), *dl = dlimit();
 				if(ul!=0 || dl!=0) {
 					if(dl!=0)
@@ -110,9 +109,7 @@ QString Container::toString() const
 						s += ul->toString();
 				}
 			}
-			
-			if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
-				ret << s;
+			ret << s;
 		} else 
 			ret << m_params[i]->toString();
 	}
@@ -164,8 +161,14 @@ QString Container::toString() const
 		case bvar:
 			toret += ret.join("->")+"->";
 			break;
+		case piece:
+			toret += ret[1]+" ? "+ret[0];
+			break;
+		case otherwise:
+			toret += "? "+ret[0];
+			break;
 		default:
-			toret += tagName()+'{'+ret.join("")+'}';
+			toret += tagName()+'{'+ret.join(", ")+'}';
 			break;
 	}
 	return toret;
@@ -258,8 +261,14 @@ QString Container::toHtml() const
 		case bvar:
 			toret += ret.join("<span class='op'>-&gt;</span>")+"<span class='op'>-&gt;</span>";
 			break;
+		case piece:
+			toret += ret[1]+" <span class='op'>?</span> "+ret[0];
+			break;
+		case otherwise:
+			toret += "<span class='op'>?</span> "+ret[0];
+			break;
 		default:
-			toret += tagName()+"<span class='op'>{</span>"+ret.join("")+"<span class='op'>}</span>";
+			toret += tagName()+"<span class='op'>{</span>"+ret.join("<span class='op'>,</span> ")+"<span class='op'>}</span>";
 			break;
 	}
 	return toret;
@@ -503,7 +512,7 @@ void objectWalker(const Object* root, int ind)
 	switch(root->type()) { //TODO: include the function into a module and use toString
 		case Object::container:
 			c= (Container*) root;
-			qDebug() << qPrintable(s) << "| cont: " << c->toString();
+			qDebug() << qPrintable(s) << "| cont: " << c->tagName() << "=" << c->toString();
 			for(int i=0; i<c->m_params.count(); i++)
 				objectWalker(c->m_params[i], ind+1);
 			
@@ -549,6 +558,13 @@ void print_dom(const QDomNode& in, int ind)
 	}
 }
 
+
+bool Container::isNumber() const
+{
+	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda ||
+		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
+}
+
 QList<Object *>::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
@@ -560,11 +576,11 @@ QList<Object *>::iterator Container::firstValue()
 			case Object::variable:
 				found=true;
 				break;
-			case Object::container: {
-				ContainerType t=((Container*) *it)->m_cont_type;
-				if(t==apply || t==math || t==lambda)
+			case Object::container:
+				if(((Container*) *it)->isNumber())
 					found=true;
-			} default:
+				break;
+			default:
 				break;
 		}
 		if(found)
@@ -584,12 +600,12 @@ QList<Object *>::const_iterator Container::firstValue() const
 			case Object::variable:
 				found=true;
 				break;
-				case Object::container: {
-					ContainerType t=((Container*) *it)->m_cont_type;
-					if(t==apply || t==math || t==lambda)
-						found=true;
-				} default:
-						break;
+			case Object::container:
+				if(((Container*) *it)->isNumber())
+					found=true;
+				break;
+			default:
+				break;
 		}
 		if(found)
 			break;
@@ -647,4 +663,5 @@ QString Container::tagName() const
 	}
 	return tag;
 }
+
 

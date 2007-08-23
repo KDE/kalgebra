@@ -24,7 +24,7 @@ using namespace std;
 
 //TODO:piece { x=3 ? x-3, x=4 ? x², x}
 
-#if 1
+#if 0
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 
@@ -51,6 +51,7 @@ QString opr2str(int in)
 		case tEof:	ret="tEof";	break;
 		case tMaxOp:	ret="tMaxOp";	break;
 		case tVal:	ret="tVal";	break;
+		case tQm:	ret="tQm";	break;
 		default:	ret="chalaoooooooooo";
 	}
 	return ret;
@@ -73,24 +74,26 @@ void printPilaVal(QStack<QString> val)
 #endif
 
 const actEnum parseTbl[tMaxOp][tMaxOp] = {
-//	 :=   ->  ..  +   -   *   /   ^   M   f   b   ,   (   )   {   }   $
-	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//:=
-	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//-> Lambda
-	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//.. Limits
-	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//+
-	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//-
-	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//*
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	///
-	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//^
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//UnaryMinus
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  S,  R,  R },	//function
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  E },	//,
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R, E2,  R, E2,  R,  R },	//)
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R, E2,  R, E2,  R,  R },	//}
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  S, E3,  A },	//$
+//	 :=   ->  ..  +   -   *   /   ^   M   Q   f   b   ?   ,   (   )   {   }   $
+	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//:=
+	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//-> Lambda
+	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//.. Limits
+	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//+
+	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//-
+	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//*
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	///
+	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//^
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Minus
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Question Mark
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  R,  S,  R,  S,  R,  R },	//function
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R,  E },	//?
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  E },	//,
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//)
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//}
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  S, E3,  A },	//$
 };
 
 Exp::Exp(QString exp) : str(exp)
@@ -202,13 +205,15 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		ret.tipus = tLcb;
 	else if(a[0]=='}')
 		ret.tipus = tRcb;
+	else if(a[0]=='?')
+		ret.tipus = (prevtok == tVal || prevtok==tRpr) ? tQm : tUqm;
 	
 	a[0]=' ';
 	a=a.trimmed();
 	l-=a.length();
 	if(l==0)
 		l=1;
-	qDebug()<< "muuuuu" << opr2str(ret.tipus) << ret.val;
+// 	qDebug()<< "muuuuu" << opr2str(ret.tipus) << ret.val;
 	return ret;
 }
 
@@ -247,7 +252,8 @@ int Exp::shift()
 	return 0;
 }
 
-int Exp::reduce(){
+int Exp::reduce()
+{
 	tokEnum oper = (tokEnum) opr.top();
 	opr.pop();
 	QString aux;
@@ -300,6 +306,12 @@ int Exp::reduce(){
 		case tComa:
 			if(!val.isEmpty()) val.push(QString("%1%2").arg(val.pop()).arg(aux));
 			break;
+		case tQm:
+			if(!val.isEmpty()) val.push(QString("<piece>%2%1</piece>").arg(val.pop()).arg(aux));
+			break;
+		case tUqm:
+			val.push(QString("<otherwise>%1</otherwise>").arg(aux));
+			break;
 		case tRpr:
 			opr.pop();
 			val.push(aux);
@@ -340,7 +352,7 @@ int Exp::parse()
 				opr.pop();
 				break;
 			case R:
-				printPilaOpr(opr);
+// 				printPilaOpr(opr);
 				if(reduce()) return 1;
 				break;
 			case S:

@@ -29,7 +29,7 @@
 #include "variables.h"
 #include "expression.h"
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
+ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculation)
 {
 	setJScriptEnabled(false);
 	setJavaEnabled(false);

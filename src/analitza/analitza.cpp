@@ -65,6 +65,7 @@ Expression Analitza::evaluate()
 
 Cn Analitza::calculate()
 {
+	objectWalker(m_exp.m_tree);
 	if(m_exp.isCorrect())
 		return calc(m_exp.m_tree);
 	else {
@@ -82,8 +83,11 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 		const Container* c = (Container*) branch;
 		Operator op = c->firstOperator();
 // 		Q_ASSERT(!c->isEmpty());
-		if(c->containerType()==Container::declare) {
-			ret = new Cn(calc(c));
+		if(c->containerType()==Container::declare) { //FIXME: x:=3 ; f:=x->x+3
+			Ci *var = (Ci*) c->m_params[0];
+			ret = eval(c->m_params[1], true);
+			ret=simp(ret);
+			m_vars->modify(var->name(), ret);
 		} else switch(op.operatorType()) {
 			case Object::diff: {
 				//FIXME: Must support multiple bvars
@@ -420,7 +424,7 @@ Cn Analitza::operate(const Container* c)
 	QList<Cn> numbers;
 	
         if(KDE_ISUNLIKELY(c->isEmpty())) {
-		m_err << i18n("Empty container: %1", c->containerType());
+		m_err << i18n("Empty container: %1", c->tagName());
 		return Cn(0.);
 	}
 	
@@ -499,10 +503,44 @@ Cn Analitza::operate(const Container* c)
 		case Container::lambda:
 			ret = calc(*c->firstValue());
 			break;
-		case Container::piecewise:
+		case Container::piecewise: {
+			//Here we have a list of options and finally the otherwise option
+			const Container *otherwise=0;
+			const Object *r=0;
+			QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+			for(; !r && it!=itEnd; ++it) {
+				Container *p=static_cast<Container*>(*it);
+				Q_ASSERT( (*it)->type()==Object::container &&
+						(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
+				bool isPiece = p->containerType()==Container::piece;
+				if(isPiece) {
+					Cn ret=calc(p->m_params[1]);
+					if(ret.value()!=0.) { // FIXME: could improve that
+						r=p->m_params[0];
+					}
+				} else {
+					//it is an otherwise
+					if(otherwise)
+						m_err << i18n("Too much <em>otherwise</em> parameters");
+					else
+						otherwise=p;
+				}
+			}
+			if(!r) {
+				if(otherwise)
+					r=otherwise->m_params[0];
+				else
+					m_err << i18nc("Piecewise is how the contitional is called here",
+						"Piecewise without otherwise nor matching piece.");
+			}
+			
+			if(r)
+				ret=calc(r);
+		}	break;
 		case Container::piece:
 		case Container::otherwise:
-#warning fill me
+			m_err << i18n("piece or otherwise in the wrong place");
+			break;
 		case Container::none:
 			break;
 	}

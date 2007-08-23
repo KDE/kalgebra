@@ -21,6 +21,7 @@
 #include "expressionedit.h"
 #include "analitza.h"
 #include "variables.h"
+#include "container.h"
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
 	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0), a(na)
@@ -106,10 +107,16 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					}
 					break;
 				case tFunc:
-					setFormat(pos, len, QColor(0,50,0));
+					if(a && a->m_vars->contains(t.val))
+						setFormat(pos, len, QColor(0,50,0));
+					else
+						setFormat(pos, len, QColor(255,50,255));
 					break;
 				case tBlock:
-					setFormat(pos, len, QColor(50,0,50));
+					if(Container::toContainerType(t.val))
+						setFormat(pos, len, QColor(50,0,50));
+					else
+						setFormat(pos, len, QColor(255,0,0));
 					break;
 				case tMaxOp:
 					m_wrong = true;

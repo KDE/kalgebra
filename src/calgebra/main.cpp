@@ -26,9 +26,57 @@
 
 using namespace std;
 
+Analitza a;
+
+void evaluate(char* expr)
+{
+	Expression e(expr, false), ans;
+	qDebug() << e.toString();
+			
+	a.setExpression(e);
+	if(e.isCorrect())
+		ans=a.evaluate();
+			
+	if(a.isCorrect()) {
+		qDebug() << qPrintable(ans.toString());
+		a.insertVariable("ans", ans);
+				
+		add_history(expr);
+	} else {
+		free(expr);
+		QStringList errors = a.errors();
+		qDebug() << "Error:";
+		foreach(QString err, errors)
+			qDebug() << " -" << qPrintable(err);
+	}
+}
+
+void calculate(char* expr)
+{
+	Expression e(expr, false);
+	Cn ans;
+	qDebug() << e.toString();
+	a.setExpression(e);
+	
+	if(e.isCorrect())
+		ans=a.calculate();
+			
+	if(a.isCorrect()) {
+		qDebug() << qPrintable(ans.toString());
+		a.insertVariable("ans", ans);
+				
+		add_history(expr);
+	} else {
+		free(expr);
+		QStringList errors = a.errors();
+		qDebug() << "Error:";
+		foreach(QString err, errors)
+			qDebug() << " -" << qPrintable(err);
+	}
+}
+
 int main(int argc, char *argv[])
 {
-	Analitza a;
 	bool done=false;
 	
 	using_history();
@@ -37,29 +85,13 @@ int main(int argc, char *argv[])
 		if(!expr)
 			done=true;
 		else {
+#if 1
 			Exp ex(expr);
 			ex.parse();
 			qDebug() << ex.mathML() << ex.error();
+#endif
 			
-			Expression e(expr, false), ans;
-			qDebug() << e.toString();
-			
-			a.setExpression(e);
-			if(e.isCorrect())
-				ans=a.evaluate();
-			
-			if(a.isCorrect()) {
-				qDebug() << qPrintable(ans.toString());
-				a.insertVariable("ans", ans);
-				
-				add_history(expr);
-			} else {
-				free(expr);
-				QStringList errors = a.errors();
-				qDebug() << "Error:";
-				foreach(QString err, errors)
-					qDebug() << " -" << qPrintable(err);
-			}
+			calculate(expr);
 		}
 	}
 	

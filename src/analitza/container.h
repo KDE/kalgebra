@@ -132,6 +132,12 @@ public:
 	/** Returns whether it is correct container. */
 	bool isCorrect() const;
 	
+	/** @return Returns whether it provides a numerical result instead of information. */
+	bool isNumber() const;
+	
+	/** @return Returns the string associated to the container type. */
+	QString tagName() const;
+	
 #if 0 //not used
 	//Monomials
 	/** Creates a monomial, just to ease the construction. */
@@ -149,7 +155,6 @@ public:
 // protected:
 	QList<Object*> m_params;
 private:
-	QString tagName() const;
 	enum ContainerType m_cont_type;
 };
 
