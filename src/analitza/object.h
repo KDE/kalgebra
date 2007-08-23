@@ -33,7 +33,6 @@
  */
 
 //FIXME: Check for public -> protected on some members
-/** Object is everything but nothing. */
 class ANALITZA_EXPORT Object
 {
 public:
@@ -44,18 +43,6 @@ public:
 		variable,	/**< Describes an object as a variable. */
 		oper,		/**< Describes an object as an operator. */
 		container	/**< Describes an object as a container. */
-	};
-	
-	/** Is used to describe Container objects in reference to the MathML standard*/
-	enum ContainerType {
-		cnone=0, 	/**< No container type, usually means an error */
-		math,		/**< Describes a container as a %lt;math&gt; tag */
-		apply,		/**< Describes a container as a %lt;apply&gt; tag */
-		declare,	/**< Describes a container as a %lt;declare&gt; tag */
-		lambda,		/**< Describes a container as a %lt;lambda&gt; tag */
-		bvar,		/**< Describes a container as a %lt;bvar&gt; tag */
-		uplimit,	/**< Describes a container as a %lt;uplimit&gt; tag */
-		downlimit	/**< Describes a container as a %lt;downlimit&gt; tag */
 	};
 	
 	/** Specifies the type of an operator */

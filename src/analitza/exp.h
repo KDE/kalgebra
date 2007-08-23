@@ -51,9 +51,12 @@ typedef enum {
 	tPow,		//^
 	tUmi,		//-a
 	tFunc,		//f(x)
+	tBlock,		//b{x}
 	tComa,		//,
 	tLpr,		//(
 	tRpr,		//)
+	tLcb,		//{ Curly bracket!
+	tRcb,		//}
 	tEof,
 	tMaxOp,
 	tVal

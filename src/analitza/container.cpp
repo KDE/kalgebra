@@ -26,7 +26,7 @@ Container::Container(const Container& c) : Object(Object::container)
 {
 	Q_ASSERT(c.type()==Object::container);
 	if(c.type()!=Object::container) {
-		setType(none);
+		setType(Object::none);
 		return;
 	}
 	
@@ -43,7 +43,7 @@ Container::Container(const Object *o) : Object(o->type())
 		m_params = c->copyParams();
 	} else {
 		setType(Object::none);
-		m_cont_type = cnone;
+		m_cont_type = none;
 	}
 }
 
@@ -75,34 +75,7 @@ QString Container::toMathML() const
 			ret += (*i)->toMathML();
 	}
 	
-	QString tag;
-	switch(m_cont_type) {
-		case Object::declare:
-			tag="declare";
-			break;
-		case Object::lambda:
-			tag="lambda";
-			break;
-		case Object::math:
-			tag="math";
-			break;
-		case Object::apply:
-			tag="apply";
-			break;
-		case Object::uplimit:
-			tag="uplimit";
-			break;
-		case Object::downlimit:
-			tag="downlimit";
-			break;
-		case Object::bvar:
-			tag="bvar";
-			break;
-		default:
-			tag="dunno";
-			break;
-	}
-	return QString("<%1>%2</%1>").arg(tag).arg(ret);
+	return QString("<%1>%2</%1>").arg(tagName()).arg(ret);
 }
 
 QString Container::toString() const
@@ -127,7 +100,7 @@ QString Container::toString() const
 			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
 				s=QString("(%1)").arg(s);
 			
-			if(c->containerType() == Object::bvar) {
+			if(c->containerType() == Container::bvar) {
 				Container *ul = ulimit(), *dl = dlimit();
 				if(ul!=0 || dl!=0) {
 					if(dl!=0)
@@ -138,7 +111,7 @@ QString Container::toString() const
 				}
 			}
 			
-			if(c->containerType()!=Object::uplimit && c->containerType()!=Object::downlimit)
+			if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
 				ret << s;
 		} else 
 			ret << m_params[i]->toString();
@@ -146,16 +119,16 @@ QString Container::toString() const
 	
 	QString toret;
 	switch(containerType()) {
-		case Object::declare:
+		case declare:
 			toret += ret.join(":=");
 			break;
-		case Object::lambda:
+		case lambda:
 			toret += ret.join("");
 			break;
-		case Object::math:
+		case math:
 			toret += ret.join("; ");
 			break;
-		case Object::apply:
+		case apply:
 			if(func){
 				QString n = ret.takeFirst();
 				toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
@@ -185,14 +158,14 @@ QString Container::toString() const
 					break;
 			}
 			break;
-		case Object::uplimit: //x->(n1..n2) is put at the same time
-		case Object::downlimit:
+		case uplimit: //x->(n1..n2) is put at the same time
+		case downlimit:
 			break;
-		case Object::bvar:
+		case bvar:
 			toret += ret.join("->")+"->";
 			break;
 		default:
-			toret += ret.join(" ?? ");
+			toret += tagName()+'{'+ret.join("")+'}';
 			break;
 	}
 	return toret;
@@ -221,7 +194,7 @@ QString Container::toHtml() const
 			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
 				s=QString("<span class='op'>(</span>%1<span class='op'>)</span>").arg(s);
 			
-			if(c->containerType() == Object::bvar) {
+			if(c->containerType() == Container::bvar) {
 				Container *ul = ulimit(), *dl = dlimit();
 				if(ul!=0 || dl!=0) {
 					if(dl!=0)
@@ -232,7 +205,7 @@ QString Container::toHtml() const
 				}
 			}
 			
-			if(c->containerType()!=Object::uplimit && c->containerType()!=Object::downlimit)
+			if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
 				ret << s;
 		} else 
 			ret << m_params[i]->toHtml();
@@ -240,16 +213,16 @@ QString Container::toHtml() const
 	
 	QString toret;
 	switch(containerType()) {
-		case Object::declare:
+		case declare:
 			toret += ret.join("<span class='op'>:=</span>");
 			break;
-		case Object::lambda:
+		case lambda:
 			toret += ret.join("");
 			break;
-		case Object::math:
+		case math:
 			toret += ret.join("<span class='op'>;</span> ");
 			break;
-		case Object::apply:
+		case apply:
 			if(func){
 				QString n = ret.takeFirst();
 				toret += QString("%1<span class='op'>(</span>%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
@@ -279,14 +252,14 @@ QString Container::toHtml() const
 						break;
 				}
 				break;
-				case Object::uplimit: //x->(n1..n2) is put at the same time
-		case Object::downlimit:
+				case uplimit: //x->(n1..n2) is put at the same time
+		case downlimit:
 			break;
-		case Object::bvar:
+		case bvar:
 			toret += ret.join("<span class='op'>-&gt;</span>")+"<span class='op'>-&gt;</span>";
 			break;
 		default:
-			toret += ret.join(" ?? ");
+			toret += tagName()+"<span class='op'>{</span>"+ret.join("")+"<span class='op'>}</span>";
 			break;
 	}
 	return toret;
@@ -302,9 +275,9 @@ QList<Object*> Container::copyParams() const
 	return ret;
 }
 
-enum Object::ContainerType Container::toContainerType(const QString& tag)
+enum Container::ContainerType Container::toContainerType(const QString& tag)
 {
-	ContainerType ret=cnone;
+	ContainerType ret=none;
 	
 	if(tag=="apply") ret=apply;
 	else if(tag=="declare") ret=declare;
@@ -313,6 +286,9 @@ enum Object::ContainerType Container::toContainerType(const QString& tag)
 	else if(tag=="bvar") ret=bvar;
 	else if(tag=="uplimit") ret=uplimit;
 	else if(tag=="downlimit") ret=downlimit;
+	else if(tag=="piecewise") ret=piecewise;
+	else if(tag=="piece") ret=piece;
+	else if(tag=="otherwise") ret=otherwise;
 	
 	return ret;
 }
@@ -324,7 +300,7 @@ QStringList Container::bvarList() const //NOTE: Should return Ci's instead of St
 	
 	for(it=m_params.begin(); it!=m_params.end(); ++it) {
 		Container* c = (Container*) (*it);
-		if(c->containerType() == Object::bvar)
+		if(c->containerType() == Container::bvar)
 			bvars.append(((Ci*)c->m_params[0])->name());
 	}
 	
@@ -335,7 +311,7 @@ Container* Container::ulimit() const
 {
 	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Object::uplimit && c->m_params[0]->type()==Object::value)
+		if(c->type()==Object::container && c->containerType()==Container::uplimit && c->m_params[0]->type()==Object::value)
 			return (Container*) c->m_params[0];
 	}
 	return 0;
@@ -345,7 +321,7 @@ Container* Container::dlimit() const
 {
 	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Object::downlimit && c->m_params[0]->type()==Object::value)
+		if(c->type()==Object::container && c->containerType()==Container::downlimit && c->m_params[0]->type()==Object::value)
 			return (Container*) c->m_params[0];
 	}
 	return 0;
@@ -629,6 +605,46 @@ bool Container::isUnary() const
 
 bool Container::isCorrect() const
 {
-	return m_correct && m_type==Object::container && m_cont_type!=Object::cnone/* && !isEmpty()*/;
+	return m_correct && m_type==Object::container && m_cont_type!=none/* && !isEmpty()*/;
+}
+
+QString Container::tagName() const
+{
+	QString tag;
+	switch(m_cont_type) {
+		case declare:
+			tag="declare";
+			break;
+		case lambda:
+			tag="lambda";
+			break;
+		case math:
+			tag="math";
+			break;
+		case apply:
+			tag="apply";
+			break;
+		case uplimit:
+			tag="uplimit";
+			break;
+		case downlimit:
+			tag="downlimit";
+			break;
+		case bvar:
+			tag="bvar";
+			break;
+		case piece:
+			tag="piece";
+			break;
+		case piecewise:
+			tag="piecewise";
+			break;
+		case otherwise:
+			tag="otherwise";
+			break;
+		case none:
+			break;
+	}
+	return tag;
 }
 

@@ -37,7 +37,7 @@ char* Operator::m_words[Object::nOfOps] = {
 	"arcsec", "arcsech", "arcsinh", "arctanh",
 	"exp", "ln", "log",
 	"conjugate", "arg", "real", "imaginary",
-	"sum", "product", "diff", "function"
+	"sum", "product", "diff", "function",
 };
 
 QString Operator::toString() const

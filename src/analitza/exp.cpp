@@ -19,10 +19,12 @@
 #include "exp.h"
 #include "operator.h"
 
-#include <klocale.h>
+#include <KLocale>
 using namespace std;
 
-#if 0
+//TODO:piece { x=3 ? x-3, x=4 ? x², x}
+
+#if 1
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 
@@ -40,9 +42,12 @@ QString opr2str(int in)
 		case tPow:	ret="tPow";	break;
 		case tUmi:	ret="tUmi";	break;
 		case tFunc:	ret="tFunc";	break;
+		case tBlock:	ret="tBlock";	break;
 		case tComa:	ret="tComa";	break;
 		case tLpr:	ret="tLpr";	break;
 		case tRpr:	ret="tRpr";	break;
+		case tLcb:	ret="tLcb";	break;
+		case tRcb:	ret="tRcb";	break;
 		case tEof:	ret="tEof";	break;
 		case tMaxOp:	ret="tMaxOp";	break;
 		case tVal:	ret="tVal";	break;
@@ -53,11 +58,10 @@ QString opr2str(int in)
 
 void printPilaOpr(QStack<int> opr) //debug only
 {
-	bool istop=true;
 	while(!opr.isEmpty()) {
 		qDebug() << ":   " << opr2str(opr.pop());
-		istop=false;
 	}
+	qDebug();
 }
 
 void printPilaVal(QStack<QString> val)
@@ -69,21 +73,24 @@ void printPilaVal(QStack<QString> val)
 #endif
 
 const actEnum parseTbl[tMaxOp][tMaxOp] = {
-//	 :=   ->  ..  +   -   *   /   ^   M   f   ,   (   )   $
-	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  R },	//:=
-	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  R },	//-> Lambda
-	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  R },	//.. Limits
-	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  R,  S,  R,  R },	//+
-	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  R,  S,  R,  R },	//-
-	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  R,  S,  R,  R },	//*
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  R,  S,  R,  R },	///
-	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  R,  S,  R,  R },	//^
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  R,  S,  R,  R },	//UnaryMinus
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  R },	//func
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  E },	//,
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R, E3,  R, E2,  R,  R },	//)
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  A },	//$
+//	 :=   ->  ..  +   -   *   /   ^   M   f   b   ,   (   )   {   }   $
+	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//:=
+	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//-> Lambda
+	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//.. Limits
+	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//+
+	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//-
+	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//*
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	///
+	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//^
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  S,  R,  S,  R,  R },	//UnaryMinus
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  S,  R,  R },	//function
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  E },	//,
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R, E2,  R, E2,  R,  R },	//)
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R, E2,  R, E2,  R,  R },	//}
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  S, E3,  A },	//$
 };
 
 Exp::Exp(QString exp) : str(exp)
@@ -157,6 +164,8 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		
 		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.tipus=tFunc;
+		} else if((a[i]=='{' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
+			ret.tipus=tBlock;
 		} else {
 			ret.val = QString::QString("<ci>%1</ci>").arg(ret.val);
 			ret.tipus= tVal;
@@ -189,12 +198,17 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		ret.tipus = tRpr;
 	else if(a[0]==',')
 		ret.tipus = tComa;
+	else if(a[0]=='{')
+		ret.tipus = tLcb;
+	else if(a[0]=='}')
+		ret.tipus = tRcb;
 	
 	a[0]=' ';
 	a=a.trimmed();
 	l-=a.length();
 	if(l==0)
 		l=1;
+	qDebug()<< "muuuuu" << opr2str(ret.tipus) << ret.val;
 	return ret;
 }
 
@@ -223,7 +237,7 @@ int Exp::shift()
 // 	cout << "------>" << tokval.ascii() << "'" << endl;
 	if(tok==tVal)
 		val.push(tokval);
-	else if(tok==tFunc){
+	else if(tok==tFunc || tok==tBlock){
 		func.push(tokval);
 		opr.push((char)tok);
 	} else
@@ -271,8 +285,11 @@ int Exp::reduce(){
 		case tFunc:
 			if(Operator::toOperatorType(func.top()) && !func.isEmpty())
 				val.push(QString("<apply><%1 />%2</apply>").arg(func.pop()).arg(aux));
-			else
+			else if(!func.isEmpty())
 				val.push(QString("<apply><ci type='function'>%1</ci>%2</apply>").arg(func.pop()).arg(aux));
+			break;
+		case tBlock:
+			if(!func.isEmpty()) val.push(QString("<%1>%2</%1>").arg(func.pop()).arg(aux));
 			break;
 		case tLambda: // ->
 			if(!val.isEmpty() && opr.top()==tLambda || (opr.count()>1 && opr[1]==tFunc))
@@ -285,6 +302,12 @@ int Exp::reduce(){
 			break;
 		case tRpr:
 			opr.pop();
+			val.push(aux);
+			break;
+		case tRcb:
+			opr.pop();
+			val.push(aux);
+			break;
 		default:
 			val.push(aux);
 			break;
@@ -317,6 +340,7 @@ int Exp::parse()
 				opr.pop();
 				break;
 			case R:
+				printPilaOpr(opr);
 				if(reduce()) return 1;
 				break;
 			case S:

@@ -41,8 +41,24 @@ void objectWalker(const Object* o, int ind=0);
 class ANALITZA_EXPORT Container : public Object
 {
 public:
+	
+	/** Is used to describe Container objects in reference to the MathML standard*/
+	enum ContainerType {
+		none=0, 	/**< No container type, usually means an error */
+		math,		/**< Describes a container as a %lt;math&gt; tag */
+		apply,		/**< Describes a container as a %lt;apply&gt; tag */
+		declare,	/**< Describes a container as a %lt;declare&gt; tag */
+		lambda,		/**< Describes a container as a %lt;lambda&gt; tag */
+		bvar,		/**< Describes a container as a %lt;bvar&gt; tag */
+		uplimit,	/**< Describes a container as a %lt;uplimit&gt; tag */
+		downlimit,	/**< Describes a container as a %lt;downlimit&gt; tag */
+		piece,		/**< Describes a container as a %lt;piece&gt; tag */
+		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
+		otherwise	/**< Describes a container as a %lt;otherwise&gt; tag */
+	};
+	
 	/** Constructor. Creates an empty container with no type. */
-	Container() : Object(container), m_cont_type(cnone) { }
+	Container() : Object(container), m_cont_type(none) { }
 	
 	/** Construtor. Creates an empty container with @p c type. */
 	Container(enum ContainerType c) : Object(container), m_cont_type(c) { }
@@ -66,7 +82,7 @@ public:
 	bool operator==(const Container& c) const;
 	
 	/** Converts a @p tag to a containerType. */
-	static enum ContainerType toContainerType(const QString& tag);
+	static ContainerType toContainerType(const QString& tag);
 	
 	/** Returns whether @p o1 is equal to @p o2. */
 	static bool equalTree(Object const* o1, Object const * o2);
@@ -133,6 +149,7 @@ public:
 // protected:
 	QList<Object*> m_params;
 private:
+	QString tagName() const;
 	enum ContainerType m_cont_type;
 };
 

@@ -18,6 +18,7 @@
 
 #include "analitza.h"
 #include "expression.h"
+#include "exp.h"
 
 #include <cstdio>
 #include <readline/readline.h>
@@ -36,16 +37,24 @@ int main(int argc, char *argv[])
 		if(!expr)
 			done=true;
 		else {
-			Expression e(expr, false);
-			a.setExpression(e);
+			Exp ex(expr);
+			ex.parse();
+			qDebug() << ex.mathML() << ex.error();
 			
-			Expression ans=a.evaluate();
+			Expression e(expr, false), ans;
+			qDebug() << e.toString();
+			
+			a.setExpression(e);
+			if(e.isCorrect())
+				ans=a.evaluate();
+			
 			if(a.isCorrect()) {
 				qDebug() << qPrintable(ans.toString());
 				a.insertVariable("ans", ans);
 				
 				add_history(expr);
 			} else {
+				free(expr);
 				QStringList errors = a.errors();
 				qDebug() << "Error:";
 				foreach(QString err, errors)

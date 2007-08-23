@@ -108,6 +108,9 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				case tFunc:
 					setFormat(pos, len, QColor(0,50,0));
 					break;
+				case tBlock:
+					setFormat(pos, len, QColor(50,0,50));
+					break;
 				case tMaxOp:
 					m_wrong = true;
 					setFormat(pos, len, QColor(255,0,0));

@@ -102,23 +102,34 @@ Object* Expression::branch(const QDomElement& elem)
 	
 	switch(whatType(elem.tagName())) {
 		case Object::container: {
-			c=new Container(Container::toContainerType(elem.tagName()));
-			
-			n = elem.firstChild();
-			while(!n.isNull()) {
-				if(n.isElement())
-					c->appendBranch(branch(n.toElement()));
+			Container::ContainerType t = Container::toContainerType(elem.tagName());
+			if(t!=Container::none) {
+				c=new Container(t);
 				
-				n = n.nextSibling();
+				n = elem.firstChild();
+				while(!n.isNull()) {
+					if(n.isElement()) {
+						Object* ob= branch(n.toElement());
+						if(ob)
+							c->appendBranch(ob);
+						else {
+							delete c;
+							return 0;
+						}
+					}
+					n = n.nextSibling();
+				}
+				
+				//Error collection
+				Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
+				bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
+				if(dGreaterU)
+					m_err << "The downlimit is greater than the uplimit. Probably should be "+ QString("%1..%2").arg(u.value()).arg(d.value());
+				//EOCollect
+				ret = c;
+			} else {
+				m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
 			}
-			
-			//Error collection
-			Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
-			bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
-			if(dGreaterU)
-				m_err << "The downlimit is greater than the uplimit. Probably should be "+ QString("%1..%2").arg(u.value()).arg(d.value());
-			//EOCollect
-			ret = c;
 			break;}
 		case Object::value:
 			num= new Cn(0.);
@@ -137,7 +148,8 @@ Object* Expression::branch(const QDomElement& elem)
 			}
 			break;
 		case Object::none:
-			qDebug() << "Not supported: " << elem.tagName();
+			m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
+			break;
 	}
 	return ret;
 }
@@ -185,7 +197,7 @@ Cn Expression::uplimit(const Container& c)
 {
 	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Object::uplimit && c->m_params[0]->type()==Object::value)
+		if(c->type()==Object::container && c->containerType()==Container::uplimit && c->m_params[0]->type()==Object::value)
 			return Cn(c->m_params[0]);
 	}
 	Cn r=Cn(0.);
@@ -197,7 +209,7 @@ Cn Expression::downlimit(const Container& c)
 {
 	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Object::downlimit && c->m_params[0]->type()==Object::value)
+		if(c->type()==Object::container && c->containerType()==Container::downlimit && c->m_params[0]->type()==Object::value)
 			return Cn(c->m_params[0]);
 	}
 	Cn r=Cn(0.);
@@ -231,7 +243,8 @@ Cn Expression::downlimit() const
 
 Object* Expression::objectCopy(const Object * old)
 {
-	Q_ASSERT(old);
+	if(!old)
+		return 0;
 	Object *o=0;
 	switch(old->type()) {
 		case Object::oper:
@@ -246,8 +259,8 @@ Object* Expression::objectCopy(const Object * old)
 		case Object::container:
 			o = new Container(old);
 			break;
-		default:
-			qDebug() << "Oops!";
+		case Object::none:
+			break;
 	}
 	return o;
 }

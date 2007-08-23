@@ -82,7 +82,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 		const Container* c = (Container*) branch;
 		Operator op = c->firstOperator();
 // 		Q_ASSERT(!c->isEmpty());
-		if(c->containerType()==Object::declare) {
+		if(c->containerType()==Container::declare) {
 			ret = new Cn(calc(c));
 		} else switch(op.operatorType()) {
 			case Object::diff: {
@@ -96,37 +96,39 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 			default: { //FIXME: Should we replace the function? the only problem appears if undeclared var in func
 				const Container *c = (Container*) branch;
 				Operator op(c->firstOperator());
-				if(op.operatorType()==Object::function && c->containerType()==Object::apply && op.isBounded()) {
+				if(op.operatorType()==Object::function && c->containerType()==Container::apply && op.isBounded()) {
 					//it is a function. I'll take only this case for the moment
 					const Container *cbody = c;
 					QStringList bvars;
 					if(op.operatorType()==Object::function) {
 						Ci *func= (Ci*) c->m_params[0];
 						Object* body= (Object*) m_vars->value(func->name()); //body is the value
-						if(body->type()!=Object::container) { //if it is a value variable
-							ret = eval(body, resolve);
-							break;
-						}
-						cbody = (Container*) body;
-						
-						QList<Object*>::const_iterator bv = cbody->m_params.begin();
-						for(; bv!=cbody->m_params.end(); ++bv) {
-							const Container *ibv;
-							if((*bv)->isContainer()) {
-								ibv = (Container*) *bv;
-								if(ibv->containerType()==Object::bvar) {
-									const Ci* ivar;
-									if(ibv->m_params[0]) {
-										ivar = (Ci*) ibv->m_params[0];
-										bvars.append(ivar->name());
+						if(body) { //FIXME: Don't really know if i fixed that properly
+							if(body->type()!=Object::container) { //if it is a value variable
+								ret = eval(body, resolve);
+								break;
+							}
+							cbody = (Container*) body;
+							
+							QList<Object*>::const_iterator bv = cbody->m_params.begin();
+							for(; bv!=cbody->m_params.end(); ++bv) {
+								const Container *ibv;
+								if((*bv)->isContainer()) {
+									ibv = (Container*) *bv;
+									if(ibv->containerType()==Container::bvar) {
+										const Ci* ivar;
+										if(ibv->m_params[0]) {
+											ivar = (Ci*) ibv->m_params[0];
+											bvars.append(ivar->name());
+										}
 									}
 								}
+								
+								QStringList::const_iterator iBvars = bvars.constBegin();
+								int i=0;
+								for(; iBvars!=bvars.constEnd(); ++iBvars)
+									m_vars->stack(*iBvars, c->m_params[++i]);
 							}
-							
-							QStringList::const_iterator iBvars = bvars.constBegin();
-							int i=0;
-							for(; iBvars!=bvars.constEnd(); ++iBvars)
-								m_vars->stack(*iBvars, c->m_params[++i]);
 						}
 					}
 					
@@ -178,7 +180,7 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 	else switch(o->type()) {
 		case Object::container:
 			c=(Container*) o;
-			if(c->containerType()==Object::apply)
+			if(c->containerType()==Container::apply)
 				ret = derivative(var, (Container*) o);
 			else {
 				Container *cret = new Container(c->containerType());
@@ -209,7 +211,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	switch(op.operatorType()) {
 		case Object::minus:
 		case Object::plus: {
-			Container *r= new Container(Object::apply);
+			Container *r= new Container(Container::apply);
 			r->m_params.append(new Operator(op));
 			
 			QList<Object*>::const_iterator it(c->firstValue());
@@ -219,12 +221,12 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			return r;
 		} break;
 		case Object::times: {
-			Container *nx = new Container(Object::apply);
+			Container *nx = new Container(Container::apply);
 			nx->m_params.append(new Operator(Object::plus));
 			
 			QList<Object*>::const_iterator it(c->firstValue());
 			for(;it!=c->m_params.end(); ++it) {
-				Container *neach = new Container(Object::apply);
+				Container *neach = new Container(Container::apply);
 				neach->m_params.append(new Operator(Object::times));
 				
 				QList<Object*>::const_iterator iobj(c->firstValue());
@@ -244,28 +246,28 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			if(hasVars(c->m_params[2], var)) {
 				//http://en.wikipedia.org/wiki/Table_of_derivatives
 				//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
-				Container *nc = new Container(Object::apply);
+				Container *nc = new Container(Container::apply);
 				nc->m_params.append(new Operator(Object::times));
 				nc->m_params.append(Expression::objectCopy(c));
-				Container *nAss = new Container(Object::apply);
+				Container *nAss = new Container(Container::apply);
 				nAss->m_params.append(new Operator(Object::plus));
 				nc->m_params.append(nAss);
 				
-				Container *nChain1 = new Container(Object::apply);
+				Container *nChain1 = new Container(Container::apply);
 				nChain1->m_params.append(new Operator(Object::times));
 				nChain1->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
 				
-				Container *cDiv = new Container(Object::apply);
+				Container *cDiv = new Container(Container::apply);
 				cDiv->m_params.append(new Operator(Object::divide));
 				cDiv->m_params.append(Expression::objectCopy(*(c->firstValue()+1)));
 				cDiv->m_params.append(Expression::objectCopy(*c->firstValue()));
 				nChain1->m_params.append(cDiv);
 				
-				Container *nChain2 = new Container(Object::apply);
+				Container *nChain2 = new Container(Container::apply);
 				nChain2->m_params.append(new Operator(Object::times));
 				nChain2->m_params.append(derivative(var, Expression::objectCopy(*(c->firstValue()+1))));
 				
-				Container *cLog = new Container(Object::apply);
+				Container *cLog = new Container(Container::apply);
 				cLog->m_params.append(new Operator(Object::ln));
 				cLog->m_params.append(Expression::objectCopy(*c->firstValue()));
 				nChain2->m_params.append(cLog);
@@ -274,14 +276,14 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				nAss->m_params.append(nChain2);
 				return nc;
 			} else {
-				Container *cx = new Container(Object::apply);
+				Container *cx = new Container(Container::apply);
 				cx->m_params.append(new Operator(Object::times));
 				cx->m_params.append(Expression::objectCopy(c->m_params[2]));
 				cx->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
 				Container* nc= new Container(c);
 				cx->m_params.append(nc);
 				
-				Container *degree = new Container(Object::apply);
+				Container *degree = new Container(Container::apply);
 				degree->m_params.append(new Operator(Object::minus));
 				degree->m_params.append(Expression::objectCopy(c->m_params[2]));
 				degree->m_params.append(new Cn(1.));
@@ -290,38 +292,38 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			}
 		} break;
 		case Object::sin: {
-			Container *ncChain = new Container(Object::apply);
+			Container *ncChain = new Container(Container::apply);
 			ncChain->m_params.append(new Operator(Object::times));
 			ncChain->m_params.append(derivative(var, *c->firstValue()));
-			Container *nc = new Container(Object::apply);
+			Container *nc = new Container(Container::apply);
 			nc->m_params.append(new Operator(Object::cos));
 			nc->m_params.append(Expression::objectCopy(*c->firstValue()));
 			ncChain->m_params.append(nc);
 			return ncChain;
 		} break;
 		case Object::cos: {
-			Container *ncChain = new Container(Object::apply);
+			Container *ncChain = new Container(Container::apply);
 			ncChain->m_params.append(new Operator(Object::times));
 			ncChain->m_params.append(derivative(var, *c->firstValue()));
 			
-			Container *nc = new Container(Object::apply);
+			Container *nc = new Container(Container::apply);
 			nc->m_params.append(new Operator(Object::sin));
 			nc->m_params.append(Expression::objectCopy(*c->firstValue()));
-			Container *negation = new Container(Object::apply);
+			Container *negation = new Container(Container::apply);
 			negation->m_params.append(new Operator(Object::minus));
 			negation->m_params.append(nc);
 			ncChain->m_params.append(negation);
 			return ncChain;
 		} break;
 		case Object::tan: {
-			Container *ncChain = new Container(Object::apply);
+			Container *ncChain = new Container(Container::apply);
 			ncChain->m_params.append(new Operator(Object::divide));
 			ncChain->m_params.append(derivative(var, *c->firstValue()));
 			
-			Container *nc = new Container(Object::apply);
+			Container *nc = new Container(Container::apply);
 			nc->m_params.append(new Operator(Object::power));
 			
-			Container *lilcosine = new Container(Object::apply);
+			Container *lilcosine = new Container(Container::apply);
 			lilcosine->m_params.append(new Operator(Object::cos));
 			lilcosine->m_params.append(Expression::objectCopy(*c->firstValue()));
 			nc->m_params.append(lilcosine);
@@ -334,26 +336,26 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			f=*c->firstValue();
 			g=*(c->firstValue()+1);
 			
-			Container *nc = new Container(Object::apply);
+			Container *nc = new Container(Container::apply);
 			nc->m_params.append(new Operator(Object::divide));
 			
-			Container *cmin = new Container(Object::apply);
+			Container *cmin = new Container(Container::apply);
 			cmin->m_params.append(new Operator(Object::minus));
 			
-			Container *cmin1 =new Container(Object::apply);
+			Container *cmin1 =new Container(Container::apply);
 			cmin1->m_params.append(new Operator(Object::times));
 			cmin1->m_params.append(derivative(var, Expression::objectCopy(f)));
 			cmin1->m_params.append(Expression::objectCopy(g));
 			cmin->m_params.append(cmin1);
 			nc->m_params.append(cmin);
 			
-			Container *cmin2 =new Container(Object::apply);
+			Container *cmin2 =new Container(Container::apply);
 			cmin2->m_params.append(new Operator(Object::times));
 			cmin2->m_params.append(Expression::objectCopy(f));
 			cmin2->m_params.append(derivative(var, Expression::objectCopy(g)));
 			cmin->m_params.append(cmin2);
 			
-			Container *cquad = new Container(Object::apply);
+			Container *cquad = new Container(Container::apply);
 			cquad->m_params.append(new Operator(Object::power));
 			cquad->m_params.append(Expression::objectCopy(g));
 			cquad->m_params.append(new Cn(2.));
@@ -363,14 +365,14 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			return nc;
 		} break;
 		case Object::ln: {
-			Container *nc = new Container(Object::apply);
+			Container *nc = new Container(Container::apply);
 			nc->m_params.append(new Operator(Object::divide));
 			nc->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
 			nc->m_params.append(Expression::objectCopy(*c->firstValue()));
 			return nc;
 		} break;
 		default: {
-			Container* obj = new Container(Object::apply);
+			Container* obj = new Container(Container::apply);
 			obj->m_params.append(new Operator(Object::diff));
 			obj->m_params.append(Expression::objectCopy(c));
 			return obj;
@@ -430,11 +432,11 @@ Cn Analitza::operate(const Container* c)
 	else if(op!= 0 && op->operatorType()==Object::product)
 		ret = product(*c);
 	else switch(c->containerType()) { //TODO: Diffs should be implemented here.
-		case Object::apply:
-		case Object::math:
-		case Object::bvar:
-		case Object::uplimit:
-		case Object::downlimit:
+		case Container::apply:
+		case Container::math:
+		case Container::bvar:
+		case Container::uplimit:
+		case Container::downlimit:
 		{
                         if(KDE_ISUNLIKELY(c->isEmpty())) {
 				m_err << i18n("Container without values found.");
@@ -477,7 +479,7 @@ Cn Analitza::operate(const Container* c)
 			}
 		}
 			break;
-		case Object::declare:
+		case Container::declare:
 		{
 			if(c->m_params.count()<=1) {
 				m_err << i18n("Need a var name and a value");
@@ -494,10 +496,14 @@ Cn Analitza::operate(const Container* c)
 			m_vars->modify(var->name(), o);
 			delete o;
 		} break;
-		case Object::lambda:
+		case Container::lambda:
 			ret = calc(*c->firstValue());
 			break;
-		case Object::cnone:
+		case Container::piecewise:
+		case Container::piece:
+		case Container::otherwise:
+#warning fill me
+		case Container::none:
 			break;
 	}
 	return ret;
@@ -549,7 +555,7 @@ bool Analitza::isFunction(const Ci& func) const
 		return false;
 	
 	Container *c = (Container*) m_vars->value(func.name());
-	return (c && c->type()==Object::container && c->containerType() == Object::lambda);
+	return (c && c->type()==Container::container && c->containerType() == Container::lambda);
 }
 
 Cn Analitza::func(const Container& n)
@@ -966,7 +972,7 @@ Object* Analitza::simp(Object* root)
 					if(cp->firstOperator()==Object::power) {
 						c->m_params[1] = Expression::objectCopy(cp->m_params[1]);
 						
-						Container *cm = new Container(Object::apply);
+						Container *cm = new Container(Container::apply);
 						cm->m_params.append(new Operator(Object::times));
 						cm->m_params.append(Expression::objectCopy(c->m_params[2]));
 						cm->m_params.append(Expression::objectCopy(cp->m_params[2]));
@@ -1067,7 +1073,7 @@ void Analitza::simpScalar(Container * c)
 		for(; !found && i!=c->m_params.end(); ++i) {
 			if((*i)->type()==Object::container) {
 				Container *c1 = (Container*) *i;
-				if(c1->containerType()==Object::apply)
+				if(c1->containerType()==Container::apply)
 					found=true;
 				
 			} else if((*i)->type()==Object::value || (*i)->type()==Object::variable) {
@@ -1238,7 +1244,7 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 				
 				if(!firstFound && (*it)->isContainer()) {
 					Container *cont= (Container*) *it;
-					if(cont->containerType()==Object::bvar) {
+					if(cont->containerType()==Container::bvar) {
 						Ci* bvar=(Ci*) cont->m_params[0];
 						if(bvar->isCorrect())
 							scope += bvar->name();
@@ -1271,7 +1277,7 @@ Object* Analitza::removeDependencies(Object * o) const
 	} else if(o->type()==Object::container) {
 		Container *c = (Container*) o;
 		Operator op(c->firstOperator());
-		if(c->containerType()==Object::apply && op.isBounded()) { //it is a function
+		if(c->containerType()==Container::apply && op.isBounded()) { //it is a function
 			Container *cbody = c;
 			QStringList bvars;
 			if(op.operatorType()==Object::function) {
