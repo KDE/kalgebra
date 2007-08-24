@@ -85,13 +85,13 @@ int main(int argc, char *argv[])
 		if(!expr)
 			done=true;
 		else {
-#if 1
+#if 0
 			Exp ex(expr);
 			ex.parse();
 			qDebug() << ex.mathML() << ex.error();
 #endif
 			
-			calculate(expr);
+			evaluate(expr);
 		}
 	}
 	

@@ -21,6 +21,8 @@
 #include <qtest_kde.h>
 #include <cmath>
 
+#include <container.h>
+
 using namespace std;
 
 QTEST_KDEMAIN_CORE( AnalitzaTest )
@@ -50,14 +52,20 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("simple addition") << "2+2" << 4.;
 	QTest::newRow("simple addition") << "2**99" << pow(2., 99.);
 	QTest::newRow("simple addition") << "3*3" << 9.;
+	
+	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << 33.;
+	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << 33.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
 {
 	QFETCH(QString, expression);
 	QFETCH(double, result);
+	Expression e(expression, false);
+	QCOMPARE(e.isCorrect(), true);
 	
-	a->setExpression(Expression(expression, false));
+	a->setExpression(e);
+	QCOMPARE(a->isCorrect(), true);
 	QCOMPARE(a->calculate().value(), result);
 }
 
@@ -70,6 +78,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple addition with var") << "2+x" << "x+2";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
 	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";
+	
+	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << "33";
+	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << "33";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -100,6 +111,40 @@ void AnalitzaTest::testDerivativeSimple()
 	
 	a->setExpression(Expression(expression, false));
 	QCOMPARE(a->derivative().toString(), QString(result));
+}
+
+void AnalitzaTest::testCorrectEvaluation_data()
+{
+	QTest::addColumn<QStringList>("expression");
+	QTest::addColumn<QString>("result");
+	
+	QStringList script;
+	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
+	script << "fib(6)";
+	QTest::newRow("piecewise fibonacci") << script << "8";
+	
+	script.clear();
+	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
+	script << "fact(5)";
+	QTest::newRow("piecewise factorial") << script << "120";
+}
+
+void AnalitzaTest::testCorrectEvaluation()
+{
+	QFETCH(QStringList, expression);
+	QFETCH(QString, result);
+	
+	Analitza b;
+	Expression res;
+	foreach(QString exp, expression) {
+		Expression e(exp, false);
+		QVERIFY(e.isCorrect());
+		
+		b.setExpression(e);
+		QVERIFY(b.isCorrect());
+		res=b.evaluate();
+	}
+	QCOMPARE(res.toString(), QString(result));
 }
 
 #include "analitzatest.moc"

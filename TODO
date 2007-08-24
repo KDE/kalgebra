@@ -9,6 +9,9 @@ Expression:
 - Shared functions Console <-> 2D
 - Delete 2D functions
 - Sort 2D functions
-- Until qt4.3: SVG export.
+- SVG export.
 - Moving on small viewport step is too large.
 - Revise keyBindings for zooming out.
+
+Doc:
+- Document about piecewise

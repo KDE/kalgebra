@@ -41,10 +41,9 @@ Q_OBJECT
 		void testTrivialCalculate();
 		void testDerivativeSimple_data();
 		void testDerivativeSimple();
+		void testCorrectEvaluation_data();
+		void testCorrectEvaluation();
 		void cleanupTestCase();
-		
-	private:
-		
 	private:
 		Analitza *a;
 };

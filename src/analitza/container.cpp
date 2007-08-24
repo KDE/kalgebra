@@ -109,7 +109,9 @@ QString Container::toString() const
 						s += ul->toString();
 				}
 			}
-			ret << s;
+			
+			if(c->containerType()!=uplimit && c->containerType()!=downlimit)
+				ret << s;
 		} else 
 			ret << m_params[i]->toString();
 	}
@@ -168,7 +170,7 @@ QString Container::toString() const
 			toret += "? "+ret[0];
 			break;
 		default:
-			toret += tagName()+'{'+ret.join(", ")+'}';
+			toret += tagName()+" { "+ret.join(", ")+" }";
 			break;
 	}
 	return toret;

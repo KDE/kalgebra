@@ -50,6 +50,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("simple expression") << "2+x";
 	QTest::newRow("simple expression") << "f:=x->x+1";
 	QTest::newRow("simple expression") << "sum(x->1..10, x)";
+	QTest::newRow("simple expression") << "piecewise { x ? y, ? 33 }";
 }
 
 void ExpressionTest::testConversion()

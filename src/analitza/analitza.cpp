@@ -65,7 +65,6 @@ Expression Analitza::evaluate()
 
 Cn Analitza::calculate()
 {
-	objectWalker(m_exp.m_tree);
 	if(m_exp.isCorrect())
 		return calc(m_exp.m_tree);
 	else {
@@ -189,9 +188,9 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 			}
 		} else if(c->containerType()==Container::math) {
 			ret=eval(c->m_params[0], resolve);
-		} else {
+		} /*else {
 			qDebug() << "Not evaluated: " << c->tagName();
-		}
+		}*/
 	} else if(resolve && branch->type()==Object::variable) {
 		Ci* var=(Ci*) branch;
 		
