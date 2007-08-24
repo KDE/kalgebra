@@ -98,12 +98,10 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 				if(isPiece) {
 					Object *cond=eval(p->m_params[1], resolve);
 					cond=simp(cond);
-					kDebug() << "evaluating: " << cond->toString();
 					if(cond->type()==Object::value) {
 						Cn* cval=static_cast<Cn*>(cond);
 						if(condition(*cval)) {
 							ret=eval(p->m_params[0], resolve);
-							kDebug(9032) << "was true";
 						}
 					}
 					delete cond;
@@ -124,6 +122,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					ret = eval(c->m_params[0], resolve);
 					break;
 				default: { //FIXME: Should we replace the function? the only problem appears if undeclared var in func
+					//This code aims to scope any bounded function
 					const Container *c = (Container*) branch;
 					Operator op(c->firstOperator());
 					if(op.operatorType()==Operator::function && op.isBounded()) {
@@ -140,8 +139,8 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 								}
 								cbody = (Container*) body;
 								
-								QList<Object*>::const_iterator bv = cbody->m_params.begin();
-								for(; bv!=cbody->m_params.end(); ++bv) {
+								QList<Object*>::const_iterator bv = cbody->m_params.constBegin();
+								for(; bv!=cbody->m_params.constEnd(); ++bv) {
 									const Container *ibv;
 									if((*bv)->isContainer()) {
 										ibv = (Container*) *bv;
@@ -153,19 +152,21 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 											}
 										}
 									}
-									
-									QStringList::const_iterator iBvars = bvars.constBegin();
-									int i=0;
-									for(; iBvars!=bvars.constEnd(); ++iBvars)
-										m_vars->stack(*iBvars, c->m_params[++i]);
+								}
+								
+								QStringList::const_iterator iBvars = bvars.constBegin();
+								int i=0;
+								for(; iBvars!=bvars.constEnd(); ++iBvars) {
+									Object *val = simp(eval(c->m_params[++i], resolve));
+									m_vars->stack(*iBvars, val);
+									delete val;
 								}
 							}
 						}
 						
-				
 						QList<Object*>::const_iterator fval = cbody->firstValue();
 						ret = eval(*fval, resolve);
-				
+						
 						QStringList::const_iterator iBvars(bvars.constBegin());
 						for(; iBvars!=bvars.constEnd(); ++iBvars)
 							m_vars->destroy(*iBvars);
@@ -645,7 +646,6 @@ Cn Analitza::func(const Container& n)
 	for(int i=0; i<var.count(); i++) {
 		Cn val=calc(n.m_params[i+1]);
 		m_vars->stack(var[i], &val);
-		kDebug() << "Adding " << val.toString() << m_vars->values("n").count();
 	}
 	
 	ret=calc(function->m_params[var.count()]);
