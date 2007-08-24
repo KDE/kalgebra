@@ -21,14 +21,14 @@
 #include <KLocale>
 #include <KApplication>
 
-OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 3, parent), m_count(Object::nOfOps)
+OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 3, parent), m_count(Operator::nOfOps)
 {
 	setHeaderData(0, Qt::Horizontal, i18nc("@title:column", "Name"));
 	setHeaderData(1, Qt::Horizontal, i18nc("@title:column", "Description"));
 	setHeaderData(2, Qt::Horizontal, i18nc("@title:column", "Parameters"));
 	
 	for (int i=1; i<m_count; ++i) {
-		addEntry(i, Operator::m_words[i], description((Object::OperatorType) i), example((Object::OperatorType) i));
+		addEntry(i, Operator::m_words[i], description((Operator::OperatorType) i), example((Operator::OperatorType) i));
 	}
 }
 
@@ -45,7 +45,7 @@ void OperatorsModel::addEntry(int i, const QString &name, const QString &value, 
 	setData(index(i-1, 2), ex);
 }
 
-QString OperatorsModel::example(Object::OperatorType o)
+QString OperatorsModel::example(Operator::OperatorType o)
 {
 	int op = Operator::nparams(o);
 	QString funcname=Operator::m_words[o];
@@ -62,197 +62,197 @@ QString OperatorsModel::example(Object::OperatorType o)
 	}
 }
 
-QString OperatorsModel::description(Object::OperatorType o)
+QString OperatorsModel::description(Operator::OperatorType o)
 {
 	QString s;
 	switch(o) {
-		case Object::plus:
+		case Operator::plus:
 			s = i18n("Addition");
 			break;
-		case Object::times:
+		case Operator::times:
 			s = i18n("Multiplication");
 			break;
-		case Object::divide:
+		case Operator::divide:
 			s = i18n("Division");
 			break;
-		case Object::minus:
+		case Operator::minus:
 			s = i18n("Subtraction");
 			break;
-		case Object::power:
+		case Operator::power:
 			s = i18n("Power");
 			break;
-		case Object::rem:
+		case Operator::rem:
 			s = i18n("Remainder");
 			break;
-		case Object::quotient:
+		case Operator::quotient:
 			s = i18n("Quotient");
 			break;
-		case Object::factorof:
+		case Operator::factorof:
 			s = i18n("The factor of");
 			break;
-		case Object::factorial:
+		case Operator::factorial:
 			s = i18n("Factorial. factorial(n)=n!");
 			break;
-		case Object::sin:
+		case Operator::sin:
 			s = i18n("Function to calculate the sine of a given angle");
 			break;
-		case Object::cos:
+		case Operator::cos:
 			s = i18n("Function to calculate the cosine of a given angle");
 			break;
-		case Object::tan:
+		case Operator::tan:
 			s = i18n("Function to calculate the tangent of a given angle");
 			break;
-		case Object::sec:
+		case Operator::sec:
 			s = i18n("Secant");
 			break;
-		case Object::csc:
+		case Operator::csc:
 			s = i18n("Cosecant");
 			break;
-		case Object::cot:
+		case Operator::cot:
 			s = i18n("Cotangent");
 			break;
-		case Object::sinh:
+		case Operator::sinh:
 			s = i18n("Hyperbolic sine");
 			break;
-		case Object::cosh:
+		case Operator::cosh:
 			s = i18n("Hyperbolic cosine");
 			break;
-		case Object::tanh:
+		case Operator::tanh:
 			s = i18n("Hyperbolic tangent");
 			break;
-		case Object::sech:
+		case Operator::sech:
 			s = i18n("Hyperbolic secant");
 			break;
-		case Object::csch:
+		case Operator::csch:
 			s = i18n("Hyperbolic cosecant");
 			break;
-		case Object::coth:
+		case Operator::coth:
 			s = i18n("Hyperbolic cotangent");
 			break;
-		case Object::arcsin:
+		case Operator::arcsin:
 			s = i18n("Arc sine");
 			break;
-		case Object::arccos:
+		case Operator::arccos:
 			s = i18n("Arc cosine");
 			break;
-		case Object::arctan:
+		case Operator::arctan:
 			s = i18n("Arc tangent");
 			break;
-		case Object::arccot:
+		case Operator::arccot:
 			s = i18n("Arc cotangent");
 			break;
-		case Object::arccoth:
+		case Operator::arccoth:
 			s = i18n("Hyperbolic arc cotangent");
 			break;
-		case Object::arctanh:
+		case Operator::arctanh:
 			s = i18n("Hyperbolic arc tangent");
 			break;
-		case Object::sum:
+		case Operator::sum:
 			s = i18n("Summatory");
 			break;
-		case Object::product:
+		case Operator::product:
 			s = i18n("Productory");
 			break;
-		case Object::diff:
+		case Operator::diff:
 			s = i18n("Differentiation");
 			break;
-		case Object::arcsinh:
+		case Operator::arcsinh:
 			s = i18n("Hyperbolic arc sine");
 			break;
-		case Object::arccosh:
+		case Operator::arccosh:
 			s = i18n("Hyperbolic arc cosine");
 			break;
-		case Object::arccsc:
+		case Operator::arccsc:
 			s = i18n("Arc cosecant");
 			break;
-		case Object::arccsch:
+		case Operator::arccsch:
 			s = i18n("Hyperbolic arc cosecant");
 			break;
-		case Object::arcsec:
+		case Operator::arcsec:
 			s = i18n("Arc secant");
 			break;
-		case Object::arcsech:
+		case Operator::arcsech:
 			s = i18n("Hyperbolic arc secant");
 			break;
-		case Object::exp:
+		case Operator::exp:
 			s = i18n("Exponent (e^x)");
 			break;
-		case Object::ln:
+		case Operator::ln:
 			s = i18n("Base-e logarithm");
 			break;
-		case Object::log:
+		case Operator::log:
 			s = i18n("Base-10 logarithm");
 			break;
-		case Object::abs:
+		case Operator::abs:
 			s = i18n("Absolute value. abs(n)=|n|");
 			break;
-		case Object::conjugate:
+		case Operator::conjugate:
 			s = i18n("Conjugate");
 			break;
-		case Object::arg:
+		case Operator::arg:
 			s = "---";//i18n("Arg?");
 			break;
-		case Object::real:
+		case Operator::real:
 			s = i18n("Real");
 			break;
-		case Object::imaginary:
+		case Operator::imaginary:
 			s = i18n("Imaginary");
 			break;
-		case Object::floor:
+		case Operator::floor:
 			s = i18n("Floor value. floor(n)=⌊n⌋");
 			break;
-		case Object::ceiling:
+		case Operator::ceiling:
 			s = i18n("Ceil value. ceil(n)=⌈n⌉");
 			break;
-		case Object::min:
+		case Operator::min:
 			s = i18n("Minimum");
 			break;
-		case Object::max:
+		case Operator::max:
 			s = i18n("Maximum");
 			break;
-		case Object::gt:
+		case Operator::gt:
 			s = i18n("Greater than. gt(a,b)=a>b");
 			break;
-		case Object::lt:
+		case Operator::lt:
 			s = i18n("Less than. lt(a,b)=a<b");
 			break;
-		case Object::eq:
+		case Operator::eq:
 			s = i18n("Equal. eq(a,b) = a=b");
 			break;
-		case Object::approx:
+		case Operator::approx:
 			s = i18n("Approximation approx(a)=a±n");
 			break;
-		case Object::neq:
+		case Operator::neq:
 			s = i18n("Not equal. neq(a,b)=a≠b");
 			break;
-		case Object::geq:
+		case Operator::geq:
 			s = i18n("Greater or equal. geq(a,b)=a≥b");
 			break;
-		case Object::leq:
+		case Operator::leq:
                         s = i18n("Less or equal. leq(a,b)=a≤b");
 			break;
-		case Object::_and:
+		case Operator::_and:
 			s = i18n("Boolean and");
 			break;
-		case Object::_not:
+		case Operator::_not:
 			s = i18n("Boolean not");
 			break;
-		case Object::_or:
+		case Operator::_or:
 			s = i18n("Boolean or");
 			break;
-		case Object::_xor:
+		case Operator::_xor:
 			s = i18n("Boolean xor");
 			break;
-		case Object::implies:
+		case Operator::implies:
 			s = i18n("Boolean implication");
 			break;
-		case Object::gcd:
+		case Operator::gcd:
 			s = i18n("Greatest common divisor");
 			break;
-		case Object::lcm:
+		case Operator::lcm:
 			s = i18n("Least common multiple");
 			break;
-		case Object::root:
+		case Operator::root:
 			s = i18n("Root");
 			break;
 		default:

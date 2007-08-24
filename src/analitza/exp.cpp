@@ -84,7 +84,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	///
 	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//^
 	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Minus
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Question Mark
+	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Question Mark
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  R,  S,  R,  S,  R,  R },	//function
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R,  E },	//?

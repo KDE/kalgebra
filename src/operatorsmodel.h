@@ -20,7 +20,7 @@
 #define OPERATORSMODEL_H
 
 #include <QStandardItemModel>
-#include "object.h"
+#include "operator.h"
 
 /** Operators model is a model class that has a relation of all operators string with their OperatorType. */
 class OperatorsModel : public QStandardItemModel
@@ -33,10 +33,10 @@ public:
 	int count() const { return m_count; }
 	
 	/** Returns the description of the @p o operator. */
-	static QString description(Object::OperatorType o);
+	static QString description(Operator::OperatorType o);
 	
 	/** Returns the description of the @p o operator. */
-	static QString example(Object::OperatorType o);
+	static QString example(Operator::OperatorType o);
 	
 	/** Adds an entry to the model. */
 	void addEntry(int i, const QString&, const QString&, const QString& ex=QString());

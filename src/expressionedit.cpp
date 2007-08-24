@@ -92,7 +92,7 @@ void ExpressionEdit::updateCompleter()
 		if(a)
 			nvars=a->m_vars->count();
 		
-		OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps+nvars, m_completer);
+		OperatorsModel *m_ops = new OperatorsModel(Operator::nOfOps+nvars, m_completer);
 		
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();

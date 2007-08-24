@@ -24,7 +24,7 @@
 Dictionary::Dictionary(QWidget *p) : QTreeView(p)
 {
 	setRootIsDecorated(false);
-	OperatorsModel *m_ops = new OperatorsModel(Object::nOfOps, this); //FIXME: change the 100
+	OperatorsModel *m_ops = new OperatorsModel(Operator::nOfOps, this); //FIXME: change the 100
 	
 // 	header()->setResizeMode(2, QHeaderView::ResizeToContents);
 	

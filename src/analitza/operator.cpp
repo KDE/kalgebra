@@ -18,7 +18,7 @@
 
 #include "operator.h"
 
-char* Operator::m_words[Object::nOfOps] = {
+char* Operator::m_words[nOfOps] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",
 	"power", "root", "factorial",
@@ -42,21 +42,21 @@ char* Operator::m_words[Object::nOfOps] = {
 
 QString Operator::toString() const
 {
-	Q_ASSERT(m_optype<Object::nOfOps);
+	Q_ASSERT(m_optype<nOfOps);
 	return QString("%1").arg(m_words[m_optype]);
 }
 
 QString Operator::toMathML() const
 {
-	Q_ASSERT(m_optype<Object::nOfOps);
+	Q_ASSERT(m_optype<nOfOps);
 	return QString("<%1 />").arg(m_words[m_optype]);
 }
 
 
-enum Object::OperatorType Operator::toOperatorType(const QString &e)
+enum Operator::OperatorType Operator::toOperatorType(const QString &e)
 {
 	//qDebug(), "lol";
-	enum OperatorType ret=onone;
+	enum OperatorType ret=none;
 	
 	if(e=="plus") ret=plus;
 	else if(e=="times") ret=times;
@@ -143,7 +143,7 @@ Operator::OperatorType Operator::multiplicityOperator(const Operator::OperatorTy
 			r = power;
 			break;
 		default:
-			r=onone;
+			r=none;
 	}
 	return r;
 }

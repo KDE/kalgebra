@@ -23,10 +23,8 @@
 
 Ci::Ci(const Object * o) : Object(o->type())
 {
-	if(type() == Object::variable) {
-		const Ci *c = (Ci*) o;
-		m_name = c->name();
-		m_function = c->isFunction();
-	} else
-		setType(Object::none);	
+	Q_ASSERT(m_type==Object::variable);
+	const Ci *c = (Ci*) o;
+	m_name = c->name();
+	m_function = c->isFunction();
 }

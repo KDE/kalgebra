@@ -25,6 +25,7 @@
 #include <QStringList>
 
 #include "value.h"
+#include "operator.h"
 #include "expression.h"
 #include "analitzaexport.h"
 
@@ -89,7 +90,7 @@ class ANALITZA_EXPORT Analitza
 		/** simplifies the expression. */
 		void simplify(); //FIXME: Should return an Expression
 		
-		/** Returns whether there is any @p var variable in the @p o tree. @p vars tells the already defined variables (which won't return false). */
+		/** Returns whether there is any @p var variable in the @p o tree. @p bvars tells the already defined variables (which won't return true). */
 		static bool hasVars(const Object* o, const QString &var=QString(), const QStringList& bvars=QStringList());
 		
 		/** @returns Return an error list. */
@@ -115,6 +116,7 @@ class ANALITZA_EXPORT Analitza
 		Cn sum(const Container& c);
 		Cn product(const Container& c);
 		Cn func(const Container& c);
+		static bool condition(const Cn& v);
 		
 		Object* simp(Object* root);
 		void simpScalar(Container* c);
@@ -122,7 +124,7 @@ class ANALITZA_EXPORT Analitza
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
-		void reduce(enum Object::OperatorType op, Cn *ret, Cn oper, bool unary);
+		void reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool unary);
 		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 };

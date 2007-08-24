@@ -28,6 +28,29 @@
 class ANALITZA_EXPORT Operator : public Object
 {
 	public:
+		/** Specifies the type of an operator */
+		enum OperatorType {
+			none=0,
+			plus, times, minus, divide, quotient,
+			power, root, factorial,
+			_and, _or, _xor, _not,
+			gcd, lcm, rem, factorof,
+			max, min,
+			lt, gt, eq, neq, leq, geq, implies,
+			approx, abs, floor, ceiling,
+			sin, cos, tan,
+			sec, csc, cot,
+			sinh, cosh, tanh,
+			sech, csch, coth,
+			arcsin, arccos, arctan,
+			arccot, arccoth,
+			arccosh, arccsc, arccsch,
+			arcsec, arcsech, arcsinh, arctanh,
+			exp, ln, log,
+			conjugate, arg, real, imaginary,
+			sum, product, diff, function,
+			nOfOps
+		};
 		/** Constructor. Creates an operator with @p t type .*/
 		Operator(OperatorType t) : Object(oper), m_optype(t) {}
 		
@@ -71,12 +94,12 @@ class ANALITZA_EXPORT Operator : public Object
 		bool isBounded() const;
 		
 		/** Returns whether it is a correct object. */
-		bool isCorrect() const { return m_correct && m_type==Object::oper && m_optype!=Object::onone;}
+		bool isCorrect() const { return m_correct && m_type==Object::oper && m_optype!=Operator::none;}
 		
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);
 		
-		static char* m_words[Object::nOfOps];
+		static char* m_words[nOfOps];
 		
 		/** Returns this operator @p o precedence. */
 		static unsigned int operatorWeight(OperatorType o);

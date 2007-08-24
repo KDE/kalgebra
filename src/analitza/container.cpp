@@ -49,14 +49,14 @@ Container::Container(const Object *o) : Object(o->type())
 
 Operator Container::firstOperator() const
 {
-	Operator ret(Object::onone);
+	Operator ret(Operator::none);
 	bool found=false;
 	for(int i=0; i<m_params.count() && !found; i++) {
 		if(m_params[i]->type()==Object::oper) {
 			ret = m_params[i];
 			found = true;
 		} else if(i==0 && containerType()==apply && m_params[i]->type()==Object::variable) {
-			ret = function;
+			ret = Operator::function;
 			found=true;
 		}
 	}
@@ -132,22 +132,22 @@ QString Container::toString() const
 			} else if(op==0)
 				toret += ret.join(" ");
 			else switch(op->operatorType()) {
-				case Object::plus:
+				case Operator::plus:
 					toret += ret.join("+");
 					break;
-				case Object::times:
+				case Operator::times:
 					toret += ret.join("*");
 					break;
-				case Object::divide:
+				case Operator::divide:
 					toret += ret.join("/");
 					break;
-				case Object::minus:
+				case Operator::minus:
 					if(ret.count()==1)
 						toret += '-'+ret[0];
 					else
 						toret += ret.join("-");
 					break;
-				case Object::power:
+				case Operator::power:
 					toret += ret.join("^");
 					break;
 				default:
@@ -232,22 +232,22 @@ QString Container::toHtml() const
 			} else if(op==0)
 				toret += ret.join(" ");
 				else switch(op->operatorType()) {
-					case Object::plus:
+					case Operator::plus:
 						toret += ret.join("<span class='op'>+</span>");
 						break;
-					case Object::times:
+					case Operator::times:
 						toret += ret.join("<span class='op'>*</span>");
 						break;
-					case Object::divide:
+					case Operator::divide:
 						toret += ret.join("<span class='op'>/</span>");
 						break;
-					case Object::minus:
+					case Operator::minus:
 						if(ret.count()==1)
 							toret += "<span class='op'>-</span>"+ret[0];
 						else
 							toret += ret.join("<span class='op'>-</span>");
 						break;
-					case Object::power:
+					case Operator::power:
 						toret += ret.join("<span class='op'>^</span>");
 						break;
 					default:
@@ -405,19 +405,19 @@ Container::Container(Cn* base, Object* var, Ci* degree) : Object(Object::contain
 	if(!var)
 		return;
 	else if(!base && var && !degree) {
-		m_params.append(new Operator(Object::times));
+		m_params.append(new Operator(Operator::times));
 		m_params.append(new Cn(1.));
 		m_params.append(var);
 	} else if(base && var && !degree) {
-		m_params.append(new Operator(Object::times));
+		m_params.append(new Operator(Operator::times));
 		m_params.append(base);
 		m_params.append(var);
 	} else if(!base && var && degree) {
-		m_params.append(new Operator(Object::power));
+		m_params.append(new Operator(Operator::power));
 		m_params.append(var);
 		m_params.append(degree);
 	} else {
-		m_params.append(new Operator(Object::times));
+		m_params.append(new Operator(Operator::times));
 		m_params.append(base);
 		m_params.append(var);
 		m_params.append(new Container(0, var, degree));
@@ -439,9 +439,9 @@ Cn* Container::monomialDegree(const Container& c)
 		valid=true;
 	}
 	
-	if(c.firstOperator()==Object::power) {
+	if(c.firstOperator()==Operator::power) {
 		return (Cn*) c.m_params[scalar];
-	} else if(c.firstOperator()==Object::times) {
+	} else if(c.firstOperator()==Operator::times) {
 		return monomialDegree(c.m_params[var]);
 	}
 	return 0;
@@ -449,7 +449,7 @@ Cn* Container::monomialDegree(const Container& c)
 
 Cn* Container::monomialBase(const Container& c)
 {
-	if(c.firstOperator()==Object::times) {
+	if(c.firstOperator()==Operator::times) {
 		bool valid=false;
 		int scalar=-1, var=-1;
 		
@@ -561,7 +561,7 @@ void print_dom(const QDomNode& in, int ind)
 
 bool Container::isNumber() const
 {
-	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda ||
+	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 

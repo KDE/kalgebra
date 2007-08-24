@@ -45,30 +45,6 @@ public:
 		container	/**< Describes an object as a container. */
 	};
 	
-	/** Specifies the type of an operator */
-	enum OperatorType {
-		onone=0,
-		plus, times, minus, divide, quotient,
-		power, root, factorial,
-		_and, _or, _xor, _not,
-		gcd, lcm, rem, factorof,
-		max, min,
-		lt, gt, eq, neq, leq, geq, implies,
-		approx, abs, floor, ceiling,
-		sin, cos, tan,
-		sec, csc, cot,
-		sinh, cosh, tanh,
-		sech, csch, coth,
-		arcsin, arccos, arctan,
-		arccot, arccoth,
-		arccosh, arccsc, arccsch,
-		arcsec, arcsech, arcsinh, arctanh,
-		exp, ln, log,
-		conjugate, arg, real, imaginary,
-		sum, product, diff, function,
-		nOfOps
-	};
-	
 	/** Object destructor. Does nothing. */
 	virtual ~Object(){}
 	
