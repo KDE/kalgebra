@@ -50,7 +50,7 @@ QString OperatorsModel::example(Operator::OperatorType o)
 	int op = Operator::nparams(o);
 	QString funcname=Operator::m_words[o];
 	if(op == -1) {
-		return QString("%1(..., parameters, ...)").arg(funcname);
+		return i18n("%1(..., parameters, ...)").arg(funcname);
 	} else {
 		QString sample = QString("%1(").arg(funcname);
 		for(int i=0; i<op; ++i) {

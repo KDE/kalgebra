@@ -306,18 +306,18 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 	int op = Operator::nparams(Operator::toOperatorType(funcname));
 	if(op) {
 		if(op == -1) {
-			ajudant(QString("<em>%1</em>(..., <b>par%2</b>, ...)").arg(funcname).arg(param+1));
+			ajudant(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
 		} else {
 			QString sample = (param < op) ?
-						QString("<em>%1</em>(").arg(funcname) :
-						QString("<em style='color:red'>%1</em>(").arg(funcname);
+						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
+						i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(", funcname);
 			for(int i=0; i<op; ++i) {
 				if(i==param)
-					sample += QString("<b>par%1</b>").arg(i+1);
+					sample += i18nc("Current parameter in function prototype", "<b>par%1</b>", i+1);
 				else
-					sample += QString("par%1").arg(i+1);
+					sample += i18nc("Parameter in function prototype", "par%1", i+1);
 				if(i<op-1)
-					sample += ", ";
+					sample += i18nc("Function parameter separator", ", ");
 			}
 			ajudant(sample+')');
 		}
@@ -326,16 +326,16 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 		QStringList params = c->bvarList();
 		
 		QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
-				QString("<em>%1</em>(").arg(funcname) :
-				QString("<em style='color:red'>%1</em>(").arg(funcname);
+				i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
+                i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(", funcname);
 		
 		for(int i=0; i<params.count(); ++i) {
 			if(i==param)
-				sample += QString("<b>%1</b>").arg(params[i]);
+                sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
 			else
-				sample += QString("%1").arg(params[i]);
+                sample += i18nc("Parameter in function prototype", "%1", params[i]);
 			if(i<params.count()-1)
-				sample+= ", ";
+                sample+= i18nc("Function parameter separator", ", ");
 		}
 		ajudant(sample+')');
 	} else

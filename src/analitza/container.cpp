@@ -20,7 +20,8 @@
 #include "expression.h"
 #include "value.h"
 
-#include <kdebug.h>
+#include <KDebug>
+#include <KLocale>
 
 Container::Container(const Container& c) : Object(Object::container)
 {
@@ -197,14 +198,14 @@ QString Container::toHtml() const
 			QString s = c->toHtml();
 			Operator child_op = c->firstOperator();
 			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
-				s=QString("<span class='op'>(</span>%1<span class='op'>)</span>").arg(s);
+				s=i18n("<span class='op'>(</span>%1<span class='op'>)</span>", s);
 			
 			if(c->containerType() == Container::bvar) {
 				Container *ul = ulimit(), *dl = dlimit();
 				if(ul!=0 || dl!=0) {
 					if(dl!=0)
 						s += dl->toHtml();
-					s += "<span class='op'>..</span>";
+					s += i18n("<span class='op'>..</span>");
 					if(ul!=0)
 						s += ul->toHtml();
 				}
@@ -219,41 +220,41 @@ QString Container::toHtml() const
 	QString toret;
 	switch(containerType()) {
 		case declare:
-			toret += ret.join("<span class='op'>:=</span>");
+			toret += ret.join(i18n("<span class='op'>:=</span>"));
 			break;
 		case lambda:
 			toret += ret.join("");
 			break;
 		case math:
-			toret += ret.join("<span class='op'>;</span> ");
+			toret += ret.join(i18nc("Not really correct", "<span class='op'>;</span> "));
 			break;
 		case apply:
 			if(func){
 				QString n = ret.takeFirst();
-				toret += QString("%1<span class='op'>(</span>%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
+                toret += i18n("%1<span class='op'>(</span>%2<span class='op'>)</span>", n, ret.join(", "));
 			} else if(op==0)
 				toret += ret.join(" ");
 				else switch(op->operatorType()) {
 					case Operator::plus:
-						toret += ret.join("<span class='op'>+</span>");
+						toret += ret.join(i18n("<span class='op'>+</span>"));
 						break;
 					case Operator::times:
-						toret += ret.join("<span class='op'>*</span>");
+						toret += ret.join(i18n("<span class='op'>*</span>"));
 						break;
 					case Operator::divide:
-						toret += ret.join("<span class='op'>/</span>");
+						toret += ret.join(i18n("<span class='op'>/</span>"));
 						break;
 					case Operator::minus:
 						if(ret.count()==1)
-							toret += "<span class='op'>-</span>"+ret[0];
+							toret += i18n("<span class='op'>-</span>%1", ret[0]);
 						else
-							toret += ret.join("<span class='op'>-</span>");
+							toret += ret.join(i18n("<span class='op'>-</span>"));
 						break;
 					case Operator::power:
-						toret += ret.join("<span class='op'>^</span>");
+						toret += ret.join(i18n("<span class='op'>^</span>"));
 						break;
 					default:
-						toret += QString("%1<span class='op'>(</span>%2<span class='op'>)</span>").arg(op->toString()).arg(ret.join(", "));
+                        toret += i18n("%1<span class='op'>(</span>%2<span class='op'>)</span>", op->toString(), ret.join(", "));
 						break;
 				}
 				break;
@@ -261,16 +262,16 @@ QString Container::toHtml() const
 		case downlimit:
 			break;
 		case bvar:
-			toret += ret.join("<span class='op'>-&gt;</span>")+"<span class='op'>-&gt;</span>";
+			toret += ret.join(i18n("<span class='op'>-&gt;</span>"))+i18n("<span class='op'>-&gt;</span>");
 			break;
 		case piece:
-			toret += ret[1]+" <span class='op'>?</span> "+ret[0];
+            toret += i18n("%1 <span class='op'>?</span> %2", ret[1], ret[0]);
 			break;
 		case otherwise:
-			toret += "<span class='op'>?</span> "+ret[0];
+			toret += i18n("<span class='op'>?</span> %1", ret[0]);
 			break;
 		default:
-			toret += tagName()+"<span class='op'>{</span>"+ret.join("<span class='op'>,</span> ")+"<span class='op'>}</span>";
+            toret += i18n("%1<span class='op'>{</span>%2<span class='op'>}</span>", tagName(), ret.join(i18n("<span class='op'>,</span> ")));
 			break;
 	}
 	return toret;
