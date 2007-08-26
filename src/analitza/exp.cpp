@@ -22,8 +22,6 @@
 #include <KLocale>
 using namespace std;
 
-//TODO:piece { x=3 ? x-3, x=4 ? x², x}
-
 #if 0
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
@@ -96,7 +94,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  S, E3,  A },	//$
 };
 
-Exp::Exp(QString exp) : str(exp)
+Exp::Exp(QString exp) : str(exp), completelyRead(0)
 {}
 
 Exp::~Exp(){}
@@ -226,6 +224,11 @@ int Exp::getTok()
 		firsttok=false;
 	
 	t=getToken(str, ignored, antnum);
+	
+	if(t.tipus==tLcb)
+		completelyRead++;
+	else if(t.tipus==tRcb)
+		completelyRead--;
 	
 	if(t.tipus==tMaxOp)
 		err << i18n("Unknown token");

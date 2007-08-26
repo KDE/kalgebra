@@ -29,7 +29,7 @@
 #include "variables.h"
 #include "expression.h"
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
+ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculation)
 {
 	setJScriptEnabled(false);
 	setJavaEnabled(false);
@@ -48,6 +48,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
 	m_css +="\t.sep { font-weight: bold; }\n";
 	m_css +="\t.num { color: #0000C4; }\n";
+	m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
 	m_css +="\t.var { color: #640000; }\n";
 	m_css +="\t.func { color: #003600; }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";

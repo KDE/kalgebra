@@ -78,6 +78,9 @@ public:
 	 */
 	bool destroy(const QString& name);
 	
+	static Cn pi();
+	static Cn e();
+	static Cn euler();
 };
 
 #endif

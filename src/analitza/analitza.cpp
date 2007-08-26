@@ -99,7 +99,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					cond=simp(cond);
 					if(cond->type()==Object::value) {
 						Cn* cval=static_cast<Cn*>(cond);
-						if(condition(*cval)) {
+						if(cval->isTrue()) {
 							ret=eval(p->m_params[0], resolve);
 						}
 					}
@@ -547,7 +547,7 @@ Cn Analitza::operate(const Container* c)
 					bool isPiece = p->containerType()==Container::piece;
 					if(isPiece) {
 						Cn ret=calc(p->m_params[1]);
-						if(condition(ret)) { // FIXME: could improve that
+						if(ret.isTrue()) {
 							r=p->m_params[0];
 						}
 					} else {
@@ -860,8 +860,9 @@ void Analitza::reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool una
 			m_err << i18n("The operator <em>%1</em> has not been implemented", op);
 			break;
 	}
-// 	
+	
 	ret->setValue(a);
+	ret->setBoolean(boolean);
 }
 
 QStringList Analitza::bvarList() const //FIXME: if
@@ -934,7 +935,7 @@ Object* Analitza::simp(Object* root)
 					p->m_params[1]=simp(p->m_params[1]);
 					if(p->m_params[1]->type()==Object::value) {
 						Cn* cond=static_cast<Cn*>(p->m_params[1]);
-						if(condition(*cond)) {
+						if(cond->isTrue()) {
 							delete p->m_params[1];
 							p->m_params.removeAt(1);
 							p->setContainerType(Container::otherwise);
@@ -1462,7 +1463,6 @@ Expression Analitza::derivative()
 			exp.m_tree = derivative(vars.first(), m_exp.m_tree);
 		exp.m_tree = simp(exp.m_tree);
 		
-// 		objectWalker(exp.m_tree);
 	}
 	return exp;
 }
@@ -1477,7 +1477,3 @@ void Analitza::insertVariable(const QString & name, const Object * value)
 	m_vars->modify(name, value);
 }
 
-bool Analitza::condition(const Cn & v)
-{
-	return v.value()!=0.;
-}

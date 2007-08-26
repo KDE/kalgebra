@@ -28,11 +28,9 @@ using namespace std;
 
 Analitza a;
 
-void evaluate(char* expr)
+void evaluate(const Expression& e)
 {
-	Expression e(expr, false), ans;
-	qDebug() << e.toString();
-			
+	Expression ans;
 	a.setExpression(e);
 	if(e.isCorrect())
 		ans=a.evaluate();
@@ -40,10 +38,7 @@ void evaluate(char* expr)
 	if(a.isCorrect()) {
 		qDebug() << qPrintable(ans.toString());
 		a.insertVariable("ans", ans);
-				
-		add_history(expr);
 	} else {
-		free(expr);
 		QStringList errors = a.errors();
 		qDebug() << "Error:";
 		foreach(QString err, errors)
@@ -51,11 +46,9 @@ void evaluate(char* expr)
 	}
 }
 
-void calculate(char* expr)
+void calculate(const Expression& e)
 {
-	Expression e(expr, false);
 	Cn ans;
-	qDebug() << e.toString();
 	a.setExpression(e);
 	
 	if(e.isCorrect())
@@ -64,10 +57,7 @@ void calculate(char* expr)
 	if(a.isCorrect()) {
 		qDebug() << qPrintable(ans.toString());
 		a.insertVariable("ans", ans);
-				
-		add_history(expr);
 	} else {
-		free(expr);
 		QStringList errors = a.errors();
 		qDebug() << "Error:";
 		foreach(QString err, errors)
@@ -75,23 +65,43 @@ void calculate(char* expr)
 	}
 }
 
+const char* prompt=">>> ";
+const char* insidePrompt="... ";
+
 int main(int argc, char *argv[])
 {
 	bool done=false;
+	bool inside=false;
 	
 	using_history();
+	QString entry;
 	while(!done) {
-		char * expr=readline(">>> ");
+		char * expr;
+		if(inside)
+			expr=readline(insidePrompt);
+		else
+			expr=readline(prompt);
+		
 		if(!expr)
 			done=true;
-		else {
-#if 0
-			Exp ex(expr);
-			ex.parse();
-			qDebug() << ex.mathML() << ex.error();
-#endif
+		else if(*expr==0) {
+			inside=false;
+			entry.clear();
+		} else {
+			add_history(expr);
+			entry+=QString(expr);
 			
-			evaluate(expr);
+			Exp ex(entry);
+			ex.parse();
+			if(ex.isCompletelyRead()) {
+				Expression e(ex.mathML(), true);
+				qDebug() << entry << e.toString();
+				evaluate(e);
+				inside =false;
+				entry.clear();
+			} else {
+				inside =true;
+			}
 		}
 	}
 	

@@ -116,7 +116,6 @@ class ANALITZA_EXPORT Analitza
 		Cn sum(const Container& c);
 		Cn product(const Container& c);
 		Cn func(const Container& c);
-		static bool condition(const Cn& v);
 		
 		Object* simp(Object* root);
 		void simpScalar(Container* c);

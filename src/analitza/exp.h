@@ -82,6 +82,8 @@ public:
 	QStringList error();
 	QString mathML();
 	
+	bool isCompletelyRead() const { return completelyRead==0; }
+	
 	static TOKEN getToken(QString &a, int &l, tokEnum prev);
 private:
 	QString mml;
@@ -102,6 +104,7 @@ private:
 	int getTok();
 	int shift();
 	int reduce();
+	int completelyRead;
 };
 
 #endif

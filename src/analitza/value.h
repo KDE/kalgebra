@@ -34,10 +34,13 @@ class ANALITZA_EXPORT Cn : public Object
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(v), m_value(v.value())/*, m_boolean(v.isBoolean())*/ {}
+		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.m_boolean) {}//, m_boolean(v.m_boolean) {}
 		
 		/** Constructor. Creates a value with values @p v. */
-		Cn(const double &b=0.) : Object(Object::value), m_value(b)/*, m_boolean(false)*/ {}
+		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
+		
+		/** Constructor. Creates a boolean value with value @p v. */
+		Cn(const bool b) : Object(Object::value), m_value(b?1.:0.), m_boolean(true) {}
 		
 		/** Constructor. Creates a value from @p o. If @p o is not a Cn, a not correct Cn will be returned. */
 		Cn(Object const * o);
@@ -62,14 +65,22 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns the value as an int.
 		 */
-		int intValue() const { return static_cast<int>(m_value); }
+		int intValue() const { return static_cast<int>(std::floor(m_value)); }
 		
-#if 0
 		/**
 		 *	Returns whether it is a boolean value or not.
 		 */
 		bool isBoolean() const { return m_boolean; }
-#endif
+		
+		/**
+		 *	Sets whether this value is boolean or not.
+		 */
+		void setBoolean(bool val) { m_boolean=val; }
+		
+		/**
+		 *	@return If it is a boolean value, returns if it is true or not, otherwise retuns false.
+		 */
+		bool isTrue() const { return m_boolean && m_value!=0.; }
 		
 // 		static double toNum(const QString& num, const QString& type, int base);
 // 		static enum ValueFormat whatValueFormat(const QDomElement&);
@@ -127,17 +138,17 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns a string representation of the value.
 		 */
-		QString toString() const;
+		virtual QString toString() const;
 		
 		/**
 		 *	Returns a MathML representation of the value.
 		 */
-		QString toMathML() const;
+		virtual QString toMathML() const;
 		
 		/**
 		 *	Returns a html representation of the value.
 		 */
-		QString toHtml() const;
+		virtual QString toHtml() const;
 		
 		/*/** Sets whether it is a correct Cn. 
 		void setCorrect(bool b) {m_correct = b; }*/
@@ -146,7 +157,7 @@ class ANALITZA_EXPORT Cn : public Object
 		bool isCorrect() const { return m_correct;}
 	private:
 		double m_value;
-// 		bool m_boolean;
+		bool m_boolean;
 // 		enum ValueFormat m_vformat;
 };
 

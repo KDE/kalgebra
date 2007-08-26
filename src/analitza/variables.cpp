@@ -20,14 +20,17 @@
 #include "container.h"
 #include "expression.h"
 
+Cn Variables::pi() { return Cn(3.1415926535897932384626433); }
+Cn Variables::e() { return Cn(2.718281828); }
+Cn Variables::euler() { return Cn(0.5772156649); }
+
 Variables::Variables() : QHash<QString, Object*>()
 {
-	insert("true", new Cn(1.));
-	insert("false", new Cn(0.));
-	insert("pi", new Cn(3.1415926535897932384626433));
-	insert("e", new Cn(2.718281828));
-	insert("euler", new Cn(0.5772156649));
-// 	modify("perimeter", Expression("r->2*pi*r", false));
+	insert("true", new Cn(true));
+	insert("false", new Cn(false));
+	insert("pi", new Cn(pi()));
+	insert("e", new Cn(e()));
+	insert("euler", new Cn(euler()));
 }
 
 Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)

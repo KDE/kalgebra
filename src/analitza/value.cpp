@@ -18,14 +18,17 @@
 
 #include "value.h"
 #include "operator.h"
+#include "variables.h"
+
+#include <KLocale>
 
 Cn::Cn(Object const *o)
-	: Object(Object::value), m_value(0.)/*, m_boolean(false)*/
+	: Object(Object::value), m_value(0.), m_boolean(false)
 {
 	if(o->type()==Operator::value){
 		Cn *v = (Cn*) o;
 		m_value = v->value();
-// 		m_boolean = v->isBoolean();
+		m_boolean = v->isBoolean();
 		setCorrect(v->isCorrect());
 	} else {
 		setCorrect(false);
@@ -34,17 +37,35 @@ Cn::Cn(Object const *o)
 
 QString Cn::toString() const
 {
-	return QString("%1").arg(m_value, 0, 'g', 12);;
+	if(isBoolean()) {
+		if(isTrue())
+			return "true";
+		else
+			return "false";
+	} else
+		return QString("%1").arg(m_value, 0, 'g', 12);
 }
 
 QString Cn::toMathML() const
 {
-	return QString("<cn>%1</cn>").arg(m_value, 0, 'g', 12);
+	if(isBoolean()) {
+		if(isTrue())
+			return "<cn type='constant'>true</cn>";
+		else
+			return "<cn type='constant'>false</cn>";
+	} else
+		return QString("<cn>%1</cn>").arg(m_value, 0, 'g', 12);
 }
 
 QString Cn::toHtml() const
 {
-	return QString("<span class='num'>%1</span>").arg(m_value, 0, 'g', 12);;
+	if(isBoolean()) {
+		if(isTrue())
+			return i18nc("html representation of a number", "<span class='const'>true</span>");
+		else
+			return i18nc("html representation of a number", "<span class='const'>false</span>");
+	} else
+		return i18nc("html representation of a number", "<span class='num'>%1</span>", m_value);
 }
 
 /*enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)
@@ -79,39 +100,35 @@ QString Cn::toHtml() const
 
 void Cn::setValue(const QDomElement& val)
 {
-	double ret=0.0;
 // 	this->m_vformat=whatValueFormat(val);
 	bool wrong;
 	QString tag = val.tagName();
+	m_boolean=false;
 	
 	if(tag == "cn"){ // a is a number
 		if(val.attribute("type", "integer") == "real") {
-			ret= val.text().trimmed().toDouble(&wrong); //TODO: Base on double not implemented
+			m_value= val.text().trimmed().toDouble(&wrong); //TODO: Base on double not implemented
 		} else if(val.attribute("type", "integer") == "integer"){
 			int base = val.attribute("base", "10").toInt(NULL, 10);
-			ret= val.text().trimmed().toInt(&wrong, base);
+			m_value= val.text().trimmed().toInt(&wrong, base);
 		}
 #if 0
 		else if(val.attribute("type") == "e-notation")	{ /*TODO: Not implemented */ }
 		else if(val.attribute("type") == "rational")		{ /*TODO: Not implemented */ }
 		else if(val.attribute("type") == "complex-cartesian")	{ /*TODO: Not implemented */ }
 		else if(val.attribute("type") == "complex-polar")	{ /*TODO: Not implemented */ }
+#endif
 		else if(val.attribute("type") == "constant"){
-			if(val.text() == "&pi;")		{ ret = toNum(vars.value("pi")); }
-			else if (val.text() == "&ee;" || val.text() == "&ExponentialE;"){ ret = exp(1.); }
-			else if (val.text() == "&true;")	{ ret = toNum(vars.value("true")); }
-			else if (val.text() == "&false;")	{ ret = toNum(vars.value("false")); }
-			else if (val.text() == "&gamma;")	{ ret = 0.5772156649; }
+			if(val.text() == "&pi;")			{ m_value = Variables::pi().m_value; }
+			else if (val.text() == "&ee;" || val.text() == "&ExponentialE;"){ m_value = Variables::e().m_value; }
+			else if (val.text() == "&true;")	{ m_value=1.; m_boolean=true; }
+			else if (val.text() == "&false;")	{ m_value=0.; m_boolean=true; }
+			else if (val.text() == "&gamma;")	{ m_value = 0.5772156649; }
+#if 0
 			else if (val.text() == "&ImagniaryI;")	; //TODO: Not implemented 
 			else if (val.text() == "&infin;")	; //TODO: Not implemented  }
 			else if (val.text() == "&NaN;")		; //TODO: Not implemented  }*/
-		}
 #endif
-	}/* else if(tag=="true")		ret = toNum(vars.value("true"));
-	else if(tag=="false")		ret = toNum(vars.value("false"));
-	else if(tag=="pi")		ret = toNum(vars.value("pi"));
-	else if(tag=="exponentiale")	ret = std::exp(1.);
-	else if(tag=="eulergamma")	ret = 0.5772156649;*/
-	
-	m_value = ret;
+		}
+	}
 }

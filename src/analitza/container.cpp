@@ -305,14 +305,14 @@ enum Container::ContainerType Container::toContainerType(const QString& tag)
 	return ret;
 }
 
-QStringList Container::bvarList() const //NOTE: Should return Ci's instead of Strings?
+QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of Strings?
 {
 	QStringList bvars;
 	QList<Object*>::const_iterator it;
 	
 	for(it=m_params.begin(); it!=m_params.end(); ++it) {
 		Container* c = (Container*) (*it);
-		if(c->containerType() == Container::bvar)
+		if(c->isContainer() && c->containerType() == Container::bvar)
 			bvars.append(((Ci*)c->m_params[0])->name());
 	}
 	

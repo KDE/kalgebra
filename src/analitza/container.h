@@ -76,7 +76,7 @@ public:
 	void setContainerType(enum ContainerType c) { m_cont_type = c; }
 	
 	/** Returns the type of the container. */
-	enum ContainerType containerType() const { return m_cont_type; }
+	enum ContainerType containerType() const { Q_ASSERT(m_type==Object::container && m_cont_type!=none); return m_cont_type; }
 	
 	/** Returns whether @p c is equal or not. */
 	bool operator==(const Container& c) const;
