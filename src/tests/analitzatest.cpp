@@ -49,9 +49,11 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<double>("result");
 
+	QTest::newRow("a value") << "2" << 2.;
+	QTest::newRow("another value") << "3" << 3.;
 	QTest::newRow("simple addition") << "2+2" << 4.;
-	QTest::newRow("simple addition") << "2**99" << pow(2., 99.);
-	QTest::newRow("simple addition") << "3*3" << 9.;
+	QTest::newRow("simple power") << "2**99" << pow(2., 99.);
+	QTest::newRow("simple multiplication") << "3*3" << 9.;
 	
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << 33.;
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << 33.;
@@ -74,6 +76,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 
+	QTest::newRow("simple value") << "2" << "2";
 	QTest::newRow("simple addition") << "2+2" << "4";
 	QTest::newRow("simple addition with var") << "2+x" << "x+2";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
@@ -97,7 +100,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 
-	QTest::newRow("simple polynomial") << "x^2+1" << "2*x";
+	QTest::newRow("simple polynomial") << "x^3+1" << "3*x^2";
 	QTest::newRow("power and sinus") << "x^2+sin(x)" << "2*x+cos(x)";
 	QTest::newRow("power derivative and logarithm simplification") << "e^x" << "e^x";
 	QTest::newRow("chain rule") << "sin(x**2)" << "2*x*cos(x^2)";

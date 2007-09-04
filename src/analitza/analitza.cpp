@@ -318,11 +318,15 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container* nc= new Container(c);
 				cx->m_params.append(nc);
 				
+				kDebug() << "lol!!!" << c->toString();
+				delete nc->m_params[2];
+				nc->m_params.removeAt(2);
+				
 				Container *degree = new Container(Container::apply);
 				degree->m_params.append(new Operator(Operator::minus));
 				degree->m_params.append(Expression::objectCopy(c->m_params[2]));
 				degree->m_params.append(new Cn(1.));
-				nc->m_params[2]=degree;
+				nc->m_params.append(degree);
 				return cx;
 			}
 		} break;

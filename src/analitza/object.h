@@ -23,6 +23,8 @@
 #include <QString>
 #include <QDebug>
 
+// #include <typeinfo>
+
 #include "analitzaexport.h"
 
 // OperatorsModel m_words;
@@ -46,7 +48,7 @@ public:
 	};
 	
 	/** Object destructor. Does nothing. */
-	virtual ~Object(){}
+	virtual ~Object() { /*qDebug() << "Destroying " << this;*/}
 	
 	/** Assigns a type @p t value to the object */
 	void setType(enum ObjectType t) { m_type=t; }
@@ -76,7 +78,7 @@ public:
 protected:
 // 	static int ocount;
 	/** Creates an object with a @p t type */
-	Object(enum ObjectType t) : m_correct(true), m_type(t) { /*ocount++; qDebug() << ocount;*/ }
+	Object(enum ObjectType t) : m_correct(true), m_type(t) { /*ocount++; qDebug() << ocount << typeid(t).name() << this;*/ }
 	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
 	bool m_correct;
 	

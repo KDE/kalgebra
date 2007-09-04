@@ -81,5 +81,25 @@ void ExpressionTest::testExp()
 	QCOMPARE(e->toMathML(), output);
 }
 
+void ExpressionTest::testCopy_data()
+{
+	QTest::addColumn<QString>("input");
+	
+	QTest::newRow("simple addition") << "2+4";
+	QTest::newRow("simple addition with var") << "2+x";
+	QTest::newRow("functin definition") << "f:=x->x+1";
+	QTest::newRow("summatory") << "sum(x->1..10, x)";
+	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
+}
+
+void ExpressionTest::testCopy()
+{
+	QFETCH(QString, input);
+	e->setText(input);
+	
+	Expression e2(*e);
+	QCOMPARE(*e, e2);
+}
+
 
 #include "expressiontest.moc"

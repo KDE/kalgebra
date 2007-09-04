@@ -219,6 +219,8 @@ Cn Expression::downlimit(const Container& c)
 
 bool Expression::operator==(const Expression & e) const
 {
+	if(!e.m_tree || !m_tree)
+		return false;
 	return Container::equalTree(e.m_tree, m_tree);
 }
 
@@ -248,18 +250,23 @@ Object* Expression::objectCopy(const Object * old)
 	Object *o=0;
 	switch(old->type()) {
 		case Object::oper:
+			Q_ASSERT(dynamic_cast<const Operator*>(old));
 			o = new Operator(old);
 			break;
 		case Object::value:
+			Q_ASSERT(dynamic_cast<const Cn*>(old));
 			o = new Cn(old);
 			break;
 		case Object::variable:
+			Q_ASSERT(dynamic_cast<const Ci*>(old));
 			o = new Ci(old);
 			break;
 		case Object::container:
+			Q_ASSERT(dynamic_cast<const Container*>(old));
 			o = new Container(old);
 			break;
 		case Object::none:
+			Q_ASSERT(false);
 			break;
 	}
 	return o;

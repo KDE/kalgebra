@@ -128,6 +128,7 @@ class ExpressionEdit : public QTextEdit
 		QLabel *m_helptip;
 		AlgebraHighlighter *m_highlight;
 		
+        bool returnPress();
 		void helpShow(const QString& funcname, int param=0);
 		static QString findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit);
 		void ajudant(const QString&, const QPoint& p);

@@ -45,8 +45,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	this->setAutoFormatting(AutoNone);
 	m_history.append("");
 	
-	m_helptip = new QLabel(this,
-		Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+	m_helptip = new QLabel(this, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 	m_helptip->setFrameShape(QFrame::Box);
 	m_helptip->setFocusPolicy(Qt::NoFocus);
 	m_helptip->setAutoFillBackground(false);
@@ -146,10 +145,10 @@ void ExpressionEdit::setMode(AlgebraHighlighter::Mode en)
 
 void ExpressionEdit::returnP()
 {
-	removenl();
+// 	removenl();
 	if(!this->toPlainText().isEmpty()) {
 		m_history.last() = this->toPlainText();
-		m_history.append("");
+		m_history.append(QString());
 		m_histPos=m_history.count()-1;
 	}
 }
@@ -166,18 +165,25 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			setMode(isMathML() ? AlgebraHighlighter::Expression : AlgebraHighlighter::MathML);
 			break;
 		case Qt::Key_Escape:
-			m_completer->popup()->hide();
+			if(m_completer->popup()->isVisible())
+				m_completer->popup()->hide();
+			else
+				clear();
 			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
 			//FIXME: have to find a way that if the focus is not in the textedit completes, otherwise don't complete.
 			if(m_completer->popup()->isVisible()) 
 				completed(m_completer->currentCompletion());
-			else
-				emit returnPressed();
+			else {
+				bool b=returnPress();
+				if(b) {
+					QTextEdit::keyPressEvent(e);
+				}
+			}
 			
 			m_completer->popup()->hide();
-			return;
+			break;
 		case Qt::Key_Up:
 			if(!m_completer->popup()->isVisible()) {
 				m_histPos--;
@@ -223,6 +229,9 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			m_histPos=m_history.count()-1;
 		this->setPlainText(m_history[m_histPos]);
 	}
+	
+	int lineCount=toPlainText().count('\n')+1;
+	this->setFixedHeight(QFontMetrics(this->currentFont()).height()*lineCount+12);
 }
 
 QString ExpressionEdit::lastWord(int pos)
@@ -444,6 +453,25 @@ void ExpressionEdit::setAnalitza(Analitza * in)
 	m_highlight->setAnalitza(in);
 	a=in;
 	updateCompleter();
+}
+
+bool ExpressionEdit::returnPress()
+{
+	bool haveToPress=false;
+	if(isMathML()) {
+		emit returnPressed();
+	} else {
+		Exp ex(toPlainText());
+		ex.parse();
+		if(ex.isCompletelyRead()) {
+			setCorrect(true);
+			emit returnPressed();
+		} else {
+			setCorrect(false);
+			haveToPress=true;
+		}
+	}
+	return haveToPress;
 }
 
 #include "expressionedit.moc"
