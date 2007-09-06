@@ -35,6 +35,6 @@ Exec=kalgebra
 MimeType=application/x-kalgebra;
 Icon=kalgebra
 Type=Application
-DocPath=kalgebra/index.html
+X-DocPath=kalgebra/index.html
 Terminal=false
 Categories=Qt;KDE;Education;Math;
