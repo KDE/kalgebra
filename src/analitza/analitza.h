@@ -118,14 +118,19 @@ class ANALITZA_EXPORT Analitza
 		Cn func(const Container& c);
 		
 		Object* simp(Object* root);
-		void simpScalar(Container* c);
-		void simpPolynomials(Container* c);
+		Object* simpScalar(Container* c);
+		Object* simpPolynomials(Container* c);
+		Object* simpSum(Container* c);
+		Object* simpPiecewise(Container* c);
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
 		void reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool unary);
 		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
+		
+		static bool hasTheVar(const QStringList& vars, const Object* o);
+		static bool hasTheVar(const QStringList& vars, const Container* c);
 };
 
 #endif

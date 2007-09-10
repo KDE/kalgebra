@@ -57,6 +57,8 @@ QString opr2str(int in)
 
 void printPilaOpr(QStack<int> opr) //debug only
 {
+	qDebug() << "0." << opr2str(opr[0]);
+	qDebug() << "1." << opr2str(opr[1]);
 	while(!opr.isEmpty()) {
 		qDebug() << ":   " << opr2str(opr.pop());
 	}
@@ -115,7 +117,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 			ret.tipus = tPow;
 			a[i]=a[i].decomposition()[0];
 		}
-		a.prepend(" ");
+		a.prepend(' ');
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
 		int coma=0, base=10;
 		if(a[0]=='.') {
@@ -150,7 +152,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 			attrib+=QString("type='real'");
 		
 		if(coma>1)
-			ret.val="<cn>%error;</cn>";
+			ret.val="<cn>&error;</cn>";
 		else
 			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
 		ret.tipus= tVal;
@@ -286,7 +288,10 @@ int Exp::reduce()
 			if(!val.isEmpty()) val.push(QString("<apply><power />%1%2</apply>").arg(val.pop()).arg(aux));
 			break;
 		case tLimits:
-			if(!val.isEmpty()) val.push(QString("<uplimit>%2</uplimit><downlimit>%1</downlimit>").arg(val.pop()).arg(aux));
+			if(!val.isEmpty())
+				val.push(QString("<uplimit>%2</uplimit><downlimit>%1</downlimit>").arg(val.pop()).arg(aux));
+			else
+				val.push(QString("<downlimit>%1</downlimit>").arg(aux));
 			break;
 		case tAssig: // :=
 			if(!val.isEmpty()) val.push(QString("<declare>%1%2</declare>").arg(val.pop()).arg(aux));
@@ -301,10 +306,12 @@ int Exp::reduce()
 			if(!func.isEmpty()) val.push(QString("<%1>%2</%1>").arg(func.pop()).arg(aux));
 			break;
 		case tLambda: // ->
-			if(!val.isEmpty() && opr.top()==tLambda || (opr.count()>1 && opr[1]==tFunc))
-				val.push(QString("<bvar>%1</bvar>%2").arg(val.pop()).arg(aux));
-			else if(!val.isEmpty())
-				val.push(QString("<lambda><bvar>%1</bvar>%2</lambda>").arg(val.pop()).arg(aux));
+			if(!val.isEmpty()) {
+				if(opr.top()==tLambda || (opr.count()>1 && opr[opr.count()-2]==tFunc)) //Yes! I am a samurai
+					val.push(QString("<bvar>%1</bvar>%2").arg(val.pop()).arg(aux));
+				else
+					val.push(QString("<lambda><bvar>%1</bvar>%2</lambda>").arg(val.pop()).arg(aux));
+			}
 			break;
 		case tComa:
 			if(!val.isEmpty()) val.push(QString("%1%2").arg(val.pop()).arg(aux));

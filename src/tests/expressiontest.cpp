@@ -46,11 +46,12 @@ void ExpressionTest::testConversion_data()
 {
 	QTest::addColumn<QString>("input");
 	
-	QTest::newRow("simple expression") << "2+4";
-	QTest::newRow("simple expression") << "2+x";
-	QTest::newRow("simple expression") << "f:=x->x+1";
-	QTest::newRow("simple expression") << "sum(x->1..10, x)";
-	QTest::newRow("simple expression") << "piecewise { x ? y, ? 33 }";
+	QTest::newRow("addition") << "2+4";
+	QTest::newRow("addition with var") << "2+x";
+	QTest::newRow("function definition") << "f:=x->x+1";
+	QTest::newRow("sum") << "sum(x->1..10, x)";
+	QTest::newRow("piecewise") << "piecewise { x ? y, ? 33 }";
+	QTest::newRow("function call") << "f(2)";
 }
 
 void ExpressionTest::testConversion()
@@ -58,6 +59,7 @@ void ExpressionTest::testConversion()
 	QFETCH(QString, input);
 	
 	e->setText(input);
+	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toString(), input);
 }
 
@@ -70,6 +72,8 @@ void ExpressionTest::testExp_data()
 
 	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
 	QTest::newRow("plus operator in plus() form") << "plus(x,x,x,x)" << fourX;
+	QTest::newRow("sum") << "x*sum(x->1..10, x)" << "<math><apply><times /><ci>x</ci><apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit><cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
+	
 }
 
 void ExpressionTest::testExp()
@@ -78,6 +82,7 @@ void ExpressionTest::testExp()
 	QFETCH(QString, output);
 
 	e->setText(input);
+	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toMathML(), output);
 }
 
@@ -98,8 +103,38 @@ void ExpressionTest::testCopy()
 	e->setText(input);
 	
 	Expression e2(*e);
+	QVERIFY(e->isCorrect() && e2.isCorrect());
 	QCOMPARE(*e, e2);
 }
 
+void ExpressionTest::testCorrection_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<bool>("isCorrect");
+	
+	QTest::newRow("simple addition") << "2+4" << true;
+	QTest::newRow("simple addition with var") << "2+x" << true;
+	QTest::newRow("functin definition") << "f:=x->x+1" << true;
+	QTest::newRow("summatory") << "sum(x->1..10, x)" << true;
+	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }" << true;
+	QTest::newRow("conditional") << "sum(n->1..10, n*x)" << true;
+	
+	QTest::newRow("addition with missing operand") << "2+" << false;
+	QTest::newRow("function definition") << "f:=n->" << false;
+	QTest::newRow("piecewise") << "piecewise { ?3, 2 }" << false;
+	
+	QTest::newRow("limits") << "f:=n->3.." << false;
+	QTest::newRow("summatory with unknown uplimit") << "sum(x->1.., x)" << false;
+		//FIXME: Should be false in runtime, controlling it on the compiler.
+		//There is no way to have uplimit/downlimit separatedly
+}
+
+void ExpressionTest::testCorrection()
+{
+	QFETCH(QString, input);
+	QFETCH(bool, isCorrect);
+	e->setText(input);
+	QCOMPARE(e->isCorrect(), isCorrect);
+}
 
 #include "expressiontest.moc"

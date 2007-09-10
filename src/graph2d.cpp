@@ -590,6 +590,7 @@ bool Graph2D::toImage(const QString &path)
 //		gen.setResolution(100);
 		pintafunc(&gen);
 		b=true;
+		forceRepaint();
 	} else if(!path.isEmpty() && path.endsWith(".png")) {
 		this->repaint();
 		b=buffer.save(path, "PNG");

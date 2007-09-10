@@ -21,13 +21,13 @@
 #include <KLocale>
 #include <KApplication>
 
-OperatorsModel::OperatorsModel(int num, QObject *parent) : QStandardItemModel(num, 3, parent), m_count(Operator::nOfOps)
+OperatorsModel::OperatorsModel(QObject *parent, int num) : QStandardItemModel(num, 3, parent)
 {
-	setHeaderData(0, Qt::Horizontal, i18nc("@title:column", "Name"));
+	setHeaderData(0, Qt::Horizontal, i18nc("@title:column", "Name")); //Not used now
 	setHeaderData(1, Qt::Horizontal, i18nc("@title:column", "Description"));
 	setHeaderData(2, Qt::Horizontal, i18nc("@title:column", "Parameters"));
 	
-	for (int i=1; i<m_count; ++i) {
+	for (int i=1; i<Operator::nOfOps; ++i) {
 		addEntry(i, Operator::m_words[i], description((Operator::OperatorType) i), example((Operator::OperatorType) i));
 	}
 }
@@ -50,11 +50,11 @@ QString OperatorsModel::example(Operator::OperatorType o)
 	int op = Operator::nparams(o);
 	QString funcname=Operator::m_words[o];
 	if(op == -1) {
-		return i18n("%1(..., parameters, ...)").arg(funcname);
+		return i18n("%1(..., parameters, ...)", funcname);
 	} else {
 		QString sample = QString("%1(").arg(funcname);
 		for(int i=0; i<op; ++i) {
-			sample += QString("par%1").arg(i+1);
+			sample += i18n("par%1", i+1);
 			if(i<op-1)
 				sample += ", ";
 		}
@@ -229,7 +229,7 @@ QString OperatorsModel::description(Operator::OperatorType o)
 			s = i18n("Greater or equal. geq(a,b)=a≥b");
 			break;
 		case Operator::leq:
-                        s = i18n("Less or equal. leq(a,b)=a≤b");
+			s = i18n("Less or equal. leq(a,b)=a≤b");
 			break;
 		case Operator::_and:
 			s = i18n("Boolean and");

@@ -54,10 +54,10 @@ Operator Container::firstOperator() const
 	bool found=false;
 	for(int i=0; i<m_params.count() && !found; i++) {
 		if(m_params[i]->type()==Object::oper) {
-			ret = m_params[i];
+			ret = Operator(m_params[i]);
 			found = true;
 		} else if(i==0 && containerType()==apply && m_params[i]->type()==Object::variable) {
-			ret = Operator::function;
+			ret = Operator(Operator::function);
 			found=true;
 		}
 	}
@@ -83,8 +83,8 @@ QString Container::toString() const
 {
 	QStringList ret;
 	bool func=false;
-	
 	Operator *op=0;
+	
 	for(int i=0; i<m_params.count(); i++) {
 		Q_ASSERT(m_params[i]!=0);
 		
@@ -92,7 +92,7 @@ QString Container::toString() const
 			op = (Operator*) m_params[i];
 		else if(m_params[i]->type() == Object::variable) {
 			Ci *b = (Ci*) m_params[i];
-			func=b->isFunction();
+			func|=b->isFunction();
 			ret << b->toString();
 		} else if(m_params[i]->type() == Object::container) {
 			Container *c = (Container*) m_params[i];
@@ -226,39 +226,37 @@ QString Container::toHtml() const
 			toret += ret.join("");
 			break;
 		case math:
-			toret += ret.join(i18nc("Not really correct", "<span class='op'>;</span> "));
+			toret += ret.join(i18nc("Not really correct", "<span class='op'>,</span> "));
 			break;
 		case apply:
-			if(func){
-				QString n = ret.takeFirst();
-                toret += i18n("%1<span class='op'>(</span>%2<span class='op'>)</span>", n, ret.join(", "));
-			} else if(op==0)
+			if(op==0)
 				toret += ret.join(" ");
-				else switch(op->operatorType()) {
-					case Operator::plus:
-						toret += ret.join(i18n("<span class='op'>+</span>"));
-						break;
-					case Operator::times:
-						toret += ret.join(i18n("<span class='op'>*</span>"));
-						break;
-					case Operator::divide:
-						toret += ret.join(i18n("<span class='op'>/</span>"));
-						break;
-					case Operator::minus:
-						if(ret.count()==1)
-							toret += i18n("<span class='op'>-</span>%1", ret[0]);
-						else
-							toret += ret.join(i18n("<span class='op'>-</span>"));
-						break;
-					case Operator::power:
-						toret += ret.join(i18n("<span class='op'>^</span>"));
-						break;
-					default:
-                        toret += i18n("%1<span class='op'>(</span>%2<span class='op'>)</span>", op->toString(), ret.join(", "));
-						break;
-				}
+			else switch(op->operatorType()) {
+				case Operator::plus:
+					toret += ret.join(i18n("<span class='op'>+</span>"));
+					break;
+				case Operator::times:
+					toret += ret.join(i18n("<span class='op'>*</span>"));
+					break;
+				case Operator::divide:
+					toret += ret.join(i18n("<span class='op'>/</span>"));
+					break;
+				case Operator::minus:
+					if(ret.count()==1)
+						toret += i18n("<span class='op'>-</span>%1", ret[0]);
+					else
+						toret += ret.join(i18n("<span class='op'>-</span>"));
+					break;
+				case Operator::power:
+					toret += ret.join(i18n("<span class='op'>^</span>"));
+					break;
+				default:
+					toret += i18n("<span class='func'>%1</span><span class='op'>(</span>%2<span class='op'>)</span>",
+								  op->toString(), ret.join(", "));
+					break;
+			}
 				break;
-				case uplimit: //x->(n1..n2) is put at the same time
+		case uplimit: //x->(n1..n2) is put at the same time
 		case downlimit:
 			break;
 		case bvar:
@@ -271,7 +269,8 @@ QString Container::toHtml() const
 			toret += i18n("<span class='op'>?</span> %1", ret[0]);
 			break;
 		default:
-            toret += i18n("%1<span class='op'>{</span>%2<span class='op'>}</span>", tagName(), ret.join(i18n("<span class='op'>,</span> ")));
+			toret += i18n("<span class='cont'>%1</span><span class='op'>{</span>%2<span class='op'>}</span>",
+						  tagName(), ret.join(i18n("<span class='op'>,</span> ")));
 			break;
 	}
 	return toret;
@@ -310,10 +309,12 @@ QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of
 	QStringList bvars;
 	QList<Object*>::const_iterator it;
 	
-	for(it=m_params.begin(); it!=m_params.end(); ++it) {
-		Container* c = (Container*) (*it);
-		if(c->isContainer() && c->containerType() == Container::bvar)
-			bvars.append(((Ci*)c->m_params[0])->name());
+	for(it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
+		if((*it)->isContainer()) {
+			Container* c = (Container*) (*it);
+			if(c->containerType() == Container::bvar)
+				bvars.append(((Ci*)c->m_params[0])->name());
+		}
 	}
 	
 	return bvars;
@@ -502,38 +503,42 @@ void objectWalker(const Object* root, int ind)
 {
 	Container *c; Cn *num; Operator *op; Ci *var;
 	QString s;
-	if(!root) {
-		qDebug() << "This is an null object";
-		return;
-	}
 	
 	if(ind>100) return;
 	
 	for(int i=0; i<ind; i++)
 		s += " |_____";
+	if(!root) {
+		qDebug() << qPrintable(s) << "This is an null object: " << root;
+		return;
+	}
 	
 	switch(root->type()) { //TODO: include the function into a module and use toString
 		case Object::container:
+			Q_ASSERT(dynamic_cast<const Container*>(root));
 			c= (Container*) root;
-			qDebug() << qPrintable(s) << "| cont: " << c->tagName() << "=" << c->toString();
+			qDebug() << qPrintable(s) << "| cont: " << c->tagName() << "=";// << c->toString();
 			for(int i=0; i<c->m_params.count(); i++)
 				objectWalker(c->m_params[i], ind+1);
 			
 			break;
 		case Object::value:
+			Q_ASSERT(dynamic_cast<const Cn*>(root));
 			num= (Cn*) root;
 			qDebug() << qPrintable(s) << "| num: " << num->value();
 			break;
 		case Object::oper:
+			Q_ASSERT(dynamic_cast<const Operator*>(root));
 			op= (Operator*) root;
 			qDebug() << qPrintable(s) << "| operator: " << op->toString();
 			break;
 		case Object::variable:
+			Q_ASSERT(dynamic_cast<const Ci*>(root));
 			var = (Ci*) root;
 			qDebug() << qPrintable(s) << "| variable: " << var->name() << "Func:" << var->isFunction();
 			break;
 		default:
-			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type();
+			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type() << root;
 			break;
 	}
 }

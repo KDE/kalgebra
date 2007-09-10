@@ -27,10 +27,10 @@ class OperatorsModel : public QStandardItemModel
 {
 public:
 	/** Constructor. Creates a new Operator Model. */
-	explicit OperatorsModel(int num, QObject *parent=NULL);
+	explicit OperatorsModel(QObject *parent=NULL, int num=Operator::nOfOps);
 	
 	/** Returns how many operators we have. */
-	int count() const { return m_count; }
+// 	int count() const { return m_count; }
 	
 	/** Returns the description of the @p o operator. */
 	static QString description(Operator::OperatorType o);
@@ -40,8 +40,6 @@ public:
 	
 	/** Adds an entry to the model. */
 	void addEntry(int i, const QString&, const QString&, const QString& ex=QString());
-private:
-	int m_count;
 };
 
 #endif

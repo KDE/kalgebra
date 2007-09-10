@@ -91,10 +91,10 @@ class Ci : public Object
 {
 	public:
 		/** Constructor. Builds a @p o variable */
-		Ci(const Object *o);
+		explicit Ci(const Object *o);
 		
 		/** Constructor. Creates a variable with a @p b name */
-		Ci(QString b=QString()) : Object(variable), m_name(b) {}
+		explicit Ci(QString b=QString()) : Object(variable), m_name(b), m_function(false) {}
 		
 		/** Sets a @p n name to a variable */
 		void setName(const QString& n) { m_name=n; }
@@ -115,10 +115,10 @@ class Ci : public Object
 		QString toString() const { return m_name; }
 		
 		/** Returns the MathML representation of the variable */
-		QString toMathML() const { return QString("<ci>%1</ci>").arg(m_name); }
+		QString toMathML() const;
 		
 		/** Returns the HTML representation of the variable */
-		QString toHtml() const { return QString("<span class='var'>%1</span>").arg(m_name); }
+		QString toHtml() const { return QString("<span class='%1'>%2</span>").arg(m_function ? "func" : "var").arg(m_name); }
 		
 		/** Returns whether it is a correct object. */
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }

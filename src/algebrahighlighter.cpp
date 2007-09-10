@@ -24,7 +24,7 @@
 #include "container.h"
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
-	: QSyntaxHighlighter(doc), m_wrong(false), m_mode(Autodetect), m_pos(0), a(na)
+	: QSyntaxHighlighter(doc), m_correct(true), m_mode(Autodetect), m_pos(0), a(na)
 {
 	negreta.setFontWeight(QFont::Bold);
 }
@@ -51,11 +51,12 @@ QString removeTags(const QString& in){
 
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
-	m_wrong=false;
+	m_correct=true;
 	if(m_pos>=text.length())
 		m_pos=text.length();
 	if(Expression::isMathML(text)) {
 		QString lasttag;
+		int inside=0;
 		for(int i=0; i<text.length(); i++){
 			if(text[i]=='<') { //We enter in a tag
 				lasttag.clear();
@@ -72,21 +73,31 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				if(lasttag.startsWith(QChar('/'))){
 					setFormat(i+1, j-i-1, QColor(100,0,0));
 					setFormat(i+1, 1, negreta);
+					inside--;
 				} else if(lasttag.endsWith(QChar('/'))) {
 					setFormat(i+1, j-i-1, QColor(0,50,0));
 					setFormat(j+1, 2, negreta);
 				} else if(j!=k) {
 					setFormat(i+1, j-i-1, QColor(150,0,0));
 					setFormat(j+1, k-j-1, QColor(150,100,0));
-				} else
+					inside++;
+				} else {
 					setFormat(i+1, j-i-1, QColor(150,0,0));
+					inside++;
+				}
 				i=k;
 			}
 			else if(lasttag=="cn")
 				setFormat(i, 1, QColor(0,0,200));
 			else if(lasttag=="ci")
 				setFormat(i, 1, QColor(100,0,0));
+			qDebug() << "-------insideeeeee" << inside;
 		}
+		qDebug() << "insideeeeee" << inside;
+		if(inside==0)
+			m_correct=true;
+		else
+			m_correct=false;
 	} else {
 		int pos=0, len=0;
 		
@@ -110,7 +121,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					if(a && a->m_vars->contains(t.val))
 						setFormat(pos, len, QColor(0,50,0));
 					else
-						setFormat(pos, len, QColor(255,50,255));
+						setFormat(pos, len, QColor(0,0x86,0));
 					break;
 				case tBlock:
 					if(Container::toContainerType(t.val))
@@ -119,7 +130,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 						setFormat(pos, len, QColor(255,0,0));
 					break;
 				case tMaxOp:
-					m_wrong = true;
+					m_correct = false;
 					setFormat(pos, len, QColor(255,0,0));
 					break;
 				default:
@@ -141,27 +152,51 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			QTextCharFormat form = format(p);
 			form.setBackground(QColor(0xff,0xff,0x80));
 			setFormat(p, 1, form);
-			if((p=complementary(text, p))>=0)
+			if((p=complementary(text, p, Parenthesis))>=0)
 				setFormat(p, 1, form);
+		}
+		
+		//To bg highlight braces
+		p=-1;
+		if(m_pos>0 && (text[m_pos-1]=='{' || text[m_pos-1]=='}'))
+			p=m_pos-1;
+		else if(text.length()>m_pos && (text[m_pos]=='{' || text[m_pos]=='}'))
+			p=m_pos;
+		
+		if(p>-1) {
+			QTextCharFormat form = format(p);
+			form.setBackground(QColor(0xff,0x80,0xff));
+			setFormat(p, 1, form);
+			if((p=complementary(text, p, Brace))>=0)
+				setFormat(p, 1, form);
+			
+			qDebug() << "k lol" << p;
 		}
 	}
 }
 
-int AlgebraHighlighter::complementary(const QString& t, int p)
+int AlgebraHighlighter::complementary(const QString& t, int p, ComplMode m)
 {
+	char open, close;
+	if(m==Brace) {
+		open='{'; close='}';
+	} else {
+		open='('; close=')';
+	}
+	
 	Q_ASSERT(p<t.length());
-	bool opening = (t[p]=='(');
+	bool opening = (t[p]==open);
 	int cat=0;
-	if(p<1)
+	if(p<1 && !opening)
 		return -1;
 	do {
-		if(t[p]==')')
+		if(t[p]==close)
 			--cat;
-		else if(t[p]=='(')
+		else if(t[p]==open)
 			++cat;
 		
 		p += opening ? 1 : -1;
-	} while(p>0 && p<t.length() && cat!=0);
+	} while(p>=0 && p<t.length() && cat!=0);
 	
 	p -= opening ? 1 : -1;
 	

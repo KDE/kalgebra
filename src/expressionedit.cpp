@@ -91,11 +91,11 @@ void ExpressionEdit::updateCompleter()
 		if(a)
 			nvars=a->m_vars->count();
 		
-		OperatorsModel *m_ops = new OperatorsModel(Operator::nOfOps+nvars, m_completer);
+		OperatorsModel *m_ops = new OperatorsModel(m_completer, Operator::nOfOps+nvars);
 		
 		if(a) {
 			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
-			for(int i=m_ops->count(); it != a->m_vars->end(); ++it, i++) {
+			for(int i=Operator::nOfOps+1; it != a->m_vars->end(); ++it, i++) {
 				m_ops->addEntry(i, it.key(), (*it)->toString());
 			}
 		}
@@ -232,6 +232,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	
 	int lineCount=toPlainText().count('\n')+1;
 	this->setFixedHeight(QFontMetrics(this->currentFont()).height()*lineCount+12);
+	setCorrect(m_highlight->isCorrect());
 }
 
 QString ExpressionEdit::lastWord(int pos)

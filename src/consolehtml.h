@@ -63,9 +63,6 @@ class ConsoleHtml : public KHTMLPart
 		/** Adds an operation @p op with the format @p mathml to the log. */
 		bool addOperation(const QString& op, bool mathml);
 		
-		/** Adds an operation @p op and tries to guess the format to the log. */
-		bool addOperation(const QString& op) { return addOperation(op, Expression::isMathML(op)); }
-		
 		/** Loads a script from @p path. */
 		bool loadScript(const QString& path);
 		

@@ -53,8 +53,9 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		/** 
 		 *	Returns whether something wrong has been found. It is an uncomplete way
 		 *	to know if it is correct because doesn't do any recursive check, but could be useful.
+		 * @returns whether it is a lexically correct expression.
 		 */
-		bool isWrong() const { return m_wrong; }
+		bool isCorrect() const { return m_correct; }
 		
 		/** Sets the cursor position. */
 		void setPos(int p) { m_pos=p; }
@@ -73,13 +74,14 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		
 // 		TOKEN getToken(QString &a, int &l);
 		//TOKEN getTokenMML(QString &a, unsigned int &l);
-		bool m_wrong;
+		bool m_correct;
 		tokEnum antnum;
 		Mode m_mode;
 		int m_pos;
 		
 		QTextCharFormat negreta;
-		int complementary(const QString&, int p);
+		enum ComplMode { Parenthesis, Brace };
+		int complementary(const QString&, int p, ComplMode m);
 		const Analitza* a;
 };
 

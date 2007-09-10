@@ -26,5 +26,13 @@ Ci::Ci(const Object * o) : Object(o->type())
 	Q_ASSERT(m_type==Object::variable);
 	const Ci *c = (Ci*) o;
 	m_name = c->name();
-	m_function = c->isFunction();
+	m_function = c->m_function;
+}
+
+QString Ci::toMathML() const
+{
+	if(m_function)
+		return QString("<ci type='function'>%1</ci>").arg(m_name);
+	else
+		return QString("<ci>%1</ci>").arg(m_name);
 }

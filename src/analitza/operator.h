@@ -52,10 +52,10 @@ class ANALITZA_EXPORT Operator : public Object
 			nOfOps
 		};
 		/** Constructor. Creates an operator with @p t type .*/
-		Operator(OperatorType t) : Object(oper), m_optype(t) {}
+		explicit Operator(OperatorType t) : Object(oper), m_optype(t) {}
 		
 		/** Constructor. Creates an operator copy of the @p o object. If it is not an object a onone object is created. */
-		Operator(Object const *o);
+		explicit Operator(Object const *o);
 		
 		/** Destructor */
 		virtual ~Operator() {}
@@ -82,7 +82,10 @@ class ANALITZA_EXPORT Operator : public Object
 		QString toHtml() const { return toString(); }
 		
 		/** Returns whether @p o is equal to this operator. */
-		bool operator==(const Operator& o) { return m_optype==o.m_optype; }
+		bool operator==(const Operator& o) const { return m_optype==o.m_optype; }
+		
+		/** Returns whether @p o is equal to this operator. */
+		bool operator==(OperatorType o) const { return m_optype==o; }
 		
 		/** Makes this operator equal to @p a. */
 		Operator operator=(const Operator &a) { setType(a.type()); m_optype=a.operatorType(); return *this;}

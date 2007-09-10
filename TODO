@@ -1,6 +1,8 @@
 
 Analitza:
 - Partial derivatives
+- Simplification for x^3*3/x-> 3*x^2
+- Simplification for sum
 
 Expression:
 - Copy on write for m_tree
@@ -9,7 +11,6 @@ Expression:
 - Shared functions Console <-> 2D
 - Delete 2D functions
 - Sort 2D functions
-- SVG export.
 - Moving on small viewport step is too large.
 - Revise keyBindings for zooming out.
 

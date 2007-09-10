@@ -334,7 +334,7 @@ void KAlgebra::toggleTransparency()
 
 void KAlgebra::save3DGraph()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Image File (*.png)"), this);
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this);
 	if(!path.isEmpty())
 		grafic3d->toPixmap().save(path, "PNG");
 }
@@ -346,7 +346,7 @@ void KAlgebra::toggleSquares()
 
 void KAlgebra::saveGraph()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);//;;Vector image file (*.svg)"));
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
 	if(!path.isEmpty())
 		grafic->toImage(path);
 }

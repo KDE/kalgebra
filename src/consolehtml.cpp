@@ -26,18 +26,17 @@
 #include <KHTMLView>
 #include <KApplication>
 
+#include "exp.h"
 #include "variables.h"
 #include "expression.h"
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculation)
+ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
 	setJScriptEnabled(false);
 	setJavaEnabled(false);
 	setMetaRefreshEnabled(false);
 	setPluginsEnabled(false);
-	
-	//FIXME: Should check if it is connected
-	//if it is connect to a kalgebra page that doesn't exist, if not I don't know
+	setOnlyLocalReferences(true);
 	
 	m_css ="<style type=\"text/css\">\n";
 	m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
@@ -46,11 +45,11 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculatio
 	m_css +="\t.op  { font-weight: bold; }\n";
 // 	m_css +="\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
 	m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
-	m_css +="\t.sep { font-weight: bold; }\n";
+	m_css +="\t.cont { color: #560000; }\n";
 	m_css +="\t.num { color: #0000C4; }\n";
 	m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
 	m_css +="\t.var { color: #640000; }\n";
-	m_css +="\t.func { color: #003600; }\n";
+	m_css +="\t.func { color: #008600; }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
@@ -91,19 +90,23 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 
 bool ConsoleHtml::loadScript(const QString& path)
 {
+	//FIXME: We have expression-only script support
 	bool correct=false;
 	if(!path.isEmpty()) {
 		QStringList lines;
 		QFile file(path);
+		QString line;
 		if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 			QTextStream stream(&file);
-			QString line;
 			correct=true;
 			while (!stream.atEnd()) {
-				line = stream.readLine(); // line of text excluding '\n'
-				line = line.trimmed();
-				if(!line.isEmpty())
-					correct &= addOperation(line);
+				line += stream.readLine(); // line of text excluding '\n'
+				
+				Exp e(line);
+				e.parse();
+				
+				if(!line.isEmpty() && e.isCompletelyRead())
+					correct &= addOperation(line, true);
 			}
 			file.close();
 		}
@@ -136,10 +139,14 @@ bool ConsoleHtml::saveLog(const QString& path) const
 	if(!path.isEmpty()) {
 		QFile file(path);
 		correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+		
 		if(correct) {
 			QTextStream out(&file);
+			out << "<html>\n<head>" << m_css << "</head>" << endl;
+			out << "<body>" << endl;
 			foreach(QString entry, m_htmlLog)
 				out << "<p>" << entry << "</p>" << endl;
+			out << "</body>\n</html>" << endl;
 		}
 		file.close();
 	}
@@ -167,8 +174,9 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	
 // 	qDebug() << "puto!" << m_htmlLog.join("<p />\n");
 	
-        qApp->processEvents();
-	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
+	qApp->processEvents();
+// 	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
+	view()->scrollBy(0, 200);
 	emit changed();
 }
 

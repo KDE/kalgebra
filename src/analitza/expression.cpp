@@ -121,10 +121,30 @@ Object* Expression::branch(const QDomElement& elem)
 				}
 				
 				//Error collection
-				Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
-				bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
-				if(dGreaterU)
-					m_err << "The downlimit is greater than the uplimit. Probably should be "+ QString("%1..%2").arg(u.value()).arg(d.value());
+				if(c->containerType()==Container::apply) {
+					Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
+					bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
+					if(dGreaterU)
+						m_err << i18nc("An error message", "The downlimit is greater than the uplimit. Probably should be %1..%2",
+										u.value(), d.value());
+				}
+				
+				if(c->containerType()==Container::piecewise) {
+					bool correct=true;
+					foreach(Object *o, c->m_params) {
+						if(o->isContainer()) {
+							Container *cc = (Container*) o;
+							if(cc->containerType()!=Container::piece && cc->containerType()!=Container::otherwise)
+								correct=false;
+						} else
+							correct=false;
+							
+						if(!correct) {
+							m_err << i18n("%1 is not a piece/otherwise inside the piecewise", o->toString());
+							break;
+						}
+					}
+				}
 				//EOCollect
 				ret = c;
 			} else {

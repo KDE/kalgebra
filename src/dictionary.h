@@ -19,17 +19,31 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-#include <QTreeView>
+#include <QWidget>
 
+class QLabel;
+class QListView;
+class QModelIndex;
+class OperatorsModel;
 /**
-	@author 
+	@author Aleix Pol
 */
-class Dictionary : public QTreeView
+class Dictionary : public QWidget
 {
 Q_OBJECT
 	public:
 		Dictionary(QWidget *p=0);
 		virtual ~Dictionary(){}
+		
+	private slots:
+		void activated(const QModelIndex& );
+		
+	private:
+		QLabel *m_name;
+		QLabel *m_descr;
+		QLabel *m_example;
+		QListView *m_list;
+		OperatorsModel *m_ops;
 };
 
 #endif

@@ -22,7 +22,7 @@
 #include <QObject>
 
 /**
-	@author 
+	@author Aleix Pol
 */
 class Expression;
 
@@ -35,12 +35,26 @@ Q_OBJECT
 	
 	private slots:
 		void initTestCase();
-		void testConversion_data();
+		
+		/**
+		* We switch it to mathml and then switch back to expression
+		* and we check that receive the same.
+		*/
 		void testConversion();
+		void testConversion_data();
+		
+		/** We check that the conversion to MathML is correct*/
 		void testExp();
 		void testExp_data();
+		
+		/** We check that the same tree is equal to another equal tree. */
 		void testCopy();
 		void testCopy_data();
+		
+		/** We check that some expressions are correct or not.*/
+		void testCorrection();
+		void testCorrection_data();
+		
 		void cleanupTestCase();
 		
 	private:
