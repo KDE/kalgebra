@@ -3,6 +3,7 @@ Analitza:
 - Partial derivatives
 - Simplification for x^3*3/x-> 3*x^2
 - Simplification for sum
+- Change QList<Object*> for a typedef
 
 Expression:
 - Copy on write for m_tree
