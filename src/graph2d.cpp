@@ -196,9 +196,9 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 				finestra.setPen(pfunc);
 				int i = it->npoints(), j;
 				
-				ultim=toWidget(it->points[0]);
+				ultim=toWidget(it->points()[0]);
 				
-				QPointF *vect=it->points;
+				QPointF *vect=it->points();
 				for(j=0; j<i; j++){
 					act=toWidget(vect[j]);
 					
@@ -448,7 +448,7 @@ bool Graph2D::addFunction(const function& func)
 	
 	if(!exist) {
 		funclist.append(func);
-		sendStatus(i18n("%1 function added", func.func->expression()->toString()));
+		sendStatus(i18n("%1 function added", func.toString()));
 	}
 	
 	update_points();

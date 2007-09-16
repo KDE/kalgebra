@@ -130,6 +130,11 @@ class ANALITZA_EXPORT Expression
 		void clear();
 		
 		/**
+		 * Lists the global bounded variables in the expression
+		 */
+		QStringList bvarList() const;
+		
+		/**
 		 *	Converts a @p tag to an object type.
 		 */
 		static enum Object::ObjectType whatType(const QString& tag);

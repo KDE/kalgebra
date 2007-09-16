@@ -892,16 +892,7 @@ void Analitza::reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool una
 
 QStringList Analitza::bvarList() const //FIXME: if
 {
-	Q_ASSERT(m_exp.m_tree);
-	Container *c = (Container*) m_exp.m_tree;
-	if(c!=0 && c->type()==Object::container) {
-		c = (Container*) c->m_params[0];
-		
-		if(c->type()==Object::container)
-			return c->bvarList();
-	}
-	return QStringList();
-	
+	return m_exp.bvarList();
 }
 
 /////////////////////////////////////////////
@@ -927,6 +918,7 @@ void Analitza::levelOut(Container *c, Container *ob, QList<Object*>::iterator &p
 Object* Analitza::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
+	
 	Object* aux=0;
 	if(!hasVars(root)) {
 		if(root->type()!=Object::value && root->type() !=Object::oper) {
@@ -999,11 +991,13 @@ Object* Analitza::simp(Object* root)
 					break;
 				case Operator::minus:
 				case Operator::plus: {
-					Object *f=0;
-					bool somed=false;
-					for(it=c->firstValue(); it!=c->m_params.end();) {
+					bool somed=false, lastdel;
+					it=c->m_params.end();
+					--it;
+					for(; it!=c->m_params.begin(); --it) {
+						lastdel=false;
 						*it = simp(*it);
-						if(f==0) f=*it;
+						
 						d=false;
 						if((*it)->isContainer()) {
 							Container *intr = (Container*) *it;
@@ -1019,32 +1013,35 @@ Object* Analitza::simp(Object* root)
 								d=true;
 						}
 						
-						if(!d)
-							++it;
-						else {
+						if(d) {
+							lastdel=true;
 							somed=true;
 							delete *it;
 							it = c->m_params.erase(it);
 						}
 					}
 					
-					Object *ret=c;
+					root=c;
 					if(c->isUnary() && c->firstOperator()==Operator::plus) {
-						ret=*c->firstValue();
+						root=*c->firstValue();
 						*c->firstValue()=0;
 						delete c;
 						c=0;
-					} else if(somed && c->isUnary() && c->firstOperator()==Operator::minus && *c->firstValue()==f) {
-						Container *aux=c;
-						ret=*c->firstValue();
-						*aux->firstValue()=0;
-						delete aux;
+					} else if(somed && c->isUnary() && c->firstOperator()==Operator::minus) {
+						if(!lastdel) {
+							Container *aux=c;
+							root=*c->firstValue();
+							*aux->firstValue()=0;
+							delete aux;
+							c=0;
+						}
 					} else {
-						ret=simpScalar(c);
-						if(ret->isContainer()) {
-							c=static_cast<Container*>(ret);
-							ret=simpPolynomials(c);
-							c=ret->isContainer() ? static_cast<Container*>(ret) : 0;
+						root=simpScalar(c);
+						
+						if(root->isContainer()) {
+							c=static_cast<Container*>(root);
+							root=simpPolynomials(c);
+							c=root->isContainer() ? static_cast<Container*>(root) : 0;
 						} else
 							c=0;
 					}
@@ -1052,8 +1049,6 @@ Object* Analitza::simp(Object* root)
 					if(c && c->isEmpty()) {
 						delete root;
 						root = new Cn(0.);
-					} else {
-						root=ret;
 					}
 					
 				}	break;
@@ -1248,13 +1243,36 @@ Object* Analitza::simpScalar(Container * c)
 	return c;
 }
 
+Object* createMono(const Operator& o, const QPair<double, Object*>& p)
+{
+	Object* toAdd=0;
+	if(p.first==0.) {
+	} else if(p.first==1.) {
+		toAdd=p.second;
+	} else if(p.first==-1. && (o.operatorType()==Operator::plus || o.operatorType()==Operator::minus)) {
+		Container *cint = new Container(Container::apply);
+		cint->m_params.append(new Operator(Operator::minus));
+		cint->m_params.append(p.second);
+		toAdd=cint;
+	} else {
+		Container *cint = new Container(Container::apply);
+		cint->m_params.append(new Operator(o.multiplicityOperator()));
+		cint->m_params.append(p.second);
+		cint->m_params.append(new Cn(p.first));
+		if(o.multiplicityOperator()==Operator::times)
+			cint->m_params.swap(1,2);
+		toAdd=cint;
+	}
+	return toAdd;
+}
+
 Object* Analitza::simpPolynomials(Container* c)
 {
 	Q_ASSERT(c!=0 && dynamic_cast<Container*>(c));
+	
 	QList<QPair<double, Object*> > monos;
 	Operator o(c->firstOperator());
 	bool sign=true;
-	
 	QList<Object*>::iterator it(c->firstValue());
 	for(; it!=c->m_params.end(); ++it) {
 		Object *o2=*it;
@@ -1334,45 +1352,32 @@ Object* Analitza::simpPolynomials(Container* c)
 	
 	qDeleteAll(c->m_params);
 	c->m_params.clear();
-	
-	QList<QPair<double, Object*> >::iterator i=monos.begin();
-	c->m_params.append(new Operator(o));
-	for(; i!=monos.end(); ++i) {
-		Object* toAdd;
-		if(i->first==0.) {
-		} else if(i->first==1.) {
-			toAdd=i->second;
-		} else if(i->first==-1. && (o.operatorType()==Operator::plus || o.operatorType()==Operator::minus)) {
-			Container *cint = new Container(Container::apply);
-			cint->m_params.append(new Operator(Operator::minus));
-			cint->m_params.append(i->second);
-			toAdd=cint;
-		} else {
-			Container *cint = new Container(Container::apply);
-			cint->m_params.append(new Operator(o.multiplicityOperator()));
-			cint->m_params.append(i->second);
-			cint->m_params.append(new Cn(i->first));
-			if(o.multiplicityOperator()==Operator::times)
-				cint->m_params.swap(1,2);
-			toAdd=cint;
-		}
-		c->m_params.append(toAdd);
-	}
-	
 	Object *root=c;
-	if(c->isUnary() && (c->firstOperator()==Operator::plus || c->firstOperator()==Operator::times)) {
-		Container *aux=c;
-		root=*c->firstValue();
-		*aux->firstValue()=0;
-		delete aux;
+	if(monos.count()==1 && o.operatorType()!=Operator::minus) {
 		c=0;
+		root=createMono(o, monos[0]);
+	} else {
+		QList<QPair<double, Object*> >::iterator i=monos.begin();
+		c->m_params.append(new Operator(o));
+		for(; i!=monos.end(); ++i) {
+			Object* toAdd=createMono(o, *i);
+			
+			if(toAdd)
+				c->m_params.append(toAdd);
+		}
 	}
+	
+	if(!root) {
+		root=new Cn(0.);
+	}
+	
 	if(!sign) {
 		Container *cn=new Container(Container::apply);
 		cn->m_params.append(new Operator(Operator::minus));
 		cn->m_params.append(root);
 		root=cn;
 	}
+	
 	return root;
 }
 
@@ -1603,7 +1608,6 @@ Expression Analitza::derivative()
 		else
 			exp.m_tree = derivative(vars.first(), m_exp.m_tree);
 		exp.m_tree = simp(exp.m_tree);
-		
 	}
 	return exp;
 }

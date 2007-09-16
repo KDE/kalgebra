@@ -83,6 +83,8 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple addition with var") << "2+x" << "x+2";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
 	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";
+	QTest::newRow("strange") << "0*x-1*1" << "-1";
+	QTest::newRow("strange2") << "x-x" << "0";
 	QTest::newRow("declare") << "w:=3" << "3";
 	QTest::newRow("nested multiplication") << "x*(x+x)" << "2*x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
@@ -112,6 +114,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 
 	QTest::newRow("simple polynomial") << "x^3+1" << "3*x^2";
 	QTest::newRow("power and sinus") << "x^2+sin(x)" << "2*x+cos(x)";
+	QTest::newRow("division") << "1/x" << "(-1)/x^2";
 	QTest::newRow("power derivative and logarithm simplification") << "e^x" << "e^x";
 	QTest::newRow("chain rule") << "sin(x**2)" << "2*x*cos(x^2)";
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";

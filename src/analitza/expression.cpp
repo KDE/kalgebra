@@ -295,11 +295,24 @@ Object* Expression::objectCopy(const Object * old)
 void Expression::clear()
 {
 	delete m_tree;
+	m_tree=0;
 	m_err.clear();
 }
 
 bool Expression::isCorrect() const
 {
 	return m_tree && m_err.isEmpty() && m_tree->isCorrect();
+}
+
+QStringList Expression::bvarList() const
+{
+	Container *c = (Container*) m_tree;
+	if(c!=0 && c->type()==Object::container) {
+		c = (Container*) c->m_params[0];
+		
+		if(c->type()==Object::container)
+			return c->bvarList();
+	}
+	return QStringList();
 }
 

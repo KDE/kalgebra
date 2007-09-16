@@ -63,8 +63,11 @@ class ANALITZA_EXPORT Analitza
 		/** Sets an expression to calculate. */
 		void setExpression(const Expression &e);
 		
-		/** Returns an expression. */
+		/** Returns the expression in use. */
 		Expression* expression() { return &m_exp; }
+		
+		/** Returns the expression in use. */
+		Expression expression() const { return m_exp; }
 		
 		/** Calculates the expression and returns a value alone. */
 		Cn calculate();

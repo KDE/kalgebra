@@ -541,6 +541,8 @@ void objectWalker(const Object* root, int ind)
 			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type() << root;
 			break;
 	}
+	if(ind==0)
+		qDebug(";");
 }
 
 void print_dom(const QDomNode& in, int ind)
