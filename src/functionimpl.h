@@ -34,12 +34,13 @@ class FunctionImpl
 		bool isCorrect() const { return func.isCorrect(); }
 		QString toString() const { return func.expression().toString(); }
 		
+		virtual Axe axeType() const { return Cartesian; }
 		virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 		virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
-		virtual double derivative(const QPointF& p) const=0;
-		virtual Axe axeType() const { return Cartesian; }
-		virtual ImplType type() const =0;
-		virtual FunctionImpl* copy() =0;
+		virtual QLineF derivative(const QPointF& p) const=0;
+		virtual ImplType type() const=0;
+		virtual FunctionImpl* copy()=0;
+		
 		QPointF *points;
 		Analitza func;
 		Expression *m_deriv;
@@ -47,8 +48,6 @@ class FunctionImpl
 		
 		unsigned int m_last_resolution;
 		unsigned int m_last_max_res;
-// 	private:
-// 		virtual FunctionImpl operator=(const FunctionImpl& f);
 };
 
 struct FunctionX : public FunctionImpl
@@ -58,7 +57,7 @@ struct FunctionX : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	double derivative(const QPointF& p) const;
+	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return XType; }
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
 };
@@ -70,7 +69,7 @@ struct FunctionY : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	double derivative(const QPointF& p) const;
+	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return YType; }
 	virtual FunctionImpl* copy() { return new FunctionY(*this); ; }
 };
@@ -83,7 +82,7 @@ struct FunctionPolar : public FunctionImpl
 	void updatePoints(const QRect& viewport, unsigned int resolution);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	Axe axeType() const { return Polar; }
-	double derivative(const QPointF& p) const;
+	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return PolarType; }
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
 	

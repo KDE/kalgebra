@@ -104,7 +104,7 @@ bool function::isShown() const
 	return m_show && m_function && m_function->isCorrect();
 }
 
-double function::derivative(const QPointF & p) const
+QLineF function::derivative(const QPointF & p) const
 {
 	Q_ASSERT(m_function);
 	return m_function->derivative(p);

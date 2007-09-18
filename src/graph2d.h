@@ -132,7 +132,9 @@ private:
 	QPointF fromWidget(const QPointF& p) const;
 	QPointF toViewport(const QPoint& mv) const;
 	QPointF calcImage(const QPointF& dp);
-	double pendent(const QPointF& dp) const;
+	QLineF pendent(const QPointF& dp) const;
+	
+	QLineF toWidget(const QLineF &) const;
 	
 	//events
 	void paintEvent( QPaintEvent * );

@@ -233,19 +233,14 @@ void Graph2D::paintEvent( QPaintEvent * )
 		
 		//Draw derivative
 		finestra.setRenderHint(QPainter::Antialiasing, true);
-		QPointF from, to;
 		ccursor.setColor(QColor(90,90,160));
 		ccursor.setStyle(Qt::SolidLine);
 		finestra.setPen(ccursor);
-		double der = pendent(fromWidget(ultim)), arcder = atan(der);
-		const double len=3.*der;
-		from.setX(mark.x()+len*cos(arcder));
-		from.setY(mark.y()+len*sin(arcder));
-		
-		to.setX(mark.x()-len*cos(arcder));
-		to.setY(mark.y()-len*sin(arcder));
-		if(!isnan(from.x()) && !isnan(from.y()) && !isnan(to.x()) && !isnan(to.y()))
-			finestra.drawLine(toWidget(from), toWidget(to));
+		QLineF slope=pendent(fromWidget(ultim));
+		slope.translate(mark);
+// 		if(!isnan(from.x()) && !isnan(from.y()) && !isnan(to.x()) && !isnan(to.y()))
+		if(!slope.isNull() && !isnan(slope.length()))
+			finestra.drawLine(toWidget(slope));
 		finestra.setRenderHint(QPainter::Antialiasing, false);
 		//EOderivative
 		
@@ -408,9 +403,9 @@ QPointF Graph2D::calcImage(const QPointF& ndp)
 	return dp;
 }
 
-double Graph2D::pendent(const QPointF & dp) const
+QLineF Graph2D::pendent(const QPointF & dp) const
 {
-	double ret=0.;
+	QLineF ret;
 	if(!funclist.isEmpty()){
 		for (QList<function>::const_iterator it = funclist.begin(); it != funclist.end(); ++it ){
 			if(it->selected() && it->isShown()) {
@@ -510,6 +505,12 @@ bool Graph2D::setShown(const QString& f, bool shown)
 	return false;
 }
 
+
+QLineF Graph2D::toWidget(const QLineF &f) const
+{
+	return QLineF(toWidget(f.p1()), toWidget(f.p2()));
+}
+
 QPointF Graph2D::toWidget(const QPointF& p) const
 {
 	return QPointF((-viewport.left() + p.x()) * rang_x,  (-viewport.top() + p.y()) * rang_y);
@@ -606,5 +607,6 @@ void Graph2D::update_scale()
 	valid=false;
 	this->repaint();
 }
+
 
 #include "graph2d.moc"

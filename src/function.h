@@ -21,6 +21,7 @@
 
 #include <QColor>
 #include <QRect>
+#include <QLine>
 #include <QPair>
 
 #include <cmath>
@@ -104,7 +105,7 @@ class function
 		Axe axeType() const;
 		
 		/** Returns the slope of the current function in the point @p p. */
-		double derivative(const QPointF& p) const;
+		QLineF derivative(const QPointF& p) const;
 		
 		/** Returns the bounded variables of the function. */
 		QStringList bvars() const;
