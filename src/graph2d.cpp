@@ -30,7 +30,8 @@
 #include <QFrame>
 #include <QFile>
 
-#include <klocale.h>
+#include <KLocale>
+#include <KApplication>
 #include <cmath>
 
 #include "analitza.h"
@@ -42,7 +43,7 @@ QColor const Graph2D::m_axe2Color(235,235,235);
 
 Graph2D::Graph2D(QWidget *parent) :
 	QWidget(parent),
-	mode(None), m_squares(true), resolucio(800), m_framed(false), m_readonly(false), m_posText("")
+	valid(false), mode(None), m_squares(true), resolucio(800), m_framed(false), m_readonly(false), m_posText("")
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	this->setCursor(QCursor(Qt::CrossCursor));
@@ -50,7 +51,6 @@ Graph2D::Graph2D(QWidget *parent) :
 	this->setMinimumWidth(10);
 	this->setMouseTracking(!m_readonly);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	valid=false;
 	
 	setViewport(QRectF(QPointF(-12., 10.), QSizeF(24., -20.)));
 	defViewport = viewport;
@@ -160,11 +160,11 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 
 void Graph2D::pintafunc(QPaintDevice *qpd)
 {
-	QPointF ultim(0.,0.), act(0.,0.);
+	QPalette p=qApp->palette();
 	QPen pfunc, ccursor;
 	if(buffer.isNull() || buffer.width()!=width() || buffer.height()!=height())
 		buffer = QPixmap(this->width(), this->height());
-	buffer.fill(Qt::white);
+	buffer.fill(p.color(QPalette::Active, QPalette::Base));
 	
 	pfunc.setColor(QColor(0,150,0));
 	pfunc.setWidth(2);
@@ -196,9 +196,8 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 				finestra.setPen(pfunc);
 				int i = it->npoints(), j;
 				
-				ultim=toWidget(it->points()[0]);
-				
 				QPointF *vect=it->points();
+				QPointF ultim(toWidget(vect[0])), act;
 				for(j=0; j<i; j++){
 					act=toWidget(vect[j]);
 					
@@ -389,7 +388,7 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 QPointF Graph2D::calcImage(const QPointF& ndp)
 {
 	QPointF dp = ndp;
-	m_posText="";
+	m_posText=QString();
 	if(!funclist.isEmpty()){
 		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
 			if(it->selected() && it->isShown()) {

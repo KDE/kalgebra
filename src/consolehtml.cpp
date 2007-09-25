@@ -32,6 +32,8 @@
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
+	QPalette p=qApp->palette();
+	
 	setJScriptEnabled(false);
 	setJavaEnabled(false);
 	setMetaRefreshEnabled(false);
@@ -39,6 +41,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	setOnlyLocalReferences(true);
 	
 	m_css ="<style type=\"text/css\">\n";
+	m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name());
 	m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
 	m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
 	m_css +="\t.before { text-align:right; }\n";
@@ -54,7 +57,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="</style>\n";
 	
 	begin();
-	write("<html></html>");
+	write("<html>\n<head>"+m_css+"</head></html>");
 	end();
 }
 

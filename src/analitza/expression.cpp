@@ -56,6 +56,8 @@ Expression::~Expression()
 Expression Expression::operator=(const Expression & e)
 {
 	if(this != &e) {
+        if(m_tree)
+            delete m_tree;
 		m_tree = objectCopy(e.m_tree);
 		m_err = e.m_err;
 	}
