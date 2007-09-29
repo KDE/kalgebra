@@ -29,7 +29,7 @@ ExpTest::ExpTest(QObject *parent)
 ExpTest::~ExpTest()
 {}
 
-Q_DECLARE_METATYPE(QList<int>);
+Q_DECLARE_METATYPE(QList<int>)
 
 void ExpTest::initTestCase()
 {
