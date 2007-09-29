@@ -13,7 +13,7 @@ Expression:
 - Delete 2D functions
 - Sort 2D functions
 - Moving on small viewport step is too large.
-- Revise keyBindings for zooming out.
+- Review keyBindings for zooming out.
 
 Doc:
 - Document about piecewise

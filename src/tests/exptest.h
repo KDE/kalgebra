@@ -16,45 +16,34 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef EXPRESSIONTEST_H
-#define EXPRESSIONTEST_H
+#ifndef EXPTEST_H
+#define EXPTEST_H
 
 #include <QObject>
 
 /**
 	@author Aleix Pol
 */
-class Expression;
 
-class ExpressionTest : public QObject
+class ExpTest : public QObject
 {
 Q_OBJECT
 	public:
-		ExpressionTest(QObject *parent = 0);
-		~ExpressionTest();
+		ExpTest(QObject *parent = 0);
+		~ExpTest();
 	
 	private slots:
 		void initTestCase();
 		
-		/**
-		* We switch it to mathml and then switch back to expression
-		* and we check that receive the same.
-		*/
-		void testConversion();
-		void testConversion_data();
+		/** We check that the conversion to MathML is correct*/
+		void testExp();
+		void testExp_data();
 		
-		/** We check that the same tree is equal to another equal tree. */
-		void testCopy();
-		void testCopy_data();
-		
-		/** We check that some expressions are correct or not.*/
-		void testCorrection();
-		void testCorrection_data();
+		/** We check the token lengths*/
+		void testLength();
+		void testLength_data();
 		
 		void cleanupTestCase();
-		
-	private:
-		Expression *e;
 };
 
 #endif

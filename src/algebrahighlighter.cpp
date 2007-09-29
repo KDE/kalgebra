@@ -91,9 +91,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				setFormat(i, 1, QColor(0,0,200));
 			else if(lasttag=="ci")
 				setFormat(i, 1, QColor(100,0,0));
-			qDebug() << "-------insideeeeee" << inside;
 		}
-		qDebug() << "insideeeeee" << inside;
 		if(inside==0)
 			m_correct=true;
 		else
@@ -105,8 +103,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		TOKEN t=Exp::getToken(op, len, tMaxOp);
 		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++);
 		
-		while(pos < text.length() && t.tipus!=tEof){
-			switch(t.tipus){
+		while(pos < text.length() && t.type!=tEof){
+			switch(t.type){
 				case tVal:
 					if(t.val.mid(1,2)=="cn") //if it is a number
 						setFormat(pos, len, QColor(0,0,200));
@@ -138,7 +136,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					break;
 			}
 			pos += len;
-			t=Exp::getToken(op, len, t.tipus);
+			t=Exp::getToken(op, len, t.type);
 		}
 		
 		//To bg highlight the parentheses
@@ -165,12 +163,10 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		
 		if(p>-1) {
 			QTextCharFormat form = format(p);
-			form.setBackground(QColor(0xff,0x80,0xff));
+			form.setBackground(QColor(0xff,0xa0,0xff));
 			setFormat(p, 1, form);
 			if((p=complementary(text, p, Brace))>=0)
 				setFormat(p, 1, form);
-			
-			qDebug() << "k lol" << p;
 		}
 	}
 }

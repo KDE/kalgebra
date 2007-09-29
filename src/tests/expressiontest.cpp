@@ -63,29 +63,6 @@ void ExpressionTest::testConversion()
 	QCOMPARE(e->toString(), input);
 }
 
-void ExpressionTest::testExp_data()
-{
-	QTest::addColumn<QString>("input");
-	QTest::addColumn<QString>("output");
-
-	QString fourX="<math><apply><plus /><ci>x</ci><ci>x</ci><ci>x</ci><ci>x</ci></apply></math>";
-
-	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
-	QTest::newRow("plus operator in plus() form") << "plus(x,x,x,x)" << fourX;
-	QTest::newRow("sum") << "x*sum(x->1..10, x)" << "<math><apply><times /><ci>x</ci><apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit><cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
-	
-}
-
-void ExpressionTest::testExp()
-{
-	QFETCH(QString, input);
-	QFETCH(QString, output);
-
-	e->setText(input);
-	QVERIFY(e->isCorrect());
-	QCOMPARE(e->toMathML(), output);
-}
-
 void ExpressionTest::testCopy_data()
 {
 	QTest::addColumn<QString>("input");

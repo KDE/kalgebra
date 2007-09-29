@@ -22,7 +22,7 @@
 #include <KLocale>
 using namespace std;
 
-#if 0
+#if 1
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 
@@ -108,13 +108,13 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 	l=a.length();
 	a = a.trimmed();
 	TOKEN ret;
-	ret.tipus = tMaxOp;
+	ret.type = tMaxOp;
 	
 	if(a.isEmpty())
-		ret.tipus = tEof;
+		ret.type = tEof;
 	else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
 		for(int i=0; i<a.count() && a[i].decompositionTag()==QChar::Super; i++) {
-			ret.tipus = tPow;
+			ret.type = tPow;
 			a[i]=a[i].decomposition()[0];
 		}
 		a.prepend(' ');
@@ -153,9 +153,11 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		
 		if(coma>1)
 			ret.val="<cn>&error;</cn>";
+		else if(attrib.isEmpty())
+			ret.val = QString("<cn>%2</cn>").arg(ret.val);
 		else
 			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
-		ret.tipus= tVal;
+		ret.type= tVal;
 	} else if(a[0].isLetter()) {//es una variable o func
 		ret.val += a[0];
 		for(i=1; a[i].isLetterOrNumber() && a[i].decompositionTag()==QChar::NoDecomposition; i++){
@@ -166,54 +168,53 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		for(;a[i].isSpace();i++);
 		
 		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
-			ret.tipus=tFunc;
+			ret.type=tFunc;
 		} else if((a[i]=='{' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
-			ret.tipus=tBlock;
+			ret.type=tBlock;
 		} else {
 			ret.val = QString::QString("<ci>%1</ci>").arg(ret.val);
-			ret.tipus= tVal;
+			ret.type= tVal;
 		}
 	} else if(a[0]=='-' && a[1] == '>') {
-		ret.tipus = tLambda;
+		ret.type = tLambda;
 		a[1] =' ';
 	} else if(a[0]==':' && a[1] == '=') {
-		ret.tipus = tAssig;
+		ret.type = tAssig;
 		a[1] =' ';
 	} else if(a[0]=='.' && a[1] == '.') {
-		ret.tipus = tLimits;
+		ret.type = tLimits;
 		a[1] =' ';
 	} else if(a[0]=='+')
-		ret.tipus = tAdd;
+		ret.type = tAdd;
 	else if(a[0]=='-')
-		ret.tipus = (prevtok == tVal || prevtok==tRpr) ? tSub : tUmi;
+		ret.type = (prevtok == tVal || prevtok==tRpr) ? tSub : tUmi;
 	else if(a[0]=='/')
-		ret.tipus = tDiv;
+		ret.type = tDiv;
 	else if(a[0]=='^')
-		ret.tipus = tPow;
+		ret.type = tPow;
 	else if(a[0]=='*' && a[1] == '*') {
-		ret.tipus = tPow;
+		ret.type = tPow;
 		a[1] =' ';
 	} else if(a[0]=='*')
-		ret.tipus = tMul;
+		ret.type = tMul;
 	else if(a[0]=='(')
-		ret.tipus = tLpr;
+		ret.type = tLpr;
 	else if(a[0]==')')
-		ret.tipus = tRpr;
+		ret.type = tRpr;
 	else if(a[0]==',')
-		ret.tipus = tComa;
+		ret.type = tComa;
 	else if(a[0]=='{')
-		ret.tipus = tLcb;
+		ret.type = tLcb;
 	else if(a[0]=='}')
-		ret.tipus = tRcb;
+		ret.type = tRcb;
 	else if(a[0]=='?')
-		ret.tipus = (prevtok == tVal || prevtok==tRpr) ? tQm : tUqm;
+		ret.type = (prevtok == tVal || prevtok==tRpr) ? tQm : tUqm;
 	
 	a[0]=' ';
 	a=a.trimmed();
 	l-=a.length();
-	if(l==0)
+	if(l==1)
 		l=1;
-// 	qDebug()<< "muuuuu" << opr2str(ret.tipus) << ret.val;
 	return ret;
 }
 
@@ -227,16 +228,16 @@ int Exp::getTok()
 	
 	t=getToken(str, ignored, antnum);
 	
-	if(t.tipus==tLcb)
+	if(t.type==tLcb)
 		completelyRead++;
-	else if(t.tipus==tRcb)
+	else if(t.type==tRcb)
 		completelyRead--;
 	
-	if(t.tipus==tMaxOp)
+	if(t.type==tMaxOp)
 		err << i18n("Unknown token");
 	
-	antnum = t.tipus;
-	tok = t.tipus;
+	antnum = t.type;
+	tok = t.type;
 	tokval = t.val;
 	
 	return 0;
@@ -244,7 +245,6 @@ int Exp::getTok()
 
 int Exp::shift()
 {
-// 	cout << "------>" << tokval.ascii() << "'" << endl;
 	if(tok==tVal)
 		val.push(tokval);
 	else if(tok==tFunc || tok==tBlock){

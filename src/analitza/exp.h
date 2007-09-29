@@ -66,11 +66,11 @@ typedef enum {
 
 struct TOKEN {
 	QString val;
-	tokEnum tipus;
+	tokEnum type;
 };
 
 // void printPilaOpr(QValueStack<int> opr);
-// QString opr2str(int);
+QString opr2str(int);
 
 class ANALITZA_EXPORT Exp
 {
