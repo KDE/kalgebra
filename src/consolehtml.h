@@ -74,12 +74,20 @@ class ConsoleHtml : public KHTMLPart
 		
 		/** Flushes the contents. */
 		void clear();
+		
+		/** Copies the selected text to the clipboard */
+		void copy() const;
+		
 	signals:
 		/** Emits a notification that tells that the widget status. */
 		void status(const QString &msg);
 		
 		/** Emits that something has changed. */
 		void changed();
+		
+	private slots:
+		void context(const QString&, const QPoint& p);
+		
 	private:
 		Analitza a;
 		void sendStatus(const QString& msg) { emit status(msg); }

@@ -20,11 +20,15 @@
 #include <QFile>
 #include <QHeaderView>
 #include <QScrollBar>
+#include <QClipboard>
 
 #include <KLocale>
+#include <KAction>
 #include <KUrl>
 #include <KHTMLView>
 #include <KApplication>
+#include <KStandardAction>
+#include <KMenu>
 
 #include "exp.h"
 #include "variables.h"
@@ -59,6 +63,8 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	begin();
 	write("<html>\n<head>"+m_css+"</head></html>");
 	end();
+	
+	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
 }
 
 ConsoleHtml::~ConsoleHtml() {}
@@ -181,6 +187,22 @@ void ConsoleHtml::updateView(const QString& newEntry)
 // 	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
 	view()->scrollBy(0, 200);
 	emit changed();
+}
+
+void ConsoleHtml::copy() const
+{
+	QClipboard *clipboard = QApplication::clipboard();
+	clipboard->setText(selectedText());
+}
+
+void ConsoleHtml::context(const QString &, const QPoint & p)
+{
+	KMenu popup;
+	if(hasSelection())
+		popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
+	popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
+	
+	popup.exec(p);
 }
 
 void ConsoleHtml::clear()
