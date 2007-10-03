@@ -32,6 +32,7 @@
 #include <QPixmap>
 #include <QProgressDialog>
 #include <QApplication>
+#include <QTime>
 
 #include "analitza.h"
 #include "exp.h"
