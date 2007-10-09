@@ -405,6 +405,7 @@ int Graph3D::load()
 		mem();
 		tefunc=true;
 		create();
+		// xgettext: no-c-format
 		sendStatus(i18n("Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
