@@ -280,7 +280,7 @@ QList<Object*> Container::copyParams() const
 {
 	QList<Object*> ret;
 	
-	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); it++) {
+	for(QList<Object*>::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); it++) {
 		ret.append(Expression::objectCopy(*it));
 	}
 	return ret;

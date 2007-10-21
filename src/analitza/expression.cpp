@@ -284,11 +284,11 @@ Object* Expression::objectCopy(const Object * old)
 			o = new Ci(old);
 			break;
 		case Object::container:
-			Q_ASSERT(dynamic_cast<const Container*>(old));
 			o = new Container(old);
+			Q_ASSERT(dynamic_cast<const Container*>(old));
 			break;
 		case Object::none:
-			Q_ASSERT(false);
+			qFatal("Do not know what are we copying.");
 			break;
 	}
 	return o;

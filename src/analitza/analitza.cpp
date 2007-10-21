@@ -47,7 +47,7 @@ void Analitza::setExpression(const Expression & e)
 
 Expression Analitza::evaluate()
 {
-	m_err=QStringList();
+	m_err.clear();
 	if(m_exp.isCorrect()) {
 		Expression e(m_exp); //FIXME: That's a strange trick, wouldn't have to copy
 		Object *aux=e.m_tree;
@@ -164,8 +164,11 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 // 						qDebug() << "before" << cbody->toString();
 						Container *r = new Container(cbody);
 						QList<Object*>::iterator it(r->firstValue());
-						for(; it!=r->m_params.end(); ++it)
-							*it = eval(*it, resolve);
+						for(; it!=r->m_params.end(); ++it) {
+							Object *o=*it;
+							*it = eval(o, resolve);
+							delete o;
+						}
 						ret=r;
 // 						qDebug() << "after" << ret->toString() << (*cbody->firstValue())->toString() << op.toString();
 						
@@ -183,8 +186,12 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					} else {
 						Container *r = new Container(c);
 						QList<Object*>::iterator it(r->firstValue());
-						for(; it!=r->m_params.end(); ++it)
-							*it = eval(*it, resolve);
+						for(; it!=r->m_params.end(); ++it) {
+							Object *o=*it;
+							*it= eval(*it, resolve);
+							delete o;
+						}
+						
 						ret=r;
 					}
 				} break;
@@ -192,6 +199,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 		} else if(c->containerType()==Container::math) {
 			//TODO: Multiline. Add a loop here!
 			ret=eval(c->m_params[0], resolve);
+// 			ret=Expression::objectCopy(c->m_params[0]);
 		} /*else {
 			qDebug() << "Not evaluated: " << c->tagName();
 		}*/
@@ -219,7 +227,7 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 	else switch(o->type()) {
 		case Object::container:
 			c=(Container*) o;
-			ret = derivative(var, (Container*) o);
+			ret = derivative(var, c);
 			break;
 		case Object::variable:
 			v = (Ci*) o;
@@ -285,7 +293,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					
 					Container *nChain1 = new Container(Container::apply);
 					nChain1->m_params.append(new Operator(Operator::times));
-					nChain1->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
+					nChain1->m_params.append(derivative(var, *c->firstValue()));
 					
 					Container *cDiv = new Container(Container::apply);
 					cDiv->m_params.append(new Operator(Operator::divide));
@@ -295,7 +303,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					
 					Container *nChain2 = new Container(Container::apply);
 					nChain2->m_params.append(new Operator(Operator::times));
-					nChain2->m_params.append(derivative(var, Expression::objectCopy(*(c->firstValue()+1))));
+					nChain2->m_params.append(derivative(var, *(c->firstValue()+1)));
 					
 					Container *cLog = new Container(Container::apply);
 					cLog->m_params.append(new Operator(Operator::ln));
@@ -309,18 +317,20 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					Container *cx = new Container(Container::apply);
 					cx->m_params.append(new Operator(Operator::times));
 					cx->m_params.append(Expression::objectCopy(c->m_params[2]));
-					cx->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
-					Container* nc= new Container(c);
-					cx->m_params.append(nc);
+					cx->m_params.append(derivative(var, *c->firstValue()));
 					
-					delete nc->m_params[2];
-					nc->m_params.removeAt(2);
+					Container* nc= new Container(Container::apply);
+					nc->m_params.append(new Operator(Operator::power));
+					nc->m_params.append(Expression::objectCopy(c->m_params[1]));
+					cx->m_params.append(nc);
 					
 					Container *degree = new Container(Container::apply);
 					degree->m_params.append(new Operator(Operator::minus));
 					degree->m_params.append(Expression::objectCopy(c->m_params[2]));
 					degree->m_params.append(new Cn(1.));
 					nc->m_params.append(degree);
+					qDebug() << ":(" << nc->m_params;
+					qDebug() << ":)" << cx->toString() << nc->toString();
 					return cx;
 				}
 			} break;
@@ -377,7 +387,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				
 				Container *cmin1 =new Container(Container::apply);
 				cmin1->m_params.append(new Operator(Operator::times));
-				cmin1->m_params.append(derivative(var, Expression::objectCopy(f)));
+				cmin1->m_params.append(derivative(var, f));
 				cmin1->m_params.append(Expression::objectCopy(g));
 				cmin->m_params.append(cmin1);
 				nc->m_params.append(cmin);
@@ -385,7 +395,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container *cmin2 =new Container(Container::apply);
 				cmin2->m_params.append(new Operator(Operator::times));
 				cmin2->m_params.append(Expression::objectCopy(f));
-				cmin2->m_params.append(derivative(var, Expression::objectCopy(g)));
+				cmin2->m_params.append(derivative(var, g));
 				cmin->m_params.append(cmin2);
 				
 				Container *cquad = new Container(Container::apply);
@@ -608,9 +618,10 @@ Cn Analitza::sum(const Container& n)
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
 	
-	m_vars->contains(var);
-	m_vars->stack(var, new Cn(0.));
+	Cn *aux=new Cn(0.);
+	m_vars->stack(var, aux);
 	c = (Cn*) m_vars->value(var);
+	delete aux;
 	
 	for(double a = dl; a<=ul; a++){
 		*c = a;
@@ -1319,7 +1330,7 @@ Object* Analitza::simpPolynomials(Container* c)
 		
 		if(!ismono) {
 			imono.first = 1.;
-			imono.second = Expression::objectCopy(o2);
+			imono.second = o2;
 		}
 		
 		if(o.operatorType()!=Operator::times && imono.second->isContainer()) {
@@ -1640,6 +1651,9 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 			cand=static_cast<const Ci*>(o);
 			if(vars.contains(cand->name()))
 				found=true;
+			break;
+		default:
+			found=false;
 			break;
 	}
 	return found;

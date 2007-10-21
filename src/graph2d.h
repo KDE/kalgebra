@@ -112,6 +112,17 @@ public:
 	
 	/** Returns how many function there are in the widget. */
 	int count() const { return funclist.count(); }
+	
+public slots:
+	/** Makes the image as dirty and repaints everything. */
+	void forceRepaint() { valid=false; repaint(); }
+
+	/** Sets the viewport to a default viewport. */
+	void resetViewport() { setViewport(defViewport); }
+signals:
+	/** Emits a status when it changes. */
+	void status(const QString &msg);
+	
 private:
 	static const QColor m_axeColor;
 	static const QColor m_axe2Color;
@@ -162,15 +173,6 @@ private:
 	bool m_readonly;
 	QString m_posText;
 	static QRect toBiggerRect(const QRectF&);
-public slots:
-	/** Makes the image as dirty and repaints everything. */
-	void forceRepaint() { valid=false; repaint(); }
-	
-	/** Sets the viewport to a default viewport. */
-	void resetViewport() { setViewport(defViewport); }
-signals:
-	/** Emits a status when it changes. */
-	void status(const QString &msg);
 };
 
 #endif

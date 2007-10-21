@@ -103,7 +103,7 @@ Exp::~Exp(){}
 
 TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 {
-	bool exp= (l==-1);
+	bool exp= (l<0);
 	int i=0;
 	l=a.length();
 	a = a.trimmed();

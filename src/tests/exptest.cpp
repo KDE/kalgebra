@@ -82,7 +82,7 @@ void ExpTest::testLength()
 	QFETCH(QString, input);
 	QFETCH(QList<int>, lengths);
 	
-	int len, pos;
+	int len=-1, pos;
 	QString op=input.trimmed();
 	TOKEN t=Exp::getToken(op, len, tMaxOp);
 	

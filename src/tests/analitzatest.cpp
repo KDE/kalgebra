@@ -88,6 +88,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("declare") << "w:=3" << "3";
 	QTest::newRow("nested multiplication") << "x*(x+x)" << "2*x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
+	
 	QTest::newRow("sum") << "sum(n->1..99, n)" << "4950";
 	QTest::newRow("sum times simplification") << "sum(n->0..99, n*x)" << "4950*x";
 	QTest::newRow("sum times") << "x*sum(n->0..99, n)" << "4950*x";
