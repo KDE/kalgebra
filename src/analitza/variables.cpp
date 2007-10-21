@@ -52,6 +52,14 @@ void Variables::modify(const QString & name, const Expression & o)
 	modify(name, o.tree());
 }
 
+void Variables::modify(const QString & name, const double & d)
+{
+	if(contains(name))
+		delete value(name);
+	
+	insert(name, new Cn(d));
+}
+
 void Variables::modify(const QString& name, const Object* o)
 {
 	if(contains(name))
@@ -84,3 +92,4 @@ void Variables::stack(const QString &name, const Object *o)
 {
 	insertMulti(name, Expression::objectCopy(o));
 }
+

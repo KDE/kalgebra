@@ -50,12 +50,17 @@ Expression Analitza::evaluate()
 	m_err.clear();
 	if(m_exp.isCorrect()) {
 		Expression e(m_exp); //FIXME: That's a strange trick, wouldn't have to copy
+		
+// 		objectWalker(e.m_tree);
+		
 		Object *aux=e.m_tree;
 		e.m_tree=eval(aux, true);
 		delete aux;
+		
 // 		objectWalker(e.m_tree);
 		e.m_tree=simp(e.m_tree);
 // 		objectWalker(e.m_tree);
+		
 		return e;
 	} else {
 		m_err << i18n("Must specify an operation");
@@ -220,8 +225,8 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 {
 	Q_ASSERT(o);
 	Object *ret=0;
-	const Container *c=0;
-	const Ci* v=0;
+	const Container *c;
+	const Ci* v;
 	if(o->type()!=Object::oper && !hasVars(o, var))
 		ret = new Cn(0.);
 	else switch(o->type()) {
@@ -320,7 +325,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					cx->m_params.append(derivative(var, *c->firstValue()));
 					
 					Container* nc= new Container(Container::apply);
-					nc->m_params.append(new Operator(Operator::power));
+					nc->m_params.append(Expression::objectCopy(c->m_params[0]));
 					nc->m_params.append(Expression::objectCopy(c->m_params[1]));
 					cx->m_params.append(nc);
 					
@@ -329,8 +334,6 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					degree->m_params.append(Expression::objectCopy(c->m_params[2]));
 					degree->m_params.append(new Cn(1.));
 					nc->m_params.append(degree);
-					qDebug() << ":(" << nc->m_params;
-					qDebug() << ":)" << cx->toString() << nc->toString();
 					return cx;
 				}
 			} break;
@@ -410,7 +413,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			case Operator::ln: {
 				Container *nc = new Container(Container::apply);
 				nc->m_params.append(new Operator(Operator::divide));
-				nc->m_params.append(derivative(var, Expression::objectCopy(*c->firstValue())));
+				nc->m_params.append(derivative(var, *c->firstValue()));
 				nc->m_params.append(Expression::objectCopy(*c->firstValue()));
 				return nc;
 			} break;
@@ -1258,6 +1261,7 @@ Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 {
 	Object* toAdd=0;
 	if(p.first==0.) {
+		delete p.second;
 	} else if(p.first==1.) {
 		toAdd=p.second;
 	} else if(p.first==-1. && (o.operatorType()==Operator::plus || o.operatorType()==Operator::minus)) {
@@ -1294,7 +1298,7 @@ Object* Analitza::simpPolynomials(Container* c)
 			Container *cx = (Container*) o2;
 			if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==3) {
 				bool valid=false;
-				int scalar=-1, var=-1;
+				int scalar, var;
 				
 				if(cx->m_params[1]->type()==Object::value) {
 					scalar=1;

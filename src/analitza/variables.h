@@ -60,7 +60,7 @@ public:
 	/**
 	 *	The same as the last one but having @p d as a value for @p name.
 	 */
-	void modify(const QString& name, const double& d) { modify(name, new Cn(d)); }
+	void modify(const QString& name, const double& d);
 	
 	/**
 	 *	If the variable @p name didn't exist it takes @p o value, if not @p name variable takes

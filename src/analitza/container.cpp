@@ -578,9 +578,8 @@ bool Container::isNumber() const
 QList<Object *>::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
+	bool found=false;
 	for(; it!=itEnd; ++it) {
-		bool found=false;
-		
 		switch((*it)->type()) {
 			case Object::value:
 			case Object::variable:
