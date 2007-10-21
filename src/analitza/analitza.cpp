@@ -1078,8 +1078,7 @@ Object* Analitza::simp(Object* root)
 							break;
 						} else if(n->value()==1.) { 
 							root = c->m_params[1];
-							delete c->m_params[2];
-							c->m_params.clear();
+							c->m_params[1]=0;
 							delete c;
 							break;
 						}
@@ -1288,8 +1287,8 @@ Object* Analitza::simpPolynomials(Container* c)
 	QList<QPair<double, Object*> > monos;
 	Operator o(c->firstOperator());
 	bool sign=true;
-	QList<Object*>::iterator it(c->firstValue());
-	for(; it!=c->m_params.end(); ++it) {
+	QList<Object*>::const_iterator it(c->firstValue());
+	for(; it!=c->m_params.constEnd(); ++it) {
 		Object *o2=*it;
 		QPair<double, Object*> imono;
 		bool ismono=false;
@@ -1365,10 +1364,14 @@ Object* Analitza::simpPolynomials(Container* c)
 		}
 	}
 	
-	qDeleteAll(c->m_params);
-	c->m_params.clear();
+	delete c;
+	c= new Container(Container::apply);
+	
+// 	qDeleteAll(c->m_params);
+// 	c->m_params.clear();
 	Object *root=c;
 	if(monos.count()==1 && o.operatorType()!=Operator::minus) {
+		delete c;
 		c=0;
 		root=createMono(o, monos[0]);
 	} else {
@@ -1383,6 +1386,7 @@ Object* Analitza::simpPolynomials(Container* c)
 	}
 	
 	if(!root) {
+		delete c;
 		root=new Cn(0.);
 	}
 	

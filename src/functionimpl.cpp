@@ -79,7 +79,7 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 	
 	double x, y=0.0;
 	for(y=t_lim; y>=b_lim; y-=inv_res) {
-		func.m_vars->modify("y", new Cn(y));
+		func.m_vars->modify("y", y);
 		x = func.calculate().value();
 		points[i++]=QPointF(x, y);
 	}
@@ -172,7 +172,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 		}
 	}
 	
-	func.m_vars->modify("x", new Cn(0.));
+	func.m_vars->modify("x", 0.);
 	Cn *vx = (Cn*) func.m_vars->value("x");
 	
 	for(x=l_lim; x<=r_lim; x+=inv_res) {
