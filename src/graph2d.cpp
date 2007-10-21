@@ -151,11 +151,26 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	ceixos.setStyle(Qt::SolidLine);
 	finestra->setPen(ceixos);
 	
-	//dibuixa eixos viewport
-	finestra->drawLine(QPointF(0., center.y()), QPointF(this->width(), center.y()));
-	finestra->drawLine(QPointF(center.x(), 0.), QPointF(center.x(),this->height()));
-	//EO dibuixa eixos viewport
+	QPointF Xright(this->width(), center.y());
+	QPointF Ytop(center.x(), 0.);
+	
+	//draw viewport axes
+	finestra->drawLine(QPointF(0., center.y()), Xright);
+	finestra->drawLine(Ytop, QPointF(center.x(),this->height()));
+	//EO draw viewport axes
 	finestra->setRenderHint(QPainter::Antialiasing, true);
+	finestra->setBrush(m_axeColor);
+	
+	QPointF dpx(15., 6.);
+	QPointF dpy(6., 15.);
+	QRectF rectX(Xright+dpx, Xright-dpx);
+	QRectF rectY(Ytop+dpy, Ytop-dpy);
+	
+	int startAngleX = 150*16;
+	int startAngleY = 240*16;
+	int spanAngle = 60*16;
+	finestra->drawPie(rectX, startAngleX, spanAngle);
+	finestra->drawPie(rectY, startAngleY, spanAngle);
 }
 
 void Graph2D::pintafunc(QPaintDevice *qpd)
