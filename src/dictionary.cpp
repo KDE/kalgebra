@@ -44,11 +44,11 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_descr->setIndent(10);
 	m_example->setIndent(10);
 	
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->horizontalHeaderItem(0)->text())));
+	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString())));
 	descrLayo->addWidget(m_name);
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->horizontalHeaderItem(1)->text())));
+	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString())));
 	descrLayo->addWidget(m_descr);
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->horizontalHeaderItem(2)->text())));
+	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString())));
 	descrLayo->addWidget(m_example);
 	descrLayo->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	
@@ -60,9 +60,14 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 
 void Dictionary::activated(const QModelIndex& idx)
 {
-	QString name=m_ops->item(idx.row(), 0)->text();
-	QString description=m_ops->item(idx.row(), 1)->text();
-	QString example=m_ops->item(idx.row(), 2)->text();
+	QModelIndex nameIdx, descriptionIdx, exampleIdx;
+	nameIdx = idx.sibling(idx.row(), 0);
+	descriptionIdx = idx.sibling(idx.row(), 1);
+	exampleIdx = idx.sibling(idx.row(), 2);
+	
+	QString name=m_ops->data(nameIdx).toString();
+	QString description=m_ops->data(descriptionIdx).toString();
+	QString example=m_ops->data(exampleIdx).toString();
 	
 	m_name->setText(name);
 	m_descr->setText(description);

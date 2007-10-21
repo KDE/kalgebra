@@ -58,6 +58,8 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	
 	m_completer = new QCompleter(this);
 	m_completer->setWidget(this);
+	m_completer->setCompletionColumn(0);
+	m_completer->setCompletionRole(Qt::DisplayRole);
 	treeView = new QTreeView;
 	m_completer->setPopup(treeView);
 	treeView->setRootIsDecorated(false);
@@ -65,6 +67,11 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 // 	treeView->resizeColumnToContents(1);
 	treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	treeView->setMinimumWidth(300);
+	m_ops = new OperatorsModel(m_completer);
+	m_completer->setModel(m_ops);
+	
+	qDebug() << m_ops << m_completer->model() << m_ops->columnCount();
+	
 	updateCompleter();
 	
 	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
@@ -86,21 +93,7 @@ ExpressionEdit::~ExpressionEdit() {}
 
 void ExpressionEdit::updateCompleter()
 {
-	if(!isMathML()) {
-		int nvars=0;
-		if(a)
-			nvars=a->m_vars->count();
-		
-		OperatorsModel *m_ops = new OperatorsModel(m_completer, Operator::nOfOps+nvars);
-		
-		if(a) {
-			QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
-			for(int i=Operator::nOfOps+1; it != a->m_vars->end(); ++it, i++) {
-				m_ops->addEntry(i, it.key(), (*it)->toString());
-			}
-		}
-		m_completer->setModel(m_ops);
-	}
+	m_ops->updateInformation();
 }
 
 void ExpressionEdit::completed(const QString& newText)
@@ -456,6 +449,7 @@ void ExpressionEdit::setAnalitza(Analitza * in)
 {
 	m_highlight->setAnalitza(in);
 	a=in;
+	m_ops->setVariables(a->variables());
 	updateCompleter();
 }
 

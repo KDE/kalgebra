@@ -18,22 +18,89 @@
 
 #include "operatorsmodel.h"
 #include "operator.h"
+#include "variables.h"
 #include <KLocale>
 #include <KApplication>
 
-OperatorsModel::OperatorsModel(QObject *parent, int num) : QStandardItemModel(num, 3, parent)
+OperatorsModel::OperatorsModel(QObject *parent) : QAbstractTableModel(parent), m_vars(0)
 {
-	setHeaderData(0, Qt::Horizontal, i18nc("@title:column", "Name")); //Not used now
-	setHeaderData(1, Qt::Horizontal, i18nc("@title:column", "Description"));
-	setHeaderData(2, Qt::Horizontal, i18nc("@title:column", "Parameters"));
-	
-	for (int i=1; i<Operator::nOfOps; ++i) {
-		addEntry(i, Operator::m_words[i], description((Operator::OperatorType) i), example((Operator::OperatorType) i));
-	}
 }
 
+QVariant OperatorsModel::data(const QModelIndex & index, int role) const
+{
+	QVariant ret;
+	if(role==Qt::DisplayRole) {
+		if(index.row()<Operator::nOfOps-2) {
+			int op=index.row()+1;
+			switch(index.column()) {
+				case 0:
+					ret=Operator::m_words[op];
+					break;
+				case 1:
+					ret=description((Operator::OperatorType) op);
+					break;
+				case 2:
+					ret=example((Operator::OperatorType) op);
+					break;
+			}
+		} else if(m_vars) {
+			int var=index.row()-Operator::nOfOps+2;
+			QString key=m_vars->keys()[var];
+			switch(index.column()) {
+				case 0:
+					ret=key;
+					break;
+				case 1:
+					ret=m_vars->value(key)->toString();
+					break;
+			}
+		}
+	} else if(role==Qt::FontRole && index.column()==1) {
+		QFont f = KApplication::font();
+		f.setItalic(true);
+		ret=f;
+	}
+	return ret;
+}
 
-void OperatorsModel::addEntry(int i, const QString &name, const QString &value, const QString &ex)
+QVariant OperatorsModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	QVariant ret;
+	if(role==Qt::DisplayRole && orientation==Qt::Horizontal) {
+		switch(section) {
+			case 0:
+				ret=i18nc("@title:column", "Name");
+				break;
+			case 1:
+				ret=i18nc("@title:column", "Description");
+				break;
+			case 2:
+				ret=i18nc("@title:column", "Parameters");
+				break;
+		}
+	}
+	return ret;
+}
+
+int OperatorsModel::rowCount(const QModelIndex & parent) const
+{
+	int count=Operator::nOfOps;
+	if(m_vars)
+		count+=m_vars->count();
+	return count-2;
+}
+
+int OperatorsModel::columnCount(const QModelIndex & parent) const
+{
+	return 3;
+}
+
+void OperatorsModel::updateInformation()
+{
+	reset();
+}
+
+/*void OperatorsModel::addEntry(int i, const QString &name, const QString &value, const QString &ex)
 {
 	QFont f = KApplication::font();
 	f.setItalic(true);
@@ -43,7 +110,7 @@ void OperatorsModel::addEntry(int i, const QString &name, const QString &value, 
 	setData(index(i-1, 0), name);
 	setItem(i-1, 1, descr);
 	setData(index(i-1, 2), ex);
-}
+}*/
 
 QString OperatorsModel::example(Operator::OperatorType o)
 {
@@ -274,4 +341,5 @@ QString OperatorsModel::description(Operator::OperatorType o)
 }
 	return QString();
 }*/
+
 

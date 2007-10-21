@@ -29,6 +29,7 @@
 #include "expression.h"
 
 class Analitza;
+class OperatorsModel;
 
 /**
 *	The expression edit widget is the one where we will input our expressions.
@@ -113,6 +114,7 @@ class ExpressionEdit : public QTextEdit
 		
 		/** Is the execution function, when return is pressed. */
 		void returnP(); //FIXME: Change my name please
+		
 	signals:
 		/** Emits that a return has been pressed. */
 		void returnPressed();
@@ -128,7 +130,7 @@ class ExpressionEdit : public QTextEdit
 		QLabel *m_helptip;
 		AlgebraHighlighter *m_highlight;
 		
-        bool returnPress();
+		bool returnPress();
 		void helpShow(const QString& funcname, int param=0);
 		static QString findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit);
 		void ajudant(const QString&, const QPoint& p);
@@ -149,7 +151,7 @@ class ExpressionEdit : public QTextEdit
 		QString m_ans;
 		QCompleter *m_completer;
 		QTreeView *treeView;
-		//QStandardItemModel *m_words;
+		OperatorsModel *m_ops;
 };
 
 #endif
