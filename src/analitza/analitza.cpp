@@ -497,6 +497,8 @@ Cn Analitza::operate(const Container* c)
 	
 	if(op!= 0 && op->operatorType()==Operator::sum) 
 		ret = sum(*c);
+	else if(op!= 0 && op->operatorType()==Operator::diff)
+		ret = sum(*c);
 	else if(op!= 0 && op->operatorType()==Operator::product)
 		ret = product(*c);
 	else switch(c->containerType()) { //TODO: Diffs should be implemented here.
@@ -1678,6 +1680,38 @@ bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
 		}
 	}
 	return found;
+}
+
+Cn Analitza::derivative(const QList< QPair<QString, double > >& values )
+{
+	//c++ numerical recipes p. 192. Only for f'
+	Cn v1;
+	QPair<QString, double> valp;
+	//Image
+	foreach(valp, values) {//TODO: it should be +-hh
+		m_vars->stack(valp.first, valp.second);
+	}
+		
+	v1=calc(m_exp.tree());
+		
+	foreach(valp, values)
+		m_vars->destroy(valp.first);
+	
+	//Image+h
+	double h=0.00000001;
+	Cn v2;
+	foreach(valp, values) {
+// 		volatile double temp=valp.second+h;
+// 		double hh=temp-valp.second;
+		m_vars->stack(valp.first, valp.second+h);
+	}
+	
+	v2=calc(m_exp.tree());
+		
+	foreach(valp, values)
+		m_vars->destroy(valp.first);
+	double ret=(v2.value()-v1.value())/h;
+	return ret;
 }
 
 

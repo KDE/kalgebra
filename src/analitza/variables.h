@@ -68,6 +68,8 @@ public:
 	 */
 	void stack(const QString& name, const Object* o);
 	
+	void stack(const QString& name, double n);
+	
 	/**
 	 *	The @p orig named variable will be called @p dest , then @p orig will be deleted.
 	 */

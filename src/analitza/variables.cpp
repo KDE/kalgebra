@@ -93,3 +93,8 @@ void Variables::stack(const QString &name, const Object *o)
 	insertMulti(name, Expression::objectCopy(o));
 }
 
+void Variables::stack(const QString & name, double n)
+{
+	insertMulti(name, new Cn(n));
+}
+

@@ -47,6 +47,7 @@ class ANALITZA_EXPORT Analitza
 	friend class function;
 	friend class Calculate3D;
 	friend class ExpressionEdit;
+	
 	public:
 		/** Constructor. Creates an empty Analitza module. */
 		Analitza();
@@ -78,6 +79,9 @@ class ANALITZA_EXPORT Analitza
 		/** Evaluates the derivative of an expression expression, like expression() but sorrounded with a diff(). */
 		Expression derivative(/*QStringList vars*/);
 		
+		/** Evaluates the derivative of an expression expression. */
+		Cn derivative(const QList< QPair<QString, double > >& values );
+		
 		/** Returns whether there has been a problem in the last calculation. */
 		bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
 		
@@ -107,6 +111,7 @@ class ANALITZA_EXPORT Analitza
 		
 		/** Adds a variable entry */
 		void insertVariable(const QString& name, const Object* value);
+		
 // 	protected: //FIXME:Shame on me
 		Expression m_exp;
 		Variables *m_vars;

@@ -21,7 +21,8 @@
 #include <qtest_kde.h>
 #include <cmath>
 
-#include <container.h>
+#include "container.h"
+#include "variables.h"
 
 using namespace std;
 
@@ -133,7 +134,20 @@ void AnalitzaTest::testDerivativeSimple()
 	QFETCH(QString, result);
 	
 	a->setExpression(Expression(expression, false));
-	QCOMPARE(a->derivative().toString(), result);
+	Expression deriv=a->derivative();
+	QCOMPARE(deriv.toString(), result);
+	
+	double val=1.;
+	QList<QPair<QString, double> > vars;
+	vars.append(QPair<QString, double>("x", val));
+	
+	Cn valCalc=a->derivative(vars);
+	a->m_vars->modify("x", val);
+	a->setExpression(deriv);
+	Cn valExp(a->calculate().value());
+	a->m_vars->destroy("x");
+	
+	QCOMPARE(QString::number(valCalc.value()), QString::number(valExp.value()));
 }
 
 void AnalitzaTest::testCorrection_data()

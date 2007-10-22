@@ -70,8 +70,6 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	m_ops = new OperatorsModel(m_completer);
 	m_completer->setModel(m_ops);
 	
-	qDebug() << m_ops << m_completer->model() << m_ops->columnCount();
-	
 	updateCompleter();
 	
 	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
