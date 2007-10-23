@@ -200,7 +200,7 @@ void AnalitzaTest::testCorrection()
 	QCOMPARE(val.toString(), result);
 }
 
-	void AnalitzaTest::testUncorrection_data()
+void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x->1.., x)");

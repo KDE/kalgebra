@@ -23,31 +23,30 @@
 #include "function.h"
 #include "analitza.h"
 
-class FunctionImpl
+struct FunctionImpl
 {
-	public:
-		enum ImplType { XType, YType, PolarType };
-		explicit FunctionImpl(const Expression& e);
-		FunctionImpl(const FunctionImpl& fi);
-		virtual ~FunctionImpl();
-		QStringList bvarList() { return func.bvarList(); }
-		bool isCorrect() const { return func.isCorrect(); }
-		QString toString() const { return func.expression().toString(); }
-		
-		virtual Axe axeType() const { return Cartesian; }
-		virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
-		virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
-		virtual QLineF derivative(const QPointF& p) const=0;
-		virtual ImplType type() const=0;
-		virtual FunctionImpl* copy()=0;
-		
-		QPointF *points;
-		Analitza func;
-		Expression *m_deriv;
-		QRect m_last_viewport;
-		
-		unsigned int m_last_resolution;
-		unsigned int m_last_max_res;
+	enum ImplType { XType, YType, PolarType };
+	explicit FunctionImpl(const Expression& e);
+	FunctionImpl(const FunctionImpl& fi);
+	virtual ~FunctionImpl();
+	QStringList bvarList() { return func.bvarList(); }
+	bool isCorrect() const { return func.isCorrect(); }
+	QString toString() const { return func.expression().toString(); }
+	
+	virtual Axe axeType() const { return Cartesian; }
+	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
+	virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
+	virtual QLineF derivative(const QPointF& p) const=0;
+	virtual ImplType type() const=0;
+	virtual FunctionImpl* copy()=0;
+	
+	QPointF *points;
+	Analitza func;
+	Expression *m_deriv;
+	QRect m_last_viewport;
+	
+	unsigned int m_last_resolution;
+	unsigned int m_last_max_res;
 };
 
 struct FunctionX : public FunctionImpl

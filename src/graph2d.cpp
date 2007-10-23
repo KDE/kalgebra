@@ -161,8 +161,9 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	finestra->setRenderHint(QPainter::Antialiasing, true);
 	finestra->setBrush(m_axeColor);
 	
-	QPointF dpx(15., 6.);
-	QPointF dpy(6., 15.);
+	const double width=15., height=4.;
+	QPointF dpx(width, height);
+	QPointF dpy(height, width);
 	QRectF rectX(Xright+dpx, Xright-dpx);
 	QRectF rectY(Ytop+dpy, Ytop-dpy);
 	

@@ -8,7 +8,11 @@ FunctionImpl::FunctionImpl(const Expression& newFunc)
 	: points(0), m_deriv(0), m_last_viewport(QRect()), m_last_resolution(0), m_last_max_res(0)
 {
 	func.setExpression(newFunc);
-	m_deriv = new Expression(func.derivative());
+	Expression deriv=func.derivative();
+	if(func.isCorrect())
+		m_deriv = new Expression(deriv);
+	else
+		func.flushErrors();
 }
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
@@ -16,7 +20,8 @@ FunctionImpl::FunctionImpl(const FunctionImpl& fi)
 {
 	if(fi.isCorrect()) {
 		func.setExpression(fi.func.expression());
-		m_deriv = new Expression(*fi.m_deriv);
+		if(fi.m_deriv)
+			m_deriv = new Expression(*fi.m_deriv);
 	}
 }
 
@@ -277,15 +282,22 @@ QLineF FunctionX::derivative(const QPointF& p) const
 {
 	Analitza a;
 	Cn ret=0.;
-	a.setExpression(*m_deriv);
-	a.m_vars->modify("y", p.y());
+	if(m_deriv) {
+		a.setExpression(*m_deriv);
+		a.m_vars->modify("y", p.y());
+		
+		if(a.isCorrect())
+			ret = a.calculate();
 	
-	if(a.isCorrect())
-		ret = a.calculate();
-
-	if(!a.isCorrect()) {
-		kDebug(0) << "Derivative error: " <<  a.errors();
-		return QLineF();
+		if(!a.isCorrect()) {
+			kDebug(0) << "Derivative error: " <<  a.errors();
+			return QLineF();
+		}
+	} else {
+		QList<QPair<QString, double> > vars;
+		vars.append(QPair<QString, double>("y", p.y()));
+		a.setExpression(func.expression());
+		ret=a.derivative(vars);
 	}
 	return mirrorXY(slopeToLine(ret.value()));
 }
@@ -294,16 +306,24 @@ QLineF FunctionY::derivative(const QPointF& p) const
 {
 	Analitza a;
 	Cn ret=0.;
-	a.setExpression(*m_deriv);
-	a.m_vars->modify("x", p.x());
+	if(m_deriv) {
+		a.setExpression(*m_deriv);
+		a.m_vars->modify("x", p.x());
+		
+		if(a.isCorrect())
+			ret = a.calculate();
 	
-	if(a.isCorrect())
-		ret = a.calculate();
-
-	if(!a.isCorrect()) {
-		kDebug(0) << "Derivative error: " <<  a.errors();
-		return QLineF();
+		if(!a.isCorrect()) {
+			kDebug(0) << "Derivative error: " <<  a.errors();
+			return QLineF();
+		}
+	} else {
+		QList<QPair<QString, double> > vars;
+		vars.append(QPair<QString, double>("x", p.x()));
+		a.setExpression(func.expression());
+		ret=a.derivative(vars);
 	}
+	
 	return slopeToLine(ret.value());
 }
 

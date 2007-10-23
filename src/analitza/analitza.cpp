@@ -418,6 +418,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				return nc;
 			} break;
 			default: {
+				m_err.append(i18n("The %1 derivative has not been implemented.", op.toString()));
 				Container* obj = new Container(Container::apply);
 				obj->m_params.append(new Operator(Operator::diff));
 				obj->m_params.append(Expression::objectCopy(c));
@@ -1620,6 +1621,7 @@ void Analitza::setVariables(Variables * v)//FIXME: Copy me!
 
 Expression Analitza::derivative()
 {
+	m_err.clear();
 	/* FIXME: Must support multiple bvars */
 	Expression exp;
 	if(m_exp.isCorrect()) {

@@ -47,6 +47,7 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("x->x") << "x";
 	QTest::newRow("x->addition") << "2+x";
+	QTest::newRow("x->logarithm") << "log x";
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
