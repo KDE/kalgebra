@@ -48,24 +48,14 @@ void Analitza::setExpression(const Expression & e)
 Expression Analitza::evaluate()
 {
 	m_err.clear();
+	Expression e;
 	if(m_exp.isCorrect()) {
-		Expression e(m_exp); //FIXME: That's a strange trick, wouldn't have to copy
-		
-// 		objectWalker(e.m_tree);
-		
-		Object *aux=e.m_tree;
-		e.m_tree=eval(aux, true);
-		delete aux;
-		
-// 		objectWalker(e.m_tree);
+		e.m_tree=eval(m_exp.tree(), true, QSet<QString>());
 		e.m_tree=simp(e.m_tree);
-// 		objectWalker(e.m_tree);
-		
-		return e;
 	} else {
-		m_err << i18n("Must specify an operation");
-		return Expression();
+		m_err << i18n("Must specify a correct operation");
 	}
+	return e;
 }
 
 Cn Analitza::calculate()
@@ -73,12 +63,12 @@ Cn Analitza::calculate()
 	if(m_exp.isCorrect())
 		return calc(m_exp.m_tree);
 	else {
-		m_err << i18n("Must specify an operation");
+		m_err << i18n("Must specify a correct operation");
 		return Cn(0.);
 	}
 }
 
-Object* Analitza::eval(const Object* branch, bool resolve)
+Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
@@ -89,7 +79,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 // 		Q_ASSERT(!c->isEmpty());
 		if(c->containerType()==Container::declare) {
 			Ci *var = (Ci*) c->m_params[0];
-			ret = eval(c->m_params[1], true);
+			ret = eval(c->m_params[1], true, unscoped);
 			ret=simp(ret);
 			m_vars->modify(var->name(), ret);
 		} else if(c->containerType()==Container::piecewise) {
@@ -100,17 +90,17 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
 				bool isPiece = p->containerType()==Container::piece;
 				if(isPiece) {
-					Object *cond=eval(p->m_params[1], resolve);
+					Object *cond=eval(p->m_params[1], resolve, unscoped);
 					cond=simp(cond);
 					if(cond->type()==Object::value) {
 						Cn* cval=static_cast<Cn*>(cond);
 						if(cval->isTrue()) {
-							ret=eval(p->m_params[0], resolve);
+							ret=eval(p->m_params[0], resolve, unscoped);
 						}
 					}
 					delete cond;
 				} else { //FIXME: Maybe should look for more pieces?
-					ret=eval(p->m_params[0], resolve);
+					ret=eval(p->m_params[0], resolve, unscoped);
 				}
 			}
 			if(!ret)
@@ -123,7 +113,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
 					break;
 				} case Operator::none:
-					ret = eval(c->m_params[0], resolve);
+					ret = eval(c->m_params[0], resolve, unscoped);
 					break;
 				default: { //FIXME: Should we replace the function? the only problem appears if undeclared var in func
 					//This code aims to scope any bounded function
@@ -131,6 +121,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 					Operator op(c->firstOperator());
 					if(op.operatorType()==Operator::function && op.isBounded()) {
 						//it is a function. I'll take only this case for the moment
+						//it is only meant for operations with scoped variables that _change_ its value => have a value
 						const Container *cbody = c;
 						QStringList bvars;
 						if(op.operatorType()==Operator::function) {
@@ -138,7 +129,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 							if(m_vars->contains(func->name())) { //FIXME: Don't really know if i fixed that properly
 								Object* body= (Object*) m_vars->value(func->name()); //body is the value
 								if(body->type()!=Object::container) { //if it is a value variable
-									ret = eval(body, resolve);
+									ret = eval(body, resolve, unscoped);
 									break;
 								}
 								cbody = (Container*) body;
@@ -159,7 +150,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 								QStringList::const_iterator iBvars = bvars.constBegin();
 								int i=0;
 								for(; iBvars!=bvars.constEnd(); ++iBvars) {
-									Object *val = simp(eval(c->m_params[++i], resolve));
+									Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
 									m_vars->stack(*iBvars, val);
 									delete val;
 								}
@@ -171,7 +162,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 						QList<Object*>::iterator it(r->firstValue());
 						for(; it!=r->m_params.end(); ++it) {
 							Object *o=*it;
-							*it = eval(o, resolve);
+							*it = eval(o, resolve, unscoped);
 							delete o;
 						}
 						ret=r;
@@ -189,11 +180,15 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 							ret = nc;
 						}*/
 					} else {
+						QSet<QString> newUnscoped(unscoped);
+						if(op.isBounded()) {
+							newUnscoped+=c->bvarList().toSet();
+						}
 						Container *r = new Container(c);
 						QList<Object*>::iterator it(r->firstValue());
 						for(; it!=r->m_params.end(); ++it) {
 							Object *o=*it;
-							*it= eval(*it, resolve);
+							*it= eval(*it, resolve, newUnscoped);
 							delete o;
 						}
 						
@@ -203,7 +198,7 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 			}
 		} else if(c->containerType()==Container::math) {
 			//TODO: Multiline. Add a loop here!
-			ret=eval(c->m_params[0], resolve);
+			ret=eval(c->m_params[0], resolve, unscoped);
 // 			ret=Expression::objectCopy(c->m_params[0]);
 		} /*else {
 			qDebug() << "Not evaluated: " << c->tagName();
@@ -211,8 +206,8 @@ Object* Analitza::eval(const Object* branch, bool resolve)
 	} else if(resolve && branch->type()==Object::variable) {
 		Ci* var=(Ci*) branch;
 		
-		if(m_vars->contains(var->name()) && m_vars->value(var->name()))
-			ret = eval(m_vars->value(var->name()), resolve);
+		if(m_vars->contains(var->name()) && m_vars->value(var->name()) && !unscoped.contains(var->name()))
+			ret = eval(m_vars->value(var->name()), resolve, unscoped);
 	}
 	if(!ret)
 		ret=Expression::objectCopy(branch);
@@ -561,7 +556,8 @@ Cn Analitza::operate(const Container* c)
 			//NOTE: Should not procrastinate the variable resolution... I think :)
 // 			m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
 			
-			Object* o = eval(c->m_params[1], true);
+			//I wonder why eval is inside calc...
+			Object* o = eval(c->m_params[1], true, QSet<QString>());
 			o=simp(o);
 			m_vars->modify(var->name(), o);
 			if(o->type()==Object::value)
@@ -624,10 +620,8 @@ Cn Analitza::sum(const Container& n)
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
 	
-	Cn *aux=new Cn(0.);
-	m_vars->stack(var, aux);
+	m_vars->stack(var, 0.);
 	c = (Cn*) m_vars->value(var);
-	delete aux;
 	
 	for(double a = dl; a<=ul; a++){
 		*c = a;

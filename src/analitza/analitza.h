@@ -119,7 +119,7 @@ class ANALITZA_EXPORT Analitza
 	private:
 		Cn calc(const Object* e);
 		Cn operate(const Container*);
-		Object* eval(const Object* e, bool vars);
+		Object* eval(const Object* e, bool vars, const QSet<QString>& unscoped);
 		
 		Cn sum(const Container& c);
 		Cn product(const Container& c);

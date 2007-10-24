@@ -169,6 +169,17 @@ void AnalitzaTest::testCorrection_data()
 	script << "func:=n->n+1";
 	script << "func(5)";
 	QTest::newRow("simple function") << script << "6";
+	
+	script.clear();
+	script << "n:=9";
+	script << "func:=n->n+1";
+	script << "func(5)";
+	QTest::newRow("simple function") << script << "6";
+	
+	script.clear();
+	script << "x:=3";
+	script << "x*sum(x->0..99, x)";
+	QTest::newRow("sum scope") << script << "14850";
 }
 
 void AnalitzaTest::testCorrection()
@@ -186,7 +197,7 @@ void AnalitzaTest::testCorrection()
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
 	}
-	QCOMPARE(res.toString(), QString(result));
+	QCOMPARE(res.toString(), result);
 	
 	Cn val;
 	foreach(QString exp, expression) {
