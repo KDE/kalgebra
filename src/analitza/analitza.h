@@ -21,7 +21,6 @@
 #define ANALITZA_H
 
 #include <cmath>
-#include <QString>
 #include <QStringList>
 
 #include "value.h"

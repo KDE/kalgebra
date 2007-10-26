@@ -20,7 +20,6 @@
 #define EXP_H
 
 #include <QStack>
-#include <QString>
 #include <QStringList>
 
 #include "analitzaexport.h"

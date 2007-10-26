@@ -20,7 +20,6 @@
 #define OBJECT_H
 
 #include <QList>
-#include <QString>
 #include <QDebug>
 
 // #include <typeinfo>
