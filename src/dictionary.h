@@ -36,7 +36,7 @@ Q_OBJECT
 		virtual ~Dictionary(){}
 		
 	private slots:
-		void activated(const QModelIndex& );
+		void activated(const QModelIndex& prev, const QModelIndex& );
 		
 	private:
 		QLabel *m_name;

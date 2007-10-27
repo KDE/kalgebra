@@ -55,10 +55,12 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	mainLayo->addWidget(m_list);
 	mainLayo->addWidget(descr);
 	
-	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
+// 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
+	connect(m_list->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex & )),
+		this, SLOT(activated(const QModelIndex& , const QModelIndex& )));
 }
 
-void Dictionary::activated(const QModelIndex& idx)
+void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
 	QModelIndex nameIdx, descriptionIdx, exampleIdx;
 	nameIdx = idx.sibling(idx.row(), 0);

@@ -19,7 +19,7 @@
 #ifndef KALGEBRA_H
 #define KALGEBRA_H
 
-#include <kmainwindow.h>
+#include <KMainWindow>
 
 #include <QPushButton>
 #include <QListWidget>

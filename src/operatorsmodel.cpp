@@ -114,15 +114,24 @@ void OperatorsModel::updateInformation()
 
 QString OperatorsModel::example(Operator::OperatorType o)
 {
-	int op = Operator::nparams(o);
-	QString funcname=Operator::m_words[o];
-	if(op == -1) {
-		return i18n("%1(..., parameters, ...)", funcname);
+	Operator oper(o);
+	QString funcname=oper.toString();
+	QString bounds;
+	if(oper.isBounded()) {
+		bounds="x->from..to";
+	}
+	
+	QString sample = i18n("%1(", funcname);
+	if(!bounds.isEmpty()) {
+		sample += i18n("%1, ", bounds);
+	}
+	
+	if(oper.nparams()<0) {
+		return i18n("%1... parameters, ...)", sample);
 	} else {
-		QString sample = QString("%1(").arg(funcname);
-		for(int i=0; i<op; ++i) {
+		for(int i=0; i<oper.nparams(); ++i) {
 			sample += i18n("par%1", i+1);
-			if(i<op-1)
+			if(i<oper.nparams()-1)
 				sample += ", ";
 		}
 		return sample+')';

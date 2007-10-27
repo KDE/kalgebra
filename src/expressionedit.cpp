@@ -307,19 +307,27 @@ void ExpressionEdit::cursorMov()
 
 void ExpressionEdit::helpShow(const QString& funcname, int param)
 {
-	int op = Operator::nparams(Operator::toOperatorType(funcname));
+	Operator oper(Operator::toOperatorType(funcname));
+	int op=oper.nparams();
 	if(op) {
 		if(op == -1) {
 			ajudant(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
 		} else {
-			QString sample = (param < op) ?
+			QString sample = (param < op+oper.isBounded()) ?
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
-						i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(", funcname);
-			for(int i=0; i<op; ++i) {
-				if(i==param)
-					sample += i18nc("Current parameter in function prototype", "<b>par%1</b>", i+1);
+						i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
+			
+			int i=-oper.isBounded();
+			for(; i<op; ++i) {
+				QString current;
+				if(i<0)
+					current=i18nc("Current parameter is the bounding", "bounds");
 				else
-					sample += i18nc("Parameter in function prototype", "par%1", i+1);
+					current=i18nc("Parameter in function prototype", "par%1", i+1);
+				
+				if(i==param-oper.isBounded())
+					current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
+				sample += current;
 				if(i<op-1)
 					sample += i18nc("Function parameter separator", ", ");
 			}
@@ -414,6 +422,11 @@ void ExpressionEdit::focusInEvent ( QFocusEvent * event )
 		default:
 			break;
 	}
+}
+
+void ExpressionEdit::focusOutEvent ( QFocusEvent * )
+{
+	m_helptip->hide();
 }
 
 void ExpressionEdit::simplify()

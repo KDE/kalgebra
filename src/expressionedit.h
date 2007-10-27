@@ -137,6 +137,7 @@ class ExpressionEdit : public QTextEdit
 		QString lastWord(int);
 		QString editingWord(int pos, int &param);
 		void focusInEvent (QFocusEvent * event);
+		void focusOutEvent ( QFocusEvent * event );
 		
 		void removenl();
 		void keyPressEvent(QKeyEvent * e);

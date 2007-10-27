@@ -33,7 +33,6 @@
 #include "expressionedit.h"
 
 class Graph2D;
-class ExpressionEdit;
 
 /**
  *	The color combo shows a different colors list.
