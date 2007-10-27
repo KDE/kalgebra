@@ -69,6 +69,14 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 
 ConsoleHtml::~ConsoleHtml() {}
 
+/*QString printable(const QString &s)
+{
+	QString s1(s);
+	s1.replace("<", "&lt;");
+	s1.replace(">", "&gt;");
+	return s1;
+}*/
+
 bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 {
 	QString result, newEntry;

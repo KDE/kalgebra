@@ -33,9 +33,9 @@ QString removeTags(const QString& in){
 	bool tag=false;
 	QString out;
 	for(int i=0; i<in.length(); i++){
-		if(in[i]=='<')
+		if(!tag && in[i]=='<')
 			tag=true;
-		else if(in[i]=='>')
+		else if(tag && in[i]=='>')
 			tag=false;
 		else if(!tag) {
 			if(in.mid(i,4)=="&gt;"){

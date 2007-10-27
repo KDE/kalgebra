@@ -42,6 +42,26 @@ void ExpressionTest::cleanupTestCase()
 	delete e;
 }
 
+QString removeTags(const QString& in)
+{
+	bool tag=false;
+	QString out;
+	for(int i=0; i<in.length(); i++){
+		if(!tag && in[i]=='<')
+			tag=true;
+		else if(tag && in[i]=='>')
+			tag=false;
+		else if(!tag) {
+			if(in.mid(i,4)=="&gt;"){
+				out += '>';
+				i+=3;
+			} else
+				out += in[i];
+		}
+	}
+	return out;
+}
+
 void ExpressionTest::testConversion_data()
 {
 	QTest::addColumn<QString>("input");
@@ -61,6 +81,7 @@ void ExpressionTest::testConversion()
 	e->setText(input);
 	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toString(), input);
+	QCOMPARE(removeTags(e->toHtml()), input);
 }
 
 void ExpressionTest::testCopy_data()
@@ -103,7 +124,7 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("limits") << "f:=n->3.." << false;
 	QTest::newRow("summatory with unknown uplimit") << "sum(x->1.., x)" << false;
 		//FIXME: Should be false in runtime, controlling it on the compiler.
-		//There is no way to have uplimit/downlimit separatedly
+		//There is no way to have uplimit/downlimit separatedly with the current Exp parser
 }
 
 void ExpressionTest::testCorrection()

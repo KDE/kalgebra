@@ -93,6 +93,9 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns the multiplicity operator. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		OperatorType multiplicityOperator() const { return multiplicityOperator(m_optype); }
 		
+		/** Returns if it is a trigonometric operator. */
+		bool isTrigonometric() const { return isTrigonometric(m_optype); }
+		
 		/** Returns whether this operator needs bounding. */
 		bool isBounded() const;
 		
@@ -112,6 +115,9 @@ class ANALITZA_EXPORT Operator : public Object
 		
 		/** Returns the expected number of parameters of a type. If there can be multiple parameters, -1 is returned */
 		static int nparams(enum OperatorType);
+		
+		/** Returns if it is a trigonometric operator. */
+		static bool isTrigonometric(enum OperatorType o);
 	private:
 		enum OperatorType m_optype;
 };

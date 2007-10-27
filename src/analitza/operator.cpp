@@ -277,4 +277,37 @@ bool Operator::isBounded() const
 	}
 }
 
+bool Operator::isTrigonometric(enum OperatorType t)
+{
+	switch(t) {
+		case sin:
+		case cos:
+		case tan:
+		case sec:
+		case csc:
+		case cot:
+		case sinh:
+		case cosh:
+		case tanh:
+		case sech:
+		case csch:
+		case coth:
+		case arcsin:
+		case arccos:
+		case arctan:
+		case arccot:
+		case arccoth:
+		case arccosh:
+		case arccsc:
+		case arccsch:
+		case arcsec:
+		case arcsech:
+		case arcsinh:
+		case arctanh:
+			return true;
+		default:
+			return false;
+	}
+}
+
 

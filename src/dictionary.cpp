@@ -23,15 +23,19 @@
 #include <QLayout>
 #include <QGroupBox>
 #include <QSpacerItem>
+#include <QSortFilterProxyModel>
 #include <KLocale>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
 	QHBoxLayout *mainLayo= new QHBoxLayout(this);
 	m_ops = new OperatorsModel(this);
+	m_sortProxy = new QSortFilterProxyModel(this);
+	m_sortProxy->setSourceModel(m_ops);
+	m_sortProxy->sort(2, Qt::AscendingOrder);
 	
 	m_list = new QListView(this);
-	m_list->setModel(m_ops);
+	m_list->setModel(m_sortProxy);
 	m_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
@@ -67,9 +71,9 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	descriptionIdx = idx.sibling(idx.row(), 1);
 	exampleIdx = idx.sibling(idx.row(), 2);
 	
-	QString name=m_ops->data(nameIdx).toString();
-	QString description=m_ops->data(descriptionIdx).toString();
-	QString example=m_ops->data(exampleIdx).toString();
+	QString name=m_sortProxy->data(nameIdx).toString();
+	QString description=m_sortProxy->data(descriptionIdx).toString();
+	QString example=m_sortProxy->data(exampleIdx).toString();
 	
 	m_name->setText(name);
 	m_descr->setText(description);

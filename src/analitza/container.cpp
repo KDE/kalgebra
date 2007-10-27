@@ -229,7 +229,10 @@ QString Container::toHtml() const
 			toret += ret.join(i18nc("Not really correct", "<span class='op'>,</span> "));
 			break;
 		case apply:
-			if(op==0)
+			if(func){
+				QString n = ret.takeFirst();
+				toret += QString("<span class='func'>%1</span><span class='op'>(</span>%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
+			} else if(op==0)
 				toret += ret.join(" ");
 			else switch(op->operatorType()) {
 				case Operator::plus:
@@ -269,10 +272,11 @@ QString Container::toHtml() const
 			toret += i18n("<span class='op'>?</span> %1", ret[0]);
 			break;
 		default:
-			toret += i18n("<span class='cont'>%1</span><span class='op'>{</span>%2<span class='op'>}</span>",
+			toret += i18n("<span class='cont'>%1</span><span class='op'> { </span>%2<span class='op'> }</span>",
 						  tagName(), ret.join(i18n("<span class='op'>,</span> ")));
 			break;
 	}
+// 	qDebug() << toret;
 	return toret;
 }
 

@@ -25,6 +25,7 @@ class QLabel;
 class QListView;
 class QModelIndex;
 class OperatorsModel;
+class QSortFilterProxyModel;
 /**
 	@author Aleix Pol
 */
@@ -44,6 +45,7 @@ Q_OBJECT
 		QLabel *m_example;
 		QListView *m_list;
 		OperatorsModel *m_ops;
+		QSortFilterProxyModel *m_sortProxy;
 };
 
 #endif

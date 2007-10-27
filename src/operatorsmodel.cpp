@@ -31,16 +31,16 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 	QVariant ret;
 	if(role==Qt::DisplayRole) {
 		if(index.row()<Operator::nOfOps-2) {
-			int op=index.row()+1;
+			Operator oper((Operator::OperatorType) (index.row()+1));
 			switch(index.column()) {
 				case 0:
-					ret=Operator::m_words[op];
+					ret=oper.toString();
 					break;
 				case 1:
-					ret=description((Operator::OperatorType) op);
+					ret=description(oper);
 					break;
 				case 2:
-					ret=example((Operator::OperatorType) op);
+					ret=example(oper);
 					break;
 			}
 		} else if(m_vars) {
@@ -112,9 +112,8 @@ void OperatorsModel::updateInformation()
 	setData(index(i-1, 2), ex);
 }*/
 
-QString OperatorsModel::example(Operator::OperatorType o)
+QString OperatorsModel::example(Operator oper)
 {
-	Operator oper(o);
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
@@ -138,10 +137,10 @@ QString OperatorsModel::example(Operator::OperatorType o)
 	}
 }
 
-QString OperatorsModel::description(Operator::OperatorType o)
+QString OperatorsModel::description(Operator o)
 {
 	QString s;
-	switch(o) {
+	switch(o.operatorType()) {
 		case Operator::plus:
 			s = i18n("Addition");
 			break;
