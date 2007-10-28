@@ -486,6 +486,7 @@ bool Graph2D::editFunction(const QString& toChange, const function& func)
 
 function* Graph2D::editFunction(int num)
 {
+	Q_ASSERT(num<funclist.count());
 	return &funclist[num];
 }
 

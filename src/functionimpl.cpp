@@ -211,7 +211,8 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	return QPair<QPointF, QString>(dp, pos);
 }
 
-static const double pi=2.*acos(0.);
+// static const double pi=2.*acos(0.);
+static const double pi=acos(-1.);
 QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 {
 	QPointF dp=p;

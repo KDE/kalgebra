@@ -82,7 +82,7 @@ class ANALITZA_EXPORT Analitza
 		Cn derivative(const QList< QPair<QString, double > >& values );
 		
 		/** Returns whether there has been a problem in the last calculation. */
-		bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
+		inline bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
 		
 		/** Returns whether @p var is a function. */
 		bool isFunction(const Ci& var) const;

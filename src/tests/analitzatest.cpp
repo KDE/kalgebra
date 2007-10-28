@@ -55,8 +55,11 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("simple power") << "2**99" << pow(2., 99.);
 	QTest::newRow("simple multiplication") << "3*3" << 9.;
 	QTest::newRow("sinus") << "sin(3*3)" << sin(9.);
-	QTest::newRow("sum") << "sum(x->1..99, x)" << 4950.;
 	QTest::newRow("declare") << "x:=3" << 3.;
+	QTest::newRow("sum") << "sum(x->1..99, x)" << 4950.;
+	
+	QTest::newRow("product") << "product(n->1..5, n)" << 120.;
+	QTest::newRow("factorial") << "factorial(5)" << 120.;
 	
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }" << 33.;
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33 }" << 33.;
@@ -97,6 +100,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("sum times simplification") << "sum(n->0..99, n*x)" << "4950*x";
 	QTest::newRow("sum times") << "x*sum(n->0..99, n)" << "4950*x";
 	QTest::newRow("unrelated sum") << "sum(n->0..99, x)" << "99*x";
+	
+	QTest::newRow("product") << "product(n->1..5, n)" << "120";
+	QTest::newRow("factorial") << "factorial(5)" << "120";
 	
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << "33";
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << "33";

@@ -133,7 +133,8 @@ void FunctionEdit::setText(const QString &newText)
 void FunctionEdit::setColor(const QColor &newColor)
 {
 	m_color->setColor(newColor);
-	m_graph->editFunction(0)->setColor(newColor);
+	if(m_graph->count()>0)
+		m_graph->editFunction(0)->setColor(newColor);
 	m_graph->forceRepaint();
 }
 

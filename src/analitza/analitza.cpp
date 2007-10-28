@@ -490,11 +490,10 @@ Cn Analitza::operate(const Container* c)
 	
 	if(c->m_params[0]->type() == Object::oper)
 		op = (Operator*) c->m_params[0]; //FIXME: c->firstOperator
-	
 	if(op!= 0 && op->operatorType()==Operator::sum) 
 		ret = sum(*c);
-	else if(op!= 0 && op->operatorType()==Operator::diff)
-		ret = sum(*c);
+// 	else if(op!= 0 && op->operatorType()==Operator::diff)
+// 		ret = sum(*c);
 	else if(op!= 0 && op->operatorType()==Operator::product)
 		ret = product(*c);
 	else switch(c->containerType()) { //TODO: Diffs should be implemented here.
@@ -623,9 +622,9 @@ Cn Analitza::sum(const Container& n)
 	m_vars->stack(var, 0.);
 	c = (Cn*) m_vars->value(var);
 	
-	for(double a = dl; a<=ul; a++){
+	for(double a = dl; a<=ul && isCorrect(); a++){
 		*c = a;
-		reduce(Operator::plus, &ret, calc(n.m_params[4]), false);
+		reduce(Operator::plus, &ret, calc(n.m_params.last()), false);
 	}
 	
 	m_vars->destroy(var);
@@ -640,13 +639,14 @@ Cn Analitza::product(const Container& n)
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
 	
-	m_vars->stack(var, new Cn(0.));
+	m_vars->stack(var, 0.);
 	c = (Cn*) m_vars->value(var);
 	
-	for(double a = dl; a<=ul; a++){
+	for(double a = dl; a<=ul && isCorrect(); a++){
 		*c = a;
-		reduce(Operator::times, &ret, calc(n.m_params[4]), false);
+		reduce(Operator::times, &ret, calc(n.m_params.last()), false);
 	}
+	
 	m_vars->destroy(var);
 	
 	return ret;

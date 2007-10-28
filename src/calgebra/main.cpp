@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 			ex.parse();
 			if(ex.isCompletelyRead()) {
 				Expression e(ex.mathML(), true);
-				qDebug() << entry << e.toString();
+// 				qDebug() << entry << e.toString();
 				evaluate(e);
 				inside =false;
 				entry.clear();
