@@ -66,6 +66,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
+	Q_UNUSED(prev);
 	QModelIndex nameIdx, descriptionIdx, exampleIdx;
 	nameIdx = idx.sibling(idx.row(), 0);
 	descriptionIdx = idx.sibling(idx.row(), 1);

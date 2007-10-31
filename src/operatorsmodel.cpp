@@ -82,7 +82,7 @@ QVariant OperatorsModel::headerData(int section, Qt::Orientation orientation, in
 	return ret;
 }
 
-int OperatorsModel::rowCount(const QModelIndex & parent) const
+int OperatorsModel::rowCount(const QModelIndex &) const
 {
 	int count=Operator::nOfOps;
 	if(m_vars)
@@ -90,7 +90,7 @@ int OperatorsModel::rowCount(const QModelIndex & parent) const
 	return count-2;
 }
 
-int OperatorsModel::columnCount(const QModelIndex & parent) const
+int OperatorsModel::columnCount(const QModelIndex &) const
 {
 	return 3;
 }

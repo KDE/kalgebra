@@ -18,7 +18,7 @@
 
 #include "operator.h"
 
-char* Operator::m_words[nOfOps] = {
+char Operator::m_words[nOfOps][10] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",
 	"power", "root", "factorial",

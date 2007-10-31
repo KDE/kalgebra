@@ -893,7 +893,7 @@ void Analitza::reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool una
 			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
 			break;
 		default:
-			m_err << i18n("The operator <em>%1</em> has not been implemented", Operator::m_words[op]);
+			m_err << i18n("The operator <em>%1</em> has not been implemented", QString(Operator::m_words[op]));
 			break;
 	}
 	

@@ -330,5 +330,6 @@ QLineF FunctionY::derivative(const QPointF& p) const
 
 QLineF FunctionPolar::derivative(const QPointF& p) const
 {
+	Q_UNUSED(p);
 	return QLineF();
 }
