@@ -99,13 +99,22 @@ like: a**(1/b)</para></listitem>
 <listitem><para>-&gt; : lambda. It’s the way to specify the bounded variable in
 a function.</para></listitem>
 <listitem><para>x-&gt;a..b : This is used when we need to delimitate a range
-(bvar+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
+(bounded variable+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
 <listitem><para>() : It is used to specify a higher priority.</para></listitem>
 <listitem><para>abc(params) : Functions. When parser finds a function, it checks
 if abc is an operator. If it is, it will be treated as an operator, if it is
 not, it will be treated as a user function.</para></listitem>
 <listitem><para>:= : Definition. It is used to define a variable value. You can
 do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
+</para></listitem>
+<listitem><para>? : Piecewise condition definition. Piecewise is the way we can define
+conditional operations on KAlgebra. If we introduce the condition before the '?' it will
+use this condition only if it is true, if it finds a '?' without any condition, it will
+enter in the last instance.
+Example: piecewise { eq(x,0) ? 0, eq(x,1) ? x+1, ? x**2 }
+</para></listitem>
+<listitem><para>{ } : MathML container. It can be used to define a container. Mainly
+useful for working with piecewise.
 </para></listitem>
 </itemizedlist>
 <para>Now you could ask me, why should the user mind about MathML? That’s easy.
@@ -189,6 +198,15 @@ Z.</para>
 <listitem><para>sin(x)*sin(y)</para></listitem>
 <listitem><para>x/y</para></listitem>
 </itemizedlist>
+
+</chapter>
+
+<chapter id="dictionary">
+<title>Dictionary</title>
+
+<para>The dictionary is a collection of all KAlgebra available operations. It can be
+useful to check what is an operation useful for and to know how many parameters does
+a function stand for.</para>
 
 </chapter>
 

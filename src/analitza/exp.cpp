@@ -113,11 +113,14 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 	if(a.isEmpty())
 		ret.type = tEof;
 	else if(a[0].decompositionTag()!=QChar::NoDecomposition) {
+		bool ok=false;
 		for(int i=0; i<a.count() && a[i].decompositionTag()==QChar::Super; i++) {
 			ret.type = tPow;
 			a[i]=a[i].decomposition()[0];
+			ok=true;
 		}
-		a.prepend(' ');
+		if(ok)
+			a.prepend(' ');
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
 		int coma=0, base=10;
 		if(a[0]=='.') {
