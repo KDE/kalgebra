@@ -36,6 +36,14 @@ set(kalgebra_SRCS
 kde4_add_library(analitza ${analitza_SRCS})
 target_link_libraries(analitza ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${KDE4_KDECORE_LIBS})
 
+if(MSVC)
+  set(kalgebra_SRCS ${kalgebra_SRCS} kalgebra.rc)
+endif(MSVC)
+
+if(MINGW)
+   KDE_ADD_RESOURCES2(kalgebra_SRCS kalgebra.rc)
+endif(MINGW)
+
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra  ${KDE4_KHTML_LIBS} ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} analitza)
 
