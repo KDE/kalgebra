@@ -51,7 +51,7 @@ set(kalgebra_icons
     ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi64-app-kalgebra.png
     ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi128-app-kalgebra.png
 )
-kde4_add_win32_app_icon(kalgebra kalgebra_SRCS ${kalgebra_icons})
+kde4_add_win32_app_icon(kalgebra_SRCS ${kalgebra_icons})
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra  ${KDE4_KHTML_LIBS} ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} analitza)
