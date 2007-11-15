@@ -45,11 +45,11 @@ target_link_libraries(analitza ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${KDE4_K
 #    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/128x128/apps/kalgebra.png
 #)
 set(kalgebra_icons
-    ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi16-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi32-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi48-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi64-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/kalgebra/icons/hi128-app-kalgebra.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi16-app-kalgebra.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi32-app-kalgebra.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi48-app-kalgebra.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi64-app-kalgebra.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi128-app-kalgebra.png
 )
 kde4_add_win32_app_icon(kalgebra_SRCS ${kalgebra_icons})
 
