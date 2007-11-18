@@ -35,9 +35,9 @@
 
 <abstract>
 <para>
-&kalgebra; is a mathematical calculator based content markup MathML language.
+&kalgebra; is a mathematical calculator based on content markup MathML language.
 Nowadays it is capable to make simple MathML operations (arithmetic and logical)
-and representate 2D and 3D graphs. It is actually not necessary to know MathML
+and to representate 2D and 3D graphs. It is actually not necessary to know MathML
 to use &kalgebra;.
 </para>
 </abstract>
@@ -84,12 +84,11 @@ calculations.
 <chapter id="syntax">
 <title>Syntax</title>
 
-<para>If we want to understand how does it work, the best thing we can do is to
-realize that our input is being converted into MathML, it is not necessary to
-know it by the way. I’ve based the syntax basically on common sense, shouldn’t
-be hard for anyone, I’ve looked closely to maxima and maple’s syntax to use it
-so they look very similar.</para>
-<para>I’ll make a list about the operators we have by now:</para>
+<para>If we want to understand how it works, the best thing we can do is to
+realize that our input is being converted into MathML although it is not necessary to
+know MathML. I have based the syntax basically on common sense, it should not
+be hard for anyone, I’ve looked closely to maxima and maple’s syntax so they look very similar.</para>
+<para>Here is a list of the available operators we have by now:</para>
 <itemizedlist>
 <listitem><para>+ - * / : Add, substract, multiplication and
 division.</para> </listitem>
@@ -101,14 +100,14 @@ a function.</para></listitem>
 <listitem><para>x-&gt;a..b : This is used when we need to delimitate a range
 (bounded variable+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
 <listitem><para>() : It is used to specify a higher priority.</para></listitem>
-<listitem><para>abc(params) : Functions. When parser finds a function, it checks
+<listitem><para>abc(params) : Functions. When the parser finds a function, it checks
 if abc is an operator. If it is, it will be treated as an operator, if it is
 not, it will be treated as a user function.</para></listitem>
 <listitem><para>:= : Definition. It is used to define a variable value. You can
 do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
 </para></listitem>
 <listitem><para>? : Piecewise condition definition. Piecewise is the way we can define
-conditional operations on KAlgebra. If we introduce the condition before the '?' it will
+conditional operations in &kalgebra;. If we introduce the condition before the '?' it will
 use this condition only if it is true, if it finds a '?' without any condition, it will
 enter in the last instance.
 Example: piecewise { eq(x,0) ? 0, eq(x,1) ? x+1, ? x**2 }
@@ -119,25 +118,23 @@ useful for working with piecewise.
 </itemizedlist>
 <para>Now you could ask me, why should the user mind about MathML? That’s easy.
 With this, we can operate with functions like cos(), sin(), any other
-trigonometrical functions, sum() or product(). Doesn’t matter what kind it is.
-We can use plus(), times() and everyone which has its operator. Boolean
-functions are implemented as well, so we can do something like or(1,0,0,0,0) or
-so.</para>
+trigonometrical functions, sum() or product(). It does not matter what kind it is.
+We can use plus(), times() and everything which has its operator. Boolean
+functions are implemented as well, so we can do something like or(1,0,0,0,0).</para>
 
 </chapter>
 
 <chapter id="using-console">
 <title>Using the console</title>
 <para>&kalgebra;'s console is useful as a calculator. There you
-have a list of the declared variables. By double clicking them you will see a
+have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change de value of it (just a way to trick the log).
 Menu options:</para>
 <itemizedlist>
-<listitem><para>New: flushes the log.</para></listitem>
+<listitem><para>New: Flushes the log.</para></listitem>
 <listitem><para>Load script: Executes the instructions in a file sequentially.
-Nice if you want to define some libraries or something like
-this.</para></listitem>
-<listitem><para>Save script: Saves the instructions you've typed since the
+Nice if you want to define some libraries or something like this.</para></listitem>
+<listitem><para>Save script: Saves the instructions you have typed since the
 session began.</para></listitem>
 <listitem><para>Save Log: Saves the log into a file, with results and
 so.</para></listitem>
@@ -149,9 +146,9 @@ so.</para></listitem>
 
 <chapter id="two-D-graphs">
 <title>2D Graphs</title>
-<para>To add a new 2D graph on KAlgebra, what you have to do is to go to the 2D
-Graphs tab and click in the "Add" tab to add the new function. Then your focus
-will go to an input text box where type your function.</para>
+<para>To add a new 2D graph on &kalgebra;, what you have to do is to go to the <guilabel>2D
+Graphs</guilabel> tab and click in the <guilabel>Add</guilabel> tab to add the new function. Then your focus
+will go to an input text box where you can type your function.</para>
 
 <sect1 id="two-D-syntax">
 <title>Syntax</title>
@@ -171,7 +168,7 @@ as the bounded variables.</para>
 
 <sect1 id="two-D-features">
 <title>Features</title>
-<para>You can set several graphs on the same view. Just use the Add button when
+<para>You can set several graphs on the same view. Just use the <guilabel>Add</guilabel> button when
 you are in List mode. You can set each graph its own color.</para>
 
 <para>The view can be zoomed and moved with the mouse. Using the wheel
@@ -188,9 +185,9 @@ show a graph anymore.</para>
 <chapter id="three-D-graphs">
 <title>3D Graphs</title>
 
-<para>To draw a 3D Graph with KAlgebra you will have to go to the 3D Graphs tab
-and there you will see a text edit, there you will introduce your input. For the
-moment KAlgebra only supports functions that fit f(x,y) that will define the
+<para>To draw a 3D Graph with &kalgebra; you will have to go to the <guilabel>3D Graphs</guilabel> tab
+and you will see an input field at the bottom where you will type your function. For the
+moment &kalgebra; only supports functions that fit f(x,y) that will define the
 Z.</para>
 
 <para>Examples:</para>
@@ -204,8 +201,8 @@ Z.</para>
 <chapter id="dictionary">
 <title>Dictionary</title>
 
-<para>The dictionary is a collection of all KAlgebra available operations. It can be
-useful to check what is an operation useful for and to know how many parameters does
+<para>The dictionary is a collection of all &kalgebra; available operations. It can be
+useful to check in the dictionary what is an operation useful for and to know how many parameters does
 a function stand for.</para>
 
 </chapter>
