@@ -122,7 +122,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					if(op.operatorType()==Operator::function && op.isBounded()) {
 						//it is a function. I'll take only this case for the moment
 						//it is only meant for operations with scoped variables that _change_ its value => have a value
-						const Container *cbody = c;
+						const Container *cbody=0;
 						QStringList bvars;
 						if(op.operatorType()==Operator::function) {
 							Ci *func= (Ci*) c->m_params[0];
@@ -157,16 +157,20 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 							}
 						}
 						
-// 						qDebug() << "before" << cbody->toString();
-						Container *r = new Container(cbody);
-						QList<Object*>::iterator it(r->firstValue());
-						for(; it!=r->m_params.end(); ++it) {
-							Object *o=*it;
-							*it = eval(o, resolve, unscoped);
-							delete o;
+						if(cbody) {
+// 							qDebug() << "before" << cbody->toString();
+							Container *r = new Container(cbody);
+							QList<Object*>::iterator it(r->firstValue());
+							for(; it!=r->m_params.end(); ++it) {
+								Object *o=*it;
+								*it = eval(o, resolve, unscoped);
+								delete o;
+							}
+							ret=eval(cbody->m_params.last(), resolve, unscoped);
+// 							qDebug() << "after" << ret->toString() << (*cbody->firstValue())->toString() << op.toString();
+						} else {
+							ret=Expression::objectCopy(c);
 						}
-						ret=r;
-// 						qDebug() << "after" << ret->toString() << (*cbody->firstValue())->toString() << op.toString();
 						
 						QStringList::const_iterator iBvars(bvars.constBegin());
 						for(; iBvars!=bvars.constEnd(); ++iBvars)
@@ -204,14 +208,19 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			qDebug() << "Not evaluated: " << c->tagName();
 		}*/
 	} else if(resolve && branch->type()==Object::variable) {
+		//FIXME: Should check if it is that crappy 
 		Ci* var=(Ci*) branch;
 		
-		if(m_vars->contains(var->name()) && m_vars->value(var->name()) && !unscoped.contains(var->name()))
-			ret = eval(m_vars->value(var->name()), resolve, unscoped);
+		if(m_vars->contains(var->name())) {
+			Object* val=m_vars->value(var->name());
+			if(val && !unscoped.contains(var->name()) && !Container::equalTree(var, val))
+				ret = eval(val, resolve, unscoped);
+// 			else
+// 				ret=Expression::objectCopy(val);
+		}
 	}
 	if(!ret)
 		ret=Expression::objectCopy(branch);
-	
 	Q_ASSERT(ret);
 	return ret;
 }

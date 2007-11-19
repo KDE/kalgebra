@@ -46,6 +46,9 @@ Q_OBJECT
 		void testCorrection_data();
 		void testCorrection();
 		
+		void testEvaluate_data();
+		void testEvaluate();
+		
 		///We check that it is not correct
 		void testUncorrection_data();
 		void testUncorrection();

@@ -159,39 +159,39 @@ void AnalitzaTest::testDerivativeSimple()
 void AnalitzaTest::testCorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
-	QTest::addColumn<QString>("result");
+	QTest::addColumn<double>("result");
 	
 	QStringList script;
 	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
 	script << "fib(6)";
-	QTest::newRow("piecewise fibonacci") << script << "8";
+	QTest::newRow("piecewise fibonacci") << script << 8.;
 	
 	script.clear();
 	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
 	script << "fact(5)";
-	QTest::newRow("piecewise factorial") << script << "120";
+	QTest::newRow("piecewise factorial") << script << 120.;
 	
 	script.clear();
 	script << "func:=n->n+1";
 	script << "func(5)";
-	QTest::newRow("simple function") << script << "6";
+	QTest::newRow("simple function") << script << 6.;
 	
 	script.clear();
 	script << "n:=9";
 	script << "func:=n->n+1";
 	script << "func(5)";
-	QTest::newRow("simple function") << script << "6";
+	QTest::newRow("simple function") << script << 6.;
 	
 	script.clear();
 	script << "x:=3";
 	script << "x*sum(x->0..99, x)";
-	QTest::newRow("sum scope") << script << "14850";
+	QTest::newRow("sum scope") << script << 14850.;
 }
 
 void AnalitzaTest::testCorrection()
 {
 	QFETCH(QStringList, expression);
-	QFETCH(QString, result);
+	QFETCH(double, result);
 	
 	Analitza b;
 	Expression res;
@@ -203,7 +203,7 @@ void AnalitzaTest::testCorrection()
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
 	}
-	QCOMPARE(res.toString(), result);
+	QCOMPARE(res.toString(), Cn(result).toString());
 	
 	Cn val;
 	foreach(QString exp, expression) {
@@ -214,7 +214,7 @@ void AnalitzaTest::testCorrection()
 		QVERIFY(b.isCorrect());
 		val=b.calculate();
 	}
-	QCOMPARE(val.toString(), result);
+	QCOMPARE(val.value(), result);
 }
 
 void AnalitzaTest::testUncorrection_data()
@@ -255,6 +255,35 @@ void AnalitzaTest::testUncorrection()
 		}
 	}
 	QVERIFY(!correct);
+}
+
+void AnalitzaTest::testEvaluate_data()
+{
+	QTest::addColumn<QStringList>("expression");
+	QTest::addColumn<QString>("result");
+	
+	QStringList script;
+	script << "f:=x->x";
+	script << "f(x)";
+	QTest::newRow("function parameter") << script << "x";
+}
+
+void AnalitzaTest::testEvaluate()
+{
+	QFETCH(QStringList, expression);
+	QFETCH(QString, result);
+	
+	Analitza b;
+	Expression res;
+	foreach(QString exp, expression) {
+		Expression e(exp, false);
+		QVERIFY(e.isCorrect());
+		
+		b.setExpression(e);
+		QVERIFY(b.isCorrect());
+		res=b.evaluate();
+	}
+	QCOMPARE(res.toString(), result);
 }
 
 #include "analitzatest.moc"

@@ -191,7 +191,7 @@ QString Container::toHtml() const
 			op = (Operator*) m_params[i];
 		else if(m_params[i]->type() == Object::variable) {
 			Ci *b = (Ci*) m_params[i];
-			func=b->isFunction();
+			func|=b->isFunction();
 			ret << b->toHtml();
 		} else if(m_params[i]->type() == Object::container) {
 			Container *c = (Container*) m_params[i];
@@ -276,7 +276,7 @@ QString Container::toHtml() const
 						  tagName(), ret.join(i18n("<span class='op'>,</span> ")));
 			break;
 	}
-// 	qDebug() << toret;
+	qDebug() << toString();
 	return toret;
 }
 
