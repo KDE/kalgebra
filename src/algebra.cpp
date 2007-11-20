@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software                      *
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
-#include "config.h"
+
 #include "algebra.h"
 #include "varedit.h"
 #include "functionedit.h"
@@ -206,12 +206,6 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	tabChanged(0);
 }
 
-void KAlgebra::new_func3d()
-{
-	grafic3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
-	grafic3d->setFocus();
-}
-
 void KAlgebra::new_func()
 {
 	QTreeWidgetItem *item;
@@ -321,20 +315,21 @@ void KAlgebra::saveLog()
 		c_results->saveLog(path);
 }
 
-
 void KAlgebra::set_res_low()	{ grafic->setResolution(416); }
 void KAlgebra::set_res_std()	{ grafic->setResolution(832); }
 void KAlgebra::set_res_fine()	{ grafic->setResolution(1664);}
 void KAlgebra::set_res_vfine()	{ grafic->setResolution(3328);}
 
+#ifdef HAVE_OPENGL
+void KAlgebra::new_func3d()
+{
+	grafic3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
+	grafic3d->setFocus();
+}
+
 void KAlgebra::set_dots()	{ grafic3d->setMethod(Graph3D::Dots);  }
 void KAlgebra::set_lines()	{ grafic3d->setMethod(Graph3D::Lines); }
 void KAlgebra::set_solid()	{ grafic3d->setMethod(Graph3D::Solid); }
-
-void KAlgebra::toggleTransparency()
-{
-	grafic3d->setTransparency(!grafic3d->transparency());
-}
 
 void KAlgebra::save3DGraph()
 {
@@ -342,6 +337,13 @@ void KAlgebra::save3DGraph()
 	if(!path.isEmpty())
 		grafic3d->toPixmap().save(path, "PNG");
 }
+
+void KAlgebra::toggleTransparency()
+{
+	grafic3d->setTransparency(!grafic3d->transparency());
+}
+
+#endif
 
 void KAlgebra::toggleSquares()
 {

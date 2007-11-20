@@ -26,6 +26,7 @@
 #include <QTreeWidget>
 #include <QToolBox>
 #include <QTabWidget>
+#include "config.h"
 
 class ExpressionEdit;
 class ConsoleHtml;
@@ -67,7 +68,6 @@ class KAlgebra : public KMainWindow
 		void saveScript();
 		void saveLog();
 		
-		void new_func3d();
 		void new_func();
 		void edit_func ( const QModelIndex & );
 		void edit_var ( const QModelIndex & );
@@ -77,17 +77,22 @@ class KAlgebra : public KMainWindow
 		void set_res_std();
 		void set_res_fine();
 		void set_res_vfine();
+		
+#ifdef HAVE_OPENGL
+		void new_func3d();
+		
+		void set_dots();
+		void set_lines();
+		void set_solid();
+		void toggleTransparency();
+		void save3DGraph();
+#endif
 		void different ( QTreeWidgetItem * item, int column );
 		void saveGraph();
 		void functools ( int );
 		
 		void changeStatusBar ( const QString & );
 		void tabChanged ( int );
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void toggleTransparency();
-		void save3DGraph();
 };
 
 #endif
