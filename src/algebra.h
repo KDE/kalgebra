@@ -41,7 +41,6 @@ class KAlgebra : public KMainWindow
 	public:
 		KAlgebra ( QWidget *parent=0 );
 		~KAlgebra() {}
-		QString calculate ( QString exp );
 	private:
 		//console
 		ExpressionEdit *c_exp;
@@ -56,11 +55,12 @@ class KAlgebra : public KMainWindow
 		Graph2D *grafic;
 		QDockWidget *b_dock_funcs;
 		FunctionEdit *b_funced;
-		
+
+#ifdef HAVE_OPENGL
 		//graph 3d
 		ExpressionEdit *t_exp;
 		Graph3D *grafic3d;
-		
+#endif
 	public slots:
 		void operate();
 		void insert ( QListWidgetItem * item );

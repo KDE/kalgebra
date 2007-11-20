@@ -377,10 +377,11 @@ void KAlgebra::tabChanged(int n)
 			b_dock_funcs->raise();
 // 			b_add->setFocus();
 			break;
+#ifdef HAVE_OPENGL
 		case 2:
 			t_exp->setFocus();
 			break;
-		case 3:
+#endif
 		default:
 			break;
 	}
