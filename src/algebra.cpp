@@ -15,14 +15,16 @@
  *  along with this program; if not, write to the Free Software                      *
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
-
+#include "config.h"
 #include "algebra.h"
 #include "varedit.h"
 #include "functionedit.h"
 #include "consolehtml.h"
 #include "expressionedit.h"
 #include "graph2d.h"
-#include "graph3d.h"
+#ifdef HAVE_OPENGL
+#	include "graph3d.h"
+#endif
 #include "variables.h"
 #include "dictionary.h"
 
@@ -154,6 +156,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//////EO2D Graph
 	
 	/////3DGraph
+#ifdef HAVE_OPENGL
 	QWidget *tridim = new QWidget(p);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new ExpressionEdit(tridim);
@@ -188,6 +191,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	t_actions[3]->setCheckable(true);
 	t_actions[4]->setCheckable(true);
 	t_actions[4]->setChecked(true);
+#endif
 	////////////
 	//////EO3D Graph
 	
