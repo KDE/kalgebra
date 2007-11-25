@@ -78,7 +78,6 @@ class KAlgebra : public KMainWindow
 		void set_res_fine();
 		void set_res_vfine();
 		
-#ifdef HAVE_OPENGL
 		void new_func3d();
 		
 		void set_dots();
@@ -86,7 +85,7 @@ class KAlgebra : public KMainWindow
 		void set_solid();
 		void toggleTransparency();
 		void save3DGraph();
-#endif
+		
 		void different ( QTreeWidgetItem * item, int column );
 		void saveGraph();
 		void functools ( int );

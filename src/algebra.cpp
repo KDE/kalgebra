@@ -320,30 +320,50 @@ void KAlgebra::set_res_std()	{ grafic->setResolution(832); }
 void KAlgebra::set_res_fine()	{ grafic->setResolution(1664);}
 void KAlgebra::set_res_vfine()	{ grafic->setResolution(3328);}
 
-#ifdef HAVE_OPENGL
 void KAlgebra::new_func3d()
 {
+#ifdef HAVE_OPENGL
 	grafic3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
 	grafic3d->setFocus();
+#endif
 }
 
-void KAlgebra::set_dots()	{ grafic3d->setMethod(Graph3D::Dots);  }
-void KAlgebra::set_lines()	{ grafic3d->setMethod(Graph3D::Lines); }
-void KAlgebra::set_solid()	{ grafic3d->setMethod(Graph3D::Solid); }
+void KAlgebra::set_dots()
+{
+#ifdef HAVE_OPENGL
+	grafic3d->setMethod(Graph3D::Dots);
+#endif
+}
+
+void KAlgebra::set_lines()
+{
+#ifdef HAVE_OPENGL
+	grafic3d->setMethod(Graph3D::Lines);
+#endif
+}
+
+void KAlgebra::set_solid()
+{
+#ifdef HAVE_OPENGL
+	grafic3d->setMethod(Graph3D::Solid);
+#endif
+}
 
 void KAlgebra::save3DGraph()
 {
+#ifdef HAVE_OPENGL
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this);
 	if(!path.isEmpty())
 		grafic3d->toPixmap().save(path, "PNG");
+#endif
 }
 
 void KAlgebra::toggleTransparency()
 {
+#ifdef HAVE_OPENGL
 	grafic3d->setTransparency(!grafic3d->transparency());
-}
-
 #endif
+}
 
 void KAlgebra::toggleSquares()
 {
