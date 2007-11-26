@@ -45,8 +45,7 @@
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {
-	this->setMinimumHeight(500);
-	this->setMinimumWidth(900);
+	resize(900, 500);
 	
 	QTabWidget *tabs = new QTabWidget(this);
 	this->setCentralWidget(tabs);

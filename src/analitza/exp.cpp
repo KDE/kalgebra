@@ -87,13 +87,13 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Question Mark
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  R,  S,  R,  S,  R,  R },	//function
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R,  E },	//?
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R, E2 },	//?
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  E },	//,
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//)
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//}
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  E,  S, E3,  S, E3,  A },	//$
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E2,  S, E3,  S, E3,  A },	//$
 };
 
 Exp::Exp(QString exp) : str(exp), completelyRead(0)
@@ -353,6 +353,10 @@ int Exp::parse()
 // 		printf("acc=%d stk=%d, tok=%d\n", parseTbl[opr.top()][tok], opr.top(), tok);
 		switch(parseTbl[opr.top()][tok]){
 			case K:
+				if(val.isEmpty()) {
+					err << i18n("Wrong stack result");
+					return -1;
+				}
 				a=val.pop();
 				if(opr.top()==tLambda && !val.isEmpty())
 					val.push(QString("%1<bvar>%2</bvar>").arg(val.pop()).arg(a));
@@ -387,7 +391,7 @@ int Exp::parse()
 				err << i18n("Unbalanced right parenthesis");
 				return 3;
 			case E:
-				err << i18n("Misplaced coma");
+				err << i18n("Misplaced comma");
 				return 4;
 			default:
 				break;

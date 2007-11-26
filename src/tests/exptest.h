@@ -39,6 +39,10 @@ Q_OBJECT
 		void testExp();
 		void testExp_data();
 		
+		/** We check if expressions are correct as expected. */
+		void testCorrection();
+		void testCorrection_data();
+		
 		/** We check the token lengths*/
 		void testLength();
 		void testLength_data();

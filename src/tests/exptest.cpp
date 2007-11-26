@@ -99,4 +99,23 @@ void ExpTest::testLength()
 	}
 }
 
+void ExpTest::testCorrection_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<bool>("correct");
+	
+	QTest::newRow("stack killing") << "k+++k" << false;
+	QTest::newRow("more stack killing") << "k-++k" << false;
+}
+
+void ExpTest::testCorrection()
+{
+	QFETCH(QString, input);
+	QFETCH(bool, correct);
+	
+	Exp e(input);
+	e.parse();
+	QCOMPARE(e.error().isEmpty(), correct);
+}
+
 #include "exptest.moc"
