@@ -42,6 +42,7 @@
 #include <KAction>
 #include <KLocale>
 #include <KHTMLView>
+#include <KStandardAction>
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {
@@ -52,7 +53,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	
 	setStatusBar(new KStatusBar(this));
-	setMenuBar(new QMenuBar(this));
+	setMenuBar(new KMenuBar(this));
 	
 	///////Consola
 	QWidget *console = new QWidget(p);
@@ -82,12 +83,13 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	////////menu
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
-	c_menu->addAction(i18nc("@item:inmenu", "&New"), c_results, SLOT(clear()), QKeySequence::New);
+	
+	c_menu->addAction(KStandardAction::openNew(c_results, SLOT(clear()), this));
 	c_menu->addAction(i18nc("@item:inmenu", "&Load Script"), this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
 	c_menu->addAction(i18nc("@item:inmenu", "&Save Script"), this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
 	c_menu->addAction(i18nc("@item:inmenu", "&Save Log"), this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
-	c_menu->addAction(i18nc("@item:inmenu", "&Quit"), this, SLOT(close()), Qt::CTRL+Qt::Key_Q);
+	c_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
 	////////////
 	//////EOConsola
 	
@@ -131,7 +133,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
 	QAction* b_actions[6];
 	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
-	b_menu->addAction(i18n("&Save"), this, SLOT(saveGraph()));
+	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
 	b_menu->addAction(i18n("&Reset View"), grafic, SLOT(resetViewport()));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
@@ -173,7 +175,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QMenu *t_menu = menuBar()->addMenu(i18n("3D &Graph"));
 	QAction* t_actions[5];
 	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
-	t_menu->addAction(i18n("&Save"), this, SLOT(save3DGraph()));
+	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
 	t_menu->addAction(i18n("&Reset View"), grafic3d, SLOT(resetView()));
 	t_menu->addSeparator()->setText(i18n("Type"));
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
