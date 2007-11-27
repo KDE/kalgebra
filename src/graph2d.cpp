@@ -125,13 +125,13 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	QPen ceixos;
 	const QPointF center = toWidget(QPointF(0.,0.));
 	QPointF p;
-	double x;
+	double x, inc=1.;
 	
 	ceixos.setColor(m_axe2Color);
 	ceixos.setStyle(Qt::SolidLine);
 	finestra->setPen(ceixos);
 
-	for(x=ceil(viewport.left()); x<=viewport.right(); x+=1.0) {	// ralletes X
+	for(x=ceil(viewport.left()); x<=viewport.right(); x+=inc) {	// ralletes X
 		p = toWidget(QPointF(x, 0.));
 		if(m_squares)
 			finestra->drawLine(QPointF(p.x(), this->height()), QPointF(p.x(), 0));
@@ -139,7 +139,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 			finestra->drawLine(p, p+QPointF(0.,-3.));
 	}
 	
-	for(x=ceil(viewport.top()); x>=viewport.bottom(); x-=1.0) {		// ralletes y
+	for(x=ceil(viewport.top()); x>=viewport.bottom(); x-=inc) {		// ralletes y
 		p = toWidget(QPointF(0., x));
 		if(m_squares)
 			finestra->drawLine(QPointF(0., p.y()), QPointF(width(), p.y()));
@@ -580,7 +580,7 @@ void Graph2D::clear()
 {
 	if(!funclist.isEmpty()) {
 		funclist.clear();
-// 		forceRepaint();
+		forceRepaint();
 	}
 }
 

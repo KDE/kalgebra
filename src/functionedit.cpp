@@ -121,6 +121,7 @@ FunctionEdit::~FunctionEdit()
 void FunctionEdit::clear()
 {
 	m_func->setText(QString());
+	m_graph->clear();
 	edit();
 }
 

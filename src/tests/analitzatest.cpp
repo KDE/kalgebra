@@ -180,7 +180,7 @@ void AnalitzaTest::testCorrection_data()
 	script << "n:=9";
 	script << "func:=n->n+1";
 	script << "func(5)";
-	QTest::newRow("simple function") << script << 6.;
+	QTest::newRow("simple function, shadowed parameter") << script << 6.;
 	
 	script.clear();
 	script << "x:=3";

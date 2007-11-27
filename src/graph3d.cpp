@@ -167,9 +167,9 @@ void Graph3D::paintGL()
 	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(); }
 	if(keyspressed & KEYE)		{ zoom*=2.0f; create(); }
 	
-	graus[0] = graus[0]>=360.f ? graus[0]-360.f : graus[0];
-	graus[1] = graus[1]>=360.f ? graus[1]-360.f : graus[1];
-	graus[2] = graus[2]>=360.f ? graus[2]-360.f : graus[2];
+	if(graus[0]>=360.f) graus[0]-=360.f;
+	if(graus[1]>=360.f) graus[1]-=360.f;
+	if(graus[2]>=360.f) graus[2]-=360.f;
 	
 	glTranslatef(0.0f, 0.0f, z);
 	glRotatef(graus[0], 1.0, 0.0, 0.0);
