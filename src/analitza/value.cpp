@@ -18,7 +18,8 @@
 
 #include "value.h"
 #include "operator.h"
-#include "variables.h"
+
+#include <QDomElement>
 
 #include <KLocale>
 
@@ -119,8 +120,8 @@ void Cn::setValue(const QDomElement& val)
 		else if(val.attribute("type") == "complex-polar")	{ /*TODO: Not implemented */ }
 #endif
 		else if(val.attribute("type") == "constant"){
-			if(val.text() == "&pi;")			{ m_value = Variables::pi().m_value; }
-			else if (val.text() == "&ee;" || val.text() == "&ExponentialE;"){ m_value = Variables::e().m_value; }
+			if(val.text() == "&pi;")			{ m_value = pi().m_value; }
+			else if (val.text() == "&ee;" || val.text() == "&ExponentialE;"){ m_value = e().m_value; }
 			else if (val.text() == "&true;")	{ m_value=1.; m_boolean=true; }
 			else if (val.text() == "&false;")	{ m_value=0.; m_boolean=true; }
 			else if (val.text() == "&gamma;")	{ m_value = 0.5772156649; }
@@ -132,3 +133,8 @@ void Cn::setValue(const QDomElement& val)
 		}
 	}
 }
+
+
+Cn Cn::pi() { return Cn(3.1415926535897932384626433); }
+Cn Cn::e() { return Cn(2.718281828); }
+Cn Cn::euler() { return Cn(0.5772156649); }

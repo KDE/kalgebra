@@ -79,10 +79,6 @@ public:
 	 *	The variable @p name will no longer exist.
 	 */
 	bool destroy(const QString& name);
-	
-	static Cn pi();
-	static Cn e();
-	static Cn euler();
 };
 
 #endif

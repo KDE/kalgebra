@@ -159,13 +159,13 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						
 						if(cbody) {
 // 							qDebug() << "before" << cbody->toString();
-							Container *r = new Container(cbody);
+							/*Container *r = new Container(cbody);
 							QList<Object*>::iterator it(r->firstValue());
 							for(; it!=r->m_params.end(); ++it) {
 								Object *o=*it;
 								*it = eval(o, resolve, unscoped);
 								delete o;
-							}
+							}*/
 							ret=eval(cbody->m_params.last(), resolve, unscoped);
 // 							qDebug() << "after" << ret->toString() << (*cbody->firstValue())->toString() << op.toString();
 						} else {

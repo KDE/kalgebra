@@ -20,17 +20,13 @@
 #include "container.h"
 #include "expression.h"
 
-Cn Variables::pi() { return Cn(3.1415926535897932384626433); }
-Cn Variables::e() { return Cn(2.718281828); }
-Cn Variables::euler() { return Cn(0.5772156649); }
-
 Variables::Variables() : QHash<QString, Object*>()
 {
 	insert("true", new Cn(true));
 	insert("false", new Cn(false));
-	insert("pi", new Cn(pi()));
-	insert("e", new Cn(e()));
-	insert("euler", new Cn(euler()));
+	insert("pi", new Cn(Cn::pi()));
+	insert("e", new Cn(Cn::e()));
+	insert("euler", new Cn(Cn::euler()));
 }
 
 Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)

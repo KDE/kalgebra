@@ -22,19 +22,21 @@
 #include "object.h"
 #include "analitzaexport.h"
 
-#include <QDomElement>
 #include <cmath>
+
 /**
 *	The Cn class is the one that represents a value in the expression trees.
 *	@author Aleix Pol <aleixpol@gmail.com>
 */
+
+class QDomElement;
 
 class ANALITZA_EXPORT Cn : public Object
 {
 	public:
 // 		enum ValueFormat { none, nan, real, integer, boolean };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.m_boolean) {}//, m_boolean(v.m_boolean) {}
+		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.m_boolean) {}
 		
 		/** Constructor. Creates a value with values @p v. */
 		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
@@ -154,7 +156,11 @@ class ANALITZA_EXPORT Cn : public Object
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		/** Returns whether it is a correct Cn. */
-		bool isCorrect() const { return m_correct;}
+		bool isCorrect() const { return m_correct; }
+		
+		static Cn pi();
+		static Cn e();
+		static Cn euler();
 	private:
 		double m_value;
 		bool m_boolean;
