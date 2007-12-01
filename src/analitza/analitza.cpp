@@ -1014,6 +1014,7 @@ Object* Analitza::simp(Object* root)
 					bool somed=false, lastdel;
 					it=c->m_params.end();
 					--it;
+					
 					for(; it!=c->m_params.begin(); --it) {
 						lastdel=false;
 						*it = simp(*it);
@@ -1055,7 +1056,17 @@ Object* Analitza::simp(Object* root)
 							delete aux;
 							c=0;
 						}
-					} else {
+					} /*else if(o.operatorType()==Operator::minus && c->isUnary() && (*c->firstValue())->isContainer()) {
+						qDebug() << "looooool" << c->toString();
+						Container *twominus=static_cast<Container*>(*c->firstValue());
+						if(twominus->firstOperator()==Operator::minus && twominus->isUnary()) {
+							root=simp(*twominus->firstValue());
+							*twominus->firstValue()=0;
+							delete twominus;
+							c=0;
+						}
+						qDebug() << "relooooool" << root->toString();
+					}*/ else {
 						root=simpScalar(c);
 						
 						if(root->isContainer()) {
@@ -1350,7 +1361,7 @@ Object* Analitza::simpPolynomials(Container* c)
 			}
 		}
 		
-		bool found = false;
+		bool found = false, foundAtFirst=true;
 		QList<QPair<double, Object*> >::iterator it1(monos.begin());
 		for(; it1!=monos.end(); ++it1) {
 			Object *o1=it1->second, *o2=imono.second;
@@ -1358,12 +1369,23 @@ Object* Analitza::simpPolynomials(Container* c)
 				found = true;
 				break;
 			}
+			foundAtFirst=false;
 		}
 		
+// 		qDebug() << "->" << c->toString() << c->firstOperator().toString() << found;
 		if(found) {
 			if(o.operatorType()==Operator::minus && it!=c->firstValue())
 				imono.first= -imono.first;
+			bool prevPositive=it1->first>0.;
 			it1->first += imono.first;
+			bool postPositive=it1->first>0.;
+			
+// 			qDebug() << "getting near:::" << prevPositive << postPositive << o.toString() << foundAtFirst;
+			if(foundAtFirst && o.operatorType()==Operator::minus) {
+				if(prevPositive ^ postPositive) {
+					sign = !sign;
+				}
+			}
 		} else {
 			imono.second = Expression::objectCopy(imono.second);
 			monos.append(imono);
@@ -1371,36 +1393,49 @@ Object* Analitza::simpPolynomials(Container* c)
 	}
 	
 	delete c;
-	c= new Container(Container::apply);
+	c=0;
 	
+	//We delete the empty monomials
+	QList<QPair<double, Object*> >::iterator i=monos.begin();
+	for(; i!=monos.end(); ) {
+		if(i->first==0.)
+			i=monos.erase(i);
+		else
+			++i;
+	}
+	
+// 	qDebug() << "entrance" << monos << o.toString();
 // 	qDeleteAll(c->m_params);
 // 	c->m_params.clear();
-	Object *root=c;
-	if(monos.count()==1 && o.operatorType()!=Operator::minus) {
-		delete c;
-		c=0;
+	Object *root=0;
+	if(monos.count()==1) {
+		if(o.operatorType()==Operator::minus)
+			monos[0].first *= -1.;
 		root=createMono(o, monos[0]);
-	} else {
-		QList<QPair<double, Object*> >::iterator i=monos.begin();
+	} else if(monos.count()>1) {
+		c= new Container(Container::apply);
 		c->m_params.append(new Operator(o));
+		
+		QList<QPair<double, Object*> >::iterator i=monos.begin();
 		for(; i!=monos.end(); ++i) {
 			Object* toAdd=createMono(o, *i);
 			
 			if(toAdd)
 				c->m_params.append(toAdd);
 		}
+		root=c;
+	}
+	
+	if(!sign && root) {
+		Container *cn=new Container(Container::apply);
+		cn->m_params.append(new Operator(Operator::minus));
+		cn->m_params.append(root);
+		root=cn;
 	}
 	
 	if(!root) {
 		delete c;
 		root=new Cn(0.);
-	}
-	
-	if(!sign) {
-		Container *cn=new Container(Container::apply);
-		cn->m_params.append(new Operator(Operator::minus));
-		cn->m_params.append(root);
-		root=cn;
 	}
 	
 	return root;

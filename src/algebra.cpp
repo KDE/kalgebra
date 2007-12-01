@@ -61,7 +61,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	c_results = new ConsoleHtml(this);
 	c_dock_vars = new QDockWidget(i18n("Variables"), this);
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
-	this->addDockWidget(static_cast<Qt::DockWidgetArea>(2), c_dock_vars);
+	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
 	c_variables = new VariableView(c_dock_vars);
 	c_exp = new ExpressionEdit(console);
@@ -100,7 +100,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_tools = new QTabWidget(b_dock_funcs);
 	b_tools->setTabPosition(QTabWidget::South);
 	
-	this->addDockWidget(static_cast<Qt::DockWidgetArea>(2), b_dock_funcs);
+	this->addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
 	b_funcs = new QTreeWidget(b_tools);
 	b_funcs->headerItem()->setText(0, i18nc("@title:column", "Name"));

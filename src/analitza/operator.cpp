@@ -153,6 +153,7 @@ int Operator::nparams(Operator::OperatorType t)
 {
 	switch(t) {
 		case plus:
+		case minus:
 		case times:
 		case min:
 		case max:
@@ -165,7 +166,6 @@ int Operator::nparams(Operator::OperatorType t)
 			return -1;
 		case quotient:
 		case power:
-		case minus:
 		case divide:
 		case rem:
 		case factorof:

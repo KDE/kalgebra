@@ -85,6 +85,11 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple value") << "2" << "2";
 	QTest::newRow("simple addition") << "2+2" << "4";
 	QTest::newRow("simple addition with var") << "2+x" << "x+2";
+	QTest::newRow("minus irreductibility") << "-x" << "-x";
+	QTest::newRow("minus") << "x-x-x" << "-x";
+	QTest::newRow("minus2") << "x-y-y-y-x" << "-y";
+	QTest::newRow("minus3") << "x-x-x-x-x-x" << "-4*x";
+	QTest::newRow("minus4") << "x-(-x)-x-x" << "0";
 	QTest::newRow("addition") << "x+x" << "2*x";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
 	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";
@@ -95,6 +100,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("nested multiplication") << "x*(x+x)" << "2*x^2";
 	QTest::newRow("multiplication") << "x*x" << "x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
+	QTest::newRow("--simplification") << "-(-x)" << "x";
+	QTest::newRow("unneeded --simplification") << "-(x-x)" << "0";
+	QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
 	
 	QTest::newRow("sum") << "sum(n->1..99, n)" << "4950";
 	QTest::newRow("sum times simplification") << "sum(n->0..99, n*x)" << "4950*x";
