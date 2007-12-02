@@ -276,7 +276,6 @@ QString Container::toHtml() const
 						  tagName(), ret.join(i18n("<span class='op'>,</span> ")));
 			break;
 	}
-	qDebug() << toString();
 	return toret;
 }
 

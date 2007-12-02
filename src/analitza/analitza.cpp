@@ -1395,18 +1395,16 @@ Object* Analitza::simpPolynomials(Container* c)
 	delete c;
 	c=0;
 	
-	//We delete the empty monomials
+	//We delete the empty monomials. Should merge both loops
 	QList<QPair<double, Object*> >::iterator i=monos.begin();
 	for(; i!=monos.end(); ) {
-		if(i->first==0.)
+		if(i->first==0.) {
+			delete i->second;
 			i=monos.erase(i);
-		else
+		} else
 			++i;
 	}
 	
-// 	qDebug() << "entrance" << monos << o.toString();
-// 	qDeleteAll(c->m_params);
-// 	c->m_params.clear();
 	Object *root=0;
 	if(monos.count()==1) {
 		if(o.operatorType()==Operator::minus)
