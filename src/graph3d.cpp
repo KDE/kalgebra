@@ -40,7 +40,7 @@
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), z(-35.),
-		method(Solid), trans(false), tefunc(false), keyspressed(0), m_n(4)
+		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
 	this->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
 	this->setFocusPolicy(Qt::ClickFocus);
@@ -184,8 +184,8 @@ void Graph3D::paintGL()
 	Q_CHECK_PTR(punts);
 	if(method==Dots) {
 		glBegin(GL_POINTS);
-		for(i=0; tefunc && i<(2*mida/step)-1; i++) {
-			for(j=0; tefunc && j<2*mida/step-1; j++) {
+		for(i=0; func3d.isCorrect() && i<(2*mida/step)-1; i++) {
+			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
 				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
 				glVertex3d(i*step-mida, j*step-mida, punts[i][j]);
 			}
@@ -194,8 +194,8 @@ void Graph3D::paintGL()
 	} else if(method == Lines) {
 		glBegin(GL_LINES);
 		
-		for(i=0; tefunc && i<(2*mida/step)-1; i++) {
-			for(j=0; tefunc && j<2*mida/step-1; j++) {
+		for(i=0; func3d.isCorrect() && i<(2*mida/step)-1; i++) {
+			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
 				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
 				
 				glVertex3d( i*step-mida, j*step - mida, punts[i][j]);
@@ -220,13 +220,13 @@ void Graph3D::paintGL()
 		double transf=0.8;
 		
 		glPushMatrix();
-		for(i=0; tefunc && i<(2*mida/step-2); i++) {
+		for(i=0; func3d.isCorrect() && i<(2*mida/step-2); i++) {
 			glPopMatrix();
 			
 			glPushMatrix();
 			glTranslatef(i*step-mida, -mida, 0);
 			glBegin(GL_TRIANGLE_STRIP);
-			for(j=0; tefunc && j<2*mida/step-1; j++) {
+			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
 				glTexCoord2f(j%2 ? .0f : 1.f, 0.f);
 				glColor4d((i*step-mida)/mida, (j*step-mida)/mida, 1./fabs(log10(5.+punts[i][j])), transf);
 				glVertex3d(0., j*step, punts[i][j]);
@@ -403,7 +403,6 @@ int Graph3D::load()
 		t.restart();
 		sendStatus(i18n("Generating... Please wait"));
 		mem();
-		tefunc=true;
 		create();
 		// xgettext: no-c-format
 		sendStatus(i18n("Done: %1ms", t.elapsed()));
@@ -411,7 +410,6 @@ int Graph3D::load()
 		return 0;
 	} else {
 		sendStatus(i18n("Error: %1", f3d.m_err.join(", ")));
-		tefunc=false;
 		this->repaint();
 		return -1;
 	}

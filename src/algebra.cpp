@@ -297,21 +297,21 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	QString path = KFileDialog::getOpenFileName(KUrl(), i18n("Script (*.kal)"), this, i18n("Choose a script"));
+	QString path = KFileDialog::getOpenFileName(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
 	if(!path.isEmpty())
 		c_results->loadScript(path);
 }
 
 void KAlgebra::saveScript()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Script (*.kal)"), this);
+	QString path = KFileDialog::getSaveFileName(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this);
 	if(!path.isEmpty())
 		c_results->saveScript(path);
 }
 
 void KAlgebra::saveLog()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("Text File (*)"),  this);
+	QString path = KFileDialog::getSaveFileName(KUrl(), "*|"+i18n("Text File (*)"),  this);
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }

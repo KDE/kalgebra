@@ -122,8 +122,10 @@ bool ConsoleHtml::loadScript(const QString& path)
 				Exp e(line);
 				e.parse();
 				
-				if(!line.isEmpty() && e.isCompletelyRead())
-					correct &= addOperation(line, true);
+				if(!line.isEmpty() && e.isCompletelyRead()) {
+					correct &= addOperation(line, Expression::isMathML(line));
+					line.clear();
+				}
 			}
 			file.close();
 		}

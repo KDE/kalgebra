@@ -151,7 +151,6 @@ class Graph3D : public QGLWidget {
 		float z;
 		enum Type method;
 		bool trans;
-		bool tefunc;
 		unsigned short keyspressed;
 		
 		int m_n;
