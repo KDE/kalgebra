@@ -47,8 +47,12 @@ void ExpTest::testExp_data()
 	QString fourX="<math><apply><plus /><ci>x</ci><ci>x</ci><ci>x</ci><ci>x</ci></apply></math>";
 
 	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
+	QTest::newRow("composed expression") << QString::fromUtf8("2²")
+			<< "<math><apply><power /><cn>2</cn><cn>2</cn></apply></math>";
 	QTest::newRow("plus operator in plus() form") << "plus(x,x,x,x)" << fourX;
-	QTest::newRow("sum") << "x*sum(x->1..10, x)" << "<math><apply><times /><ci>x</ci><apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit><cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
+	QTest::newRow("sum") << "x*sum(x->1..10, x)" << "<math><apply><times /><ci>x</ci>"
+			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
+			"<cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
 	
 }
 
@@ -59,6 +63,8 @@ void ExpTest::testExp()
 	
 	Exp e(input);
 	e.parse();
+	if(!e.error().isEmpty())
+		qDebug() << "errors:" << e.error();
 	QVERIFY(e.error().isEmpty());
 	QCOMPARE(e.mathML(), output);
 }

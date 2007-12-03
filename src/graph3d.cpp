@@ -274,7 +274,7 @@ bool Graph3D::create()
 		}
 	}
 	
-	qDebug() << "Elapsed time" << t.elapsed();
+// 	qDebug() << "Elapsed time" << t.elapsed();
 	
 	qDeleteAll(threads);
 	return ret;

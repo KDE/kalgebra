@@ -57,8 +57,8 @@ QString opr2str(int in)
 
 void printPilaOpr(QStack<int> opr) //debug only
 {
-	qDebug() << "0." << opr2str(opr[0]);
-	qDebug() << "1." << opr2str(opr[1]);
+// 	qDebug() << "0." << opr2str(opr[0]);
+// 	qDebug() << "1." << opr2str(opr[1]);
 	while(!opr.isEmpty()) {
 		qDebug() << ":   " << opr2str(opr.pop());
 	}
@@ -110,6 +110,8 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 	TOKEN ret;
 	ret.type = tMaxOp;
 	
+	qDebug() << "loooool" << a.length() << a;
+	
 	if(a.isEmpty())
 		ret.type = tEof;
 	else if(a[0].decompositionTag()==QChar::Super) {
@@ -117,6 +119,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 			ret.type = tPow;
 			a[i]=a[i].decomposition()[0];
 		}
+		a.prepend(' ');
 	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
 		int coma=0, base=10;
 		if(a[0]=='.') {
@@ -374,8 +377,8 @@ int Exp::parse()
 				if(shift()) return 1;
 				break;
 			case A:
-// 				printPilaOpr(opr);
-// 				printPilaVal(val);
+/*				printPilaOpr(opr);
+				printPilaVal(val);*/
 				if(val.count()==1)
 					mml = QString("<math>%1</math>").arg(val.pop());
 				else if(val.count()>1)

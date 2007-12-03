@@ -401,7 +401,7 @@ void KAlgebra::tabChanged(int n)
 			b_dock_funcs->raise();
 			
 			if(b_funcs->topLevelItemCount()==0)
-				b_tools->setCurrentIndex(1); //We set te Add tab
+				b_tools->setCurrentIndex(1); //We set the Add tab
 // 			b_add->setFocus();
 			break;
 #ifdef HAVE_OPENGL
