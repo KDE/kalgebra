@@ -388,17 +388,10 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 			viewport.setBottom(viewport.bottom() +ystep);
 			break;
 		case Qt::Key_Minus:
-// 			resolucio=(resolucio*viewport.width())/(viewport.width()+2.);
-			viewport.setCoords(viewport.left() -1., viewport.top() +1., viewport.right() + 1., viewport.bottom() -1.);
-			update_scale();
+			zoomOut();
 			break;
 		case Qt::Key_Plus:
-			if(viewport.height() < -3. && viewport.width() > 3.){
-				//FIXME:Bad solution
-// 				resolucio=(resolucio*viewport.width())/(viewport.width()-2.);
-				viewport.setCoords(viewport.left() + 1., viewport.top() -1., viewport.right() -1., viewport.bottom() +1.);
-				update_scale();
-			} else return;
+			zoomIn();
 			break;
 		default:
 			return;
@@ -631,5 +624,21 @@ void Graph2D::update_scale()
 	this->repaint();
 }
 
+void Graph2D::zoomIn()
+{
+	if(viewport.height() < -3. && viewport.width() > 3.){
+		//resolucio=(resolucio*viewport.width())/(viewport.width()-2.);
+		viewport.setCoords(viewport.left() + 1., viewport.top() -1., viewport.right() -1., viewport.bottom() +1.);
+		update_scale();
+	}
+}
+
+void Graph2D::zoomOut()
+{
+	//FIXME:Bad solution
+	//resolucio=(resolucio*viewport.width())/(viewport.width()+2.);
+	viewport.setCoords(viewport.left() -1., viewport.top() +1., viewport.right() + 1., viewport.bottom() -1.);
+	update_scale();
+}
 
 #include "graph2d.moc"

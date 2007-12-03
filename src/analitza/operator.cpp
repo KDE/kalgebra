@@ -247,12 +247,13 @@ unsigned int Operator::operatorWeight(OperatorType op)
 		case geq:
 			return 1;
 		case minus:
-		case plus:
 			return 2;
-		case times:
+		case plus:
 			return 3;
-		case divide:
+		case times:
 			return 4;
+		case divide:
+			return 5;
 		case _and:
 		case _or:
 		case _xor:

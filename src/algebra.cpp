@@ -133,6 +133,9 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
 	QAction* b_actions[6];
 	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
+	b_menu->addAction(KStandardAction::zoomIn(grafic, SLOT(zoomIn()), this));
+	b_menu->addAction(KStandardAction::zoomOut(grafic, SLOT(zoomOut()), this));
+	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
 	b_menu->addAction(i18n("&Reset View"), grafic, SLOT(resetViewport()));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
@@ -396,6 +399,9 @@ void KAlgebra::tabChanged(int n)
 		case 1:
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
+			
+			if(b_funcs->topLevelItemCount()==0)
+				b_tools->setCurrentIndex(1); //We set te Add tab
 // 			b_add->setFocus();
 			break;
 #ifdef HAVE_OPENGL

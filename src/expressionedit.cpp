@@ -343,11 +343,12 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 		
 		for(int i=0; i<params.count(); ++i) {
 			if(i==param)
-                sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
+				sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
 			else
-                sample += i18nc("Parameter in function prototype", "%1", params[i]);
+				sample += params[i];
+			
 			if(i<params.count()-1)
-                sample+= i18nc("Function parameter separator", ", ");
+				sample+= i18nc("Function parameter separator", ", ");
 		}
 		ajudant(sample+')');
 	} else

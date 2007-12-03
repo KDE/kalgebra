@@ -132,14 +132,16 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 			a[i]=' ';
 		}
 		
-		char suffix[][2] = { {'h', 16}, {'d', 10}, {'o', 8}, {'b', 2}, {0, -1} };
-		for(int j=0; a[i].isLetter() && suffix[j][0] != 0; j++) {
+		//NOTE: This is an old idea i had but never managed to get it done
+// 		char suffix[][2] = { {'h', 16}, {'d', 10}, {'o', 8}, {'b', 2}, {0, -1} };
+/*		for(int j=0; a[i].isLetter() && suffix[j][0] != 0; j++) {
 			if(a[i]==suffix[j][0]) {
 				a[i++]=' ';
 				base=suffix[j][1];
 				break;
 			}
-		}
+		}*/
+		for(; a[i].isSpace(); i++) {}
 		
 		if(exp && (a[i] == '(' || a[i].isLetter()))
 			a.prepend(" *");

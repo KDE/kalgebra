@@ -119,6 +119,12 @@ public slots:
 
 	/** Sets the viewport to a default viewport. */
 	void resetViewport() { setViewport(defViewport); }
+	
+	/** Zooms in to the Viewport center */
+	void zoomIn();
+	
+	/** Zooms out */
+	void zoomOut();
 signals:
 	/** Emits a status when it changes. */
 	void status(const QString &msg);
