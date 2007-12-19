@@ -117,7 +117,11 @@ class function
 		
 		QString toString() const;
 		
+		/** Queries if it is a correct function. */
 		bool isCorrect() const;
+		
+		/** Returns a list of the supported bvars */
+		static QStringList supportedBoundedVars();
 	private:
 		FunctionImpl* m_function;
 		bool m_show;

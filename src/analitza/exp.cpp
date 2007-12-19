@@ -110,8 +110,6 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 	TOKEN ret;
 	ret.type = tMaxOp;
 	
-	qDebug() << "loooool" << a.length() << a;
-	
 	if(a.isEmpty())
 		ret.type = tEof;
 	else if(a[0].decompositionTag()==QChar::Super) {

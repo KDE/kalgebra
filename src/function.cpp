@@ -146,3 +146,12 @@ QString function::toString() const
 {
 	return m_function->toString();
 }
+
+QStringList function::supportedBoundedVars()
+{
+	QStringList ret;
+	ret.append("x");
+	ret.append("y");
+	ret.append("q");
+	return ret;
+}
