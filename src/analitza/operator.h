@@ -19,7 +19,6 @@
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
-#include <QStandardItemModel>
 
 #include "object.h"
 #include "analitzaexport.h"

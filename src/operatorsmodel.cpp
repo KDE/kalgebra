@@ -21,6 +21,7 @@
 #include "variables.h"
 #include <KLocale>
 #include <KApplication>
+#include <QFont>
 
 OperatorsModel::OperatorsModel(QObject *parent) : QAbstractTableModel(parent), m_vars(0)
 {

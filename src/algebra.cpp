@@ -29,19 +29,15 @@
 #include "dictionary.h"
 
 #include <QVBoxLayout>
-#include <QLayout>
-#include <QSplitter>
 #include <QHeaderView>
 #include <QDockWidget>
-#include <QMessageBox>
-
+#include <KAction>
+#include <KHTMLView>
 #include <KFileDialog>
 #include <KMenu>
 #include <KMenuBar>
 #include <KStatusBar>
-#include <KAction>
 #include <KLocale>
-#include <KHTMLView>
 #include <KStandardAction>
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)

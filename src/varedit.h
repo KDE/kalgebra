@@ -21,12 +21,7 @@
 
 #include <KDialog>
 
-#include <QToolTip>
-#include <QLayout>
 #include <QRadioButton>
-#include <QLineEdit>
-#include <QGroupBox>
-#include <QDialogButtonBox>
 #include <QLabel>
 
 #include <expression.h>

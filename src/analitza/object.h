@@ -19,7 +19,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <QList>
 #include <QDebug>
 
 // #include <typeinfo>

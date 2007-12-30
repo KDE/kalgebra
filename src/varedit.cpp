@@ -26,6 +26,8 @@
 
 #include <QPushButton>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QGroupBox>
 
 VarEdit::VarEdit(QWidget *parent, bool modal) :
 	KDialog(parent), vars(NULL), m_correct(false), m_var("x")

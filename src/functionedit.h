@@ -19,14 +19,11 @@
 #ifndef FUNCTIONEDIT_H
 #define FUNCTIONEDIT_H
 
-#include <QLayout>
 #include <QLabel>
-#include <QLocale>
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
-#include <QList>
 
 #include <kcolorcombo.h>
 

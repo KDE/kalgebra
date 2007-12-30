@@ -26,10 +26,7 @@
 #include <QPaintEvent>
 #include <QWidget>
 #include <QPainter>
-#include <QEvent>
-#include <QToolTip>
 #include <QLabel>
-#include <QCursor>
 #include <QPixmap>
 
 #include "function.h"

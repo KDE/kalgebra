@@ -20,10 +20,11 @@
 #include "operatorsmodel.h"
 #include <QLabel>
 #include <QListView>
-#include <QLayout>
 #include <QGroupBox>
 #include <QSpacerItem>
 #include <QSortFilterProxyModel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <KLocale>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)

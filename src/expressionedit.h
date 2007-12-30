@@ -23,7 +23,6 @@
 #include <QKeyEvent>
 #include <QCompleter>
 #include <QLabel>
-#include <QStandardItemModel>
 #include <QTreeView>
 #include "algebrahighlighter.h"
 #include "expression.h"

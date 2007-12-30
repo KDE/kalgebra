@@ -21,8 +21,6 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QTreeView>
-#include <QStringListModel>
-#include <QStandardItemModel>
 #include <QHeaderView>
 #include <QMenu>
 

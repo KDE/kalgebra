@@ -20,9 +20,7 @@
 #define CONSOLE_H
 
 #include <QWidget>
-#include <QListWidget>
 #include <QTreeWidget>
-#include <QScrollBar>
 
 #include <khtml_part.h>
 

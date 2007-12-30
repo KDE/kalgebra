@@ -30,8 +30,6 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QPixmap>
-#include <QProgressDialog>
-#include <QApplication>
 #include <QTime>
 
 #include "analitza.h"

@@ -24,14 +24,12 @@
 #include <QResizeEvent>
 #include <QList>
 #include <QPixmap>
-#include <QLabel>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include <QFrame>
 #include <QFile>
+#include <QApplication>
 
 #include <KLocale>
-#include <KApplication>
 #include <cmath>
 
 #include "analitza.h"

@@ -24,7 +24,6 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QTreeWidget>
-#include <QToolBox>
 #include <QTabWidget>
 #include "config-kalgebra.h"
 

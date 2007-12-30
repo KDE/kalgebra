@@ -24,8 +24,6 @@
 #include <QWidget>
 #include <QListWidget>
 #include <QTreeWidget>
-#include <QApplication>
-#include <QScrollBar>
 
 #include "analitza.h"
 

@@ -19,16 +19,14 @@
 #include "consolehtml.h"
 #include <QFile>
 #include <QHeaderView>
-#include <QScrollBar>
 #include <QClipboard>
+#include <QApplication>
 
 #include <KLocale>
-#include <KAction>
-#include <KUrl>
-#include <KHTMLView>
-#include <KApplication>
 #include <KStandardAction>
 #include <KMenu>
+#include <KHTMLView>
+#include <KAction>
 
 #include "exp.h"
 #include "variables.h"
