@@ -37,21 +37,8 @@ kde4_add_library(analitza ${analitza_SRCS})
 target_link_libraries(analitza ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${KDE4_KDECORE_LIBS})
 
 #uncomment this if oxygen icons for kalgebra are available
-#set(kalgebra_icons
-#    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/16x16/apps/kalgebra.png
-#    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/32x32/apps/kalgebra.png
-#    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/48x48/apps/kalgebra.png
-#    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/64x64/apps/kalgebra.png
-#    ${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/128x128/apps/kalgebra.png
-#)
-set(kalgebra_icons
-    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi16-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi32-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi48-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi64-app-kalgebra.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi128-app-kalgebra.png
-)
-kde4_add_win32_app_icon(kalgebra_SRCS ${kalgebra_icons})
+#kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
+kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
 
