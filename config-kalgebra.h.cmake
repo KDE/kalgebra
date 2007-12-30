@@ -1,1 +1,1 @@
-#cmakedefine HAVE_OPENGL
+#cmakedefine HAVE_OPENGL 1

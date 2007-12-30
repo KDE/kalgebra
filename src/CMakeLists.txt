@@ -54,7 +54,12 @@ set(kalgebra_icons
 kde4_add_win32_app_icon(kalgebra_SRCS ${kalgebra_icons})
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra  ${KDE4_KHTML_LIBS} ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} analitza)
+
+target_link_libraries(kalgebra  ${KDE4_KHTML_LIBS} analitza)
+
+if(OPENGL_FOUND)
+   target_link_libraries(kalgebra  ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
+endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra DESTINATION ${BIN_INSTALL_DIR})
 #install(TARGETS analitza DESTINATION ${LIB_INSTALL_DIR})
