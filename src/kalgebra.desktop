@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=KAlgebra
+Name[hi]=के-अलजेब्रा
 Name[ne]=केडीई बीजगणित
 Name[sv]=Kalgebra
 Name[uk]=KАлгебра
@@ -15,6 +16,7 @@ GenericName[et]=Graafikute arvutaja
 GenericName[fa]=ماشین حساب گراف
 GenericName[fr]=Calculateur graphique
 GenericName[ga]=Áireamhán Grafach
+GenericName[hi]=ग्राफ गणक
 GenericName[it]=Calcolatrice grafica
 GenericName[ja]=グラフ計算機
 GenericName[ko]=그래프 계산기
@@ -44,6 +46,7 @@ Comment[et]=Matemaatiliste avaldiste lahendaja ja joonistaja
 Comment[fa]=حل‌کننده و رسام عبارت ریاضی
 Comment[fr]=Résoud des expressions mathématiques et trace des courbes
 Comment[ga]=Réiteoir agus Breacaire Sloinn Mhatamaiticiúla
+Comment[hi]=गणित एक्सप्रेशन सुलझाने वाला तथा प्लॉटर
 Comment[it]=Risolutore e disegnatore di espressioni matematiche
 Comment[ja]=数式ソルバ＆プロッタ
 Comment[ko]=수식 계산기와 그래핑 도구
