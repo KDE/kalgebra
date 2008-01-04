@@ -37,7 +37,7 @@ enum Axe { Cartesian=0, Polar};
  *	@author Aleix Pol i Gonzalez
  */
 
-class FunctionImpl;
+struct FunctionImpl;
 
 class function
 {
