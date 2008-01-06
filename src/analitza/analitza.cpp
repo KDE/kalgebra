@@ -1689,7 +1689,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 		case Object::container: {
 			const Container *c=static_cast<const Container*>(o);
 			QStringList bvars=c->bvarList(), varsCopy=vars;
-			foreach(QString var, bvars) {
+			foreach(const QString &var, bvars) {
 				if(varsCopy.contains(var))
 					varsCopy.removeAll(var);
 			}

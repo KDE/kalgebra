@@ -41,7 +41,7 @@ void evaluate(const Expression& e)
 	} else {
 		QStringList errors = a.errors();
 		qDebug() << "Error:";
-		foreach(QString err, errors)
+		foreach(const QString &err, errors)
 			qDebug() << " -" << qPrintable(err);
 	}
 }
@@ -60,7 +60,7 @@ void calculate(const Expression& e)
 	} else {
 		QStringList errors = a.errors();
 		qDebug() << "Error:";
-		foreach(QString err, errors)
+		foreach(const QString &err, errors)
 			qDebug() << " -" << qPrintable(err);
 	}
 }

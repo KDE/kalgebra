@@ -161,7 +161,7 @@ bool ConsoleHtml::saveLog(const QString& path) const
 			QTextStream out(&file);
 			out << "<html>\n<head>" << m_css << "</head>" << endl;
 			out << "<body>" << endl;
-			foreach(QString entry, m_htmlLog)
+			foreach(const QString &entry, m_htmlLog)
 				out << "<p>" << entry << "</p>" << endl;
 			out << "</body>\n</html>" << endl;
 		}
@@ -179,7 +179,7 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	write(m_css);
 	write("</head>\n<body>");
 	write(m_css);
-	foreach(QString entry, m_htmlLog) {
+	foreach(const QString &entry, m_htmlLog) {
 		write("<p class='normal'>"+entry+"</p>");
 	}
 	if(!newEntry.isEmpty()) {

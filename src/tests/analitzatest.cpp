@@ -203,7 +203,7 @@ void AnalitzaTest::testCorrection()
 	
 	Analitza b;
 	Expression res;
-	foreach(QString exp, expression) {
+	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
 		
@@ -214,7 +214,7 @@ void AnalitzaTest::testCorrection()
 	QCOMPARE(res.toString(), Cn(result).toString());
 	
 	Cn val;
-	foreach(QString exp, expression) {
+	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
 		
@@ -239,7 +239,7 @@ void AnalitzaTest::testUncorrection()
 	bool correct;
 	Analitza b;
 	Expression res;
-	foreach(QString exp, expression) {
+	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
 		
@@ -252,7 +252,7 @@ void AnalitzaTest::testUncorrection()
 	QVERIFY(!b.isCorrect());
 	
 	Cn val;
-	foreach(QString exp, expression) {
+	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
 		
@@ -283,7 +283,7 @@ void AnalitzaTest::testEvaluate()
 	
 	Analitza b;
 	Expression res;
-	foreach(QString exp, expression) {
+	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
 		
