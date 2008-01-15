@@ -41,7 +41,7 @@
 
 /**
  *	Used to calculate 3D Graphs in parallel.
- *	@author Aleix Pol i Gonzalez<aleixpol@gmail.com>
+ *	@author Aleix Pol i Gonzalez <aleixpol@gmail.com>
  */
 
 class Calculate3D : public QThread
@@ -114,7 +114,7 @@ class Graph3D : public QGLWidget {
 		void setStep(double res);
 		
 		/** Sets the Z coordinate. */
-		void setZ(float coord_z);
+		void setZoom(float alpha);
 		
 		/** Sets the showed method. */
 		void setMethod(enum Type m);
@@ -148,7 +148,7 @@ class Graph3D : public QGLWidget {
 		double zoom;
 		double **punts;
 		float graus[3];
-		float z;
+		float alpha;
 		enum Type method;
 		bool trans;
 		unsigned short keyspressed;

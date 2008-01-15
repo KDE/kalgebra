@@ -24,7 +24,7 @@
 	#include <GL/glu.h>
 #endif
 
-#include <klocale.h>
+#include <KLocale>
 
 #include <QImage>
 #include <QMouseEvent>
@@ -37,7 +37,7 @@
 #include "variables.h"
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
-		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), z(-35.),
+		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
 	this->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
@@ -59,7 +59,8 @@ Graph3D::~Graph3D()
 	}
 }
 
-void Graph3D::initializeGL() {
+void Graph3D::initializeGL()
+{
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0f);
@@ -89,23 +90,18 @@ void Graph3D::initializeGL() {
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 }
 
-void Graph3D::resizeGL( int width, int height ) {
+void Graph3D::resizeGL( int width, int height )
+{
 	height = height ? height : 1;
 	
-	glViewport( 0, 0, (GLint)width, (GLint)height );
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,1000.0f);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glViewport( 0, 0, width, height );
 }
 
 void Graph3D::mousePressEvent(QMouseEvent *e)
 {
-	if(e->button() == Qt::LeftButton){
-		press = e->pos(); keyspressed |= LCLICK;
+	if(e->button() == Qt::LeftButton) {
+		press = e->pos();
+		keyspressed |= LCLICK;
 	}
 }
 
@@ -120,12 +116,10 @@ void Graph3D::mouseMoveEvent(QMouseEvent *e)
 	if(keyspressed & LCLICK){
 		QPoint rel = e->pos() - press;
 		graus[0] += rel.y();
-		graus[2] += -rel.x();
-		graus[1] += 0.0;
-		glRotatef(100.0f, graus[0], graus[1], graus[2]);
-		this->repaint();
+		graus[2] -= rel.x();
 		
 		press = e->pos();
+		this->repaint();
 	}
 }
 
@@ -133,8 +127,8 @@ void Graph3D::drawAxes()
 {
 	glColor3f(0.8, 0.8, 0.4);
 	this->renderText(11.0, 0.0, 0.0, "X");
-	this->renderText(0.0, 0.0,-11.0, "Z");
 	this->renderText(0.0, 11.0, 0.0, "Y");
+	this->renderText(0.0, 0.0,-11.0, "Z");
 	
 	glBegin(GL_LINES);
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -152,7 +146,6 @@ void Graph3D::drawAxes()
 void Graph3D::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 	
 	if(keyspressed & KEYDOWN)	graus[0]+=3.f;
 	if(keyspressed & KEYUP)		graus[0]-=3.f;
@@ -160,8 +153,8 @@ void Graph3D::paintGL()
 	if(keyspressed & KEYREPAG)	graus[1]-=3.f;
 	if(keyspressed & KEYLEFT)	graus[2]+=3.f;
 	if(keyspressed & KEYRIGHT)	graus[2]-=3.f;
-	if(keyspressed & KEYW)		z/=1.1f;
-	if(keyspressed & KEYS)		z= z!=0. ? z*1.1f : .1f;
+	if(keyspressed & KEYW)		alpha/=2.f;
+	if(keyspressed & KEYS && alpha<=90.f)	alpha*=2.f;
 	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(); }
 	if(keyspressed & KEYE)		{ zoom*=2.0f; create(); }
 	
@@ -169,21 +162,29 @@ void Graph3D::paintGL()
 	if(graus[1]>=360.f) graus[1]-=360.f;
 	if(graus[2]>=360.f) graus[2]-=360.f;
 	
-	glTranslatef(0.0f, 0.0f, z);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(alpha,(GLfloat)width()/(GLfloat)height(),0.1f,100.0f);
+	
+	float z=25.f;
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0,0,-z);
 	glRotatef(graus[0], 1.0, 0.0, 0.0);
 	glRotatef(graus[1], 0.0, 1.0, 0.0);
-	glRotatef(graus[2], 0.0, 0.0, 2.0);
+	glRotatef(graus[2], 0.0, 0.0, 1.0);
 	
-	double mida=default_size*zoom, step=default_step*zoom;
+	const double mida=default_size*zoom, step=default_step*zoom;
+	unsigned int bound=(2*mida/step)-1;
 	drawAxes();
-	int i,j;
-	if(punts==NULL)
+	
+	if(punts==NULL && !func3d.isCorrect())
 		return;
-	Q_CHECK_PTR(punts);
+	
 	if(method==Dots) {
 		glBegin(GL_POINTS);
-		for(i=0; func3d.isCorrect() && i<(2*mida/step)-1; i++) {
-			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
+		for(unsigned int i=0; i<bound; i++) {
+			for(unsigned int j=0; j<bound; j++) {
 				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
 				glVertex3d(i*step-mida, j*step-mida, punts[i][j]);
 			}
@@ -192,8 +193,8 @@ void Graph3D::paintGL()
 	} else if(method == Lines) {
 		glBegin(GL_LINES);
 		
-		for(i=0; func3d.isCorrect() && i<(2*mida/step)-1; i++) {
-			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
+		for(unsigned int i=0; i<bound; i++) {
+			for(unsigned int j=0; j<bound; j++) {
 				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
 				
 				glVertex3d( i*step-mida, j*step - mida, punts[i][j]);
@@ -218,13 +219,13 @@ void Graph3D::paintGL()
 		double transf=0.8;
 		
 		glPushMatrix();
-		for(i=0; func3d.isCorrect() && i<(2*mida/step-2); i++) {
+		for(unsigned int i=0; i<bound; i++) {
 			glPopMatrix();
 			
 			glPushMatrix();
 			glTranslatef(i*step-mida, -mida, 0);
 			glBegin(GL_TRIANGLE_STRIP);
-			for(j=0; func3d.isCorrect() && j<2*mida/step-1; j++) {
+			for(unsigned int j=0; j<bound; j++) {
 				glTexCoord2f(j%2 ? .0f : 1.f, 0.f);
 				glColor4d((i*step-mida)/mida, (j*step-mida)/mida, 1./fabs(log10(5.+punts[i][j])), transf);
 				glVertex3d(0., j*step, punts[i][j]);
@@ -444,9 +445,9 @@ void Graph3D::setStep(double newRes)
 	this->repaint();
 }
 
-void Graph3D::setZ(float coord_z)
+void Graph3D::setZoom(float a)
 {
-	z = coord_z;
+	alpha = a;
 	this->repaint();
 }
 
@@ -470,7 +471,7 @@ void Graph3D::resetView()
 		zoom=1.0f;
 		create();
 	}
-	z=-35.;
+	alpha=60.;
 	
 	graus[0] = 90.0;
 	graus[1] = 0.0;
