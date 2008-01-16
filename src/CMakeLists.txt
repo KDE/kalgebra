@@ -17,7 +17,9 @@ set(analitza_SRCS
 )
 
 set(kalgebra_SRCS
+	algebrahighlighter.cpp
 	algebra.cpp
+	dictionary.cpp
 	#console.cpp
 	consolehtml.cpp
 	function.cpp
@@ -25,11 +27,12 @@ set(kalgebra_SRCS
 	varedit.cpp
 	main.cpp
 	graph3d.cpp
-	algebrahighlighter.cpp
 	expressionedit.cpp
 	graph2d.cpp
 	operatorsmodel.cpp
-	dictionary.cpp
+	variablesmodel.cpp
+	functionsview.cpp
+	functionsmodel.cpp
 	functionimpl.cpp
 )
 

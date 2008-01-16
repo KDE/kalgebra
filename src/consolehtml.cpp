@@ -220,39 +220,4 @@ void ConsoleHtml::clear()
 	updateView();
 }
 
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-
-VariableView::VariableView(QWidget *parent) : QTreeWidget(parent), a(NULL)
-{
-	setColumnCount(2);
-	headerItem()->setText(0, i18nc("@title:column", "Name"));
-	headerItem()->setText(1, i18nc("@title:column", "Value"));
-	clear();
-	header()->setResizeMode(0, QHeaderView::ResizeToContents);
-	setRootIsDecorated(false);
-	setSortingEnabled(false);
-	setSelectionMode(QAbstractItemView::SingleSelection);
-}
-
-VariableView::~VariableView() {}
-
-void VariableView::updateVariables()
-{
-	clear();
-	if(a!=NULL) {
-		QList<QTreeWidgetItem *> items;
-		QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
-		for(; it != a->m_vars->end(); ++it) {
-			QTreeWidgetItem* item = new QTreeWidgetItem(this);
-			item->setText(0, it.key());
-			item->setText(1, it.value()->toString());
-			
-			items.append(item);
-		}
-		sortItems(0, Qt::AscendingOrder);
-	}
-}
-
 #include "consolehtml.moc"

@@ -22,19 +22,22 @@
 #include <QResizeEvent>
 #include <QWheelEvent>
 #include <QMouseEvent>
-#include <QKeyEvent>
 #include <QPaintEvent>
+#include <QKeyEvent>
 #include <QWidget>
 #include <QPainter>
 #include <QLabel>
 #include <QPixmap>
+#include <QModelIndex>
 
 #include "function.h"
 
 /**
  *	This class lets you create a widget that can draw multiple 2D graphs.
- *	@author aleix
+ *	@author Aleix Pol Gonzàlez
  */
+
+class FunctionsModel;
 
 class Graph2D : public QWidget
 {
@@ -48,28 +51,12 @@ public:
 	};
 	
 	/** Constructor. Constructs a new Graph2D. */
-	Graph2D(QWidget *parent = 0);
+	Graph2D(FunctionsModel* fm, QWidget *parent = 0);
 	
 	/** Destructor. */
 	~Graph2D();
 	
-	/** Adds another function @p f. Returns whether another function like @p f existed. */
-	bool addFunction(const function& f);
-	
-	/** Sets the function selected to @p exp. Returns whether another function like @p exp existed. */
-	bool setSelected(const QString& exp);
-	
-	/** Specifies that the @p exp function is shown. Returns whether another function like @p exp existed. */
-	bool setShown(const QString& exp, bool shown);
-	
-	/** Edits the @p num nth function. The @p num should be less than the number of functions, because you are editing. */
-	void editFunction(int num, const function& func);
-	
-	/** Edits the @p exp function. Returns whether another function like @p exp existed. */
-	bool editFunction(const QString& name, const function& func);
-	
-	/** Returns a pointer to the @p num nth function. */
-	function* editFunction(int num);
+	void setModel(FunctionsModel* f) { m_model=f; }
 	
 	/** Saves the graphs to a file located at @p path. */
 	bool toImage(const QString& path);
@@ -92,9 +79,6 @@ public:
 	/** Sets the desired maximum resolution to @p res. */
 	void setResolution(int res);
 	
-	/** Removes all graphs. */
-	void clear();
-	
 	/** Returns whether it has a little border frame. */
 	bool isFramed() const { return m_framed; }
 	
@@ -106,9 +90,6 @@ public:
 	
 	/** Sets whether it is a read-only widget. */
 	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
-	
-	/** Returns how many function there are in the widget. */
-	int count() const { return funclist.count(); }
 	
 public slots:
 	/** Makes the image as dirty and repaints everything. */
@@ -122,6 +103,11 @@ public slots:
 	
 	/** Zooms out */
 	void zoomOut();
+	
+private slots:
+	void update( const QModelIndex & start, const QModelIndex& end );
+	void addFuncs( const QModelIndex & parent, int start, int end);
+	
 signals:
 	/** Emits a status when it changes. */
 	void status(const QString &msg);
@@ -131,17 +117,16 @@ private:
 	static const QColor m_axe2Color;
 	
 	//painting
+	FunctionsModel* m_model;
 	QPixmap buffer;
 	QPixmap front;
 	bool valid;
 	QPainter finestra;
 	QLabel *micepos;
-	QList<function> funclist;
 	QPointF mark;
 	void drawAxes(QPainter*, Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
-	void update_points();
 	QPointF toWidget(const QPointF &) const;
 	QPointF fromWidget(const QPointF& p) const;
 	QPointF toViewport(const QPoint& mv) const;
@@ -161,7 +146,7 @@ private:
 	GraphMode mode;
 	QPoint press; QPoint last;
 	
-	//representacio
+	//presentation
 	bool m_squares;
 	double resolucio;
 	double rang_x, rang_y;

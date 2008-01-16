@@ -74,12 +74,6 @@ class function
 		/** Returns the number of points it has. */
 		unsigned int npoints() const;
 		
-		/** Sets whether it is selected. */
-		void setSelected(bool newSelec) { m_selected=newSelec; }
-		
-		/** Retrieves whether it is selected. */
-		bool selected() const { return m_selected; }
-		
 		/** Sets whether the function has to be shown. */
 		void setShown(bool newShow) { m_show=newShow; }
 		
@@ -125,7 +119,6 @@ class function
 	private:
 		FunctionImpl* m_function;
 		bool m_show;
-		bool m_selected;
 		QColor m_color;
 		QStringList m_err;
 		QString m_name;

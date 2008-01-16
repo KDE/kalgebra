@@ -16,79 +16,42 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRA_H
-#define KALGEBRA_H
+#include "functionsview.h"
+#include "functionsmodel.h"
+#include <KDebug>
+#include <KLocale>
+#include <QMouseEvent>
+#include <QMenu>
 
-#include <KMainWindow>
-#include <QTreeView>
-#include <QPushButton>
-#include <QTabWidget>
-#include "config-kalgebra.h"
-
-class ExpressionEdit;
-class ConsoleHtml;
-class VariableView;
-class FunctionEdit;
-class Graph2D;
-class Graph3D;
-class FunctionsModel;
-
-class KAlgebra : public KMainWindow
+FunctionsView::FunctionsView(QWidget * parent) : QTreeView(parent)
 {
-	Q_OBJECT
-	public:
-		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra() {}
-	private:
-		//consoleeWidget
-		ExpressionEdit *c_exp;
-		ConsoleHtml *c_results;
-		QTreeView *c_variables;
-		int outs;
-		QDockWidget *c_dock_vars;
-		
-		//graf 2d
-		FunctionsModel* b_funcsModel;
-		QTreeView *b_funcs;
-		QTabWidget *b_tools;
-		Graph2D *grafic;
-		QDockWidget *b_dock_funcs;
-		FunctionEdit *b_funced;
+}
 
-#ifdef HAVE_OPENGL
-		//graph 3d
-		ExpressionEdit *t_exp;
-		Graph3D *grafic3d;
-#endif
-	public slots:
-		void operate();
-		void loadScript();
-		void saveScript();
-		void saveLog();
-		
-		void select(const QModelIndex& idx);
-		void new_func();
-		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
-		
-		void new_func3d();
-		
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void toggleTransparency();
-		void save3DGraph();
-		
-		void saveGraph();
-		void functools ( int );
-		
-		void changeStatusBar ( const QString & );
-		void tabChanged ( int );
-};
+void FunctionsView::selectionChanged(const QItemSelection & selected, const QItemSelection &)
+{
+	QModelIndex idx=selected.indexes().first();
+	model()->setData(idx, QVariant(), FunctionsModel::Selection);
+}
 
-#endif
+void FunctionsView::mousePressEvent(QMouseEvent * e)
+{
+	QModelIndex idx(indexAt(e->pos()));
+	qDebug() << "press" << e;
+	if(e->button()==Qt::RightButton && idx.isValid()) {
+		bool shown=model()->data(idx, FunctionsModel::Shown).toBool();
+		QString actuallyShown;
+		if(shown)
+			actuallyShown=i18n("Hide '%1'", model()->data(idx).toString());
+		else
+			actuallyShown=i18n("Show '%1'", model()->data(idx).toString());
+		
+		QMenu menu(this);
+		QAction* actionShown=menu.addAction(actuallyShown);
+		QAction* result=menu.exec(e->globalPos());
+		if(actionShown==result) {
+			model()->setData(idx, !shown, FunctionsModel::Shown);
+		}
+	}
+}
+
+#include "functionsview.moc"

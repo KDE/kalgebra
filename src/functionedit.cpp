@@ -30,6 +30,7 @@
 #include "graph2d.h"
 #include "algebrahighlighter.h"
 #include "variables.h"
+#include "functionsmodel.h"
 
 FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 		QWidget(parent, f), m_correct(false)
@@ -82,7 +83,10 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_color->setColor(QColor(0,150,0));
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	
-	m_graph = new Graph2D(this);
+	m_funcsModel=new FunctionsModel;
+	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
+	
+	m_graph = new Graph2D(m_funcsModel, this);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setResolution(200);
 	m_graph->setFocusPolicy(Qt::NoFocus);
@@ -90,7 +94,6 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
-	m_graph->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
 	
 	QHBoxLayout *m_butts = new QHBoxLayout(0);
 	m_ok = new QPushButton(i18n("OK"), this);
@@ -121,7 +124,7 @@ FunctionEdit::~FunctionEdit()
 void FunctionEdit::clear()
 {
 	m_func->setText(QString());
-	m_graph->clear();
+	m_funcsModel->clear();
 	edit();
 }
 
@@ -134,8 +137,8 @@ void FunctionEdit::setText(const QString &newText)
 void FunctionEdit::setColor(const QColor &newColor)
 {
 	m_color->setColor(newColor);
-	if(m_graph->count()>0)
-		m_graph->editFunction(0)->setColor(newColor);
+	if(m_funcsModel->rowCount()>0)
+		  m_funcsModel->editFunction(0)->setColor(newColor);
 	m_graph->forceRepaint();
 }
 
@@ -176,11 +179,11 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	
 	m_correct=a.isCorrect();
 	if(m_correct) {
-		m_graph->clear();
-		m_graph->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
+		m_funcsModel->clear();
+		m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
 		m_valid->setToolTip(QString());
 	} else {
-		m_graph->clear();
+		m_funcsModel->clear();
 		m_graph->forceRepaint();
 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		m_valid->setToolTip(a.errors().join("\n"));
@@ -200,6 +203,7 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 	m_func->setFocus();
 }
 
+#if 0
 //////////////////////////////////////////
 ///////////ColorCombo is deprecated.//////
 ColorCombo::ColorCombo(QWidget* parent) : QComboBox(parent)
@@ -237,5 +241,6 @@ QColor ColorCombo::color() const
 {
 	return QColor(itemData(currentIndex()).toString());
 }
+#endif
 
 #include "functionedit.moc"

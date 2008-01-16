@@ -157,7 +157,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			if(m_completer->popup()->isVisible())
 				m_completer->popup()->hide();
 			else
-				clear();
+				selectAll();
 			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
@@ -165,8 +165,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 // 			if(m_completer->popup()->isVisible()) 
 // 				completed(m_completer->currentCompletion());
 			{
-				bool b=returnPress();
-				if(b) {
+				if(returnPress()) {
 					QTextEdit::keyPressEvent(e);
 				}
 				m_completer->popup()->hide();

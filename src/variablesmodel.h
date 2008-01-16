@@ -16,79 +16,34 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRA_H
-#define KALGEBRA_H
+#ifndef VARIABLESMODEL_H
+#define VARIABLESMODEL_H
 
-#include <KMainWindow>
-#include <QTreeView>
-#include <QPushButton>
-#include <QTabWidget>
-#include "config-kalgebra.h"
+#include <QAbstractTableModel>
+#include "operator.h"
 
-class ExpressionEdit;
-class ConsoleHtml;
-class VariableView;
-class FunctionEdit;
-class Graph2D;
-class Graph3D;
-class FunctionsModel;
+class Variables;
 
-class KAlgebra : public KMainWindow
+/** Variables model is a model class that has a relation of all operators string with their VariableType. */
+class VariablesModel : public QAbstractTableModel
 {
 	Q_OBJECT
 	public:
-		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra() {}
-	private:
-		//consoleeWidget
-		ExpressionEdit *c_exp;
-		ConsoleHtml *c_results;
-		QTreeView *c_variables;
-		int outs;
-		QDockWidget *c_dock_vars;
+		/** Constructor. Creates a new Variable Model. */
+		explicit VariablesModel(QObject *parent=0);
 		
-		//graf 2d
-		FunctionsModel* b_funcsModel;
-		QTreeView *b_funcs;
-		QTabWidget *b_tools;
-		Graph2D *grafic;
-		QDockWidget *b_dock_funcs;
-		FunctionEdit *b_funced;
-
-#ifdef HAVE_OPENGL
-		//graph 3d
-		ExpressionEdit *t_exp;
-		Graph3D *grafic3d;
-#endif
+		QVariant data( const QModelIndex &index, int role=Qt::DisplayRole) const;
+		QVariant headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
+		int rowCount(const QModelIndex &parent=QModelIndex()) const;
+		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
+		
+		void setVariables(const Variables* v) { m_vars=v; }
+		const QSet<QString>& functions() const;
 	public slots:
-		void operate();
-		void loadScript();
-		void saveScript();
-		void saveLog();
-		
-		void select(const QModelIndex& idx);
-		void new_func();
-		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
-		
-		void new_func3d();
-		
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void toggleTransparency();
-		void save3DGraph();
-		
-		void saveGraph();
-		void functools ( int );
-		
-		void changeStatusBar ( const QString & );
-		void tabChanged ( int );
+		/** Updates the variables information */
+		void updateInformation();
+	private:
+		const Variables *m_vars;
 };
 
 #endif

@@ -36,7 +36,7 @@ class Graph2D;
  *	\deprecated
  *	@author Aleix Pol i Gonzalez
  */
-
+#if 0
 class ColorCombo : public QComboBox
 {
 Q_OBJECT
@@ -55,6 +55,8 @@ public:
 private:
 	void resizeEvent(QResizeEvent * event);
 };
+#endif
+class FunctionsModel;
 
 /**
  *	The FunctionEdit dialog provides a way to specify functions.
@@ -115,6 +117,7 @@ private:
 	QLabel *m_valid;
 	Graph2D *m_graph;
 	KColorCombo *m_color;
+	FunctionsModel *m_funcsModel;
 	
 	bool m_correct;
 	bool m_modmode;

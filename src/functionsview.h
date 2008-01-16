@@ -16,79 +16,21 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRA_H
-#define KALGEBRA_H
+#ifndef FUNCTIONSVIEW_H
+#define FUNCTIONSVIEW_H
 
-#include <KMainWindow>
 #include <QTreeView>
-#include <QPushButton>
-#include <QTabWidget>
-#include "config-kalgebra.h"
 
-class ExpressionEdit;
-class ConsoleHtml;
-class VariableView;
-class FunctionEdit;
-class Graph2D;
-class Graph3D;
 class FunctionsModel;
 
-class KAlgebra : public KMainWindow
+class FunctionsView : public QTreeView
 {
 	Q_OBJECT
 	public:
-		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra() {}
-	private:
-		//consoleeWidget
-		ExpressionEdit *c_exp;
-		ConsoleHtml *c_results;
-		QTreeView *c_variables;
-		int outs;
-		QDockWidget *c_dock_vars;
+		FunctionsView(QWidget *parent=0);
 		
-		//graf 2d
-		FunctionsModel* b_funcsModel;
-		QTreeView *b_funcs;
-		QTabWidget *b_tools;
-		Graph2D *grafic;
-		QDockWidget *b_dock_funcs;
-		FunctionEdit *b_funced;
-
-#ifdef HAVE_OPENGL
-		//graph 3d
-		ExpressionEdit *t_exp;
-		Graph3D *grafic3d;
-#endif
-	public slots:
-		void operate();
-		void loadScript();
-		void saveScript();
-		void saveLog();
-		
-		void select(const QModelIndex& idx);
-		void new_func();
-		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
-		
-		void new_func3d();
-		
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void toggleTransparency();
-		void save3DGraph();
-		
-		void saveGraph();
-		void functools ( int );
-		
-		void changeStatusBar ( const QString & );
-		void tabChanged ( int );
+		virtual void selectionChanged ( const QItemSelection & selected, const QItemSelection & deselected );
+		virtual void mousePressEvent ( QMouseEvent * event );
 };
 
 #endif

@@ -22,11 +22,14 @@
 #include "consolehtml.h"
 #include "expressionedit.h"
 #include "graph2d.h"
+#include "variables.h"
+#include "variablesmodel.h"
+#include "dictionary.h"
+#include "functionsmodel.h"
+#include "functionsview.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif
-#include "variables.h"
-#include "dictionary.h"
 
 #include <QVBoxLayout>
 #include <QHeaderView>
@@ -59,10 +62,18 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
 	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
-	c_variables = new VariableView(c_dock_vars);
+	
+	VariablesModel* c_varsModel=new VariablesModel;
+	c_varsModel->setVariables(c_results->analitza()->variables());
+	
+	c_variables = new QTreeView(c_dock_vars);
+	c_variables->setModel(c_varsModel);
+	c_variables->setRootIsDecorated(false);
+	c_variables->setSelectionMode(QAbstractItemView::SingleSelection);
+	c_variables->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+	
 	c_exp = new ExpressionEdit(console);
 	c_exp->setAnalitza(c_results->analitza());
-	c_variables->setAnalitza(c_results->analitza());
 	c_dock_vars->setWidget(c_variables);
 	
 	tabs->addTab(console, i18n("&Console"));
@@ -71,9 +82,8 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	c_layo->addWidget(c_exp);
 	
 	connect(c_exp, SIGNAL(returnPressed()), this, SLOT(operate()));
-// 	connect(c_results, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(insert(QListWidgetItem *)));
 	connect(c_results, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
-	connect(c_results, SIGNAL(changed()), c_variables, SLOT(updateVariables()));
+	connect(c_results, SIGNAL(changed()), c_varsModel, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
 	connect(c_variables, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_var(const QModelIndex &)));
 	
@@ -90,7 +100,9 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//////EOConsola
 	
 	//////2D Graph
-	grafic = new Graph2D(this);
+	b_funcsModel=new FunctionsModel(this);
+	
+	grafic = new Graph2D(b_funcsModel, this);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
@@ -98,15 +110,13 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	this->addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
-	b_funcs = new QTreeWidget(b_tools);
-	b_funcs->headerItem()->setText(0, i18nc("@title:column", "Name"));
-	b_funcs->headerItem()->setText(1, i18nc("@title:column", "Function"));
+	b_funcs = new FunctionsView(b_tools);
+	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->setResizeMode(0, QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
 	b_funcs->setRootIsDecorated(false);
 	b_funcs->setSortingEnabled(false);
 	
-	b_funcs->clear();
 	b_tools->addTab(b_funcs, i18n("List"));
 	
 	b_funced = new FunctionEdit(b_tools);
@@ -118,10 +128,6 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	tabs->addTab(grafic, i18n("&2D Graph"));
 	
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
-	connect(b_funcs, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
-		this, SLOT(change(QTreeWidgetItem*, QTreeWidgetItem*)));
-	
-	connect(b_funcs, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(different(QTreeWidgetItem *, int)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
 	connect(grafic, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	
@@ -208,39 +214,26 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 
 void KAlgebra::new_func()
 {
-	QTreeWidgetItem *item;
-	QString name;
+	QString name = b_funced->name();
+	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true);
 	if(!b_funced->editing()) {
-		name = b_funced->name();
-		grafic->addFunction(function(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
-		item = new QTreeWidgetItem(b_funcs);
-		item->setFlags(Qt::ItemIsSelectable| Qt::ItemIsUserCheckable| Qt::ItemIsEnabled| Qt::ItemIsTristate);
+		b_funcsModel->addFunction(f);
 	} else {
-		item = b_funcs->currentItem();
-		grafic->editFunction(item->text(0),
-                                     function(item->text(0), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true));
-		name = item->text(0);
+		b_funcsModel->editFunction(name, f);
 	}
-	QPixmap ico(15, 15);
-	ico.fill(b_funced->color());
-
-	item->setIcon(0, ico);
-	item->setText(0, name);
-	item->setText(1, b_funced->text());
-	item->setTextColor(1, b_funced->color());
-	item->setCheckState(0, Qt::Checked);
+	
 	b_funced->setEditing(false);
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
+	b_funcsModel->setSelected(name);
 	grafic->setFocus();
-	grafic->setSelected(name);
 }
 
-void KAlgebra::edit_func(const QModelIndex &)
+void KAlgebra::edit_func(const QModelIndex &idx)
 {
 	b_tools->setTabText(1, i18n("&Editing"));
 	b_tools->setCurrentIndex(1);
-	b_funced->setText(b_funcs->currentItem()->text(1));
+	b_funced->setText(b_funcsModel->data(idx).toString());
 	b_funced->setEditing(true);
 	b_funced->setFocus();
 }
@@ -250,29 +243,23 @@ void KAlgebra::functools(int i)
 	if(i==0)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
-		b_funced->setName(QString("f").append(QString::number(b_funcs->topLevelItemCount()+1)));
+		b_funced->setName(QString("f").append(QString::number(b_funcsModel->rowCount()+1)));
 		b_funced->setEditing(false);
 		b_funced->setFocus();
 	}
 }
 
-void KAlgebra::different(QTreeWidgetItem * item, int)
+void KAlgebra::edit_var(const QModelIndex &idx)
 {
-	grafic->setShown(item->text(0), item->checkState(0) == Qt::Checked);
-}
-
-void KAlgebra::edit_var(const QModelIndex &)
-{
+	QModelIndex idxName=idx.sibling(idx.row(), 0);
 	VarEdit e(this, false);
-	QString varname = c_variables->currentItem()->text(0);
-	QString var(varname);
+	QString var = c_variables->model()->data(idxName, Qt::DisplayRole).toString();
+	
 	e.setAnalitza(c_results->analitza());
 	e.setVar(var);
 	
 	if(e.exec() == QDialog::Accepted)
-		c_results->analitza()->m_vars->modify(varname, e.val());
-	
-	c_variables->updateVariables();
+		c_results->analitza()->m_vars->modify(var, e.val());
 }
 
 void KAlgebra::operate()
@@ -281,12 +268,6 @@ void KAlgebra::operate()
 		c_exp->setCorrect(c_results->addOperation(c_exp->text(), c_exp->isMathML()));
 		c_exp->selectAll();
 	}
-}
-
-void KAlgebra::insert(QListWidgetItem * item)
-{
-	c_exp->insertPlainText(item->toolTip());
-	c_exp->setFocus();
 }
 
 void KAlgebra::changeStatusBar(const QString& msg)
@@ -377,11 +358,6 @@ void KAlgebra::saveGraph()
 		grafic->toImage(path);
 }
 
-void KAlgebra::change(QTreeWidgetItem *current, QTreeWidgetItem *)
-{
-	grafic->setSelected(current->text(0));
-}
-
 void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
@@ -396,7 +372,7 @@ void KAlgebra::tabChanged(int n)
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
 			
-			if(b_funcs->topLevelItemCount()==0)
+			if(b_funcsModel->rowCount()==0)
 				b_tools->setCurrentIndex(1); //We set the Add tab
 // 			b_add->setFocus();
 			break;
@@ -409,6 +385,11 @@ void KAlgebra::tabChanged(int n)
 			break;
 	}
 	changeStatusBar(i18nc("@info:status", "Ready"));
+}
+
+void KAlgebra::select(const QModelIndex & idx)
+{
+	b_funcsModel->setSelected(idx);
 }
 
 #include "algebra.moc"

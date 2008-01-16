@@ -101,27 +101,4 @@ class ConsoleHtml : public KHTMLPart
 		QString m_css;
 };
 
-/** The VariableView is a widget that shows all variables with their values. */
-class VariableView : public QTreeWidget
-{
-Q_OBJECT
-public:
-	/** Constructor. Creates a new VariableView widget. */
-	VariableView(QWidget *parent=0);
-	
-	/** Destructor. */
-	~VariableView();
-	
-	/** Retrieves the used Analitza module. */
-	Analitza* analitza() const { return a; }
-	
-	/** Sets the used Analitza module. */
-	void setAnalitza(Analitza *na) { a=na; updateVariables(); }
-public slots:
-	/** Rechecks the Variables for the view. */
-	void updateVariables();
-private:
-	Analitza *a;
-};
-
 #endif

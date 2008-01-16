@@ -26,11 +26,11 @@
 #include "functionimpl.h"
 
 function::function()
-	: m_function(0), m_show(true), m_selected(false), m_color(Qt::black)
+	: m_function(0), m_show(true), m_color(Qt::black)
 {}
 
 function::function(const QString &name, const Expression& newFunc, const QColor& color, bool selec)
-	: m_function(0), m_show(true), m_selected(selec), m_color(color), m_name(name)
+	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
 	QStringList bvars=newFunc.bvarList();
 	QString firstBVar=bvars.isEmpty() ? "x" : bvars[0];
@@ -60,7 +60,7 @@ function::function(const QString &name, const Expression& newFunc, const QColor&
 }*/
 
 function::function(const function& f)
-	: m_function(0), m_show(f.m_show), m_selected(f.m_selected), m_color(f.m_color), m_name(f.m_name)
+	: m_function(0), m_show(f.m_show), m_color(f.m_color), m_name(f.m_name)
 {
 	m_function=f.m_function->copy();
 }
@@ -81,7 +81,6 @@ function function::operator=(const function& f)
 // 		m_function=copy(f.m_function);
 		Q_ASSERT(m_function);
 		m_show=f.m_show;
-		m_selected=f.m_selected;
 		m_color=f.m_color;
 		m_name=f.m_name;
 	}

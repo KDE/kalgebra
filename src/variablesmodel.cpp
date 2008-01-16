@@ -16,79 +16,65 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRA_H
-#define KALGEBRA_H
+#include "variablesmodel.h"
+#include "variables.h"
+#include <KLocale>
+#include <KApplication>
 
-#include <KMainWindow>
-#include <QTreeView>
-#include <QPushButton>
-#include <QTabWidget>
-#include "config-kalgebra.h"
+VariablesModel::VariablesModel(QObject *parent)
+	: QAbstractTableModel(parent), m_vars(0)
+{}
 
-class ExpressionEdit;
-class ConsoleHtml;
-class VariableView;
-class FunctionEdit;
-class Graph2D;
-class Graph3D;
-class FunctionsModel;
-
-class KAlgebra : public KMainWindow
+QVariant VariablesModel::data(const QModelIndex & index, int role) const
 {
-	Q_OBJECT
-	public:
-		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra() {}
-	private:
-		//consoleeWidget
-		ExpressionEdit *c_exp;
-		ConsoleHtml *c_results;
-		QTreeView *c_variables;
-		int outs;
-		QDockWidget *c_dock_vars;
-		
-		//graf 2d
-		FunctionsModel* b_funcsModel;
-		QTreeView *b_funcs;
-		QTabWidget *b_tools;
-		Graph2D *grafic;
-		QDockWidget *b_dock_funcs;
-		FunctionEdit *b_funced;
+	QVariant ret;
+	if(role==Qt::DisplayRole) {
+		int var=index.row();
+		QString key=m_vars->keys()[var];
+		switch(index.column()) {
+			case 0:
+				ret=key;
+				break;
+			case 1:
+				ret=m_vars->value(key)->toString();
+				break;
+		}
+	}
+	return ret;
+}
 
-#ifdef HAVE_OPENGL
-		//graph 3d
-		ExpressionEdit *t_exp;
-		Graph3D *grafic3d;
-#endif
-	public slots:
-		void operate();
-		void loadScript();
-		void saveScript();
-		void saveLog();
-		
-		void select(const QModelIndex& idx);
-		void new_func();
-		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
-		
-		void new_func3d();
-		
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void toggleTransparency();
-		void save3DGraph();
-		
-		void saveGraph();
-		void functools ( int );
-		
-		void changeStatusBar ( const QString & );
-		void tabChanged ( int );
-};
+QVariant VariablesModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	QVariant ret;
+	if(role==Qt::DisplayRole && orientation==Qt::Horizontal) {
+		switch(section) {
+			case 0:
+				ret=i18nc("@title:column", "Name");
+				break;
+			case 1:
+				ret=i18nc("@title:column", "Value");
+				break;
+		}
+	}
+	return ret;
+}
 
-#endif
+int VariablesModel::rowCount(const QModelIndex &idx) const
+{
+	if(idx.isValid())
+		return 0;
+	else
+		return m_vars->count();
+}
+
+void VariablesModel::updateInformation()
+{
+	reset();
+}
+
+const QSet<QString>& VariablesModel::functions() const
+{
+	return m_vars->functions();
+}
+
+#include "variablesmodel.moc"
