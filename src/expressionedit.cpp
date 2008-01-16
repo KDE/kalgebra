@@ -18,11 +18,12 @@
 
 #include "expressionedit.h"
 
+#include <QMenu>
 #include <QLabel>
 #include <QKeyEvent>
 #include <QTreeView>
 #include <QHeaderView>
-#include <QMenu>
+#include <QApplication>
 
 #include <KLocale>
 
@@ -395,12 +396,12 @@ void ExpressionEdit::ajudant(const QString& msg, const QPoint& p)
 
 void ExpressionEdit::setCorrect(bool correct)
 {
-	QPalette p;
+	QPalette p=qApp->palette();
 	QColor c;
 	m_correct=correct;
 	
 	if(m_correct && !isMathML())
-		c = QColor(255,255,255);
+		c = p.color(QPalette::Active, QPalette::Base);
 	else if(m_correct)
 		c = QColor(255,255,200);
 	else

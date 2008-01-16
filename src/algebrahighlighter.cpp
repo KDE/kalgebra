@@ -16,6 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include <QApplication>
+
 #include "algebrahighlighter.h"
 #include "expression.h"
 #include "expressionedit.h"
@@ -54,6 +56,16 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	m_correct=true;
 	if(m_pos>=text.length())
 		m_pos=text.length();
+	
+	QPalette pal=qApp->palette();
+		
+	const QColor number(pal.color(QPalette::Active, QPalette::Link));
+	const QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
+	const QColor definedFunction(0,50,0);
+	const QColor undefinedFunction(0,0x86,0);
+	const QColor block(50,0,50);
+	const QColor uncorrect(Qt::red);
+	
 	if(Expression::isMathML(text)) {
 		QString lasttag;
 		int inside=0;
@@ -75,7 +87,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					setFormat(i+1, 1, negreta);
 					inside--;
 				} else if(lasttag.endsWith(QChar('/'))) {
-					setFormat(i+1, j-i-1, QColor(0,50,0));
+					setFormat(i+1, j-i-1, definedFunction);
 					setFormat(j+1, 2, negreta);
 				} else if(j!=k) {
 					setFormat(i+1, j-i-1, QColor(150,0,0));
@@ -88,9 +100,9 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				i=k;
 			}
 			else if(lasttag=="cn")
-				setFormat(i, 1, QColor(0,0,200));
+				setFormat(i, 1, number);
 			else if(lasttag=="ci")
-				setFormat(i, 1, QColor(100,0,0));
+				setFormat(i, 1, variable);
 		}
 		if(inside==0)
 			m_correct=true;
@@ -104,37 +116,42 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++);
 		
 		while(pos < text.length() && t.type!=tEof){
+			QColor f;
+			bool isBold=false;
 			switch(t.type){
 				case tVal:
 					if(t.val.mid(1,2)=="cn") //if it is a number
-						setFormat(pos, len, QColor(0,0,200));
+						f=number;
 					else { //if it is a variable
 						if(a && a->variables()->contains(removeTags(t.val)))
-							setFormat(pos, len, QColor(0,0,200));
+							f=number;
 						else
-							setFormat(pos, len, QColor(100,0,0));
+							f=variable;
 					}
 					break;
 				case tFunc:
 					if(a && a->m_vars->contains(t.val))
-						setFormat(pos, len, QColor(0,50,0));
+						f=definedFunction;
 					else
-						setFormat(pos, len, QColor(0,0x86,0));
+						f=undefinedFunction;
 					break;
 				case tBlock:
 					if(Container::toContainerType(t.val))
-						setFormat(pos, len, QColor(50,0,50));
+						f=block;
 					else
-						setFormat(pos, len, QColor(255,0,0));
+						f=uncorrect;
 					break;
 				case tMaxOp:
 					m_correct = false;
-					setFormat(pos, len, QColor(255,0,0));
+					f=uncorrect;
 					break;
 				default:
+					isBold=true;
 					setFormat(pos, len, negreta);
 					break;
 			}
+			if(!isBold)
+				setFormat(pos, len, f);
 			pos += len;
 			t=Exp::getToken(op, len, t.type);
 		}
