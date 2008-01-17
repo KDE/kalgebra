@@ -54,6 +54,8 @@ class ANALITZA_EXPORT Expression
 		 */
 		Expression(const Cn& e);
 		
+		explicit Expression(Object* o);
+		
 		/**
 		 *	Constructor. Parses an expression and creates the object.
 		 *	@param exp expression to be assigned
@@ -133,6 +135,8 @@ class ANALITZA_EXPORT Expression
 		 * Lists the global bounded variables in the expression
 		 */
 		QStringList bvarList() const;
+		
+		double value() const;
 		
 		/**
 		 *	Converts a @p tag to an object type.

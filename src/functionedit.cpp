@@ -160,9 +160,9 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	}
 	
 	if(!m_func->isMathML())
-		a.expression()->setText(funct);
+		a.setExpression(Expression(funct, 0));
 	else
-		a.expression()->setMathML(funct);
+		a.setExpression(Expression(funct, 1));
 	
 	if(a.isCorrect()) {
 		QStringList bvl = a.bvarList();

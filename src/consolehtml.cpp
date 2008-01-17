@@ -32,7 +32,7 @@
 #include "variables.h"
 #include "expression.h"
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
+ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculation)
 {
 	QPalette p=qApp->palette();
 	
@@ -81,15 +81,14 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 	Expression e(op, mathml);
 	a.setExpression(e);
 	if(a.isCorrect()) {
+		Expression res;
 		if(m_mode==Evaluation) {
-			Expression res=a.evaluate();
-			result = res.toHtml();
-			a.insertVariable("ans", res);
+			res=a.evaluate();
 		} else {
-			Cn val=a.calculate();
-			result = val.toHtml();
-			a.insertVariable("ans", &val);
+			res=a.calculate();
 		}
+		result = res.toHtml();
+		a.insertVariable("ans", res);
 	}
 	
 	if(a.isCorrect()) {

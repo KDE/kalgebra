@@ -23,8 +23,6 @@
 #include <cmath>
 #include <QStringList>
 
-#include "value.h"
-#include "operator.h"
 #include "expression.h"
 #include "analitzaexport.h"
 
@@ -64,13 +62,13 @@ class ANALITZA_EXPORT Analitza
 		void setExpression(const Expression &e);
 		
 		/** Returns the expression in use. */
-		Expression* expression() { return &m_exp; }
+		const Expression* expression() { return &m_exp; }
 		
 		/** Returns the expression in use. */
-		Expression expression() const { return m_exp; }
+		const Expression & expression() const { return m_exp; }
 		
 		/** Calculates the expression and returns a value alone. */
-		Cn calculate();
+		Expression calculate();
 		
 		/** Evaluates an expression, like calculate() but returns a tree. */
 		Expression evaluate();
@@ -79,10 +77,10 @@ class ANALITZA_EXPORT Analitza
 		Expression derivative(/*QStringList vars*/);
 		
 		/** Evaluates the derivative of an expression expression. */
-		Cn derivative(const QList< QPair<QString, double > >& values );
+		double derivative(const QList< QPair<QString, double > >& values );
 		
 		/** Returns whether there has been a problem in the last calculation. */
-		inline bool isCorrect() const { return m_exp.isCorrect() && m_err.isEmpty(); }
+		inline bool isCorrect() const { return m_err.isEmpty() && m_exp.isCorrect(); }
 		
 		/** Returns whether @p var is a function. */
 		bool isFunction(const Ci& var) const;
@@ -91,7 +89,7 @@ class ANALITZA_EXPORT Analitza
 		QStringList bvarList() const;
 		
 		/** Empties the error list. */
-		void flushErrors() { m_err = QStringList(); }
+		void flushErrors() { m_err.clear(); }
 		
 		/** simplifies the expression. */
 		void simplify(); //FIXME: Should return an Expression
@@ -116,13 +114,16 @@ class ANALITZA_EXPORT Analitza
 		Variables *m_vars;
 		QStringList m_err;
 	private:
-		Cn calc(const Object* e);
-		Cn operate(const Container*);
+		Object* calc(const Object* e);
+		Object* operate(const Container*);
 		Object* eval(const Object* e, bool vars, const QSet<QString>& unscoped);
 		
-		Cn sum(const Container& c);
-		Cn product(const Container& c);
-		Cn func(const Container& c);
+		Object* sum(const Container& c);
+		Object* product(const Container& c);
+		Object* func(const Container& c);
+		
+		Object* calcPiecewise(const Container* c);
+		Object* calcDeclare(const Container* c);
 		
 		Object* simp(Object* root);
 		Object* simpScalar(Container* c);
@@ -132,7 +133,6 @@ class ANALITZA_EXPORT Analitza
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
-		void reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool unary);
 		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 		

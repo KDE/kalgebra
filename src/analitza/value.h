@@ -20,6 +20,7 @@
 #define VALUE_H
 
 #include "object.h"
+#include "operator.h"
 #include "analitzaexport.h"
 
 #include <cmath>
@@ -157,6 +158,10 @@ class ANALITZA_EXPORT Cn : public Object
 		
 		/** Returns whether it is a correct Cn. */
 		bool isCorrect() const { return m_correct; }
+		
+		QString reduce(enum Operator::OperatorType op, const Cn& oper);
+		
+		QString reduceUnary(enum Operator::OperatorType op);
 		
 		static Cn pi();
 		static Cn e();

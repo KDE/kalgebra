@@ -58,13 +58,13 @@ Expression Analitza::evaluate()
 	return e;
 }
 
-Cn Analitza::calculate()
+Expression Analitza::calculate()
 {
 	if(m_exp.isCorrect())
-		return calc(m_exp.m_tree);
+		return Expression(calc(m_exp.m_tree));
 	else {
 		m_err << i18n("Must specify a correct operation");
-		return Cn(0.);
+		return Expression();
 	}
 }
 
@@ -454,10 +454,10 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	return 0;
 }
 
-Cn Analitza::calc(const Object* root)
+Object* Analitza::calc(const Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
-	Cn ret=Cn(0.);
+	Object* ret=0;
 	Ci *a;
 	
 	switch(root->type()) {
@@ -465,7 +465,7 @@ Cn Analitza::calc(const Object* root)
 			ret = operate((Container*) root);
 			break;
 		case Object::value:
-			ret=(Cn*) root;
+			ret=Expression::objectCopy(root);
 			break;
 		case Object::variable:
 			a=(Ci*) root;
@@ -485,36 +485,102 @@ Cn Analitza::calc(const Object* root)
 	return ret;
 }
 
-Cn Analitza::operate(const Container* c)
+Object* Analitza::calcPiecewise(const Container* c)
+{
+	Object* ret=0;
+	//Here we have a list of options and finally the otherwise option
+	const Container *otherwise=0;
+	const Object *r=0;
+	QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+	for(; !r && it!=itEnd; ++it) {
+		Container *p=static_cast<Container*>(*it);
+		Q_ASSERT( (*it)->type()==Object::container &&
+				(p->containerType()==Container::piece ||
+				p->containerType()==Container::otherwise) );
+		bool isPiece = p->containerType()==Container::piece;
+		if(isPiece) {
+			Cn* ret=(Cn*) calc(p->m_params[1]);
+			if(ret->type()==Object::value && ret->isTrue()) {
+				r=p->m_params[0];
+			}
+			delete ret;
+		} else {
+						//it is an otherwise
+			if(otherwise)
+				m_err << i18n("Too much <em>otherwise</em> parameters");
+			else
+				otherwise=p;
+		}
+	}
+	if(!r) {
+		if(otherwise)
+			r=otherwise->m_params[0];
+		else
+			m_err << i18nc("Piecewise is how the contitional is called here",
+				       "Piecewise without otherwise nor matching piece.");
+	}
+				
+	if(r)
+		ret=calc(r);
+	return ret;
+}
+
+Object* Analitza::calcDeclare(const Container* c)
+{
+	Object *ret=0;
+	if(c->m_params.count()<=1) {
+		m_err << i18n("Need a var name and a value");
+		return 0;
+	}
+			
+	Ci *var = (Ci*) c->m_params[0];
+	//NOTE: Should not procrastinate the variable resolution... I think :)
+	//m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
+	
+	//I wonder why eval is inside calc...
+	Object* o = eval(c->m_params[1], true, QSet<QString>());
+	o=simp(o);
+	m_vars->modify(var->name(), o);
+	if(o->type()==Object::value)
+		ret=Expression::objectCopy(o);
+	else {
+				//should return NaN
+		Cn n(0.);
+		ret=Expression::objectCopy(&n);
+	}
+	delete o;
+	return ret;
+}
+
+Object* Analitza::operate(const Container* c)
 {
 	Q_ASSERT(c);
-	Operator *op=0;
-	Cn ret(0.);
-	QList<Cn> numbers;
+	Object* ret;
 	
 	if(KDE_ISUNLIKELY(c->isEmpty())) {
 		m_err << i18n("Empty container: %1", c->tagName());
-		return Cn(0.);
+		return 0;
 	}
 	
-	if(c->m_params[0]->type() == Object::oper)
-		op = (Operator*) c->m_params[0]; //FIXME: c->firstOperator
-	if(op!= 0 && op->operatorType()==Operator::sum) 
-		ret = sum(*c);
-// 	else if(op!= 0 && op->operatorType()==Operator::diff)
-// 		ret = sum(*c);
-	else if(op!= 0 && op->operatorType()==Operator::product)
-		ret = product(*c);
-	else switch(c->containerType()) { //TODO: Diffs should be implemented here.
-		case Container::apply:
+	switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Container::math:
 		case Container::bvar:
 		case Container::uplimit:
 		case Container::downlimit:
+		case Container::lambda:
+			ret=calc(c->m_params[0]);
+			break;
+		case Container::apply:
 		{
-			if(KDE_ISUNLIKELY(c->isEmpty())) {
-				m_err << i18n("Container without values found.");
-			} else if(c->m_params[0]->type() == Object::variable) {
+			Operator op = c->firstOperator();
+			Operator::OperatorType opt=op.operatorType();
+			Q_ASSERT(opt!=Operator::none);
+			
+			if(opt==Operator::sum) 
+				ret = sum(*c);
+			else if(opt==Operator::product)
+				ret = product(*c);
+			else if(opt==Operator::function) {
 				Ci* var= (Ci*) c->m_params[0];
 				
 				if(var->isFunction())
@@ -522,31 +588,30 @@ Cn Analitza::operate(const Container* c)
 				else
 					ret = calc(c->m_params[0]);
 			} else {
-				QList<Object*>::const_iterator it = c->firstValue();
-				for(; it!=c->m_params.end(); it++) {
-					Q_ASSERT((*it)!=0);
-					if((*it)->type() != Object::oper)
-						numbers.append(calc(*it));
+				QList<Object*> numbers;
+				Container::const_iterator it = c->firstValue(), itEnd=c->m_params.constEnd();
+				for(; it!=itEnd; it++) {
+					numbers.append(calc(*it));
 				}
 				
-				if(op==0) {
+				if(opt==Operator::none) {
 					ret = numbers.first();
-				} else if(op->nparams()>-1 && numbers.count()!=op->nparams() && op->operatorType()!=Operator::minus) {
-					m_err << i18n("Too much operators for <em>%1</em>", op->toString());
-					ret = Cn(0.);
-                                } else if(KDE_ISLIKELY(numbers.count()>=1 && op->type()==Object::oper)) {
+				} else if(op.nparams()>-1 && numbers.count()!=op.nparams() && opt!=Operator::minus) {
+					m_err << i18n("Too much operators for <em>%1</em>", opt);
+					ret = 0;
+				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
+					Q_ASSERT(dynamic_cast<Cn*>(numbers.first()));
+					Cn *toRet=(Cn*) numbers.first();
 					if(numbers.count()>=2) {
-						QList<Cn>::iterator it = numbers.begin();
-						ret = *it;
-						
-						++it;
-						for(; it != numbers.end(); ++it)
-							reduce(op->operatorType(), &ret, *it, false);
-						
+						Container::const_iterator it = numbers.constBegin()+1;
+						for(; it != numbers.constEnd(); ++it) {
+							toRet->reduce(opt, *((Cn*)*it));
+							delete *it;
+						}
 					} else {
-						ret=numbers.first();
-						reduce(op->operatorType(), &ret, 0., true);
+						toRet->reduceUnary(opt);
 					}
+					ret = toRet;
 				} else {
 					ret = numbers.first();
 				}
@@ -554,63 +619,11 @@ Cn Analitza::operate(const Container* c)
 		}
 			break;
 		case Container::declare:
-		{
-			if(c->m_params.count()<=1) {
-				m_err << i18n("Need a var name and a value");
-				return Cn(0.);
-			}
-			
-			Ci *var = (Ci*) c->m_params[0];
-			//NOTE: Should not procrastinate the variable resolution... I think :)
-// 			m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
-			
-			//I wonder why eval is inside calc...
-			Object* o = eval(c->m_params[1], true, QSet<QString>());
-			o=simp(o);
-			m_vars->modify(var->name(), o);
-			if(o->type()==Object::value)
-				ret=*static_cast<Cn*>(o);
-			//else
-			//	should return NaN
-			delete o;
-		} break;
-		case Container::lambda:
-			ret = calc(*c->firstValue());
+			ret=calcDeclare(c);
 			break;
-		case Container::piecewise: {
-				//Here we have a list of options and finally the otherwise option
-				const Container *otherwise=0;
-				const Object *r=0;
-				QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
-				for(; !r && it!=itEnd; ++it) {
-					Container *p=static_cast<Container*>(*it);
-					Q_ASSERT( (*it)->type()==Object::container &&
-							(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
-					bool isPiece = p->containerType()==Container::piece;
-					if(isPiece) {
-						Cn ret=calc(p->m_params[1]);
-						if(ret.isTrue()) {
-							r=p->m_params[0];
-						}
-					} else {
-						//it is an otherwise
-						if(otherwise)
-							m_err << i18n("Too much <em>otherwise</em> parameters");
-						else
-							otherwise=p;
-					}
-				}
-				if(!r) {
-					if(otherwise)
-						r=otherwise->m_params[0];
-					else
-						m_err << i18nc("Piecewise is how the contitional is called here",
-							"Piecewise without otherwise nor matching piece.");
-				}
-				
-				if(r)
-					ret=calc(r);
-		}	break;
+		case Container::piecewise:
+			ret=calcPiecewise(c);
+			break;
 		case Container::piece:
 		case Container::otherwise:
 			m_err << i18n("piece or otherwise in the wrong place");
@@ -621,43 +634,46 @@ Cn Analitza::operate(const Container* c)
 	return ret;
 }
 
-Cn Analitza::sum(const Container& n)
+Object* Analitza::sum(const Container& n)
 {
-	Cn ret(.0), *c;
+	Cn* ret=new Cn;
 	QString var= n.bvarList()[0];
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
 	
 	m_vars->stack(var, 0.);
-	c = (Cn*) m_vars->value(var);
+	Cn* c = (Cn*) m_vars->value(var);
 	
-	for(double a = dl; a<=ul && isCorrect(); a++){
-		*c = a;
-		reduce(Operator::plus, &ret, calc(n.m_params.last()), false);
+	for(double a = dl; a<=ul; a++){
+		Q_ASSERT(isCorrect());
+		c->setValue(a);
+		Cn *val=(Cn*) calc(n.m_params.last());
+		ret->reduce(Operator::plus, *val);
+		delete val;
 	}
-	
 	m_vars->destroy(var);
-	
 	return ret;
 }
 
-Cn Analitza::product(const Container& n)
+Object* Analitza::product(const Container& n)
 {
-	Cn ret(1.), *c;
+	Cn* ret=new Cn(1.);
 	QString var= n.bvarList()[0];
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
 	
 	m_vars->stack(var, 0.);
-	c = (Cn*) m_vars->value(var);
+	Cn* c = (Cn*) m_vars->value(var);
 	
-	for(double a = dl; a<=ul && isCorrect(); a++){
-		*c = a;
-		reduce(Operator::times, &ret, calc(n.m_params.last()), false);
+	for(double a = dl; a<=ul; a++){
+		Q_ASSERT(isCorrect());
+		c->setValue(a);
+		Cn *val=(Cn*) calc(n.m_params.last());
+		ret->reduce(Operator::times, *val);
+		delete val;
 	}
 	
 	m_vars->destroy(var);
-	
 	return ret;
 }
 
@@ -670,9 +686,9 @@ bool Analitza::isFunction(const Ci& func) const
 	return (c && c->type()==Container::container && c->containerType() == Container::lambda);
 }
 
-Cn Analitza::func(const Container& n)
+Object* Analitza::func(const Container& n)
 {
-	Cn ret(.0);
+	Object* ret=0;
 	Ci funct(n.m_params[0]);
 	
 	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
@@ -686,8 +702,9 @@ Cn Analitza::func(const Container& n)
 		QStringList var = function->bvarList();
 	
 		for(int i=0; i<var.count(); i++) {
-			Cn val=calc(n.m_params[i+1]);
-			m_vars->stack(var[i], &val);
+			Object* val=calc(n.m_params[i+1]);
+			m_vars->stack(var[i], val);
+			delete val;
 		}
 		
 		ret=calc(function->m_params[var.count()]);
@@ -699,215 +716,6 @@ Cn Analitza::func(const Container& n)
 		ret=calc(function);
 	
 	return ret;
-}
-
-void Analitza::reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool unary)
-{
-	int residu;
-	double a=ret->value(), b=oper.value(), c;
-	bool boolean=false;
-	
-	switch(op) {
-		case Operator::plus:
-			a += b;
-			break;
-		case Operator::times:
-			a *= b;
-			break;
-		case Operator::divide:
-			a /=b;
-			break;
-		case Operator::minus:
-			a = unary ? -a : a-b;
-			break;
-		case Operator::power:
-			a = pow(a, b);
-			break;
-		case Operator::rem:
-			if(floor(b)!=0.)
-				a = static_cast<int>(floor(a)) % static_cast<int>(floor(b));
-			else
-				m_err << i18n("Cannot calculate the <em>remainder</em> of 0.");
-			break;
-		case Operator::quotient:
-			a = floor(a / b);
-			break;
-		case Operator::factorof:
-			if(floor(b)!=0.)
-				a = (((int)a % (int)b)==0) ? 1.0 : 0.0;
-			else {
-				a = 0.;
-				m_err << i18n("Cannot calculate the <em>factor</em> of 0.");
-			}
-			boolean = true;
-			break;
-		case Operator::factorial:
-			b = floor(a);
-			for(a=1.; b>1.; b--)
-				a*=b;
-			break;
-		case Operator::sin:
-			a=sin(a);
-			break;
-		case Operator::cos:
-			a=cos(a);
-			break;
-		case Operator::tan:
-			a=tan(a);
-			break;
-		case Operator::sec:
-			a=1./cos(a);
-			break;
-		case Operator::csc:
-			a=1./sin(a);
-			break;
-		case Operator::cot:
-			a=1./tan(a);
-			break;
-		case Operator::sinh:
-			a=sinh(a);
-			break;
-		case Operator::cosh:
-			a=cosh(a);
-			break;
-		case Operator::tanh:
-			a=tanh(a);
-			break;
-		case Operator::sech:
-			a=1.0/cosh(a);
-			break;
-		case Operator::csch:
-			a=1.0/sinh(a);
-			break;
-		case Operator::coth:
-			a=cosh(a)/sinh(a);
-			break;
-		case Operator::arcsin:
-			a=asin(a);
-			break;
-		case Operator::arccos:
-			a=acos(a);
-			break;
-		case Operator::arctan:
-			a=acos(a);
-			break;
-		case Operator::arccot:
-			a=log(a+pow(a*a+1., 0.5));
-			break;
-		case Operator::arcsinh:
-			a=0.5*(log(1.+1./a)-log(1.-1./a));
-			break;
-		case Operator::arccosh:
-			a=log(a+sqrt(a-1.)*sqrt(a+1.));
-			break;
-	// 	case Operator::arccsc:
-	// 	case Operator::arccsch:
-	// 	case Operator::arcsec:
-	// 	case Operator::arcsech:
-	// 	case Operator::arcsinh:
-	// 	case Operator::arctanh:
-		case Operator::exp:
-			a=exp(a);
-			break;
-		case Operator::ln:
-			a=log(a);
-			break;
-		case Operator::log:
-			a=log10(a);
-			break;
-		case Operator::abs:
-			a= a>=0. ? a : -a;
-			break;
-		//case Object::conjugate:
-		//case Object::arg:
-		//case Object::real:
-		//case Object::imaginary:
-		case Operator::floor:
-			a=floor(a);
-			break;
-		case Operator::ceiling:
-			a=ceil(a);
-			break;
-		case Operator::min:
-			a= a < b? a : b;
-			break;
-		case Operator::max:
-			a= a > b? a : b;
-			break;
-		case Operator::gt:
-			a= a > b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::lt:
-			a= a < b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::eq:
-			a= a == b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::approx:
-			a= fabs(a-b)<0.001? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::neq:
-			a= a != b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::geq:
-			a= a >= b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::leq:
-			a= a <= b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::_and:
-			a= a && b? 1.0 : 0.0;
-			boolean=true;
-			break;
-		case Operator::_not:
-			a=!a;
-			boolean = true;
-			break;
-		case Operator::_or:
-			a= a || b? 1.0 : 0.0;
-			boolean = true;
-			break;
-		case Operator::_xor:
-			a= (a || b) && !(a&&b)? 1.0 : 0.0;
-			boolean = true;
-			break;
-		case Operator::implies:
-			a= (a && !b)? 0.0 : 1.0;
-			boolean = true;
-			break;
-		case Operator::gcd: //code by michael cane aka kiko :)
-			while (b > 0.) {
-				residu = (int) floor(a) % (int) floor(b);
-				a = b;
-				b = residu;
-			}
-			break;
-		case Operator::lcm: //code by michael cane aka kiko :)
-			c=a*b;
-			while (b > 0.) {
-				residu = (int) floor(a) % (int) floor(b);
-				a = b;
-				b = residu;
-			}
-			a=(int)c/(int)a;
-			break;
-		case Operator::root:
-			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
-			break;
-		default:
-			m_err << i18n("The operator <em>%1</em> has not been implemented", QString(Operator::m_words[op]));
-			break;
-	}
-	
-	ret->setValue(a);
-	ret->setBoolean(boolean);
 }
 
 QStringList Analitza::bvarList() const //FIXME: if
@@ -943,7 +751,7 @@ Object* Analitza::simp(Object* root)
 	if(!hasVars(root)) {
 		if(root->type()!=Object::value && root->type() !=Object::oper) {
 			aux = root;
-			root = new Cn(calc(root));
+			root = calc(root);
 			delete aux;
 		}
 	} else if(root->isContainer()) {
@@ -1219,7 +1027,7 @@ Object* Analitza::simpScalar(Container * c)
 // 				aux->negate();
 			
 			if(changed)
-				reduce(o.operatorType(), &value, *aux, false);
+				value.reduce(o.operatorType(), *aux);
 			else
 				value=*aux;
 			d=true;
@@ -1720,35 +1528,38 @@ bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
 	return found;
 }
 
-Cn Analitza::derivative(const QList< QPair<QString, double > >& values )
+double Analitza::derivative(const QList< QPair<QString, double > >& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
-	Cn v1;
 	QPair<QString, double> valp;
 	//Image
 	foreach(valp, values) {//TODO: it should be +-hh
 		m_vars->stack(valp.first, valp.second);
 	}
 		
-	v1=calc(m_exp.tree());
+	Object* v1=calc(m_exp.tree());
 		
 	foreach(valp, values)
 		m_vars->destroy(valp.first);
 	
 	//Image+h
 	double h=0.00000001;
-	Cn v2;
 	foreach(valp, values) {
 // 		volatile double temp=valp.second+h;
 // 		double hh=temp-valp.second;
 		m_vars->stack(valp.first, valp.second+h);
 	}
 	
-	v2=calc(m_exp.tree());
+	Object* v2=calc(m_exp.tree());
 		
 	foreach(valp, values)
 		m_vars->destroy(valp.first);
-	double ret=(v2.value()-v1.value())/h;
+	Q_ASSERT(v1->type()==Object::value & v2->type()==Object::value);
+	Cn *cn1=(Cn*)v1, *cn2=(Cn*)v2;
+	double ret=(cn2->value()-cn1->value())/h;
+	
+	delete v1;
+	delete v2;
 	return ret;
 }
 

@@ -54,8 +54,11 @@ public:
 		downlimit,	/**< Describes a container as a %lt;downlimit&gt; tag */
 		piece,		/**< Describes a container as a %lt;piece&gt; tag */
 		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
-		otherwise	/**< Describes a container as a %lt;otherwise&gt; tag */
+		otherwise,	/**< Describes a container as a %lt;otherwise&gt; tag */
+		vector		/**< Describes a container as a %lt;vector&gt; tag */
 	};
+	
+	typedef QList<Object*>::const_iterator const_iterator;
 	
 	/** Constructor. Creates an empty container with no type. */
 	Container() : Object(container), m_cont_type(none) { }

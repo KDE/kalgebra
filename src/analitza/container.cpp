@@ -50,19 +50,19 @@ Container::Container(const Object *o) : Object(o->type())
 
 Operator Container::firstOperator() const
 {
-	Operator ret(Operator::none);
 	bool found=false;
-	for(int i=0; i<m_params.count() && !found; i++) {
-		if(m_params[i]->type()==Object::oper) {
-			ret = Operator(m_params[i]);
+	const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
+	for(; it!=itEnd && !found; ++it) {
+		if((*it)->type()==Object::oper) {
+			return Operator(*it);
 			found = true;
-		} else if(i==0 && containerType()==apply && m_params[i]->type()==Object::variable) {
-			ret = Operator(Operator::function);
+		} else if(it==m_params.constBegin() && m_cont_type==apply && (*it)->type()==Object::variable) {
+			return Operator(Operator::function);
 			found=true;
 		}
 	}
 	
-	return ret;
+	return Operator(Operator::none);
 }
 
 QString Container::toMathML() const
@@ -303,6 +303,7 @@ enum Container::ContainerType Container::toContainerType(const QString& tag)
 	else if(tag=="piecewise") ret=piecewise;
 	else if(tag=="piece") ret=piece;
 	else if(tag=="otherwise") ret=otherwise;
+	else if(tag=="vector") ret=vector;
 	
 	return ret;
 }
@@ -669,6 +670,9 @@ QString Container::tagName() const
 			break;
 		case otherwise:
 			tag="otherwise";
+			break;
+		case vector:
+			tag="vector";
 			break;
 		case none:
 			break;

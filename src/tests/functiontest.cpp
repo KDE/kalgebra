@@ -51,7 +51,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
-	QTest::newRow("polar->hard") << "q->(1..10, ceil(q/(2*pi)))";
+	QTest::newRow("polar->hard") << "q->(1..10, ceiling(q/(2*pi)))";
 	QTest::newRow("polar->strange") << "q->q/q";
 }
 
@@ -65,11 +65,11 @@ void FunctionTest::testCopy()
 	function f3;
 	f3=f2;
 	QVERIFY(f3.isCorrect());
-	f3.update_points(QRect(-10, 10, 10, -10), 100);
+	/*f3.update_points(QRect(-10, 10, 10, -10), 100);
 	f3.derivative(QPointF(0., 0.));
 	f3.derivative(QPointF(1., 0.));
 	f3.calc(QPointF(0., 0.));
-	f3.calc(QPointF(1., 0.));
+	f3.calc(QPointF(1., 0.));*/
 	f3.calc(QPointF(109., 20.)); // peta aki
 }
 

@@ -119,8 +119,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		return;
 	unsigned int resolucio=max_res;
 	double pi=2.*acos(0.);
-	double r=0., th=0.;
-	Expression *e = func.expression();
+	const Expression *e = func.expression();
 	Cn ulimit = e->uplimit(), dlimit=e->downlimit();
 	
 	if(!ulimit.isCorrect())
@@ -142,10 +141,13 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		points = new QPointF[max_res];
 	}
 	
-	double inv_res= (double) (ulimit.value()-dlimit.value())/resolucio;
+// 	qDebug() << "lol" << func.expression()->toString();
+	
 	func.m_vars->modify("q", 0.);
 	Cn *varth = (Cn*) func.m_vars->value("q");
 	
+	double inv_res= (double) (ulimit.value()-dlimit.value())/resolucio;
+	double r=0., th=0.;
 	for(th=dlimit.value(); th<ulimit.value() && i<max_res; th+=inv_res) {
 		varth->setValue(th);
 		r = func.calculate().value();
@@ -245,13 +247,13 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(!ulimit.isCorrect()) ulimit = 2.*pi;
 	if(!dlimit.isCorrect()) dlimit = 0.;
 			
-			/*while(th<dlimit.value())
+	/*while(th<dlimit.value())
 	th += 2.*pi;
 			
 	while(th>ulimit.value())
 	th -= 2.*pi;*/
 	QPointF dist;
-	for(;;) {
+	do {
 		func.m_vars->modify("q", th);
 		r = func.calculate().value();
 		dp = fromPolar(r, th);
@@ -264,16 +266,11 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 		dist = (dp-p);
 		d2 = sqrt(pow(dist.x(), 2.)+pow(dist.y(), 2.));
 		
-		if(d<=d2)
-			break;
 		th += 2.*pi;
-	}
+	} while(d<d2);
 	
 	func.m_vars->modify("q", th);
 	r = func.calculate().value();
-	dp = fromPolar(r, th);
-	pos = QString("r=%1 th=%2").arg(r,3,'f',2).arg(th,3,'f',2);
-	
 	dp = fromPolar(r, th);
 	pos = QString("r=%1 th=%2").arg(r,3,'f',2).arg(th,3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
@@ -300,13 +297,13 @@ QLineF mirrorXY(const QLineF& l)
 QLineF FunctionX::derivative(const QPointF& p) const
 {
 	Analitza a;
-	Cn ret=0.;
+	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
 		a.m_vars->modify("y", p.y());
 		
 		if(a.isCorrect())
-			ret = a.calculate();
+			ret = a.calculate().value();
 	
 		if(!a.isCorrect()) {
 			kDebug(0) << "Derivative error: " <<  a.errors();
@@ -318,19 +315,19 @@ QLineF FunctionX::derivative(const QPointF& p) const
 		a.setExpression(func.expression());
 		ret=a.derivative(vars);
 	}
-	return mirrorXY(slopeToLine(ret.value()));
+	return mirrorXY(slopeToLine(ret));
 }
 
 QLineF FunctionY::derivative(const QPointF& p) const
 {
 	Analitza a;
-	Cn ret=0.;
+	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
 		a.m_vars->modify("x", p.x());
 		
 		if(a.isCorrect())
-			ret = a.calculate();
+			ret = a.calculate().value();
 	
 		if(!a.isCorrect()) {
 			kDebug(0) << "Derivative error: " <<  a.errors();
@@ -343,7 +340,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		ret=a.derivative(vars);
 	}
 	
-	return slopeToLine(ret.value());
+	return slopeToLine(ret);
 }
 
 QLineF FunctionPolar::derivative(const QPointF& p) const

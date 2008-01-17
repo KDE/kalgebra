@@ -102,7 +102,6 @@ Expression VarEdit::val()
 
 void VarEdit::edit()
 {
-	double val;
 	Analitza a;
 	QString funct = m_exp->text();
 	
@@ -128,14 +127,14 @@ void VarEdit::edit()
 		if(a.bvarList().count()>0)
 			m_valid->setText(i18n("%1:=%2", m_var, m_exp->text()));
 		else {
-			val = a.calculate().value();
+			Expression val = a.calculate();
 			
 			if(!a.isCorrect()) {
 				m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 				m_valid->setToolTip(a.m_err.join("\n"));
 				m_correct=false;
 			} else {
-				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val));
+				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val.toString()));
 				m_valid->setToolTip(QString());
 				m_correct=true;
 			}

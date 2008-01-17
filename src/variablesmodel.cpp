@@ -72,9 +72,5 @@ void VariablesModel::updateInformation()
 	reset();
 }
 
-const QSet<QString>& VariablesModel::functions() const
-{
-	return m_vars->functions();
-}
 
 #include "variablesmodel.moc"

@@ -69,7 +69,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	if(Expression::isMathML(text)) {
 		QString lasttag;
 		int inside=0;
-		for(int i=0; i<text.length(); i++){
+		for(int i=0; i<text.length(); i++) {
 			if(text[i]=='<') { //We enter in a tag
 				lasttag.clear();
 				int j=i+1, k=0;

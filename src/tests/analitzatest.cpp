@@ -155,13 +155,13 @@ void AnalitzaTest::testDerivativeSimple()
 	QList<QPair<QString, double> > vars;
 	vars.append(QPair<QString, double>("x", val));
 	
-	Cn valCalc=a->derivative(vars);
+	double valCalc=a->derivative(vars);
 	a->m_vars->modify("x", val);
 	a->setExpression(deriv);
 	Cn valExp(a->calculate().value());
 	a->m_vars->destroy("x");
 	
-	QCOMPARE(QString::number(valCalc.value()), QString::number(valExp.value()));
+	QCOMPARE(QString::number(valCalc), QString::number(valExp.value()));
 }
 
 void AnalitzaTest::testCorrection_data()
@@ -213,16 +213,16 @@ void AnalitzaTest::testCorrection()
 	}
 	QCOMPARE(res.toString(), Cn(result).toString());
 	
-	Cn val;
+	double val;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
 		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
-		val=b.calculate();
+		val=b.calculate().value();
 	}
-	QCOMPARE(val.value(), result);
+	QCOMPARE(val, result);
 }
 
 void AnalitzaTest::testUncorrection_data()
@@ -251,7 +251,7 @@ void AnalitzaTest::testUncorrection()
 	}
 	QVERIFY(!b.isCorrect());
 	
-	Cn val;
+	double val;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
@@ -259,7 +259,7 @@ void AnalitzaTest::testUncorrection()
 		if(correct) {
 			b.setExpression(e);
 			correct=b.isCorrect();
-			val=b.calculate();
+			val=b.calculate().value();
 		}
 	}
 	QVERIFY(!correct);

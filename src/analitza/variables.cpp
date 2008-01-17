@@ -99,8 +99,3 @@ void Variables::stack(const QString & name, double n)
 {
 	insertMulti(name, new Cn(n));
 }
-
-const QSet<QString> & Variables::functions() const
-{
-	
-}

@@ -26,6 +26,11 @@ Expression::Expression() : m_tree(0), m_err()
 {
 }
 
+Expression::Expression(Object * o)
+	: m_tree(o), m_err()
+{
+}
+
 Expression::Expression(const Cn & e) : m_tree(0), m_err()
 {
 	if(e.isCorrect())
@@ -272,20 +277,20 @@ Object* Expression::objectCopy(const Object * old)
 	Object *o=0;
 	switch(old->type()) {
 		case Object::oper:
-			Q_ASSERT(dynamic_cast<const Operator*>(old));
+// 			Q_ASSERT(dynamic_cast<const Operator*>(old));
 			o = new Operator(old);
 			break;
 		case Object::value:
-			Q_ASSERT(dynamic_cast<const Cn*>(old));
+// 			Q_ASSERT(dynamic_cast<const Cn*>(old));
 			o = new Cn(old);
 			break;
 		case Object::variable:
-			Q_ASSERT(dynamic_cast<const Ci*>(old));
+// 			Q_ASSERT(dynamic_cast<const Ci*>(old));
 			o = new Ci(old);
 			break;
 		case Object::container:
+// 			Q_ASSERT(dynamic_cast<const Container*>(old));
 			o = new Container(old);
-			Q_ASSERT(dynamic_cast<const Container*>(old));
 			break;
 		case Object::none:
 			qFatal("Do not know what are we copying.");
@@ -296,7 +301,8 @@ Object* Expression::objectCopy(const Object * old)
 
 void Expression::clear()
 {
-	delete m_tree;
+	if(m_tree)
+		delete m_tree;
 	m_tree=0;
 	m_err.clear();
 }
@@ -316,5 +322,15 @@ QStringList Expression::bvarList() const
 			return c->bvarList();
 	}
 	return QStringList();
+}
+
+double Expression::value() const
+{
+	if(m_tree && m_tree->type()==Object::value)
+		return ((Cn*) m_tree)->value();
+	else {
+		qDebug() << "trying to return an invalid value" << m_tree->toString();
+		return 0;
+	}
 }
 
