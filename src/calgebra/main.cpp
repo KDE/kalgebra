@@ -48,9 +48,8 @@ void evaluate(const Expression& e)
 
 void calculate(const Expression& e)
 {
-	Cn ans;
+	Expression ans;
 	a.setExpression(e);
-	
 	if(e.isCorrect())
 		ans=a.calculate();
 			
