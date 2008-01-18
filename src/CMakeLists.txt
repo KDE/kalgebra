@@ -10,6 +10,7 @@ set(analitza_SRCS
 	analitza/analitza.cpp
 	analitza/container.cpp
 	analitza/operator.cpp
+	analitza/operations.cpp
 	analitza/exp.cpp
 	analitza/variables.cpp
 	analitza/object.cpp
@@ -32,8 +33,8 @@ set(kalgebra_SRCS
 	operatorsmodel.cpp
 	variablesmodel.cpp
 	functionsview.cpp
-	functionsmodel.cpp
 	functionimpl.cpp
+	functionsmodel.cpp
 )
 
 kde4_add_library(analitza ${analitza_SRCS})

@@ -20,6 +20,7 @@
 #include <KLocale>
 #include <kdemacros.h>
 
+#include "operations.h"
 #include "value.h"
 #include "variables.h"
 #include "container.h"
@@ -60,9 +61,9 @@ Expression Analitza::evaluate()
 
 Expression Analitza::calculate()
 {
-	if(m_exp.isCorrect())
+	if(m_exp.isCorrect()) {
 		return Expression(calc(m_exp.m_tree));
-	else {
+	} else {
 		m_err << i18n("Must specify a correct operation");
 		return Expression();
 	}
@@ -472,10 +473,13 @@ Object* Analitza::calc(const Object* root)
 			
 			if(KDE_ISLIKELY(m_vars->contains(a->name())))
 				ret = calc(m_vars->value(a->name()));
-			else if(a->isFunction())
-				m_err << i18n("The function <em>%1</em> does not exist", a->name());
-			else
-				m_err << i18n("The variable <em>%1</em> does not exist", a->name());
+			else {
+				if(a->isFunction())
+					m_err << i18n("The function <em>%1</em> does not exist", a->name());
+				else
+					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
+				ret = new Cn(0.);
+			}
 			
 			break;
 		case Object::oper:
@@ -570,6 +574,13 @@ Object* Analitza::operate(const Container* c)
 		case Container::lambda:
 			ret=calc(c->m_params[0]);
 			break;
+		case Container::vector: {
+			Container *c1=new Container(Container::vector);
+			for(Container::const_iterator it=c->m_params.constBegin(); it!=c->m_params.constEnd(); ++it) {
+				c1->m_params.append(calc(*it));
+			}
+			ret=c1;
+		}	break;
 		case Container::apply:
 		{
 			Operator op = c->firstOperator();
@@ -594,24 +605,24 @@ Object* Analitza::operate(const Container* c)
 					numbers.append(calc(*it));
 				}
 				
-				if(opt==Operator::none) {
+				if(!opt) {
 					ret = numbers.first();
 				} else if(op.nparams()>-1 && numbers.count()!=op.nparams() && opt!=Operator::minus) {
 					m_err << i18n("Too much operators for <em>%1</em>", opt);
 					ret = 0;
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
-					Q_ASSERT(dynamic_cast<Cn*>(numbers.first()));
-					Cn *toRet=(Cn*) numbers.first();
+					ret = numbers.first();
 					if(numbers.count()>=2) {
 						Container::const_iterator it = numbers.constBegin()+1;
 						for(; it != numbers.constEnd(); ++it) {
-							toRet->reduce(opt, *((Cn*)*it));
-							delete *it;
+							ret=Operations::reduce(opt, ret, *it);
+// 							if(!err.isEmpty()) m_err.append(err);
+// 							delete *it;
 						}
 					} else {
-						toRet->reduceUnary(opt);
+						Operations::reduceUnary(opt, ret);
+// 						if(!err.isEmpty()) m_err.append(err);
 					}
-					ret = toRet;
 				} else {
 					ret = numbers.first();
 				}
@@ -631,6 +642,7 @@ Object* Analitza::operate(const Container* c)
 		case Container::none:
 			break;
 	}
+	Q_ASSERT(ret);
 	return ret;
 }
 
@@ -648,8 +660,7 @@ Object* Analitza::sum(const Container& n)
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
 		Cn *val=(Cn*) calc(n.m_params.last());
-		ret->reduce(Operator::plus, *val);
-		delete val;
+		Operations::reduce(Operator::plus, ret, val);
 	}
 	m_vars->destroy(var);
 	return ret;
@@ -669,8 +680,7 @@ Object* Analitza::product(const Container& n)
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
 		Cn *val=(Cn*) calc(n.m_params.last());
-		ret->reduce(Operator::times, *val);
-		delete val;
+		Operations::reduce(Operator::times, ret, val);
 	}
 	
 	m_vars->destroy(var);
@@ -1027,7 +1037,7 @@ Object* Analitza::simpScalar(Container * c)
 // 				aux->negate();
 			
 			if(changed)
-				value.reduce(o.operatorType(), *aux);
+				Operations::reduce(o.operatorType(), &value, aux);
 			else
 				value=*aux;
 			d=true;

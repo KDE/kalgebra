@@ -59,6 +59,7 @@ public:
 	};
 	
 	typedef QList<Object*>::const_iterator const_iterator;
+	typedef QList<Object*>::iterator iterator;
 	
 	/** Constructor. Creates an empty container with no type. */
 	Container() : Object(container), m_cont_type(none) { }
@@ -140,6 +141,10 @@ public:
 	
 	/** @return Returns the string associated to the container type. */
 	QString tagName() const;
+	
+	virtual void negate();
+	
+	virtual bool isZero() const;
 	
 #if 0 //not used
 	//Monomials

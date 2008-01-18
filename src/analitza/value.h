@@ -153,15 +153,13 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		virtual QString toHtml() const;
 		
+		virtual bool isZero() const { return m_value==0.; }
+		
 		/*/** Sets whether it is a correct Cn. 
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		/** Returns whether it is a correct Cn. */
 		bool isCorrect() const { return m_correct; }
-		
-		QString reduce(enum Operator::OperatorType op, const Cn& oper);
-		
-		QString reduceUnary(enum Operator::OperatorType op);
 		
 		static Cn pi();
 		static Cn e();

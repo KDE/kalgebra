@@ -32,7 +32,7 @@
 #include "variables.h"
 #include "expression.h"
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Calculation)
+ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
 	QPalette p=qApp->palette();
 	

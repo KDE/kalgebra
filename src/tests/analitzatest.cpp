@@ -228,6 +228,7 @@ void AnalitzaTest::testCorrection()
 void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
+	QTest::newRow("different tag") << QStringList("prp { x, y ,z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x->1.., x)");
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x->..3, x)");
 }
@@ -292,6 +293,74 @@ void AnalitzaTest::testEvaluate()
 		res=b.evaluate();
 	}
 	QCOMPARE(res.toString(), result);
+}
+
+void AnalitzaTest::testVector()
+{
+	QFETCH(QString, expression);
+	QFETCH(QString, result);
+	Expression e(expression, false);
+	QCOMPARE(e.isCorrect(), true);
+	
+	a->setExpression(e);
+	QCOMPARE(a->isCorrect(), true);
+	QCOMPARE(a->calculate().toString(), result);
+}
+
+void AnalitzaTest::testVector_data()
+{
+	QTest::addColumn<QString>("expression");
+	QTest::addColumn<QString>("result");
+
+	QTest::newRow("irreductible vector") << "vector { 1, 2, 3 }" << "vector { 1, 2, 3 }";
+	QTest::newRow("in-vector operations") << "vector { 2+2, 3*3, 3^3 }" << "vector { 4, 9, 27 }";
+	
+	QTest::newRow("vect+vect") << "vector { 1, 2, 3 }+vector { 3, 2, 1 }" << "vector { 4, 4, 4 }";
+	QTest::newRow("vect+vect2") << "vector { 1, 2, 3 }+vector { 3, 2, sin(pi/2) }" << "vector { 4, 4, 4 }";
+	QTest::newRow("vect*scalar") << "vector { 1, 2, 3 }*3" << "vector { 3, 6, 9 }";
+	QTest::newRow("scalar*vect") << "3*vector { 1, 2, 3 }" << "vector { 3, 6, 9 }";
+}
+
+void AnalitzaTest::testVectorEvaluate()
+{
+	QFETCH(QString, expression);
+	QFETCH(QString, result);
+	Expression e(expression, false);
+	QCOMPARE(e.isCorrect(), true);
+	
+	a->setExpression(e);
+	QCOMPARE(a->isCorrect(), true);
+	QCOMPARE(a->evaluate().toString(), result);
+}
+
+void AnalitzaTest::testVectorEvaluate_data()
+{
+	QTest::addColumn<QString>("expression");
+	QTest::addColumn<QString>("result");
+
+	QTest::newRow("irreductible vector") << "vector { x, y, z }" << "vector { x, y, z }";
+	QTest::newRow("in-vector operations") << "vector { x+x, y+y, z-z }" << "vector { 2*x, 2*y, 0 }";
+	
+	QTest::newRow("vect+vect") << "vector { x, y, z }+vector { z, y, x }" << "vector { x+z, 2*y, x+z }";
+	QTest::newRow("vect*scalar") << "vector { 1, y, 3 }*x" << "vector { x, x*y, 3*x }";
+	QTest::newRow("scalar*vect") << "x*vector { 1, y, 3 }" << "vector { x, x*y, 3*x }";
+}
+
+void AnalitzaTest::testCrash_data()
+{
+	QTest::addColumn<QString>("expression");
+
+	QTest::newRow("undefined variable") << "x";
+}
+
+void AnalitzaTest::testCrash()
+{
+	QFETCH(QString, expression);
+	Expression e(expression, false);
+	QCOMPARE(e.isCorrect(), true);
+	
+	a->setExpression(e);
+	QString str=a->calculate().toString();
 }
 
 #include "analitzatest.moc"

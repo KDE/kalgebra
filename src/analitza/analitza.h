@@ -20,7 +20,6 @@
 #ifndef ANALITZA_H
 #define ANALITZA_H
 
-#include <cmath>
 #include <QStringList>
 
 #include "expression.h"

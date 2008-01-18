@@ -42,6 +42,15 @@ Q_OBJECT
 		void testDerivativeSimple_data();
 		void testDerivativeSimple();
 		
+		void testVector_data();
+		void testVector();
+		
+		void testVectorEvaluate_data();
+		void testVectorEvaluate();
+		
+		void testCrash_data();
+		void testCrash();
+		
 		///We check that it is correct
 		void testCorrection_data();
 		void testCorrection();

@@ -74,6 +74,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("sum") << "sum(x->1..10, x)";
 	QTest::newRow("piecewise") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("function call") << "f(2)";
+	QTest::newRow("vector") << "vector { x, y, z }";
 }
 
 void ExpressionTest::testConversion()
@@ -95,6 +96,7 @@ void ExpressionTest::testCopy_data()
 	QTest::newRow("function definition") << "f:=x->x+1";
 	QTest::newRow("summatory") << "sum(x->1..10, x)";
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
+	QTest::newRow("vector") << "vector { x, y, z }";
 }
 
 void ExpressionTest::testCopy()

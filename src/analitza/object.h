@@ -72,6 +72,10 @@ public:
 	/** Returns whether it is a correct object or not */
 	virtual bool isCorrect() const = 0;
 	
+	virtual void negate() {}
+	
+	virtual bool isZero() const { return false; }
+	
 	void setCorrect(bool b) { m_correct = b; }
 protected:
 // 	static int ocount;

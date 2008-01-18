@@ -65,6 +65,22 @@ Operator Container::firstOperator() const
 	return Operator(Operator::none);
 }
 
+void Container::negate()
+{
+	foreach(Object* o, m_params) {
+		o->negate();
+	}
+}
+
+bool Container::isZero() const
+{
+	bool a=true;
+	foreach(const Object* o, m_params) {
+		a = a && o->isZero();
+	}
+	return a;
+}
+
 QString Container::toMathML() const
 {
 	QString ret;
@@ -576,7 +592,7 @@ void print_dom(const QDomNode& in, int ind)
 bool Container::isNumber() const
 {
 	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
-		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
+		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==vector || m_cont_type==otherwise;
 }
 
 QList<Object *>::iterator Container::firstValue()
@@ -679,5 +695,3 @@ QString Container::tagName() const
 	}
 	return tag;
 }
-
-
