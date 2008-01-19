@@ -334,3 +334,8 @@ double Expression::value() const
 	}
 }
 
+Operations::ValueType Expression::valueType() const
+{
+	return m_tree ? Operations::valueType(m_tree) : Operations::Null;
+}
+

@@ -24,6 +24,7 @@
 
 #include "value.h"
 #include "analitzaexport.h"
+#include "operations.h"
 
 class Container;
 
@@ -139,6 +140,8 @@ class ANALITZA_EXPORT Expression
 		double value() const;
 		
 		bool isValue() const { return m_tree && m_tree->type()==Object::value; }
+		
+		Operations::ValueType valueType() const;
 		
 		/**
 		 *	Converts a @p tag to an object type.

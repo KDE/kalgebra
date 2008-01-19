@@ -38,7 +38,7 @@
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), alpha(60.),
-		method(Solid), trans(false), keyspressed(0), m_n(4)
+		method(Solid), trans(false), keyspressed(0), m_type(Operations::Null), m_n(4)
 {
 	this->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
 	this->setFocusPolicy(Qt::ClickFocus);
@@ -178,7 +178,7 @@ void Graph3D::paintGL()
 	unsigned int bound=(2*mida/step)-1;
 	drawAxes();
 	
-	if(punts==NULL && !func3d.isCorrect())
+	if(punts==NULL || !func3d.isCorrect() || m_type!=Operations::Real)
 		return;
 	
 	if(method==Dots) {
@@ -289,8 +289,7 @@ void Calculate3D::run()
 	
 	Cn *x=(Cn*)a.m_vars->value("x"), *y=(Cn*)a.m_vars->value("y");
 	
-	bool isval=a.calculate().isValue();
-	if(!a.isCorrect() || !isval)
+	if(!a.isCorrect())
 		return;
 	
 	for(int i=from; i<to; i++) {
@@ -399,20 +398,24 @@ int Graph3D::load()
 	f3d.setExpression(func3d);
 	f3d.m_vars->modify("x", 0.);
 	f3d.m_vars->modify("y", 0.);
-	f3d.calculate();
+	Expression e=f3d.calculate();
+	m_type=e.valueType();
 	
-	if(f3d.isCorrect()) {
+	if(f3d.isCorrect() && m_type==Operations::Real) {
 		QTime t;
 		t.restart();
 		sendStatus(i18n("Generating... Please wait"));
 		mem();
 		create();
 		// xgettext: no-c-format
-		sendStatus(i18n("Done: %1ms", t.elapsed()));
+		sendStatus(i18nc("3D graph done in x miliseconds", "Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
 	} else {
-		sendStatus(i18n("Error: %1", f3d.m_err.join(", ")));
+		if(f3d.isCorrect())
+			sendStatus(i18n("Error: We need values to draw a graph"));
+		else
+			sendStatus(i18n("Error: %1", f3d.m_err.join(", ")));
 		this->repaint();
 		return -1;
 	}

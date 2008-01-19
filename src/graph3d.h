@@ -152,6 +152,7 @@ class Graph3D : public QGLWidget {
 		enum Type method;
 		bool trans;
 		unsigned short keyspressed;
+		Operations::ValueType m_type;
 		
 		int m_n;
 };
