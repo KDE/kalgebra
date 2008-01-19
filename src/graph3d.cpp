@@ -289,7 +289,11 @@ void Calculate3D::run()
 	
 	Cn *x=(Cn*)a.m_vars->value("x"), *y=(Cn*)a.m_vars->value("y");
 	
-	for(int i=from; a.isCorrect() && i<to; i++) {
+	bool isval=a.calculate().isValue();
+	if(!a.isCorrect() || !isval)
+		return;
+	
+	for(int i=from; i<to; i++) {
 		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
 			y->setValue(j*step-size);

@@ -164,6 +164,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	else
 		a.setExpression(Expression(funct, 1));
 	
+	Expression res;
 	if(a.isCorrect()) {
 		QStringList bvl = a.bvarList();
 		QString var = bvl.count()==0 ? "x" : bvl[0];
@@ -173,20 +174,25 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		}
 		
 		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));
-		a.calculate();
+		res=a.calculate();
 	} else
 		a.errors() << i18n("From parser:") << a.expression()->error();
 	
-	m_correct=a.isCorrect();
+	m_correct=a.isCorrect() && res.isValue();
 	if(m_correct) {
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color(), true));
 		m_valid->setToolTip(QString());
 	} else {
+		QStringList errors=a.errors();
+		if(a.isCorrect() && !res.isValue()) {
+			errors.append(i18n("We can only draw Real results."));
+		}
+		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		m_valid->setToolTip(a.errors().join("\n"));
+		m_valid->setToolTip(errors.join("\n"));
 	}
 	m_func->setCorrect(m_correct);
 	m_ok->setEnabled(m_correct);

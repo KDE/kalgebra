@@ -35,8 +35,8 @@ class Operations
 		
 		static ValueType valueType(const Object* obj);
 		
-		static Object* reduce(Operator::OperatorType op, Object* op, Object* op1);
-		static Object* reduceUnary(Operator::OperatorType op, Object* op);
+		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1);
+		static Object* reduceUnary(Operator::OperatorType op, Object* oper);
 		
 	private:
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1);
