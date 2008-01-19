@@ -1022,39 +1022,24 @@ Object* Analitza::simp(Object* root)
 
 Object* Analitza::simpScalar(Container * c)
 {
-	Cn value(0.), *aux;
+	Object *value;
 	Operator o = c->firstOperator();
-	bool d, changed=false, sign=true;
-	
-	QList<Object*>::iterator i = c->firstValue();
-	
-	for(; i!=c->m_params.end();) {
-		d=false;
+	bool changed=false, sign=true;
+	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
+		bool d=false;
 		
-		if((*i)->type()==Object::value) {
-			aux = (Cn*) *i;
-// 			if(!changed && o.operatorType()==Operator::minus && i!=c->firstValue())
-// 				aux->negate();
+		int t=Operations::valueType(*i);
+		if(t && !hasVars(*i)) {
+			Object* aux = *i;
 			
-			if(changed)
-				Operations::reduce(o.operatorType(), &value, aux);
-			else
-				value=*aux;
+			if(changed) {
+				value=Operations::reduce(o.operatorType(), value, aux);
+			} else
+				value=aux;
 			d=true;
-		} /*else if((*i)->isContainer() && o.operatorType()==Operator::times) {
-			Container *m = (Container*) *i;
-			
-			if(m->firstOperator()==Operator::minus && m->isUnary()) {
-				Object* aux = Expression::objectCopy(*m->firstValue());
-				delete *m->firstValue();
-				*i = aux;
-				sign = !sign;
-				changed=true;
-			}
-		}*/
+		}
 		
 		if(d) {
-			delete *i;
 			changed=true;
 			i = c->m_params.erase(i);
 		} else
@@ -1063,9 +1048,8 @@ Object* Analitza::simpScalar(Container * c)
 	
 	if(changed) {
 		bool found=false;
-		i=c->firstValue();
-		for(; !found && i!=c->m_params.end(); ++i) {
-			if((*i)->type()==Object::container) {
+		for(Container::iterator i = c->firstValue(); !found && i!=c->m_params.end(); ++i) {
+			if((*i)->isContainer()) {
 				Container *c1 = (Container*) *i;
 				if(c1->containerType()==Container::apply)
 					found=true;
@@ -1076,17 +1060,19 @@ Object* Analitza::simpScalar(Container * c)
 		}
 		
 		if(!sign)
-			value.negate();
+			value->negate();
 		
-		if(found && value.value()!=0)
+		if(found && !value->isZero()) {
 			switch(o.operatorType()) {
 				case Operator::minus:
 				case Operator::plus:
-					c->m_params.append(new Cn(value));
+					c->m_params.append(Expression::objectCopy(value));
 					break;
 				default:
-					c->m_params.insert(c->firstValue(), new Cn(value));
+					c->m_params.insert(c->firstValue(), Expression::objectCopy(value));
+					break;
 			}
+		}
 	}
 	return c;
 }
