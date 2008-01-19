@@ -840,16 +840,14 @@ Object* Analitza::simp(Object* root)
 						d=false;
 						if((*it)->isContainer()) {
 							Container *intr = (Container*) *it;
-							if(intr->firstOperator()==Operator::plus) {
+							if(intr->containerType()==Container::apply && intr->firstOperator()==Operator::plus) {
 								levelOut(c, intr, it);
 								d=true;
 							}
 						}
 						
-						if((*it)->type() == Object::value) {
-							Cn* n = (Cn*) (*it);
-							if(n->value()==0.) //0+-exp=exp
-								d=true;
+						if(Operations::valueType(*it) && !hasVars(*it) && (*it)->isZero()) {
+							d=true;
 						}
 						
 						if(d) {
@@ -874,17 +872,7 @@ Object* Analitza::simp(Object* root)
 							delete aux;
 							c=0;
 						}
-					} /*else if(o.operatorType()==Operator::minus && c->isUnary() && (*c->firstValue())->isContainer()) {
-						qDebug() << "looooool" << c->toString();
-						Container *twominus=static_cast<Container*>(*c->firstValue());
-						if(twominus->firstOperator()==Operator::minus && twominus->isUnary()) {
-							root=simp(*twominus->firstValue());
-							*twominus->firstValue()=0;
-							delete twominus;
-							c=0;
-						}
-						qDebug() << "relooooool" << root->toString();
-					}*/ else {
+					} else {
 						root=simpScalar(c);
 						
 						if(root->isContainer()) {
@@ -1022,17 +1010,16 @@ Object* Analitza::simp(Object* root)
 
 Object* Analitza::simpScalar(Container * c)
 {
-	Object *value;
+	Object *value=0;
 	Operator o = c->firstOperator();
-	bool changed=false, sign=true;
+	bool sign=true;
 	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
 		bool d=false;
 		
-		int t=Operations::valueType(*i);
-		if(t && !hasVars(*i)) {
+		if(Operations::valueType(*i) && !hasVars(*i)) {
 			Object* aux = *i;
 			
-			if(changed) {
+			if(value) {
 				value=Operations::reduce(o.operatorType(), value, aux);
 			} else
 				value=aux;
@@ -1040,29 +1027,16 @@ Object* Analitza::simpScalar(Container * c)
 		}
 		
 		if(d) {
-			changed=true;
 			i = c->m_params.erase(i);
 		} else
 			++i;
 	}
 	
-	if(changed) {
-		bool found=false;
-		for(Container::iterator i = c->firstValue(); !found && i!=c->m_params.end(); ++i) {
-			if((*i)->isContainer()) {
-				Container *c1 = (Container*) *i;
-				if(c1->containerType()==Container::apply)
-					found=true;
-				
-			} else if((*i)->type()==Object::value || (*i)->type()==Object::variable) {
-				found=true;
-			}
-		}
-		
+	if(value) {
 		if(!sign)
 			value->negate();
 		
-		if(found && !value->isZero()) {
+		if(!value->isZero()) {
 			switch(o.operatorType()) {
 				case Operator::minus:
 				case Operator::plus:
@@ -1073,6 +1047,7 @@ Object* Analitza::simpScalar(Container * c)
 					break;
 			}
 		}
+		delete value;
 	}
 	return c;
 }
@@ -1108,13 +1083,14 @@ Object* Analitza::simpPolynomials(Container* c)
 	QList<QPair<double, Object*> > monos;
 	Operator o(c->firstOperator());
 	bool sign=true;
-	QList<Object*>::const_iterator it(c->firstValue());
+	Container::const_iterator it(c->firstValue());
+	
 	for(; it!=c->m_params.constEnd(); ++it) {
 		Object *o2=*it;
 		QPair<double, Object*> imono;
 		bool ismono=false;
 		
-		if(o2->type() == Object::container) {
+		if(o2->isContainer()) {
 			Container *cx = (Container*) o2;
 			if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==3) {
 				bool valid=false;

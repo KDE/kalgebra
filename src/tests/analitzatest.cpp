@@ -343,6 +343,8 @@ void AnalitzaTest::testVectorEvaluate_data()
 	
 // 	QTest::newRow("vect+vect") << "vector { x, y, z }+vector { z, y, x }" << "vector { x+z, 2*y, x+z }";
 	QTest::newRow("vect+vect") << "x+vector { 2, 3, 4 }+vector { 4, 3, 2 }" << "x+vector { 6, 6, 6 }";
+	QTest::newRow("vect+2vect") << "2*vector { x, y, z }+vector {x,y,z}" << "3*vector { x, y, z }";
+	QTest::newRow("vect+v0") << "vector { x, y, z }+vector {0,0,0}" << "vector { x, y, z }";
 // 	QTest::newRow("vect*scalar") << "vector { 1, y, 3 }*x" << "vector { x, x*y, 3*x }";
 // 	QTest::newRow("scalar*vect") << "x*vector { 1, y, 3 }" << "vector { x, x*y, 3*x }";
 }
