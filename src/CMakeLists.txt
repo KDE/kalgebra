@@ -19,7 +19,7 @@ set(analitza_SRCS
 
 set(kalgebra_SRCS
 	algebrahighlighter.cpp
-	algebra.cpp
+	kalgebra.cpp
 	dictionary.cpp
 	#console.cpp
 	consolehtml.cpp
