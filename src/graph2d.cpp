@@ -336,6 +336,8 @@ void Graph2D::mouseReleaseEvent(QMouseEvent *e){
 		
 		if(mindist >= minrate) //if selection is not very small
 			setViewport(QRectF(fromWidget(press), QSizeF(pd.x(), pd.y())));
+		else
+			sendStatus(i18n("Selected viewport too small"));
 	}
 	mode = None;
 	this->repaint();

@@ -266,7 +266,7 @@ int Exp::reduce()
 	QString aux;
 	if(val.isEmpty()) {
 		aux = "0";
-		err << i18n("Value Stack is empty");
+		err << i18n("Value stack is empty");
 	} else
 		aux = val.pop();
 	

@@ -36,7 +36,7 @@ void FunctionsView::selectionChanged(const QItemSelection & selected, const QIte
 void FunctionsView::mousePressEvent(QMouseEvent * e)
 {
 	QModelIndex idx(indexAt(e->pos()));
-	qDebug() << "press" << e;
+	
 	if(e->button()==Qt::RightButton && idx.isValid()) {
 		bool shown=model()->data(idx, FunctionsModel::Shown).toBool();
 		QString actuallyShown;
@@ -51,6 +51,8 @@ void FunctionsView::mousePressEvent(QMouseEvent * e)
 		if(actionShown==result) {
 			model()->setData(idx, !shown, FunctionsModel::Shown);
 		}
+	} else {
+		QTreeView::mousePressEvent(e);
 	}
 }
 
