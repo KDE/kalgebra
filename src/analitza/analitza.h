@@ -102,13 +102,16 @@ class ANALITZA_EXPORT Analitza
 		/** @returns Returns a way to query variables. */
 		const Variables *variables() const { return m_vars; }
 		
+		/** @returns Returns a way to query variables. */
+		Variables *variables() { return m_vars; }
+		
 		/** Adds a variable entry */
 		void insertVariable(const QString& name, const Expression& value);
 		
 		/** Adds a variable entry */
 		void insertVariable(const QString& name, const Object* value);
 		
-// 	protected: //FIXME:Shame on me
+	protected:
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;

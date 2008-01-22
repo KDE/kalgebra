@@ -40,7 +40,6 @@ Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(NULL), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_type(Operations::Null), m_n(4)
 {
-	this->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
 	this->setFocusPolicy(Qt::ClickFocus);
 	graus[0] = 90.0;
 	graus[1] = 0.0;
@@ -61,9 +60,10 @@ Graph3D::~Graph3D()
 
 void Graph3D::initializeGL()
 {
-	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0f);
+// 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glShadeModel(GL_SMOOTH);
 	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -383,7 +383,7 @@ void Graph3D::timeOut(){
 	this->repaint();
 }
 
-void Graph3D::setFunc(const Expression& exp) //FIXME: Must pass an Expression
+void Graph3D::setFunc(const Expression& exp)
 {
 	if(exp.isCorrect()) {
 		func3d = exp;
@@ -396,8 +396,8 @@ int Graph3D::load()
 {
 	Analitza f3d;
 	f3d.setExpression(func3d);
-	f3d.m_vars->modify("x", 0.);
-	f3d.m_vars->modify("y", 0.);
+	f3d.variables()->modify("x", 0.);
+	f3d.variables()->modify("y", 0.);
 	Expression e=f3d.calculate();
 	m_type=e.valueType();
 	
@@ -415,7 +415,7 @@ int Graph3D::load()
 		if(f3d.isCorrect())
 			sendStatus(i18n("Error: We need values to draw a graph"));
 		else
-			sendStatus(i18n("Error: %1", f3d.m_err.join(", ")));
+			sendStatus(i18n("Error: %1", f3d.errors().join(", ")));
 		this->repaint();
 		return -1;
 	}

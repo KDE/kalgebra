@@ -134,9 +134,7 @@ Object* Expression::branch(const QDomElement& elem)
 					if(dGreaterU)
 						m_err << i18nc("An error message", "The downlimit is greater than the uplimit. Probably should be %1..%2",
 										u.value(), d.value());
-				}
-				
-				if(c->containerType()==Container::piecewise) {
+				} else if(c->containerType()==Container::piecewise) {
 					bool correct=true;
 					foreach(Object *o, c->m_params) {
 						if(o->isContainer()) {
@@ -150,6 +148,10 @@ Object* Expression::branch(const QDomElement& elem)
 							m_err << i18n("%1 is not a piece/otherwise inside the piecewise", o->toString());
 							break;
 						}
+					}
+				} else if(c->containerType()==Container::declare) {
+					if(c->m_params.first()->type()!=Object::variable) {
+						m_err << i18n("We can only declare variables");
 					}
 				}
 				//EOCollect

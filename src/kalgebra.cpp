@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "algebra.h"
+#include "kalgebra.h"
 #include "varedit.h"
 #include "functionedit.h"
 #include "consolehtml.h"
@@ -259,7 +259,7 @@ void KAlgebra::edit_var(const QModelIndex &idx)
 	e.setVar(var);
 	
 	if(e.exec() == QDialog::Accepted)
-		c_results->analitza()->m_vars->modify(var, e.val());
+		c_results->analitza()->insertVariable(var, e.val());
 }
 
 void KAlgebra::operate()
@@ -392,4 +392,4 @@ void KAlgebra::select(const QModelIndex & idx)
 	b_funcsModel->setSelected(idx);
 }
 
-#include "algebra.moc"
+#include "kalgebra.moc"

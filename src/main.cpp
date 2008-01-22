@@ -19,7 +19,7 @@
 #include <KApplication>
 #include <KAboutData>
 #include <KCmdLineArgs>
-#include "algebra.h"
+#include "kalgebra.h"
 
 int main(int argc, char *argv[])
 {

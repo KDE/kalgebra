@@ -101,8 +101,11 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 }*/
 	
 	double x, y=0.0;
+	func.variables()->modify("y", 0.);
+	Cn *yval=(Cn*) func.variables()->value("y");
+	
 	for(y=t_lim; y>=b_lim; y-=inv_res) {
-		func.m_vars->modify("y", y);
+		yval->setValue(y);
 		x = func.calculate().value();
 		points[i++]=QPointF(x, y);
 	}
@@ -143,8 +146,8 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	
 // 	qDebug() << "lol" << func.expression()->toString();
 	
-	func.m_vars->modify("q", 0.);
-	Cn *varth = (Cn*) func.m_vars->value("q");
+	func.variables()->modify("q", 0.);
+	Cn *varth = (Cn*) func.variables()->value("q");
 	
 	double inv_res= (double) (ulimit.value()-dlimit.value())/resolucio;
 	double r=0., th=0.;
@@ -197,8 +200,8 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 		}
 	}
 	
-	func.m_vars->modify("x", 0.);
-	Cn *vx = (Cn*) func.m_vars->value("x");
+	func.variables()->modify("x", 0.);
+	Cn *vx = (Cn*) func.variables()->value("x");
 	
 	for(x=l_lim; x<=r_lim; x+=inv_res) {
 		vx->setValue(x);
@@ -215,7 +218,7 @@ QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	QString pos;
-	func.m_vars->modify("y", dp.y());
+	func.variables()->modify("y", dp.y());
 	dp.setX(func.calculate().value());
 	pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
@@ -225,7 +228,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	QString pos;
-	func.m_vars->modify(QString("x"), dp.x());
+	func.variables()->modify(QString("x"), dp.x());
 	dp.setY(func.calculate().value());
 	pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
@@ -254,13 +257,13 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	th -= 2.*pi;*/
 	QPointF dist;
 	do {
-		func.m_vars->modify("q", th);
+		func.variables()->modify("q", th);
 		r = func.calculate().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d = sqrt(pow(dist.x(), 2.)+pow(dist.y(), 2.));
 				
-		func.m_vars->modify("q", th+2.*pi);
+		func.variables()->modify("q", th+2.*pi);
 		r = func.calculate().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
@@ -269,7 +272,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 		th += 2.*pi;
 	} while(d<d2);
 	
-	func.m_vars->modify("q", th);
+	func.variables()->modify("q", th);
 	r = func.calculate().value();
 	dp = fromPolar(r, th);
 	pos = QString("r=%1 th=%2").arg(r,3,'f',2).arg(th,3,'f',2);
@@ -300,7 +303,7 @@ QLineF FunctionX::derivative(const QPointF& p) const
 	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
-		a.m_vars->modify("y", p.y());
+		a.variables()->modify("y", p.y());
 		
 		if(a.isCorrect())
 			ret = a.calculate().value();
@@ -324,7 +327,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
-		a.m_vars->modify("x", p.x());
+		a.variables()->modify("x", p.x());
 		
 		if(a.isCorrect())
 			ret = a.calculate().value();

@@ -231,7 +231,7 @@ QString ExpressionEdit::lastWord(int pos)
 {
 	QString exp=text();
 	int act=pos-1;
-	for(; act>=0 && exp[act].isLetter(); act--);
+	for(; act>=0 && exp[act].isLetter(); act--) {}
 	
 	return exp.mid(act+1, pos-act-1);
 }

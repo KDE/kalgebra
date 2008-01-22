@@ -170,7 +170,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		QString var = bvl.count()==0 ? "x" : bvl[0];
 		
 		if(function::supportedBoundedVars().contains(var)) {
-			a.m_vars->modify(var, 0.);
+			a.insertVariable(var, Cn(0.));
 		}
 		
 		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));

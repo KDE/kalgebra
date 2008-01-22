@@ -130,7 +130,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					}
 					break;
 				case tFunc:
-					if(a && a->m_vars->contains(t.val))
+					if(a && a->variables()->contains(t.val))
 						f=definedFunction;
 					else
 						f=undefinedFunction;

@@ -78,20 +78,20 @@ ConsoleHtml::~ConsoleHtml() {}
 bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 {
 	QString result, newEntry;
+	Expression res;
 	Expression e(op, mathml);
 	a.setExpression(e);
 	if(a.isCorrect()) {
-		Expression res;
 		if(m_mode==Evaluation) {
 			res=a.evaluate();
 		} else {
 			res=a.calculate();
 		}
-		result = res.toHtml();
-		a.insertVariable("ans", res);
 	}
 	
 	if(a.isCorrect()) {
+		result = res.toHtml();
+		a.insertVariable("ans", res);
 		m_script += op; //Script won't have the errors
 		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(a.expression()->toHtml()).arg(result);
 	} else
