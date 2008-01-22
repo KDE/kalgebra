@@ -191,7 +191,8 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
-		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
+// 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
+		m_valid->setText(i18n("<b style='color:red'>%1</b>", a.errors().first()));
 		m_valid->setToolTip(errors.join("\n"));
 	}
 	m_func->setCorrect(m_correct);
