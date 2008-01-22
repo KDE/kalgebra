@@ -109,5 +109,6 @@ int main(int argc, char *argv[])
 // 		free(he->line);
 		free_history_entry(he);
 	}
+	qDebug("\nExit.");
 	return 0;
 }

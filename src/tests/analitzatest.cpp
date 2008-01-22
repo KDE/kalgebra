@@ -156,10 +156,10 @@ void AnalitzaTest::testDerivativeSimple()
 	vars.append(QPair<QString, double>("x", val));
 	
 	double valCalc=a->derivative(vars);
-	a->m_vars->modify("x", val);
+	a->variables()->modify("x", val);
 	a->setExpression(deriv);
 	Cn valExp(a->calculate().value());
-	a->m_vars->destroy("x");
+	a->variables()->destroy("x");
 	
 	QCOMPARE(QString::number(valCalc), QString::number(valExp.value()));
 }
