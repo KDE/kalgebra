@@ -104,6 +104,19 @@ bool FunctionsModel::addFunction(const function& func)
 	return exist;
 }
 
+bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
+{
+	Q_ASSERT(row+count-1<funclist.count());
+	if(parent.isValid())
+		return false;
+	emit beginRemoveRows(parent, row, row+count);
+	QList<function>::iterator it=funclist.begin()+row;
+	for(int i=count-1; i>=0; i--) {
+		it=funclist.erase(it);
+	}
+	emit endRemoveRows();
+	return true;
+}
 
 void FunctionsModel::setSelected(const QModelIndex & indexSel)
 {

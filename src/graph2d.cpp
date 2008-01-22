@@ -59,6 +59,8 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 		this, SLOT(update(const QModelIndex&, const QModelIndex)));
 	connect(m_model, SIGNAL( rowsInserted ( const QModelIndex &, int, int ) ),
 		this, SLOT(addFuncs(const QModelIndex&, int, int)));
+	connect(m_model, SIGNAL( rowsRemoved ( const QModelIndex &, int, int ) ),
+			this, SLOT(removeFuncs(const QModelIndex&, int, int)));
 }
 
 Graph2D::~Graph2D() {}
@@ -564,6 +566,12 @@ void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 		m_model->updatePoints(start, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;
+}
+
+void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
+{
+	valid=false;
+	repaint();
 }
 
 #include "graph2d.moc"

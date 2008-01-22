@@ -104,13 +104,14 @@ public slots:
 	/** Zooms out */
 	void zoomOut();
 	
-private slots:
-	void update( const QModelIndex & start, const QModelIndex& end );
-	void addFuncs( const QModelIndex & parent, int start, int end);
-	
 signals:
 	/** Emits a status when it changes. */
 	void status(const QString &msg);
+	
+private slots:
+	void update( const QModelIndex & start, const QModelIndex& end );
+	void addFuncs( const QModelIndex & parent, int start, int end);
+	void removeFuncs( const QModelIndex & parent, int start, int end);
 	
 private:
 	static const QColor m_axeColor;

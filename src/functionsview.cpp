@@ -35,21 +35,25 @@ void FunctionsView::selectionChanged(const QItemSelection & selected, const QIte
 
 void FunctionsView::mousePressEvent(QMouseEvent * e)
 {
-	QModelIndex idx(indexAt(e->pos()));
+	QModelIndex clickIdx(indexAt(e->pos()));
 	
-	if(e->button()==Qt::RightButton && idx.isValid()) {
-		bool shown=model()->data(idx, FunctionsModel::Shown).toBool();
+	if(e->button()==Qt::RightButton && clickIdx.isValid()) {
+		QModelIndex nameIdx(clickIdx.sibling(clickIdx.row(), 0));
+		bool shown=model()->data(clickIdx, FunctionsModel::Shown).toBool();
 		QString actuallyShown;
 		if(shown)
-			actuallyShown=i18n("Hide '%1'", model()->data(idx).toString());
+			actuallyShown=i18n("Hide '%1'", model()->data(nameIdx).toString());
 		else
-			actuallyShown=i18n("Show '%1'", model()->data(idx).toString());
+			actuallyShown=i18n("Show '%1'", model()->data(nameIdx).toString());
 		
 		QMenu menu(this);
 		QAction* actionShown=menu.addAction(actuallyShown);
+		QAction* actionRemove=menu.addAction(i18n("Remove '%1'", model()->data(nameIdx).toString()));
 		QAction* result=menu.exec(e->globalPos());
-		if(actionShown==result) {
-			model()->setData(idx, !shown, FunctionsModel::Shown);
+		if(result==actionShown) {
+			model()->setData(clickIdx, !shown, FunctionsModel::Shown);
+		} else if(result==actionRemove) {
+			model()->removeRow(clickIdx.row());
 		}
 	} else {
 		QTreeView::mousePressEvent(e);
