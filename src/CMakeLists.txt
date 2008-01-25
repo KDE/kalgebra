@@ -2,6 +2,9 @@ add_subdirectory(tests)
 if(HAVE_READLINE)
 	add_subdirectory(calgebra)
 endif(HAVE_READLINE)
+if(HAVE_PLASMA)
+	add_subdirectory(plasmoid)
+endif(HAVE_PLASMA)
 
 include_directories(analitza)
 
