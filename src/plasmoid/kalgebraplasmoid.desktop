@@ -1,6 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KAlgebra
+Name[hi]=के-अलजेब्रा
+Name[ne]=केडीई बीजगणित
+Name[pa]=ਕੇ-ਐਲਜਬਰਾ
+Name[sv]=Kalgebra
+Name[uk]=KАлгебра
+Name[x-test]=xxKAlgebraxx
 Comment=A Calculator
 Type=Service
 ServiceTypes=Plasma/Applet
