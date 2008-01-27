@@ -8,6 +8,9 @@ Name[sv]=Kalgebra
 Name[uk]=KАлгебра
 Name[x-test]=xxKAlgebraxx
 Comment=A Calculator
+Comment[el]=Ένας υπολογιστής
+Comment[ga]=Áireamhán
+Comment[zh_TW]=計算器
 Type=Service
 ServiceTypes=Plasma/Applet
 
