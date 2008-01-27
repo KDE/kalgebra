@@ -47,8 +47,9 @@ class ANALITZA_EXPORT Operator : public Object
 			arcsec, arcsech, arcsinh, arctanh,
 			exp, ln, log,
 			conjugate, arg, real, imaginary,
-			sum, product, diff, function,
-			nOfOps
+			sum, product, diff,
+			card,
+			function, nOfOps
 		};
 		/** Constructor. Creates an operator with @p t type .*/
 		explicit Operator(OperatorType t) : Object(oper), m_optype(t) {}

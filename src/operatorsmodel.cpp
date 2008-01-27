@@ -33,6 +33,7 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 	if(role==Qt::DisplayRole) {
 		if(index.row()<Operator::nOfOps-2) {
 			Operator oper((Operator::OperatorType) (index.row()+1));
+			
 			switch(index.column()) {
 				case 0:
 					ret=oper.toString();
@@ -100,18 +101,6 @@ void OperatorsModel::updateInformation()
 {
 	reset();
 }
-
-/*void OperatorsModel::addEntry(int i, const QString &name, const QString &value, const QString &ex)
-{
-	QFont f = KApplication::font();
-	f.setItalic(true);
-	QStandardItem *descr = new QStandardItem(value);
-	descr->setFont(f);
-	
-	setData(index(i-1, 0), name);
-	setItem(i-1, 1, descr);
-	setData(index(i-1, 2), ex);
-}*/
 
 QString OperatorsModel::example(Operator oper)
 {
@@ -330,6 +319,9 @@ QString OperatorsModel::description(Operator o)
 			break;
 		case Operator::root:
 			s = i18n("Root");
+			break;
+		case Operator::card:
+			s = i18n("Cardinal");
 			break;
 		default:
 			break;

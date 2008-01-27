@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -35,17 +35,17 @@ class Operations
 		
 		static ValueType valueType(const Object* obj);
 		
-		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1);
-		static Object* reduceUnary(Operator::OperatorType op, Object* oper);
+		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, bool &correct);
+		static Object* reduceUnary(Operator::OperatorType op, Object* oper, bool &correct);
 		
 	private:
-		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1);
-		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper);
+		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, bool &correct);
+		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper, bool &correct);
 		
-		static Object* reduceRealVector(Operator::OperatorType op, Cn *oper, Container* vector);
-		static Object* reduceVectorReal(Operator::OperatorType op, Container* vector, Cn *oper);
-		static Object* reduceVectorVector(Operator::OperatorType op, Container* v1, Container* v2);
-		static Object* reduceUnaryVector(Operator::OperatorType op, Container* c);
+		static Object* reduceRealVector(Operator::OperatorType op, Cn *oper, Container* vector, bool &correct);
+		static Object* reduceVectorReal(Operator::OperatorType op, Container* vector, Cn *oper, bool &correct);
+		static Object* reduceVectorVector(Operator::OperatorType op, Container* v1, Container* v2, bool &correct);
+		static Object* reduceUnaryVector(Operator::OperatorType op, Container* c, bool &correct);
 		
 		QStringList m_err;
 };

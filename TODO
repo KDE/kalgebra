@@ -2,15 +2,12 @@
 Analitza:
 - Partial derivatives
 - Simplification for x^3*3/x-> 3*x^2
-- Simplification for sum
-- Change QList<Object*> for a typedef
 
 Expression:
 - Copy on write for m_tree
 
 2D:
 - Shared functions Console <-> 2D
-- Delete 2D functions
 - Sort 2D functions
 - Moving on small viewport step is too large.
 - Review keyBindings for zooming out.

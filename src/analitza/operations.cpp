@@ -26,7 +26,7 @@
 
 using namespace std;
 
-Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1)
+Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, bool &correct)
 {
 	int residu;
 	double a=oper->value(), b=oper1->value(), c;
@@ -51,8 +51,8 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 		case Operator::rem:
 			if(floor(b)!=0.)
 				a = static_cast<int>(floor(a)) % static_cast<int>(floor(b));
-// 			else
-// 				m_err += i18n("Cannot calculate the <em>remainder</em> of 0.");
+			else
+				correct=false;
 			break;
 		case Operator::quotient:
 			a = floor(a / b);
@@ -62,7 +62,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 				a = (((int)a % (int)b)==0) ? 1.0 : 0.0;
 			else {
 				a = 0.;
-// 				m_err += i18n("Cannot calculate the <em>factor</em> of 0.");
+				correct=false;
 			}
 			boolean = true;
 			break;
@@ -117,7 +117,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			boolean = true;
 			break;
 		case Operator::implies:
-			a= (a && !b)? 0.0 : 1.0;
+			a= (a || !b)? 0.0 : 1.0;
 			boolean = true;
 			break;
 			case Operator::gcd: //code by michael cane aka kiko :)
@@ -140,7 +140,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
 			break;
 		default:
-// 			return i18n("The operator <em>%1</em> has not been implemented", QString(Operator::m_words[op]));
+			correct=false;
 			break;
 	}
 	oper->setValue(a);
@@ -149,7 +149,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 	return oper;
 }
 
-Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val)
+Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &correct)
 {
 	double a=val->value();
 	
@@ -247,7 +247,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val)
 			a=ceil(a);
 			break;
 		default:
-// 			m_err += i18n("Unary operator '%1' not suported", Operator(op).toString());
+			correct=false;
 			break;
 	}
 	
@@ -256,25 +256,27 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val)
 	return val;
 }
 
-Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2)
+Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, bool &correct)
 {
 	ValueType t1=valueType(val1), t2=valueType(val2);
+	correct=true;
 	
-	if(t1==Real && t2==Real) return reduceRealReal(op, (Cn*) val1, (Cn*) val2);
-	if(t1==Real && t2==Vector) return reduceRealVector(op, (Cn*) val1, (Container*) val2);
-	if(t1==Vector && t2==Real) return reduceVectorReal(op, (Container*) val1, (Cn*) val2);
-	if(t1==Vector && t2==Vector) return reduceVectorVector(op, (Container*) val1, (Container*) val2);
+	if(t1==Real && t2==Real) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
+	if(t1==Real && t2==Vector) return reduceRealVector(op, (Cn*) val1, (Container*) val2, correct);
+	if(t1==Vector && t2==Real) return reduceVectorReal(op, (Container*) val1, (Cn*) val2, correct);
+	if(t1==Vector && t2==Vector) return reduceVectorVector(op, (Container*) val1, (Container*) val2, correct);
 	Q_ASSERT(0);
 	return 0;
 }
 
-Object * Operations::reduceUnary(Operator::OperatorType op, Object * val)
+Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, bool &correct)
 {
+	correct=true;
 	switch(valueType(val)) {
 		case Real:
-			return reduceUnaryReal(op, (Cn*) val);
+			return reduceUnaryReal(op, (Cn*) val, correct);
 		case Vector:
-			return reduceUnaryVector(op, (Container*) val);
+			return reduceUnaryVector(op, (Container*) val, correct);
 		case Null:
 			break;
 	}
@@ -303,41 +305,51 @@ Operations::ValueType Operations::valueType(const Object * val)
 	return Null;
 }
 
-Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Container * v1)
+Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Container * v1, bool& correct)
 {
 	for(Container::iterator it=v1->m_params.begin(); it!=v1->m_params.end(); ++it)
 	{
-		*it=reduce(op, new Cn(oper), *it);
+		*it=reduce(op, new Cn(oper), *it, correct);
 	}
 	
 	delete oper;
 	return v1;
 }
 
-Object * Operations::reduceVectorReal(Operator::OperatorType op, Container * v1, Cn * oper)
+Object * Operations::reduceVectorReal(Operator::OperatorType op, Container * v1, Cn * oper, bool &correct)
 {
 	for(Container::iterator it=v1->m_params.begin(); it!=v1->m_params.end(); ++it)
 	{
-		*it=reduce(op, *it, new Cn(oper));
+		*it=reduce(op, *it, new Cn(oper), correct);
 	}
 	delete oper;
 	return v1;
 }
 
-Object * Operations::reduceVectorVector(Operator::OperatorType op, Container * v1, Container * v2)
+Object * Operations::reduceVectorVector(Operator::OperatorType op, Container * v1, Container * v2, bool &correct)
 {
 	Q_ASSERT(v1->m_params.count()==v2->m_params.count());
 	Container::iterator it2=v2->m_params.begin();
 	for(Container::iterator it1=v1->m_params.begin(); it1!=v1->m_params.end(); ++it1, ++it2)
 	{
-		*it1=reduce(op, *it1, *it2);
+		*it1=reduce(op, *it1, *it2, correct);
 		v2->m_params.erase(it2);
 	}
 	delete v2;
 	return v1;
 }
 
-Object * Operations::reduceUnaryVector(Operator::OperatorType op, Container * c)
+Object * Operations::reduceUnaryVector(Operator::OperatorType op, Container * c, bool &correct)
 {
-	return 0;
+	Object *ret=0;
+	switch(op) {
+		case Operator::card:
+			ret=new Cn(static_cast<double>(c->m_params.count()));
+			break;
+		default:
+			correct=false;
+			ret=new Cn(0.);
+			break;
+	}
+	return ret;
 }

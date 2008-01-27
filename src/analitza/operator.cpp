@@ -37,7 +37,10 @@ char Operator::m_words[nOfOps][10] = {
 	"arcsec", "arcsech", "arcsinh", "arctanh",
 	"exp", "ln", "log",
 	"conjugate", "arg", "real", "imaginary",
-	"sum", "product", "diff", "function",
+	"sum", "product", "diff",
+	//Vector operations
+	"card",
+	"function"
 };
 
 QString Operator::toString() const
@@ -56,79 +59,13 @@ QString Operator::toMathML() const
 enum Operator::OperatorType Operator::toOperatorType(const QString &e)
 {
 	//qDebug(), "lol";
-	enum OperatorType ret=none;
+	for(int i=none; i<nOfOps; i++)
+	{
+		if(m_words[i]==e)
+			return (OperatorType) i;
+	}
 	
-	if(e=="plus") ret=plus;
-	else if(e=="times") ret=times;
-	else if(e=="min") ret=min;
-	else if(e=="max") ret=max;
-	else if(e=="and") ret=_and;
-	else if(e=="or" ) ret=_or;
-	else if(e=="xor") ret=_xor;
-	else if(e=="gcd") ret=gcd;
-	else if(e=="lcm") ret=lcm;
-	else if(e=="max") ret=max;
-	else if(e=="min") ret=min;
-	else if(e=="quotient") ret=quotient;
-	else if(e=="power") ret=power;
-	else if(e=="minus") ret=minus;
-	else if(e=="divide" ) ret=divide;
-	else if(e=="rem") ret=rem;
-	else if(e=="factorof") ret=factorof;
-	else if(e=="lt") ret=lt;
-	else if(e=="gt") ret=gt;
-	else if(e=="eq") ret=eq;
-	else if(e=="neq") ret=neq;
-	else if(e=="leq") ret=leq;
-	else if(e=="geq") ret=geq;
-	else if(e=="implies") ret=implies;
-	else if(e=="approx") ret=approx;
-	else if(e=="root") ret=root;
-	else if(e=="factorial") ret=factorial;
-	else if(e=="abs") ret=abs;
-	else if(e=="sin") ret=sin;
-	else if(e=="cos") ret=cos;
-	else if(e=="tan") ret=tan;
-	else if(e=="sec") ret=sec;
-	else if(e=="csc") ret=csc;
-	else if(e=="cot") ret=cot;
-	else if(e=="sinh") ret=sinh;
-	else if(e=="cosh") ret=cosh;
-	else if(e=="tanh") ret=tanh;
-	else if(e=="sech") ret=sech;
-	else if(e=="csch") ret=csch;
-	else if(e=="coth") ret=coth;
-	else if(e=="arcsin") ret=arcsin;
-	else if(e=="arccos") ret=arccos;
-	else if(e=="arctan") ret=arctan;
-	else if(e=="arccos") ret=arccos;
-	else if(e=="arccot") ret=arccot;
-	else if(e=="arccoth") ret=arccoth;
-	else if(e=="arccosh") ret=arccosh;
-	else if(e=="arccsc" ) ret=arccsc;
-	else if(e=="arccsch") ret=arccsch;
-	else if(e=="arcsec" ) ret=arcsec;
-	else if(e=="arcsech") ret=arcsech;
-	else if(e=="arcsinh") ret=arcsinh;
-	else if(e=="arctanh") ret=arctanh;
-	else if(e=="exp") ret=exp;
-	else if(e=="ln") ret=ln;
-	else if(e=="log") ret=log;
-	else if(e=="not") ret=_not;
-	else if(e=="factorial") ret=factorial;
-	else if(e=="minus") ret=minus;
-	else if(e=="abs") ret=abs;
-	else if(e=="conjugate") ret=conjugate;
-	else if(e=="arg") ret=arg;
-	else if(e=="real") ret=real;
-	else if(e=="imaginary") ret=imaginary;
-	else if(e=="floor") ret=floor;
-	else if(e=="ceiling") ret=ceiling;
-	else if(e=="sum") ret=sum;
-	else if(e=="product") ret=product;
-	else if(e=="diff") ret=diff;
-	
-	return ret;
+	return none;
 }
 
 Operator::OperatorType Operator::multiplicityOperator(const Operator::OperatorType& t)
@@ -218,6 +155,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case sum:
 		case product:
 		case diff:
+		case card:
 			return 1;
 		case nOfOps:
 		case none:

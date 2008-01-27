@@ -84,7 +84,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			ret=simp(ret);
 			m_vars->modify(var->name(), ret);
 		} else if(c->containerType()==Container::piecewise) {
-			QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
 			for(; !ret && it!=itEnd; ++it) {
 				Container *p=static_cast<Container*>(*it);
 				Q_ASSERT( (*it)->type()==Object::container &&
@@ -135,7 +135,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 								}
 								cbody = (Container*) body;
 								
-								QList<Object*>::const_iterator bv = cbody->m_params.constBegin();
+								Container::const_iterator bv = cbody->m_params.constBegin();
 								for(; bv!=cbody->m_params.constEnd(); ++bv) {
 									if((*bv)->isContainer()) {
 										const Container *ibv = (Container*) *bv;
@@ -161,7 +161,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						if(cbody) {
 // 							qDebug() << "before" << cbody->toString();
 							/*Container *r = new Container(cbody);
-							QList<Object*>::iterator it(r->firstValue());
+							Container::iterator it(r->firstValue());
 							for(; it!=r->m_params.end(); ++it) {
 								Object *o=*it;
 								*it = eval(o, resolve, unscoped);
@@ -179,7 +179,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						
 						/*if(op.operatorType()!=Operator::function) {
 							Container *nc = new Container(c);
-							QList<Object*>::iterator fval = nc->firstValue();
+							Container::iterator fval = nc->firstValue();
 							delete *fval;
 							*fval=ret;
 							ret = nc;
@@ -190,7 +190,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 							newUnscoped+=c->bvarList().toSet();
 						}
 						Container *r = new Container(c);
-						QList<Object*>::iterator it(r->firstValue());
+						Container::iterator it(r->firstValue());
 						for(; it!=r->m_params.end(); ++it) {
 							Object *o=*it;
 							*it= eval(*it, resolve, newUnscoped);
@@ -205,9 +205,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			//TODO: Multiline. Add a loop here!
 			ret=eval(c->m_params[0], resolve, unscoped);
 // 			ret=Expression::objectCopy(c->m_params[0]);
-		} /*else {
-			qDebug() << "Not evaluated: " << c->tagName();
-		}*/
+		}
 	} else if(resolve && branch->type()==Object::variable) {
 		//FIXME: Should check if it is that crappy 
 		Ci* var=(Ci*) branch;
@@ -262,7 +260,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container *r= new Container(Container::apply);
 				r->m_params.append(new Operator(op));
 				
-				QList<Object*>::const_iterator it(c->firstValue());
+				Container::const_iterator it(c->firstValue());
 				for(; it!=c->m_params.end(); ++it)
 					r->m_params.append(derivative(var, *it));
 				
@@ -272,12 +270,12 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container *nx = new Container(Container::apply);
 				nx->m_params.append(new Operator(Operator::plus));
 				
-				QList<Object*>::const_iterator it(c->firstValue());
+				Container::const_iterator it(c->firstValue());
 				for(;it!=c->m_params.end(); ++it) {
 					Container *neach = new Container(Container::apply);
 					neach->m_params.append(new Operator(Operator::times));
 					
-					QList<Object*>::const_iterator iobj(c->firstValue());
+					Container::const_iterator iobj(c->firstValue());
 						for(; iobj!=c->m_params.end(); ++iobj) {
 						Object *o;
 						o=Expression::objectCopy(*iobj);
@@ -433,7 +431,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	} else if(c->containerType()==Container::piecewise) {
 		Container *newPw = new Container(c);
 		
-		QList<Object*>::const_iterator it;
+		Container::const_iterator it;
 		int i=newPw->m_params.count();
 		//NOTE: This i-- is because it overflows the list, looks like a Qt bug
 		for(it=newPw->m_params.constBegin(); i-- && it!=c->m_params.constEnd(); ++it) {
@@ -446,7 +444,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 		return newPw;
 	} else {
 		Container *cret = new Container(c->containerType());
-		QList<Object*>::const_iterator it = c->m_params.begin(), end=c->m_params.end();
+		Container::const_iterator it = c->m_params.begin(), end=c->m_params.end();
 		for(; it!=end; it++) {
 			cret->m_params.append(derivative(var, *it));
 		}
@@ -455,47 +453,13 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	return 0;
 }
 
-Object* Analitza::calc(const Object* root)
-{
-	Q_ASSERT(root && root->type()!=Object::none);
-	Object* ret=0;
-	Ci *a;
-	
-	switch(root->type()) {
-		case Object::container:
-			ret = operate((Container*) root);
-			break;
-		case Object::value:
-			ret=Expression::objectCopy(root);
-			break;
-		case Object::variable:
-			a=(Ci*) root;
-			
-			if(KDE_ISLIKELY(m_vars->contains(a->name())))
-				ret = calc(m_vars->value(a->name()));
-			else {
-				if(a->isFunction())
-					m_err << i18n("The function <em>%1</em> does not exist", a->name());
-				else
-					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
-				ret = new Cn(0.);
-			}
-			
-			break;
-		case Object::oper:
-		default:
-			break;
-	}
-	return ret;
-}
-
 Object* Analitza::calcPiecewise(const Container* c)
 {
 	Object* ret=0;
 	//Here we have a list of options and finally the otherwise option
 	const Container *otherwise=0;
 	const Object *r=0;
-	QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
 	for(; !r && it!=itEnd; ++it) {
 		Container *p=static_cast<Container*>(*it);
 		Q_ASSERT( (*it)->type()==Object::container &&
@@ -553,6 +517,40 @@ Object* Analitza::calcDeclare(const Container* c)
 		ret=Expression::objectCopy(&n);
 	}
 	delete o;
+	return ret;
+}
+
+Object* Analitza::calc(const Object* root)
+{
+	Q_ASSERT(root && root->type()!=Object::none);
+	Object* ret=0;
+	Ci *a;
+	
+	switch(root->type()) {
+		case Object::container:
+			ret = operate((Container*) root);
+			break;
+		case Object::value:
+			ret=Expression::objectCopy(root);
+			break;
+		case Object::variable:
+			a=(Ci*) root;
+			
+			if(KDE_ISLIKELY(m_vars->contains(a->name())))
+				ret = calc(m_vars->value(a->name()));
+			else {
+				if(a->isFunction())
+					m_err << i18n("The function <em>%1</em> does not exist", a->name());
+				else
+					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
+				ret = new Cn(0.);
+			}
+			
+			break;
+		case Object::oper:
+		default:
+			break;
+	}
 	return ret;
 }
 
@@ -615,13 +613,18 @@ Object* Analitza::operate(const Container* c)
 					if(numbers.count()>=2) {
 						Container::const_iterator it = numbers.constBegin()+1;
 						for(; it != numbers.constEnd(); ++it) {
-							ret=Operations::reduce(opt, ret, *it);
-// 							if(!err.isEmpty()) m_err.append(err);
+							bool correct;
+							ret=Operations::reduce(opt, ret, *it, correct);
+							if(!correct)
+								m_err.append(i18n("Can't calculate the %1(%2, %3)",
+											op.toString(), ret->toString(), (*it)->toString()));
 // 							delete *it;
 						}
 					} else {
-						Operations::reduceUnary(opt, ret);
-// 						if(!err.isEmpty()) m_err.append(err);
+						bool correct;
+						ret=Operations::reduceUnary(opt, ret, correct);
+						if(!correct)
+							m_err.append(i18n("Can't calculate the %1 %2", ret->toString(), op.toString()));
 					}
 				} else {
 					ret = numbers.first();
@@ -658,9 +661,10 @@ Object* Analitza::sum(const Container& n)
 	
 	for(double a = dl; a<=ul; a++){
 		Q_ASSERT(isCorrect());
+		bool correct;
 		c->setValue(a);
 		Cn *val=(Cn*) calc(n.m_params.last());
-		Operations::reduce(Operator::plus, ret, val);
+		Operations::reduce(Operator::plus, ret, val, correct);
 	}
 	m_vars->destroy(var);
 	return ret;
@@ -680,7 +684,8 @@ Object* Analitza::product(const Container& n)
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
 		Cn *val=(Cn*) calc(n.m_params.last());
-		Operations::reduce(Operator::times, ret, val);
+		bool correct;
+		Operations::reduce(Operator::times, ret, val, correct);
 	}
 	
 	m_vars->destroy(var);
@@ -743,9 +748,9 @@ void Analitza::simplify()
 		m_exp.m_tree = simp(m_exp.m_tree);
 }
 
-void Analitza::levelOut(Container *c, Container *ob, QList<Object*>::iterator &pos)
+void Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
 {
-	QList<Object*>::iterator it = ob->firstValue();
+	Container::iterator it = ob->firstValue();
 	for(; it!=ob->m_params.end();) {
 		pos=c->m_params.insert(pos, *it);
 		pos++;
@@ -772,7 +777,7 @@ Object* Analitza::simp(Object* root)
 		} else if(c->containerType()==Container::lambda) {
 			*c->firstValue()=simp(*c->firstValue());
 		} else if(c->containerType()==Container::apply) {
-			QList<Object*>::iterator it;
+			Container::iterator it;
 			Operator o = c->firstOperator();
 			switch(o.operatorType()) {
 				case Operator::times:
@@ -998,7 +1003,7 @@ Object* Analitza::simp(Object* root)
 					break;
 			}
 		} else {
-			QList<Object*>::iterator it = c->firstValue();
+			Container::iterator it = c->firstValue();
 					
 			for(; it!=c->m_params.end(); it++)
 				*it = simp(*it);
@@ -1020,7 +1025,8 @@ Object* Analitza::simpScalar(Container * c)
 			Object* aux = *i;
 			
 			if(value) {
-				value=Operations::reduce(o.operatorType(), value, aux);
+				bool correct;
+				value=Operations::reduce(o.operatorType(), value, aux, correct);
 			} else
 				value=aux;
 			d=true;
@@ -1227,7 +1233,7 @@ Object* Analitza::simpSum(Container * c)
 	Operator o=cval->firstOperator();
 	if(o.operatorType()==Operator::times) {
 		QList<Object*> sum, out;
-		QList<Object*>::iterator it=cval->m_params.begin(), itEnd=cval->m_params.end(), firstV=cval->firstValue();
+		Container::iterator it=cval->m_params.begin(), itEnd=cval->m_params.end(), firstV=cval->firstValue();
 		bool firstFound=false;
 		int multCount=0;
 		for(; it!=itEnd; ++it) {
@@ -1267,7 +1273,7 @@ Object* Analitza::simpPiecewise(Container *c)
 	Object *root=c;
 	//Here we have a list of options and finally the otherwise option
 	const Container *otherwise=0;
-	QList<Object*>::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
 	QList<Object*> newList;
 	bool stop=false;
 	for(; !stop && it!=itEnd; ++it) {
@@ -1341,7 +1347,7 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 		case Object::container: {
 			Container *c = (Container*) o;
 			bool firstFound=false;
-			QList<Object*>::iterator it = c->m_params.begin(), first = c->firstValue();
+			Container::iterator it = c->m_params.begin(), first = c->firstValue();
 			
 			QStringList scope=bvars;
 			
@@ -1404,7 +1410,7 @@ Object* Analitza::removeDependencies(Object * o) const
 				c = 0;
 			}
 			
-			QList<Object*>::iterator fval(cbody->firstValue());
+			Container::iterator fval(cbody->firstValue());
 			Object *ret= removeDependencies(Expression::objectCopy(*fval));
 			
 			QStringList::const_iterator iBvars(bvars.constBegin());
@@ -1420,7 +1426,7 @@ Object* Analitza::removeDependencies(Object * o) const
 				return c;
 			}
 		} else {
-			QList<Object*>::iterator it(c->firstValue());
+			Container::iterator it(c->firstValue());
 			for(; it!=c->m_params.end(); ++it)
 				*it = removeDependencies(*it);
 		}
@@ -1491,7 +1497,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
 {
 	bool found=false;
 	if(c->containerType()==Container::apply) {
-		QList<Object*>::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
+		Container::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
 		for(; !found && it!=itEnd; ++it) {
 			if(hasTheVar(vars, *it))
 				found=true;

@@ -231,6 +231,8 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("different tag") << QStringList("prp { x, y ,z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x->1.., x)");
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x->..3, x)");
+	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
+	QTest::newRow("scalar+card") << QStringList("card(3)");
 }
 
 void AnalitzaTest::testUncorrection()
@@ -258,12 +260,11 @@ void AnalitzaTest::testUncorrection()
 		correct=e.isCorrect();
 		
 		if(correct) {
-			b.setExpression(e);
-			correct=b.isCorrect();
+			b.setExpression(e);;
 			val=b.calculate().value();
 		}
 	}
-	QVERIFY(!correct);
+	QVERIFY(!b.isCorrect());
 }
 
 void AnalitzaTest::testEvaluate_data()
@@ -319,6 +320,7 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("vect+vect2") << "vector { 1, 2, 3 }+vector { 3, 2, sin(pi/2) }" << "vector { 4, 4, 4 }";
 	QTest::newRow("vect*scalar") << "vector { 1, 2, 3 }*3" << "vector { 3, 6, 9 }";
 	QTest::newRow("scalar*vect") << "3*vector { 1, 2, 3 }" << "vector { 3, 6, 9 }";
+	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
 }
 
 void AnalitzaTest::testVectorEvaluate()
@@ -344,6 +346,7 @@ void AnalitzaTest::testVectorEvaluate_data()
 	QTest::newRow("vect+vect") << "x+vector { 2, 3, 4 }+vector { 4, 3, 2 }" << "x+vector { 6, 6, 6 }";
 	QTest::newRow("vect+2vect") << "2*vector { x, y, z }+vector{x,y,z}" << "3*vector { x, y, z }";
 	QTest::newRow("vect+null") << "vector { x, y, z }+vector{0,0,0}" << "vector { x, y, z }";
+	QTest::newRow("card(vect)") << "card(vector { x, y, z })" << "3";
 }
 
 void AnalitzaTest::testCrash_data()

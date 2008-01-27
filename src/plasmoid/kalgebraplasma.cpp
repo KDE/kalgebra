@@ -79,7 +79,6 @@ void KAlgebraPlasmoid::addOperation()
 	} else {
 		m_output->setPen(QPen(Qt::red));
 		m_output->setText(a.errors().join("\n"));
-		qDebug() << "error" << a.errors();
 	}
 }
 
