@@ -37,7 +37,6 @@ class Container;
 
 class ANALITZA_EXPORT Expression
 {
-	friend class Analitza;
 	public:
 		
 		/**
@@ -111,7 +110,9 @@ class ANALITZA_EXPORT Expression
 		 *	Returns the tree associated to this object.
 		 */
 		const Object* tree() const { return m_tree; }
+		Object* tree() { return m_tree; }
 		
+		void setTree(Object* o) { m_tree=o; }
 		/**
 		 *	Converts the expression to a string expression.
 		 */
@@ -168,15 +169,13 @@ class ANALITZA_EXPORT Expression
 		 */
 		static Object* objectCopy(const Object * o);
 		
-	protected:
-		/** The real container of the class, has all the expression tree inside. */
-		Object* m_tree;
 	private:
 		Object* branch(const QDomElement& elem);
 		
+		/** The real container of the class, has all the expression tree inside. */
+		Object* m_tree;
+		
 		QStringList m_err;
-// 		bool m_attach; //TODO: Copy on Write :)
-// 		int m_attached;
 };
 
 #endif

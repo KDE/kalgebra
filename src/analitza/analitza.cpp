@@ -51,8 +51,9 @@ Expression Analitza::evaluate()
 	m_err.clear();
 	Expression e;
 	if(m_exp.isCorrect()) {
-		e.m_tree=eval(m_exp.tree(), true, QSet<QString>());
-		e.m_tree=simp(e.m_tree);
+		Object *o=eval(m_exp.tree(), true, QSet<QString>());
+		o=simp(o);
+		e.setTree(o);
 	} else {
 		m_err << i18n("Must specify a correct operation");
 	}
@@ -62,7 +63,7 @@ Expression Analitza::evaluate()
 Expression Analitza::calculate()
 {
 	if(m_exp.isCorrect()) {
-		return Expression(calc(m_exp.m_tree));
+		return Expression(calc(m_exp.tree()));
 	} else {
 		m_err << i18n("Must specify a correct operation");
 		return Expression();
@@ -744,8 +745,10 @@ QStringList Analitza::bvarList() const //FIXME: if
 
 void Analitza::simplify()
 {
-	if(m_exp.isCorrect())
-		m_exp.m_tree = simp(m_exp.m_tree);
+	if(m_exp.isCorrect()) {
+		Object* o=simp(m_exp.tree());
+		m_exp.setTree(o);
+	}
 }
 
 void Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
@@ -1448,11 +1451,12 @@ Expression Analitza::derivative()
 	Expression exp;
 	if(m_exp.isCorrect()) {
 		QStringList vars = bvarList();
+		Object *o;
 		if(vars.empty())
-			exp.m_tree = derivative("x", m_exp.m_tree);
+			o = derivative("x", m_exp.tree());
 		else
-			exp.m_tree = derivative(vars.first(), m_exp.m_tree);
-		exp.m_tree = simp(exp.m_tree);
+			o = derivative(vars.first(), m_exp.tree());
+		exp.setTree(simp(o));
 	}
 	return exp;
 }
