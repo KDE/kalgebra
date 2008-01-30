@@ -17,6 +17,14 @@ macro_log_feature(PLASMA_FOUND "Plasma" "Plasma is the KDE4 desktop" "http://pla
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 
 #adding subdirs
+add_subdirectory(analitza)
 add_subdirectory(src)
+add_subdirectory(tests)
 add_subdirectory(icons)
 
+if(HAVE_READLINE)
+	add_subdirectory(calgebra)
+endif(HAVE_READLINE)
+if(HAVE_PLASMA)
+	add_subdirectory(plasmoid)
+endif(HAVE_PLASMA)

@@ -26,11 +26,9 @@
 #include <kdemacros.h>
 #ifndef ANALITZA_EXPORT
 # ifdef MAKE_ANALITZA_LIB
-// #  define ANALITZA_EXPORT KDE_EXPORT
-#  define ANALITZA_EXPORT
+#  define ANALITZA_EXPORT KDE_EXPORT
 # else
-// #  define ANALITZA_EXPORT KDE_IMPORT
-#  define ANALITZA_EXPORT 
+#  define ANALITZA_EXPORT KDE_IMPORT
 # endif
 #endif
 

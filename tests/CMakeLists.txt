@@ -1,6 +1,6 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-include_directories(${CMAKE_SOURCE_DIR}/kalgebra/src/ ${CMAKE_SOURCE_DIR}/kalgebra/src/analitza)
+include_directories(${CMAKE_SOURCE_DIR}/kalgebra/src ${CMAKE_SOURCE_DIR}/kalgebra/analitza)
 
 set( analitzatest_SRCS analitzatest.cpp)
 kde4_add_unit_test(analitzatest ${analitzatest_SRCS})
@@ -10,7 +10,7 @@ set( expressiontest_SRCS expressiontest.cpp)
 kde4_add_unit_test(expressiontest ${expressiontest_SRCS})
 target_link_libraries(expressiontest ${QT_QTXML_LIBRARY} ${QT_QTTEST_LIBRARY} analitza)
 
-set( functiontest_SRCS functiontest.cpp ../function.cpp ../functionimpl.cpp)
+set( functiontest_SRCS functiontest.cpp ../src/function.cpp ../src/functionimpl.cpp)
 kde4_add_unit_test(functiontest ${functiontest_SRCS})
 target_link_libraries(functiontest ${QT_QTXML_LIBRARY} ${QT_QTTEST_LIBRARY} ${QT_QTGUI_LIBRARY} analitza)
 
