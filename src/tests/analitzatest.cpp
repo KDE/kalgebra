@@ -321,6 +321,9 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("vect*scalar") << "vector { 1, 2, 3 }*3" << "vector { 3, 6, 9 }";
 	QTest::newRow("scalar*vect") << "3*vector { 1, 2, 3 }" << "vector { 3, 6, 9 }";
 	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
+	
+	QTest::newRow("sum") << "sum(x->1..99, vector {x,x,x})" << "vector { 4950, 4950, 4950 }";
+	QTest::newRow("sum") << "product(x->1..5, vector {x,x,x})" << "vector { 120, 120, 120 }";
 }
 
 void AnalitzaTest::testVectorEvaluate()

@@ -351,5 +351,6 @@ Object * Operations::reduceUnaryVector(Operator::OperatorType op, Container * c,
 			ret=new Cn(0.);
 			break;
 	}
+	delete c;
 	return ret;
 }

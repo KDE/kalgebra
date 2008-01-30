@@ -619,20 +619,19 @@ Object* Analitza::operate(const Container* c)
 							if(!correct)
 								m_err.append(i18n("Can't calculate the %1(%2, %3)",
 											op.toString(), ret->toString(), (*it)->toString()));
-// 							delete *it;
 						}
 					} else {
 						bool correct;
 						ret=Operations::reduceUnary(opt, ret, correct);
 						if(!correct)
-							m_err.append(i18n("Can't calculate the %1 %2", ret->toString(), op.toString()));
+							m_err.append(i18n("Can't calculate the %1 %2",
+										ret->toString(), op.toString()));
 					}
 				} else {
 					ret = numbers.first();
 				}
 			}
-		}
-			break;
+		}	break;
 		case Container::declare:
 			ret=calcDeclare(c);
 			break;
@@ -642,6 +641,7 @@ Object* Analitza::operate(const Container* c)
 		case Container::piece:
 		case Container::otherwise:
 			m_err << i18n("piece or otherwise in the wrong place");
+			ret=0;
 			break;
 		case Container::none:
 			break;
@@ -652,7 +652,7 @@ Object* Analitza::operate(const Container* c)
 
 Object* Analitza::sum(const Container& n)
 {
-	Cn* ret=new Cn;
+	Object* ret=new Cn(0.);
 	QString var= n.bvarList()[0];
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
@@ -662,18 +662,19 @@ Object* Analitza::sum(const Container& n)
 	
 	for(double a = dl; a<=ul; a++){
 		Q_ASSERT(isCorrect());
-		bool correct;
 		c->setValue(a);
-		Cn *val=(Cn*) calc(n.m_params.last());
-		Operations::reduce(Operator::plus, ret, val, correct);
+		Object *val=calc(n.m_params.last());
+		bool correct;
+		ret=Operations::reduce(Operator::plus, ret, val, correct);
 	}
+	
 	m_vars->destroy(var);
 	return ret;
 }
 
 Object* Analitza::product(const Container& n)
 {
-	Cn* ret=new Cn(1.);
+	Object* ret=new Cn(1.);
 	QString var= n.bvarList()[0];
 	double ul= Expression::uplimit(n).value();
 	double dl= Expression::downlimit(n).value();
@@ -684,9 +685,9 @@ Object* Analitza::product(const Container& n)
 	for(double a = dl; a<=ul; a++){
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
-		Cn *val=(Cn*) calc(n.m_params.last());
+		Object *val=calc(n.m_params.last());
 		bool correct;
-		Operations::reduce(Operator::times, ret, val, correct);
+		ret=Operations::reduce(Operator::times, ret, val, correct);
 	}
 	
 	m_vars->destroy(var);
@@ -1020,7 +1021,7 @@ Object* Analitza::simpScalar(Container * c)
 {
 	Object *value=0;
 	Operator o = c->firstOperator();
-	bool sign=true;
+// 	bool sign=true;
 	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
 		bool d=false;
 		
@@ -1042,9 +1043,6 @@ Object* Analitza::simpScalar(Container * c)
 	}
 	
 	if(value) {
-		if(!sign)
-			value->negate();
-		
 		if(!value->isZero()) {
 			switch(o.operatorType()) {
 				case Operator::minus:
@@ -1278,17 +1276,17 @@ Object* Analitza::simpPiecewise(Container *c)
 	const Container *otherwise=0;
 	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
 	QList<Object*> newList;
-	bool stop=false;
-	for(; !stop && it!=itEnd; ++it) {
+	
+	for(; /*!stop &&*/ it!=itEnd; ++it) {
 		Container *p=static_cast<Container*>(*it);
 		Q_ASSERT( (*it)->type()==Object::container &&
 				(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
 		bool isPiece = p->containerType()==Container::piece;
 				
-		if(stop) {
-			delete p;
-			continue;
-		}
+// 		if(stop) {
+// 			delete p;
+// 			continue;
+// 		}
 				
 		if(isPiece) {
 			p->m_params[1]=simp(p->m_params[1]);
@@ -1299,7 +1297,7 @@ Object* Analitza::simpPiecewise(Container *c)
 					p->m_params.removeAt(1);
 					p->setContainerType(Container::otherwise);
 					isPiece=false;
-					stop=true;
+// 					stop=true;
 				} else {
 					delete p;
 				}

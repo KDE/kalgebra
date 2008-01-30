@@ -73,8 +73,8 @@ bool Expression::setText(const QString & exp)
 	m_err = QStringList();
 	Exp e(exp);
 	e.parse();
-	bool b;
-	if(b=e.error().isEmpty()) {
+	bool b=e.error().isEmpty();
+	if(b) {
 		setMathML(e.mathML());
 	} else {
 		m_err << e.error();
@@ -330,7 +330,7 @@ double Expression::value() const
 	if(m_tree && m_tree->type()==Object::value)
 		return ((Cn*) m_tree)->value();
 	else {
-		qDebug() << "trying to return an invalid value" << m_tree->toString();
+		qDebug() << "trying to return an invalid value";
 		return 0;
 	}
 }
