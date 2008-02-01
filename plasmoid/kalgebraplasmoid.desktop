@@ -17,7 +17,7 @@ Comment[zh_TW]=計算器
 Type=Service
 ServiceTypes=Plasma/Applet
 
-X-KDE-Library=kalgebraplasmoid
+X-KDE-Library=kalgebra_plasmoid
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@gmail.com
 X-KDE-PluginInfo-Name=kalgebraplasmoid
