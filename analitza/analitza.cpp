@@ -202,10 +202,9 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					}
 				} break;
 			}
-		} else if(c->containerType()==Container::math) {
+		} else if(c->containerType()==Container::math && !c->m_params.isEmpty()) {
 			//TODO: Multiline. Add a loop here!
 			ret=eval(c->m_params[0], resolve, unscoped);
-// 			ret=Expression::objectCopy(c->m_params[0]);
 		}
 	} else if(resolve && branch->type()==Object::variable) {
 		//FIXME: Should check if it is that crappy 

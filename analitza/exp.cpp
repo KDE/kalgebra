@@ -88,7 +88,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  R,  S,  R,  S,  R,  R },	//function
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  R,  S,  R,  S,  R,  R },	//block
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R, E2 },	//?
-	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  E },	//,
+	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  R,  R,  E },	//,
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//)
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
@@ -267,8 +267,9 @@ int Exp::reduce()
 	if(val.isEmpty()) {
 		aux = "0";
 		err << i18n("Value stack is empty");
-	} else
+	} else {
 		aux = val.pop();
+	}
 	
 	switch(oper) {
 		case tAdd:
@@ -368,7 +369,6 @@ int Exp::parse()
 				opr.pop();
 				break;
 			case R:
-// 				printPilaOpr(opr);
 				if(reduce()) return 1;
 				break;
 			case S:
@@ -395,10 +395,10 @@ int Exp::parse()
 				return 3;
 			case E4:
 				err << i18n("Uncorrect bounding");
-				return 3;
+				return 4;
 			case E:
 				err << i18n("Misplaced comma");
-				return 4;
+				return 5;
 			default:
 				break;
 		}

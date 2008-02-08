@@ -364,7 +364,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("undefined variable") << "x";
 	QTest::newRow("too few operators") << "divide(2)";
 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
-	QTest::newRow("emptymath") << "<math />";
+	QTest::newRow("emptymath") << "<math></math>";
 }
 
 void AnalitzaTest::testCrash()
@@ -375,6 +375,7 @@ void AnalitzaTest::testCrash()
 	
 	a->setExpression(e);
 	QString str=a->calculate().toString();
+	str=a->evaluate().toString();
 }
 
 #include "analitzatest.moc"
