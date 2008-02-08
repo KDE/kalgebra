@@ -244,6 +244,9 @@ void Graph3D::paintGL()
 
 bool Graph3D::create()
 {
+	if(!func3d.isCorrect())
+		return false;
+	
 	double mida=default_size*zoom, step=default_step*zoom;
 	const int k=static_cast<int>(mida/step)*2;
 	
