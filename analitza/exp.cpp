@@ -81,7 +81,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//+
 	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//-
 	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//*
-	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	///
+	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	// /
 	{ R,  R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//^
 	{ R,  R,  R,  R,  R,  R,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Minus
 	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//Unary Question Mark
@@ -90,7 +90,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  R,  R,  R,  R, E2 },	//?
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  S,  R,  R,  R,  E },	//,
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//(
-	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//)
+	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E2, E3,  R,  R, E2,  R, E2,  R,  R },	//)
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E1 },	//{
 	{ R,  R,  R,  R,  R,  R,  R,  R,  R,  R, E3, E3,  R,  R, E2,  R, E2,  R,  R },	//}
 	{ S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, E2,  S, E3,  S, E3,  A },	//$

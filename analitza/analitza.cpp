@@ -1004,6 +1004,15 @@ Object* Analitza::simp(Object* root)
 					   root=simpSum(c);
 					
 					break;
+				case Operator::card: {
+					Object* val=*c->firstValue();
+					if(val->isContainer())
+					{
+						bool correct;
+						root=Operations::reduceUnary(Operator::card, val, correct);
+						//TODO: if(!correct) Handle me!
+					}
+				}	break;
 				default:
 					it = c->firstValue();
 					
