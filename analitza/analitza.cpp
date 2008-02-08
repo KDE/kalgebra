@@ -606,11 +606,17 @@ Object* Analitza::operate(const Container* c)
 				
 				if(!opt) {
 					ret = numbers.first();
-				} else if(op.nparams()>-1 && numbers.count()!=op.nparams() && opt!=Operator::minus) {
-					m_err << i18n("Too much operators for <em>%1</em>", opt);
-					ret = 0;
+				} else if(((op.nparams()<0 && numbers.count()<=1) ||
+							(op.nparams()>-1 && numbers.count()!=op.nparams())) && opt!=Operator::minus) {
+					if(op.nparams()<0)
+						m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());
+					else
+						m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
+					
+					ret = new Cn(0.);
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
 					ret = numbers.first();
+					
 					if(numbers.count()>=2) {
 						Container::const_iterator it = numbers.constBegin()+1;
 						for(; it != numbers.constEnd(); ++it) {
