@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -22,7 +22,6 @@
 #include <QFontMetrics>
 #include <QSizeF>
 
-#include <plasma/svg.h>
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
 #include <plasma/widgets/lineedit.h>

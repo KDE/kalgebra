@@ -127,8 +127,14 @@ void ExpressionTest::testCorrection_data()
 	
 	QTest::newRow("limits") << "f:=n->3.." << false;
 	QTest::newRow("summatory with unknown uplimit") << "sum(x->1.., x)" << false;
-		//FIXME: Should be false in runtime, controlling it on the compiler.
-		//There is no way to have uplimit/downlimit separatedly with the current Exp parser
+	//FIXME: Should be false in runtime, controlling it on the compiler.
+	//There is no way to have uplimit/downlimit separatedly with the current Exp parser
+	
+	QTest::newRow("uncotextualized bounds") << "9..99" << false;
+	QTest::newRow("uncotextualized bounds") << "9..(9+9)" << false;
+	QTest::newRow("uncotextualized bounds") << "x:=9..(9+9)" << false;
+	QTest::newRow("uncotextualized bounds") << "3+(9..(9+9))" << false;
+	QTest::newRow("uncotextualized bounds") << "3+9..(9+9)" << false;
 }
 
 void ExpressionTest::testCorrection()

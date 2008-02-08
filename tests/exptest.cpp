@@ -54,6 +54,9 @@ void ExpTest::testExp_data()
 			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
 			"<cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
 	
+	QTest::newRow("lol") << "times((x),(y))" << "<math><apply><times /><ci>x</ci><ci>y</ci></apply></math>";
+	QTest::newRow("lol1") << "times((x),(y),((z)))" << "<math><apply><times /><ci>x</ci><ci>y</ci><ci>z</ci></apply></math>";
+	
 }
 
 void ExpTest::testExp()

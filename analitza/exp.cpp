@@ -77,7 +77,7 @@ const actEnum parseTbl[tMaxOp][tMaxOp] = {
 //	 :=   ->  ..  +   -   *   /   ^   M   Q   f   b   ?   ,   (   )   {   }   $
 	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//:=
 	{ R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//-> Lambda
-	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//.. Limits
+	{ R,  R,  R,  S,  S,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  E4, S,  R, E4 },	//.. Limits
 	{ R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//+
 	{ R,  R,  R,  R,  K,  S,  S,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//-
 	{ R,  R,  R,  R,  R,  K,  R,  S,  S,  S,  S,  S,  R,  R,  S,  R,  S,  R,  R },	//*
@@ -392,6 +392,9 @@ int Exp::parse()
 				return 2;
 			case E3:
 				err << i18n("Unbalanced right parenthesis");
+				return 3;
+			case E4:
+				err << i18n("Uncorrect bounding");
 				return 3;
 			case E:
 				err << i18n("Misplaced comma");

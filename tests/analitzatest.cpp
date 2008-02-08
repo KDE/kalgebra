@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -364,12 +364,13 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("undefined variable") << "x";
 	QTest::newRow("too few operators") << "divide(2)";
 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
+	QTest::newRow("emptymath") << "<math />";
 }
 
 void AnalitzaTest::testCrash()
 {
 	QFETCH(QString, expression);
-	Expression e(expression, false);
+	Expression e(expression, Expression::isMathML(expression));
 	QCOMPARE(e.isCorrect(), true);
 	
 	a->setExpression(e);
