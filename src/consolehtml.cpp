@@ -97,7 +97,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 	} else {
 		QString operation=op;
 		operation.replace('%', " % "); //To avoid %1 or %2 constructions
-		m_htmlLog += QString("<ul class='error'>Error: %1<li>%2</li></ul>").arg(operation).arg(a.errors().join("</li>\n<li>"));
+		m_htmlLog += i18n("<ul class='error'>Error: %1<li>%2</li></ul>", operation, a.errors().join("</li>\n<li>"));
 	}
 	
 	updateView(newEntry);

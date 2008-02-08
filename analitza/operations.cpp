@@ -104,10 +104,6 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a= a && b? 1.0 : 0.0;
 			boolean=true;
 			break;
-		case Operator::_not:
-			a=!a;
-			boolean = true;
-			break;
 		case Operator::_or:
 			a= a || b? 1.0 : 0.0;
 			boolean = true;
@@ -120,22 +116,22 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a= (a || !b)? 0.0 : 1.0;
 			boolean = true;
 			break;
-			case Operator::gcd: //code by michael cane aka kiko :)
-				while (b > 0.) {
-					residu = (int) floor(a) % (int) floor(b);
-					a = b;
-					b = residu;
-				}
-				break;
-				case Operator::lcm: //code by michael cane aka kiko :)
-					c=a*b;
-					while (b > 0.) {
-						residu = (int) floor(a) % (int) floor(b);
-						a = b;
-						b = residu;
-					}
-					a=(int)c/(int)a;
-					break;
+		case Operator::gcd: //code by michael cane aka kiko :)
+			while (b > 0.) {
+				residu = (int) floor(a) % (int) floor(b);
+				a = b;
+				b = residu;
+			}
+			break;
+		case Operator::lcm: //code by michael cane aka kiko :)
+			c=a*b;
+			while (b > 0.) {
+				residu = (int) floor(a) % (int) floor(b);
+				a = b;
+				b = residu;
+			}
+			a=(int)c/(int)a;
+			break;
 		case Operator::root:
 			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
 			break;
@@ -152,6 +148,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &correct)
 {
 	double a=val->value();
+	bool boolean=false;
 	
 	switch(op) {
 		case Operator::minus:
@@ -246,12 +243,17 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 		case Operator::ceiling:
 			a=ceil(a);
 			break;
+		case Operator::_not:
+			a=!a;
+			boolean = true;
+			break;
 		default:
 			correct=false;
 			break;
 	}
 	
 	val->setValue(a);
+	val->setBoolean(boolean);
 	
 	return val;
 }

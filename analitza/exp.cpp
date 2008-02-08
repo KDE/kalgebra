@@ -22,7 +22,7 @@
 #include <KLocale>
 using namespace std;
 
-#if 1
+#if 0
 QString opr2str(int in);
 void printPilaOpr(QStack<int> opr);
 
@@ -357,7 +357,7 @@ int Exp::parse()
 		switch(parseTbl[opr.top()][tok]){
 			case K:
 				if(val.isEmpty()) {
-					err << i18n("Wrong stack result");
+					err << i18n("Wrong expression");
 					return -1;
 				}
 				a=val.pop();
