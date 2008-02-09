@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -612,6 +612,7 @@ Object* Analitza::operate(const Container* c)
 					else
 						m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
 					
+					qDeleteAll(numbers);
 					ret = new Cn(0.);
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
 					ret = numbers.first();
@@ -1005,12 +1006,15 @@ Object* Analitza::simp(Object* root)
 					
 					break;
 				case Operator::card: {
-					Object* val=*c->firstValue();
-					if(val->isContainer())
+					Object* val=simp(*c->firstValue());
+					if(Operations::valueType(val)==Operations::Vector)
 					{
+						c->m_params.last()=0;
 						bool correct;
-						root=Operations::reduceUnary(Operator::card, val, correct);
+						val=Operations::reduceUnary(Operator::card, val, correct);
 						//TODO: if(!correct) Handle me!
+						delete c;
+						root=val;
 					}
 				}	break;
 				default:

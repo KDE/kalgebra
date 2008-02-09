@@ -346,7 +346,7 @@ Object * Operations::reduceUnaryVector(Operator::OperatorType op, Container * c,
 	Object *ret=0;
 	switch(op) {
 		case Operator::card:
-			ret=new Cn(static_cast<double>(c->m_params.count()));
+			ret=new Cn(double(c->m_params.count()));
 			break;
 		default:
 			correct=false;

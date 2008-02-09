@@ -328,7 +328,7 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
 	
 	QTest::newRow("sum") << "sum(x->1..99, vector {x,x,x})" << "vector { 4950, 4950, 4950 }";
-	QTest::newRow("sum") << "product(x->1..5, vector {x,x,x})" << "vector { 120, 120, 120 }";
+	QTest::newRow("product") << "product(x->1..5, vector {x,x,x})" << "vector { 120, 120, 120 }";
 }
 
 void AnalitzaTest::testVectorEvaluate()
@@ -354,7 +354,8 @@ void AnalitzaTest::testVectorEvaluate_data()
 	QTest::newRow("vect+vect") << "x+vector { 2, 3, 4 }+vector { 4, 3, 2 }" << "x+vector { 6, 6, 6 }";
 	QTest::newRow("vect+2vect") << "2*vector { x, y, z }+vector{x,y,z}" << "3*vector { x, y, z }";
 	QTest::newRow("vect+null") << "vector { x, y, z }+vector{0,0,0}" << "vector { x, y, z }";
-	QTest::newRow("card(vect)") << "card(vector { x, y, z })" << "3";
+	QTest::newRow("card") << "card(vector { x, y, z })" << "3";
+	QTest::newRow("card+var") << "card(x)" << "card(x)";
 }
 
 void AnalitzaTest::testCrash_data()
@@ -364,7 +365,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("undefined variable") << "x";
 	QTest::newRow("too few operators") << "divide(2)";
 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
-	QTest::newRow("emptymath") << "<math></math>";
+	QTest::newRow("empty math") << "<math></math>";
 }
 
 void AnalitzaTest::testCrash()
