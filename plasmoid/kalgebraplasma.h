@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -24,9 +24,9 @@
 #include "analitza.h"
 
 class QSizeF;
+class ExpressionEdit;
 
 namespace Plasma {
-	class LineEdit;
 	class Label;
 }
  
@@ -39,10 +39,11 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		
 		void init();
 	private slots:
+		void simplify();
 		void addOperation();
 		
 	private:
-		Plasma::LineEdit *m_input;
+		ExpressionEdit *m_input;
 		Plasma::Label *m_output;
 		Analitza a;
 };

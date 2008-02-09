@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 #include "kalgebraplasma.h"
+#include "expressionedit.h"
 
 #include <QPainter>
 #include <QFontMetrics>
@@ -24,7 +25,6 @@
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
-#include <plasma/widgets/lineedit.h>
 #include <plasma/widgets/label.h>
 #include <plasma/widgets/flash.h>
 #include <plasma/layouts/boxlayout.h>
@@ -49,7 +49,7 @@ void KAlgebraPlasmoid::init()
 	m_layout->setMargin( 0 );
 	m_layout->setSpacing( 0 );
 	
-	m_input = new Plasma::LineEdit(this);
+	m_input = new ExpressionEdit(this);
 	m_input->setGeometry(QRectF(QPointF(0,0),size()));
 	m_input->setDefaultTextColor(Qt::white);
 	m_input->setDefaultText(i18n("Write here the expression..."));
@@ -61,6 +61,7 @@ void KAlgebraPlasmoid::init()
 	m_layout->addItem(m_output);
 	
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
+	connect(m_input, SIGNAL(changed()), this, SLOT(simplify()));
 }
 
 void KAlgebraPlasmoid::addOperation()
@@ -79,6 +80,21 @@ void KAlgebraPlasmoid::addOperation()
 		m_output->setPen(QPen(Qt::red));
 		m_output->setText(a.errors().join("\n"));
 	}
+}
+
+void KAlgebraPlasmoid::simplify()
+{
+	Expression res;
+	a.setExpression(Expression(m_input->toPlainText(), false));
+	
+	if(a.isCorrect()) {
+		a.simplify();
+		res=*a.expression();
+		
+		m_output->setPen(QPen(Qt::blue));
+		m_output->setText(res.toString());
+	} else
+		m_output->setText(QString());
 }
 
 #include "kalgebraplasma.moc"
