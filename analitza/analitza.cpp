@@ -589,6 +589,8 @@ Object* Analitza::operate(const Container* c)
 				ret = sum(*c);
 			else if(opt==Operator::product)
 				ret = product(*c);
+			else if(opt==Operator::selector)
+				ret = selector(calc(c->m_params[1]), calc(c->m_params[2]));
 			else if(opt==Operator::function) {
 				Ci* var= (Ci*) c->m_params[0];
 				
@@ -618,8 +620,9 @@ Object* Analitza::operate(const Container* c)
 					ret = numbers.first();
 					
 					if(numbers.count()>=2) {
-						Container::const_iterator it = numbers.constBegin()+1;
-						for(; it != numbers.constEnd(); ++it) {
+						Container::const_iterator it=numbers.constBegin()+1;
+						Container::const_iterator itEnd=numbers.constEnd();
+						for(; it!=itEnd; ++it) {
 							bool correct;
 							ret=Operations::reduce(opt, ret, *it, correct);
 							if(!correct)
@@ -630,8 +633,7 @@ Object* Analitza::operate(const Container* c)
 						bool correct;
 						ret=Operations::reduceUnary(opt, ret, correct);
 						if(!correct)
-							m_err.append(i18n("Can't calculate the %1 %2",
-										ret->toString(), op.toString()));
+							m_err.append(i18n("Can't calculate the %1 %2", ret->toString(), op.toString()));
 					}
 				} else {
 					ret = numbers.first();
@@ -698,6 +700,25 @@ Object* Analitza::product(const Container& n)
 	
 	m_vars->destroy(var);
 	return ret;
+}
+
+Object* Analitza::selector(const Object* index, const Object* vector)
+{
+	if(index->type()==Object::value && Operations::valueType(vector)==Operations::Vector)
+	{
+		const Cn *cIdx=static_cast<const Cn*>(index);
+		const Container *cVect=static_cast<const Container*>(vector);
+		
+		int select=cIdx->intValue();
+		if(select<1 || (select-1) > cVect->m_params.count())
+		{
+			m_err << i18n("Unvalid index for a container");
+			return new Cn(0.);
+		}
+		return Expression::objectCopy(cVect->m_params[select-1]);
+	}
+	m_err << i18n("We can only select a containers value with its integer index");
+	return new Cn(0.);
 }
 
 bool Analitza::isFunction(const Ci& func) const
@@ -1015,6 +1036,20 @@ Object* Analitza::simp(Object* root)
 						//TODO: if(!correct) Handle me!
 						delete c;
 						root=val;
+					}
+				}	break;
+				case Operator::selector: {
+					c->m_params[1]=simp(c->m_params[1]);
+					c->m_params[2]=simp(c->m_params[2]);
+					
+					Object* idx=c->m_params[1];
+					Object* value=c->m_params[2];
+					if(Operations::valueType(idx)==Operations::Real && Operations::valueType(value)==Operations::Vector)
+					{
+						root=selector(*c->firstValue(), c->m_params.last());
+						delete c;
+						qDebug() << root->toString();
+						objectWalker(root);
 					}
 				}	break;
 				default:

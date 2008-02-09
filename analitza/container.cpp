@@ -114,9 +114,10 @@ QString Container::toString() const
 			Container *c = (Container*) m_params[i];
 			QString s = c->toString();
 			Operator child_op = c->firstOperator();
-			if(op!=0 && op->weight()>=child_op.weight() && op->nparams()!=1) //apply
+			
+			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
 				s=QString("(%1)").arg(s);
-			else if(c->containerType() == Container::bvar) { //bvar
+			} else if(c->containerType() == Container::bvar) { //bvar
 				Container *ul = ulimit(), *dl = dlimit();
 				if(ul!=0 || dl!=0) {
 					if(dl!=0)

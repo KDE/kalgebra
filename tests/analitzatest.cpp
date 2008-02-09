@@ -329,6 +329,8 @@ void AnalitzaTest::testVector_data()
 	
 	QTest::newRow("sum") << "sum(x->1..99, vector {x,x,x})" << "vector { 4950, 4950, 4950 }";
 	QTest::newRow("product") << "product(x->1..5, vector {x,x,x})" << "vector { 120, 120, 120 }";
+	
+	QTest::newRow("selector") << "selector(2, vector{1,2,3})" << "2";
 }
 
 void AnalitzaTest::testVectorEvaluate()
@@ -356,6 +358,10 @@ void AnalitzaTest::testVectorEvaluate_data()
 	QTest::newRow("vect+null") << "vector { x, y, z }+vector{0,0,0}" << "vector { x, y, z }";
 	QTest::newRow("card") << "card(vector { x, y, z })" << "3";
 	QTest::newRow("card+var") << "card(x)" << "card(x)";
+	
+	QTest::newRow("selector+idx") << "selector(1, vector{x,y,z})" << "x";
+	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "selector(x, vector { x, y, z })";
+	QTest::newRow("selector+impossible") << "selector(1, v)" << "selector(1, v)";
 }
 
 void AnalitzaTest::testCrash_data()
@@ -365,7 +371,9 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("undefined variable") << "x";
 	QTest::newRow("too few operators") << "divide(2)";
 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
-	QTest::newRow("empty math") << "<math></math>";
+	QTest::newRow("empty math") << "<math />";
+	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
+	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
 }
 
 void AnalitzaTest::testCrash()

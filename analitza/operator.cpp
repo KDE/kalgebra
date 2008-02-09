@@ -18,7 +18,7 @@
 
 #include "operator.h"
 
-char Operator::m_words[nOfOps][10] = {
+char Operator::m_words[nOfOps][14] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",
 	"power", "root", "factorial",
@@ -39,7 +39,7 @@ char Operator::m_words[nOfOps][10] = {
 	"conjugate", "arg", "real", "imaginary",
 	"sum", "product", "diff",
 	//Vector operations
-	"card",
+	"card", "scalarproduct", "selector",
 	"function"
 };
 
@@ -100,6 +100,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case gcd:
 		case lcm:
 		case function:
+		case scalarproduct:
 			return -1;
 		case quotient:
 		case power:
@@ -115,6 +116,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case implies:
 		case approx:
 		case root:
+		case selector: //FIXME: Should move to -1 when matrix appear
 			return 2;
 		case abs:
 		case sin:

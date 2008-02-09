@@ -50,7 +50,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			break;
 		case Operator::rem:
 			if(floor(b)!=0.)
-				a = static_cast<int>(floor(a)) % static_cast<int>(floor(b));
+				a = remainder(a, b);
 			else
 				correct=false;
 			break;
@@ -331,6 +331,8 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Container * v1,
 Object * Operations::reduceVectorVector(Operator::OperatorType op, Container * v1, Container * v2, bool &correct)
 {
 	Q_ASSERT(v1->m_params.count()==v2->m_params.count());
+	if(op==Operator::scalarproduct)
+		op=Operator::times;
 	Container::iterator it2=v2->m_params.begin();
 	for(Container::iterator it1=v1->m_params.begin(); it1!=v1->m_params.end(); ++it1, ++it2)
 	{

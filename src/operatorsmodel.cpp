@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -322,6 +322,12 @@ QString OperatorsModel::description(Operator o)
 			break;
 		case Operator::card:
 			s = i18n("Cardinal");
+			break;
+		case Operator::scalarproduct:
+			s = i18n("Scalar product");
+			break;
+		case Operator::selector:
+			s = i18n("Select an element from a container");
 			break;
 		default:
 			break;

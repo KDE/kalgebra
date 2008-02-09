@@ -48,7 +48,7 @@ class ANALITZA_EXPORT Operator : public Object
 			exp, ln, log,
 			conjugate, arg, real, imaginary,
 			sum, product, diff,
-			card,
+			card, scalarproduct, selector,
 			function, nOfOps
 		};
 		/** Constructor. Creates an operator with @p t type .*/
@@ -105,7 +105,7 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);
 		
-		static char m_words[nOfOps][10];
+		static char m_words[nOfOps][14];
 		
 		/** Returns this operator @p o precedence. */
 		static unsigned int operatorWeight(OperatorType o);

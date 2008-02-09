@@ -122,6 +122,7 @@ class ANALITZA_EXPORT Analitza
 		
 		Object* sum(const Container& c);
 		Object* product(const Container& c);
+		Object* selector(const Object* index, const Object* vector);
 		Object* func(const Container& c);
 		
 		Object* calcPiecewise(const Container* c);
