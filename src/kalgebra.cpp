@@ -66,14 +66,14 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
 	
-	VariablesModel* c_varsModel=new VariablesModel;
+	c_varsModel=new VariablesModel;
 	c_varsModel->setVariables(c_results->analitza()->variables());
 	
 	c_variables = new QTreeView(c_dock_vars);
 	c_variables->setModel(c_varsModel);
 	c_variables->setRootIsDecorated(false);
 	c_variables->setSelectionMode(QAbstractItemView::SingleSelection);
-	c_variables->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+	c_variables->header()->resizeSections(QHeaderView::ResizeToContents);
 	
 	c_exp = new ExpressionEdit(console);
 	c_exp->setAnalitza(c_results->analitza());
@@ -86,7 +86,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	connect(c_exp, SIGNAL(returnPressed()), this, SLOT(operate()));
 	connect(c_results, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
-	connect(c_results, SIGNAL(changed()), c_varsModel, SLOT(updateInformation()));
+	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
 	connect(c_variables, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_var(const QModelIndex &)));
 	
@@ -115,7 +115,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	b_funcs = new FunctionsView(b_tools);
 	b_funcs->setModel(b_funcsModel);
-	b_funcs->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
 	b_funcs->setRootIsDecorated(false);
 	b_funcs->setSortingEnabled(false);
@@ -394,6 +394,12 @@ void KAlgebra::tabChanged(int n)
 void KAlgebra::select(const QModelIndex & idx)
 {
 	b_funcsModel->setSelected(idx);
+}
+
+void KAlgebra::updateInformation()
+{
+	c_varsModel->updateInformation();
+	c_variables->header()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 #include "kalgebra.moc"

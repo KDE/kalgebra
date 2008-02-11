@@ -28,7 +28,7 @@
 
 class ExpressionEdit;
 class ConsoleHtml;
-class VariableView;
+class VariablesModel;
 class FunctionEdit;
 class Graph2D;
 class Graph3D;
@@ -49,6 +49,7 @@ class KAlgebra : public KMainWindow
 		QTreeView *c_variables;
 		int outs;
 		QDockWidget *c_dock_vars;
+		VariablesModel* c_varsModel;
 		
 		//graf 2d
 		FunctionsModel* b_funcsModel;
@@ -68,6 +69,7 @@ class KAlgebra : public KMainWindow
 		void loadScript();
 		void saveScript();
 		void saveLog();
+		void updateInformation();
 		
 		void select(const QModelIndex& idx);
 		void new_func();
