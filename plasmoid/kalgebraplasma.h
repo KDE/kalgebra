@@ -49,6 +49,6 @@ class KAlgebraPlasmoid : public Plasma::Applet
 };
 
 // This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(kalgebraplasmoid, KAlgebraPlasmoid);
+K_EXPORT_PLASMA_APPLET(kalgebraplasmoid, KAlgebraPlasmoid)
 
 #endif
