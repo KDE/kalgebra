@@ -20,6 +20,10 @@ set(kalgebra_SRCS
 	functionsmodel.cpp
 )
 
+#uncomment this if oxygen icons for kalgebra are available
+#kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
+kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
+
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza)
 
@@ -29,7 +33,3 @@ endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra DESTINATION ${BIN_INSTALL_DIR})
 install(FILES kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-
-#uncomment this if oxygen icons for kalgebra are available
-#kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
-kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
