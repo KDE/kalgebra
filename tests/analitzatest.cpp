@@ -233,18 +233,27 @@ void AnalitzaTest::testCorrection()
 void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
-	QTest::newRow("different tag") << QStringList("prp { x, y ,z }");
+	QTest::newRow("different tag") << QStringList("prp { x, y, z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x->1.., x)");
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x->..3, x)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
+	
+	QStringList script;
+	script << "x:=x+1";
+	QTest::newRow("recursive var") << script;
+	
+	script.clear();
+	script << "a:=b";
+	script << "b:=a";
+	QTest::newRow("var dependency cycle") << script;
 }
 
 void AnalitzaTest::testUncorrection()
 {
 	QFETCH(QStringList, expression);
 	
-	bool correct;
+	bool correct=false;
 	Analitza b;
 	Expression res;
 	foreach(const QString &exp, expression) {
@@ -256,6 +265,7 @@ void AnalitzaTest::testUncorrection()
 			correct=b.isCorrect();
 			res=b.evaluate();
 		}
+// 		qDebug() << "cycle" << b.isCorrect();
 	}
 	QVERIFY(!b.isCorrect());
 	
@@ -265,7 +275,7 @@ void AnalitzaTest::testUncorrection()
 		correct=e.isCorrect();
 		
 		if(correct) {
-			b.setExpression(e);;
+			b.setExpression(e);
 			val=b.calculate().value();
 		}
 	}
@@ -297,6 +307,8 @@ void AnalitzaTest::testEvaluate()
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
+		QVERIFY(b.isCorrect());
+		b.calculate();
 	}
 	QCOMPARE(res.toString(), result);
 }

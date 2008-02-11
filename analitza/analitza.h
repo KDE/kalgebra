@@ -93,9 +93,6 @@ class ANALITZA_EXPORT Analitza
 		/** simplifies the expression. */
 		void simplify(); //FIXME: Should return an Expression
 		
-		/** Returns whether there is any @p var variable in the @p o tree. @p bvars tells the already defined variables (which won't return true). */
-		static bool hasVars(const Object* o, const QString &var=QString(), const QStringList& bvars=QStringList());
-		
 		/** @returns Return an error list. */
 		QStringList errors() const { return m_exp.error() + m_err; }
 		
@@ -111,6 +108,9 @@ class ANALITZA_EXPORT Analitza
 		/** Adds a variable entry */
 		void insertVariable(const QString& name, const Object* value);
 		
+		/** Returns whether there is any @p var variable in the @p o tree. @p bvars tells the already defined variables (which won't return true). */
+		static bool hasVars(const Object* o, const QString &var=QString(),
+							const QStringList& bvars=QStringList(), const Variables* vars=0);
 	protected:
 		Expression m_exp;
 		Variables *m_vars;

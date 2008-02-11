@@ -83,7 +83,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			Ci *var = (Ci*) c->m_params[0];
 			ret = eval(c->m_params[1], true, unscoped);
 			ret=simp(ret);
-			m_vars->modify(var->name(), ret);
+			insertVariable(var->name(), ret);
 		} else if(c->containerType()==Container::piecewise) {
 			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
 			for(; !ret && it!=itEnd; ++it) {
@@ -496,27 +496,26 @@ Object* Analitza::calcPiecewise(const Container* c)
 Object* Analitza::calcDeclare(const Container* c)
 {
 	Object *ret=0;
-	if(c->m_params.count()<=1) {
+	if(c->m_params.count()!=2 || c->m_params[0]->type()!=Object::variable) {
 		m_err << i18n("Need a var name and a value");
 		return 0;
 	}
 			
-	Ci *var = (Ci*) c->m_params[0];
+	const Ci *var = (const Ci*) c->m_params[0];
 	//NOTE: Should not procrastinate the variable resolution... I think :)
 	//m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
 	
 	//I wonder why eval is inside calc...
 	Object* o = eval(c->m_params[1], true, QSet<QString>());
 	o=simp(o);
-	m_vars->modify(var->name(), o);
-	if(o->type()==Object::value)
-		ret=Expression::objectCopy(o);
+	insertVariable(var->name(), o);
+	if(Operations::valueType(o)!=Operations::Null)
+		ret=o;
 	else {
-				//should return NaN
-		Cn n(0.);
-		ret=Expression::objectCopy(&n);
+		//should return NaN
+		ret=new Cn(0.);
+		delete o;
 	}
-	delete o;
 	return ret;
 }
 
@@ -583,15 +582,16 @@ Object* Analitza::operate(const Container* c)
 		{
 			Operator op = c->firstOperator();
 			Operator::OperatorType opt=op.operatorType();
-			Q_ASSERT(opt!=Operator::none);
 			
 			if(opt==Operator::sum) 
 				ret = sum(*c);
 			else if(opt==Operator::product)
 				ret = product(*c);
-			else if(opt==Operator::selector)
-				ret = selector(calc(c->m_params[1]), calc(c->m_params[2]));
-			else if(opt==Operator::function) {
+			else if(opt==Operator::selector) {
+				Object *idx=calc(c->m_params[1]), *vect=calc(c->m_params[2]);
+				ret = selector(idx, vect);
+				delete idx; delete vect;
+			} else if(opt==Operator::function) {
 				Ci* var= (Ci*) c->m_params[0];
 				
 				if(var->isFunction())
@@ -704,21 +704,23 @@ Object* Analitza::product(const Container& n)
 
 Object* Analitza::selector(const Object* index, const Object* vector)
 {
-	if(index->type()==Object::value && Operations::valueType(vector)==Operations::Vector)
-	{
+	Object *ret;
+	if(index->type()==Object::value && Operations::valueType(vector)==Operations::Vector) {
 		const Cn *cIdx=static_cast<const Cn*>(index);
 		const Container *cVect=static_cast<const Container*>(vector);
 		
 		int select=cIdx->intValue();
-		if(select<1 || (select-1) > cVect->m_params.count())
-		{
+		if(select<1 || (select-1) > cVect->m_params.count()) {
 			m_err << i18n("Unvalid index for a container");
-			return new Cn(0.);
+			ret=new Cn(0.);
+		} else {
+			ret=Expression::objectCopy(cVect->m_params[select-1]);
 		}
-		return Expression::objectCopy(cVect->m_params[select-1]);
+	} else {
+		ret = new Cn(0.);
+		m_err << i18n("We can only select a containers value with its integer index");
 	}
-	m_err << i18n("We can only select a containers value with its integer index");
-	return new Cn(0.);
+	return ret;
 }
 
 bool Analitza::isFunction(const Ci& func) const
@@ -1048,8 +1050,6 @@ Object* Analitza::simp(Object* root)
 					{
 						root=selector(*c->firstValue(), c->m_params.last());
 						delete c;
-						qDebug() << root->toString();
-						objectWalker(root);
 					}
 				}	break;
 				default:
@@ -1061,7 +1061,7 @@ Object* Analitza::simp(Object* root)
 			}
 		} else {
 			Container::iterator it = c->firstValue();
-					
+			
 			for(; it!=c->m_params.end(); it++)
 				*it = simp(*it);
 		}
@@ -1335,12 +1335,7 @@ Object* Analitza::simpPiecewise(Container *c)
 		Q_ASSERT( (*it)->type()==Object::container &&
 				(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
 		bool isPiece = p->containerType()==Container::piece;
-				
-// 		if(stop) {
-// 			delete p;
-// 			continue;
-// 		}
-				
+		
 		if(isPiece) {
 			p->m_params[1]=simp(p->m_params[1]);
 			if(p->m_params[1]->type()==Object::value) {
@@ -1382,7 +1377,7 @@ Object* Analitza::simpPiecewise(Container *c)
 	return root;
 }
 
-bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& bvars)
+bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& bvars, const Variables* vars)
 {
 	Q_ASSERT(o);
 	
@@ -1397,6 +1392,9 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 			
 			if(r && bvars.contains(i->name()))
 				r=false;
+			else if(r && vars && !var.isEmpty() && vars->contains(i->name())) {
+				r=hasVars(vars->value(i->name()), var, bvars, vars);
+			}
 		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
@@ -1417,7 +1415,7 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 							scope += bvar->name();
 					}
 				} else if(firstFound)
-					r |= hasVars(*it, var, scope);
+					r |= hasVars(*it, var, scope, vars);
 			}
 			
 		} break;
@@ -1514,12 +1512,22 @@ Expression Analitza::derivative()
 
 void Analitza::insertVariable(const QString & name, const Expression & value)
 {
-	m_vars->modify(name, value);
+	insertVariable(name, value.tree());
 }
 
 void Analitza::insertVariable(const QString & name, const Object * value)
 {
-	m_vars->modify(name, value);
+	bool islambda=false;
+	if(value->isContainer()) {
+		const Container *c=static_cast<const Container*>(value);
+		islambda= c->containerType()==Container::lambda;
+	}
+	
+	if(!islambda && hasVars(value, name, QStringList(), m_vars)) {
+		m_err << i18n("Defined a variable cycle");
+	} else {
+		m_vars->modify(name, value);
+	}
 }
 
 bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
@@ -1538,8 +1546,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 		}	break;
 		case Object::variable:
 			cand=static_cast<const Ci*>(o);
-			if(vars.contains(cand->name()))
-				found=true;
+			found=vars.contains(cand->name());
 			break;
 		default:
 			found=false;
@@ -1551,7 +1558,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
 {
 	bool found=false;
-	if(c->containerType()==Container::apply) {
+	if(c->containerType()!=Container::bvar) {
 		Container::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
 		for(; !found && it!=itEnd; ++it) {
 			if(hasTheVar(vars, *it))
@@ -1595,5 +1602,6 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 	delete v2;
 	return ret;
 }
+
 
 
