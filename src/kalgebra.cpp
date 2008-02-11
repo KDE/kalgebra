@@ -54,6 +54,9 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
 	
+	m_status = new QLabel(this);
+	statusBar()->insertWidget(0, m_status);
+	
 	///////Consola
 	QWidget *console = new QWidget(p);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
@@ -272,7 +275,8 @@ void KAlgebra::operate()
 
 void KAlgebra::changeStatusBar(const QString& msg)
 {
-	statusBar()->showMessage(msg);
+// 	statusBar()->showMessage(msg);
+	m_status->setText(msg);
 }
 
 void KAlgebra::loadScript()

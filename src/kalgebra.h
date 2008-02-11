@@ -23,6 +23,7 @@
 #include <QTreeView>
 #include <QPushButton>
 #include <QTabWidget>
+#include <QLabel>
 #include "config-kalgebra.h"
 
 class ExpressionEdit;
@@ -40,6 +41,8 @@ class KAlgebra : public KMainWindow
 		KAlgebra ( QWidget *parent=0 );
 		~KAlgebra() {}
 	private:
+		QLabel *m_status;
+		
 		//consoleeWidget
 		ExpressionEdit *c_exp;
 		ConsoleHtml *c_results;
@@ -60,7 +63,7 @@ class KAlgebra : public KMainWindow
 		ExpressionEdit *t_exp;
 		Graph3D *grafic3d;
 #endif
-	public slots:
+	private slots:
 		void operate();
 		void loadScript();
 		void saveScript();
