@@ -37,7 +37,7 @@ KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 {
 	//this will get us the standard applet background, for free!
 	//setDrawStandardBackground(true);
-	setSize(200, 200);
+	setSize(QSize(200, 200));
 }
  
  
