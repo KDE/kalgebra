@@ -16,6 +16,7 @@ Comment[pt]=Uma Calculadora
 Comment[pt_BR]=Uma Calculadora
 Comment[tr]=Bir Hesap Makinesi
 Comment[uk]=Калькулятор
+Comment[zh_CN]=一个计算器
 Comment[zh_TW]=計算器
 Type=Service
 ServiceTypes=Plasma/Applet
