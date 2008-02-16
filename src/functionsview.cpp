@@ -29,8 +29,10 @@ FunctionsView::FunctionsView(QWidget * parent) : QTreeView(parent)
 
 void FunctionsView::selectionChanged(const QItemSelection & selected, const QItemSelection &)
 {
-	QModelIndex idx=selected.indexes().first();
-	model()->setData(idx, QVariant(), FunctionsModel::Selection);
+	if(!selected.indexes().isEmpty()) {
+		QModelIndex idx=selected.indexes().first();
+		model()->setData(idx, QVariant(), FunctionsModel::Selection);
+	}
 }
 
 void FunctionsView::mousePressEvent(QMouseEvent * e)

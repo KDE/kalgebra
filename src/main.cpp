@@ -23,8 +23,8 @@
 
 int main(int argc, char *argv[])
 {
-	KAboutData about("kalgebra", 0, ki18n(("KAlgebra")), "0.7", ki18n("A calculator"),
-			 KAboutData::License_GPL, ki18n("(C) 2006 Aleix Pol Gonzalez"));
+	KAboutData about("kalgebra", 0, ki18n(("KAlgebra")), "0.8", ki18n("A calculator"),
+			 KAboutData::License_GPL, ki18n("(C) 2006-2008 Aleix Pol Gonzalez"));
 	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@gmail.com" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KApplication app;

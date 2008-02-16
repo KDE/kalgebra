@@ -61,6 +61,8 @@ class FunctionsModel : public QAbstractTableModel
 		/** Returns a pointer to the @p num nth function. */
 		function* editFunction(int num);
 		
+		void unselect();
+		
 		void clear();
 		
 		void sendStatus(const QString& msg) { emit status(msg); }

@@ -256,11 +256,11 @@ void Graph2D::paintEvent( QPaintEvent * )
 		ccursor.setColor(QColor(90,90,160));
 		ccursor.setStyle(Qt::SolidLine);
 		finestra.setPen(ccursor);
-		QLineF slope=pendent(fromWidget(ultim));
-		slope.translate(mark);
+		QLineF sl=slope(fromWidget(ultim));
+		sl.translate(mark);
 // 		if(!isnan(from.x()) && !isnan(from.y()) && !isnan(to.x()) && !isnan(to.y()))
-		if(!slope.isNull() && !isnan(slope.length()))
-			finestra.drawLine(toWidget(slope));
+		if(!sl.isNull() && !isnan(sl.length()))
+			finestra.drawLine(toWidget(sl));
 		finestra.setRenderHint(QPainter::Antialiasing, false);
 		//EOderivative
 		
@@ -400,41 +400,17 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 
 QPointF Graph2D::calcImage(const QPointF& ndp)
 {
-	QPointF dp = ndp;
-	/*m_posText=QString();
-	if(!funclist.isEmpty()){
-		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
-			if(it->selected() && it->isShown()) {
-				QPair<QPointF, QString> o = it->calc(dp);
-				dp=o.first;
-				m_posText = o.second;
-				break;
-			}
-		}
-	}*/
-	return dp;
+	return m_model->calcImage(ndp).first;
 }
 
-QLineF Graph2D::pendent(const QPointF & dp) const
+QLineF Graph2D::slope(const QPointF & dp) const
 {
-	QLineF ret;
-/*	if(!funclist.isEmpty()){
-		for (QList<function>::const_iterator it = funclist.begin(); it != funclist.end(); ++it ){
-			if(it->selected() && it->isShown()) {
-				ret = it->derivative(dp);
-				break;
-			}
-		}
-	}*/
-	return ret;
+	return m_model->slope(dp);
 }
 
-void Graph2D::unselect(){
-// 	if(!funclist.isEmpty()){
-// 		for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it) {
-// 			(*it).setSelected(false);
-// 		}
-// 	}
+void Graph2D::unselect()
+{
+	m_model->unselect();
 }
 
 QLineF Graph2D::toWidget(const QLineF &f) const

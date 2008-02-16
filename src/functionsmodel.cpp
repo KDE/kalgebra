@@ -170,8 +170,6 @@ bool FunctionsModel::setShown(const QString& f, bool shown)
 	for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
 		if(it->name() == f) {
 			it->setShown(shown);
-// 			valid=false;
-// 			this->repaint(); emit update
 			return true;
 		}
 	}
@@ -271,6 +269,11 @@ QPair<QPointF, QString> FunctionsModel::calcImage(const QPointF & ndp)
 Qt::ItemFlags FunctionsModel::flags(const QModelIndex &) const
 {
 	return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsTristate;
+}
+
+void FunctionsModel::unselect()
+{
+	m_selectedRow=-1;
 }
 
 #include "functionsmodel.moc"
