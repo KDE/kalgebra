@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -91,6 +91,10 @@ public:
 	/** Sets whether it is a read-only widget. */
 	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
 	
+	void setKeepAspectRatio(bool ar);
+	
+	bool keepAspectRatio() const { return m_keepRatio; }
+	
 public slots:
 	/** Makes the image as dirty and repaints everything. */
 	void forceRepaint() { valid=false; repaint(); }
@@ -149,13 +153,15 @@ private:
 	
 	//presentation
 	bool m_squares;
+	bool m_keepRatio;
 	double resolucio;
 	double rang_x, rang_y;
-	QPointF ant;
-	QRectF viewport;
+    QPointF ant;
+    QRectF viewport;
+    QRectF userViewport;
 	QRectF defViewport;
 	void pintafunc(QPaintDevice*);
-	void update_scale();
+	void updateScale();
 		
 	void sendStatus(const QString& msg) { emit status(msg); }
 	bool m_framed;

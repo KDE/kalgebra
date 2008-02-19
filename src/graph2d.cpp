@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -42,7 +42,8 @@ QColor const Graph2D::m_axe2Color(235,235,235);
 
 Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	QWidget(parent), m_model(fm),
-	valid(false), mode(None), m_squares(true), resolucio(800), m_framed(false), m_readonly(false), m_posText("")
+	valid(false), mode(None), m_squares(true), m_keepRatio(true), resolucio(800),
+	m_framed(false), m_readonly(false), m_posText()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	this->setCursor(QCursor(Qt::CrossCursor));
@@ -136,13 +137,14 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	
 	double xini=ceil(viewport.left()), inc=1.;
 	double yini=ceil(viewport.top());
-	if(viewport.width()>100.) {
+	
+	if(viewport.width()>100.) { //Draw less lines on large viewports
 		inc=10.;
 		xini=floor(xini/10.)*10.;
 		yini=floor(yini/10.)*10.;
 	}
 	
-	for(double x=xini; x<=viewport.right(); x+=inc) {	// ralletes X
+	for(double x=xini; x<=viewport.right(); x+=inc) {	// ticks X
 		p = toWidget(QPointF(x, 0.));
 		if(m_squares)
 			finestra->drawLine(QPointF(p.x(), this->height()), QPointF(p.x(), 0));
@@ -310,7 +312,7 @@ void Graph2D::wheelEvent(QWheelEvent *e){
 		viewport.setTop(viewport.top() + d);
 		viewport.setRight(viewport.right() + d);
 		viewport.setBottom(viewport.bottom() - d);
-		update_scale();
+		updateScale();
 	}
 	sendStatus(QString("(%1, %2)-(%3, %4)").arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
 }
@@ -370,20 +372,24 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 	
 	switch(e->key()) {
 		case Qt::Key_Right:
-			viewport.setLeft(viewport.left() +xstep);
-			viewport.setRight(viewport.right() +xstep);
+			userViewport.setLeft(viewport.left() +xstep);
+			userViewport.setRight(viewport.right() +xstep);
+			updateScale();
 			break;
 		case Qt::Key_Left:
-			viewport.setLeft(viewport.left() -xstep);
-			viewport.setRight(viewport.right() -xstep);
+			userViewport.setLeft(viewport.left() -xstep);
+			userViewport.setRight(viewport.right() -xstep);
+			updateScale();
 			break;
 		case Qt::Key_Down:
-			viewport.setTop(viewport.top() -ystep);
-			viewport.setBottom(viewport.bottom() -ystep);
+			userViewport.setTop(viewport.top() -ystep);
+			userViewport.setBottom(viewport.bottom() -ystep);
+			updateScale();
 			break;
 		case Qt::Key_Up:
-			viewport.setTop(viewport.top() +ystep);
-			viewport.setBottom(viewport.bottom() +ystep);
+			userViewport.setTop(viewport.top() +ystep);
+			userViewport.setBottom(viewport.bottom() +ystep);
+			updateScale();
 			break;
 		case Qt::Key_Minus:
 			zoomOut();
@@ -420,7 +426,8 @@ QLineF Graph2D::toWidget(const QLineF &f) const
 
 QPointF Graph2D::toWidget(const QPointF& p) const
 {
-	return QPointF((-viewport.left() + p.x()) * rang_x,  (-viewport.top() + p.y()) * rang_y);
+	double left=-viewport.left(), top=-viewport.top();
+	return QPointF((left + p.x()) * rang_x,  (top + p.y()) * rang_y);
 }
 
 QPointF Graph2D::fromWidget(const QPointF& p) const
@@ -442,27 +449,28 @@ void Graph2D::setResolution(int res)
 
 void Graph2D::setViewport(const QRectF &vp)
 {
-	viewport = vp;
-	if(viewport.top()<viewport.bottom()) {
-		double aux = viewport.bottom();
-		viewport.setBottom(viewport.top());
-		viewport.setTop(aux);
+	userViewport = vp;
+	if(userViewport.top()<userViewport.bottom()) {
+		double aux = userViewport.bottom();
+		userViewport.setBottom(userViewport.top());
+		userViewport.setTop(aux);
 	}
 	
-	if(viewport.right()<viewport.left()) {
-		double aux = viewport.left();
-		viewport.setLeft(viewport.right());
-		viewport.setRight(aux);
+	if(userViewport .right()<userViewport .left()) {
+		double aux = userViewport .left();
+		userViewport.setLeft(userViewport .right());
+		userViewport.setRight(aux);
 	}
 	
-	sendStatus(QString("(%1, %2)-(%3, %4)").arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
-	update_scale();
+	sendStatus(QString("(%1, %2)-(%3, %4)")
+			.arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
+	updateScale();
 }
 
 void Graph2D::resizeEvent(QResizeEvent *)
 {
 	buffer=QPixmap(this->size());
-	update_scale();
+	updateScale();
 	repaint();
 }
 
@@ -500,20 +508,39 @@ bool Graph2D::toImage(const QString &path)
 	return b;
 }
 
-void Graph2D::update_scale()
+void Graph2D::updateScale()
 {
-	rang_x= this->width()/viewport.width();
-	rang_y= this->height()/viewport.height();
+	viewport=userViewport;
+	rang_x= width()/viewport.width();
+	rang_y= height()/viewport.height();
+	
+	if(m_keepRatio && rang_x!=rang_y)
+	{
+		rang_y=rang_x=qMax(fabs(rang_x), fabs(rang_y));
+		if(rang_y>0.) rang_y=-rang_y;
+		if(rang_x<0.) rang_x=-rang_x;
+		
+		double newW=width()/rang_x, newH=height()/rang_x;
+		
+		double mx=(userViewport.width()-newW)/2.;
+		double my=(userViewport.height()-newH)/2.;
+		
+		viewport.setLeft(userViewport.left()+mx);
+		viewport.setTop(userViewport.bottom()-my);
+		viewport.setWidth(newW);
+		viewport.setHeight(-newH);
+		Q_ASSERT(userViewport.center() == viewport.center());
+	}
+	
 	valid=false;
 	this->repaint();
 }
 
 void Graph2D::zoomIn()
 {
-	if(viewport.height() < -3. && viewport.width() > 3.){
+	if(userViewport.height() < -3. && userViewport.width() > 3.){
 		//resolucio=(resolucio*viewport.width())/(viewport.width()-2.);
-		viewport.setCoords(viewport.left() + 1., viewport.top() -1., viewport.right() -1., viewport.bottom() +1.);
-		update_scale();
+		setViewport(QRect(userViewport.left() + 1., userViewport.top() -1., userViewport.right() -1., userViewport.bottom() +1.));
 	}
 }
 
@@ -521,16 +548,15 @@ void Graph2D::zoomOut()
 {
 	//FIXME:Bad solution
 	//resolucio=(resolucio*viewport.width())/(viewport.width()+2.);
-	viewport.setCoords(viewport.left() -1., viewport.top() +1., viewport.right() + 1., viewport.bottom() -1.);
-	update_scale();
+	setViewport(QRect(userViewport.left() -1., userViewport.top() +1., userViewport.right() + 1., userViewport.bottom() -1.));
 }
 
 void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 {
 	int start=startIdx.row(), end=endIdx.row();
 	
-	for(; start<end; start++) {
-		m_model->updatePoints(start, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
+	for(int i=start; i<end; i++) {
+		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;
 	repaint();
@@ -538,14 +564,21 @@ void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 
 void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 {
-	for(; start<end; start++) {
-		m_model->updatePoints(start, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
+	for(int i=start; i<end; i++) {
+		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;
 }
 
 void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
 {
+	valid=false;
+	repaint();
+}
+
+void Graph2D::setKeepAspectRatio(bool ar)
+{
+	m_keepRatio=ar;
 	valid=false;
 	repaint();
 }
