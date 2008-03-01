@@ -128,7 +128,7 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 <title>Using the console</title>
 <para>&kalgebra;'s console is useful as a calculator. There you
 have a list of the declared variables. By double clicking on them you will see a
-dialog that lets you change de value of it (just a way to trick the log).
+dialog that lets you change their values (just a way to trick the log).
 Menu options:</para>
 <itemizedlist>
 <listitem><para>New: Flushes the log.</para></listitem>
