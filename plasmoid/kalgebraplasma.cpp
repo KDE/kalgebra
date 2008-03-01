@@ -51,7 +51,6 @@ void KAlgebraPlasmoid::init()
 	
 	m_input = new ExpressionEdit(this);
 	m_input->setGeometry(QRectF(QPointF(0,0),size()));
-	m_input->setDefaultTextColor(Qt::white);
 	m_input->setDefaultText(i18n("Write here the expression..."));
 	m_input->setMultiLine(false);
 	m_layout->addItem(m_input);
