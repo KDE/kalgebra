@@ -74,8 +74,9 @@ class KAlgebra : public KMainWindow
 		void select(const QModelIndex& idx);
 		void new_func();
 		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
+        void edit_var ( const QModelIndex & );
+        void toggleSquares();
+        void toggleKeepAspect();
 		void set_res_low();
 		void set_res_std();
 		void set_res_fine();

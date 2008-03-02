@@ -579,8 +579,7 @@ void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
 void Graph2D::setKeepAspectRatio(bool ar)
 {
 	m_keepRatio=ar;
-	valid=false;
-	repaint();
+	forceRepaint();
 }
 
 #include "graph2d.moc"

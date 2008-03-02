@@ -65,7 +65,7 @@ public:
 	virtual QSizePolicy sizePolicy() const;
 	
 	/** Sets whether we will see a grid or only the axes. */
-	void setSquares(bool newSquare) {m_squares=newSquare; valid=false; }
+	void setSquares(bool newSquare) { m_squares=newSquare; forceRepaint(); }
 	
 	/** Returns whether we have chosen to see the grid. */
 	bool squares() const {return m_squares;}
@@ -91,8 +91,10 @@ public:
 	/** Sets whether it is a read-only widget. */
 	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
 	
+	/** Sets whether it has to keep the aspect ratio (1:1 grid). */
 	void setKeepAspectRatio(bool ar);
 	
+	/** Sets whether it is keeping the aspect ratio (1:1 grid). */
 	bool keepAspectRatio() const { return m_keepRatio; }
 	
 public slots:
