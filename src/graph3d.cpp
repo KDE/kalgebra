@@ -304,6 +304,15 @@ void Calculate3D::run()
 	}
 }
 
+void Graph3D::wheelEvent(QWheelEvent * e)
+{
+	if(e->delta()>0)
+		alpha/=2.f;
+	else if(alpha<=90.f)
+		alpha*=2.f;
+	repaint();
+}
+
 void Graph3D::keyPressEvent( QKeyEvent *e ) {
 	switch(e->key()) {
 		case Qt::Key_Up:

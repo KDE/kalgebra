@@ -308,11 +308,13 @@ void Graph2D::paintEvent( QPaintEvent * )
 void Graph2D::wheelEvent(QWheelEvent *e){
 	int d = e->delta()>0 ? -1 : 1;
 	if(viewport.left()-d < 1 && viewport.top()+d > 1 && viewport.right()+d > 1 && viewport.bottom()-d < 1) {
-		viewport.setLeft(viewport.left() - d);
-		viewport.setTop(viewport.top() + d);
-		viewport.setRight(viewport.right() + d);
-		viewport.setBottom(viewport.bottom() - d);
-		updateScale();
+		QRectF nv;
+		nv.setLeft(viewport.left() - d);
+		nv.setTop(viewport.top() + d);
+		nv.setRight(viewport.right() + d);
+		nv.setBottom(viewport.bottom() - d);
+		
+		setViewport(nv);
 	}
 	sendStatus(QString("(%1, %2)-(%3, %4)").arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
 }

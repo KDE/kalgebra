@@ -118,6 +118,8 @@ class Graph3D : public QGLWidget {
 		
 		/** Sets the showed method. */
 		void setMethod(enum Type m);
+		
+		void wheelEvent(QWheelEvent *e);
 	public slots:
 		/** Resets the view coordinates. */
 		void resetView();
