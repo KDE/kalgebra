@@ -805,7 +805,9 @@ void Analitza::reduce(enum Operator::OperatorType op, Cn *ret, Cn oper, bool una
 	// 	case Operator::arcsec:
 	// 	case Operator::arcsech:
 	// 	case Operator::arcsinh:
-	// 	case Operator::arctanh:
+		case Operator::arctanh:
+			a=atanh(a);
+			break;
 		case Operator::exp:
 			a=exp(a);
 			break;
