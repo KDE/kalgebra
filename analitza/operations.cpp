@@ -215,12 +215,13 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 		case Operator::arccosh:
 			a=log(a+sqrt(a-1.)*sqrt(a+1.));
 			break;
-		// 	case Operator::arccsc:
-		// 	case Operator::arccsch:
-		// 	case Operator::arcsec:
-		// 	case Operator::arcsech:
-		// 	case Operator::arcsinh:
-		// 	case Operator::arctanh:
+// 		case Operator::arccsc:
+// 		case Operator::arccsch:
+// 		case Operator::arcsec:
+// 		case Operator::arcsech:
+		case Operator::arctanh:
+			a=atanh(a);
+			break;
 		case Operator::exp:
 			a=exp(a);
 			break;
