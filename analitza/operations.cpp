@@ -297,8 +297,7 @@ Operations::ValueType Operations::valueType(const Object * val)
 			return Real;
 		case Object::container: {
 			Container *c=(Container*) val;
-			Container::ContainerType ct=c->containerType();
-			if(ct==Container::vector)
+			if(c->containerType()==Container::vector)
 				return Vector;
 			break;
 		}

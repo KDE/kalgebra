@@ -18,6 +18,10 @@
 
 #include "dictionary.h"
 #include "operatorsmodel.h"
+#include "functionsmodel.h"
+#include "expression.h"
+#include "graph2d.h"
+
 #include <QLabel>
 #include <QListView>
 #include <QGroupBox>
@@ -43,10 +47,17 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	QVBoxLayout *descrLayo=new QVBoxLayout(descr);
 	m_name=new QLabel(descr);
 	m_descr=new QLabel(descr);
+	m_sample=new QLabel(descr);
 	m_example=new QLabel(descr);
+	m_funcs=new FunctionsModel(descr);
+	m_graph=new Graph2D(m_funcs, descr);
+	m_graph->setReadOnly(true);
+	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
+	m_graph->setResolution(400);
 	
 	m_name->setIndent(10);
 	m_descr->setIndent(10);
+	m_sample->setIndent(10);
 	m_example->setIndent(10);
 	
 	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString())));
@@ -54,8 +65,11 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString())));
 	descrLayo->addWidget(m_descr);
 	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString())));
+	descrLayo->addWidget(m_sample);
+	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString())));
 	descrLayo->addWidget(m_example);
-	descrLayo->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+// 	descrLayo->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+	descrLayo->addWidget(m_graph);
 	
 	mainLayo->addWidget(m_list);
 	mainLayo->addWidget(descr);
@@ -68,18 +82,24 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
 	Q_UNUSED(prev);
-	QModelIndex nameIdx, descriptionIdx, exampleIdx;
+	QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
 	nameIdx = idx.sibling(idx.row(), 0);
 	descriptionIdx = idx.sibling(idx.row(), 1);
-	exampleIdx = idx.sibling(idx.row(), 2);
+	sampleIdx = idx.sibling(idx.row(), 2);
+	exampleIdx = idx.sibling(idx.row(), 3);
 	
 	QString name=m_sortProxy->data(nameIdx).toString();
 	QString description=m_sortProxy->data(descriptionIdx).toString();
+	QString sample=m_sortProxy->data(sampleIdx).toString();
 	QString example=m_sortProxy->data(exampleIdx).toString();
 	
 	m_name->setText(name);
 	m_descr->setText(description);
+	m_sample->setText(sample);
 	m_example->setText(example);
+	
+	m_funcs->clear();
+	m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0), true));
 }
 
 #include "dictionary.moc"

@@ -104,7 +104,7 @@ class function
 		/** Returns the bounded variables of the function. */
 		QStringList bvars() const;
 	
-		/** Here we store the calculated points of the function. */
+		/** Retrieves the calculated points of the function. */
 		QPointF* points() const;
 		
 		QPair<QPointF, QString> calc(const QPointF& dp);
@@ -113,6 +113,8 @@ class function
 		
 		/** Queries if it is a correct function. */
 		bool isCorrect() const;
+		
+		const QStringList& errors() const { return m_err; }
 		
 		/** Returns a list of the supported bvars */
 		static QStringList supportedBoundedVars();

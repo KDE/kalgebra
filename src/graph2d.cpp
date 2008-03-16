@@ -46,7 +46,7 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	m_framed(false), m_readonly(false), m_posText()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
-	this->setCursor(QCursor(Qt::CrossCursor));
+	this->setCursor(Qt::CrossCursor);
 	this->setMinimumHeight(20);
 	this->setMinimumWidth(10);
 	this->setMouseTracking(!m_readonly);
@@ -250,6 +250,7 @@ void Graph2D::paintEvent( QPaintEvent * )
 	
 // 	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
+// 	qDebug() << "xxx1 " << viewport;
 	if(!m_readonly && mode==None) {
 		ultim = toWidget(mark);
 		
@@ -300,6 +301,7 @@ void Graph2D::paintEvent( QPaintEvent * )
 	}
 	finestra.end();
 	
+// 	qDebug() << "xxx2 " << viewport;
 	///////////////////////////////
 	QPainter win(this);
 	win.drawPixmap(QPoint(0,0), front);
@@ -334,7 +336,11 @@ void Graph2D::mousePressEvent(QMouseEvent *e){
 }
 
 void Graph2D::mouseReleaseEvent(QMouseEvent *e){
-	this->setCursor(QCursor(Qt::CrossCursor));
+	if(m_readonly)
+		this->setCursor(Qt::ArrowCursor);
+	else
+		this->setCursor(Qt::CrossCursor);
+	
 	if(!m_readonly && mode==Selection) {
 		QPointF pd = toViewport(e->pos())-toViewport(press);
 		const double mindist = fmin(fabs(pd.x()), fabs(pd.y())), rate=7.;
@@ -458,7 +464,7 @@ void Graph2D::setViewport(const QRectF &vp)
 		userViewport.setTop(aux);
 	}
 	
-	if(userViewport .right()<userViewport .left()) {
+	if(userViewport.right()<userViewport.left()) {
 		double aux = userViewport .left();
 		userViewport.setLeft(userViewport .right());
 		userViewport.setRight(aux);
@@ -533,6 +539,7 @@ void Graph2D::updateScale()
 		viewport.setHeight(-newH);
 		Q_ASSERT(userViewport.center() == viewport.center());
 	}
+// 	qDebug() << "xxxK " << userViewport << viewport;
 	
 	valid=false;
 	this->repaint();
@@ -582,6 +589,13 @@ void Graph2D::setKeepAspectRatio(bool ar)
 {
 	m_keepRatio=ar;
 	forceRepaint();
+}
+
+void Graph2D::setReadOnly(bool ro)
+{
+	m_readonly=ro;
+	this->setCursor(ro ? Qt::ArrowCursor : Qt::CrossCursor);
+	setMouseTracking(!ro);
 }
 
 #include "graph2d.moc"

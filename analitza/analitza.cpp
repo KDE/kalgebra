@@ -569,7 +569,7 @@ Object* Analitza::operate(const Container* c)
 		case Container::uplimit:
 		case Container::downlimit:
 		case Container::lambda:
-			ret=calc(c->m_params[0]);
+			ret=calc(*c->firstValue());
 			break;
 		case Container::vector: {
 			Container *c1=new Container(Container::vector);

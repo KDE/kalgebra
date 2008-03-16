@@ -26,6 +26,9 @@ class QListView;
 class QModelIndex;
 class OperatorsModel;
 class QSortFilterProxyModel;
+class Graph2D;
+class FunctionsModel;
+
 /**
 	@author Aleix Pol
 */
@@ -42,7 +45,10 @@ Q_OBJECT
 	private:
 		QLabel *m_name;
 		QLabel *m_descr;
+		QLabel *m_sample;
 		QLabel *m_example;
+		Graph2D *m_graph;
+		FunctionsModel *m_funcs;
 		QListView *m_list;
 		OperatorsModel *m_ops;
 		QSortFilterProxyModel *m_sortProxy;

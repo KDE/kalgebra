@@ -242,35 +242,33 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	QString pos;
 	if(p==QPointF(0., 0.))
 		return QPair<QPointF, QString>(dp, i18n("center"));
-	double th=atan(p.y()/p.x()), r=1., d, d2;
+	double th=atan(p.y()/ p.x()), r=1., d, d2;
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
 			
 	Cn ulimit = func.expression()->uplimit(), dlimit=func.expression()->downlimit();
 	if(!ulimit.isCorrect()) ulimit = 2.*pi;
 	if(!dlimit.isCorrect()) dlimit = 0.;
-			
-	/*while(th<dlimit.value())
-	th += 2.*pi;
-			
-	while(th>ulimit.value())
-	th -= 2.*pi;*/
+	
+	if(th<dlimit.value()) th = dlimit.value();
+	if(th>ulimit.value()) th = ulimit.value();
+	
 	QPointF dist;
 	do {
 		func.variables()->modify("q", th);
 		r = func.calculate().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
-		d = sqrt(pow(dist.x(), 2.)+pow(dist.y(), 2.));
-				
+		d = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
+		
 		func.variables()->modify("q", th+2.*pi);
 		r = func.calculate().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
-		d2 = sqrt(pow(dist.x(), 2.)+pow(dist.y(), 2.));
+		d2 = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
 		
 		th += 2.*pi;
-	} while(d<d2);
+	} while(d>d2);
 	
 	func.variables()->modify("q", th);
 	r = func.calculate().value();
@@ -333,7 +331,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 			ret = a.calculate().value();
 	
 		if(!a.isCorrect()) {
-			kDebug(0) << "Derivative error: " <<  a.errors();
+			kDebug() << "Derivative error: " <<  a.errors();
 			return QLineF();
 		}
 	} else {

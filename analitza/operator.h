@@ -105,8 +105,6 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);
 		
-		static char m_words[nOfOps][14];
-		
 		/** Returns this operator @p o precedence. */
 		static unsigned int operatorWeight(OperatorType o);
 		
@@ -119,6 +117,7 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns if it is a trigonometric operator. */
 		static bool isTrigonometric(enum OperatorType o);
 	private:
+		static char m_words[nOfOps][14];
 		enum OperatorType m_optype;
 };
 

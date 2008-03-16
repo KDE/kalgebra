@@ -107,6 +107,11 @@ class ANALITZA_EXPORT Expression
 		Cn downlimit() const;
 		
 		/**
+		 *	Returns whether it is a lambda-expression.
+		 */
+		bool isLambda() const;
+		
+		/**
 		 *	Returns the tree associated to this object.
 		 */
 		const Object* tree() const { return m_tree; }

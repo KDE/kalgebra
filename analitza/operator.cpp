@@ -46,7 +46,7 @@ char Operator::m_words[nOfOps][14] = {
 QString Operator::toString() const
 {
 	Q_ASSERT(m_optype<nOfOps);
-	return QString("%1").arg(m_words[m_optype]);
+	return QString(m_words[m_optype]);
 }
 
 QString Operator::toMathML() const

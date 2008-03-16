@@ -340,3 +340,13 @@ Operations::ValueType Expression::valueType() const
 	return m_tree ? Operations::valueType(m_tree) : Operations::Null;
 }
 
+bool Expression::isLambda() const
+{
+	Container* c = (Container*) m_tree;
+	if(m_tree && m_tree->isContainer() && c->containerType()==Container::math) {
+		Container *c1 = (Container*) c->m_params[0];
+		return c->m_params[0]->isContainer() && c1->containerType()==Container::lambda;
+	} else
+		return false;
+}
+

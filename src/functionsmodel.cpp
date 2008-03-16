@@ -88,20 +88,20 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 
 bool FunctionsModel::addFunction(const function& func)
 {
-	bool exist=false;
+	bool exists=false;
 	
-	for (QList<function>::iterator it = funclist.begin(); !exist && it!=funclist.end(); ++it)
-		exist = (it->name() == func.name());
+	for (QList<function>::iterator it = funclist.begin(); !exists && it!=funclist.end(); ++it)
+		exists = (it->name() == func.name());
 	
-	if(!exist) {
+	if(!exists) {
 		beginInsertRows (QModelIndex(), rowCount(), rowCount()+1);
 		funclist.append(func);
-		sendStatus(i18n("%1 function added", func.toString()));
 		m_selectedRow=funclist.count()-1;
 		endInsertRows();
+		sendStatus(i18n("%1 function added", func.toString()));
 	}
 	
-	return exist;
+	return exists;
 }
 
 bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)

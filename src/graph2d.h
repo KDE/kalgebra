@@ -89,7 +89,7 @@ public:
 	bool isReadOnly() const { return m_readonly; }
 	
 	/** Sets whether it is a read-only widget. */
-	void setReadOnly(bool ro) { m_readonly=ro; setMouseTracking(!ro); }
+	void setReadOnly(bool ro);
 	
 	/** Sets whether it has to keep the aspect ratio (1:1 grid). */
 	void setKeepAspectRatio(bool ar);

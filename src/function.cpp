@@ -32,8 +32,7 @@ function::function()
 function::function(const QString &name, const Expression& newFunc, const QColor& color, bool selec)
 	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
-	QStringList bvars=newFunc.bvarList();
-	QString firstBVar=bvars.isEmpty() ? "x" : bvars[0];
+	QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
 	if(firstBVar=="x")
 		m_function=new FunctionY(newFunc);
 	else if(firstBVar=="y")

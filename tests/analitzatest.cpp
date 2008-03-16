@@ -118,6 +118,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << "33";
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << "33";
 	
+	QTest::newRow("lambda") << "f:=q->2" << "2";
 // 	QTest::newRow("boolean and") << "and(x,0)" << "false";
 }
 

@@ -42,6 +42,9 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 					ret=description(oper);
 					break;
 				case 2:
+					ret=sample(oper);
+					break;
+				case 3:
 					ret=example(oper);
 					break;
 			}
@@ -79,6 +82,9 @@ QVariant OperatorsModel::headerData(int section, Qt::Orientation orientation, in
 			case 2:
 				ret=i18nc("@title:column", "Parameters");
 				break;
+			case 3:
+				ret=i18nc("@title:column", "Example");
+				break;
 		}
 	}
 	return ret;
@@ -94,7 +100,7 @@ int OperatorsModel::rowCount(const QModelIndex &) const
 
 int OperatorsModel::columnCount(const QModelIndex &) const
 {
-	return 3;
+	return 4;
 }
 
 void OperatorsModel::updateInformation()
@@ -102,12 +108,12 @@ void OperatorsModel::updateInformation()
 	reset();
 }
 
-QString OperatorsModel::example(Operator oper)
+QString OperatorsModel::sample(Operator oper)
 {
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
-		bounds="x->from..to";
+		bounds="from..to";
 	}
 	
 	QString sample = i18n("%1(", funcname);
@@ -335,6 +341,148 @@ QString OperatorsModel::description(Operator o)
 	return s;
 }
 
+QString OperatorsModel::example(Operator o)
+{
+	QString s;
+	
+	switch(o.operatorType()) {
+		case Operator::plus:
+			s="x+2";
+			break;
+		case Operator::times:
+			s="x*2";
+			break;
+		case Operator::divide:
+			s="x/2";
+			break;
+		case Operator::minus:
+			s="x-2";
+			break;
+		case Operator::power:
+			s="x**2";
+			break;
+		case Operator::rem:
+			s="rem(x, 5)";
+			break;
+		case Operator::quotient:
+			s="quotient(x, 2)";
+			break;
+		case Operator::factorof:
+			s="factorof(x, 2)";
+			break;
+		case Operator::min:
+			s="min(x, 4)";
+			break;
+		case Operator::max:
+			s="max(x, 4)";
+			break;
+		case Operator::gt:
+			s="gt(x, 4)";
+			break;
+		case Operator::lt:
+			s="lt(x, 4)";
+			break;
+		case Operator::eq:
+			s="eq(x, 4)";
+			break;
+		case Operator::approx:
+			s="approx(x, 4)";
+			break;
+		case Operator::neq:
+			s="neq(x, 4)";
+			break;
+		case Operator::geq:
+			s="geq(x, 4)";
+			break;
+		case Operator::leq:
+			s="leq(x, 4)";
+			break;
+		case Operator::_and:
+			s="and(x, 1)";
+			break;
+		case Operator::_or:
+			s="or(x, 1)";
+			break;
+		case Operator::_xor:
+			s="xor(x, 1)";
+			break;
+		case Operator::implies:
+			s="implies(x, 1)";
+			break;
+		case Operator::gcd:
+			s="gcd(x, 3)";
+			break;
+		case Operator::lcm:
+			s="lcm(x, 4)";
+			break;
+		case Operator::root:
+			s="root(x, 2)";
+			break;
+		case Operator::selector:
+			s="piecewise { x>0 ? selector(0, vector{x, 1/x}), ? selector(1, vector{x, 1/x} ) }";
+			break;
+		case Operator::sum:
+			s="sum(t->0..4, t)";
+			break;
+		case Operator::product:
+			s="product(t->0..4, t)";
+			break;
+		case Operator::factorial:
+		case Operator::card:
+		case Operator::scalarproduct:
+		case Operator::diff:
+		case Operator::arcsech:
+		case Operator::arcsec:
+		case Operator::arccsch:
+		case Operator::arccsc:
+		case Operator::arccoth:
+		case Operator::sin:
+		case Operator::cos:
+		case Operator::tan:
+		case Operator::sec:
+		case Operator::csc:
+		case Operator::cot:
+		case Operator::sinh:
+		case Operator::cosh:
+		case Operator::tanh:
+		case Operator::sech:
+		case Operator::csch:
+		case Operator::coth:
+		case Operator::arcsin:
+		case Operator::arccos:
+		case Operator::arctan:
+		case Operator::arccot:
+		case Operator::arcsinh:
+		case Operator::arccosh:
+// 		case Operator::arccsc:
+// 		case Operator::arccsch:
+// 		case Operator::arcsec:
+// 		case Operator::arcsech:
+		case Operator::arctanh:
+		case Operator::exp:
+		case Operator::ln:
+		case Operator::log:
+		case Operator::abs:
+		//case Object::conjugate:
+		//case Object::arg:
+		//case Object::real:
+		//case Object::imaginary:
+		case Operator::floor:
+		case Operator::ceiling:
+		case Operator::_not:
+			s=QString("%1(x)").arg(o.toString());
+			break;
+		case Operator::nOfOps:
+		case Operator::none:
+		case Operator::function:
+		case Operator::conjugate:
+		case Operator::real:
+		case Operator::arg:
+		case Operator::imaginary:
+			break;
+	}
+	return s;
+}
 
 /*QString OperatorsModel::operToString(const Operator& op) const
 {

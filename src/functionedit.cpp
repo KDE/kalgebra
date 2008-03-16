@@ -61,25 +61,6 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_valid->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	
 	m_color = new KColorCombo(this);
-	QList<QColor> someColors;	//Remove that when KColorCombo works itself :)
-	someColors.append(Qt::red);
-	someColors.append(Qt::green);
-	someColors.append(Qt::blue);
-	someColors.append(Qt::cyan);
-	someColors.append(Qt::magenta);
-	someColors.append(Qt::yellow);
-	someColors.append(Qt::darkRed);
-	someColors.append(Qt::darkGreen);
-	someColors.append(Qt::darkBlue);
-	someColors.append(Qt::darkCyan);
-	someColors.append(Qt::darkMagenta);
-	someColors.append(Qt::darkYellow);
-	someColors.append(Qt::white);
-	someColors.append(Qt::lightGray);
-	someColors.append(Qt::gray);
-	someColors.append(Qt::darkGray);
-	someColors.append(Qt::black);
-	m_color->setColors(someColors);
 	m_color->setColor(QColor(0,150,0));
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	

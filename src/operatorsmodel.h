@@ -38,6 +38,8 @@ class OperatorsModel : public QAbstractTableModel
 		static QString description(Operator o);
 		
 		/** Returns the description of the @p o operator. */
+		static QString sample(Operator o);
+		
 		static QString example(Operator o);
 		
 		/** Adds an entry to the model. */
