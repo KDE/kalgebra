@@ -368,7 +368,7 @@ QString OperatorsModel::example(Operator o)
 			s="quotient(x, 2)";
 			break;
 		case Operator::factorof:
-			s="factorof(x, 2)";
+			s="factorof(x, 3)";
 			break;
 		case Operator::min:
 			s="min(x, 4)";

@@ -147,7 +147,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	for(double x=xini; x<=viewport.right(); x+=inc) {	// ticks X
 		p = toWidget(QPointF(x, 0.));
 		if(m_squares)
-			finestra->drawLine(QPointF(p.x(), this->height()), QPointF(p.x(), 0));
+			finestra->drawLine(QPointF(p.x(), this->height()), QPointF(p.x(), 0.));
 		else
 			finestra->drawLine(p, p+QPointF(0.,-3.));
 	}
@@ -212,18 +212,19 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	drawAxes(&finestra, t);
 	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
-	int i=0;
-	for (FunctionsModel::const_iterator it=m_model->constBegin(); it!=m_model->constEnd(); ++it, ++i ){
+	int k=0;
+	FunctionsModel::const_iterator it=m_model->constBegin(), itEnd=m_model->constEnd();
+	for (; it!=itEnd; ++it, ++k ) {
 		if(!it->isShown())
 			continue;
 		pfunc.setColor(it->color());
-		pfunc.setWidth(m_model->isSelected(i)+1);
+		pfunc.setWidth(m_model->isSelected(k)+1);
 		finestra.setPen(pfunc);
-		int i = it->npoints(), j;
+		int pointsCount = it->npoints();
 			
 		QPointF *vect=it->points();
 		QPointF ultim(toWidget(vect[0])), act;
-		for(j=0; j<i; j++){
+		for(unsigned int j=0; j<pointsCount; j++) {
 			act=toWidget(vect[j]);
 				
 			if(!isnan(act.y()) && !isnan(ultim.y()) && (panorama.contains(act) || panorama.contains(ultim)))
@@ -539,7 +540,6 @@ void Graph2D::updateScale()
 		viewport.setHeight(-newH);
 		Q_ASSERT(userViewport.center() == viewport.center());
 	}
-// 	qDebug() << "xxxK " << userViewport << viewport;
 	
 	valid=false;
 	this->repaint();
@@ -548,8 +548,9 @@ void Graph2D::updateScale()
 void Graph2D::zoomIn()
 {
 	if(userViewport.height() < -3. && userViewport.width() > 3.){
-		//resolucio=(resolucio*viewport.width())/(viewport.width()-2.);
-		setViewport(QRect(userViewport.left() + 1., userViewport.top() -1., userViewport.right() -1., userViewport.bottom() +1.));
+		setViewport(QRect(userViewport.left() +1., userViewport.top() -1.,
+					userViewport.width() -2., userViewport.height() +2.));
+		updateScale();
 	}
 }
 
@@ -557,7 +558,9 @@ void Graph2D::zoomOut()
 {
 	//FIXME:Bad solution
 	//resolucio=(resolucio*viewport.width())/(viewport.width()+2.);
-	setViewport(QRect(userViewport.left() -1., userViewport.top() +1., userViewport.right() + 1., userViewport.bottom() -1.));
+	setViewport(QRect(userViewport.left() -1., userViewport.top() +1.,
+				userViewport.width() +2., userViewport.height() -2.));
+	updateScale();
 }
 
 void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
