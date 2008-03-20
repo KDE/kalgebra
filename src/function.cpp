@@ -19,17 +19,19 @@
 #include "function.h"
 #include "exp.h"
 
-#include <klocale.h>
 #include "variables.h"
 #include "analitza.h"
 #include "expression.h"
 #include "functionimpl.h"
 
+#include <KLocale>
+#include <cmath>
+
 function::function()
 	: m_function(0), m_show(true), m_color(Qt::black)
 {}
 
-function::function(const QString &name, const Expression& newFunc, const QColor& color, bool selec)
+function::function(const QString &name, const Expression& newFunc, const QColor& color)
 	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
 	QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";

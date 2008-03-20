@@ -19,9 +19,10 @@
 #ifndef FUNCTIONIMPL_H
 #define FUNCTIONIMPL_H
 
-#include "expression.h"
 #include "function.h"
 #include "analitza.h"
+
+class Expression;
 
 struct FunctionImpl
 {

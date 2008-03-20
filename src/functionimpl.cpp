@@ -18,6 +18,7 @@
 
 #include "functionimpl.h"
 #include "variables.h"
+#include "expression.h"
 
 #include <KLocale>
 #include <KDebug>

@@ -22,6 +22,7 @@
 #include <KDebug>
 #include <QPixmap>
 #include <QFont>
+#include <cmath>
 
 FunctionsModel::FunctionsModel(QObject *parent)
 	: QAbstractTableModel(parent), m_selectedRow(-1)

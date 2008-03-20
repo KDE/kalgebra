@@ -24,7 +24,7 @@
 #include <QRadioButton>
 #include <QLabel>
 
-#include <expression.h>
+#include "expression.h"
 
 class Analitza;
 class Variables;
@@ -42,9 +42,6 @@ class VarEdit : public KDialog
 		/** Constructor. Creates a variable editing dialog. */
 		explicit VarEdit(QWidget *parent = 0, bool modal = false);
 		
-		/** Destructor. */
-		~VarEdit();
-		
 		/** Returns the variable expression */
 		QString text() const;
 		
@@ -56,16 +53,18 @@ class VarEdit : public KDialog
 		
 		/** Returns the resulting variable expression */
 		Expression val();
+		
 	private:
 		ExpressionEdit *m_exp;
 		
-		QRadioButton *m_opt_calc;		//Per escollir guardar calcul
-		QRadioButton *m_opt_exp;		//Per escollir guardar expressio
+		QRadioButton *m_opt_calc; //We can save the result or the whole expression
+		QRadioButton *m_opt_exp;
 		
 		QLabel *m_valid;
 		Variables *vars;
 		bool m_correct;
 		QString m_var;
+		
 	private slots:
 		void edit();
 		void ok();

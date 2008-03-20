@@ -509,7 +509,7 @@ Object* Analitza::calcDeclare(const Container* c)
 	Object* o = eval(c->m_params[1], true, QSet<QString>());
 	o=simp(o);
 	insertVariable(var->name(), o);
-	if(Operations::valueType(o)!=Operations::Null)
+	if(o->valueType()!=Object::Null)
 		ret=o;
 	else {
 		//should return NaN
@@ -534,7 +534,6 @@ Object* Analitza::calc(const Object* root)
 			break;
 		case Object::variable:
 			a=(Ci*) root;
-			
 			if(KDE_ISLIKELY(m_vars->contains(a->name())))
 				ret = calc(m_vars->value(a->name()));
 			else {
@@ -705,7 +704,7 @@ Object* Analitza::product(const Container& n)
 Object* Analitza::selector(const Object* index, const Object* vector)
 {
 	Object *ret;
-	if(index->type()==Object::value && Operations::valueType(vector)==Operations::Vector) {
+	if(index->type()==Object::value && vector->valueType()==Object::Vector) {
 		const Cn *cIdx=static_cast<const Cn*>(index);
 		const Container *cVect=static_cast<const Container*>(vector);
 		
@@ -739,7 +738,7 @@ Object* Analitza::func(const Container& n)
 	
 	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
 		m_err << i18n("The function <em>%1</em> does not exist", funct.name());
-		return ret;
+		return new Cn(0.);
 	}
 	
 	Container *function = (Container*) m_vars->value(funct.name());
@@ -884,7 +883,7 @@ Object* Analitza::simp(Object* root)
 							}
 						}
 						
-						if(Operations::valueType(*it) && !hasVars(*it) && (*it)->isZero()) {
+						if((*it)->valueType() && !hasVars(*it) && (*it)->isZero()) {
 							d=true;
 						}
 						
@@ -1030,7 +1029,7 @@ Object* Analitza::simp(Object* root)
 					break;
 				case Operator::card: {
 					Object* val=simp(*c->firstValue());
-					if(Operations::valueType(val)==Operations::Vector)
+					if(val->valueType()==Object::Vector)
 					{
 						c->m_params.last()=0;
 						bool correct;
@@ -1046,7 +1045,7 @@ Object* Analitza::simp(Object* root)
 					
 					Object* idx=c->m_params[1];
 					Object* value=c->m_params[2];
-					if(Operations::valueType(idx)==Operations::Real && Operations::valueType(value)==Operations::Vector)
+					if(idx->valueType()==Object::Real && value->valueType()==Object::Vector)
 					{
 						root=selector(*c->firstValue(), c->m_params.last());
 						delete c;
@@ -1078,7 +1077,7 @@ Object* Analitza::simpScalar(Container * c)
 	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
 		bool d=false;
 		
-		if(Operations::valueType(*i) && !hasVars(*i)) {
+		if((*i)->valueType() && !hasVars(*i)) {
 			Object* aux = *i;
 			
 			if(value) {

@@ -99,7 +99,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	m_example->setText(example);
 	
 	m_funcs->clear();
-	m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0), true));
+	m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0)));
 }
 
 #include "dictionary.moc"

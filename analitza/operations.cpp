@@ -261,13 +261,13 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 
 Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, bool &correct)
 {
-	ValueType t1=valueType(val1), t2=valueType(val2);
+	Object::ValueType t1=val1->valueType(), t2=val2->valueType();
 	correct=true;
 	
-	if(t1==Real && t2==Real) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
-	if(t1==Real && t2==Vector) return reduceRealVector(op, (Cn*) val1, (Container*) val2, correct);
-	if(t1==Vector && t2==Real) return reduceVectorReal(op, (Container*) val1, (Cn*) val2, correct);
-	if(t1==Vector && t2==Vector) return reduceVectorVector(op, (Container*) val1, (Container*) val2, correct);
+	if(t1==Object::Real && t2==Object::Real) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
+	if(t1==Object::Real && t2==Object::Vector) return reduceRealVector(op, (Cn*) val1, (Container*) val2, correct);
+	if(t1==Object::Vector && t2==Object::Real) return reduceVectorReal(op, (Container*) val1, (Cn*) val2, correct);
+	if(t1==Object::Vector && t2==Object::Vector) return reduceVectorVector(op, (Container*) val1, (Container*) val2, correct);
 	Q_ASSERT(0);
 	return 0;
 }
@@ -275,36 +275,17 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, bool &correct)
 {
 	correct=true;
-	switch(valueType(val)) {
-		case Real:
+	switch(val->valueType()) {
+		case Object::Real:
 			return reduceUnaryReal(op, (Cn*) val, correct);
-		case Vector:
+		case Object::Vector:
 			return reduceUnaryVector(op, (Container*) val, correct);
-		case Null:
+		case Object::Null:
 			break;
 	}
 	
 	Q_ASSERT(0);
 	return 0;
-}
-
-Operations::ValueType Operations::valueType(const Object * val)
-{
-	Object::ObjectType t=val->type();
-	
-	switch(t) {
-		case Object::value:
-			return Real;
-		case Object::container: {
-			Container *c=(Container*) val;
-			if(c->containerType()==Container::vector)
-				return Vector;
-			break;
-		}
-		default:
-			break;
-	}
-	return Null;
 }
 
 Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Container * v1, bool& correct)

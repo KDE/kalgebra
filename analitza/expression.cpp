@@ -18,6 +18,7 @@
 #include "expression.h"
 
 #include <KLocale>
+#include <QDomElement>
 
 #include "container.h"
 #include "exp.h"
@@ -335,9 +336,9 @@ double Expression::value() const
 	}
 }
 
-Operations::ValueType Expression::valueType() const
+Object::ValueType Expression::valueType() const
 {
-	return m_tree ? Operations::valueType(m_tree) : Operations::Null;
+	return m_tree ? m_tree->valueType() : Object::Null;
 }
 
 bool Expression::isLambda() const

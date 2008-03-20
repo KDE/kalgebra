@@ -45,6 +45,9 @@ public:
 		container	/**< Describes an object as a container. */
 	};
 	
+	/** Describes the nature of the value. */
+	enum ValueType { Null=0, Real, Vector };
+	
 	/** Object destructor. Does nothing. */
 	virtual ~Object() { /*qDebug() << "Destroying " << this;*/}
 	
@@ -77,10 +80,12 @@ public:
 	virtual bool isZero() const { return false; }
 	
 	void setCorrect(bool b) { m_correct = b; }
+	
+	ValueType valueType() const;
 protected:
-// 	static int ocount;
 	/** Creates an object with a @p t type */
-	Object(enum ObjectType t) : m_correct(true), m_type(t) { /*ocount++; qDebug() << ocount << typeid(t).name() << this;*/ }
+	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
+	
 	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
 	bool m_correct;
 	

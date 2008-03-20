@@ -29,12 +29,6 @@ class Container;
 class Operations
 {
 	public:
-		enum ValueType { Null=0, Real, Vector };
-		
-		QStringList errors() const { return m_err; }
-		
-		static ValueType valueType(const Object* obj);
-		
 		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, bool &correct);
 		static Object* reduceUnary(Operator::OperatorType op, Object* oper, bool &correct);
 		
@@ -46,8 +40,6 @@ class Operations
 		static Object* reduceVectorReal(Operator::OperatorType op, Container* vector, Cn *oper, bool &correct);
 		static Object* reduceVectorVector(Operator::OperatorType op, Container* v1, Container* v2, bool &correct);
 		static Object* reduceUnaryVector(Operator::OperatorType op, Container* c, bool &correct);
-		
-		QStringList m_err;
 };
 
 #endif

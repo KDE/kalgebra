@@ -387,6 +387,8 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
+	
+	QTest::newRow("wrong func") << "xsin(x)";
 }
 
 void AnalitzaTest::testCrash()

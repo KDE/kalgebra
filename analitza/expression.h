@@ -20,13 +20,12 @@
 #define EXPRESSION_H
 
 #include <QStringList>
-#include <QDomElement>
 
 #include "value.h"
 #include "analitzaexport.h"
-#include "operations.h"
 
 class Container;
+class QDomElement;
 
 /**
  *	This class represents an expression.
@@ -147,7 +146,7 @@ class ANALITZA_EXPORT Expression
 		
 		bool isValue() const { return m_tree && m_tree->type()==Object::value; }
 		
-		Operations::ValueType valueType() const;
+		Object::ValueType valueType() const;
 		
 		/**
 		 *	Converts a @p tag to an object type.

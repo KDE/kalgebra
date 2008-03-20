@@ -20,7 +20,6 @@
 #define VALUE_H
 
 #include "object.h"
-#include "operator.h"
 #include "analitzaexport.h"
 
 #include <cmath>

@@ -36,3 +36,20 @@ QString Ci::toMathML() const
 	else
 		return QString("<ci>%1</ci>").arg(m_name);
 }
+
+Object::ValueType Object::valueType() const
+{
+	switch(m_type) {
+		case Object::value:
+			return Real;
+		case Object::container: {
+			const Container *c=(const Container*) this;
+			if(c->containerType()==Container::vector)
+				return Vector;
+			break;
+		}
+		default:
+			break;
+	}
+	return Null;
+}

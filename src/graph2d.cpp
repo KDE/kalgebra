@@ -220,7 +220,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		pfunc.setColor(it->color());
 		pfunc.setWidth(m_model->isSelected(k)+1);
 		finestra.setPen(pfunc);
-		int pointsCount = it->npoints();
+		unsigned int pointsCount = it->npoints();
 			
 		QPointF *vect=it->points();
 		QPointF ultim(toWidget(vect[0])), act;

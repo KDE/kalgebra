@@ -24,8 +24,6 @@
 #include <QLine>
 #include <QPair>
 
-#include <cmath>
-
 class Analitza;
 class Expression;
 
@@ -52,9 +50,8 @@ class function
 			@param name the function name.
 			@param newExp the function expression tree.
 			@param color the function representation color.
-			@param selec defines if the function is selected.
 		*/
-		function(const QString& name, const Expression& newExp, const QColor& color=Qt::red, bool selec=false);
+		function(const QString& name, const Expression& newExp, const QColor& color=Qt::red);
 		
 		/** Destructor. */
 		~function();

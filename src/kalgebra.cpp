@@ -221,7 +221,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 void KAlgebra::new_func()
 {
 	QString name = b_funced->name();
-	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color(), true);
+	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color());
 	if(!b_funced->editing()) {
 		b_funcsModel->addFunction(f);
 	} else {

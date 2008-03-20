@@ -70,8 +70,6 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	m_exp->setFocus();
 }
 
-VarEdit::~VarEdit(){}
-
 void VarEdit::setVar(const QString& newVar)
 {
 	m_var=newVar;
@@ -91,11 +89,10 @@ Expression VarEdit::val()
 	
 	Expression e(m_exp->text(), m_exp->isMathML());
 	
-	
 	if(m_opt_calc->isChecked()) {
 		Analitza a;
 		a.setExpression(e);
-		return Expression(a.calculate());
+		return a.calculate();
 	} else
 		return e;
 }
@@ -145,7 +142,8 @@ void VarEdit::edit()
 	enableButtonApply(m_correct);
 }
 
-void VarEdit::ok(){
+void VarEdit::ok()
+{
 	if(m_correct)
 		accept();
 }

@@ -18,6 +18,7 @@
 
 #include <QApplication>
 
+#include "exp.h"
 #include "algebrahighlighter.h"
 #include "expression.h"
 #include "expressionedit.h"
