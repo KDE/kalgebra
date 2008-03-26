@@ -219,7 +219,7 @@ void Graph3D::paintGL()
 		double transf=0.8;
 		
 		glPushMatrix();
-		for(unsigned int i=0; i<bound; i++) {
+		for(unsigned int i=0; i<bound-1; i++) {
 			glPopMatrix();
 			
 			glPushMatrix();
@@ -442,15 +442,15 @@ void Graph3D::mem()
 		delete [] punts;
 	}
 	
-	int midadelgrafo=0;
+	int graphsize=0;
 	punts = new double* [j];
 	Q_CHECK_PTR(punts);
 	for(int i=0; i<j; i++){
-		midadelgrafo+=sizeof(double)*j;
+		graphsize+=sizeof(double)*j;
 		punts[i] = new double[j];
 		Q_CHECK_PTR(punts[i]);
 	}
-	qDebug() << "Mida: " << midadelgrafo;
+	qDebug() << "Size: " << graphsize;
 }
 
 void Graph3D::setSize(double newSize)
