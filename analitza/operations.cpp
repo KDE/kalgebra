@@ -16,9 +16,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include <math.h>
+
 #include "operations.h"
 #include <KLocale>
 #include <cmath>
+
 
 #include "value.h"
 #include "container.h"

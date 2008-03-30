@@ -174,7 +174,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 		} else if((a[i]=='{' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=tBlock;
 		} else {
-			ret.val = QString::QString("<ci>%1</ci>").arg(ret.val);
+			ret.val = QString("<ci>%1</ci>").arg(ret.val);
 			ret.type= tVal;
 		}
 	} else if(a[0]=='-' && a[1] == '>') {
