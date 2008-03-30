@@ -86,7 +86,7 @@ struct FunctionPolar : public FunctionImpl
 	ImplType type() const { return PolarType; }
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
 	
-	inline QPointF fromPolar(double r, double th) { return QPointF(r*cos(th), r*sin(th)); }
+	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
 };
 
 #endif

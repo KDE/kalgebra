@@ -227,11 +227,11 @@ void Graph3D::paintGL()
 			glBegin(GL_TRIANGLE_STRIP);
 			for(unsigned int j=0; j<bound; j++) {
 				glTexCoord2f(j%2 ? .0f : 1.f, 0.f);
-				glColor4d((i*step-mida)/mida, (j*step-mida)/mida, 1./fabs(log10(5.+punts[i][j])), transf);
+				glColor4d((i*step-mida)/mida, (j*step-mida)/mida, 1./std::fabs(std::log10(5.+punts[i][j])), transf);
 				glVertex3d(0., j*step, punts[i][j]);
 				
 				glTexCoord2f(j%2 ? .0f : 1.f, 1.f);
-				glColor4d(((i+1)*step-mida)/mida, (j*step-mida)/mida, 1./fabs(log10(5.+punts[i+1][j])), transf);
+				glColor4d(((i+1)*step-mida)/mida, (j*step-mida)/mida, 1./std::fabs(std::log10(5.+punts[i+1][j])), transf);
 				glVertex3d(step, j*step, punts[i+1][j]);
 			}
 			glEnd();

@@ -16,6 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include <math.h>
+
 #include "functionimpl.h"
 #include "variables.h"
 #include "expression.h"
