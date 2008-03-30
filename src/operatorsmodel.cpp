@@ -398,16 +398,16 @@ QString OperatorsModel::example(Operator o)
 			s="leq(x, 4)";
 			break;
 		case Operator::_and:
-			s="and(x, 1)";
+			s="and(gt(x,-2), lt(x,2))";
 			break;
 		case Operator::_or:
-			s="or(x, 1)";
+			s="or(gt(x,2), lt(x,-2))";
 			break;
 		case Operator::_xor:
-			s="xor(x, 1)";
+			s="xor(lt(x, 0), lt(x, 3))";
 			break;
 		case Operator::implies:
-			s="implies(x, 1)";
+			s="implies(lt(x, 0), lt(x, 3))";
 			break;
 		case Operator::gcd:
 			s="gcd(x, 3)";

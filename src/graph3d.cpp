@@ -446,10 +446,10 @@ void Graph3D::mem()
 	punts = new double* [j];
 	Q_CHECK_PTR(punts);
 	for(int i=0; i<j; i++){
-		graphsize+=sizeof(double)*j;
 		punts[i] = new double[j];
 		Q_CHECK_PTR(punts[i]);
 	}
+	graphsize=sizeof(double)*j*j;
 	qDebug() << "Size: " << graphsize;
 }
 

@@ -117,9 +117,9 @@ Object* Expression::branch(const QDomElement& elem)
 				while(!n.isNull()) {
 					if(n.isElement()) {
 						Object* ob= branch(n.toElement());
-						if(ob)
+						if(ob) {
 							c->appendBranch(ob);
-						else {
+						} else {
 							delete c;
 							return 0;
 						}

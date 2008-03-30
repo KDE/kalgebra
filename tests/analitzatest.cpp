@@ -104,8 +104,10 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("multiplication") << "x*x" << "x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
 	QTest::newRow("--simplification") << "-(-x)" << "x";
-	QTest::newRow("unneeded --simplification") << "-(x-x)" << "0";
-	QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
+    QTest::newRow("unneeded --simplification") << "-(x-x)" << "0";
+    QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
+    QTest::newRow("and") << "and(gt(6,5), lt(4,5))" << "true";
+    QTest::newRow("or") << "or(gt(6,5), lt(6,5))" << "true";
 	
 	QTest::newRow("sum") << "sum(n->1..99, n)" << "4950";
 	QTest::newRow("sum times simplification") << "sum(n->0..99, n*x)" << "4950*x";
@@ -128,6 +130,8 @@ void AnalitzaTest::testTrivialEvaluate()
 	QFETCH(QString, result);
 	
 	a->setExpression(Expression(expression, false));
+	if(!a->isCorrect())
+		qDebug() << "errors:" << a->errors();
 	QVERIFY(a->isCorrect());
 	QCOMPARE(a->evaluate().toString(), result);
 }
