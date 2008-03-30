@@ -228,7 +228,7 @@ bool FunctionsModel::editFunction(const QString& toChange, const function& func)
 void FunctionsModel::updatePoints(int i, const QRect & viewport, int resolution)
 {
 	Q_ASSERT(i<funclist.count());
-	funclist[i].update_points(viewport, static_cast<int>(floor(resolution)));
+	funclist[i].update_points(viewport, static_cast<int>(std::floor((double)resolution)));
 }
 
 const function & FunctionsModel::currentFunction() const
