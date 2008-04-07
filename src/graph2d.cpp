@@ -540,7 +540,8 @@ void Graph2D::updateScale()
 		viewport.setTop(userViewport.bottom()-my);
 		viewport.setWidth(newW);
 		viewport.setHeight(-newH);
-		Q_ASSERT(userViewport.center() == viewport.center());
+		//Commented because precision could make the program crash
+// 		Q_ASSERT(userViewport.center() == viewport.center());
 	}
 	
 	valid=false;

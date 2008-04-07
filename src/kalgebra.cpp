@@ -49,7 +49,6 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	QTabWidget *tabs = new QTabWidget(this);
 	this->setCentralWidget(tabs);
-	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
@@ -136,9 +135,9 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	////////menu
 	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
-    QAction* b_actions[6];
-    b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
-    b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
+	QAction* b_actions[6];
+	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
+	b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
 	b_menu->addAction(KStandardAction::zoomIn(grafic, SLOT(zoomIn()), this));
 	b_menu->addAction(KStandardAction::zoomOut(grafic, SLOT(zoomOut()), this));
 	b_menu->addSeparator();
@@ -156,10 +155,10 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	res->addAction(b_actions[4]);
 	res->addAction(b_actions[5]);
 	
-    b_actions[0]->setCheckable(true);
-    b_actions[0]->setChecked(true);
-    b_actions[1]->setCheckable(true);
-    b_actions[1]->setChecked(true);
+	b_actions[0]->setCheckable(true);
+	b_actions[0]->setChecked(true);
+	b_actions[1]->setCheckable(true);
+	b_actions[1]->setChecked(true);
 	b_actions[2]->setCheckable(true);
 	b_actions[3]->setCheckable(true);
 	b_actions[3]->setChecked(true);
@@ -215,6 +214,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
+	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
 }
 
