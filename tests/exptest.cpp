@@ -115,6 +115,7 @@ void ExpTest::testCorrection_data()
 	
 	QTest::newRow("stack killing") << "k+++k" << false;
 	QTest::newRow("more stack killing") << "k-++k" << false;
+	QTest::newRow("omartinez bug") << "piecewise { gt(x,23)?a }" << true;
 }
 
 void ExpTest::testCorrection()

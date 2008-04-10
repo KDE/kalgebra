@@ -104,10 +104,10 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("multiplication") << "x*x" << "x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
 	QTest::newRow("--simplification") << "-(-x)" << "x";
-    QTest::newRow("unneeded --simplification") << "-(x-x)" << "0";
-    QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
-    QTest::newRow("and") << "and(gt(6,5), lt(4,5))" << "true";
-    QTest::newRow("or") << "or(gt(6,5), lt(6,5))" << "true";
+	QTest::newRow("unneeded --simplification") << "-(x-x)" << "0";
+	QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
+	QTest::newRow("and") << "and(gt(6,5), lt(4,5))" << "true";
+	QTest::newRow("or") << "or(gt(6,5), lt(6,5))" << "true";
 	
 	QTest::newRow("sum") << "sum(n->1..99, n)" << "4950";
 	QTest::newRow("sum times simplification") << "sum(n->0..99, n*x)" << "4950*x";
@@ -391,6 +391,8 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
+	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
+	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
 	
 	QTest::newRow("wrong func") << "xsin(x)";
 }
@@ -404,6 +406,19 @@ void AnalitzaTest::testCrash()
 	a->setExpression(e);
 	QString str=a->calculate().toString();
 	str=a->evaluate().toString();
+	
+	//We don't want it to crash, so we try to
+	for(int i=0; i<expression.size(); i++)
+	{
+		QString aux=expression.left(i);
+		QString aux1=expression.right(i);
+		
+		Expression e1(aux, false);
+		Expression e2(aux, true);
+		
+		Expression e3(aux1, false);
+		Expression e4(aux1, true);
+	}
 }
 
 #include "analitzatest.moc"

@@ -473,7 +473,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 			}
 			delete ret;
 		} else {
-						//it is an otherwise
+			//it is an otherwise
 			if(otherwise)
 				m_err << i18n("Too much <em>otherwise</em> parameters");
 			else
@@ -490,6 +490,9 @@ Object* Analitza::calcPiecewise(const Container* c)
 				
 	if(r)
 		ret=calc(r);
+	else
+		ret=new Cn(0.);
+	Q_ASSERT(ret);
 	return ret;
 }
 
@@ -516,6 +519,7 @@ Object* Analitza::calcDeclare(const Container* c)
 		ret=new Cn(0.);
 		delete o;
 	}
+	Q_ASSERT(ret);
 	return ret;
 }
 
