@@ -29,6 +29,7 @@
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <KLineEdit>
 #include <KLocale>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
@@ -38,10 +39,19 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_sortProxy = new QSortFilterProxyModel(this);
 	m_sortProxy->setSourceModel(m_ops);
 	m_sortProxy->sort(2, Qt::AscendingOrder);
+	m_sortProxy->setFilterKeyColumn(2);
 	
+	QLayout *leftLayo=new QVBoxLayout();
+	m_filter=new KLineEdit(this);
+	m_filter->setClearButtonShown(true);
+	connect(m_filter, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
+	m_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	m_list = new QListView(this);
 	m_list->setModel(m_sortProxy);
 	m_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+	leftLayo->addWidget(new QLabel("Look for:", this));
+	leftLayo->addWidget(m_filter);
+	leftLayo->addWidget(m_list);
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
 	QVBoxLayout *descrLayo=new QVBoxLayout(descr);
@@ -71,8 +81,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 // 	descrLayo->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	descrLayo->addWidget(m_graph);
 	
-	mainLayo->addWidget(m_list);
 	mainLayo->addWidget(descr);
+	mainLayo->addLayout(leftLayo);
 	
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
 	connect(m_list->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex & )),
@@ -100,6 +110,11 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	
 	m_funcs->clear();
 	m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0)));
+}
+
+void Dictionary::filterChanged(const QString &filter)
+{
+	m_sortProxy->setFilterFixedString(filter);
 }
 
 #include "dictionary.moc"

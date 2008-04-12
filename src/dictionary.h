@@ -26,6 +26,7 @@ class QListView;
 class QModelIndex;
 class OperatorsModel;
 class QSortFilterProxyModel;
+class KLineEdit;
 class Graph2D;
 class FunctionsModel;
 
@@ -41,8 +42,10 @@ Q_OBJECT
 		
 	private slots:
 		void activated(const QModelIndex& prev, const QModelIndex& );
+		void filterChanged(const QString&);
 		
 	private:
+		KLineEdit *m_filter;
 		QLabel *m_name;
 		QLabel *m_descr;
 		QLabel *m_sample;
