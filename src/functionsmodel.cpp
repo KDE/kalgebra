@@ -111,6 +111,9 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	if(parent.isValid())
 		return false;
 	emit beginRemoveRows(parent, row, row+count);
+	if(m_selectedRow>=row && m_selectedRow<row+count)
+		m_selectedRow=-1;
+	
 	QList<function>::iterator it=funclist.begin()+row;
 	for(int i=count-1; i>=0; i--) {
 		it=funclist.erase(it);
@@ -199,7 +202,8 @@ bool FunctionsModel::setData(const QModelIndex & idx, const QVariant &value, int
 {
 	if(role==Selection) setSelected(idx);
 	else if(role==Shown) {
-		funclist[idx.row()].setShown(value.toBool());
+		bool isshown=value.toBool();
+		funclist[idx.row()].setShown(isshown);
 		
 		QModelIndex idx1=index(idx.row(), 0), idxEnd=index(idx.row(), columnCount());
 		emit dataChanged(idx1, idxEnd);
