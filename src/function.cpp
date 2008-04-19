@@ -31,9 +31,12 @@ function::function()
 	: m_function(0), m_show(true), m_color(Qt::black)
 {}
 
+// #include "container.h"
+
 function::function(const QString &name, const Expression& newFunc, const QColor& color)
 	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
+// 	objectWalker(newFunc.tree());
 	QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
 	if(firstBVar=="x")
 		m_function=new FunctionY(newFunc);
@@ -154,4 +157,9 @@ QStringList function::supportedBoundedVars()
 	ret.append("y");
 	ret.append("q");
 	return ret;
+}
+
+const Expression& function::expression() const
+{
+	return *analitza()->expression();
 }

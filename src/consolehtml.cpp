@@ -222,4 +222,14 @@ void ConsoleHtml::clear()
 	updateView();
 }
 
+void ConsoleHtml::modifyVariable(const QString& name, const Expression& exp)
+{
+	a.variables()->modify(name, exp);
+}
+
+void ConsoleHtml::removeVariable(const QString & name)
+{
+	a.variables()->remove(name);
+}
+
 #include "consolehtml.moc"

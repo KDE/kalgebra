@@ -86,6 +86,8 @@ class ConsoleHtml : public KHTMLPart
 	private slots:
 		void context(const QString&, const QPoint& p);
 		
+		void modifyVariable(const QString& name, const Expression& exp);
+		void removeVariable(const QString& name);
 	private:
 		Analitza a;
 		void sendStatus(const QString& msg) { emit status(msg); }

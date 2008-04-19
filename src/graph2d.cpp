@@ -154,7 +154,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 			finestra->drawLine(p, p+QPointF(0.,-3.));
 	}
 	
-	for(double y=yini; y>=viewport.bottom(); y-=inc) {		// ralletes y
+	for(double y=yini; y>=viewport.bottom(); y-=inc) {		// ticks y
 		p = toWidget(QPointF(0., y));
 		if(m_squares)
 			finestra->drawLine(QPointF(0., p.y()), QPointF(width(), p.y()));
@@ -568,9 +568,10 @@ void Graph2D::zoomOut()
 
 void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 {
+	Q_ASSERT(startIdx.isValid() && endIdx.isValid());
 	int start=startIdx.row(), end=endIdx.row();
 	
-	for(int i=start; i<end; i++) {
+	for(int i=start; i<=end; i++) {
 		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;

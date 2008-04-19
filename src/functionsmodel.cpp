@@ -100,6 +100,7 @@ bool FunctionsModel::addFunction(const function& func)
 		m_selectedRow=funclist.count()-1;
 		endInsertRows();
 		sendStatus(i18n("%1 function added", func.toString()));
+		emit functionModified(func.name(), func.expression());
 	}
 	
 	return exists;
@@ -116,6 +117,7 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	
 	QList<function>::iterator it=funclist.begin()+row;
 	for(int i=count-1; i>=0; i--) {
+		emit functionRemoved(it->name());
 		it=funclist.erase(it);
 	}
 	emit endRemoveRows();
@@ -180,6 +182,7 @@ bool FunctionsModel::setShown(const QString& f, bool shown)
 	return false;
 }
 
+//TODO remove me
 function* FunctionsModel::editFunction(int num)
 {
 	Q_ASSERT(num<funclist.count());
@@ -191,24 +194,12 @@ void FunctionsModel::editFunction(int num, const function& func)
 	Q_ASSERT(num<funclist.count());
 	funclist[num]=func;
 	
-	QModelIndex idx=index(num, 0), idxEnd=index(num, columnCount());
+	QModelIndex idx=index(num, 0), idxEnd=index(num, columnCount()-1);
 	emit dataChanged(idx, idxEnd);
+	emit functionModified(func.name(), func.expression());
 	
 // 	update_points();
 // 	this->repaint(); emit update
-}
-
-bool FunctionsModel::setData(const QModelIndex & idx, const QVariant &value, int role)
-{
-	if(role==Selection) setSelected(idx);
-	else if(role==Shown) {
-		bool isshown=value.toBool();
-		funclist[idx.row()].setShown(isshown);
-		
-		QModelIndex idx1=index(idx.row(), 0), idxEnd=index(idx.row(), columnCount());
-		emit dataChanged(idx1, idxEnd);
-	}
-	return false;
 }
 
 bool FunctionsModel::editFunction(const QString& toChange, const function& func)
@@ -221,12 +212,26 @@ bool FunctionsModel::editFunction(const QString& toChange, const function& func)
 			exist=true;
 			*it = func;
 			it->setName(toChange);
-			QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount());
+			QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
 			emit dataChanged(idx, idxEnd);
+			emit functionModified(toChange, func.expression());
 		}
 	}
 	
 	return exist;
+}
+
+bool FunctionsModel::setData(const QModelIndex & idx, const QVariant &value, int role)
+{
+	if(role==Selection) setSelected(idx);
+	else if(role==Shown) {
+		bool isshown=value.toBool();
+		funclist[idx.row()].setShown(isshown);
+		
+		QModelIndex idx1=index(idx.row(), 0), idxEnd=index(idx.row(), columnCount()-1);
+		emit dataChanged(idx1, idxEnd);
+	}
+	return false;
 }
 
 void FunctionsModel::updatePoints(int i, const QRect & viewport, int resolution)

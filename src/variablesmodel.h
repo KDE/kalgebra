@@ -23,6 +23,7 @@
 #include "operator.h"
 
 class Variables;
+class Expression;
 
 /** Variables model is a model class that has a relation of all operators string with their VariableType. */
 class VariablesModel : public QAbstractTableModel
@@ -42,6 +43,7 @@ class VariablesModel : public QAbstractTableModel
 	public slots:
 		/** Updates the variables information */
 		void updateInformation();
+		
 	private:
 		const Variables *m_vars;
 };

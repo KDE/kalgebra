@@ -214,6 +214,11 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
+	connect(b_funcsModel, SIGNAL(functionModified(const QString &, const Expression & )),
+			c_results, SLOT(modifyVariable(const QString & , const Expression & )));
+	connect(b_funcsModel, SIGNAL(functionRemoved(const QString &)),
+			c_results, SLOT(removeVariable(const QString &)));
+	
 	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
 }
@@ -222,10 +227,11 @@ void KAlgebra::new_func()
 {
 	QString name = b_funced->name();
 	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color());
-	if(!b_funced->editing()) {
-		b_funcsModel->addFunction(f);
-	} else {
+	
+	if(b_funced->editing()) {
 		b_funcsModel->editFunction(name, f);
+	} else {
+		b_funcsModel->addFunction(f);
 	}
 	
 	b_funced->setEditing(false);
@@ -239,7 +245,8 @@ void KAlgebra::edit_func(const QModelIndex &idx)
 {
 	b_tools->setTabText(1, i18n("&Editing"));
 	b_tools->setCurrentIndex(1);
-	b_funced->setText(b_funcsModel->data(idx).toString());
+	b_funced->setName(b_funcsModel->data(idx.sibling(idx.row(), 0)).toString());
+	b_funced->setText(b_funcsModel->data(idx.sibling(idx.row(), 1)).toString());
 	b_funced->setEditing(true);
 	b_funced->setFocus();
 }

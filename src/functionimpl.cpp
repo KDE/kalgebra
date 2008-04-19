@@ -29,10 +29,14 @@ FunctionImpl::FunctionImpl(const Expression& newFunc)
 	: points(0), m_deriv(0), m_last_viewport(QRect()), m_last_resolution(0), m_last_max_res(0)
 {
 	func.setExpression(newFunc);
-	Expression deriv=func.derivative();
-	if(func.isCorrect())
-		m_deriv = new Expression(deriv);
-	else
+	if(func.isCorrect()) {
+		Expression deriv = func.derivative();
+		if(func.isCorrect())
+			m_deriv = new Expression(deriv);
+		else
+			func.flushErrors();
+		Q_ASSERT(func.isCorrect());
+	} else
 		func.flushErrors();
 }
 

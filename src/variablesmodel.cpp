@@ -20,6 +20,7 @@
 #include "variables.h"
 #include <KLocale>
 #include <KApplication>
+#include <KDebug>
 
 VariablesModel::VariablesModel(QObject *parent)
 	: QAbstractTableModel(parent), m_vars(0)
@@ -71,6 +72,5 @@ void VariablesModel::updateInformation()
 {
 	reset();
 }
-
 
 #include "variablesmodel.moc"

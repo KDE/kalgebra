@@ -71,8 +71,6 @@ class FunctionsModel : public QAbstractTableModel
 		
 		const function& currentFunction() const;
 		
-		function& currentFunction();
-		
 		bool hasSelection() const { return m_selectedRow>=0 && !funclist.isEmpty(); }
 		
 		const_iterator constBegin() const { return funclist.constBegin(); }
@@ -91,14 +89,21 @@ class FunctionsModel : public QAbstractTableModel
 		int selectedRow() const { return m_selectedRow; }
 		
 	signals:
-		/** Emits a status when it changes. */
+		/** Emits a status message when something changes. */
 		void status(const QString &msg);
+		
+		void functionModified(const QString& name, const Expression& e);
+		void functionRemoved(const QString& name);
+		
 	private:
+		function& currentFunction();
+		
 		QLineF slope(const QPointF& dp) const;
 		QPair<QPointF, QString> calcImage(const QPointF& dp);
 		
 		QList<function> funclist;
 		int m_selectedRow;
+
 };
 
 #endif

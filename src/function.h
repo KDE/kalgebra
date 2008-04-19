@@ -113,6 +113,8 @@ class function
 		
 		const QStringList& errors() const { return m_err; }
 		
+		const Expression& expression() const;
+		
 		/** Returns a list of the supported bvars */
 		static QStringList supportedBoundedVars();
 	private:
