@@ -24,7 +24,7 @@
 #include "analitza.h"
 
 class QSizeF;
-class QLineEdit;
+class KLineEdit;
 class QLabel;
 
 class KAlgebraPlasmoid : public Plasma::Applet
@@ -41,7 +41,7 @@ class KAlgebraPlasmoid : public Plasma::Applet
         void constraintsEvent(Plasma::Constraints constraints);
 
 	private:
-		QLineEdit *m_input;
+        KLineEdit *m_input;
 		QLabel *m_output;
 		Analitza a;
 };

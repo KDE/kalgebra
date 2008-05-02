@@ -24,7 +24,7 @@
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QLineEdit>
+#include <KLineEdit>
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
@@ -49,7 +49,7 @@ KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 void KAlgebraPlasmoid::init()
 {
     QGraphicsProxyWidget * graphicsWidget = new QGraphicsProxyWidget(this);
-    QWidget *widget = new QWidget;
+    QFrame *widget = new QFrame;
     QVBoxLayout *layout = new QVBoxLayout(widget);
     graphicsWidget->setWidget(widget);
 
@@ -61,10 +61,10 @@ void KAlgebraPlasmoid::init()
 	layout->setMargin( 0 );
 	layout->setSpacing( 0 );
 	
-	m_input = new QLineEdit(widget);
+	m_input = new KLineEdit(widget);
     layout->addWidget(m_input);
 // 	m_input->setGeometry(QRectF(QPointF(0,0),size()));
-// 	m_input->setDefaultText(i18n("Write here the expression..."));
+    m_input->setClickMessage(i18n("Enter the expression..."));
 // 	m_input->setMultiLine(false);
 // 	m_layout->addItem(m_input);
 	
