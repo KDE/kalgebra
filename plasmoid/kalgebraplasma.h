@@ -24,12 +24,9 @@
 #include "analitza.h"
 
 class QSizeF;
-class ExpressionEdit;
+class QLineEdit;
+class QLabel;
 
-namespace Plasma {
-	class Label;
-}
- 
 class KAlgebraPlasmoid : public Plasma::Applet
 {
 	Q_OBJECT
@@ -41,10 +38,11 @@ class KAlgebraPlasmoid : public Plasma::Applet
 	private slots:
 		void simplify();
 		void addOperation();
-		
+        void constraintsEvent(Plasma::Constraints constraints);
+
 	private:
-		ExpressionEdit *m_input;
-		Plasma::Label *m_output;
+		QLineEdit *m_input;
+		QLabel *m_output;
 		Analitza a;
 };
 

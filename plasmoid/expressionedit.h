@@ -19,13 +19,13 @@
 #ifndef EXPRESSIONEDITPLASMA_H
 #define EXPRESSIONEDITPLASMA_H
 
-#include <plasma/widgets/lineedit.h>
- 
-class ExpressionEdit : public Plasma::LineEdit
+#include <QLineEdit>
+
+class ExpressionEdit : public QLineEdit
 {
 	Q_OBJECT
 	public:
-		ExpressionEdit(QGraphicsItem* parent) : Plasma::LineEdit(parent) {}
+		ExpressionEdit(QWidget* parent) : QLineEdit(parent) {}
 		
 		void keyPressEvent(QKeyEvent *event);
 	signals:

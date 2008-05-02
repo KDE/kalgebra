@@ -22,7 +22,7 @@
 
 void ExpressionEdit::keyPressEvent(QKeyEvent * event)
 {
-	Plasma::LineEdit::keyPressEvent(event);
+	QLineEdit::keyPressEvent(event);
 	
 	if(event->key()!=Qt::Key_Return)
 		emit changed();
