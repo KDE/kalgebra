@@ -19,6 +19,7 @@
 #include "functiontest.h"
 #include "function.h"
 #include "expression.h"
+#include "analitza.h"
 #include <qtest_kde.h>
 #include <cmath>
 
@@ -27,7 +28,7 @@ using namespace std;
 QTEST_KDEMAIN_CORE( FunctionTest )
 
 FunctionTest::FunctionTest(QObject *parent)
- : QObject(parent)
+	: QObject(parent)
 {}
 
 FunctionTest::~FunctionTest()
@@ -53,8 +54,6 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->hard") << "q->(1..10, ceiling(q/(2*pi)))";
 	QTest::newRow("polar->strange") << "q->q/q";
 }
-
-#include "analitza.h"
 
 void FunctionTest::testCopy()
 {

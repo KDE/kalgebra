@@ -24,21 +24,6 @@
 
 #include "analitza.h"
 
-#define KEYRIGHT	1<<0
-#define KEYLEFT		1<<1
-#define KEYUP		1<<2
-#define KEYDOWN		1<<3
-#define KEYAVPAG	1<<4
-#define KEYREPAG	1<<5
-#define KEYS		1<<6
-#define KEYW		1<<7
-#define KEYQ		1<<8
-#define KEYE		1<<9
-#define LCLICK		1<<10
-#define RCLICK		1<<11
-#define MCLICK		1<<12
-
-
 /**
  *	Used to calculate 3D Graphs in parallel.
  *	@author Aleix Pol i Gonzalez <aleixpol@gmail.com>

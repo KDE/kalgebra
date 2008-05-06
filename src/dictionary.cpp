@@ -29,6 +29,7 @@
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QFormLayout>
 #include <KLineEdit>
 #include <KLocale>
 
@@ -54,7 +55,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	leftLayo->addWidget(m_list);
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
-	QVBoxLayout *descrLayo=new QVBoxLayout(descr);
+	QFormLayout *descrLayo=new QFormLayout;
+	QVBoxLayout *graphLayo=new QVBoxLayout;
 	m_name=new QLabel(descr);
 	m_descr=new QLabel(descr);
 	m_sample=new QLabel(descr);
@@ -64,24 +66,22 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_graph->setReadOnly(true);
 	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
 	m_graph->setResolution(400);
+	m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	
 	m_name->setIndent(10);
 	m_descr->setIndent(10);
 	m_sample->setIndent(10);
 	m_example->setIndent(10);
 	
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString())));
-	descrLayo->addWidget(m_name);
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString())));
-	descrLayo->addWidget(m_descr);
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString())));
-	descrLayo->addWidget(m_sample);
-	descrLayo->addWidget(new QLabel(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString())));
-	descrLayo->addWidget(m_example);
-// 	descrLayo->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
-	descrLayo->addWidget(m_graph);
+	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString()), m_name);
+	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
+	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
+	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example); 
+	graphLayo->addWidget(descr);
+	graphLayo->addWidget(m_graph);
+	descr->setLayout(descrLayo);
 	
-	mainLayo->addWidget(descr);
+	mainLayo->addLayout(graphLayo);
 	mainLayo->addLayout(leftLayo);
 	
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));

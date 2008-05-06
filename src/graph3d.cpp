@@ -36,6 +36,10 @@
 #include "exp.h"
 #include "variables.h"
 
+enum ActionsEnum {
+    KEYRIGHT=1<<0, KEYLEFT=1<<1, KEYUP=1<<2, KEYDOWN=1<<3, KEYAVPAG=1<<4, KEYREPAG=1<<5, KEYS=1<<6, KEYW=1<<7,
+    KEYQ=1<<8, KEYE=1<<9, LCLICK=1<<10, RCLICK=1<<11, MCLICK=1<<12 };
+
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(0), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_type(Object::Null), m_n(4)
@@ -261,11 +265,12 @@ bool Graph3D::create()
 	
 	for(int i=0; i<m_n; ++i) {
 		Calculate3D *r = new Calculate3D(this, Analitza(a), punts, part*i, part*(i+1), mida, step);
+		if(i+1==m_n)
+			r->setTo(2*static_cast<int>(default_size/default_step));
+		
 		threads << r;
 		r->start();
 	}
-	
-	threads.last()->setTo(2*static_cast<int>(default_size/default_step));
 	
 	bool ret=true;
 	QList<Calculate3D*>::iterator it = threads.begin();
@@ -388,7 +393,8 @@ void Graph3D::keyReleaseEvent( QKeyEvent *e ){
 	this->repaint();
 }
 
-void Graph3D::timeOut(){
+void Graph3D::timeOut()
+{
 	graus[0] += 20.0;
 	graus[1] += 20.0;
 	graus[2] += 20.0;
