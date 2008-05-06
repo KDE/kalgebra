@@ -30,7 +30,7 @@
 void print_dom(const QDomNode& in, int ind);
 
 /** Prints an expression tree from a node @p o indenting it by @p ind */
-void objectWalker(const Object* o, int ind=0);
+void ANALITZA_EXPORT objectWalker(const Object* o, int ind=0);
 
 /**
  *	This class is the one that will correspond to MathML container.

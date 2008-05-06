@@ -79,7 +79,7 @@ class ANALITZA_EXPORT Analitza
 		double derivative(const QList< QPair<QString, double > >& values );
 		
 		/** Returns whether there has been a problem in the last calculation. */
-		inline bool isCorrect() const { return m_err.isEmpty() && m_exp.isCorrect(); }
+		bool isCorrect() const { return m_err.isEmpty() && m_exp.isCorrect(); }
 		
 		/** Returns whether @p var is a function. */
 		bool isFunction(const Ci& var) const;

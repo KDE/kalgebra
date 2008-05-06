@@ -501,7 +501,7 @@ Object* Analitza::calcDeclare(const Container* c)
 	Object *ret=0;
 	if(c->m_params.count()!=2 || c->m_params[0]->type()!=Object::variable) {
 		m_err << i18n("Need a var name and a value");
-		return 0;
+		return new Cn(0.);
 	}
 			
 	const Ci *var = (const Ci*) c->m_params[0];
@@ -563,7 +563,7 @@ Object* Analitza::operate(const Container* c)
 	
 	if(KDE_ISUNLIKELY(c->isEmpty())) {
 		m_err << i18n("Empty container: %1", c->tagName());
-		return 0;
+		return new Cn(0.);
 	}
 	
 	switch(c->containerType()) { //TODO: Diffs should be implemented here.
