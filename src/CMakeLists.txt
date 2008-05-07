@@ -1,5 +1,7 @@
 include_directories(../analitza)
 
+add_subdirectory(tests)
+
 set(kalgebra_SRCS
 	algebrahighlighter.cpp
 	kalgebra.cpp

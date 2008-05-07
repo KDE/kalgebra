@@ -64,14 +64,15 @@ private:
  *	@author Aleix Pol i Gonzalez
  */
 
-class Graph3D : public QGLWidget {
+class Graph3D : public QGLWidget
+{
 	Q_OBJECT
 	public:
 		/** Defines how will be the graph representated. */
 		enum Type {
-			Dots=0,	/**< Dots will be drawn. */
-			Lines=1,/**< Lines will be drawn. */
-			Solid=2	/**< A solid graph will be drawn with a line texture. */
+			Dots=0,  ///< Dots will be drawn.
+			Lines=1, ///< Lines will be drawn.
+			Solid=2  ///< A solid graph will be drawn with a line texture.
 		};
 		
 		/** Constructor. Creates a new Graph3D widget. */
@@ -102,15 +103,18 @@ class Graph3D : public QGLWidget {
 		void setZoom(float alpha);
 		
 		/** Sets the showed method. */
-		void setMethod(enum Type m);
+		void setMethod(Type m);
 		
 		void wheelEvent(QWheelEvent *e);
+		
 	public slots:
 		/** Resets the view coordinates. */
 		void resetView();
+		
 	signals:
 		/** Emits a status message. */
 		void status(const QString &msg);
+		
 	private:
 		void drawAxes();
 		

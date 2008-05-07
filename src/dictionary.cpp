@@ -55,6 +55,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	leftLayo->addWidget(m_list);
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
+	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	QFormLayout *descrLayo=new QFormLayout;
 	QVBoxLayout *graphLayo=new QVBoxLayout;
 	m_name=new QLabel(descr);

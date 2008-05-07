@@ -318,7 +318,8 @@ void Graph3D::wheelEvent(QWheelEvent * e)
 	repaint();
 }
 
-void Graph3D::keyPressEvent( QKeyEvent *e ) {
+void Graph3D::keyPressEvent( QKeyEvent *e )
+{
 	switch(e->key()) {
 		case Qt::Key_Up:
 			keyspressed |= KEYUP;
@@ -355,7 +356,8 @@ void Graph3D::keyPressEvent( QKeyEvent *e ) {
 	this->repaint();
 }
 
-void Graph3D::keyReleaseEvent( QKeyEvent *e ){
+void Graph3D::keyReleaseEvent( QKeyEvent *e )
+{
 	switch(e->key()) {
 		case Qt::Key_Up:
 			keyspressed &= ~KEYUP;

@@ -1,5 +1,7 @@
 project(analitza)
 
+add_subdirectory(tests)
+
 set(analitza_SRCS
 	expression.cpp
 	analitza.cpp
