@@ -23,29 +23,44 @@
 #include "container.h"
 #include "exp.h"
 
-Expression::Expression() : m_tree(0), m_err()
+struct Expression::ExpressionPrivate
 {
+	Object* m_tree;
+	
+	QStringList m_err;
+};
+
+Expression::Expression()
+{
+	d=new ExpressionPrivate;
+	d->m_tree=0;
 }
 
 Expression::Expression(Object * o)
-	: m_tree(o), m_err()
 {
+	d=new ExpressionPrivate;
+	d->m_tree=o;
 }
 
-Expression::Expression(const Cn & e) : m_tree(0), m_err()
+Expression::Expression(const Cn & e)
 {
+	d=new ExpressionPrivate;
 	if(e.isCorrect())
-		m_tree = new Cn(e);
+		d->m_tree = new Cn(e);
 }
 
-Expression::Expression(const Expression & e) : m_tree(0), m_err(e.m_err)
+Expression::Expression(const Expression & e)
 {
+	d=new ExpressionPrivate;
+	d->m_err=e.d->m_err;
 	if(e.isCorrect())
-		m_tree = objectCopy(e.m_tree);
+		d->m_tree = objectCopy(e.d->m_tree);
 }
 
-Expression::Expression(const QString & exp, bool mathml) : m_tree(0), m_err()
+Expression::Expression(const QString & exp, bool mathml)
 {
+	d=new ExpressionPrivate;
+	d->m_tree=0;
 	if(mathml)
 		setMathML(exp);
 	else
@@ -54,50 +69,51 @@ Expression::Expression(const QString & exp, bool mathml) : m_tree(0), m_err()
 
 Expression::~Expression()
 {
-	if(m_tree)
-		delete m_tree;
+	if(d->m_tree)
+		delete d->m_tree;
+	delete d;
 }
 
 Expression Expression::operator=(const Expression & e)
 {
 	if(this != &e) {
-        if(m_tree)
-            delete m_tree;
-		m_tree = objectCopy(e.m_tree);
-		m_err = e.m_err;
+		if(d->m_tree)
+			delete d->m_tree;
+		d->m_tree = objectCopy(e.d->m_tree);
+		d->m_err = e.d->m_err;
 	}
 	return *this;
 }
 
 bool Expression::setText(const QString & exp)
 {
-	m_err = QStringList();
+	d->m_err.clear();
 	Exp e(exp);
 	e.parse();
 	bool b=e.error().isEmpty();
 	if(b) {
 		setMathML(e.mathML());
 	} else {
-		m_err << e.error();
+		d->m_err << e.error();
 	}
 	return b;
 }
 
 bool Expression::setMathML(const QString & s)
 {
-	m_err.clear();
+	d->m_err.clear();
 	
-	if(m_tree)
-		delete m_tree;
+	if(d->m_tree)
+		delete d->m_tree;
 	
 	QDomDocument doc;
 	
 	if (!doc.setContent(s)) {
-		m_err << i18n("Error while parsing: %1", s);
+		d->m_err << i18n("Error while parsing: %1", s);
 		return false;
 	}
 	
-	m_tree = branch(doc.documentElement());
+	d->m_tree = branch(doc.documentElement());
 	return true;
 }
 
@@ -132,8 +148,8 @@ Object* Expression::branch(const QDomElement& elem)
 					Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
 					bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
 					if(dGreaterU)
-						m_err << i18nc("An error message", "The downlimit is greater than the uplimit. Probably should be %1..%2",
-										u.value(), d.value());
+						this->d->m_err << i18nc("An error message", "The downlimit is greater than the uplimit."
+													"Probably should be %1..%2", u.value(), d.value());
 				} else if(c->containerType()==Container::piecewise) {
 					bool correct=true;
 					foreach(Object *o, c->m_params) {
@@ -145,19 +161,19 @@ Object* Expression::branch(const QDomElement& elem)
 							correct=false;
 							
 						if(!correct) {
-							m_err << i18n("%1 is not a piece/otherwise inside the piecewise", o->toString());
+							d->m_err << i18n("%1 is not a piece/otherwise inside the piecewise", o->toString());
 							break;
 						}
 					}
 				} else if(c->containerType()==Container::declare) {
 					if(c->m_params.first()->type()!=Object::variable) {
-						m_err << i18n("We can only declare variables");
+						d->m_err << i18n("We can only declare variables");
 					}
 				}
 				//EOCollect
 				ret = c;
 			} else {
-				m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
+				d->m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
 			}
 			break;}
 		case Object::value:
@@ -177,7 +193,7 @@ Object* Expression::branch(const QDomElement& elem)
 			}
 			break;
 		case Object::none:
-			m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
+			d->m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
 			break;
 	}
 	return ret;
@@ -186,7 +202,7 @@ Object* Expression::branch(const QDomElement& elem)
 QString Expression::toHtml() const
 {
 	if(isCorrect())
-		return m_tree->toHtml();
+		return d->m_tree->toHtml();
 	else
 		return QString();
 }
@@ -194,7 +210,7 @@ QString Expression::toHtml() const
 QString Expression::toMathML() const
 {
 	if(isCorrect())
-		return m_tree->toMathML();
+		return d->m_tree->toMathML();
 	else
 		return QString();
 }
@@ -202,7 +218,7 @@ QString Expression::toMathML() const
 QString Expression::toString() const
 {
 	if(isCorrect())
-		return m_tree->toString();
+		return d->m_tree->toString();
 	else
 		return QString();
 }
@@ -248,16 +264,16 @@ Cn Expression::downlimit(const Container& c)
 
 bool Expression::operator==(const Expression & e) const
 {
-	if(!e.m_tree || !m_tree)
+	if(!e.d->m_tree || !d->m_tree)
 		return false;
-	return Container::equalTree(e.m_tree, m_tree);
+	return Container::equalTree(e.d->m_tree, d->m_tree);
 }
 
 Cn Expression::uplimit() const
 {
 	Cn ret(0.);
-	if(m_tree->type() == Object::container) {
-		Container *c= (Container*) m_tree;
+	if(d->m_tree->type() == Object::container) {
+		Container *c= (Container*) d->m_tree;
 		ret=uplimit(c->m_params[0]);
 	}
 	return ret;
@@ -265,8 +281,8 @@ Cn Expression::uplimit() const
 
 Cn Expression::downlimit() const
 {
-	if(m_tree->type() == Object::container) {
-		Container *c= (Container*) m_tree;
+	if(d->m_tree->type() == Object::container) {
+		Container *c= (Container*) d->m_tree;
 		return downlimit(c->m_params[0]);
 	}
 	return Cn(0.);
@@ -303,20 +319,20 @@ Object* Expression::objectCopy(const Object * old)
 
 void Expression::clear()
 {
-	if(m_tree)
-		delete m_tree;
-	m_tree=0;
-	m_err.clear();
+	if(d->m_tree)
+		delete d->m_tree;
+	d->m_tree=0;
+	d->m_err.clear();
 }
 
 bool Expression::isCorrect() const
 {
-	return m_tree && m_err.isEmpty() && m_tree->isCorrect();
+	return d->m_tree && d->m_err.isEmpty() && d->m_tree->isCorrect();
 }
 
 QStringList Expression::bvarList() const
 {
-	Container *c = (Container*) m_tree;
+	Container *c = (Container*) d->m_tree;
 	if(c!=0 && c->type()==Object::container) {
 		c = (Container*) c->m_params[0];
 		
@@ -328,8 +344,8 @@ QStringList Expression::bvarList() const
 
 double Expression::value() const
 {
-	if(m_tree && m_tree->type()==Object::value)
-		return ((Cn*) m_tree)->value();
+	if(d->m_tree && d->m_tree->type()==Object::value)
+		return ((Cn*) d->m_tree)->value();
 	else {
 		qDebug() << "trying to return an invalid value";
 		return 0;
@@ -338,16 +354,40 @@ double Expression::value() const
 
 Object::ValueType Expression::valueType() const
 {
-	return m_tree ? m_tree->valueType() : Object::Null;
+	return d->m_tree ? d->m_tree->valueType() : Object::Null;
 }
 
 bool Expression::isLambda() const
 {
-	Container* c = (Container*) m_tree;
-	if(m_tree && m_tree->isContainer() && c->containerType()==Container::math) {
-		Container *c1 = (Container*) c->m_params[0];
+	Container* c = (Container*) d->m_tree;
+	if(d->m_tree && d->m_tree->isContainer() && c->containerType()==Container::math) {
+		Container *c1 = (Container*) c->m_params.first();
 		return c->m_params[0]->isContainer() && c1->containerType()==Container::lambda;
 	} else
 		return false;
 }
 
+QStringList Expression::error() const
+{
+	return d->m_err;
+}
+
+const Object* Expression::tree() const
+{
+	return d->m_tree;
+}
+
+Object* Expression::tree()
+{
+	return d->m_tree;
+}
+
+void Expression::setTree(Object* o)
+{
+	d->m_tree=o;
+}
+
+bool Expression::isValue() const
+{
+	return d->m_tree && d->m_tree->type()==Object::value;
+}
