@@ -99,27 +99,41 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	unsigned int resolucio=max_res;
 	double pi=2.*acos(0.);
 	const Expression *e = func.expression();
-	Cn ulimit = e->uplimit(), dlimit=e->downlimit();
+	Expression ulimitexp = e->uplimit(), dlimitexp=e->downlimit();
+	double ulimit, dlimit;
 	
-	if(!ulimit.isCorrect())
+	if(ulimitexp.isCorrect()) {
+		Analitza u;
+		u.setExpression(ulimitexp);
+		ulimitexp=u.calculate();
+	}
+	if(ulimitexp.isCorrect() && ulimitexp.isValue())
+		ulimit=ulimitexp.value();
+	else
 		ulimit = 2.*pi;
 	
-	if(!dlimit.isCorrect())
+	if(dlimitexp.isCorrect()) {
+		Analitza d;
+		d.setExpression(dlimitexp);
+		dlimitexp=d.calculate();
+	}
+	if(dlimitexp.isCorrect() && dlimitexp.isValue())
+		dlimit=dlimitexp.value();
+	else
 		dlimit = 0.;
 	
-	if(ulimit<dlimit) {
-		qDebug() << "can't have uplimit<downlimit";
+	if(ulimit<=dlimit) {
+		qDebug() << i18n("Can't have uplimit <= downlimit");
 		return;
 	}
-	
 	points.reserve(max_res);
 	
 	func.variables()->modify("q", 0.);
 	Cn *varth = (Cn*) func.variables()->value("q");
 	
-	double inv_res= (double) (ulimit.value()-dlimit.value())/resolucio;
-	double final=ulimit.value()-inv_res;
-	for(double th=dlimit.value(); th<final; th+=inv_res) {
+	double inv_res= double((ulimit-dlimit)/resolucio);
+	double final=ulimit-inv_res;
+	for(double th=dlimit; th<final; th+=inv_res) {
 		varth->setValue(th);
 		double r = func.calculate().value();
 		
@@ -138,15 +152,12 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	points.reserve(max_res);
 	double l_lim=viewport.left()-1., r_lim=viewport.right()+1., x=0.;
 	
-	unsigned int resolucio=0, width=static_cast<unsigned int>(-l_lim+r_lim);
-	while(resolucio<max_res)
-		resolucio+=width;
-	resolucio -= width;
-		
+	unsigned int width=static_cast<unsigned int>(-l_lim+r_lim);
+	unsigned int resolucio=((max_res-1)/width)*width;
 	double inv_res= (double) (-l_lim+r_lim)/resolucio;
-	register int i=0;
 	
-	/*if(viewport.width() == m_last_viewport.width()) { //Perhaps these optimizations could be removed now, calculator is fast enough
+	/*if(viewport.width() == m_last_viewport.width()) {
+		//Perhaps these optimizations could be removed now, calculator is fast enough
 		int cacho = static_cast<int>(round(resolucio/(-l_lim+r_lim)));
 		
 		if(viewport.right()<m_last_viewport.right()) {
@@ -165,7 +176,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	
 	func.variables()->modify("x", 0.);
 	Cn *vx = (Cn*) func.variables()->value("x");
-	
+	int i=0;
 	double middleX=viewport.left()+viewport.width()/2;
 	for(x=l_lim; x<=r_lim; x+=inv_res) {
 		vx->setValue(x);
@@ -213,10 +224,25 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	double th=atan(p.y()/ p.x()), r=1., d, d2;
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
-			
-	Cn ulimit = func.expression()->uplimit(), dlimit=func.expression()->downlimit();
-	if(!ulimit.isCorrect()) ulimit = 2.*pi;
-	if(!dlimit.isCorrect()) dlimit = 0.;
+	
+	const Expression *e = func.expression();
+	Expression ulimitexp = e->uplimit(), dlimitexp=e->downlimit();
+	Cn ulimit, dlimit;
+	if(ulimitexp.isCorrect()) {
+		Analitza u;
+		u.setExpression(ulimitexp);
+		ulimitexp=u.calculate();
+	}
+	if(!ulimitexp.isCorrect())
+		ulimit = 2.*pi;
+	
+	if(dlimitexp.isCorrect()) {
+		Analitza d;
+		d.setExpression(dlimitexp);
+		dlimitexp=d.calculate();
+	}
+	if(!dlimitexp.isCorrect())
+		dlimit = 0.;
 	
 	if(th<dlimit.value()) th=dlimit.value();
 	if(th>ulimit.value()) th=ulimit.value();

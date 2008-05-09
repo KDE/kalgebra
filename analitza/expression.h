@@ -98,12 +98,12 @@ class ANALITZA_EXPORT Expression
 		/**
 		 *	Returns the uplimit field. If is not a Cn a not correct Cn will be returned.
 		 */
-		Cn uplimit() const;
+		Expression uplimit() const;
 		
 		/**
 		 *	Returns the downlimit field. If is not a Cn a not correct Cn will be returned.
 		 */
-		Cn downlimit() const;
+		Expression downlimit() const;
 		
 		/**
 		 *	Returns whether it is a lambda-expression.
@@ -159,14 +159,14 @@ class ANALITZA_EXPORT Expression
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
 		/**
-		 *	Returns the uplimit of a given @p c container. If it doesn't exist a not correct Cn will be returned.
+		 *	Returns the uplimit of a given @p c container.
 		 */
-		static Cn uplimit(const Container& c);
+		static Expression uplimit(const Container& c);
 		
 		/**
-		 *	Returns the uplimit of a given @p c container. If it doesn't exist a not correct Cn will be returned.
+		 *	Returns the uplimit of a given @p c container.
 		 */
-		static Cn downlimit(const Container& c);
+		static Expression downlimit(const Container& c);
 		
 		/**
 		 *	Copies an object @p o to a new object.

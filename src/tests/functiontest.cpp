@@ -53,6 +53,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
 	QTest::newRow("polar->hard") << "q->(1..10, ceiling(q/(2*pi)))";
+	QTest::newRow("polar->hard") << "q->(2..4+4, ceiling(q/(2*pi)))";
 	QTest::newRow("polar->strange") << "q->q/q";
 }
 

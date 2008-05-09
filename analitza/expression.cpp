@@ -25,6 +25,8 @@
 
 struct Expression::ExpressionPrivate
 {
+	ExpressionPrivate(Object* t) : m_tree(t) {}
+	
 	Object* m_tree;
 	
 	QStringList m_err;
@@ -32,26 +34,24 @@ struct Expression::ExpressionPrivate
 
 Expression::Expression()
 {
-	d=new ExpressionPrivate;
-	d->m_tree=0;
+	d=new ExpressionPrivate(0);
 }
 
 Expression::Expression(Object * o)
 {
-	d=new ExpressionPrivate;
-	d->m_tree=o;
+	d=new ExpressionPrivate(o);
 }
 
 Expression::Expression(const Cn & e)
 {
-	d=new ExpressionPrivate;
+	d=new ExpressionPrivate(0);
 	if(e.isCorrect())
 		d->m_tree = new Cn(e);
 }
 
 Expression::Expression(const Expression & e)
 {
-	d=new ExpressionPrivate;
+	d=new ExpressionPrivate(0);
 	d->m_err=e.d->m_err;
 	if(e.isCorrect())
 		d->m_tree = objectCopy(e.d->m_tree);
@@ -59,8 +59,7 @@ Expression::Expression(const Expression & e)
 
 Expression::Expression(const QString & exp, bool mathml)
 {
-	d=new ExpressionPrivate;
-	d->m_tree=0;
+	d=new ExpressionPrivate(0);
 	if(mathml)
 		setMathML(exp);
 	else
@@ -69,7 +68,7 @@ Expression::Expression(const QString & exp, bool mathml)
 
 Expression::~Expression()
 {
-	if(d->m_tree)
+	if(d && d->m_tree)
 		delete d->m_tree;
 	delete d;
 }
@@ -144,8 +143,11 @@ Object* Expression::branch(const QDomElement& elem)
 				}
 				
 				//Error collection
-				if(c->containerType()==Container::apply) {
-					Cn u=uplimit(*c), d=downlimit(*c); //FIXME: Don't look for it, append it at 2nd position ors
+				Expression ul=uplimit(*c);
+				Expression dl=downlimit(*c);
+				if(c->containerType()==Container::apply && ul.isValue() && dl.isValue()) {
+					//FIXME: Don't look for it, append it at 2nd position ors
+					Cn u=ul.tree(), d=ul.tree();
 					bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
 					if(dGreaterU)
 						this->d->m_err << i18nc("An error message", "The downlimit is greater than the uplimit."
@@ -238,40 +240,34 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 	return ret;
 }
 
-Cn Expression::uplimit(const Container& c)
+Expression Expression::uplimit(const Container& c)
 {
 	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::uplimit && c->m_params[0]->type()==Object::value)
-			return Cn(c->m_params[0]);
+		if(c->type()==Object::container && c->containerType()==Container::uplimit)
+			return Expression(objectCopy(c->m_params.first()));
 	}
-	Cn r=Cn(0.);
-	r.setCorrect(false);
-	return r;
+	return Expression();
 }
 
-Cn Expression::downlimit(const Container& c)
+Expression Expression::downlimit(const Container& c)
 {
 	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::downlimit && c->m_params[0]->type()==Object::value)
-			return Cn(c->m_params[0]);
+		if(c->type()==Object::container && c->containerType()==Container::downlimit)
+			return Expression(objectCopy(c->m_params.first()));
 	}
-	Cn r=Cn(0.);
-	r.setCorrect(false);
-	return r;
+	return Expression();
 }
 
 bool Expression::operator==(const Expression & e) const
 {
-	if(!e.d->m_tree || !d->m_tree)
-		return false;
-	return Container::equalTree(e.d->m_tree, d->m_tree);
+	return e.d->m_tree && d->m_tree && Container::equalTree(e.d->m_tree, d->m_tree);
 }
 
-Cn Expression::uplimit() const
+Expression Expression::uplimit() const
 {
-	Cn ret(0.);
+	Expression ret;
 	if(d->m_tree->type() == Object::container) {
 		Container *c= (Container*) d->m_tree;
 		ret=uplimit(c->m_params[0]);
@@ -279,13 +275,13 @@ Cn Expression::uplimit() const
 	return ret;
 }
 
-Cn Expression::downlimit() const
+Expression Expression::downlimit() const
 {
 	if(d->m_tree->type() == Object::container) {
 		Container *c= (Container*) d->m_tree;
 		return downlimit(c->m_params[0]);
 	}
-	return Cn(0.);
+	return Expression();
 }
 
 Object* Expression::objectCopy(const Object * old)
