@@ -224,14 +224,19 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		finestra.setPen(pfunc);
 		unsigned int pointsCount = it->npoints();
 			
-		QPointF *vect=it->points();
+		const QVector<QPointF> &vect=it->points();
 		QPointF ultim(toWidget(vect[0])), act;
+		
+// 		qDebug() << "pppppppppppp" << fromWidget(panorama.bottomRight());
+// 		for(unsigned int j=0; j<pointsCount; j++) {
+// 			qDebug() << "ooooooooooo" << j << vect[j];
+// 		}
+		
 		for(unsigned int j=0; j<pointsCount; j++) {
-			act=toWidget(vect[j]);
+			act=toWidget(vect.at(j));
 				
 			if(!isnan(act.y()) && !isnan(ultim.y()) && (panorama.contains(act) || panorama.contains(ultim)))
 				finestra.drawLine(ultim, act);
-				
 			ultim=act;
 		}
 	}

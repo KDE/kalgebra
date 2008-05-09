@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@gmail.com>                        *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,8 +16,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <math.h>
-
 #include "functionimpl.h"
 #include "variables.h"
 #include "expression.h"
@@ -26,7 +24,7 @@
 #include <KDebug>
 
 FunctionImpl::FunctionImpl(const Expression& newFunc)
-	: points(0), m_deriv(0), m_last_viewport(QRect()), m_last_resolution(0), m_last_max_res(0)
+	: points(), m_deriv(0), m_last_viewport(QRect())
 {
 	func.setExpression(newFunc);
 	if(func.isCorrect()) {
@@ -41,7 +39,7 @@ FunctionImpl::FunctionImpl(const Expression& newFunc)
 }
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
-	: points(0), m_deriv(0), m_last_viewport(QRect()), m_last_resolution(0), m_last_max_res(0)
+	: points(), m_deriv(0), m_last_viewport(QRect())
 {
 	if(fi.isCorrect()) {
 		func.setExpression(fi.func.expression());
@@ -52,8 +50,7 @@ FunctionImpl::FunctionImpl(const FunctionImpl& fi)
 
 FunctionImpl::~FunctionImpl()
 {
-	if(points)
-		delete [] points;
+	points.clear();
 	
 	if(m_deriv)
 		delete m_deriv;
@@ -74,58 +71,30 @@ FunctionImpl::~FunctionImpl()
 
 void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 {
-	if(viewport.top()==m_last_viewport.top() && viewport.bottom()==m_last_viewport.bottom() && max_res==m_last_max_res || max_res<=static_cast<unsigned int>(-viewport.height()))
+	if(viewport.top()==m_last_viewport.top() && viewport.bottom()==m_last_viewport.bottom() && int(max_res)==points.capacity() 
+		|| max_res<=static_cast<unsigned int>(-viewport.height()))
 		return;
 	
-	if(max_res!=m_last_max_res) {
-		if(points!=0)
-			delete [] points;
-		points = new QPointF[max_res];
-	}
-	double t_lim=viewport.top()+1, b_lim=viewport.bottom()-1;
-	
-	unsigned int resolucio=0, width=static_cast<unsigned int>(-b_lim+t_lim);
-	
-	while(resolucio<max_res)
-		resolucio+= width;
-	resolucio -= width;
-	
-	double inv_res= (double) ( -b_lim+t_lim)/resolucio;
-	register unsigned int i=0;
-	
-	/*if(viewport.height() == m_last_viewport.height()) { //Should port y=f(x) optimizations here
-	int cacho = round(resolucio/(-b_lim+t_lim));
-// 		qDebug("<%d>", cacho);
-		
-	if(viewport.top()>m_last_viewport.top()) { //if its gone down
-	b_lim= m_last_viewport.top()-1;
-	for(i=0;i<(viewport.height()-(viewport.height()+m_last_viewport.top()))*cacho;i++){
-// 				qDebug("%d>=%d", resolucio, i+(m_last_viewport.top()-viewport.top())*cacho);
-	points[i]=points[i+(m_last_viewport.top()-viewport.top())*cacho];
-}
-	i=0;
-}
-}*/
-	
-	double x, y=0.0;
+	points.reserve( max_res );
 	func.variables()->modify("y", 0.);
 	Cn *yval=(Cn*) func.variables()->value("y");
 	
-	for(y=t_lim; y>=b_lim; y-=inv_res) {
+	double t_lim=viewport.top()+.1, b_lim=viewport.bottom()-.1;
+	double inv_res=double((-b_lim+t_lim)/max_res);
+	for(double y=t_lim; y>=b_lim; y-=inv_res) {
 		yval->setValue(y);
-		x = func.calculate().value();
-		points[i++]=QPointF(x, y);
+		double x = func.calculate().value();
+		points.append(QPointF(x, y));
 	}
 	
+	npoints=points.count();
 	m_last_viewport=viewport;
-	m_last_resolution=resolucio;
-	m_last_max_res = max_res;
 }
 
 void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 {
 	Q_ASSERT(func.expression()->isCorrect());
-	if(max_res==m_last_max_res && !m_last_viewport.isNull())
+	if(int(max_res)==points.capacity() && m_last_viewport==viewport)
 		return;
 	unsigned int resolucio=max_res;
 	double pi=2.*acos(0.);
@@ -143,43 +112,30 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		return;
 	}
 	
-	register unsigned int i=0;
-	
-	if(max_res!=m_last_max_res) {
-		if(points!=0)
-			delete [] points;
-		points = new QPointF[max_res];
-	}
-	
-// 	qDebug() << "lol" << func.expression()->toString();
+	points.reserve(max_res);
 	
 	func.variables()->modify("q", 0.);
 	Cn *varth = (Cn*) func.variables()->value("q");
 	
 	double inv_res= (double) (ulimit.value()-dlimit.value())/resolucio;
-	double r=0., th=0.;
-	for(th=dlimit.value(); th<ulimit.value() && i<max_res; th+=inv_res) {
+	double final=ulimit.value()-inv_res;
+	for(double th=dlimit.value(); th<final; th+=inv_res) {
 		varth->setValue(th);
-		r = func.calculate().value();
+		double r = func.calculate().value();
 		
-		points[i++]=fromPolar(r, th);
+		points.append(fromPolar(r, th));
 	}
 	
+	npoints=points.size();
 	m_last_viewport=viewport;
-	m_last_resolution=resolucio;
-	m_last_max_res = max_res;
 }
 
 void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 {
-	if(viewport.left()==m_last_viewport.left() && viewport.right()==m_last_viewport.right() && max_res==m_last_max_res/* || max_res<=viewport.width()*/)
+	if(viewport.left()==m_last_viewport.left() && viewport.right()==m_last_viewport.right() && int(max_res)==points.capacity()/* || max_res<=viewport.width()*/)
 		return;
 	
-	if(max_res!=m_last_max_res) {
-		if(points==0)
-			delete [] points;
-		points = new QPointF[max_res];
-	}
+	points.reserve(max_res);
 	double l_lim=viewport.left()-1., r_lim=viewport.right()+1., x=0.;
 	
 	unsigned int resolucio=0, width=static_cast<unsigned int>(-l_lim+r_lim);
@@ -190,7 +146,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	double inv_res= (double) (-l_lim+r_lim)/resolucio;
 	register int i=0;
 	
-	if(viewport.width() == m_last_viewport.width()) { //Perhaps these optimizations could be removed now, calculator is fast enough
+	/*if(viewport.width() == m_last_viewport.width()) { //Perhaps these optimizations could be removed now, calculator is fast enough
 		int cacho = static_cast<int>(round(resolucio/(-l_lim+r_lim)));
 		
 		if(viewport.right()<m_last_viewport.right()) {
@@ -205,20 +161,26 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 			for(i=0;i<(viewport.width()-(viewport.left()-m_last_viewport.left()))*cacho;i++)
 				points[i]=points[i+(viewport.left()-m_last_viewport.left())*cacho];
 		}
-	}
+	}*/
 	
 	func.variables()->modify("x", 0.);
 	Cn *vx = (Cn*) func.variables()->value("x");
 	
+	double middleX=viewport.left()+viewport.width()/2;
 	for(x=l_lim; x<=r_lim; x+=inv_res) {
 		vx->setValue(x);
 		double y = func.calculate().value();
-		points[i++]=QPointF(x, y);
+		
+		if(i>=2 && !(i<3 && x>middleX) && points[i-1].y()==y && points[i-2].y()==y) {
+			points.last().setX(x);
+		} else {
+			points.append(QPointF(x, y));
+			i++;
+		}
 	}
 	
+	npoints=i;
 	m_last_viewport=viewport;
-	m_last_resolution=resolucio;
-	m_last_max_res = max_res;
 }
 
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
@@ -241,7 +203,6 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	return QPair<QPointF, QString>(dp, pos);
 }
 
-// static const double pi=2.*acos(0.);
 static const double pi=acos(-1.);
 QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 {
@@ -257,8 +218,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(!ulimit.isCorrect()) ulimit = 2.*pi;
 	if(!dlimit.isCorrect()) dlimit = 0.;
 	
-	if(th<dlimit.value()) th = dlimit.value();
-	if(th>ulimit.value()) th = ulimit.value();
+	if(th<dlimit.value()) th=dlimit.value();
+	if(th>ulimit.value()) th=ulimit.value();
 	
 	QPointF dist;
 	do {
@@ -314,7 +275,7 @@ QLineF FunctionX::derivative(const QPointF& p) const
 			ret = a.calculate().value();
 	
 		if(!a.isCorrect()) {
-			kDebug(0) << "Derivative error: " <<  a.errors();
+			kDebug() << "Derivative error: " <<  a.errors();
 			return QLineF();
 		}
 	} else {
@@ -336,7 +297,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		
 		if(a.isCorrect())
 			ret = a.calculate().value();
-	
+		
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();
 			return QLineF();

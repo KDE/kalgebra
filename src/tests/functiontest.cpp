@@ -44,6 +44,7 @@ void FunctionTest::testCopy_data()
 {
 	QTest::addColumn<QString>("input");
 	
+	QTest::newRow("x->flat") << "1";
 	QTest::newRow("x->x") << "x";
 	QTest::newRow("x->addition") << "2+x";
 	QTest::newRow("x->logarithm") << "log x";
@@ -66,6 +67,9 @@ void FunctionTest::testCopy()
 	f3=f2;
 	QVERIFY(f3.isCorrect());
 	f3.update_points(QRect(-10, 10, 10, -10), 100);
+	QVERIFY(f3.npoints()>1);
+	QVERIFY(f3.npoints()<=100);
+	
 	f3.derivative(QPointF(0., 0.));
 	f3.derivative(QPointF(1., 0.));
 	f3.calc(QPointF(0., 0.));

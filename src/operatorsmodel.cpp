@@ -422,10 +422,10 @@ QString OperatorsModel::example(Operator o)
 			s="piecewise { x>0 ? selector(0, vector{x, 1/x}), ? selector(1, vector{x, 1/x} ) }";
 			break;
 		case Operator::sum:
-			s="sum(t->0..4, t)";
+			s="x*sum(t->0..3, t)";
 			break;
 		case Operator::product:
-			s="product(t->0..4, t)";
+			s="product(t->1..3, t)";
 			break;
 		case Operator::factorial:
 		case Operator::card:

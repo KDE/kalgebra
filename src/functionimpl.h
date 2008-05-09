@@ -41,13 +41,12 @@ struct FunctionImpl
 	virtual ImplType type() const=0;
 	virtual FunctionImpl* copy()=0;
 	
-	QPointF *points;
+	QVector<QPointF> points;
 	Analitza func;
 	Expression *m_deriv;
 	QRect m_last_viewport;
 	
-	unsigned int m_last_resolution;
-	unsigned int m_last_max_res;
+	unsigned int npoints;
 };
 
 struct FunctionX : public FunctionImpl

@@ -102,7 +102,7 @@ class function
 		QStringList bvars() const;
 	
 		/** Retrieves the calculated points of the function. */
-		QPointF* points() const;
+		const QVector<QPointF>& points() const;
 		
 		QPair<QPointF, QString> calc(const QPointF& dp);
 		

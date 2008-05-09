@@ -120,7 +120,7 @@ QStringList function::bvars() const
 
 unsigned int function::npoints() const
 {
-	return m_function->m_last_resolution;
+	return m_function->npoints;
 }
 
 Analitza * function::analitza() const
@@ -129,7 +129,7 @@ Analitza * function::analitza() const
 	return &m_function->func;
 }
 
-QPointF * function::points() const
+const QVector<QPointF>& function::points() const
 {
 	return m_function->points;
 }
