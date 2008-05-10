@@ -145,6 +145,14 @@ bool function::isCorrect() const
 	return m_function && m_err.isEmpty() && m_function->isCorrect();
 }
 
+QStringList function::errors() const
+{
+	QStringList err(m_err);
+	if(m_function)
+		err += m_function->m_err;
+	return err;
+}
+
 QString function::toString() const
 {
 	return m_function->toString();

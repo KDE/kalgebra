@@ -31,7 +31,7 @@ struct FunctionImpl
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
 	QStringList bvarList() { return func.bvarList(); }
-	bool isCorrect() const { return func.isCorrect(); }
+	bool isCorrect() const { return m_err.isEmpty() && func.isCorrect(); }
 	QString toString() const { return func.expression().toString(); }
 	
 	virtual Axe axeType() const { return Cartesian; }
@@ -45,7 +45,7 @@ struct FunctionImpl
 	Analitza func;
 	Expression *m_deriv;
 	QRect m_last_viewport;
-	
+	QStringList m_err;
 	unsigned int npoints;
 };
 

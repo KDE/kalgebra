@@ -36,6 +36,9 @@ Q_OBJECT
 	private slots:
 		void initTestCase();
 		
+		void testCorrect();
+		void testCorrect_data();
+		
 		void testCopy();
 		void testCopy_data();
 		

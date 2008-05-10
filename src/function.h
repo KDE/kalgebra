@@ -111,7 +111,7 @@ class function
 		/** Queries if it is a correct function. */
 		bool isCorrect() const;
 		
-		const QStringList& errors() const { return m_err; }
+		QStringList errors() const;
 		
 		const Expression& expression() const;
 		

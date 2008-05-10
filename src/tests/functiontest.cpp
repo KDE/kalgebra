@@ -77,5 +77,38 @@ void FunctionTest::testCopy()
 	f3.calc(QPointF(1., 0.));
 	f3.calc(QPointF(109., 20.));
 }
+void FunctionTest::testCorrect_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<bool>("correct");
+	
+	QTest::newRow("q->empty range") << "q->(0..0, q)" << false;
+}
+
+void FunctionTest::testCorrect()
+{
+	QFETCH(QString, input);
+	QFETCH(bool, correct);
+	function f("hola", Expression(input, false));
+	bool corr=f.isCorrect();
+	function f2(f);
+	corr = corr || f2.isCorrect();
+	function f3;
+	f3=f2;
+	
+	corr=corr || f3.isCorrect();
+	f3.update_points(QRect(-10, 10, 10, -10), 100);
+	corr=corr && f3.isCorrect();
+	
+	QCOMPARE(correct, corr);
+	QCOMPARE(correct, f3.errors().isEmpty());
+	
+	if(correct)
+	{
+		f3.update_points(QRect(-10, 10, 10, -10), 100);
+		QVERIFY(f3.npoints()>1);
+		QVERIFY(f3.npoints()<=100);
+	}
+}
 
 #include "functiontest.moc"

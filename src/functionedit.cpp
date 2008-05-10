@@ -160,20 +160,27 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		a.errors() << i18n("From parser:") << a.expression()->error();
 	
 	m_correct=a.isCorrect() && res.isValue();
+	function f;
+	if(m_correct) {
+		f=function(m_name->text(), m_func->expression(), m_color->color());
+		f.update_points(QRect(-10, 10, 10, -10), 100);
+	}
+	m_correct=m_correct && f.isCorrect();
+	
 	if(m_correct) {
 		m_funcsModel->clear();
-		m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
+		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
 	} else {
 		QStringList errors=a.errors();
-		if(a.isCorrect() && !res.isValue()) {
+		if(a.isCorrect() && !res.isValue())
 			errors.append(i18n("We can only draw Real results."));
-		}
+		errors += f.errors();
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		m_valid->setText(i18n("<b style='color:red'>%1</b>", a.errors().first()));
+		m_valid->setText(i18n("<b style='color:red'>%1</b>", errors.first()));
 		m_valid->setToolTip(errors.join("\n"));
 	}
 	m_func->setCorrect(m_correct);
