@@ -675,6 +675,8 @@ Object* Analitza::sum(const Container& n)
 		Cn *d=static_cast<Cn*>(objdl);
 		ul=u->value();
 		dl=d->value();
+		delete u;
+		delete d;
 	} else {
 		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
 		return new Cn(0.);
@@ -698,9 +700,23 @@ Object* Analitza::sum(const Container& n)
 Object* Analitza::product(const Container& n)
 {
 	Object* ret=new Cn(1.);
-	QString var= n.bvarList()[0];
-	double ul= Expression::uplimit(n).value();
-	double dl= Expression::downlimit(n).value();
+	QString var= n.bvarList().first();
+	
+	Object *objul=calc(Expression::uplimit(n).tree());
+	Object *objdl=calc(Expression::downlimit(n).tree());
+	double ul, dl;
+	
+	if(objul->type()==Object::value && objdl->type()==Object::value) {
+		Cn *u=static_cast<Cn*>(objul);
+		Cn *d=static_cast<Cn*>(objdl);
+		ul=u->value();
+		dl=d->value();
+		delete u;
+		delete d;
+	} else {
+		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
+		return new Cn(0.);
+	}
 	
 	m_vars->stack(var, 0.);
 	Cn* c = (Cn*) m_vars->value(var);

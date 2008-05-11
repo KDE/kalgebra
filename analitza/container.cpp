@@ -98,7 +98,7 @@ QString Container::toMathML() const
 QString Container::toString() const
 {
 	QStringList ret;
-	bool func=false;
+	bool func=false, bounded=false;
 	Operator *op=0;
 	
 	for(int i=0; i<m_params.count(); i++) {
@@ -117,19 +117,24 @@ QString Container::toString() const
 			
 			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
 				s=QString("(%1)").arg(s);
-			} else if(c->containerType() == Container::bvar) { //bvar
-				Container *ul = ulimit(), *dl = dlimit();
-				if(ul!=0 || dl!=0) {
-					if(dl!=0)
-						s += dl->toString();
-					s += "..";
-					if(ul!=0)
-						s += ul->toString();
-				}
 			}
 			
 			if(c->containerType()!=uplimit && c->containerType()!=downlimit)
 				ret << s;
+			
+			if(c->containerType() == Container::bvar) { //bvar
+				bounded=true;
+				QString bounds;
+				Container *ul = ulimit(), *dl = dlimit();
+				if(dl)
+					bounds += dl->toString();
+				if(dl || ul)
+					bounds += "..";
+				if(ul)
+					bounds += ul->toString();
+				if(!bounds.isEmpty())
+					ret << bounds;
+			}
 		} else 
 			ret << m_params[i]->toString();
 	}
@@ -140,8 +145,14 @@ QString Container::toString() const
 			toret += ret.join(":=");
 			break;
 		case lambda:
-			toret += ret.join("");
-			break;
+		{
+			QString res=ret.takeFirst();
+			if(ret.count()==1)
+				res=res+ret.first();
+			else
+				res=res+'('+ret.join(", ")+')';
+			toret += res;
+		}	break;
 		case math:
 			toret += ret.join("; ");
 			break;
@@ -171,6 +182,11 @@ QString Container::toString() const
 					toret += ret.join("^");
 					break;
 				default:
+					if(bounded) {
+						QString bounding=ret.takeFirst();
+						ret[0]=bounding+ret[0];
+					}
+						
 					toret += QString("%1(%2)").arg(op->toString()).arg(ret.join(", "));
 					break;
 			}
@@ -197,6 +213,7 @@ QString Container::toString() const
 
 QString Container::toHtml() const
 {
+	bool bounded=false;
 	QStringList ret;
 	bool func=false;
 	
@@ -217,19 +234,22 @@ QString Container::toHtml() const
 			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
 				s=i18n("<span class='op'>(</span>%1<span class='op'>)</span>", s);
 			
-			if(c->containerType() == Container::bvar) {
-				Container *ul = ulimit(), *dl = dlimit();
-				if(ul!=0 || dl!=0) {
-					if(dl!=0)
-						s += dl->toHtml();
-					s += i18n("<span class='op'>..</span>");
-					if(ul!=0)
-						s += ul->toHtml();
-				}
-			}
-			
 			if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
 				ret << s;
+			
+			if(c->containerType() == Container::bvar) { //bvar
+				bounded=true;
+				QString bounds;
+				Container *ul = ulimit(), *dl = dlimit();
+				if(dl)
+					bounds += dl->toString();
+				if(dl || ul)
+					bounds += i18n("<span class='op'>..</span>");
+				if(ul)
+					bounds += ul->toString();
+				if(!bounds.isEmpty())
+					ret << bounds;
+			}
 		} else 
 			ret << m_params[i]->toHtml();
 	}
@@ -240,15 +260,22 @@ QString Container::toHtml() const
 			toret += ret.join(i18n("<span class='op'>:=</span>"));
 			break;
 		case lambda:
-			toret += ret.join("");
-			break;
+			{
+			QString res=ret.takeFirst();
+			if(ret.count()==1)
+				res=res+ret.first();
+			else
+				res=res+"<span class='op'>(</span>"+ret.join(", ")+"<span class='op'>)</span>";
+			toret += res;
+		}	break;
 		case math:
 			toret += ret.join(i18nc("Not really correct", "<span class='op'>,</span> "));
 			break;
 		case apply:
 			if(func){
 				QString n = ret.takeFirst();
-				toret += QString("<span class='func'>%1</span><span class='op'>(</span>%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
+				toret += QString("<span class='func'>%1</span><span class='op'>(</span>"
+								"%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
 			} else if(op==0)
 				toret += ret.join(" ");
 			else switch(op->operatorType()) {
@@ -263,7 +290,7 @@ QString Container::toHtml() const
 					break;
 				case Operator::minus:
 					if(ret.count()==1)
-						toret += i18n("<span class='op'>-</span>%1", ret[0]);
+						toret += i18n("<span class='op'>-</span>%1", ret.first());
 					else
 						toret += ret.join(i18n("<span class='op'>-</span>"));
 					break;
@@ -271,6 +298,10 @@ QString Container::toHtml() const
 					toret += ret.join(i18n("<span class='op'>^</span>"));
 					break;
 				default:
+					if(bounded) {
+						QString bounding=ret.takeFirst();
+						ret[0]=bounding+ret[0];
+					}
 					toret += i18n("<span class='func'>%1</span><span class='op'>(</span>%2<span class='op'>)</span>",
 								  op->toString(), ret.join(", "));
 					break;
