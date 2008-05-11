@@ -20,10 +20,12 @@
 #define KALGEBRA_H
 
 #include <KMainWindow>
+#include <KLineEdit>
 #include <QTreeView>
 #include <QPushButton>
 #include <QTabWidget>
 #include <QLabel>
+#include <QListView>
 #include "config-kalgebra.h"
 
 class ExpressionEdit;
@@ -64,6 +66,11 @@ class KAlgebra : public KMainWindow
 		ExpressionEdit *t_exp;
 		Graph3D *grafic3d;
 #endif
+		//Dictionary
+		QDockWidget *d_dock;
+		QListView *d_list;
+		KLineEdit *d_filter;
+		
 	private slots:
 		void operate();
 		void loadScript();
@@ -74,9 +81,9 @@ class KAlgebra : public KMainWindow
 		void select(const QModelIndex& idx);
 		void new_func();
 		void edit_func ( const QModelIndex & );
-        void edit_var ( const QModelIndex & );
-        void toggleSquares();
-        void toggleKeepAspect();
+		void edit_var ( const QModelIndex & );
+		void toggleSquares();
+		void toggleKeepAspect();
 		void set_res_low();
 		void set_res_std();
 		void set_res_fine();

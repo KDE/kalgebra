@@ -27,6 +27,7 @@
 #include "dictionary.h"
 #include "functionsmodel.h"
 #include "functionsview.h"
+#include "operatorsmodel.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif
@@ -206,10 +207,29 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	////////////
 	//////EO3D Graph
 	
-	
 	//Dictionary tab
+	d_dock = new QDockWidget(i18n("Operations"), this);
+	this->addDockWidget(Qt::RightDockWidgetArea, d_dock);
 	Dictionary *dic = new Dictionary(tabs);
 	tabs->addTab(dic, i18n("&Dictionary"));
+	
+	QWidget *w=new QWidget;
+	QLayout *leftLayo=new QVBoxLayout(w);
+	d_filter=new KLineEdit(w);
+	d_filter->setClearButtonShown(true);
+	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(filterChanged(const QString&)));
+	d_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+	d_list = new QListView(w);
+	d_list->setModel(dic->model());
+	d_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+	leftLayo->addWidget(new QLabel("Look for:", d_dock));
+	leftLayo->addWidget(d_filter);
+	leftLayo->addWidget(d_list);
+	d_dock->setWidget(w);
+	
+	connect(d_list->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex & )),
+		dic, SLOT(activated(const QModelIndex& , const QModelIndex& )));
+	
 	//EODictionary
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
@@ -381,6 +401,7 @@ void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
+	d_dock->hide();
 	switch(n) {
 		case 0:
 			c_dock_vars->show();
@@ -400,6 +421,9 @@ void KAlgebra::tabChanged(int n)
 			t_exp->setFocus();
 			break;
 #endif
+		case 3:
+			d_dock->show();
+			d_dock->raise();
 		default:
 			break;
 	}

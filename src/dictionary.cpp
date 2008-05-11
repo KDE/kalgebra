@@ -17,16 +17,15 @@
  *************************************************************************************/
 
 #include "dictionary.h"
-#include "operatorsmodel.h"
 #include "functionsmodel.h"
 #include "expression.h"
 #include "graph2d.h"
+#include "operatorsmodel.h"
 
 #include <QLabel>
 #include <QListView>
 #include <QGroupBox>
 #include <QSpacerItem>
-#include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>
@@ -35,29 +34,16 @@
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
-	QHBoxLayout *mainLayo= new QHBoxLayout(this);
-	m_ops = new OperatorsModel(this);
+	m_ops=new OperatorsModel(this);
 	m_sortProxy = new QSortFilterProxyModel(this);
 	m_sortProxy->setSourceModel(m_ops);
 	m_sortProxy->sort(2, Qt::AscendingOrder);
 	m_sortProxy->setFilterKeyColumn(2);
 	
-	QLayout *leftLayo=new QVBoxLayout();
-	m_filter=new KLineEdit(this);
-	m_filter->setClearButtonShown(true);
-	connect(m_filter, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
-	m_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-	m_list = new QListView(this);
-	m_list->setModel(m_sortProxy);
-	m_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
-	leftLayo->addWidget(new QLabel("Look for:", this));
-	leftLayo->addWidget(m_filter);
-	leftLayo->addWidget(m_list);
-	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
 	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	QFormLayout *descrLayo=new QFormLayout;
-	QVBoxLayout *graphLayo=new QVBoxLayout;
+	QVBoxLayout *graphLayo=new QVBoxLayout(this);
 	m_name=new QLabel(descr);
 	m_descr=new QLabel(descr);
 	m_sample=new QLabel(descr);
@@ -82,12 +68,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	graphLayo->addWidget(m_graph);
 	descr->setLayout(descrLayo);
 	
-	mainLayo->addLayout(graphLayo);
-	mainLayo->addLayout(leftLayo);
-	
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
-	connect(m_list->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex & )),
-		this, SLOT(activated(const QModelIndex& , const QModelIndex& )));
 }
 
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)

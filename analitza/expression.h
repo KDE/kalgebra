@@ -21,10 +21,11 @@
 
 #include <QStringList>
 
-#include "value.h"
 #include "analitzaexport.h"
+#include "object.h"
 
 class Container;
+class Cn;
 class QDomElement;
 
 /**
@@ -96,12 +97,12 @@ class ANALITZA_EXPORT Expression
 		Expression operator=(const Expression& e);
 		
 		/**
-		 *	Returns the uplimit field. If is not a Cn a not correct Cn will be returned.
+		 *	Returns the uplimit field tree.
 		 */
 		Expression uplimit() const;
 		
 		/**
-		 *	Returns the downlimit field. If is not a Cn a not correct Cn will be returned.
+		 *	Returns the downlimit field tree.
 		 */
 		Expression downlimit() const;
 		

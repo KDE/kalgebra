@@ -21,6 +21,7 @@
 #include <QDomElement>
 
 #include "container.h"
+#include "value.h"
 #include "exp.h"
 
 struct Expression::ExpressionPrivate

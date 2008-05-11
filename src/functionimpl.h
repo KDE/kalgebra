@@ -21,6 +21,7 @@
 
 #include "function.h"
 #include "analitza.h"
+#include <cmath>
 
 class Expression;
 

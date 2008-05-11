@@ -20,15 +20,13 @@
 #define DICTIONARY_H
 
 #include <QWidget>
+#include <QSortFilterProxyModel>
 
 class QLabel;
-class QListView;
 class QModelIndex;
-class OperatorsModel;
-class QSortFilterProxyModel;
-class KLineEdit;
 class Graph2D;
 class FunctionsModel;
+class OperatorsModel;
 
 /**
 	@author Aleix Pol
@@ -40,19 +38,19 @@ Q_OBJECT
 		Dictionary(QWidget *p=0);
 		virtual ~Dictionary(){}
 		
-	private slots:
+		QSortFilterProxyModel* model() const { return m_sortProxy; }
+		
+	public slots:
 		void activated(const QModelIndex& prev, const QModelIndex& );
 		void filterChanged(const QString&);
 		
 	private:
-		KLineEdit *m_filter;
 		QLabel *m_name;
 		QLabel *m_descr;
 		QLabel *m_sample;
 		QLabel *m_example;
 		Graph2D *m_graph;
 		FunctionsModel *m_funcs;
-		QListView *m_list;
 		OperatorsModel *m_ops;
 		QSortFilterProxyModel *m_sortProxy;
 };
