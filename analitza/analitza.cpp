@@ -597,7 +597,9 @@ Object* Analitza::operate(const Container* c)
 			} else if(opt==Operator::diff) {
 				//TODO: Make multibvar
 				QStringList bvar=c->bvarList();
-				ret=derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last());
+				Object *deriv=simp(derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last()));
+				ret=calc(deriv);
+				delete deriv;
 			} else if(opt==Operator::function) {
 				Ci* var= (Ci*) c->m_params[0];
 				
@@ -1629,7 +1631,7 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 		
 	foreach(valp, values)
 		m_vars->destroy(valp.first);
-	Q_ASSERT(v1->type()==Object::value & v2->type()==Object::value);
+	Q_ASSERT(v1->type()==Object::value && v2->type()==Object::value);
 	Cn *cn1=(Cn*)v1, *cn2=(Cn*)v2;
 	double ret=(cn2->value()-cn1->value())/h;
 	
