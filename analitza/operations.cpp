@@ -258,7 +258,6 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 	
 	val->setValue(a);
 	val->setBoolean(boolean);
-	
 	return val;
 }
 

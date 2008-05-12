@@ -57,6 +57,8 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("sinus") << "sin(3*3)" << sin(9.);
 	QTest::newRow("declare") << "x:=3" << 3.;
 	QTest::newRow("sum") << "sum(x->1..99, x)" << 4950.;
+	QTest::newRow("diff") << "diff(x)" << 1.;
+	QTest::newRow("diffz") << "diff(z->z)" << 1.;
 	
 	QTest::newRow("product") << "product(n->1..5, n)" << 120.;
 	QTest::newRow("factorial") << "factorial(5)" << 120.;
@@ -76,7 +78,8 @@ void AnalitzaTest::testTrivialCalculate()
 	QCOMPARE(e.isCorrect(), true);
 	
 	a->setExpression(e);
-	QCOMPARE(a->isCorrect(), true);
+	QVERIFY(a->isCorrect());
+	QCOMPARE(a->evaluate().value(), result);
 	QCOMPARE(a->calculate().value(), result);
 }
 

@@ -594,6 +594,10 @@ Object* Analitza::operate(const Container* c)
 				Object *idx=calc(c->m_params[1]), *vect=calc(c->m_params[2]);
 				ret = selector(idx, vect);
 				delete idx; delete vect;
+			} else if(opt==Operator::diff) {
+				//TODO: Make multibvar
+				QStringList bvar=c->bvarList();
+				ret=derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last());
 			} else if(opt==Operator::function) {
 				Ci* var= (Ci*) c->m_params[0];
 				
