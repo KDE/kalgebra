@@ -118,11 +118,6 @@ QStringList function::bvars() const
 	return m_function->bvarList();
 }
 
-unsigned int function::npoints() const
-{
-	return m_function->npoints;
-}
-
 Analitza * function::analitza() const
 {
 	Q_ASSERT(m_function);

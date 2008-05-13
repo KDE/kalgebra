@@ -68,9 +68,6 @@ class function
 		/** Sets the color of the function. */
 		void setColor(const QColor& newColor) { m_color=newColor; }
 		
-		/** Returns the number of points it has. */
-		unsigned int npoints() const;
-		
 		/** Sets whether the function has to be shown. */
 		void setShown(bool newShow) { m_show=newShow; }
 		

@@ -49,7 +49,10 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->addition") << "2+x";
 	QTest::newRow("x->logarithm") << "log x";
 	QTest::newRow("x->sum") << "sum(t->0..4, t)";
+	QTest::newRow("y->flat") << "y->1";
 	QTest::newRow("y->trigonometric") << "y->sin y";
+	QTest::newRow("x->diff") << "diff(x)";
+	QTest::newRow("x->diffx") << "diff(x^2)";
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
 	QTest::newRow("polar->hard") << "q->(1..10, ceiling(q/(2*pi)))";
@@ -67,9 +70,21 @@ void FunctionTest::testCopy()
 	function f3;
 	f3=f2;
 	QVERIFY(f3.isCorrect());
-	f3.update_points(QRect(-10, 10, 10, -10), 100);
-	QVERIFY(f3.npoints()>1);
-	QVERIFY(f3.npoints()<=100);
+	QRectF viewp(QPoint(-5, 7), QPoint(5, -7));
+	f3.update_points(viewp.toRect(), 100);
+	
+	QVERIFY(f3.points().size()>1);
+	QVERIFY(f3.points().size()<=100);
+	f3.update_points(viewp.toRect(), 100);
+	
+	bool found=false, intersect=false;
+	foreach(const QPointF& pt, f3.points()) {
+		if(viewp.contains(pt)) {
+			found=true;
+			break;
+		}
+	}
+	QVERIFY(found);
 	
 	f3.derivative(QPointF(0., 0.));
 	f3.derivative(QPointF(1., 0.));
@@ -106,8 +121,8 @@ void FunctionTest::testCorrect()
 	if(correct)
 	{
 		f3.update_points(QRect(-10, 10, 10, -10), 100);
-		QVERIFY(f3.npoints()>1);
-		QVERIFY(f3.npoints()<=100);
+		QVERIFY(f3.points().size()>1);
+		QVERIFY(f3.points().size()<=100);
 	}
 }
 

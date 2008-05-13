@@ -1639,6 +1639,3 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 	delete v2;
 	return ret;
 }
-
-
-

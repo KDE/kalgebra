@@ -58,11 +58,10 @@ public:
 	
 	void setModel(FunctionsModel* f) { m_model=f; }
 	
+	QSize sizeHint() const { return QSize(100, 100); }
+	
 	/** Saves the graphs to a file located at @p path. */
 	bool toImage(const QString& path);
-	
-	/** Specifies the widget size policy. To know more about it, read the Qt documentation */
-	virtual QSizePolicy sizePolicy() const;
 	
 	/** Sets whether we will see a grid or only the axes. */
 	void setSquares(bool newSquare) { m_squares=newSquare; forceRepaint(); }
@@ -122,13 +121,12 @@ private slots:
 private:
 	static const QColor m_axeColor;
 	static const QColor m_axe2Color;
+	static const QColor m_derivativeColor;
 	
 	//painting
 	FunctionsModel* m_model;
 	QPixmap buffer;
-	QPixmap front;
 	bool valid;
-	QPainter finestra;
 	QLabel *micepos;
 	QPointF mark;
 	void drawAxes(QPainter*, Axe a);

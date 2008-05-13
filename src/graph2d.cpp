@@ -41,7 +41,7 @@ using namespace std;
 
 QColor const Graph2D::m_axeColor(100,100,255);
 QColor const Graph2D::m_axe2Color(235,235,235);
-
+QColor const Graph2D::m_derivativeColor(90,90,160);
 Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	QWidget(parent), m_model(fm),
 	valid(false), mode(None), m_squares(true), m_keepRatio(true), resolucio(800),
@@ -49,8 +49,7 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	this->setCursor(Qt::CrossCursor);
-	this->setMinimumHeight(20);
-	this->setMinimumWidth(10);
+	
 	this->setMouseTracking(!m_readonly);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	
@@ -68,14 +67,9 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 
 Graph2D::~Graph2D() {}
 
-QSizePolicy Graph2D::sizePolicy() const
-{
-	return QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-}
-
 void Graph2D::drawAxes(QPainter *f, Axe a)
 {
-	finestra.setRenderHint(QPainter::Antialiasing, false);
+	f->setRenderHint(QPainter::Antialiasing, false);
 	
 	switch(a) {
 		case Polar:
@@ -112,13 +106,13 @@ void Graph2D::drawPolarAxes(QPainter *w)
 	ceixos.setStyle(Qt::SolidLine);
 	w->setPen(ceixos);
 	
-	finestra.setRenderHint(QPainter::Antialiasing, true);
+	w->setRenderHint(QPainter::Antialiasing, true);
 	for(double i=thmin; i<thmax; i++) { //i is +
 		QPointF p(toWidget(QPointF(i,i)));
 		QPointF p2(toWidget(QPointF(-i,-i)));
 		w->drawEllipse(QRectF(p.x(),p.y(), p2.x()-p.x(),p2.y()-p.y()));
 	}
-	finestra.setRenderHint(QPainter::Antialiasing, false);
+	w->setRenderHint(QPainter::Antialiasing, false);
 	
 	ceixos.setColor(m_axeColor);
 	ceixos.setStyle(Qt::SolidLine);
@@ -192,7 +186,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 void Graph2D::pintafunc(QPaintDevice *qpd)
 {
 	QPalette p=qApp->palette();
-	QPen pfunc, ccursor;
+	QPen pfunc;
 	if(buffer.isNull() || buffer.width()!=width() || buffer.height()!=height())
 		buffer = QPixmap(this->width(), this->height());
 	buffer.fill(p.color(QPalette::Active, QPalette::Base));
@@ -200,13 +194,10 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	pfunc.setColor(QColor(0,150,0));
 	pfunc.setWidth(2);
 	
+	QPainter finestra;
 	finestra.begin(qpd);
 //	finestra.initFrom(this);
-	
-	QRectF panorama(QPoint(0,0), size());
 	finestra.setPen(pfunc);
-	
-	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
 	Axe t=Cartesian;
 	if(m_model->hasSelection())
@@ -215,6 +206,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
 	int k=0;
+	QRectF panorama(QPoint(0,0), size());
 	FunctionsModel::const_iterator it=m_model->constBegin(), itEnd=m_model->constEnd();
 	for (; it!=itEnd; ++it, ++k ) {
 		if(!it->isShown())
@@ -222,21 +214,26 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		pfunc.setColor(it->color());
 		pfunc.setWidth(m_model->isSelected(k)+1);
 		finestra.setPen(pfunc);
-		unsigned int pointsCount = it->npoints();
-			
-		const QVector<QPointF> &vect=it->points();
-		QPointF ultim(toWidget(vect[0])), act;
 		
-// 		qDebug() << "pppppppppppp" << fromWidget(panorama.bottomRight());
-// 		for(unsigned int j=0; j<pointsCount; j++) {
-// 			qDebug() << "ooooooooooo" << j << vect[j];
-// 		}
+		const QVector<QPointF> &vect=it->points();
+		unsigned int pointsCount = vect.count();
+		QPointF ultim(toWidget(vect[0]));
 		
 		for(unsigned int j=0; j<pointsCount; j++) {
-			act=toWidget(vect.at(j));
+			QPointF act=toWidget(vect.at(j));
 				
 			if(!isnan(act.y()) && !isnan(ultim.y()) && (panorama.contains(act) || panorama.contains(ultim)))
+			{
 				finestra.drawLine(ultim, act);
+			
+			#if 1
+				QPen p(Qt::red);
+				p.setWidth(3);
+				finestra.setPen(p);
+				finestra.drawPoint(ultim);
+				finestra.setPen(pfunc);
+			#endif
+			}
 			ultim=act;
 		}
 	}
@@ -245,31 +242,29 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	valid=true;
 }
 
-void Graph2D::paintEvent( QPaintEvent * )
+void Graph2D::paintEvent( QPaintEvent * ev )
 {
 	if(!valid)
 		pintafunc(&buffer);
 	
-	front = buffer;
-	finestra.begin(&front);
-	finestra.initFrom(this);
+	QPainter finestra(this);
+	finestra.drawPixmap(0,0,width(),height(), buffer);
 	QPen ccursor;
 	QPointF ultim;
 	
 // 	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
-// 	qDebug() << "xxx1 " << viewport;
 	if(!m_readonly && mode==None) {
 		ultim = toWidget(mark);
 		
 		//Draw derivative
-		finestra.setRenderHint(QPainter::Antialiasing, true);
-		ccursor.setColor(QColor(90,90,160));
+		ccursor.setColor(m_derivativeColor);
 		ccursor.setStyle(Qt::SolidLine);
-		finestra.setPen(ccursor);
 		QLineF sl=slope(fromWidget(ultim));
 		sl.translate(mark);
-// 		if(!isnan(from.x()) && !isnan(from.y()) && !isnan(to.x()) && !isnan(to.y()))
+		
+		finestra.setPen(ccursor);
+		finestra.setRenderHint(QPainter::Antialiasing, true);
 		if(!sl.isNull() && !isnan(sl.length()))
 			finestra.drawLine(toWidget(sl));
 		finestra.setRenderHint(QPainter::Antialiasing, false);
@@ -291,7 +286,7 @@ void Graph2D::paintEvent( QPaintEvent * )
 		if(ultim.y() < 0.)
 			ultim.setY(0.);
 		
-		finestra.setPen(QPen(QColor(0,0,0)));
+		finestra.setPen(QPen(Qt::black));
 		finestra.drawText(QPointF(ultim.x()+15., ultim.y()+15.), m_posText);
 	} else if(!m_readonly && mode==Selection) {
 		ccursor.setColor(QColor(0xc0,0,0));
@@ -302,17 +297,14 @@ void Graph2D::paintEvent( QPaintEvent * )
 	}
 	
 	if(m_framed) {
+		QPoint p2=QPoint(this->width(), this->height());
 		QPen bord(Qt::black);
 		finestra.setPen(bord);
-		QPoint p2=QPoint(this->width(), this->height());
 		finestra.drawRect(QRect(QPoint(0,0), p2-QPoint(2,2)));
 	}
 	finestra.end();
 	
 // 	qDebug() << "xxx2 " << viewport;
-	///////////////////////////////
-	QPainter win(this);
-	win.drawPixmap(QPoint(0,0), front);
 }
 
 void Graph2D::wheelEvent(QWheelEvent *e){
@@ -416,8 +408,7 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 		default:
 			return;
 	}
-	valid=false;
-	this->repaint();
+	forceRepaint();
 }
 
 QPointF Graph2D::calcImage(const QPointF& ndp)
@@ -549,8 +540,9 @@ void Graph2D::updateScale()
 // 		Q_ASSERT(userViewport.center() == viewport.center());
 	}
 	
-	valid=false;
-	this->repaint();
+	if(m_model->rowCount())
+		update(m_model->index(0,0), m_model->index(m_model->rowCount()-1,0));
+	forceRepaint();
 }
 
 void Graph2D::zoomIn()

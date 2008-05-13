@@ -422,6 +422,7 @@ void KAlgebra::tabChanged(int n)
 			break;
 #endif
 		case 3:
+			d_filter->setFocus();
 			d_dock->show();
 			d_dock->raise();
 		default:

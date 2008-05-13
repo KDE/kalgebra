@@ -34,6 +34,7 @@ struct FunctionImpl
 	QStringList bvarList() { return func.bvarList(); }
 	bool isCorrect() const { return m_err.isEmpty() && func.isCorrect(); }
 	QString toString() const { return func.expression().toString(); }
+	void addValue(const QPointF& p);
 	
 	virtual Axe axeType() const { return Cartesian; }
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
@@ -45,9 +46,7 @@ struct FunctionImpl
 	QVector<QPointF> points;
 	Analitza func;
 	Expression *m_deriv;
-	QRect m_last_viewport;
 	QStringList m_err;
-	unsigned int npoints;
 };
 
 struct FunctionX : public FunctionImpl
@@ -87,6 +86,7 @@ struct FunctionPolar : public FunctionImpl
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
+	QRect m_last_viewport;
 };
 
 #endif
