@@ -61,6 +61,9 @@ Q_OBJECT
 		///We check that it is not correct
 		void testUncorrection_data();
 		void testUncorrection();
+		
+// 		void testJumps_data();
+// 		void testJumps();
 		void cleanupTestCase();
 	private:
 		Analitza *a;

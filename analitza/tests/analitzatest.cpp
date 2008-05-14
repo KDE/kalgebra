@@ -207,6 +207,11 @@ void AnalitzaTest::testCorrection_data()
 	script << "x:=3";
 	script << "x*sum(x->0..99, x)";
 	QTest::newRow("sum scope") << script << 14850.;
+	
+	script.clear();
+	script << "f:=x->diff(x^2)";
+	script << "f(3)";
+	QTest::newRow("diff function") << script << 6.;
 }
 
 void AnalitzaTest::testCorrection()
@@ -219,6 +224,9 @@ void AnalitzaTest::testCorrection()
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
+		
+		Object *o=b.variables()->value("f");
+		if(o) qDebug() << o->toMathML();
 		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
@@ -423,5 +431,45 @@ void AnalitzaTest::testCrash()
 		Expression e4(aux1, true);
 	}
 }
+
+static const double pi=acos(-1.);
+Q_DECLARE_METATYPE(QList<double>)
+Q_DECLARE_METATYPE(Analitza::Bounds)
+
+/*void AnalitzaTest::testJumps_data()
+{
+	QTest::addColumn<QString>("expression");
+	QTest::addColumn<QList<double> >("values");
+	QTest::addColumn< Analitza::Bounds >("bounds");
+	
+	Analitza::Bounds defB(-1,1);
+	Analitza::Bounds bigB(-2,2), trigB(0,pi);
+	QTest::newRow("undefined variable") << "1/x" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "rem(x,5)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "tan(x)" << (QList<double>()<<pi/2) << trigB;
+	QTest::newRow("undefined variable") << "eq(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "approx(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "lt(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "gt(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "leq(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "geq(x,0)" << (QList<double>()<<0.) << defB;
+	QTest::newRow("undefined variable") << "or(lt(x,-1), gt(x,1))" << (QList<double>() << -1. << 1.) << bigB;
+	QTest::newRow("undefined variable") << "and(lt(x,1), gt(x,-1))" << (QList<double>() << -1. << 1.) << bigB;
+}
+
+void AnalitzaTest::testJumps()
+{
+	QFETCH(QString, expression);
+	QFETCH(QList<double>, values);
+	QFETCH(Analitza::Bounds, bounds);
+	
+	Expression e(expression, false);
+	QVERIFY(e.isCorrect());
+	
+	a->setExpression(e);
+	a->simplify();
+	QVERIFY(a->isCorrect());
+	QCOMPARE(a->discontinuities("x", bounds), values);
+}*/
 
 #include "analitzatest.moc"

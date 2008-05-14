@@ -77,7 +77,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 	//Won't calc() so would be a good idea to have it simplified
 	if(branch->isContainer()) {
 		const Container* c = (Container*) branch;
-		Operator op = c->firstOperator();
+		
 // 		Q_ASSERT(!c->isEmpty());
 		if(c->containerType()==Container::declare) {
 			Ci *var = (Ci*) c->m_params[0];
@@ -86,6 +86,8 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			insertVariable(var->name(), ret);
 		} else if(c->containerType()==Container::piecewise) {
 			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+			
+			bool boundeddep=false;
 			for(; !ret && it!=itEnd; ++it) {
 				Container *p=static_cast<Container*>(*it);
 				Q_ASSERT( (*it)->type()==Object::container &&
@@ -94,6 +96,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				if(isPiece) {
 					Object *cond=eval(p->m_params[1], resolve, unscoped);
 					cond=simp(cond);
+					boundeddep=boundeddep || hasTheVar(unscoped.toList(), cond);
 					if(cond->type()==Object::value) {
 						Cn* cval=static_cast<Cn*>(cond);
 						if(cval->isTrue()) {
@@ -102,12 +105,15 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					}
 					delete cond;
 				} else { //FIXME: Maybe should look for more pieces?
-					ret=eval(p->m_params[0], resolve, unscoped);
+					if(!boundeddep)
+						ret=eval(p->m_params[0], resolve, unscoped);
 				}
 			}
+			
 			if(!ret)
 				ret=Expression::objectCopy(c);
 		} else if(c->containerType()==Container::apply) {
+			Operator op = c->firstOperator();
 			switch(op.operatorType()) {
 				case Operator::diff: {
 					//FIXME: Must support multiple bvars
@@ -202,6 +208,16 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					}
 				} break;
 			}
+		} else if(c->containerType()==Container::lambda) {
+			QSet<QString> newUnscoped(unscoped);
+			newUnscoped+=c->bvarList().toSet();
+			
+			Container *r = new Container(c);
+			Object* old=r->m_params.last();
+			r->m_params[1]=eval(r->m_params[1], false, newUnscoped);
+			delete old;
+			
+			ret=r;
 		} else if(c->containerType()==Container::math && !c->m_params.isEmpty()) {
 			//TODO: Multiline. Add a loop here!
 			ret=eval(c->m_params[0], resolve, unscoped);
@@ -484,7 +500,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 		if(otherwise)
 			r=otherwise->m_params[0];
 		else
-			m_err << i18nc("Piecewise is how the contitional is called here",
+			m_err << i18nc("Piecewise is how the contional is called here",
 				       "Piecewise without otherwise nor matching piece.");
 	}
 				
@@ -845,7 +861,7 @@ Object* Analitza::simp(Object* root)
 		if(c->containerType()==Container::piecewise) {
 			root=simpPiecewise(c);
 		} else if(c->containerType()==Container::lambda) {
-			*c->firstValue()=simp(*c->firstValue());
+			c->m_params.last()=simp(c->m_params.last());
 		} else if(c->containerType()==Container::apply) {
 			Container::iterator it;
 			Operator o = c->firstOperator();
@@ -1639,3 +1655,35 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 	delete v2;
 	return ret;
 }
+
+QList<double> Analitza::discontinuities(const QString& var, const Bounds& b)
+{
+	QList<double> ret;
+	if(m_exp.isCorrect()) {
+// 		ret=discon(m_exp.tree(), var, b, QSet<QString>());
+	} else {
+		m_err << i18n("Must specify a correct operation");
+	}
+	return ret;
+}
+
+/*
+QList<double> Analitza::discon(const Object* branch, const QString& var, const Bounds& b, const QSet<QString>& unscoped)
+{
+	QList<double> ret;
+	if(branch->isContainer()) {
+		const Container* c = (Container*) branch;
+		
+		if(c->containerType()==Container::declare) {
+			
+		} else if(c->containerType()==Container::apply) {
+			Operator op = c->firstOperator();
+			
+		} else if((c->containerType()==Container::math || c->containerType()==Container::declare)
+				&& !c->m_params.isEmpty() ) {
+			//TODO: Multiline. Add a loop here!
+			ret=discon(c->m_params[0], var, b, unscoped);
+		}
+	}
+	return ret;
+}*/
