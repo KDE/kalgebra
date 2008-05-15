@@ -355,7 +355,9 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("sum") << "sum(x->1..99, vector {x,x,x})" << "vector { 4950, 4950, 4950 }";
 	QTest::newRow("product") << "product(x->1..5, vector {x,x,x})" << "vector { 120, 120, 120 }";
 	
-	QTest::newRow("selector") << "selector(2, vector{1,2,3})" << "2";
+	QTest::newRow("selector1") << "selector(1, vector{1,2,3})" << "1";
+	QTest::newRow("selector2") << "selector(2, vector{1,2,3})" << "2";
+	QTest::newRow("selector3") << "selector(3, vector{1,2,3})" << "3";
 }
 
 void AnalitzaTest::testVectorEvaluate()
@@ -429,7 +431,6 @@ void AnalitzaTest::testCrash()
 	}
 }
 
-static const double pi=acos(-1.);
 Q_DECLARE_METATYPE(QList<double>)
 Q_DECLARE_METATYPE(Analitza::Bounds)
 
@@ -468,5 +469,18 @@ void AnalitzaTest::testJumps()
 	QVERIFY(a->isCorrect());
 	QCOMPARE(a->discontinuities("x", bounds), values);
 }*/
+
+void AnalitzaTest::testOperators()
+{
+	for(int i=Operator::none+1; i<Operator::nOfOps; i++) {
+		Operator o(static_cast<Operator::OperatorType>(i));
+		QVERIFY(o.nparams()>=-1);
+		if(!o.isCorrect())
+			qDebug() << o.toString();
+		QVERIFY(o.isCorrect());
+		QCOMPARE(static_cast<Operator::OperatorType>(i), o.operatorType());
+		QCOMPARE(Operator::toOperatorType(o.toString()), o.operatorType());
+	}
+}
 
 #include "analitzatest.moc"

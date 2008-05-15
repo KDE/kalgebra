@@ -50,6 +50,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->addition") << "2+x";
 	QTest::newRow("x->logarithm") << "log x";
 	QTest::newRow("x->sum") << "sum(t->0..3, t)";
+	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
 	QTest::newRow("y->flat") << "y->1";
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("x->diff") << "diff(x)";

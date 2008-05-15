@@ -46,7 +46,8 @@ class ANALITZA_EXPORT Operator : public Object
 			arccosh, arccsc, arccsch,
 			arcsec, arcsech, arcsinh, arctanh,
 			exp, ln, log,
-			conjugate, arg, real, imaginary,
+   			real,
+// 			conjugate, arg, real, imaginary,
 			sum, product, diff,
 			card, scalarproduct, selector,
 			function, nOfOps

@@ -62,6 +62,8 @@ Q_OBJECT
 		void testUncorrection_data();
 		void testUncorrection();
 		
+		void testOperators();
+		
 // 		void testJumps_data();
 // 		void testJumps();
 		void cleanupTestCase();

@@ -257,18 +257,18 @@ QString OperatorsModel::description(Operator o)
 		case Operator::abs:
 			s = i18n("Absolute value. abs(n)=|n|");
 			break;
-		case Operator::conjugate:
-			s = i18n("Conjugate");
-			break;
-		case Operator::arg:
-			s = "---";//i18n("Arg?");
-			break;
+// 		case Operator::conjugate:
+// 			s = i18n("Conjugate");
+// 			break;
+// 		case Operator::arg:
+// 			s = "---";//i18n("Arg?");
+// 			break;
 		case Operator::real:
 			s = i18n("Real");
 			break;
-		case Operator::imaginary:
-			s = i18n("Imaginary");
-			break;
+// 		case Operator::imaginary:
+// 			s = i18n("Imaginary");
+// 			break;
 		case Operator::floor:
 			s = i18n("Floor value. floor(n)=⌊n⌋");
 			break;
@@ -419,7 +419,7 @@ QString OperatorsModel::example(Operator o)
 			s="root(x, 2)";
 			break;
 		case Operator::selector:
-			s="piecewise { x>0 ? selector(0, vector{x, 1/x}), ? selector(1, vector{x, 1/x} ) }";
+			s="piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
 			break;
 		case Operator::sum:
 			s="x*sum(t->0..3, t)";
@@ -475,10 +475,10 @@ QString OperatorsModel::example(Operator o)
 		case Operator::nOfOps:
 		case Operator::none:
 		case Operator::function:
-		case Operator::conjugate:
 		case Operator::real:
-		case Operator::arg:
-		case Operator::imaginary:
+// 		case Operator::conjugate:
+// 		case Operator::arg:
+// 		case Operator::imaginary:
 			break;
 	}
 	return s;

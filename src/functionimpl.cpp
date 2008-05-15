@@ -43,11 +43,10 @@ FunctionImpl::FunctionImpl(const Expression& newFunc)
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
 	: points(), m_deriv(0)
 {
-	if(fi.isCorrect()) {
-		func.setExpression(fi.func.expression());
-		if(fi.m_deriv)
-			m_deriv = new Expression(*fi.m_deriv);
-	}
+// 	Q_ASSERT(fi.isCorrect());
+	func.setExpression(fi.func.expression());
+	if(fi.m_deriv)
+		m_deriv = new Expression(*fi.m_deriv);
 }
 
 FunctionImpl::~FunctionImpl()
@@ -160,6 +159,11 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	}*/
 	
 	//TODO: Check that the last value is the one we are looking for
+	if(!func.isCorrect()) {
+		qDebug() << "func error." << func.errors() << func.expression()->toString();
+		return;
+	}
+		
 	if(!points.isEmpty() && isSimilar(points.first().x(), l_lim) && isSimilar(points.last().x(), r_lim) &&
 			int(max_res)==points.capacity()) {
 		return;

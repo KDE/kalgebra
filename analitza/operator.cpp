@@ -35,8 +35,8 @@ char Operator::m_words[nOfOps][14] = {
 	"arccot", "arcoth",
 	"arccosh", "arccsc", "arccsch",
 	"arcsec", "arcsech", "arcsinh", "arctanh",
-	"exp", "ln", "log",
-	"conjugate", "arg", "real", "imaginary",
+	"exp", "ln", "log", "real",
+// 	"conjugate", "arg", "imaginary",
 	"sum", "product", "diff",
 	//Vector operations
 	"card", "scalarproduct", "selector",
@@ -148,10 +148,10 @@ int Operator::nparams(Operator::OperatorType t)
 		case log:
 		case _not:
 		case factorial:
-		case conjugate:
-		case arg:
 		case real:
-		case imaginary:
+// 		case conjugate:
+// 		case arg:
+// 		case imaginary:
 		case floor:
 		case ceiling:
 		case sum:
