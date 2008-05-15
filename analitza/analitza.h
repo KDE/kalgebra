@@ -115,7 +115,7 @@ class ANALITZA_EXPORT Analitza
 		static bool hasVars(const Object* o, const QString &var=QString(),
 							const QStringList& bvars=QStringList(), const Variables* vars=0);
 							
-		QList<double> discontinuities(const QString& var, const Bounds& b);
+// 		QList<double> discontinuities(const QString& var, const Bounds& b);
 	protected:
 		Expression m_exp;
 		Variables *m_vars;

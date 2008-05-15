@@ -42,6 +42,7 @@ using namespace std;
 QColor const Graph2D::m_axeColor(100,100,255);
 QColor const Graph2D::m_axe2Color(235,235,235);
 QColor const Graph2D::m_derivativeColor(90,90,160);
+
 Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	QWidget(parent), m_model(fm),
 	valid(false), mode(None), m_squares(true), m_keepRatio(true), resolucio(800),
@@ -216,23 +217,27 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		finestra.setPen(pfunc);
 		
 		const QVector<QPointF> &vect=it->points();
+		QList<int> jumps=it->jumps();
+		
 		unsigned int pointsCount = vect.count();
 		QPointF ultim(toWidget(vect[0]));
 		
+		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
 				
-			if(!isnan(act.y()) && !isnan(ultim.y()) && (panorama.contains(act) || panorama.contains(ultim)))
-			{
+			if(!isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
 				finestra.drawLine(ultim, act);
-			
-			#if 1
+				
+#if 0
 				QPen p(Qt::red);
 				p.setWidth(3);
 				finestra.setPen(p);
 				finestra.drawPoint(ultim);
 				finestra.setPen(pfunc);
-			#endif
+#endif
+			} else if(nextjump==int(j)) {
+				nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
 			}
 			ultim=act;
 		}

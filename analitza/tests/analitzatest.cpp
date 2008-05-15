@@ -79,8 +79,8 @@ void AnalitzaTest::testTrivialCalculate()
 	
 	a->setExpression(e);
 	QVERIFY(a->isCorrect());
-	QCOMPARE(a->evaluate().value(), result);
-	QCOMPARE(a->calculate().value(), result);
+	QCOMPARE(a->evaluate().value().value(), result);
+	QCOMPARE(a->calculate().value().value(), result);
 }
 
 void AnalitzaTest::testTrivialEvaluate_data()
@@ -225,9 +225,6 @@ void AnalitzaTest::testCorrection()
 		Expression e(exp, false);
 		QVERIFY(e.isCorrect());
 		
-		Object *o=b.variables()->value("f");
-		if(o) qDebug() << o->toMathML();
-		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
@@ -241,7 +238,7 @@ void AnalitzaTest::testCorrection()
 		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
-		val=b.calculate().value();
+		val=b.calculate().value().value();
 	}
 	QCOMPARE(val, result);
 }
@@ -292,7 +289,7 @@ void AnalitzaTest::testUncorrection()
 		
 		if(correct) {
 			b.setExpression(e);
-			val=b.calculate().value();
+			val=b.calculate().value().value();
 		}
 	}
 	QVERIFY(!b.isCorrect());

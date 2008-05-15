@@ -112,6 +112,8 @@ class function
 		
 		const Expression& expression() const;
 		
+		QList<int> jumps() const;
+		
 		/** Returns a list of the supported bvars */
 		static QStringList supportedBoundedVars();
 	private:

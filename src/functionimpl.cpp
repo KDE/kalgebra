@@ -94,7 +94,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		ulimitexp=u.calculate();
 	}
 	if(ulimitexp.isCorrect() && ulimitexp.isValue())
-		ulimit=ulimitexp.value();
+		ulimit=ulimitexp.value().value();
 	else
 		ulimit = 2.*pi;
 	
@@ -104,7 +104,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		dlimitexp=d.calculate();
 	}
 	if(dlimitexp.isCorrect() && dlimitexp.isValue())
-		dlimit=dlimitexp.value();
+		dlimit=dlimitexp.value().value();
 	else
 		dlimit = 0.;
 	
@@ -122,7 +122,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
 		varth->setValue(th);
-		double r = func.calculate().value();
+		double r = func.calculate().value().value();
 		
 		addValue(fromPolar(r, th));
 	}
@@ -140,15 +140,12 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 	func.variables()->modify("y", 0.);
 	Cn *yval=(Cn*) func.variables()->value("y");
 	
-	double inv_res=double((-b_lim+t_lim)/max_res), middleY=b_lim+viewport.height()/2;
+	double inv_res=double((-b_lim+t_lim)/max_res);
 	for(double y=t_lim; y>b_lim; y-=inv_res) {
 		yval->setValue(y);
-		double x = func.calculate().value();
+		double x = func.calculate().value().value();
 		
-		if(points.count()<3 && y>middleY)
-			points.append(QPointF(x,y));
-		else
-			addValue(QPointF(x, y));
+		addValue(QPointF(x, y));
 	}
 }
 
@@ -156,11 +153,19 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 {
 	double l_lim=viewport.left()-.1, r_lim=viewport.right()+.1;
 	
+	/*if(!points.isEmpty()) {
+		qDebug() << isSimilar(points.first().x(), l_lim) << isSimilar(points.last().x(), r_lim) <<
+			(int(max_res)==points.capacity());
+		qDebug() << points.last().x() << r_lim;
+	}*/
+	
+	//TODO: Check that the last value is the one we are looking for
 	if(!points.isEmpty() && isSimilar(points.first().x(), l_lim) && isSimilar(points.last().x(), r_lim) &&
 			int(max_res)==points.capacity()) {
 		return;
 	}
 	
+	m_jumps.clear();
 	points.clear();
 	points.reserve(max_res);
 	
@@ -169,40 +174,46 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	func.variables()->modify("x", 0.);
 	Cn *vx = (Cn*) func.variables()->value("x");
 	
-	double middleX=l_lim+viewport.width()/2;
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
-		double y = func.calculate().value();
+		Cn y = func.calculate().value();
+		bool wasempty=points.isEmpty();
+		bool ch=addValue(QPointF(x, y.value()));
 		
-		if(points.count()<3 && x>middleX)
-			points.append(QPointF(x,y));
-		else
-			addValue(QPointF(x, y));
+		if(ch && !wasempty && y.format()!=Cn::Real) {
+			if(!wasempty && points[points.count()-2].y()==y.value()) {
+				m_jumps.append(points.count());
+			}
+		}
 	}
 }
 
-void FunctionImpl::addValue(const QPointF& p)
+bool FunctionImpl::addValue(const QPointF& p)
 {
+	bool appended=true;
 	int count=points.count();
 	if(count<2) {
 		points.append(p);
-		return;
+		return appended;
 	}
 	
 	double slope1=(points[count-1].x()-p.x())/(points[count-1].y()-p.y());
 	double slope2=(points[count-2].x()-p.x())/(points[count-2].y()-p.y());
 	if(isSimilar(slope1, slope2) || (p.y()==points[count-1].y() && p.y()==points[count-2].y())) {
 		points.last()=p;
+		appended=false;
 	} else {
 		points.append(p);
+		appended=true;
 	}
+	return appended;
 }
 
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	func.variables()->modify("y", dp.y());
-	dp.setX(func.calculate().value());
+	dp.setX(func.calculate().value().value());
 	QString pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
@@ -212,7 +223,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	QPointF dp=p;
 	QString pos;
 	func.variables()->modify(QString("x"), dp.x());
-	dp.setY(func.calculate().value());
+	dp.setY(func.calculate().value().value());
 	pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
@@ -252,13 +263,13 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	QPointF dist;
 	do {
 		func.variables()->modify("q", th);
-		r = func.calculate().value();
+		r = func.calculate().value().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
 		
 		func.variables()->modify("q", th+2.*pi);
-		r = func.calculate().value();
+		r = func.calculate().value().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d2 = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
@@ -267,7 +278,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	} while(d>d2);
 	
 	func.variables()->modify("q", th);
-	r = func.calculate().value();
+	r = func.calculate().value().value();
 	dp = fromPolar(r, th);
 	pos = QString("r=%1 th=%2").arg(r,3,'f',2).arg(th,3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
@@ -300,7 +311,7 @@ QLineF FunctionX::derivative(const QPointF& p) const
 		a.variables()->modify("y", p.y());
 		
 		if(a.isCorrect())
-			ret = a.calculate().value();
+			ret = a.calculate().value().value();
 	
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();
@@ -324,7 +335,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		a.variables()->modify("x", p.x());
 		
 		if(a.isCorrect())
-			ret = a.calculate().value();
+			ret = a.calculate().value().value();
 		
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();

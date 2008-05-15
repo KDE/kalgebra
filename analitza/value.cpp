@@ -24,12 +24,12 @@
 #include <KLocale>
 
 Cn::Cn(Object const *o)
-	: Object(Object::value), m_value(0.), m_boolean(false)
+	: Object(Object::value), m_value(0.), m_format(Real)
 {
 	if(o->type()==Operator::value){
 		Cn *v = (Cn*) o;
 		m_value = v->value();
-		m_boolean = v->isBoolean();
+		m_format = v->format();
 		setCorrect(v->isCorrect());
 	} else {
 		setCorrect(false);
@@ -38,7 +38,7 @@ Cn::Cn(Object const *o)
 
 QString Cn::toString() const
 {
-	if(isBoolean()) {
+	if(m_format==Boolean) {
 		if(isTrue())
 			return "true";
 		else
@@ -49,7 +49,7 @@ QString Cn::toString() const
 
 QString Cn::toMathML() const
 {
-	if(isBoolean()) {
+	if(m_format==Boolean) {
 		if(isTrue())
 			return "<cn type='constant'>true</cn>";
 		else
@@ -60,7 +60,7 @@ QString Cn::toMathML() const
 
 QString Cn::toHtml() const
 {
-	if(isBoolean()) {
+	if(m_format==Boolean) {
 		if(isTrue())
 			return i18nc("html representation of a number", "<span class='const'>true</span>");
 		else
@@ -104,7 +104,7 @@ void Cn::setValue(const QDomElement& val)
 // 	this->m_vformat=whatValueFormat(val);
 	bool wrong;
 	QString tag = val.tagName();
-	m_boolean=false;
+	m_format=Real;
 	
 	if(tag == "cn"){ // a is a number
 		if(val.attribute("type", "integer") == "real") {
@@ -112,6 +112,7 @@ void Cn::setValue(const QDomElement& val)
 		} else if(val.attribute("type", "integer") == "integer"){
 			int base = val.attribute("base", "10").toInt(NULL, 10);
 			m_value= val.text().trimmed().toInt(&wrong, base);
+			m_format=Integer;
 		}
 #if 0
 		else if(val.attribute("type") == "e-notation")	{ /*TODO: Not implemented */ }
@@ -122,8 +123,8 @@ void Cn::setValue(const QDomElement& val)
 		else if(val.attribute("type") == "constant"){
 			if(val.text() == "&pi;")			{ m_value = pi().m_value; }
 			else if (val.text() == "&ee;" || val.text() == "&ExponentialE;"){ m_value = e().m_value; }
-			else if (val.text() == "&true;")	{ m_value=1.; m_boolean=true; }
-			else if (val.text() == "&false;")	{ m_value=0.; m_boolean=true; }
+			else if (val.text() == "&true;")	{ m_value=1.; m_format=Boolean; }
+			else if (val.text() == "&false;")	{ m_value=0.; m_format=Boolean; }
 			else if (val.text() == "&gamma;")	{ m_value = 0.5772156649; }
 #if 0
 			else if (val.text() == "&ImagniaryI;")	; //TODO: Not implemented 

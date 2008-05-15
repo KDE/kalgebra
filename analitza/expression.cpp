@@ -339,13 +339,13 @@ QStringList Expression::bvarList() const
 	return QStringList();
 }
 
-double Expression::value() const
+Cn Expression::value() const
 {
 	if(d->m_tree && d->m_tree->type()==Object::value)
-		return ((Cn*) d->m_tree)->value();
+		return Cn((Cn*) d->m_tree);
 	else {
 // 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();
-		return 0;
+		return 0.;
 	}
 }
 

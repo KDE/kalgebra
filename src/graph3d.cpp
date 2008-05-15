@@ -304,7 +304,7 @@ void Calculate3D::run()
 		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
 			y->setValue(j*step-size);
-			punts[i][j] = -a.calculate().value();
+			punts[i][j] = -a.calculate().value().value();
 		}
 	}
 }

@@ -166,3 +166,9 @@ const Expression& function::expression() const
 {
 	return *analitza()->expression();
 }
+
+
+QList<int> function::jumps() const
+{
+	return m_function->m_jumps;
+}

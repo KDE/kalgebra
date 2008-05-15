@@ -33,7 +33,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 {
 	int residu;
 	double a=oper->value(), b=oper1->value(), c;
-	bool boolean=false;
+	Cn::ValueFormat format=oper->format();
 	
 	switch(op) {
 		case Operator::plus:
@@ -59,6 +59,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			break;
 		case Operator::quotient:
 			a = floor(a / b);
+			format=Cn::Integer;
 			break;
 		case Operator::factorof:
 			if(floor(b)!=0.)
@@ -67,7 +68,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 				a = 0.;
 				correct=false;
 			}
-			boolean = true;
+			format=Cn::Boolean;
 			break;
 		case Operator::min:
 			a= a < b? a : b;
@@ -77,47 +78,47 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			break;
 		case Operator::gt:
 			a= a > b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::lt:
 			a= a < b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::eq:
 			a= a == b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::approx:
 			a= fabs(a-b)<0.001? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::neq:
 			a= a != b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::geq:
 			a= a >= b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::leq:
 			a= a <= b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::_and:
 			a= a && b? 1.0 : 0.0;
-			boolean=true;
+			format=Cn::Boolean;
 			break;
 		case Operator::_or:
 			a= a || b? 1.0 : 0.0;
-			boolean = true;
+			format = Cn::Boolean;
 			break;
 		case Operator::_xor:
 			a= (a || b) && !(a&&b)? 1.0 : 0.0;
-			boolean = true;
+			format = Cn::Boolean;
 			break;
 		case Operator::implies:
 			a= (a || !b)? 0.0 : 1.0;
-			boolean = true;
+			format = Cn::Boolean;
 			break;
 		case Operator::gcd: //code by michael cane aka kiko :)
 			while (b > 0.) {
@@ -125,6 +126,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 				a = b;
 				b = residu;
 			}
+			format=Cn::Integer;
 			break;
 		case Operator::lcm: //code by michael cane aka kiko :)
 			c=a*b;
@@ -134,6 +136,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 				b = residu;
 			}
 			a=(int)c/(int)a;
+			format=Cn::Integer;
 			break;
 		case Operator::root:
 			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
@@ -143,7 +146,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			break;
 	}
 	oper->setValue(a);
-	oper->setBoolean(boolean);
+	oper->setFormat(format);
 	delete oper1;
 	return oper;
 }
@@ -151,7 +154,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &correct)
 {
 	double a=val->value();
-	bool boolean=false;
+	Cn::ValueFormat format=val->format();
 	
 	switch(op) {
 		case Operator::minus:
@@ -162,8 +165,8 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 			for(a=1.; b>1.; b--) {
 				a*=b;
 			}
-		}
-			break;
+			format=Cn::Integer;
+		}	break;
 		case Operator::sin:
 			a=sin(a);
 			break;
@@ -243,13 +246,15 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 		//case Object::imaginary:
 		case Operator::floor:
 			a=floor(a);
+			format=Cn::Integer;
 			break;
 		case Operator::ceiling:
 			a=ceil(a);
+			format=Cn::Integer;
 			break;
 		case Operator::_not:
 			a=!a;
-			boolean = true;
+			format=Cn::Boolean;
 			break;
 		default:
 			correct=false;
@@ -257,7 +262,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 	}
 	
 	val->setValue(a);
-	val->setBoolean(boolean);
+	val->setFormat(format);
 	return val;
 }
 

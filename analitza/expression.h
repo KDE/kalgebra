@@ -143,7 +143,7 @@ class ANALITZA_EXPORT Expression
 		 */
 		QStringList bvarList() const;
 		
-		double value() const;
+		Cn value() const;
 		
 		bool isValue() const;
 		

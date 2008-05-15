@@ -1656,34 +1656,33 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 	return ret;
 }
 
-QList<double> Analitza::discontinuities(const QString& var, const Bounds& b)
-{
-	QList<double> ret;
-	if(m_exp.isCorrect()) {
-// 		ret=discon(m_exp.tree(), var, b, QSet<QString>());
-	} else {
-		m_err << i18n("Must specify a correct operation");
-	}
-	return ret;
-}
-
-/*
-QList<double> Analitza::discon(const Object* branch, const QString& var, const Bounds& b, const QSet<QString>& unscoped)
-{
-	QList<double> ret;
-	if(branch->isContainer()) {
-		const Container* c = (Container*) branch;
-		
-		if(c->containerType()==Container::declare) {
-			
-		} else if(c->containerType()==Container::apply) {
-			Operator op = c->firstOperator();
-			
-		} else if((c->containerType()==Container::math || c->containerType()==Container::declare)
-				&& !c->m_params.isEmpty() ) {
-			//TODO: Multiline. Add a loop here!
-			ret=discon(c->m_params[0], var, b, unscoped);
-		}
-	}
-	return ret;
-}*/
+// QList<double> Analitza::discontinuities(const QString& var, const Bounds& b)
+// {
+// 	QList<double> ret;
+// 	if(m_exp.isCorrect()) {
+// // 		ret=discon(m_exp.tree(), var, b, QSet<QString>());
+// 	} else {
+// 		m_err << i18n("Must specify a correct operation");
+// 	}
+// 	return ret;
+// }
+// 
+// QList<double> Analitza::discon(const Object* branch, const QString& var, const Bounds& b, const QSet<QString>& unscoped)
+// {
+// 	QList<double> ret;
+// 	if(branch->isContainer()) {
+// 		const Container* c = (Container*) branch;
+// 		
+// 		if(c->containerType()==Container::declare) {
+// 			
+// 		} else if(c->containerType()==Container::apply) {
+// 			Operator op = c->firstOperator();
+// 			
+// 		} else if((c->containerType()==Container::math || c->containerType()==Container::declare)
+// 				&& !c->m_params.isEmpty() ) {
+// 			//TODO: Multiline. Add a loop here!
+// 			ret=discon(c->m_params[0], var, b, unscoped);
+// 		}
+// 	}
+// 	return ret;
+// }

@@ -34,15 +34,18 @@ class QDomElement;
 class ANALITZA_EXPORT Cn : public Object
 {
 	public:
-// 		enum ValueFormat { none, nan, real, integer, boolean };
+		enum ValueFormat { Real, Integer, Boolean };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(v), m_value(v.value()), m_boolean(v.m_boolean) {}
+		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) {}
 		
-		/** Constructor. Creates a value with values @p v. */
-		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_boolean(false) {}
+		/** Constructor. Creates a boolean value with @p b. */
+		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_format(Real) {}
 		
-		/** Constructor. Creates a boolean value with value @p v. */
-		Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_boolean(true) {}
+		/** Constructor. Creates an integer value with @p i. */
+		Cn(int i) : Object(Object::value), m_value(i), m_format(Integer) {}
+		
+		/** Constructor. Creates a boolean value with value @p b. */
+		Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Integer) {}
 		
 		/** Constructor. Creates a value from @p o. If @p o is not a Cn, a not correct Cn will be returned. */
 		Cn(Object const * o);
@@ -72,17 +75,20 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns whether it is a boolean value or not.
 		 */
-		bool isBoolean() const { return m_boolean; }
+		bool isBoolean() const { return m_format==Boolean; }
+		
+		ValueFormat format() const { return m_format; }
+		void setFormat(ValueFormat v) { m_format=v; }
 		
 		/**
 		 *	Sets whether this value is boolean or not.
 		 */
-		void setBoolean(bool val) { m_boolean=val; }
+		void setBoolean(bool b) { m_format= b ? Boolean : Real; }
 		
 		/**
 		 *	@return If it is a boolean value, returns if it is true or not, otherwise retuns false.
 		 */
-		bool isTrue() const { return m_boolean && m_value!=0.; }
+		bool isTrue() const { return m_format==Boolean && m_value!=0.; }
 		
 // 		static double toNum(const QString& num, const QString& type, int base);
 // 		static enum ValueFormat whatValueFormat(const QDomElement&);
@@ -165,8 +171,7 @@ class ANALITZA_EXPORT Cn : public Object
 		static Cn euler();
 	private:
 		double m_value;
-		bool m_boolean;
-// 		enum ValueFormat m_vformat;
+		enum ValueFormat m_format;
 };
 
 #endif
