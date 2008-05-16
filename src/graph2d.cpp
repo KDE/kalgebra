@@ -68,12 +68,12 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 
 Graph2D::~Graph2D() {}
 
-void Graph2D::drawAxes(QPainter *f, Axe a)
+void Graph2D::drawAxes(QPainter *f, function::Axe a)
 {
 	f->setRenderHint(QPainter::Antialiasing, false);
 	
 	switch(a) {
-		case Polar:
+		case function::Polar:
 			drawPolarAxes(f);
 			break;
 		default:
@@ -200,7 +200,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 //	finestra.initFrom(this);
 	finestra.setPen(pfunc);
 	
-	Axe t=Cartesian;
+	function::Axe t=function::Cartesian;
 	if(m_model->hasSelection())
 		t=m_model->currentFunction().axeType();
 	drawAxes(&finestra, t);
@@ -225,7 +225,10 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
-				
+			
+// 			QLineF deriv=it->derivative(ultim);
+// 			qDebug() << "inf" << deriv.dy()/deriv.dx() << deriv;
+			
 			if(!isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
 				finestra.drawLine(ultim, act);
 				
@@ -238,7 +241,16 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 #endif
 			} else if(nextjump==int(j)) {
 				nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
+#if 0
+				qDebug() << "jumpiiiiiing" << vect.at(j);
+				QPen p(Qt::blue);
+				p.setWidth(2);
+				finestra.setPen(p);
+				finestra.drawLine(QLineF(QPointF(act.x(), height()/2-10), QPointF(act.x(), height()/2+10)));
+				finestra.setPen(pfunc);
+#endif
 			}
+
 			ultim=act;
 		}
 	}

@@ -27,9 +27,6 @@
 class Analitza;
 class Expression;
 
-/** Defines a function axe type. */
-enum Axe { Cartesian=0, Polar};
-
 /**
  *	Calculates 2D functions.
  *	@author Aleix Pol i Gonzalez
@@ -40,6 +37,9 @@ struct FunctionImpl;
 class function
 {
 	public:
+		/** Defines a function axe type. */
+		enum Axe { Cartesian=0, Polar};
+		
 		/** Constructor. Create an empty function. */
 		function();
 		

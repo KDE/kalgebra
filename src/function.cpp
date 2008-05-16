@@ -97,7 +97,7 @@ void function::update_points(const QRect& viewport, unsigned int max_res)
 	m_function->updatePoints(viewport, max_res);
 }
 
-Axe function::axeType() const
+function::Axe function::axeType() const
 {
 	return m_function->axeType();
 }

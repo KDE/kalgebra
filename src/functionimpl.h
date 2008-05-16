@@ -36,7 +36,7 @@ struct FunctionImpl
 	QString toString() const { return func.expression().toString(); }
 	bool addValue(const QPointF& p);
 	
-	virtual Axe axeType() const { return Cartesian; }
+	virtual function::Axe axeType() const { return function::Cartesian; }
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 	virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
 	virtual QLineF derivative(const QPointF& p) const=0;
@@ -81,7 +81,7 @@ struct FunctionPolar : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	Axe axeType() const { return Polar; }
+	function::Axe axeType() const { return function::Polar; }
 	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return PolarType; }
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }

@@ -48,13 +48,15 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->x") << "x";
 	QTest::newRow("x->abs") << "abs(x)";
 	QTest::newRow("x->addition") << "2+x";
-	QTest::newRow("x->logarithm") << "log x";
+	QTest::newRow("x->minus") << "x-2";
+	QTest::newRow("x->log") << "log x";
+	QTest::newRow("x->tan") << "tan x";
 	QTest::newRow("x->sum") << "sum(t->0..3, t)";
 	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
-	QTest::newRow("y->flat") << "y->1";
-	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("x->diff") << "diff(x)";
 	QTest::newRow("x->diffx") << "diff(x^2)";
+	QTest::newRow("y->flat") << "y->1";
+	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
 	QTest::newRow("polar->hard") << "q->(1..10, ceiling(q/(2*pi)))";
@@ -72,12 +74,13 @@ void FunctionTest::testCopy()
 	function f3;
 	f3=f2;
 	QVERIFY(f3.isCorrect());
-	QRectF viewp(QPoint(-5, 7), QPoint(5, -7));
-	f3.update_points(viewp.toRect(), 100);
+	QRectF viewp(QPoint(-12, 10), QPoint(12, -10));
+	int resolution=800;
+	f3.update_points(viewp.toRect(), resolution);
 	
 	QVERIFY(f3.points().size()>1);
-	QVERIFY(f3.points().size()<=100);
-	f3.update_points(viewp.toRect(), 100);
+	QVERIFY(f3.points().size()<=resolution);
+	f3.update_points(viewp.toRect(), resolution);
 	
 // 	bool found=false;
 // 	foreach(const QPointF& pt, f3.points()) {
@@ -87,6 +90,12 @@ void FunctionTest::testCopy()
 // 		}
 // 	}
 // 	QVERIFY(found);
+	
+	int ant=-1;
+	foreach(int pos, f3.jumps()) {
+		QVERIFY(pos>ant);
+		ant=pos;
+	}
 	
 	f3.derivative(QPointF(0., 0.));
 	f3.derivative(QPointF(1., 0.));

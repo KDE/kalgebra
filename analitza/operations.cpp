@@ -161,7 +161,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 			a = -a;
 			break;
 		case Operator::factorial: {
-			int b = static_cast<int>(floor(a));
+			double b = a;
 			for(a=1.; b>1.; b--) {
 				a*=b;
 			}

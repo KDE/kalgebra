@@ -129,7 +129,7 @@ private:
 	bool valid;
 	QLabel *micepos;
 	QPointF mark;
-	void drawAxes(QPainter*, Axe a);
+	void drawAxes(QPainter*, function::Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
 	QPointF toWidget(const QPointF &) const;

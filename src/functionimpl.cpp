@@ -148,6 +148,12 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 	}
 }
 
+bool traverse(double v1, double v2)
+{
+// 	if(fabs(v1)>10 || fabs(v2)>10) qDebug() << "lolololo" << fabs(v1) << fabs(v2);
+	return ((v1<0. && v2>0.) || (v2<0. && v1>0.)) && fabs(v1)>10 && fabs(v2)>10;
+}
+
 void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 {
 	double l_lim=viewport.left()-.1, r_lim=viewport.right()+.1;
@@ -181,26 +187,31 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
 		Cn y = func.calculate().value();
+		QPointF p(x, y.value());
 		bool wasempty=points.isEmpty();
-		bool ch=addValue(QPointF(x, y.value()));
+		bool ch=addValue(p);
 		
-		if(ch && !wasempty && y.format()!=Cn::Real) {
-			if(!wasempty && points[points.count()-2].y()==y.value()) {
+		if(!wasempty && ch && (m_jumps.isEmpty() || m_jumps.last()!=points.count())) {
+			if(y.format()!=Cn::Real && points[points.count()-2].y()==y.value()) {
 				m_jumps.append(points.count());
+				qDebug() << "tototo";
+			} else if(traverse(points[points.count()-2].y(), y.value())) {
+				m_jumps.append(points.count()-1);
 			}
 		}
 	}
+// 	qDebug() << "end." << m_jumps;
 }
 
 bool FunctionImpl::addValue(const QPointF& p)
 {
-	bool appended=true;
 	int count=points.count();
 	if(count<2) {
 		points.append(p);
-		return appended;
+		return false;
 	}
 	
+	bool appended;
 	double slope1=(points[count-1].x()-p.x())/(points[count-1].y()-p.y());
 	double slope2=(points[count-2].x()-p.x())/(points[count-2].y()-p.y());
 	if(isSimilar(slope1, slope2) || (p.y()==points[count-1].y() && p.y()==points[count-2].y())) {
