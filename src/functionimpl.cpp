@@ -164,7 +164,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 		qDebug() << points.last().x() << r_lim;
 	}*/
 	
-	//TODO: Check that the last value is the one we are looking for
+	//TODO: Check that the last value is the end of the viewport
 	if(!func.isCorrect()) {
 		qDebug() << "func error." << func.errors() << func.expression()->toString();
 		return;
@@ -192,9 +192,8 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 		bool ch=addValue(p);
 		
 		if(!wasempty && ch && (m_jumps.isEmpty() || m_jumps.last()!=points.count())) {
-			if(y.format()!=Cn::Real && points[points.count()-2].y()==y.value()) {
-				m_jumps.append(points.count());
-				qDebug() << "tototo";
+			if(y.format()!=Cn::Real && points[points.count()-2].y()!=y.value()) {
+				m_jumps.append(points.count()-1);
 			} else if(traverse(points[points.count()-2].y(), y.value())) {
 				m_jumps.append(points.count()-1);
 			}
