@@ -36,16 +36,20 @@ function::function()
 function::function(const QString &name, const Expression& newFunc, const QColor& color)
 	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
-// 	objectWalker(newFunc.tree());
-	QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
-	if(firstBVar=="x")
-		m_function=new FunctionY(newFunc);
-	else if(firstBVar=="y")
-		m_function=new FunctionX(newFunc);
-	else if(firstBVar=="q")
-		m_function=new FunctionPolar(newFunc);
-	else
-		m_err << "Function type not recognized";
+	if(newFunc.isCorrect()) {
+//		objectWalker(newFunc.tree());
+		QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
+		if(firstBVar=="x")
+			m_function=new FunctionY(newFunc);
+		else if(firstBVar=="y")
+			m_function=new FunctionX(newFunc);
+		else if(firstBVar=="q")
+			m_function=new FunctionPolar(newFunc);
+		else
+			m_err << "Function type not recognized";
+	} else {
+		m_err << "The expression is not correct";
+	}
 }
 
 /*FunctionImpl* copy(FunctionImpl* fi)
@@ -64,9 +68,10 @@ function::function(const QString &name, const Expression& newFunc, const QColor&
 }*/
 
 function::function(const function& f)
-	: m_function(0), m_show(f.m_show), m_color(f.m_color), m_name(f.m_name)
+	: m_function(0), m_show(f.m_show), m_color(f.m_color), m_name(f.m_name), m_err(f.m_err)
 {
-	m_function=f.m_function->copy();
+	if(f.m_function)
+		m_function=f.m_function->copy();
 }
 
 function::~function()
@@ -81,12 +86,16 @@ function function::operator=(const function& f)
 		if(m_function)
 			delete m_function;
 		
-		m_function=f.m_function->copy();
-// 		m_function=copy(f.m_function);
-		Q_ASSERT(m_function);
+		if(f.m_function) {
+			m_function=f.m_function->copy();
+//	 		m_function=copy(f.m_function);
+			Q_ASSERT(m_function);
+		} else
+			m_function=0;
 		m_show=f.m_show;
 		m_color=f.m_color;
 		m_name=f.m_name;
+		m_err=f.m_err;
 	}
 	return *this;
 }
@@ -150,6 +159,7 @@ QStringList function::errors() const
 
 QString function::toString() const
 {
+	Q_ASSERT(m_function);
 	return m_function->toString();
 }
 

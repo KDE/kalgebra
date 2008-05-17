@@ -324,7 +324,7 @@ void Expression::clear()
 
 bool Expression::isCorrect() const
 {
-	return d->m_tree && d->m_err.isEmpty() && d->m_tree->isCorrect();
+	return d && d->m_tree && d->m_err.isEmpty() && d->m_tree->isCorrect();
 }
 
 QStringList Expression::bvarList() const

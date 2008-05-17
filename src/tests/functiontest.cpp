@@ -46,6 +46,7 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("x->flat") << "1";
 	QTest::newRow("x->x") << "x";
+	QTest::newRow("x->and") << "and(gt(x,-1), lt(x,1))";
 	QTest::newRow("x->abs") << "abs(x)";
 	QTest::newRow("x->addition") << "2+x";
 	QTest::newRow("x->minus") << "x-2";
@@ -108,6 +109,7 @@ void FunctionTest::testCorrect_data()
 	QTest::addColumn<QString>("input");
 	QTest::addColumn<bool>("correct");
 	
+	QTest::newRow("empty function") << "" << false;
 	QTest::newRow("q->empty range") << "q->(0..0, q)" << false;
 }
 
@@ -123,7 +125,8 @@ void FunctionTest::testCorrect()
 	f3=f2;
 	
 	corr=corr || f3.isCorrect();
-	f3.update_points(QRect(-10, 10, 10, -10), 100);
+	if(corr)
+		f3.update_points(QRect(-10, 10, 10, -10), 100);
 	corr=corr && f3.isCorrect();
 	
 	QCOMPARE(correct, corr);

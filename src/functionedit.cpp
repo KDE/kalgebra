@@ -65,7 +65,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	
 	m_funcsModel=new FunctionsModel;
-	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
+//	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
 	
 	m_graph = new Graph2D(m_funcsModel, this);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));

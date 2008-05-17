@@ -89,6 +89,7 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 
 bool FunctionsModel::addFunction(const function& func)
 {
+	Q_ASSERT(func.isCorrect());
 	bool exists=false;
 	
 	for (QList<function>::iterator it = funclist.begin(); !exists && it!=funclist.end(); ++it)

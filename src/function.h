@@ -120,8 +120,8 @@ class function
 		FunctionImpl* m_function;
 		bool m_show;
 		QColor m_color;
-		QStringList m_err;
 		QString m_name;
+		QStringList m_err;
 };
 
 #endif
