@@ -36,7 +36,7 @@ public:
 		@param p	parent object.
 		@param na	Analitza module used fot the calculations.
 		@param poi	memory space where the results will be located.
-		@param fr	Begining of the calculated values.
+		@param fr	Beginning of the calculated values.
 		@param to	End of the calculated values.
 		@param m	Distance of each dimension from the (0, 0) to be calculated.
 		@param s	Step between each 2 values.
