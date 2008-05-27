@@ -33,5 +33,5 @@ if(OPENGL_FOUND)
    target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
 endif(OPENGL_FOUND)
 
-install(TARGETS kalgebra DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
