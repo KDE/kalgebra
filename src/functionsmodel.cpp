@@ -114,16 +114,22 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	Q_ASSERT(row+count-1<funclist.count());
 	if(parent.isValid())
 		return false;
-	emit beginRemoveRows(parent, row, row+count-1);
-	if(m_selectedRow>=row && m_selectedRow<row+count)
-		m_selectedRow=-1;
+	beginRemoveRows(parent, row, row+count-1);
+	
+	if(m_selectedRow>=row)
+		m_selectedRow-=count;
 	
 	QList<function>::iterator it=funclist.begin()+row;
 	for(int i=count-1; i>=0; i--) {
-		emit functionRemoved(it->name());
+		QString name=it->name();
 		it=funclist.erase(it);
+		emit functionRemoved(name);
 	}
-	emit endRemoveRows();
+	endRemoveRows();
+	
+	qDebug() << "new state" << m_selectedRow;
+	Q_ASSERT(m_selectedRow>=-1 && m_selectedRow<funclist.count());
+	
 	return true;
 }
 
@@ -245,11 +251,13 @@ void FunctionsModel::updatePoints(int i, const QRect & viewport, int resolution)
 
 const function & FunctionsModel::currentFunction() const
 {
+	Q_ASSERT(hasSelection());
 	return funclist[m_selectedRow];
 }
 
 function & FunctionsModel::currentFunction()
 {
+	Q_ASSERT(hasSelection());
 	return funclist[m_selectedRow];
 }
 
