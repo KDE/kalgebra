@@ -32,6 +32,7 @@
 #include <QApplication>
 
 #include <KLocale>
+#include <KDebug>
 #include <cmath>
 
 #include "analitza.h"
@@ -217,17 +218,22 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		finestra.setPen(pfunc);
 		
 		const QVector<QPointF> &vect=it->points();
+		Q_ASSERT(!vect.isEmpty());
 		QList<int> jumps=it->jumps();
 		
 		unsigned int pointsCount = vect.count();
 		QPointF ultim(toWidget(vect[0]));
 		
 		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
+		bool nextpoint=false;
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
 			
 // 			QLineF deriv=it->derivative(ultim);
 // 			qDebug() << "inf" << deriv.dy()/deriv.dx() << deriv;
+			
+			if(isinf(act.y()) && !isnan(act.y())) qDebug() << "toma ya";
+			else if(isinf(act.y()) && isnan(act.y())) qDebug() << "joooooooooooo";
 			
 			if(!isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
 				finestra.drawLine(ultim, act);
@@ -240,7 +246,11 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 				finestra.setPen(pfunc);
 #endif
 			} else if(nextjump==int(j)) {
-				nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
+				do {
+					if(nextjump!=int(j))
+						finestra.drawPoint(act);
+					nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
+				} while(!jumps.isEmpty() && jumps.first()==nextjump+1);
 #if 0
 				qDebug() << "jumpiiiiiing" << vect.at(j);
 				QPen p(Qt::blue);
@@ -594,7 +604,7 @@ void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 
 void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 {
-	for(int i=start; i<end; i++) {
+	for(int i=start; i<=end; i++) {
 		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;

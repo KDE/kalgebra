@@ -31,6 +31,8 @@ FunctionsModel::FunctionsModel(QObject *parent)
 QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 {
 	QVariant ret;
+	if(!index.isValid() || index.row()>=funclist.count())
+		return QVariant();
 	int var=index.row();
 	const function &f=funclist[var];
 	
@@ -96,7 +98,7 @@ bool FunctionsModel::addFunction(const function& func)
 		exists = (it->name() == func.name());
 	
 	if(!exists) {
-		beginInsertRows (QModelIndex(), rowCount(), rowCount()+1);
+		beginInsertRows (QModelIndex(), rowCount(), rowCount());
 		funclist.append(func);
 		m_selectedRow=funclist.count()-1;
 		endInsertRows();
@@ -112,7 +114,7 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	Q_ASSERT(row+count-1<funclist.count());
 	if(parent.isValid())
 		return false;
-	emit beginRemoveRows(parent, row, row+count);
+	emit beginRemoveRows(parent, row, row+count-1);
 	if(m_selectedRow>=row && m_selectedRow<row+count)
 		m_selectedRow=-1;
 	
@@ -277,9 +279,12 @@ QPair<QPointF, QString> FunctionsModel::calcImage(const QPointF & ndp)
 	return ret;
 }
 
-Qt::ItemFlags FunctionsModel::flags(const QModelIndex &) const
+Qt::ItemFlags FunctionsModel::flags(const QModelIndex &idx) const
 {
-	return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsTristate;
+	if(idx.isValid())
+		return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsTristate;
+	else
+		return 0;
 }
 
 void FunctionsModel::unselect()
