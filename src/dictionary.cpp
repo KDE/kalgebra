@@ -91,7 +91,8 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	m_example->setText(example);
 	
 	m_funcs->clear();
-	m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0)));
+	if(!example.isEmpty())
+		m_funcs->addFunction(function("func", Expression(example, false), QColor(0,150,0)));
 }
 
 void Dictionary::filterChanged(const QString &filter)
