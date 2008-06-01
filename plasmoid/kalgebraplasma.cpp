@@ -21,14 +21,15 @@
 #include <QPainter>
 #include <QFontMetrics>
 #include <QSizeF>
+#include <QLabel>
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
-#include <QLabel>
+#include <QGraphicsLinearLayout>
 #include <KLineEdit>
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
-// #include <plasma/widgets/label.h>
+#include <plasma/widgets/label.h>
 // #include <plasma/widgets/flash.h>
 // #include <plasma/layouts/boxlayout.h>
 // #include <plasma/widgets/icon.h>
@@ -48,68 +49,45 @@ KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 
 void KAlgebraPlasmoid::init()
 {
-    QGraphicsProxyWidget * graphicsWidget = new QGraphicsProxyWidget(this);
-    QFrame *widget = new QFrame;
-    QVBoxLayout *layout = new QVBoxLayout(widget);
-    graphicsWidget->setWidget(widget);
-
-    // FIXME real position
-    graphicsWidget->setPos(10,10);
-    graphicsWidget->resize(size());
-    
-// 	Plasma::VBoxLayout* m_layout = new Plasma::VBoxLayout( this );
-	layout->setMargin( 0 );
-	layout->setSpacing( 0 );
+	QGraphicsProxyWidget * graphicsWidget = new QGraphicsProxyWidget(this);
+	m_input = new KLineEdit;
+	m_input->setClickMessage(i18n("Enter the expression..."));
+	m_input->setAttribute( Qt::WA_NoSystemBackground );
+	graphicsWidget->setWidget(m_input);
 	
-	m_input = new KLineEdit(widget);
-    layout->addWidget(m_input);
-// 	m_input->setGeometry(QRectF(QPointF(0,0),size()));
-    m_input->setClickMessage(i18n("Enter the expression..."));
-// 	m_input->setMultiLine(false);
-// 	m_layout->addItem(m_input);
+	QGraphicsLinearLayout* m_layout = new QGraphicsLinearLayout(this);
+	m_layout->setOrientation( Qt::Vertical );
 	
-    m_output = new QLabel(widget);
-    m_output->setAlignment(Qt::AlignCenter);
-    layout->addWidget(m_output);
-    
-// 	m_output->setGeometry(QRectF(QPointF(0,0),size()));
-// 	m_layout->addItem(m_output);
+	m_output = new Plasma::Label(this);
+	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
+	
+	m_layout->addItem(graphicsWidget);
+	m_layout->addItem(m_output);
 	
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
-	connect(m_input, SIGNAL(changed()), this, SLOT(simplify()));
-}
-
-void KAlgebraPlasmoid::constraintsEvent(Plasma::Constraints constraints)
-{
-    if (constraints & Plasma::SizeConstraint) {
-        // FIXME resize
-    }
+	connect(m_input, SIGNAL(textChanged ( const QString & )), this, SLOT(simplify()));
 }
 
 void KAlgebraPlasmoid::addOperation()
 {
-// 	m_input->selectAll();
 	Expression res;
 	a.setExpression(Expression(m_input->text(), false));
 	if(a.isCorrect()) {
 		res=a.evaluate();
 	}
 	
+	QColor c;
 	if(a.isCorrect()) {
-// 		m_output->setPen(QPen(Qt::white));
-        QPalette palette = m_output->palette();
-        palette.setColor(QPalette::WindowText, Qt::white);
-        m_output->setPalette(palette);
-
 		m_output->setText(res.toString());
+		c=Qt::white;
 	} else {
-// 		m_output->setPen(QPen(Qt::red));
-        QPalette palette = m_output->palette();
-        palette.setColor(QPalette::WindowText, Qt::red);
-        m_output->setPalette(palette);
-
 		m_output->setText(a.errors().join("\n"));
+		c=Qt::red;
 	}
+	QPalette palette = m_output->palette();
+	palette.setColor(QPalette::WindowText, c);
+	m_output->nativeWidget()->setPalette(palette);
 }
 
 void KAlgebraPlasmoid::simplify()
@@ -120,12 +98,11 @@ void KAlgebraPlasmoid::simplify()
 	if(a.isCorrect()) {
 		a.simplify();
 		res=*a.expression();
-
-		QPalette palette = m_output->palette();
-        palette.setColor(QPalette::WindowText, Qt::blue);
-        m_output->setPalette(palette);
-// 		m_output->setPen(QPen(Qt::blue));
 		m_output->setText(res.toString());
+		
+		QPalette palette = m_output->palette();
+		palette.setColor(QPalette::WindowText, Qt::yellow);
+		m_output->nativeWidget()->setPalette(palette);
 	} else
 		m_output->setText(QString());
 }

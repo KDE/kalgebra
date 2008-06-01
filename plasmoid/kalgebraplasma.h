@@ -21,6 +21,7 @@
 #define KALGEBRAPLASMOID_HEADER
 
 #include <Plasma/Applet>
+#include <Plasma/Label>
 #include "analitza.h"
 
 class QSizeF;
@@ -38,11 +39,10 @@ class KAlgebraPlasmoid : public Plasma::Applet
 	private slots:
 		void simplify();
 		void addOperation();
-        void constraintsEvent(Plasma::Constraints constraints);
-
+		
 	private:
-        KLineEdit *m_input;
-		QLabel *m_output;
+		KLineEdit *m_input;
+		Plasma::Label *m_output;
 		Analitza a;
 };
 
