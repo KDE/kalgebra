@@ -43,8 +43,8 @@ KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 	//setDrawStandardBackground(true);
 	resize(200, 200);
 }
- 
- 
+
+
 KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 
 void KAlgebraPlasmoid::init()
@@ -54,29 +54,31 @@ void KAlgebraPlasmoid::init()
 	m_input->setClickMessage(i18n("Enter the expression..."));
 	m_input->setAttribute( Qt::WA_NoSystemBackground );
 	graphicsWidget->setWidget(m_input);
-	
+
 	QGraphicsLinearLayout* m_layout = new QGraphicsLinearLayout(this);
 	m_layout->setOrientation( Qt::Vertical );
-	
+
 	m_output = new Plasma::Label(this);
 	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
-	
+
 	m_layout->addItem(graphicsWidget);
 	m_layout->addItem(m_output);
-	
+
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
 	connect(m_input, SIGNAL(textChanged ( const QString & )), this, SLOT(simplify()));
 }
 
 void KAlgebraPlasmoid::addOperation()
 {
+        if ( m_input->text().isEmpty() )
+            return;
 	Expression res;
 	a.setExpression(Expression(m_input->text(), false));
 	if(a.isCorrect()) {
 		res=a.evaluate();
 	}
-	
+
 	QColor c;
 	if(a.isCorrect()) {
 		m_output->setText(res.toString());
@@ -94,12 +96,12 @@ void KAlgebraPlasmoid::simplify()
 {
 	Expression res;
 	a.setExpression(Expression(m_input->text(), false));
-	
+
 	if(a.isCorrect()) {
 		a.simplify();
 		res=*a.expression();
 		m_output->setText(res.toString());
-		
+
 		QPalette palette = m_output->palette();
 		palette.setColor(QPalette::WindowText, Qt::yellow);
 		m_output->nativeWidget()->setPalette(palette);
