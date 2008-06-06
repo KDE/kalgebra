@@ -25,22 +25,25 @@
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 #include <QGraphicsLinearLayout>
-#include <KLineEdit>
+#include <QFont>
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
-#include <plasma/widgets/label.h>
 // #include <plasma/widgets/flash.h>
 // #include <plasma/layouts/boxlayout.h>
 // #include <plasma/widgets/icon.h>
 
 #include "expression.h"
 
+QColor KAlgebraPlasmoid::correctColor() { return Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor);}
+QColor KAlgebraPlasmoid::errorColor() { return Qt::red; }
+int KAlgebraPlasmoid::simplificationSize() {  return Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont).pointSize(); }
+int KAlgebraPlasmoid::resultSize() { return simplificationSize()*2; }
+
 KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 	: Plasma::Applet(parent, args)
 {
-	//this will get us the standard applet background, for free!
-	//setDrawStandardBackground(true);
+	setBackgroundHints(TranslucentBackground);
 	resize(200, 200);
 }
 
@@ -59,7 +62,7 @@ void KAlgebraPlasmoid::init()
 	m_layout->setOrientation( Qt::Vertical );
 
 	m_output = new Plasma::Label(this);
-	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+// 	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
 
 	m_layout->addItem(graphicsWidget);
@@ -82,11 +85,16 @@ void KAlgebraPlasmoid::addOperation()
 	QColor c;
 	if(a.isCorrect()) {
 		m_output->setText(res.toString());
-		c=Qt::white;
+		c=correctColor();
 	} else {
 		m_output->setText(a.errors().join("\n"));
-		c=Qt::red;
+		c=errorColor();
 	}
+	QFont f=m_output->nativeWidget()->font();
+	f.setBold(true);
+	f.setPointSize(resultSize());
+	m_output->nativeWidget()->setFont(f);
+	
 	QPalette palette = m_output->palette();
 	palette.setColor(QPalette::WindowText, c);
 	m_output->nativeWidget()->setPalette(palette);
@@ -102,9 +110,10 @@ void KAlgebraPlasmoid::simplify()
 		res=*a.expression();
 		m_output->setText(res.toString());
 
-		QPalette palette = m_output->palette();
-		palette.setColor(QPalette::WindowText, Qt::yellow);
-		m_output->nativeWidget()->setPalette(palette);
+		QFont f=m_output->nativeWidget()->font();
+		f.setBold(false);
+		f.setPointSize(simplificationSize());
+		m_output->nativeWidget()->setFont(f);
 	} else
 		m_output->setText(QString());
 }

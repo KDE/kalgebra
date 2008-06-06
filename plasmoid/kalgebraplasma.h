@@ -22,10 +22,11 @@
 
 #include <Plasma/Applet>
 #include <Plasma/Label>
+#include <Plasma/LineEdit>
+#include <KLineEdit>
 #include "analitza.h"
 
 class QSizeF;
-class KLineEdit;
 class QLabel;
 
 class KAlgebraPlasmoid : public Plasma::Applet
@@ -41,6 +42,11 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		void addOperation();
 		
 	private:
+		static QColor correctColor();
+		static QColor errorColor();
+		static int resultSize();
+		static int simplificationSize();
+		
 		KLineEdit *m_input;
 		Plasma::Label *m_output;
 		Analitza a;
