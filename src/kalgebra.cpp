@@ -94,9 +94,12 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	
 	c_menu->addAction(KStandardAction::openNew(c_results, SLOT(clear()), this));
-	c_menu->addAction(i18nc("@item:inmenu", "&Load Script"), this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
-	c_menu->addAction(i18nc("@item:inmenu", "&Save Script"), this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
-	c_menu->addAction(i18nc("@item:inmenu", "&Save Log"), this, SLOT(saveLog()), QKeySequence::Save);
+	c_menu->addAction(KIcon("document-open"), i18nc("@item:inmenu", "&Load Script"),
+						this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
+	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Script"),
+						this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
+	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Log"),
+						this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
 	c_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
 	////////////
@@ -124,7 +127,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	b_funced = new FunctionEdit(b_tools);
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
-	b_tools->addTab(b_funced, i18n("&Add"));
+	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
@@ -143,7 +146,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_menu->addAction(KStandardAction::zoomOut(grafic, SLOT(zoomOut()), this));
 	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
-	b_menu->addAction(i18n("&Reset View"), grafic, SLOT(resetViewport()));
+	b_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), grafic, SLOT(resetViewport()));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
 	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
@@ -187,7 +190,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QAction* t_actions[5];
 	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
-	t_menu->addAction(i18n("&Reset View"), grafic3d, SLOT(resetView()));
+	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), grafic3d, SLOT(resetView()));
 	t_menu->addSeparator()->setText(i18n("Type"));
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
 	t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
@@ -217,8 +220,8 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QLayout *leftLayo=new QVBoxLayout(w);
 	d_filter=new KLineEdit(w);
 	d_filter->setClearButtonShown(true);
-	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(filterChanged(const QString&)));
 	d_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(filterChanged(const QString&)));
 	d_list = new QListView(w);
 	d_list->setModel(dic->model());
 	d_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));

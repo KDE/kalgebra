@@ -40,7 +40,9 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	this->enableButtonApply( false );
 	this->setMainWidget( widget );
 	
-
+	this->setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
+	this->setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
+	
 	connect( this, SIGNAL( applyClicked() ), this, SLOT( accept() ) );
 	connect( this, SIGNAL( okClicked() ), this, SLOT( reject() ) );
 	

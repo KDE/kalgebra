@@ -127,7 +127,6 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	}
 	endRemoveRows();
 	
-	qDebug() << "new state" << m_selectedRow;
 	Q_ASSERT(m_selectedRow>=-1 && m_selectedRow<funclist.count());
 	
 	return true;

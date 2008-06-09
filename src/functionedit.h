@@ -115,6 +115,7 @@ private:
 	QLineEdit *m_name;
 	QPushButton *m_ok;
 	QLabel *m_valid;
+	QLabel *m_validIcon;
 	Graph2D *m_graph;
 	KColorCombo *m_color;
 	FunctionsModel *m_funcsModel;

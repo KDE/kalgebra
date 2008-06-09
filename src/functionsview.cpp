@@ -20,6 +20,7 @@
 #include "functionsmodel.h"
 #include <KDebug>
 #include <KLocale>
+#include <KIcon>
 #include <QMouseEvent>
 #include <QMenu>
 
@@ -43,14 +44,18 @@ void FunctionsView::mousePressEvent(QMouseEvent * e)
 		QModelIndex nameIdx(clickIdx.sibling(clickIdx.row(), 0));
 		bool shown=model()->data(clickIdx, FunctionsModel::Shown).toBool();
 		QString actuallyShown;
-		if(shown)
+		QString icon;
+		if(shown) {
+			icon="user-invisible";
 			actuallyShown=i18n("Hide '%1'", model()->data(nameIdx).toString());
-		else
+		} else {
+			icon="user-online";
 			actuallyShown=i18n("Show '%1'", model()->data(nameIdx).toString());
+		}
 		
 		QMenu menu(this);
-		QAction* actionShown=menu.addAction(actuallyShown);
-		QAction* actionRemove=menu.addAction(i18n("Remove '%1'", model()->data(nameIdx).toString()));
+		QAction* actionShown=menu.addAction(KIcon(icon), actuallyShown);
+		QAction* actionRemove=menu.addAction(KIcon("list-remove"), i18n("Remove '%1'", model()->data(nameIdx).toString()));
 		QAction* result=menu.exec(e->globalPos());
 		if(result==actionShown) {
 			model()->setData(clickIdx, !shown, FunctionsModel::Shown);

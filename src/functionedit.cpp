@@ -23,7 +23,8 @@
 #include <QLabel>
 #include <QLineEdit>
 
-#include <klocale.h>
+#include <KLocale>
+#include <KIcon>
 
 #include "analitza.h"
 #include "expression.h"
@@ -59,6 +60,11 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	
 	m_valid = new QLabel(this);
 	m_valid->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	m_validIcon = new QLabel(this);
+	m_validIcon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	QLayout* validLayout=new QHBoxLayout;
+	validLayout->addWidget(m_validIcon);
+	validLayout->addWidget(m_valid);
 	
 	m_color = new KColorCombo(this);
 	m_color->setColor(QColor(0,150,0));
@@ -78,14 +84,16 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	
 	QHBoxLayout *m_butts = new QHBoxLayout(0);
 	m_ok = new QPushButton(i18n("OK"), this);
+	m_ok->setIcon(KIcon("dialog-ok"));
 	QPushButton *m_clear = new QPushButton(i18nc("@action:button", "Clear"), this);
+	m_clear->setIcon(KIcon("dialog-cancel"));
 	connect(m_ok, SIGNAL(clicked()), this, SLOT(ok()));
 	connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
 	
 	topLayout->addWidget(m_name);
 	topLayout->addWidget(m_func);
 	topLayout->addWidget(m_color);
-	topLayout->addWidget(m_valid);
+	topLayout->addLayout(validLayout);
 	topLayout->addWidget(m_graph);
 	topLayout->addLayout(m_butts);
 	
@@ -137,6 +145,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_func->setCorrect(true);
 		m_ok->setEnabled(false);
 		m_valid->setText(QString());
+		m_validIcon->setPixmap(KIcon("flag-yellow").pixmap(QSize(16,16)));
 		return;
 	}
 	
@@ -154,7 +163,6 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 			a.insertVariable(var, Cn(0.));
 		}
 		
-		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));
 		res=a.calculate();
 	} else
 		a.errors() << i18n("From parser:") << a.expression()->error();
@@ -171,6 +179,8 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
+		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));
+		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
 	} else {
 		QStringList errors=a.errors();
 		if(a.isCorrect() && !res.isValue())
@@ -182,6 +192,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		m_valid->setText(i18n("<b style='color:red'>%1</b>", errors.first()));
 		m_valid->setToolTip(errors.join("\n"));
+		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
 	m_func->setCorrect(m_correct);
 	m_ok->setEnabled(m_correct);
