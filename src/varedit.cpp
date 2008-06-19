@@ -77,7 +77,7 @@ void VarEdit::setVar(const QString& newVar)
 	m_var=newVar;
 	this->setWindowTitle(i18n("Edit '%1' value", newVar));
 	if(vars==NULL)
-		m_exp->setText("not available");
+		m_exp->setText(i18n("not available"));
 	else {
 		if(m_exp->isMathML())
 			m_exp->setText(vars->value(newVar)->toMathML());
