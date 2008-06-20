@@ -23,6 +23,13 @@
 #include <KLocale>
 #include <KDebug>
 
+using std::acos;
+using std::atan;
+using std::fabs;
+using std::cos;
+using std::sin;
+using std::sqrt;
+
 static const double pi=acos(-1.);
 
 FunctionImpl::FunctionImpl(const Expression& newFunc)
