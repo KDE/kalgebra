@@ -225,7 +225,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	d_list = new QListView(w);
 	d_list->setModel(dic->model());
 	d_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
-	leftLayo->addWidget(new QLabel("Look for:", d_dock));
+	leftLayo->addWidget(new QLabel(i18n("Look for:"), d_dock));
 	leftLayo->addWidget(d_filter);
 	leftLayo->addWidget(d_list);
 	d_dock->setWidget(w);
