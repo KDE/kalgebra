@@ -56,7 +56,7 @@ bool Console::addOperation(const QString& op, bool mathml)
 		else
 			item->setBackgroundColor(QColor(250,250,250));
 	} else {
-		item->setText(QString("%1\nError: %2").arg(op).arg(a.m_err.join("\n")));
+		item->setText(i18n("%1\nError: %2",op,a.m_err.join("\n")));
 		item->setBackgroundColor(QColor(255,222,222));
 		item->setTextAlignment(Qt::AlignRight);
 		f.setBold(true);
