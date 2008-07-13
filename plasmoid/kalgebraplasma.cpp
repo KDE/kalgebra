@@ -74,8 +74,8 @@ void KAlgebraPlasmoid::init()
 
 void KAlgebraPlasmoid::addOperation()
 {
-        if ( m_input->text().isEmpty() )
-            return;
+	if ( m_input->text().isEmpty() )
+		return;
 	Expression res;
 	a.setExpression(Expression(m_input->text(), false));
 	if(a.isCorrect()) {
@@ -90,9 +90,26 @@ void KAlgebraPlasmoid::addOperation()
 		m_output->setText(a.errors().join("\n"));
 		c=errorColor();
 	}
+	plasmoidFont(true, c, true);
+}
+
+void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
+{
 	QFont f=m_output->nativeWidget()->font();
-	f.setBold(true);
-	f.setPointSize(resultSize());
+	f.setBold(bold);
+	int size;
+	if(big) {
+		size=(m_output->nativeWidget()->height()*2)/3;
+		f.setPointSize(size);
+		QFontMetrics fm(f);
+		for(; fm.width(m_output->text()) > m_output->nativeWidget()->width(); size--) {
+			f.setPointSize(size);
+			fm=QFontMetrics(f);
+		}
+	} else
+		size=simplificationSize();
+	f.setPointSize(size);
+	
 	m_output->nativeWidget()->setFont(f);
 	
 	QPalette palette = m_output->palette();
@@ -109,11 +126,8 @@ void KAlgebraPlasmoid::simplify()
 		a.simplify();
 		res=*a.expression();
 		m_output->setText(res.toString());
-
-		QFont f=m_output->nativeWidget()->font();
-		f.setBold(false);
-		f.setPointSize(simplificationSize());
-		m_output->nativeWidget()->setFont(f);
+		
+		plasmoidFont(false, Qt::white, false);
 	} else
 		m_output->setText(QString());
 }

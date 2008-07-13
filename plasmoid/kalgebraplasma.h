@@ -47,6 +47,8 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		static int resultSize();
 		static int simplificationSize();
 		
+		void plasmoidFont(bool big, const QColor& c, bool bold);
+		
 		KLineEdit *m_input;
 		Plasma::Label *m_output;
 		Analitza a;
