@@ -24,7 +24,6 @@
 #include <QLabel>
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
-#include <QGraphicsLinearLayout>
 #include <QFont>
 
 #include <plasma/theme.h>
@@ -35,18 +34,18 @@
 
 #include "expression.h"
 
-QColor KAlgebraPlasmoid::correctColor() { return Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor);}
+using namespace Plasma;
+
+QColor KAlgebraPlasmoid::correctColor() { return Theme::defaultTheme()->color(Theme::TextColor);}
 QColor KAlgebraPlasmoid::errorColor() { return Qt::red; }
-int KAlgebraPlasmoid::simplificationSize() {  return Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont).pointSize(); }
+int KAlgebraPlasmoid::simplificationSize() {  return Theme::defaultTheme()->font(Theme::DefaultFont).pointSize(); }
 int KAlgebraPlasmoid::resultSize() { return simplificationSize()*2; }
 
 KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
-	: Plasma::Applet(parent, args)
+	: Applet(parent, args), m_layout(0)
 {
 	setBackgroundHints(TranslucentBackground);
-	resize(200, 200);
 }
-
 
 KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 
@@ -57,19 +56,44 @@ void KAlgebraPlasmoid::init()
 	m_input->setClickMessage(i18n("Enter the expression..."));
 	m_input->setAttribute( Qt::WA_NoSystemBackground );
 	graphicsWidget->setWidget(m_input);
-
-	QGraphicsLinearLayout* m_layout = new QGraphicsLinearLayout(this);
-	m_layout->setOrientation( Qt::Vertical );
-
+	
 	m_output = new Plasma::Label(this);
-// 	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
 
+	m_layout = new QGraphicsLinearLayout(this);
+	m_layout->setOrientation( Qt::Vertical );
 	m_layout->addItem(graphicsWidget);
 	m_layout->addItem(m_output);
 
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
 	connect(m_input, SIGNAL(textChanged ( const QString & )), this, SLOT(simplify()));
+	
+	setPreferredSize(QSizeF(200,200));
+}
+
+void KAlgebraPlasmoid::updateFactor()
+{
+	switch(formFactor()) {
+		case Horizontal:
+			m_input->setText("hola");
+			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+			m_layout->setOrientation(Qt::Horizontal);
+			break;
+		default:
+			m_input->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+			m_input->setText("adeu");
+			m_layout->setOrientation(Qt::Vertical);
+			break;
+	}
+}
+
+void KAlgebraPlasmoid::constraintsEvent(Constraints constraints)
+{
+	Q_ASSERT(m_layout);
+	if(constraints & FormFactorConstraint) {
+		updateFactor();
+	}
 }
 
 void KAlgebraPlasmoid::addOperation()
@@ -90,6 +114,7 @@ void KAlgebraPlasmoid::addOperation()
 		m_output->setText(a.errors().join("\n"));
 		c=errorColor();
 	}
+	m_input->selectAll();
 	plasmoidFont(true, c, true);
 }
 

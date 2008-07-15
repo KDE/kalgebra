@@ -24,6 +24,7 @@
 #include <Plasma/Label>
 #include <Plasma/LineEdit>
 #include <KLineEdit>
+#include <QGraphicsLinearLayout>
 #include "analitza.h"
 
 class QSizeF;
@@ -37,6 +38,9 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		~KAlgebraPlasmoid();
 		
 		void init();
+	protected:
+		void constraintsEvent(Plasma::Constraints constraints);
+		
 	private slots:
 		void simplify();
 		void addOperation();
@@ -47,8 +51,10 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		static int resultSize();
 		static int simplificationSize();
 		
+		void updateFactor();
 		void plasmoidFont(bool big, const QColor& c, bool bold);
 		
+		QGraphicsLinearLayout* m_layout;
 		KLineEdit *m_input;
 		Plasma::Label *m_output;
 		Analitza a;
