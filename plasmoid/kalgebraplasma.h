@@ -17,8 +17,8 @@
  *************************************************************************************/
 
 
-#ifndef KALGEBRAPLASMOID_HEADER
-#define KALGEBRAPLASMOID_HEADER
+#ifndef KALGEBRAPLASMA_HEADER
+#define KALGEBRAPLASMA_HEADER
 
 #include <Plasma/Applet>
 #include <Plasma/Label>

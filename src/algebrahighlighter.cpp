@@ -16,10 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include "algebrahighlighter.h"
+
 #include <QApplication>
 
 #include "exp.h"
-#include "algebrahighlighter.h"
 #include "expression.h"
 #include "expressionedit.h"
 #include "analitza.h"

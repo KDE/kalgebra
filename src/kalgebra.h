@@ -26,7 +26,7 @@
 #include <QTabWidget>
 #include <QLabel>
 #include <QListView>
-#include "config-kalgebra.h"
+#include <config-kalgebra.h>
 
 class ExpressionEdit;
 class ConsoleHtml;
