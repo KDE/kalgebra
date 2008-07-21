@@ -24,8 +24,9 @@
 #include "value.h"
 #include "exp.h"
 
-struct Expression::ExpressionPrivate
+class Expression::ExpressionPrivate
 {
+public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
 	Object* m_tree;
