@@ -76,13 +76,11 @@ void KAlgebraPlasmoid::updateFactor()
 {
 	switch(formFactor()) {
 		case Horizontal:
-			m_input->setText("hola");
 			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 			m_layout->setOrientation(Qt::Horizontal);
 			break;
 		default:
-			m_input->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-			m_input->setText("adeu");
+			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 			m_layout->setOrientation(Qt::Vertical);
 			break;
 	}
