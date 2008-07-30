@@ -140,7 +140,8 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 {
 	Analitza a;
 	QString funct = m_func->text();
-	
+	QStringList bvl;
+
 	if(m_func->text().isEmpty()) {
 		m_func->setCorrect(true);
 		m_ok->setEnabled(false);
@@ -155,19 +156,22 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		a.setExpression(Expression(funct, 1));
 	
 	Expression res;
+	bool bvarCorrect=true;
 	if(a.isCorrect()) {
-		QStringList bvl = a.bvarList();
-		QString var = bvl.count()==0 ? "x" : bvl[0];
+		bvl = a.bvarList();
+		QString var = bvl.isEmpty() ? "x" : bvl[0];
 		
 		if(function::supportedBoundedVars().contains(var)) {
 			a.insertVariable(var, Cn(0.));
+		} else {
+			bvarCorrect=false;
 		}
 		
 		res=a.calculate();
 	} else
 		a.errors() << i18n("From parser:") << a.expression()->error();
 	
-	m_correct=a.isCorrect() && res.isValue();
+	m_correct= bvarCorrect && a.isCorrect() && res.isValue();
 	function f;
 	if(m_correct) {
 		f=function(m_name->text(), m_func->expression(), m_color->color());
@@ -185,6 +189,8 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		QStringList errors=a.errors();
 		if(a.isCorrect() && !res.isValue())
 			errors.append(i18n("We can only draw Real results."));
+		else if(!bvarCorrect)
+			errors.append(i18nc("Error message", "Unknown bounded variable: %1", bvl.join(", ")));
 		errors += f.errors();
 		
 		m_funcsModel->clear();
