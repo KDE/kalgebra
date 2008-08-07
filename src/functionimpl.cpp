@@ -60,8 +60,7 @@ FunctionImpl::~FunctionImpl()
 {
 	points.clear();
 	
-	if(m_deriv)
-		delete m_deriv;
+	delete m_deriv;
 }
 
 bool isSimilar(const double &a, const double &b, const double& diff=0.0001)
