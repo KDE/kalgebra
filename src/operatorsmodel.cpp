@@ -291,7 +291,7 @@ QString OperatorsModel::description(Operator o)
 			s = i18n("Equal. eq(a,b) = a=b");
 			break;
 		case Operator::approx:
-			s = i18n("Approximation approx(a)=a±n");
+			s = i18n("Approximation. approx(a)=a±n");
 			break;
 		case Operator::neq:
 			s = i18n("Not equal. neq(a,b)=a≠b");
