@@ -30,8 +30,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2007-05-07</date>
-<releaseinfo>1.4</releaseinfo>
+<date>2008-08-22</date>
+<releaseinfo>0.8 (&kde; 4.1.2</releaseinfo>
 
 <abstract>
 <para>
@@ -74,7 +74,8 @@ knowledge.</para>
 </screenshot>
 
 <para>
-&kalgebra; main window consists in a console tab, a 2D tab and a 3D tab. Below
+&kalgebra; main window consists in a <guilabel>Console</guilabel> tab, a <guilabel>2D Graph</guilabel> tab, 
+a <guilabel>3D Graph</guilabel> tab and a <guilabel>Dictionary</guilabel> tab. Below
 these tabs you will find an input field to type your functions or do your
 calculations.
 </para>
@@ -125,29 +126,68 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 </chapter>
 
 <chapter id="using-console">
-<title>Using the console</title>
+<title>Using the Console</title>
 <para>&kalgebra;'s console is useful as a calculator. There you
 have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change their values (just a way to trick the log).
 Menu options:</para>
-<itemizedlist>
-<listitem><para>New: Flushes the log.</para></listitem>
-<listitem><para>Load script: Executes the instructions in a file sequentially.
+
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>N</keycap></keycombo></shortcut>
+<guimenuitem>New</guimenuitem>
+</menuchoice></term>
+<listitem><para>Flushes the log.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>L</keycap></keycombo></shortcut>
+<guimenuitem>Load Script</guimenuitem>
+</menuchoice></term>
+<listitem><para>Executes the instructions in a file sequentially.
 Nice if you want to define some libraries or something like this.</para></listitem>
-<listitem><para>Save script: Saves the instructions you have typed since the
-session began.</para></listitem>
-<listitem><para>Save Log: Saves the log into a file, with results and
-so.</para></listitem>
-<listitem><para>Exit: Shuts the program down.</para></listitem>
-</itemizedlist>
-<!--<variablelist><varlistentry><term>Word</><listitem><para>Definition</></></>
-< / > --> 
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>G</keycap></keycombo></shortcut>
+<guimenuitem>Save Script</guimenuitem>
+</menuchoice></term>
+<listitem><para>Saves the instructions you have typed since the session began.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>S</keycap></keycombo></shortcut>
+<guimenuitem>Save Log</guimenuitem>
+</menuchoice></term>
+<listitem><para>Saves the log with all results into a file.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>Q</keycap></keycombo></shortcut>
+<guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shuts the program down.</para></listitem>
+</varlistentry>
+
+</variablelist>
+
 </chapter>
 
 <chapter id="two-D-graphs">
 <title>2D Graphs</title>
 <para>To add a new 2D graph on &kalgebra;, what you have to do is to go to the <guilabel>2D
-Graphs</guilabel> tab and click in the <guilabel>Add</guilabel> tab to add the new function. Then your focus
+Graph</guilabel> tab and click in the <guilabel>Add</guilabel> tab to add the new function. Then your focus
 will go to an input text box where you can type your function.</para>
 
 <sect1 id="two-D-syntax">
@@ -164,6 +204,8 @@ as the bounded variables.</para>
 <listitem><para>q->(0..100, q)</para></listitem>
 <listitem><para>q->3*sin(7q)</para></listitem>
 </itemizedlist>
+<para>If you have entered the function click on the <guibutton>OK</guibutton> button to display the graph in the main window.</para>
+
 </sect1>
 
 <sect1 id="two-D-features">
@@ -175,8 +217,7 @@ you are in List mode. You can set each graph its own color.</para>
 you can zoom in and out. You can also select an area with the left button
 of the mouse and this area will be zoomed in.</para>
 
-<para>In the List tab, you can uncheck the check box if you don't want to
-show a graph anymore.</para>
+<para>In the <guilabel>List</guilabel> tab, you can open a context menu with a &RMB; click on a function and hide or remove it.</para>
 
 </sect1>
 
@@ -185,7 +226,7 @@ show a graph anymore.</para>
 <chapter id="three-D-graphs">
 <title>3D Graphs</title>
 
-<para>To draw a 3D Graph with &kalgebra; you will have to go to the <guilabel>3D Graphs</guilabel> tab
+<para>To draw a 3D Graph with &kalgebra; you will have to go to the <guilabel>3D Graph</guilabel> tab
 and you will see an input field at the bottom where you will type your function. For the
 moment &kalgebra; only supports functions that fit f(x,y) that will define the
 Z.</para>
