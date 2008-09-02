@@ -56,7 +56,7 @@ void KAlgebraPlasmoid::init()
 	m_input->setClickMessage(i18n("Enter the expression..."));
 	m_input->setAttribute( Qt::WA_NoSystemBackground );
 	graphicsWidget->setWidget(m_input);
-	
+
 	m_output = new Plasma::Label(this);
 	m_output->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
@@ -68,8 +68,8 @@ void KAlgebraPlasmoid::init()
 
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
 	connect(m_input, SIGNAL(textChanged ( const QString & )), this, SLOT(simplify()));
-	
-	setPreferredSize(QSizeF(200,200));
+
+	resize(200,150);
 }
 
 void KAlgebraPlasmoid::updateFactor()
@@ -112,10 +112,15 @@ void KAlgebraPlasmoid::addOperation()
 		m_output->setText(a.errors().join("\n"));
 		c=errorColor();
 	}
-	m_input->selectAll();
 	plasmoidFont(true, c, true);
+	update();
 }
 
+void KAlgebraPlasmoid::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+	m_input->selectAll();
+	m_input->setFocus(Qt::MouseFocusReason);
+}
 void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 {
 	QFont f=m_output->nativeWidget()->font();
@@ -132,9 +137,9 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 	} else
 		size=simplificationSize();
 	f.setPointSize(size);
-	
+
 	m_output->nativeWidget()->setFont(f);
-	
+
 	QPalette palette = m_output->palette();
 	palette.setColor(QPalette::WindowText, c);
 	m_output->nativeWidget()->setPalette(palette);
@@ -149,8 +154,8 @@ void KAlgebraPlasmoid::simplify()
 		a.simplify();
 		res=*a.expression();
 		m_output->setText(res.toString());
-		
-		plasmoidFont(false, Qt::white, false);
+
+		plasmoidFont(true, Qt::white, true);
 	} else
 		m_output->setText(QString());
 }
