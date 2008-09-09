@@ -36,27 +36,25 @@ class KAlgebraPlasmoid : public Plasma::Applet
 	public:
 		KAlgebraPlasmoid(QObject *parent, const QVariantList &args);
 		~KAlgebraPlasmoid();
-
+		
 		void init();
-	protected Q_SLOTS:
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-
+		
 	protected:
 		void constraintsEvent(Plasma::Constraints constraints);
-
+		
 	private slots:
 		void simplify();
 		void addOperation();
-
+		
 	private:
 		static QColor correctColor();
 		static QColor errorColor();
 		static int resultSize();
 		static int simplificationSize();
-
+		
 		void updateFactor();
 		void plasmoidFont(bool big, const QColor& c, bool bold);
-
+		
 		QGraphicsLinearLayout* m_layout;
 		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;
