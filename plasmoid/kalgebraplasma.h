@@ -38,7 +38,6 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		~KAlgebraPlasmoid();
 
 		void init();
-
 	protected Q_SLOTS:
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 
@@ -59,7 +58,7 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		void plasmoidFont(bool big, const QColor& c, bool bold);
 
 		QGraphicsLinearLayout* m_layout;
-		KLineEdit *m_input;
+		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;
 		Analitza a;
 };
