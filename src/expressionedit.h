@@ -85,6 +85,9 @@ class ExpressionEdit : public QTextEdit
 		/** Returns the string that will be entered when the first operator is pressed. */
 		QString ans() const { return m_ans; }
 		
+		/** Sets an expression to the input box. */
+		void setExpression(const Expression& e);
+		
 		/** Returns the expression we have in the text. */
 		Expression expression() const { return Expression(text(), isMathML()); }
 	public slots:

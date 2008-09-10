@@ -88,6 +88,14 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 
 ExpressionEdit::~ExpressionEdit() {}
 
+void ExpressionEdit::setExpression(const Expression& e)
+{
+	if(isMathML())
+		setText(e.toString());
+	else
+		setText(e.toMathML());
+}
+
 void ExpressionEdit::updateCompleter()
 {
 	m_ops->updateInformation();
