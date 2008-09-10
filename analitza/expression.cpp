@@ -23,6 +23,10 @@
 #include "container.h"
 #include "value.h"
 #include "exp.h"
+#include "expressionwritter.h"
+#include "stringexpressionwritter.h"
+#include "htmlexpressionwritter.h"
+#include "mathmlexpressionwritter.h"
 
 class Expression::ExpressionPrivate
 {
@@ -30,7 +34,6 @@ public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
 	Object* m_tree;
-	
 	QStringList m_err;
 };
 
@@ -205,25 +208,28 @@ Object* Expression::branch(const QDomElement& elem)
 
 QString Expression::toHtml() const
 {
-	if(isCorrect())
-		return d->m_tree->toHtml();
-	else
+	if(isCorrect()) {
+		HtmlExpressionWritter s(d->m_tree);
+		return s.result();
+	} else
 		return QString();
 }
 
 QString Expression::toMathML() const
 {
-	if(isCorrect())
-		return d->m_tree->toMathML();
-	else
+	if(isCorrect()) {
+		MathMLExpressionWritter s(d->m_tree);
+		return s.result();
+	} else
 		return QString();
 }
 
 QString Expression::toString() const
 {
-	if(isCorrect())
-		return d->m_tree->toString();
-	else
+	if(isCorrect()) {
+		StringExpressionWritter s(d->m_tree);
+		return s.result();
+	} else
 		return QString();
 }
 

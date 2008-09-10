@@ -112,15 +112,6 @@ public:
 	/** Copies all the params to a new list. */
 	QList<Object*> copyParams() const;
 	
-	/** Returns a string representation of the container. */
-	QString toString() const;
-	
-	/** Returns a MathML representation of the container. */
-	QString toMathML() const;
-	
-	/** Returns a Html representation of the container. */
-	QString toHtml() const;
-	
 	/** Returns the container's uplimit. */
 	Container* ulimit() const;
 	
@@ -141,6 +132,8 @@ public:
 	
 	/** @return Returns the string associated to the container type. */
 	QString tagName() const;
+	
+	virtual QString visit(ExpressionWritter*) const;
 	
 	virtual void negate();
 	

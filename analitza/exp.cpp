@@ -167,7 +167,7 @@ TOKEN Exp::getToken(QString &a, int &l, tokEnum prevtok)
 			a[i]=' ';
 		}
 		
-		for(;a[i].isSpace();i++);
+		for(; a[i].isSpace(); i++) {}
 		
 		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=tFunc;

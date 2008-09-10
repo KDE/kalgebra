@@ -19,7 +19,6 @@
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
-
 #include "object.h"
 #include "analitzaexport.h"
 
@@ -74,13 +73,7 @@ class ANALITZA_EXPORT Operator : public Object
 		unsigned int weight() const { return operatorWeight(m_optype); }
 		
 		/** Returns the string expression representation of the operator. */
-		QString toString() const;
-		
-		/** Returns the MathML representation of the operator. */
-		QString toMathML() const;
-		
-		/** Returns the MathML representation of the operator. */
-		QString toHtml() const { return toString(); }
+		QString name() const;
 		
 		/** Returns whether @p o is equal to this operator. */
 		bool operator==(const Operator& o) const { return m_optype==o.m_optype; }
@@ -117,6 +110,8 @@ class ANALITZA_EXPORT Operator : public Object
 		
 		/** Returns if it is a trigonometric operator. */
 		static bool isTrigonometric(enum OperatorType o);
+		
+		virtual QString visit(ExpressionWritter*) const;
 	private:
 		static char m_words[nOfOps][14];
 		enum OperatorType m_optype;

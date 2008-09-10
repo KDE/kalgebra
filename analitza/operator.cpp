@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 #include "operator.h"
+#include "expressionwritter.h"
 
 char Operator::m_words[nOfOps][14] = {
 	"onone",
@@ -43,18 +44,16 @@ char Operator::m_words[nOfOps][14] = {
 	"function"
 };
 
-QString Operator::toString() const
+QString Operator::visit(ExpressionWritter* e) const
+{
+	return e->accept(this);
+}
+
+QString Operator::name() const
 {
 	Q_ASSERT(m_optype<nOfOps);
 	return QString(m_words[m_optype]);
 }
-
-QString Operator::toMathML() const
-{
-	Q_ASSERT(m_optype<nOfOps);
-	return QString("<%1 />").arg(m_words[m_optype]);
-}
-
 
 enum Operator::OperatorType Operator::toOperatorType(const QString &e)
 {

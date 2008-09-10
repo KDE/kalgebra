@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,51 +16,49 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "object.h"
+#include "mathmlexpressionwritter.h"
+#include "value.h"
+#include "operator.h"
 #include "container.h"
-#include "expressionwritter.h"
-#include "stringexpressionwritter.h"
+#include <QStringList>
 
-QString Object::toString() const
+MathMLExpressionWritter::MathMLExpressionWritter(const Object* o)
 {
-	StringExpressionWritter e(this);
-	return e.result();
+	m_result=o->visit(this);
 }
 
-Ci::Ci(const Object * o) : Object(o->type())
+QString MathMLExpressionWritter::accept(const Ci* var)
 {
-	Q_ASSERT(m_type==Object::variable);
-	const Ci *c = (Ci*) o;
-	m_name = c->name();
-	m_function = c->m_function;
+	return var->name();
 }
 
-QString Ci::visit(ExpressionWritter* e) const
+QString MathMLExpressionWritter::accept(const Operator* op)
 {
-	return e->accept(this);
+	return QString("<%1 />").arg(op->name());;
 }
 
-QString Ci::toMathML() const
+QString MathMLExpressionWritter::accept(const Cn* val)
 {
-	if(m_function)
-		return QString("<ci type='function'>%1</ci>").arg(m_name);
-	else
-		return QString("<ci>%1</ci>").arg(m_name);
+	if(val->isBoolean()) {
+		if(val->isTrue())
+			return "<cn type='constant'>true</cn>";
+		else
+			return "<cn type='constant'>false</cn>";
+	} else
+		return QString("<cn>%1</cn>").arg(val->value(), 0, 'g', 12);
+
 }
 
-Object::ValueType Object::valueType() const
+QString MathMLExpressionWritter::accept(const Container* c)
 {
-	switch(m_type) {
-		case Object::value:
-			return Real;
-		case Object::container: {
-			const Container *c=(const Container*) this;
-			if(c->containerType()==Container::vector)
-				return Vector;
-			break;
-		}
-		default:
-			break;
+	QString ret;
+	QList<Object*>::const_iterator i;
+	for(i=c->m_params.constBegin(); i!=c->m_params.constEnd(); ++i) {
+		if(*i==0)
+			ret += "error;";
+		else
+			ret += (*i)->visit(this);
 	}
-	return Null;
+	
+	return QString("<%1>%2</%1>").arg(c->tagName()).arg(ret);
 }

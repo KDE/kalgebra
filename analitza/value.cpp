@@ -18,6 +18,7 @@
 
 #include "value.h"
 #include "operator.h"
+#include "expressionwritter.h"
 
 #include <QDomElement>
 
@@ -36,37 +37,9 @@ Cn::Cn(Object const *o)
 	}
 }
 
-QString Cn::toString() const
+QString Cn::visit(ExpressionWritter* e) const
 {
-	if(m_format==Boolean) {
-		if(isTrue())
-			return "true";
-		else
-			return "false";
-	} else
-		return QString("%1").arg(m_value, 0, 'g', 12);
-}
-
-QString Cn::toMathML() const
-{
-	if(m_format==Boolean) {
-		if(isTrue())
-			return "<cn type='constant'>true</cn>";
-		else
-			return "<cn type='constant'>false</cn>";
-	} else
-		return QString("<cn>%1</cn>").arg(m_value, 0, 'g', 12);
-}
-
-QString Cn::toHtml() const
-{
-	if(m_format==Boolean) {
-		if(isTrue())
-			return i18nc("html representation of a number", "<span class='const'>true</span>");
-		else
-			return i18nc("html representation of a number", "<span class='const'>false</span>");
-	} else
-		return i18nc("html representation of a number", "<span class='num'>%1</span>", m_value);
+	return e->accept(this);
 }
 
 /*enum Cn::ValueFormat Cn::whatValueFormat(const QDomElement& val)

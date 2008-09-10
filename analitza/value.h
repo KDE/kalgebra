@@ -24,12 +24,13 @@
 
 #include <cmath>
 
+class QDomElement;
+class ExpressionWritter;
+
 /**
 *	The Cn class is the one that represents a value in the expression trees.
 *	@author Aleix Pol <aleixpol@gmail.com>
 */
-
-class QDomElement;
 
 class ANALITZA_EXPORT Cn : public Object
 {
@@ -143,21 +144,7 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		Cn operator++(int) { m_value++; return this; }
 		
-		/**
-		 *	Returns a string representation of the value.
-		 */
-		virtual QString toString() const;
-		
-		/**
-		 *	Returns a MathML representation of the value.
-		 */
-		virtual QString toMathML() const;
-		
-		/**
-		 *	Returns a html representation of the value.
-		 */
-		virtual QString toHtml() const;
-		
+		virtual QString visit(ExpressionWritter*) const;
 		virtual bool isZero() const { return m_value==0.; }
 		
 		/*/** Sets whether it is a correct Cn. 

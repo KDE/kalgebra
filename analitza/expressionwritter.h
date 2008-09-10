@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,51 +16,36 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#ifndef EXPRESSIONWRITTER_H
+#define EXPRESSIONWRITTER_H
+
+#include <QString>
+
+#include "analitzaexport.h"
 #include "object.h"
-#include "container.h"
-#include "expressionwritter.h"
-#include "stringexpressionwritter.h"
 
-QString Object::toString() const
-{
-	StringExpressionWritter e(this);
-	return e.result();
-}
+class Ci;
+class Cn;
+class Container;
+class Operator;
 
-Ci::Ci(const Object * o) : Object(o->type())
-{
-	Q_ASSERT(m_type==Object::variable);
-	const Ci *c = (Ci*) o;
-	m_name = c->name();
-	m_function = c->m_function;
-}
+/**
+ *	This class represents an expression writter.
+ *
+ *	@author Aleix Pol <aleixpol@gmail.com>
+ */
 
-QString Ci::visit(ExpressionWritter* e) const
+class ExpressionWritter
 {
-	return e->accept(this);
-}
+	public:
+		virtual ~ExpressionWritter();
+		
+		virtual QString accept(const Operator* var) = 0;
+		virtual QString accept(const Ci* var) = 0;
+		virtual QString accept(const Cn* var) = 0;
+		virtual QString accept(const Container* var) = 0;
+		
+		virtual QString result() const=0;
+};
 
-QString Ci::toMathML() const
-{
-	if(m_function)
-		return QString("<ci type='function'>%1</ci>").arg(m_name);
-	else
-		return QString("<ci>%1</ci>").arg(m_name);
-}
-
-Object::ValueType Object::valueType() const
-{
-	switch(m_type) {
-		case Object::value:
-			return Real;
-		case Object::container: {
-			const Container *c=(const Container*) this;
-			if(c->containerType()==Container::vector)
-				return Vector;
-			break;
-		}
-		default:
-			break;
-	}
-	return Null;
-}
+#endif

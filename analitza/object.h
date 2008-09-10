@@ -21,11 +21,10 @@
 
 #include <QDebug>
 
-// #include <typeinfo>
-
 #include "analitzaexport.h"
 
-// OperatorsModel m_words;
+class ExpressionWritter;
+
 /**
  *	\internal
  *	The atomic mean of the expression trees. Should never used alone, always inherited.
@@ -61,16 +60,13 @@ public:
 	bool isContainer() const { return m_type==container; }
 	
 	/** Returns the string representation of the object. */
-	virtual QString toString() const = 0;
-	
-	/** Returns the MathML representation of the object. */
-	virtual QString toMathML() const = 0;
-	
-	/** Returns a HTML representation of the object. */
-	virtual QString toHtml() const = 0;
+	QString toString() const;
 	
 	/** Converts a @p tag to a type. */
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
+	
+	/** Returns whether it is a correct object or not */
+	virtual QString visit(ExpressionWritter* exp) const =0;
 	
 	/** Returns whether it is a correct object or not */
 	virtual bool isCorrect() const = 0;
@@ -118,9 +114,6 @@ class Ci : public Object
 		/** Returns whether it is a variable that has to be a function */
 		bool isFunction() const { return m_function; }
 		
-		/** Returns the string expression representation of the variable */
-		QString toString() const { return m_name; }
-		
 		/** Returns the MathML representation of the variable */
 		QString toMathML() const;
 		
@@ -129,6 +122,8 @@ class Ci : public Object
 		
 		/** Returns whether it is a correct object. */
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
+		
+		virtual QString visit(ExpressionWritter*) const;
 	private:
 		QString m_name;
 		bool m_function;
