@@ -79,13 +79,12 @@ void VarEdit::setVar(const QString& newVar)
 	if(!vars)
 		m_exp->setText(i18n("not available"));
 	else {
-		m_exp->setExpression(Expression(vars->value(newVar)));
+		m_exp->setExpression(Expression(Expression::objectCopy(vars->value(newVar))));
 	}
 }
 
 Expression VarEdit::val()
 {
-	
 	Expression e(m_exp->text(), m_exp->isMathML());
 	
 	if(m_opt_calc->isChecked()) {

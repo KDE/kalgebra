@@ -91,9 +91,9 @@ ExpressionEdit::~ExpressionEdit() {}
 void ExpressionEdit::setExpression(const Expression& e)
 {
 	if(isMathML())
-		setText(e.toString());
-	else
 		setText(e.toMathML());
+	else
+		setText(e.toString());
 }
 
 void ExpressionEdit::updateCompleter()
