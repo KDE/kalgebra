@@ -16,31 +16,36 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef HTMLEXPRESSIONWRITTER_H
-#define HTMLEXPRESSIONWRITTER_H
+#ifndef EXPRESSIONWRITER_H
+#define EXPRESSIONWRITER_H
 
-#include "expressionwritter.h"
+#include <QString>
+
+#include "analitzaexport.h"
+#include "object.h"
+
+class Ci;
+class Cn;
+class Container;
+class Operator;
 
 /**
- *	This class represents the string expression writter.
+ *	This class represents an expression writer.
  *
  *	@author Aleix Pol <aleixpol@gmail.com>
  */
 
-class HtmlExpressionWritter : public ExpressionWritter
+class ExpressionWriter
 {
 	public:
-		HtmlExpressionWritter(const Object* o);
+		virtual ~ExpressionWriter();
 		
-		virtual QString accept(const Ci* var);
-		virtual QString accept(const Cn* var);
-		virtual QString accept(const Container* var);
-		virtual QString accept(const Operator* var);
+		virtual QString accept(const Operator* var) = 0;
+		virtual QString accept(const Ci* var) = 0;
+		virtual QString accept(const Cn* var) = 0;
+		virtual QString accept(const Container* var) = 0;
 		
-		QString result() const { return m_result; }
-		
-	private:
-		QString m_result;
+		virtual QString result() const=0;
 };
 
 #endif

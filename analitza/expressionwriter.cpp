@@ -16,36 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef EXPRESSIONWRITTER_H
-#define EXPRESSIONWRITTER_H
+#include "expressionwriter.h"
 
-#include <QString>
-
-#include "analitzaexport.h"
-#include "object.h"
-
-class Ci;
-class Cn;
-class Container;
-class Operator;
-
-/**
- *	This class represents an expression writter.
- *
- *	@author Aleix Pol <aleixpol@gmail.com>
- */
-
-class ExpressionWritter
-{
-	public:
-		virtual ~ExpressionWritter();
-		
-		virtual QString accept(const Operator* var) = 0;
-		virtual QString accept(const Ci* var) = 0;
-		virtual QString accept(const Cn* var) = 0;
-		virtual QString accept(const Container* var) = 0;
-		
-		virtual QString result() const=0;
-};
-
-#endif
+ExpressionWriter::~ExpressionWriter()
+{}

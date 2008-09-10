@@ -4,10 +4,10 @@ add_subdirectory(tests)
 
 set(analitza_SRCS
 	expression.cpp
-	expressionwritter.cpp
-	stringexpressionwritter.cpp
-	mathmlexpressionwritter.cpp
-	htmlexpressionwritter.cpp
+	expressionwriter.cpp
+	stringexpressionwriter.cpp
+	mathmlexpressionwriter.cpp
+	htmlexpressionwriter.cpp
 	analitza.cpp
 	container.cpp
 	operator.cpp

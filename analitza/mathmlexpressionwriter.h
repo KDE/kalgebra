@@ -16,21 +16,21 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef STRINGEXPRESSIONWRITTER_H
-#define STRINGEXPRESSIONWRITTER_H
+#ifndef MATHMLEXPRESSIONWRITER_H
+#define MATHMLEXPRESSIONWRITER_H
 
-#include "expressionwritter.h"
+#include "expressionwriter.h"
 
 /**
- *	This class represents the string expression writter.
+ *	This class represents the mathml expression writer.
  *
  *	@author Aleix Pol <aleixpol@gmail.com>
  */
 
-class StringExpressionWritter : public ExpressionWritter
+class MathMLExpressionWriter : public ExpressionWriter
 {
 	public:
-		StringExpressionWritter(const Object* o);
+		MathMLExpressionWriter(const Object* o);
 		
 		virtual QString accept(const Ci* var);
 		virtual QString accept(const Cn* var);

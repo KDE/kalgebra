@@ -18,12 +18,12 @@
 
 #include "object.h"
 #include "container.h"
-#include "expressionwritter.h"
-#include "stringexpressionwritter.h"
+#include "expressionwriter.h"
+#include "stringexpressionwriter.h"
 
 QString Object::toString() const
 {
-	StringExpressionWritter e(this);
+	StringExpressionWriter e(this);
 	return e.result();
 }
 
@@ -35,7 +35,7 @@ Ci::Ci(const Object * o) : Object(o->type())
 	m_function = c->m_function;
 }
 
-QString Ci::visit(ExpressionWritter* e) const
+QString Ci::visit(ExpressionWriter* e) const
 {
 	return e->accept(this);
 }

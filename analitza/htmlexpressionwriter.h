@@ -16,49 +16,31 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "mathmlexpressionwritter.h"
-#include "value.h"
-#include "operator.h"
-#include "container.h"
-#include <QStringList>
+#ifndef HTMLEXPRESSIONWRITER_H
+#define HTMLEXPRESSIONWRITER_H
 
-MathMLExpressionWritter::MathMLExpressionWritter(const Object* o)
+#include "expressionwriter.h"
+
+/**
+ *	This class represents the string expression writer.
+ *
+ *	@author Aleix Pol <aleixpol@gmail.com>
+ */
+
+class HtmlExpressionWriter : public ExpressionWriter
 {
-	m_result=o->visit(this);
-}
+	public:
+		HtmlExpressionWriter(const Object* o);
+		
+		virtual QString accept(const Ci* var);
+		virtual QString accept(const Cn* var);
+		virtual QString accept(const Container* var);
+		virtual QString accept(const Operator* var);
+		
+		QString result() const { return m_result; }
+		
+	private:
+		QString m_result;
+};
 
-QString MathMLExpressionWritter::accept(const Ci* var)
-{
-	return var->name();
-}
-
-QString MathMLExpressionWritter::accept(const Operator* op)
-{
-	return QString("<%1 />").arg(op->name());;
-}
-
-QString MathMLExpressionWritter::accept(const Cn* val)
-{
-	if(val->isBoolean()) {
-		if(val->isTrue())
-			return "<cn type='constant'>true</cn>";
-		else
-			return "<cn type='constant'>false</cn>";
-	} else
-		return QString("<cn>%1</cn>").arg(val->value(), 0, 'g', 12);
-
-}
-
-QString MathMLExpressionWritter::accept(const Container* c)
-{
-	QString ret;
-	QList<Object*>::const_iterator i;
-	for(i=c->m_params.constBegin(); i!=c->m_params.constEnd(); ++i) {
-		if(*i==0)
-			ret += "error;";
-		else
-			ret += (*i)->visit(this);
-	}
-	
-	return QString("<%1>%2</%1>").arg(c->tagName()).arg(ret);
-}
+#endif

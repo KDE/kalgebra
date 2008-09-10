@@ -16,24 +16,24 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "htmlexpressionwritter.h"
+#include "htmlexpressionwriter.h"
 #include "value.h"
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
 #include <KLocale>
 
-HtmlExpressionWritter::HtmlExpressionWritter(const Object* o)
+HtmlExpressionWriter::HtmlExpressionWriter(const Object* o)
 {
 	m_result=o->visit(this);
 }
 
-QString HtmlExpressionWritter::accept(const Ci* var)
+QString HtmlExpressionWriter::accept(const Ci* var)
 {
 	return var->name();
 }
 
-QString HtmlExpressionWritter::accept(const Cn* val)
+QString HtmlExpressionWriter::accept(const Cn* val)
 {
 	if(val->isBoolean()) {
 		if(val->isTrue())
@@ -44,12 +44,12 @@ QString HtmlExpressionWritter::accept(const Cn* val)
 		return i18nc("html representation of a number", "<span class='num'>%1</span>", val->value());
 }
 
-QString HtmlExpressionWritter::accept(const Operator* op)
+QString HtmlExpressionWriter::accept(const Operator* op)
 {
 	return op->name();
 }
 
-QString HtmlExpressionWritter::accept(const Container* c)
+QString HtmlExpressionWriter::accept(const Container* c)
 {
 	bool bounded=false;
 	QStringList ret;

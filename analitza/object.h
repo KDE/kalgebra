@@ -23,7 +23,7 @@
 
 #include "analitzaexport.h"
 
-class ExpressionWritter;
+class ExpressionWriter;
 
 /**
  *	\internal
@@ -66,7 +66,7 @@ public:
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
 	
 	/** Returns whether it is a correct object or not */
-	virtual QString visit(ExpressionWritter* exp) const =0;
+	virtual QString visit(ExpressionWriter* exp) const =0;
 	
 	/** Returns whether it is a correct object or not */
 	virtual bool isCorrect() const = 0;
@@ -123,7 +123,7 @@ class Ci : public Object
 		/** Returns whether it is a correct object. */
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
 		
-		virtual QString visit(ExpressionWritter*) const;
+		virtual QString visit(ExpressionWriter*) const;
 	private:
 		QString m_name;
 		bool m_function;

@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "operator.h"
-#include "expressionwritter.h"
+#include "expressionwriter.h"
 
 char Operator::m_words[nOfOps][14] = {
 	"onone",
@@ -44,7 +44,7 @@ char Operator::m_words[nOfOps][14] = {
 	"function"
 };
 
-QString Operator::visit(ExpressionWritter* e) const
+QString Operator::visit(ExpressionWriter* e) const
 {
 	return e->accept(this);
 }

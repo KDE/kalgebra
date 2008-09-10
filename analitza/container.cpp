@@ -18,7 +18,7 @@
 #include "container.h"
 
 #include "expression.h"
-#include "expressionwritter.h"
+#include "expressionwriter.h"
 #include "value.h"
 
 #include <KDebug>
@@ -66,7 +66,7 @@ Operator Container::firstOperator() const
 	return Operator(Operator::none);
 }
 
-QString Container::visit(ExpressionWritter* e) const
+QString Container::visit(ExpressionWriter* e) const
 {
 	return e->accept(this);
 }

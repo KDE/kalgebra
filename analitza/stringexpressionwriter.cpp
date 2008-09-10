@@ -16,28 +16,28 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "stringexpressionwritter.h"
+#include "stringexpressionwriter.h"
 #include "value.h"
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
 
-StringExpressionWritter::StringExpressionWritter(const Object* o)
+StringExpressionWriter::StringExpressionWriter(const Object* o)
 {
 	m_result=o->visit(this);
 }
 
-QString StringExpressionWritter::accept(const Ci* var)
+QString StringExpressionWriter::accept(const Ci* var)
 {
 	return var->name();
 }
 
-QString StringExpressionWritter::accept(const Operator* op)
+QString StringExpressionWriter::accept(const Operator* op)
 {
 	return op->name();
 }
 
-QString StringExpressionWritter::accept(const Cn* var)
+QString StringExpressionWriter::accept(const Cn* var)
 {
 	if(var->isBoolean()) {
 		if(var->isTrue())
@@ -48,7 +48,7 @@ QString StringExpressionWritter::accept(const Cn* var)
 		return QString("%1").arg(var->value(), 0, 'g', 12);
 }
 
-QString StringExpressionWritter::accept(const Container* var)
+QString StringExpressionWriter::accept(const Container* var)
 {
 	QStringList ret;
 	bool func=false, bounded=false;

@@ -111,7 +111,7 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns if it is a trigonometric operator. */
 		static bool isTrigonometric(enum OperatorType o);
 		
-		virtual QString visit(ExpressionWritter*) const;
+		virtual QString visit(ExpressionWriter*) const;
 	private:
 		static char m_words[nOfOps][14];
 		enum OperatorType m_optype;

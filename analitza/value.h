@@ -25,7 +25,6 @@
 #include <cmath>
 
 class QDomElement;
-class ExpressionWritter;
 
 /**
 *	The Cn class is the one that represents a value in the expression trees.
@@ -144,7 +143,7 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		Cn operator++(int) { m_value++; return this; }
 		
-		virtual QString visit(ExpressionWritter*) const;
+		virtual QString visit(ExpressionWriter*) const;
 		virtual bool isZero() const { return m_value==0.; }
 		
 		/*/** Sets whether it is a correct Cn. 
