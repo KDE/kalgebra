@@ -12,10 +12,13 @@ set(analitza_SRCS
 	container.cpp
 	operator.cpp
 	operations.cpp
-	exp.cpp
 	variables.cpp
 	object.cpp
 	value.cpp
+	
+	expressiontable.cpp	#generated
+	expressionparser.cpp	#   ''
+	explexer.cpp
 )
 
 kde4_add_library(analitza SHARED ${analitza_SRCS})

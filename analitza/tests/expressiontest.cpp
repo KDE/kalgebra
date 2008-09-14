@@ -71,11 +71,11 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("function definition") << "f:=x->x+1";
 	QTest::newRow("simple addition and subtraction") << "2+x-3";
 	QTest::newRow("simple addition and unary minus") << "(-x)+y";
-	QTest::newRow("sum") << "sum(x->1..10, x)";
+	QTest::newRow("sum") << "sum(x=1..10|x^2)";
 	QTest::newRow("piecewise") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("function call") << "f(2)";
 	QTest::newRow("vector") << "vector { x, y, z }";
-	QTest::newRow("boundedfunc") << "q->(0..10, q)";
+	QTest::newRow("boundedfunc") << "q=0..10->q";
 }
 
 void ExpressionTest::testConversion()
@@ -95,7 +95,7 @@ void ExpressionTest::testCopy_data()
 	QTest::newRow("simple addition") << "2+4";
 	QTest::newRow("simple addition with var") << "2+x";
 	QTest::newRow("function definition") << "f:=x->x+1";
-	QTest::newRow("summatory") << "sum(x->1..10, x)";
+	QTest::newRow("summatory") << "sum(x=1..10 | x)";
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("vector") << "vector { x, y, z }";
 }
@@ -118,16 +118,16 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("simple addition") << "2+4" << true;
 	QTest::newRow("simple addition with var") << "2+x" << true;
 	QTest::newRow("functin definition") << "f:=x->x+1" << true;
-	QTest::newRow("summatory") << "sum(x->1..10, x)" << true;
+	QTest::newRow("summatory") << "sum(x=1..10 | x)" << true;
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }" << true;
-	QTest::newRow("conditional") << "sum(n->1..10, n*x)" << true;
+	QTest::newRow("conditional") << "sum(n=1..10 | n*x)" << true;
 	
 	QTest::newRow("addition with missing operand") << "2+" << false;
 	QTest::newRow("function definition") << "f:=n->" << false;
 	QTest::newRow("piecewise") << "piecewise { ?3, 2 }" << false;
 	
 	QTest::newRow("limits") << "f:=n->3.." << false;
-	QTest::newRow("summatory with unknown uplimit") << "sum(x->1.., x)" << false;
+	QTest::newRow("summatory with unknown uplimit") << "sum(x=1.. | x)" << false;
 	//FIXME: Should be false in runtime, controlling it on the compiler.
 	//There is no way to have uplimit/downlimit separatedly with the current Exp parser
 	

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,41 +16,38 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef EXPTEST_H
-#define EXPTEST_H
+#ifndef EXPLEXER_H
+#define EXPLEXER_H
 
-#include <QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QMap>
+#include "analitzaexport.h"
 
-/**
-	@author Aleix Pol
-*/
-
-class ExpTest : public QObject
+class ANALITZA_EXPORT ExpLexer
 {
-Q_OBJECT
 	public:
-		ExpTest(QObject *parent = 0);
-		~ExpTest();
+		typedef struct {
+			QString val;
+			int type;
+			QString error;
+		} TOKEN;
+		
+		ExpLexer(const QString &source);
+		~ExpLexer();
+		int lex();
+		int lineNumber() const { return 0; }
+		
+		TOKEN current;
 	
-	private slots:
-		void initTestCase();
+		static TOKEN getToken(QString &a, int &l);
+	private:
+		QChar next();
 		
-		void testSimple_data();
-		void testSimple();
-		
-		/** We check that the conversion to MathML is correct*/
-		void testExp();
-		void testExp_data();
-		
-		/** We check if expressions are correct as expected. */
-		void testCorrection();
-		void testCorrection_data();
-		
-		/** We check the token lengths*/
-		void testLength();
-		void testLength_data();
-		
-		void cleanupTestCase();
+		QString m_source;
+		static QMap<QChar, int> m_operators;
+		static QMap<QString, int> m_longOperators;
+// 		static QMap<int, QString> m_operatorTags;
 };
 
 #endif

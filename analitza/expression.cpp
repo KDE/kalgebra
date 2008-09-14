@@ -20,9 +20,10 @@
 #include <KLocale>
 #include <QDomElement>
 
+#include "explexer.h"
+#include "expressionparser.h"
 #include "container.h"
 #include "value.h"
-#include "exp.h"
 #include "expressionwriter.h"
 #include "stringexpressionwriter.h"
 #include "htmlexpressionwriter.h"
@@ -92,15 +93,16 @@ Expression Expression::operator=(const Expression & e)
 bool Expression::setText(const QString & exp)
 {
 	d->m_err.clear();
-	Exp e(exp);
-	e.parse();
-	bool b=e.error().isEmpty();
-	if(b) {
-		setMathML(e.mathML());
-	} else {
-		d->m_err << e.error();
-	}
-	return b;
+	ExpLexer lex(exp);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	
+	if(corr)
+		setMathML(parser.mathML());
+	else
+		d->m_err << parser.error();
+	
+	return corr;
 }
 
 bool Expression::setMathML(const QString & s)

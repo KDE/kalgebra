@@ -44,122 +44,128 @@ QString HtmlExpressionWriter::accept(const Cn* val)
 		return i18nc("html representation of a number", "<span class='num'>%1</span>", val->value());
 }
 
+QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
+QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
+
 QString HtmlExpressionWriter::accept(const Operator* op)
 {
 	return op->name();
 }
 
-QString HtmlExpressionWriter::accept(const Container* c)
+QString HtmlExpressionWriter::accept(const Container* var)
 {
-	bool bounded=false;
 	QStringList ret;
 	bool func=false;
-	
 	Operator *op=0;
-	for(int i=0; i<c->m_params.count(); i++) {
-		Q_ASSERT(c->m_params[i]!=0);
+	QString bounds;
+	QStringList bvars;
+	
+	for(int i=0; i<var->m_params.count(); i++) {
+		Q_ASSERT(var->m_params[i]!=0);
 		
-		if(c->m_params[i]->type() == Object::oper)
-			op = (Operator*) c->m_params[i];
-		else if(c->m_params[i]->type() == Object::variable) {
-			Ci *b = (Ci*) c->m_params[i];
+		if(var->m_params[i]->type() == Object::oper)
+			op = (Operator*) var->m_params[i];
+		else if(var->m_params[i]->type() == Object::variable) {
+			Ci *b = (Ci*) var->m_params[i];
 			func|=b->isFunction();
 			ret << b->visit(this);
-		} else if(c->m_params[i]->type() == Object::container) {
-			Container *c1 = (Container*) c->m_params[i];
-			QString s = c1->visit(this);
-			Operator child_op = c1->firstOperator();
-			if(op!=0 && op->weight()>child_op.weight() && op->nparams()!=1)
-				s=i18n("<span class='op'>(</span>%1<span class='op'>)</span>", s);
+		} else if(var->m_params[i]->type() == Object::container) {
+			Container *c = (Container*) var->m_params[i];
+			QString s = c->visit(this);
+			Operator child_op = c->firstOperator();
 			
-			if(c1->containerType()!=Container::uplimit && c1->containerType()!=Container::downlimit)
-				ret << s;
+			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
+				s=oper('(')+s+oper(')');
+			}
 			
-			if(c1->containerType() == Container::bvar) { //bvar
-				bounded=true;
-				QString bounds;
-				Container *ul = c->ulimit(), *dl = c->dlimit();
+			if(c->containerType() == Container::bvar) { //bvar
+				Container *ul = var->ulimit(), *dl = var->dlimit();
 				if(dl)
 					bounds += dl->visit(this);
 				if(dl || ul)
-					bounds += i18n("<span class='op'>..</span>");
+					bounds += oper("..");
 				if(ul)
 					bounds += ul->visit(this);
-				if(!bounds.isEmpty())
-					ret << bounds;
+				
+				bvars += s;
 			}
+			else if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
+				ret << s;
 		} else 
-			ret << c->m_params[i]->visit(this);
+			ret << var->m_params[i]->visit(this);
 	}
 	
 	QString toret;
-	switch(c->containerType()) {
+	switch(var->containerType()) {
 		case Container::declare:
-			toret += ret.join(i18n("<span class='op'>:=</span>"));
+			toret += ret.join(oper(":="));
 			break;
-		case Container::lambda:
-			{
-			QString res=ret.takeFirst();
-			if(ret.count()==1)
-				res=res+ret.first();
-			else
-				res=res+"<span class='op'>(</span>"+ret.join(", ")+"<span class='op'>)</span>";
-			toret += res;
+		case Container::lambda: {
+			QString last=ret.takeLast();
+			if(bvars.count()!=1) toret +=oper('(');
+			toret += bvars.join(oper(", "));
+			if(bvars.count()!=1) toret +=oper(')');
+			if(!bounds.isEmpty()) toret+=oper('=')+bounds;
+			toret += oper("->") + last;
 		}	break;
 		case Container::math:
-			toret += ret.join(i18nc("Not really correct", "<span class='op'>,</span> "));
+			toret += ret.join(oper(';'));
 			break;
 		case Container::apply:
 			if(func){
 				QString n = ret.takeFirst();
-				toret += QString("<span class='func'>%1</span><span class='op'>(</span>"
-								"%2<span class='op'>)</span>").arg(n).arg(ret.join(", "));
+				toret += n+oper('(')+ret.join(oper(", "))+oper(')');
 			} else if(op==0)
 				toret += ret.join(" ");
 			else switch(op->operatorType()) {
 				case Operator::plus:
-					toret += ret.join(i18n("<span class='op'>+</span>"));
+					toret += ret.join(oper('+'));
 					break;
 				case Operator::times:
-					toret += ret.join(i18n("<span class='op'>*</span>"));
+					toret += ret.join(oper('*'));
 					break;
 				case Operator::divide:
-					toret += ret.join(i18n("<span class='op'>/</span>"));
+					toret += ret.join(oper('/'));
 					break;
 				case Operator::minus:
 					if(ret.count()==1)
-						toret += i18n("<span class='op'>-</span>%1", ret.first());
+						toret += oper('-')+ret[0];
 					else
-						toret += ret.join(i18n("<span class='op'>-</span>"));
+						toret += ret.join(oper('-'));
 					break;
 				case Operator::power:
-					toret += ret.join(i18n("<span class='op'>^</span>"));
+					toret += ret.join(oper('^'));
 					break;
-				default:
-					if(bounded) {
-						QString bounding=ret.takeFirst();
-						ret[0]=bounding+ret[0];
+				default: {
+					QString bounding;
+					if(!bounds.isEmpty() || !bvars.isEmpty()) {
+						if(bvars.count()!=1) bounding +=oper('(');
+						bounding += bvars.join(oper(", "));
+						if(bvars.count()!=1) bounding +=oper(')');
+						
+						bounding = bounding+oper('=')+bounds+oper('|');
 					}
-					toret += i18n("<span class='func'>%1</span><span class='op'>(</span>%2<span class='op'>)</span>",
-								  op->visit(this), ret.join(", "));
-					break;
+						
+					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(bounding).arg(ret.join(oper(", ")));
+				}	break;
 			}
-				break;
+			break;
 		case Container::uplimit: //x->(n1..n2) is put at the same time
 		case Container::downlimit:
 			break;
 		case Container::bvar:
-			toret += ret.join(i18n("<span class='op'>-&gt;</span>"))+i18n("<span class='op'>-&gt;</span>");
+			if(ret.count()>1) toret += oper('(');
+			toret += ret.join(oper(", "));
+			if(ret.count()>1) toret += oper(')');
 			break;
 		case Container::piece:
-            toret += i18n("%1 <span class='op'>?</span> %2", ret[1], ret[0]);
+			toret += ret[1]+oper(" ? ")+ret[0];
 			break;
 		case Container::otherwise:
-			toret += i18n("<span class='op'>?</span> %1", ret[0]);
+			toret += oper(oper("? "))+ret[0];
 			break;
 		default:
-			toret += i18n("<span class='cont'>%1</span><span class='op'> { </span>%2<span class='op'> }</span>",
-						  c->tagName(), ret.join(i18n("<span class='op'>,</span> ")));
+			toret += var->tagName()+oper(" { ")+ret.join(oper(", "))+oper(" }");
 			break;
 	}
 	return toret;

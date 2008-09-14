@@ -17,7 +17,8 @@
  *************************************************************************************/
 
 #include "exptest.h"
-#include "exp.h"
+#include "explexer.h"
+#include "expressionparser.h"
 #include <qtest_kde.h>
 
 QTEST_KDEMAIN_CORE( ExpTest )
@@ -31,12 +32,84 @@ ExpTest::~ExpTest()
 
 Q_DECLARE_METATYPE(QList<int>)
 
-void ExpTest::initTestCase()
+void ExpTest::initTestCase() {}
+
+void ExpTest::cleanupTestCase() {}
+
+void ExpTest::testSimple_data()
 {
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<QString>("output");
+	
+	QTest::newRow("1 value") << "1" << "<math><cn>1</cn></math>";
+	QTest::newRow("addition") << "1+2" << "<math><apply><plus /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("substraction") << "2-3" << "<math><apply><minus /><cn>2</cn><cn>3</cn></apply></math>";
+	QTest::newRow("unary minus alone") << "-3" << "<math><apply><minus /><cn>3</cn></apply></math>";
+	QTest::newRow("x*unary minus") << "x*(-3)" << "<math><apply><times /><ci>x</ci>"
+											  "<apply><minus /><cn>3</cn></apply></apply></math>";
+	QTest::newRow("unary minus*x") << "-3*x" << "<math><apply><times /><apply><minus />"
+											  "<cn>3</cn></apply><ci>x</ci></apply></math>";
+	
+	QTest::newRow("assignation") << "x:=2+3" << "<math><declare><ci>x</ci><apply><plus /><cn>2</cn>"
+													"<cn>3</cn></apply></declare></math>";
+	QTest::newRow("simple expression") << "2+1-3" << "<math><apply><minus /><apply><plus />"
+										"<cn>2</cn><cn>1</cn></apply><cn>3</cn></apply></math>";
+	QTest::newRow("times") << "1*2" << "<math><apply><times /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("power") << "1^2" << "<math><apply><power /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("power") << "1**2"<< "<math><apply><power /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("times") << "1/2" << "<math><apply><divide /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("priority") << "2+3*5" << "<math><apply><plus /><cn>2</cn><apply><times />"
+											"<cn>3</cn><cn>5</cn></apply></apply></math>";
+	
+	QTest::newRow("function") << "func(x, y)" << "<math><apply><ci type='function'>func</ci>"
+												"<ci>x</ci><ci>y</ci></apply></math>";
+	QTest::newRow("block") << "blk{x, y}" << "<math><blk><ci>x</ci><ci>y</ci></blk></math>";
+	QTest::newRow("lambda") << "x->(3)" << "<math><lambda><bvar><ci>x</ci></bvar><cn>3</cn></lambda></math>";
+	
+	QTest::newRow("sum") << "sum(x=1..10 | x)" << "<math>"
+			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
+			"<cn>1</cn></downlimit><ci>x</ci></apply></math>";
+	QTest::newRow("x*sum") << "x*sum(x=1..10 | x)" <<
+			"<math><apply><times /><ci>x</ci><apply><sum /><bvar><ci>x</ci></bvar>"
+			"<uplimit><cn>10</cn></uplimit><downlimit><cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
+	QTest::newRow("piecewise") << "piecewise{x?a, ?b}" << "<math><piecewise><piece><ci>a</ci><ci>x</ci></piece>"
+														"<otherwise><ci>b</ci></otherwise></piecewise></math>";
+	QTest::newRow("piecewise2") << "piecewise{?b}" << "<math><piecewise><otherwise><ci>b</ci></otherwise></piecewise></math>";
+	
+	QTest::newRow("piecewise2") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }" << "<math><declare><ci>fib</ci><lambda><bvar><ci>n</ci></bvar><piecewise><piece><cn>0</cn><apply><eq /><ci>n</ci><cn>0</cn></apply></piece><piece><cn>1</cn><apply><eq /><ci>n</ci><cn>1</cn></apply></piece><otherwise><apply><plus /><apply><ci type='function'>fib</ci><apply><minus /><ci>n</ci><cn>1</cn></apply></apply><apply><ci type='function'>fib</ci><apply><minus /><ci>n</ci><cn>2</cn></apply></apply></apply></otherwise></piecewise></lambda></declare></math>";
+	
+	QTest::newRow("lambda2") << "(x, y)->(x+y)" << "<math><lambda><bvar><ci>x</ci></bvar><bvar><ci>y</ci></bvar>"
+								"<apply><plus /><ci>x</ci><ci>y</ci></apply></lambda></math>";
+	QTest::newRow("lambda3") << "y->y" << "<math><lambda><bvar><ci>y</ci></bvar>"
+								"<ci>y</ci></lambda></math>";
+	QTest::newRow("unary minus") << "1*(-2)" << "<math><apply><times /><cn>1</cn><apply>"
+												"<minus /><cn>2</cn></apply></apply></math>";
+	QTest::newRow("boundedlambda") << "q=0..10->q" << "<math><lambda><bvar><ci>q</ci></bvar><uplimit><cn>10</cn>"
+										"</uplimit><downlimit><cn>0</cn></downlimit><ci>q</ci></lambda></math>";
+	QTest::newRow("bounds and !limit") << "func(x|x)" << "<math><apply><ci type='function'>func</ci>"
+									"<bvar><ci>x</ci></bvar><ci>x</ci></apply></math>";
+	QTest::newRow("bounds and limit") << "func(x=0..1 | x+y)" << 
+				"<math><apply><ci type='function'>func</ci>"
+				"<bvar><ci>x</ci></bvar><uplimit><cn>1</cn></uplimit><downlimit><cn>0</cn></downlimit>"
+				"<apply><plus /><ci>x</ci><ci>y</ci></apply></apply></math>";
+	QTest::newRow("bounds and limit") << "card(vector { x, y, z })"
+				<< "<math><apply><card /><vector><ci>x</ci><ci>y</ci><ci>z</ci></vector></apply></math>";
 }
 
-void ExpTest::cleanupTestCase()
+void ExpTest::testSimple()
 {
+	QFETCH(QString, input);
+	QFETCH(QString, output);
+	
+	ExpLexer lex(input);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	
+	if(!parser.error().isEmpty())
+		qDebug() << ">>> " << parser.mathML() << "errors:" << parser.error();
+	QVERIFY(corr);
+	QVERIFY(parser.error().isEmpty());
+	QCOMPARE(parser.mathML(), output);
 }
 
 void ExpTest::testExp_data()
@@ -46,11 +119,12 @@ void ExpTest::testExp_data()
 
 	QString fourX="<math><apply><plus /><ci>x</ci><ci>x</ci><ci>x</ci><ci>x</ci></apply></math>";
 
-	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
+	//FIXME: Repetition not suported
+// 	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
 	QTest::newRow("composed expression") << QString::fromUtf8("2²")
 			<< "<math><apply><power /><cn>2</cn><cn>2</cn></apply></math>";
 	QTest::newRow("plus operator in plus() form") << "plus(x,x,x,x)" << fourX;
-	QTest::newRow("sum") << "x*sum(x->1..10, x)" << "<math><apply><times /><ci>x</ci>"
+	QTest::newRow("sum") << "x*sum(x=1..10 | x)" << "<math><apply><times /><ci>x</ci>"
 			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
 			"<cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
 	
@@ -64,12 +138,13 @@ void ExpTest::testExp()
 	QFETCH(QString, input);
 	QFETCH(QString, output);
 	
-	Exp e(input);
-	e.parse();
-	if(!e.error().isEmpty())
-		qDebug() << "errors:" << e.error();
-	QVERIFY(e.error().isEmpty());
-	QCOMPARE(e.mathML(), output);
+	ExpLexer lex(input);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	if(!parser.error().isEmpty())
+		qDebug() << "errors:" << parser.error();
+	QVERIFY(parser.error().isEmpty() && corr);
+	QCOMPARE(parser.mathML(), output);
 }
 
 void ExpTest::testLength_data()
@@ -93,17 +168,17 @@ void ExpTest::testLength()
 	
 	int len=-1, pos;
 	QString op=input.trimmed();
-	TOKEN t=Exp::getToken(op, len, tMaxOp);
+	ExpLexer::TOKEN t=ExpLexer::getToken(op, len);
 	
-	for(pos=0; pos<input.length() && input[pos].isSpace(); pos++);
+	for(pos=0; pos<input.length() && input[pos].isSpace(); pos++) {}
 	
 	int current=0;
-	while(!op.isEmpty() && pos < input.length() && t.type!=tEof) {
-		QVERIFY(t.type!=tMaxOp);
+	while(!op.isEmpty() && pos < input.length() && t.type!=0/*EOF*/) {
+		QVERIFY(t.type>0);
 		pos += len;
 		QCOMPARE(lengths[current], len);
 		
-		t=Exp::getToken(op, len, t.type);
+		t=ExpLexer::getToken(op, len);
 		current++;
 	}
 }
@@ -123,9 +198,10 @@ void ExpTest::testCorrection()
 	QFETCH(QString, input);
 	QFETCH(bool, correct);
 	
-	Exp e(input);
-	e.parse();
-	QCOMPARE(e.error().isEmpty(), correct);
+	ExpLexer lex(input);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	QCOMPARE(parser.error().isEmpty() && corr, correct);
 }
 
 #include "exptest.moc"

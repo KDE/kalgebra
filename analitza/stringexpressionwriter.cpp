@@ -51,8 +51,10 @@ QString StringExpressionWriter::accept(const Cn* var)
 QString StringExpressionWriter::accept(const Container* var)
 {
 	QStringList ret;
-	bool func=false, bounded=false;
+	bool func=false;
 	Operator *op=0;
+	QString bounds;
+	QStringList bvars;
 	
 	for(int i=0; i<var->m_params.count(); i++) {
 		Q_ASSERT(var->m_params[i]!=0);
@@ -72,12 +74,7 @@ QString StringExpressionWriter::accept(const Container* var)
 				s=QString("(%1)").arg(s);
 			}
 			
-			if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
-				ret << s;
-			
 			if(c->containerType() == Container::bvar) { //bvar
-				bounded=true;
-				QString bounds;
 				Container *ul = var->ulimit(), *dl = var->dlimit();
 				if(dl)
 					bounds += dl->visit(this);
@@ -85,9 +82,11 @@ QString StringExpressionWriter::accept(const Container* var)
 					bounds += "..";
 				if(ul)
 					bounds += ul->visit(this);
-				if(!bounds.isEmpty())
-					ret << bounds;
+				
+				bvars += s;
 			}
+			else if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
+				ret << s;
 		} else 
 			ret << var->m_params[i]->visit(this);
 	}
@@ -97,14 +96,13 @@ QString StringExpressionWriter::accept(const Container* var)
 		case Container::declare:
 			toret += ret.join(":=");
 			break;
-		case Container::lambda:
-		{
-			QString res=ret.takeFirst();
-			if(ret.count()==1)
-				res=res+ret.first();
-			else
-				res=res+'('+ret.join(", ")+')';
-			toret += res;
+		case Container::lambda: {
+			QString last=ret.takeLast();
+			if(bvars.count()!=1) toret +="(";
+			toret += bvars.join(", ");
+			if(bvars.count()!=1) toret +=")";
+			if(!bounds.isEmpty()) toret+='='+bounds;
+			toret += "->" + last;
 		}	break;
 		case Container::math:
 			toret += ret.join("; ");
@@ -134,21 +132,27 @@ QString StringExpressionWriter::accept(const Container* var)
 				case Operator::power:
 					toret += ret.join("^");
 					break;
-				default:
-					if(bounded) {
-						QString bounding=ret.takeFirst();
-						ret[0]=bounding+ret[0];
+				default: {
+					QString bounding;
+					if(!bounds.isEmpty() || !bvars.isEmpty()) {
+						if(bvars.count()!=1) bounding +="(";
+						bounding += bvars.join(", ");
+						if(bvars.count()!=1) bounding +=")";
+						
+						bounding = bounding+"="+bounds+"|";
 					}
 						
-					toret += QString("%1(%2)").arg(op->visit(this)).arg(ret.join(", "));
-					break;
+					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(bounding).arg(ret.join(", "));
+				}	break;
 			}
 			break;
 		case Container::uplimit: //x->(n1..n2) is put at the same time
 		case Container::downlimit:
 			break;
 		case Container::bvar:
-			toret += ret.join("->")+"->";
+			if(ret.count()>1) toret += "(";
+			toret += ret.join(", ");
+			if(ret.count()>1) toret += ")";
 			break;
 		case Container::piece:
 			toret += ret[1]+" ? "+ret[0];
