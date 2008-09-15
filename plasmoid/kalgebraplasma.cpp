@@ -27,9 +27,6 @@
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
-// #include <plasma/widgets/flash.h>
-// #include <plasma/layouts/boxlayout.h>
-// #include <plasma/widgets/icon.h>
 
 #include "expression.h"
 
@@ -121,7 +118,7 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 		f.setPointSize(Theme::defaultTheme()->font(Theme::DefaultFont).pointSize());
 		QFontMetrics fm(f);
 		m_output->setMinimumWidth(fm.width(m_output->text()));
-		qDebug() << "tamareeeeeeee" << m_output->text() << fm.width(m_output->text());
+		kDebug() << "tamareeeeeeee" << m_output->text() << fm.width(m_output->text());
 	} else {
 		if(big) {
 			size=(m_output->size().height()*2)/3;
