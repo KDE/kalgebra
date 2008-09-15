@@ -33,7 +33,6 @@
 #include <QTime>
 
 #include "analitza.h"
-#include "exp.h"
 #include "variables.h"
 
 enum ActionsEnum {

@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include "function.h"
-#include "exp.h"
 
 #include "variables.h"
 #include "analitza.h"

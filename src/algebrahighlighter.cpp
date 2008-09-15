@@ -17,10 +17,9 @@
  *************************************************************************************/
 
 #include "algebrahighlighter.h"
-
+#include "expressionparser.h"
 #include <QApplication>
 
-#include "exp.h"
 #include "expression.h"
 #include "expressionedit.h"
 #include "analitza.h"
@@ -114,14 +113,14 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		int pos=0, len=0;
 		
 		QString op=text.trimmed();
-		TOKEN t=Exp::getToken(op, len, tMaxOp);
-		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++);
+		ExpLexer::TOKEN t=ExpLexer::getToken(op, len);
+		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++) {}
 		
-		while(pos < text.length() && t.type!=tEof){
+		while(pos < text.length() && t.type!=ExpressionTable::EOF_SYMBOL){
 			QColor f;
 			bool isBold=false;
 			switch(t.type){
-				case tVal:
+				case ExpressionTable::tVal:
 					if(t.val.mid(1,2)=="cn") //if it is a number
 						f=number;
 					else { //if it is a variable
@@ -131,19 +130,19 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 							f=variable;
 					}
 					break;
-				case tFunc:
+				case ExpressionTable::tFunc:
 					if(a && a->variables()->contains(t.val))
 						f=definedFunction;
 					else
 						f=undefinedFunction;
 					break;
-				case tBlock:
+				case ExpressionTable::tBlock:
 					if(Container::toContainerType(t.val))
 						f=block;
 					else
 						f=uncorrect;
 					break;
-				case tMaxOp:
+				case -1:
 					m_correct = false;
 					f=uncorrect;
 					break;
@@ -155,7 +154,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			if(!isBold)
 				setFormat(pos, len, f);
 			pos += len;
-			t=Exp::getToken(op, len, t.type);
+			t=ExpLexer::getToken(op, len);
 		}
 		
 		//To bg highlight the parentheses

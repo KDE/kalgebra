@@ -28,7 +28,8 @@
 #include <KHTMLView>
 #include <KAction>
 
-#include "exp.h"
+#include "explexer.h"
+#include "expressionparser.h"
 #include "variables.h"
 #include "expression.h"
 
@@ -119,10 +120,11 @@ bool ConsoleHtml::loadScript(const QString& path)
 			while (!stream.atEnd()) {
 				line += stream.readLine(); // line of text excluding '\n'
 				
-				Exp e(line);
-				e.parse();
+				ExpLexer lex(line);
+				ExpressionParser parser;
+				parser.parse(&lex);
 				
-				if(!line.isEmpty() && e.isCompletelyRead()) {
+				if(!line.isEmpty() && parser.isCompletelyRead()) {
 					correct &= addOperation(line, Expression::isMathML(line));
 					line.clear();
 				}

@@ -27,9 +27,10 @@
 
 #include <KLocale>
 
+#include "explexer.h"
+#include "expressionparser.h"
 #include "operatorsmodel.h"
 #include "operator.h"
-#include "exp.h"
 #include "analitza.h"
 #include "variables.h"
 #include "container.h"
@@ -129,12 +130,8 @@ void ExpressionEdit::setMode(AlgebraHighlighter::Mode en)
 			Expression e(toPlainText(), true);
 			this->setPlainText(e.toString());
 		} else if(!isMathML() && en==AlgebraHighlighter::MathML) {
-			/*Expression e(toPlainText(), false);
-			this->setPlainText(e.toMathML());*/
-			
-			Exp e(toPlainText());
-			e.parse();
-			this->setPlainText(e.mathML());
+			Expression e(toPlainText(), false);
+			this->setPlainText(e.toMathML());
 		}
 	}
 	m_highlight->setMode(en);
@@ -477,8 +474,9 @@ bool ExpressionEdit::returnPress()
 	if(isMathML()) {
 		emit returnPressed();
 	} else {
-		Exp ex(toPlainText());
-		ex.parse();
+		ExpLexer lex(toPlainText());
+		ExpressionParser ex;
+		ex.parse(&lex);
 		if(ex.isCompletelyRead()) {
 			setCorrect(true);
 			emit returnPressed();

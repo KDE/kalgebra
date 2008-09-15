@@ -16,11 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <QSyntaxHighlighter>
-#include "exp.h"
-
 #ifndef ALGEBRAHIGHLIGHTER_H
 #define ALGEBRAHIGHLIGHTER_H
+
+#include <QSyntaxHighlighter>
+#include "explexer.h"
 
 /**
  *	The AlgebraHighlighter class is used to highlight the ExpressionEdit text.
@@ -72,10 +72,8 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 			value
 		} MMLtokEnum;
 		
-// 		TOKEN getToken(QString &a, int &l);
-		//TOKEN getTokenMML(QString &a, unsigned int &l);
 		bool m_correct;
-		tokEnum antnum;
+		int antnum;
 		Mode m_mode;
 		int m_pos;
 		
