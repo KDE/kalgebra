@@ -66,10 +66,10 @@ void ExpTest::testSimple_data()
 	QTest::newRow("block") << "blk{x, y}" << "<math><blk><ci>x</ci><ci>y</ci></blk></math>";
 	QTest::newRow("lambda") << "x->(3)" << "<math><lambda><bvar><ci>x</ci></bvar><cn>3</cn></lambda></math>";
 	
-	QTest::newRow("sum") << "sum(x=1..10 | x)" << "<math>"
+	QTest::newRow("sum") << "sum(x : x=1..10)" << "<math>"
 			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
 			"<cn>1</cn></downlimit><ci>x</ci></apply></math>";
-	QTest::newRow("x*sum") << "x*sum(x=1..10 | x)" <<
+	QTest::newRow("x*sum") << "x*sum(x : x=1..10)" <<
 			"<math><apply><times /><ci>x</ci><apply><sum /><bvar><ci>x</ci></bvar>"
 			"<uplimit><cn>10</cn></uplimit><downlimit><cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
 	QTest::newRow("piecewise") << "piecewise{x?a, ?b}" << "<math><piecewise><piece><ci>a</ci><ci>x</ci></piece>"
@@ -86,9 +86,9 @@ void ExpTest::testSimple_data()
 												"<minus /><cn>2</cn></apply></apply></math>";
 	QTest::newRow("boundedlambda") << "q=0..10->q" << "<math><lambda><bvar><ci>q</ci></bvar><uplimit><cn>10</cn>"
 										"</uplimit><downlimit><cn>0</cn></downlimit><ci>q</ci></lambda></math>";
-	QTest::newRow("bounds and !limit") << "func(x|x)" << "<math><apply><ci type='function'>func</ci>"
+	QTest::newRow("bounds and !limit") << "func(x:x)" << "<math><apply><ci type='function'>func</ci>"
 									"<bvar><ci>x</ci></bvar><ci>x</ci></apply></math>";
-	QTest::newRow("bounds and limit") << "func(x=0..1 | x+y)" << 
+	QTest::newRow("bounds and limit") << "func(x+y : x=0..1)" << 
 				"<math><apply><ci type='function'>func</ci>"
 				"<bvar><ci>x</ci></bvar><uplimit><cn>1</cn></uplimit><downlimit><cn>0</cn></downlimit>"
 				"<apply><plus /><ci>x</ci><ci>y</ci></apply></apply></math>";
@@ -124,7 +124,7 @@ void ExpTest::testExp_data()
 	QTest::newRow("composed expression") << QString::fromUtf8("2²")
 			<< "<math><apply><power /><cn>2</cn><cn>2</cn></apply></math>";
 	QTest::newRow("plus operator in plus() form") << "plus(x,x,x,x)" << fourX;
-	QTest::newRow("sum") << "x*sum(x=1..10 | x)" << "<math><apply><times /><ci>x</ci>"
+	QTest::newRow("sum") << "x*sum(x : x=1..10)" << "<math><apply><times /><ci>x</ci>"
 			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
 			"<cn>1</cn></downlimit><ci>x</ci></apply></apply></math>";
 	

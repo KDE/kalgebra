@@ -35,7 +35,7 @@ QMap<QChar, int> initializeOperators()
 	operators['{']=ExpressionTable::tLcb;
 	operators['}']=ExpressionTable::tRcb;
 	operators['?']=ExpressionTable::tQm;
-	operators['|']=ExpressionTable::tBar;
+	operators[':']=ExpressionTable::tColon;
 	operators['=']=ExpressionTable::tEq;
 	return operators;
 }

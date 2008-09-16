@@ -23,7 +23,7 @@
 %token tRcb		"}"
 %token tVal		"value"
 %token tEq		"="
-%token tBar		"|"
+%token tColon	"|"
 
 
 %left tComa
@@ -226,12 +226,12 @@ case $rule_number:
 ./
 
 -- function's body
-FBody ::=                  Parameters ;
+FBody ::= Parameters ;
 
-FBody ::= BVars tBar       Parameters ;
+FBody ::= Parameters tColon BVars ;
 /.
 case $rule_number:
-	sym(1) += sym(3);
+	sym(1) = sym(3)+sym(1);
 	break;
 ./
 

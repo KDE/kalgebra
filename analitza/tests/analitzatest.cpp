@@ -56,11 +56,11 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("simple multiplication") << "3*3" << 9.;
 	QTest::newRow("sinus") << "sin(3*3)" << sin(9.);
 	QTest::newRow("declare") << "x:=3" << 3.;
-	QTest::newRow("sum") << "sum(x=1..99 | x)" << 4950.;
+	QTest::newRow("sum") << "sum(x : x=1..99)" << 4950.;
 	QTest::newRow("diff") << "diff(x)" << 1.;
-	QTest::newRow("diffz") << "diff(z|z)" << 1.;
+	QTest::newRow("diffz") << "diff(z:z)" << 1.;
 	
-	QTest::newRow("product") << "product(n=1..5 | n)" << 120.;
+	QTest::newRow("product") << "product(n : n=1..5)" << 120.;
 	QTest::newRow("factorial") << "factorial(5)" << 120.;
 	
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }" << 33.;
@@ -117,12 +117,12 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("and") << "and(gt(6,5), lt(4,5))" << "true";
 	QTest::newRow("or") << "or(gt(6,5), lt(6,5))" << "true";
 	
-	QTest::newRow("sum") << "sum(n=1..99 | n)" << "4950";
-	QTest::newRow("sum times simplification") << "sum(n=0..99 | n*x)" << "4950*x";
-	QTest::newRow("sum times") << "x*sum(n=0..99 | n)" << "4950*x";
-	QTest::newRow("unrelated sum") << "sum(n=0..99 | x)" << "99*x";
+	QTest::newRow("sum") << "sum(n : n=1..99)" << "4950";
+	QTest::newRow("sum times simplification") << "sum(n*x : n=0..99)" << "4950*x";
+	QTest::newRow("sum times") << "x*sum(n : n=0..99)" << "4950*x";
+	QTest::newRow("unrelated sum") << "sum(x : n=0..99)" << "99*x";
 	
-	QTest::newRow("product") << "product(n=1..5 | n)" << "120";
+	QTest::newRow("product") << "product(n : n=1..5)" << "120";
 	QTest::newRow("factorial") << "factorial(5)" << "120";
 	
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << "33";
@@ -210,7 +210,7 @@ void AnalitzaTest::testCorrection_data()
 	
 	script.clear();
 	script << "x:=3";
-	script << "x*sum(x=0..99 | x)";
+	script << "x*sum(x : x=0..99)";
 	QTest::newRow("bounded scope") << script << 14850.;
 	
 	script.clear();
@@ -253,8 +253,8 @@ void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
 	QTest::newRow("different tag") << QStringList("prp { x, y, z }");
-	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x=1..| x)");
-	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x=..3| x)");
+	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
+	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
 	
@@ -358,8 +358,8 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("scalar*vect") << "3*vector { 1, 2, 3 }" << "vector { 3, 6, 9 }";
 	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
 	
-	QTest::newRow("sum") << "sum(x=1..99 | vector {x,x,x})" << "vector { 4950, 4950, 4950 }";
-	QTest::newRow("product") << "product(x=1..5 | vector {x,x,x})" << "vector { 120, 120, 120 }";
+	QTest::newRow("sum") << "sum(vector {x,x,x} : x=1..99)" << "vector { 4950, 4950, 4950 }";
+	QTest::newRow("product") << "product(vector {x,x,x} : x=1..5)" << "vector { 120, 120, 120 }";
 	
 	QTest::newRow("selector1") << "selector(1, vector{1,2,3})" << "1";
 	QTest::newRow("selector2") << "selector(2, vector{1,2,3})" << "2";

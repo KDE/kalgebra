@@ -10,8 +10,8 @@ public:
     otherwise_prec = 20,
     tAdd = 1,
     tAssig = 4,
-    tBar = 19,
     tBlock = 9,
+    tColon = 19,
     tComa = 12,
     tDiv = 6,
     tEq = 18,
@@ -29,15 +29,15 @@ public:
     tVal = 17,
     uminus_prec = 21,
 
-    ACCEPT_STATE = 42,
+    ACCEPT_STATE = 55,
     RULE_COUNT = 31,
-    STATE_COUNT = 63,
+    STATE_COUNT = 64,
     TERMINAL_COUNT = 22,
     NON_TERMINAL_COUNT = 12,
 
-    GOTO_INDEX_OFFSET = 63,
-    GOTO_INFO_OFFSET = 134,
-    GOTO_CHECK_OFFSET = 134
+    GOTO_INDEX_OFFSET = 64,
+    GOTO_INFO_OFFSET = 142,
+    GOTO_CHECK_OFFSET = 142
   };
 
   static const char  *const spell [];

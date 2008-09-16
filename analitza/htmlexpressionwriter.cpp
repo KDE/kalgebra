@@ -143,10 +143,10 @@ QString HtmlExpressionWriter::accept(const Container* var)
 						bounding += bvars.join(oper(", "));
 						if(bvars.count()!=1) bounding +=oper(')');
 						
-						bounding = bounding+oper('=')+bounds+oper('|');
+						bounding = oper(':')+bounding+oper('=')+bounds;
 					}
 						
-					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(bounding).arg(ret.join(oper(", ")));
+					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(ret.join(oper(", "))).arg(bounding);
 				}	break;
 			}
 			break;

@@ -124,7 +124,7 @@ case 7:
 #line 232 "exp.g"
 
 case 9:
-	sym(1) += sym(3);
+	sym(1) = sym(3)+sym(1);
 	break;
 
 #line 240 "exp.g"
