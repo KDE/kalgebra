@@ -225,7 +225,6 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		QPointF ultim(toWidget(vect[0]));
 		
 		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
-		bool nextpoint=false;
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
 			

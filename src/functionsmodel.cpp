@@ -150,7 +150,7 @@ bool FunctionsModel::setSelected(const QString& exp)
 	int i=0;
 	int previous=m_selectedRow;
 	bool found=false;
-	foreach(function f, funclist) {
+	foreach(const function& f, funclist) {
 		if(f.name() == exp) {
 			m_selectedRow=i;
 			found=true;

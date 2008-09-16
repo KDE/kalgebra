@@ -22,10 +22,10 @@
 #include <QLabel>
 #include <QWidget>
 #include <QPushButton>
-#include <QLineEdit>
 #include <QComboBox>
 
-#include <kcolorcombo.h>
+#include <KColorCombo>
+#include <KLineEdit>
 
 #include "expressionedit.h"
 
@@ -112,7 +112,7 @@ signals:
 	void accept();
 private:
 	ExpressionEdit *m_func;
-	QLineEdit *m_name;
+	KLineEdit *m_name;
 	QPushButton *m_ok;
 	QLabel *m_valid;
 	QLabel *m_validIcon;

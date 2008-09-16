@@ -114,7 +114,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		dlimit = 0.;
 	
 	if(ulimit<=dlimit) {
-		m_err += i18n("Can't have downlimit ≥ uplimit");
+		m_err += i18n("Cannot have downlimit ≥ uplimit");
 		return;
 	}
 	points.clear();

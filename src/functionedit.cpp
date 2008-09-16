@@ -51,7 +51,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	topLayout->setMargin(2);
 	topLayout->setSpacing(5);
 	
-	m_name = new QLineEdit(this);
+	m_name = new KLineEdit(this);
 	
 	m_func = new ExpressionEdit(this);
 	m_func->setAns("x");

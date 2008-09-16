@@ -651,14 +651,14 @@ Object* Analitza::operate(const Container* c)
 							bool correct;
 							ret=Operations::reduce(opt, ret, *it, correct);
 							if(!correct)
-								m_err.append(i18n("Can't calculate the %1(%2, %3)",
+								m_err.append(i18n("Cannot calculate the %1(%2, %3)",
 											op.toString(), ret->toString(), (*it)->toString()));
 						}
 					} else {
 						bool correct;
 						ret=Operations::reduceUnary(opt, ret, correct);
 						if(!correct)
-							m_err.append(i18n("Can't calculate the %1 %2", ret->toString(), op.toString()));
+							m_err.append(i18n("Cannot calculate the %1 %2", ret->toString(), op.toString()));
 					}
 				} else {
 					ret = numbers.first();
@@ -1657,20 +1657,20 @@ bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
 double Analitza::derivative(const QList< QPair<QString, double > >& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
-	QPair<QString, double> valp;
+	typedef QPair<QString, double> StringDoublePair;
 	//Image
-	foreach(valp, values) {//TODO: it should be +-hh
+	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
 		m_vars->stack(valp.first, valp.second);
 	}
 		
 	Object* v1=calc(m_exp.tree());
 		
-	foreach(valp, values)
+	foreach(const StringDoublePair& valp, values)
 		m_vars->destroy(valp.first);
 	
 	//Image+h
 	double h=0.00000001;
-	foreach(valp, values) {
+	foreach(const StringDoublePair& valp, values) {
 // 		volatile double temp=valp.second+h;
 // 		double hh=temp-valp.second;
 		m_vars->stack(valp.first, valp.second+h);
@@ -1678,7 +1678,7 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 	
 	Object* v2=calc(m_exp.tree());
 		
-	foreach(valp, values)
+	foreach(const StringDoublePair& valp, values)
 		m_vars->destroy(valp.first);
 	Q_ASSERT(v1->type()==Object::value && v2->type()==Object::value);
 	Cn *cn1=(Cn*)v1, *cn2=(Cn*)v2;

@@ -98,9 +98,9 @@ QString StringExpressionWriter::accept(const Container* var)
 			break;
 		case Container::lambda: {
 			QString last=ret.takeLast();
-			if(bvars.count()!=1) toret +="(";
+			if(bvars.count()!=1) toret +='(';
 			toret += bvars.join(", ");
-			if(bvars.count()!=1) toret +=")";
+			if(bvars.count()!=1) toret +=')';
 			if(!bounds.isEmpty()) toret+='='+bounds;
 			toret += "->" + last;
 		}	break;
@@ -135,9 +135,9 @@ QString StringExpressionWriter::accept(const Container* var)
 				default: {
 					QString bounding;
 					if(!bounds.isEmpty() || !bvars.isEmpty()) {
-						if(bvars.count()!=1) bounding +="(";
+						if(bvars.count()!=1) bounding +='(';
 						bounding += bvars.join(", ");
-						if(bvars.count()!=1) bounding +=")";
+						if(bvars.count()!=1) bounding +=')';
 						
 						bounding = ':'+bounding+'='+bounds;
 					}
@@ -150,9 +150,9 @@ QString StringExpressionWriter::accept(const Container* var)
 		case Container::downlimit:
 			break;
 		case Container::bvar:
-			if(ret.count()>1) toret += "(";
+			if(ret.count()>1) toret += '(';
 			toret += ret.join(", ");
-			if(ret.count()>1) toret += ")";
+			if(ret.count()>1) toret += ')';
 			break;
 		case Container::piece:
 			toret += ret[1]+" ? "+ret[0];

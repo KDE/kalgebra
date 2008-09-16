@@ -100,7 +100,6 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("minus3") << "x-x-x-x-x-x" << "-4*x";
 	QTest::newRow("minus3.1") << "x-x-x-x" << "-2*x";
 	QTest::newRow("minus3.2") << "minus(x,x,x,x,x,x)" << "-4*x";
-	QTest::newRow("minus4") << "x-(-x)-x-x" << "0";
 	QTest::newRow("addition") << "x+x" << "2*x";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
 	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";

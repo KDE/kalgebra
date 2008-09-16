@@ -51,7 +51,7 @@ public:
 	};
 	
 	/** Constructor. Constructs a new Graph2D. */
-	Graph2D(FunctionsModel* fm, QWidget *parent = 0);
+	explicit Graph2D(FunctionsModel* fm, QWidget *parent = 0);
 	
 	/** Destructor. */
 	~Graph2D();

@@ -34,6 +34,8 @@ class Expression::ExpressionPrivate
 public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
+	static Object* extractType(const Container& c, Container::ContainerType t);
+	
 	Object* m_tree;
 	QStringList m_err;
 };
@@ -250,24 +252,24 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 	return ret;
 }
 
-Expression Expression::uplimit(const Container& c)
+Object* Expression::ExpressionPrivate::extractType(const Container& c, Container::ContainerType t)
 {
 	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::uplimit)
-			return Expression(objectCopy(c->m_params.first()));
+		if(c->type()==Object::container && c->containerType()==t)
+			return c->m_params.first();
 	}
-	return Expression();
+	return 0;
+}
+
+Expression Expression::uplimit(const Container& c)
+{
+	return Expression(objectCopy(ExpressionPrivate::extractType(c, Container::uplimit)));
 }
 
 Expression Expression::downlimit(const Container& c)
 {
-	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
-		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::downlimit)
-			return Expression(objectCopy(c->m_params.first()));
-	}
-	return Expression();
+	return Expression(objectCopy(ExpressionPrivate::extractType(c, Container::downlimit)));
 }
 
 bool Expression::operator==(const Expression & e) const
