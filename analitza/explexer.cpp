@@ -132,7 +132,7 @@ ExpLexer::TOKEN ExpLexer::getToken(QString &a, int &l)
 		
 		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=ExpressionTable::tFunc;
-		} else if((a[i]=='{' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
+		} else if(a[i]=='{' && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=ExpressionTable::tBlock;
 		} else {
 			ret.val = QString("<ci>%1</ci>").arg(ret.val);

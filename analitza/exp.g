@@ -211,6 +211,13 @@ case $rule_number:
 ./
 
 -- function
+Expression ::= Func Value ;
+/.
+case $rule_number:
+	sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>";
+	break;
+./
+
 Expression ::= Func tLpr FBody tRpr ;
 /.
 case $rule_number:

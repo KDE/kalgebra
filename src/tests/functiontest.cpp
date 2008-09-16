@@ -52,7 +52,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->minus") << "x-2";
 	QTest::newRow("x->log") << "log x";
 	QTest::newRow("x->tan") << "tan x";
-	QTest::newRow("x->sum") << "sum(t->0..3, t)";
+	QTest::newRow("x->sum") << "sum(t : t=0..3)";
 	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
 	QTest::newRow("x->diff") << "diff(x)";
 	QTest::newRow("x->diffx") << "diff(x^2)";
@@ -61,7 +61,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
 	QTest::newRow("polar->hard") << "q=1..10->ceiling(q/(2*pi))";
-	QTest::newRow("polar->hard") << "q2..4+4->ceiling(q/(2*pi))";
+	QTest::newRow("polar->hard") << "q=2..(4+4)->ceiling(q/(2*pi))";
 	QTest::newRow("polar->strange") << "q->q/q";
 }
 
@@ -110,7 +110,7 @@ void FunctionTest::testCorrect_data()
 	QTest::addColumn<bool>("correct");
 	
 	QTest::newRow("empty function") << "" << false;
-	QTest::newRow("q->empty range") << "q->(0..0, q)" << false;
+	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
 }
 
 void FunctionTest::testCorrect()

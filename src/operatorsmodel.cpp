@@ -113,23 +113,20 @@ QString OperatorsModel::sample(Operator oper)
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
-		bounds="from..to";
+		bounds=" : var=from..to";
 	}
 	
 	QString sample = i18n("%1(", funcname);
-	if(!bounds.isEmpty()) {
-		sample += i18n("%1, ", bounds);
-	}
 	
 	if(oper.nparams()<0) {
-		return i18n("%1... parameters, ...)", sample);
+		return i18n("%1... parameters, ...%2)", sample, bounds);
 	} else {
 		for(int i=0; i<oper.nparams(); ++i) {
 			sample += i18n("par%1", i+1);
 			if(i<oper.nparams()-1)
 				sample += ", ";
 		}
-		return sample+')';
+		return sample+bounds+')';
 	}
 }
 
@@ -422,10 +419,10 @@ QString OperatorsModel::example(Operator o)
 			s="piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
 			break;
 		case Operator::sum:
-			s="x*sum(t->0..3, t)";
+			s="x*sum(t : t=0..3)";
 			break;
 		case Operator::product:
-			s="product(t->1..3, t)";
+			s="product(t : t=1..3)";
 			break;
 		case Operator::factorial:
 		case Operator::card:
