@@ -43,7 +43,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	this->setTabChangesFocus(true);
 	this->setAcceptRichText(false);
 	this->setAutoFormatting(AutoNone);
-	m_history.append("");
+	m_history.append(QString());
 	
 	m_helptip = new QLabel(this, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 	m_helptip->setFrameShape(QFrame::Box);
@@ -294,7 +294,7 @@ QString ExpressionEdit::editingWord(int pos, int &param)
 { //simplification use only
 	int p=0;
 	param=0;
-	return findPrec(this->toPlainText().mid(0,pos), p, pos, param, "");
+	return findPrec(this->toPlainText().mid(0,pos), p, pos, param, QString());
 }
 
 void ExpressionEdit::cursorMov()
@@ -436,12 +436,10 @@ void ExpressionEdit::focusOutEvent ( QFocusEvent * )
 void ExpressionEdit::simplify()
 {
 	Analitza a;
-	a.setExpression(Expression(toPlainText(), isMathML()));
+	a.setExpression(expression());
 	a.simplify();
-	if(isMathML())
-		this->setPlainText(a.expression()->toMathML());
-	else
-		this->setPlainText(a.expression()->toString());
+	
+	setExpression(*a.expression());
 	this->selectAll();
 }
 

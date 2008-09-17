@@ -32,7 +32,8 @@ AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
 	negreta.setFontWeight(QFont::Bold);
 }
 
-QString removeTags(const QString& in){
+QString removeTags(const QString& in)
+{
 	bool tag=false;
 	QString out;
 	for(int i=0; i<in.length(); i++){
@@ -51,6 +52,14 @@ QString removeTags(const QString& in){
 	return out;
 }
 
+QColor number(pal.color(QPalette::Active, QPalette::Link));
+QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
+QColor definedFunction(0,50,0);
+QColor undefinedFunction(0,0x86,0);
+QColor block(50,0,50);
+QColor uncorrect(Qt::red);
+QColor brHighlight(0xff,0xa0,0xff);
+QColor prHighlight(0xff,0xff,0x80);
 
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
@@ -59,13 +68,6 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		m_pos=text.length();
 	
 	QPalette pal=qApp->palette();
-		
-	const QColor number(pal.color(QPalette::Active, QPalette::Link));
-	const QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
-	const QColor definedFunction(0,50,0);
-	const QColor undefinedFunction(0,0x86,0);
-	const QColor block(50,0,50);
-	const QColor uncorrect(Qt::red);
 	
 	if(Expression::isMathML(text)) {
 		QString lasttag;
@@ -111,12 +113,11 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			m_correct=false;
 	} else {
 		int pos=0, len=0;
-		
 		QString op=text.trimmed();
 		ExpLexer::TOKEN t=ExpLexer::getToken(op, len);
 		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++) {}
 		
-		while(pos < text.length() && t.type!=ExpressionTable::EOF_SYMBOL){
+		while(pos < text.length() && t.type!=ExpressionTable::EOF_SYMBOL) {
 			QColor f;
 			bool isBold=false;
 			switch(t.type){
@@ -157,35 +158,33 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			t=ExpLexer::getToken(op, len);
 		}
 		
-		//To bg highlight the parentheses
-		int p=-1;
-		if(m_pos>0 && (text[m_pos-1]=='(' || text[m_pos-1]==')'))
-			p=m_pos-1;
-		else if(text.length()>m_pos && (text[m_pos]=='(' || text[m_pos]==')'))
-			p=m_pos;
-		
-		if(p>-1) {
-			QTextCharFormat form = format(p);
-			form.setBackground(QColor(0xff,0xff,0x80));
-			setFormat(p, 1, form);
-			if((p=complementary(text, p, Parenthesis))>=0)
-				setFormat(p, 1, form);
-		}
-		
-		//To bg highlight braces
-		p=-1;
-		if(m_pos>0 && (text[m_pos-1]=='{' || text[m_pos-1]=='}'))
-			p=m_pos-1;
-		else if(text.length()>m_pos && (text[m_pos]=='{' || text[m_pos]=='}'))
-			p=m_pos;
-		
-		if(p>-1) {
-			QTextCharFormat form = format(p);
-			form.setBackground(QColor(0xff,0xa0,0xff));
-			setFormat(p, 1, form);
-			if((p=complementary(text, p, Brace))>=0)
-				setFormat(p, 1, form);
-		}
+		bgHighlight(text, prHighlight, Parenthesis);
+		bgHighlight(text, brHighlight, Brace);
+	}
+}
+
+void AlgebraHighlighter::bgHighlight(const QString& text, const QColor& bgColor, ComplMode c)
+{
+	int p=-1;
+	if(m_pos>0 && (
+		(c==Parenthesis && (text[m_pos-1]=='(' || text[m_pos-1]==')')) ||
+		(c==Brace && (text[m_pos-1]=='{' || text[m_pos-1]=='}'))
+	))
+		p=m_pos-1;
+	else if(text.length()>m_pos && (
+		(c==Parenthesis && (text[m_pos]=='(' || text[m_pos]==')')) ||
+		(c==Brace && (text[m_pos]=='{' || text[m_pos]=='}'))
+	))
+		p=m_pos;
+	
+	if(p>-1) {
+		QTextCharFormat form = format(p);
+		form.setBackground(bgColor);
+		setFormat(p, 1, form);
+		int compp=complementary(text, p, c);
+		if(compp==-3)
+			form.setBackground(uncorrect);
+		setFormat(p, 1, form);
 	}
 }
 
@@ -214,7 +213,9 @@ int AlgebraHighlighter::complementary(const QString& t, int p, ComplMode m)
 	
 	p -= opening ? 1 : -1;
 	
-	if(cat!=0)
+	if(cat>0)
 		return -2;
+	else if(cat<0)
+		return -3;
 	return p;
 }

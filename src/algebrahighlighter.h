@@ -81,6 +81,8 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		enum ComplMode { Parenthesis, Brace };
 		int complementary(const QString&, int p, ComplMode m);
 		const Analitza* a;
+		
+		void bgHighlight(const QString& text, const QColor& bgColor, ComplMode c);
 };
 
 #endif
