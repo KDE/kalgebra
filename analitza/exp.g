@@ -163,8 +163,8 @@ bool ExpressionParser::parse(ExpLexer *lexer)
       const int state = m_stateStack.at(m_tos);
       if (yytoken == -1 && - TERMINAL_COUNT != action_index [state]) {
         yytoken = lexer->lex();
-		if(!lexer->current.error.isEmpty()) {
-			m_err += lexer->current.error;
+		if(!lexer->error().isEmpty()) {
+			m_err += lexer->error();
 			return false;
 		}
 	  }

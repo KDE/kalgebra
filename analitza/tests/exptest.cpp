@@ -166,19 +166,13 @@ void ExpTest::testLength()
 	QFETCH(QString, input);
 	QFETCH(QList<int>, lengths);
 	
-	int len=-1, pos;
-	QString op=input.trimmed();
-	ExpLexer::TOKEN t=ExpLexer::getToken(op, len);
-	
-	for(pos=0; pos<input.length() && input[pos].isSpace(); pos++) {}
+	ExpLexer lex=ExpLexer(input);
 	
 	int current=0;
-	while(!op.isEmpty() && pos < input.length() && t.type!=0/*EOF*/) {
-		QVERIFY(t.type>0);
-		pos += len;
-		QCOMPARE(lengths[current], len);
+	while(lex.lex()!=0/*EOF*/) {
+		QVERIFY(lex.current.type>0);
+		QCOMPARE((unsigned char) lengths[current], lex.current.len);
 		
-		t=ExpLexer::getToken(op, len);
 		current++;
 	}
 }

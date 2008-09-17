@@ -20,6 +20,7 @@
 #include "expressionparser.h"
 #include <QDebug>
 #include <QStringList>
+#include <KLocale>
 
 QMap<QChar, int> initializeOperators()
 {
@@ -55,105 +56,99 @@ QMap<QString, int> ExpLexer::m_longOperators=initializeLongOperators();
 // QMap<int, QString> ExpLexer::m_operatorTags=initializeOperatorTags();
 
 ExpLexer::ExpLexer(const QString &source)
-	: m_source(source)
-{
-}
+	: current(-1, 0), m_pos(0), m_source(source)
+{}
 
-ExpLexer::~ExpLexer()
-{
-}
+ExpLexer::~ExpLexer() {}
 
 int ExpLexer::lex()
 {
-	int dontlookatme=-1;
-	TOKEN c=getToken(m_source, dontlookatme);
-// 	if(c.type==ExpressionTable::tVal)
-	current=c;
+	Q_ASSERT(m_err.isEmpty());
+	if(m_tokens.isEmpty())
+		getToken(m_source, m_pos);
 	
-// 	if(m_longOperators.values().contains(c.type))
-// 		qDebug() << "-" << m_longOperators.key(c.type);
-// 	else if(m_operators.values().contains(c.type))
-// 		qDebug() << "-" << m_operators.key(c.type);
-// 	else
-// 		qDebug() << "-" << c.val << c.error;
+	Q_ASSERT(!m_tokens.isEmpty());
+	current=m_tokens.takeFirst();
 	
-	return c.type;
+// 	if(m_longOperators.values().contains(current.type))  qDebug() << "-" << m_longOperators.key(current.type);
+// 	else if(m_operators.values().contains(current.type)) qDebug() << "-" << m_operators.key(current.type);
+// 	else qDebug() << "-" << current.val << error();
+	
+	return current.type;
 }
 
-ExpLexer::TOKEN ExpLexer::getToken(QString &a, int &l)
+void ExpLexer::getToken(const QString &a, int &pos)
 {
-	bool exp= (l<0);
-	int i=0;
-	l=a.length();
-	a = a.trimmed();
-	TOKEN ret;
-	ret.type = -1;
+	for(; pos<a.length() && a[pos].isSpace(); pos++) {}
 	
-	if(a.isEmpty())
+	int oldpos=pos;
+	TOKEN ret(-1, pos);
+	
+	if(pos==a.length()) {
 		ret.type = ExpressionTable::EOF_SYMBOL;
-	else if(a[0].decompositionTag()==QChar::Super) {
-		for(int i=0; i<a.count() && a[i].decompositionTag()==QChar::Super; i++) {
+	} else if(a[pos].decompositionTag()==QChar::Super) {
+		QString super;
+		for(int i=pos; i<a.count() && a[i].decompositionTag()==QChar::Super; i++) {
 			ret.type = ExpressionTable::tPow;
-			a[i]=a[i].decomposition()[0];
+			super+=a[i].decomposition()[0];
+			
+			pos++;
 		}
-		a.prepend(' ');
-	} else if(a[0].isDigit() || (a[0]=='.' && a[1].isDigit())) {
+		m_tokens.append(TOKEN(ExpressionTable::tPow, pos, QString(), 0));
+		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
+	} else if(a[pos].isDigit() || (a[pos]=='.' && a[1].isDigit())) {
 		int coma=0;
 		
-		for(i=0; a[i].isDigit() || (a[i]=='.' && a[i+1]!='.'); i++){
+		int i;
+		for(i=pos; i<a.length() && (a[i].isDigit() || (a[i]=='.' && a[i+1]!='.')); i++){
 			if(a[i]=='.')
 				coma++;
 			ret.val += a[i];
-			a[i]=' ';
+			pos++;
 		}
-		for(; a[i].isSpace(); i++) {}
+		for(; i<a.length() && a[i].isSpace(); i++) {}
 		
-		if(exp && (a[i] == '(' || a[i].isLetter()))
-			a.prepend(" *");
+		if(i<a.length() && (a[i] == '(' || a[i].isLetter()))
+			m_tokens.append(TOKEN(ExpressionTable::tMul, 0));
 		
 		QStringList attrib;
 		if(coma)
 			attrib+="type='real'";
 		
 		if(coma>1)
-			ret.val="<cn>&error;</cn>";
+			m_err = i18nc("Error message", "Trying to codify an unknown value: %1", ret.val);
 		else if(attrib.isEmpty())
 			ret.val = QString("<cn>%2</cn>").arg(ret.val);
 		else
 			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
 		ret.type= ExpressionTable::tVal;
-	} else if(a[0].isLetter()) {//es una variable o funcret.val += a[0];
-		for(i=0; a[i].isLetterOrNumber() && a[i].decompositionTag()==QChar::NoDecomposition; i++){
+	} else if(a[pos].isLetter()) {//es una variable o funcret.val += a[0];
+		int i;
+		for(i=pos; i<a.length() && a[i].isLetterOrNumber() && a[i].decompositionTag()==QChar::NoDecomposition; i++){
 			ret.val += a[i];
-			a[i]=' ';
+			pos++;
 		}
 		
-		for(; a[i].isSpace(); i++) {}
+		for(; i<a.length() && a[i].isSpace(); i++) {}
 		
-		if((a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
+		if(i<a.length() && (a[i]=='(' || a[i].isLetterOrNumber()) && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=ExpressionTable::tFunc;
-		} else if(a[i]=='{' && a[i].decompositionTag()==QChar::NoDecomposition) {
+		} else if(i<a.length() && a[i]=='{' && a[i].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=ExpressionTable::tBlock;
 		} else {
 			ret.val = QString("<ci>%1</ci>").arg(ret.val);
 			ret.type= ExpressionTable::tVal;
 		}
-	} else if(a.length()>=2 && m_longOperators.contains(QString(a[0])+a[1])) {
-		ret.type=m_longOperators[QString(a[0])+a[1]];
-// 		ret.val=m_operatorTags[ret.type];
-		a[0]=a[1]=' ';
-	} else if(!a.isEmpty() && m_operators.contains(a[0])) {
-		ret.type=m_operators[a[0]];
-// 		ret.val=m_operatorTags[ret.type];
-		a[0]=' ';
+	} else if(a.length()>pos+1 && m_longOperators.contains(QString(a[pos])+a[pos+1])) {
+		ret.type=m_longOperators[QString(a[pos])+a[pos+1]];
+		pos+=2;
+	} else if(a.length()>pos && m_operators.contains(a[pos])) {
+		ret.type=m_operators[a[pos]];
+		pos++;
 	} else {
 		ret.val=-1;
-		ret.error=QString("Unknown token %1").arg(a[0]);
+		m_err=i18n("Unknown token %1", a[pos]);
 	}
-	
-// 	qDebug() << "lalala" << a << ret.val;
-	a=a.trimmed();
-	l-=a.length();
-	
-	return ret;
+	ret.len = pos-oldpos;
+	m_tokens.append(ret);
 }

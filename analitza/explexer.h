@@ -22,16 +22,22 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
+#include <QtCore/QQueue>
 #include "analitzaexport.h"
 
 class ANALITZA_EXPORT ExpLexer
 {
 	public:
-		typedef struct {
-			QString val;
+		struct TOKEN
+		{
+			TOKEN(int _type, uint _pos, const QString& _val=QString(), unsigned char _len=0) :
+				type(_type), val(_val), len(_len), pos(_pos) {}
+			
 			int type;
-			QString error;
-		} TOKEN;
+			QString val;
+			unsigned char len;
+			uint pos;
+		};
 		
 		ExpLexer(const QString &source);
 		~ExpLexer();
@@ -39,15 +45,17 @@ class ANALITZA_EXPORT ExpLexer
 		int lineNumber() const { return 0; }
 		
 		TOKEN current;
-	
-		static TOKEN getToken(QString &a, int &l);
+		QString error() const { return m_err; }
 	private:
+		void getToken(const QString &a, int &p);
+		QString m_err;
 		QChar next();
+		int m_pos;
 		
 		QString m_source;
+		QQueue<TOKEN> m_tokens;
 		static QMap<QChar, int> m_operators;
 		static QMap<QString, int> m_longOperators;
-// 		static QMap<int, QString> m_operatorTags;
 };
 
 #endif

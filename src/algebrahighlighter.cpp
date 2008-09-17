@@ -52,15 +52,6 @@ QString removeTags(const QString& in)
 	return out;
 }
 
-QColor number(pal.color(QPalette::Active, QPalette::Link));
-QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
-QColor definedFunction(0,50,0);
-QColor undefinedFunction(0,0x86,0);
-QColor block(50,0,50);
-QColor uncorrect(Qt::red);
-QColor brHighlight(0xff,0xa0,0xff);
-QColor prHighlight(0xff,0xff,0x80);
-
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
 	m_correct=true;
@@ -68,6 +59,14 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		m_pos=text.length();
 	
 	QPalette pal=qApp->palette();
+	QColor number(pal.color(QPalette::Active, QPalette::Link));
+	QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
+	QColor definedFunction(0,50,0);
+	QColor undefinedFunction(0,0x86,0);
+	QColor block(50,0,50);
+	QColor uncorrect(Qt::red);
+	QColor brHighlight(0xff,0xa0,0xff);
+	QColor prHighlight(0xff,0xff,0x80);
 	
 	if(Expression::isMathML(text)) {
 		QString lasttag;
@@ -112,33 +111,30 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		else
 			m_correct=false;
 	} else {
-		int pos=0, len=0;
-		QString op=text.trimmed();
-		ExpLexer::TOKEN t=ExpLexer::getToken(op, len);
-		for(pos=0; pos<text.length() && text[pos].isSpace(); pos++) {}
+		ExpLexer lex(text.trimmed());
 		
-		while(pos < text.length() && t.type!=ExpressionTable::EOF_SYMBOL) {
+		while(lex.lex()!=ExpressionTable::EOF_SYMBOL) {
 			QColor f;
 			bool isBold=false;
-			switch(t.type){
+			switch(lex.current.type){
 				case ExpressionTable::tVal:
-					if(t.val.mid(1,2)=="cn") //if it is a number
+					if(lex.current.val.mid(1,2)=="cn") //if it is a number
 						f=number;
 					else { //if it is a variable
-						if(a && a->variables()->contains(removeTags(t.val)))
+						if(a && a->variables()->contains(removeTags(lex.current.val)))
 							f=number;
 						else
 							f=variable;
 					}
 					break;
 				case ExpressionTable::tFunc:
-					if(a && a->variables()->contains(t.val))
+					if(a && a->variables()->contains(lex.current.val))
 						f=definedFunction;
 					else
 						f=undefinedFunction;
 					break;
 				case ExpressionTable::tBlock:
-					if(Container::toContainerType(t.val))
+					if(Container::toContainerType(lex.current.val))
 						f=block;
 					else
 						f=uncorrect;
@@ -149,13 +145,11 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					break;
 				default:
 					isBold=true;
-					setFormat(pos, len, negreta);
+					setFormat(lex.current.pos, lex.current.len, negreta);
 					break;
 			}
 			if(!isBold)
-				setFormat(pos, len, f);
-			pos += len;
-			t=ExpLexer::getToken(op, len);
+				setFormat(lex.current.pos, lex.current.len, f);
 		}
 		
 		bgHighlight(text, prHighlight, Parenthesis);
@@ -183,7 +177,7 @@ void AlgebraHighlighter::bgHighlight(const QString& text, const QColor& bgColor,
 		setFormat(p, 1, form);
 		int compp=complementary(text, p, c);
 		if(compp==-3)
-			form.setBackground(uncorrect);
+			form.setBackground(Qt::red);
 		setFormat(p, 1, form);
 	}
 }
