@@ -131,7 +131,7 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change their values (just a way to trick the log).
 
-Every time you enter an expression, the ans variable's value will be changed to the last result.
+Every time you enter an expression, the ans variable's value will be changed to the last result.</para>
 
 <para>Examples:</para>
 <itemizedlist>
@@ -142,7 +142,7 @@ Every time you enter an expression, the ans variable's value will be changed to 
 <listitem><para>f(pi)</para></listitem>
 </itemizedlist>
 
-Menu options:</para>
+<para>Menu options:</para>
 
 <variablelist>
 
