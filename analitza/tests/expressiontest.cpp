@@ -143,6 +143,10 @@ void ExpressionTest::testCorrection()
 {
 	QFETCH(QString, input);
 	QFETCH(bool, isCorrect);
+	for(int i=0; i<input.length(); i++)
+	{
+		e->setText(input.mid(0, i));
+	}
 	e->setText(input);
 	QCOMPARE(e->isCorrect(), isCorrect);
 }

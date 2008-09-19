@@ -63,7 +63,6 @@ ExpLexer::~ExpLexer() {}
 
 int ExpLexer::lex()
 {
-	Q_ASSERT(m_err.isEmpty());
 	if(m_tokens.isEmpty())
 		getToken(m_source, m_pos);
 	
@@ -100,7 +99,7 @@ void ExpLexer::getToken(const QString &a, int &pos)
 		int coma=0;
 		
 		int i;
-		for(i=pos; i<a.length() && (a[i].isDigit() || (a[i]=='.' && a[i+1]!='.')); i++){
+		for(i=pos; i<a.length() && (a[i].isDigit() || (i+1<a.length() && a[i]=='.' && a[i+1]!='.')); i++){
 			if(a[i]=='.')
 				coma++;
 			ret.val += a[i];
