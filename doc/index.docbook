@@ -98,7 +98,7 @@ the unicode ² characters. Powers are one way to make roots too, you can do it
 like: a**(1/b)</para></listitem>
 <listitem><para>-&gt; : lambda. It’s the way to specify the bounded variable in
 a function.</para></listitem>
-<listitem><para>x-&gt;a..b : This is used when we need to delimitate a range
+<listitem><para>x=a..b : This is used when we need to delimitate a range
 (bounded variable+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
 <listitem><para>() : It is used to specify a higher priority.</para></listitem>
 <listitem><para>abc(params) : Functions. When the parser finds a function, it checks
@@ -130,6 +130,18 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 <para>&kalgebra;'s console is useful as a calculator. There you
 have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change their values (just a way to trick the log).
+
+Every time you enter an expression, the ans variable's value will be changed to the last result.
+
+<para>Examples:</para>
+<itemizedlist>
+<listitem><para>sin(pi)</para></listitem>
+<listitem><para>k:=33</para></listitem>
+<listitem><para>sum(k*x : x=0..x)</para></listitem>
+<listitem><para>f:=p->p*k</para></listitem>
+<listitem><para>f(pi)</para></listitem>
+</itemizedlist>
+
 Menu options:</para>
 
 <variablelist>
@@ -201,8 +213,8 @@ as the bounded variables.</para>
 <listitem><para>sin(x)</para></listitem>
 <listitem><para>x²</para></listitem>
 <listitem><para>y->sin(y)</para></listitem>
-<listitem><para>q->(0..100, q)</para></listitem>
 <listitem><para>q->3*sin(7q)</para></listitem>
+<listitem><para>q=0..100->q</para></listitem>
 </itemizedlist>
 <para>If you have entered the function click on the <guibutton>OK</guibutton> button to display the graph in the main window.</para>
 
