@@ -99,8 +99,8 @@ void Graph2D::drawPolarAxes(QPainter *w)
 	zero= center.x()>0. && center.y()>0. && center.x()<width() && center.y()<height();
 	double thmin = zero ? 0. : fmin(floor(fmin(viewport.left(), viewport.bottom())), ceil(fmax(viewport.right(), viewport.top())));
 	double thmax = ceil(fmax(
-				sqrt(pow(viewport.topRight().x(), 2.) + pow(viewport.topRight().y(), 2.)),
-				sqrt(pow(viewport.bottomLeft().x(), 2.)+ pow(viewport.bottomLeft().y(), 2.))
+				sqrt(pow(viewport.topRight().x(), qreal(2)) + pow(viewport.topRight().y(), qreal(2))),
+				sqrt(pow(viewport.bottomLeft().x(), qreal(2))+ pow(viewport.bottomLeft().y(), qreal(2)))
 			    )
 			);
 		
