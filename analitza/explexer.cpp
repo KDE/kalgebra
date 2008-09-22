@@ -22,62 +22,14 @@
 #include <QStringList>
 #include <KLocale>
 
-QMap<QChar, int> initializeOperators()
-{
-	QMap<QChar, int> operators;
-	operators['+']=ExpressionTable::tAdd;
-	operators['-']=ExpressionTable::tSub;
-	operators['*']=ExpressionTable::tMul;
-	operators['/']=ExpressionTable::tDiv;
-	operators['^']=ExpressionTable::tPow;
-	operators['(']=ExpressionTable::tLpr;
-	operators[')']=ExpressionTable::tRpr;
-	operators[',']=ExpressionTable::tComa;
-	operators['{']=ExpressionTable::tLcb;
-	operators['}']=ExpressionTable::tRcb;
-	operators['?']=ExpressionTable::tQm;
-	operators[':']=ExpressionTable::tColon;
-	operators['=']=ExpressionTable::tEq;
-	return operators;
-}
-
-QMap<QString, int> initializeLongOperators()
-{
-	QMap<QString, int> longOperators;
-	longOperators["->"]=ExpressionTable::tLambda;
-	longOperators[":="]=ExpressionTable::tAssig;
-	longOperators[".."]=ExpressionTable::tLimits;
-	longOperators["**"]=ExpressionTable::tPow;
-	return longOperators;
-}
-
-QMap<QChar, int> ExpLexer::m_operators=initializeOperators();
-QMap<QString, int> ExpLexer::m_longOperators=initializeLongOperators();
-// QMap<int, QString> ExpLexer::m_operatorTags=initializeOperatorTags();
-
 ExpLexer::ExpLexer(const QString &source)
-	: current(-1, 0), m_pos(0), m_source(source)
+	: AbstractLexer(source), m_pos(0)
 {}
 
-ExpLexer::~ExpLexer() {}
-
-int ExpLexer::lex()
+void ExpLexer::getToken()
 {
-	if(m_tokens.isEmpty())
-		getToken(m_source, m_pos);
-	
-	Q_ASSERT(!m_tokens.isEmpty());
-	current=m_tokens.takeFirst();
-	
-// 	if(m_longOperators.values().contains(current.type))  qDebug() << "-" << m_longOperators.key(current.type);
-// 	else if(m_operators.values().contains(current.type)) qDebug() << "-" << m_operators.key(current.type);
-// 	else qDebug() << "-" << current.val << error();
-	
-	return current.type;
-}
-
-void ExpLexer::getToken(const QString &a, int &pos)
-{
+	int& pos=m_pos;
+	const QString& a=m_source;
 	for(; pos<a.length() && a[pos].isSpace(); pos++) {}
 	
 	int oldpos=pos;

@@ -19,6 +19,8 @@ set(analitza_SRCS
 	expressiontable.cpp	#generated
 	expressionparser.cpp	#   ''
 	explexer.cpp
+	abstractlexer.cpp
+	mathmlpresentationlexer.cpp
 )
 
 kde4_add_library(analitza SHARED ${analitza_SRCS})

@@ -63,7 +63,7 @@
 #include <QtCore/QVector>
 #include "expressiontable_p.h"
 #include "analitzaexport.h"
-class ExpLexer;
+class AbstractLexer;
 
 class ANALITZA_EXPORT ExpressionParser : protected $table
 {
@@ -71,7 +71,7 @@ class ANALITZA_EXPORT ExpressionParser : protected $table
 		ExpressionParser();
 		~ExpressionParser();
 
-		bool parse(ExpLexer *lexer);
+		bool parse(AbstractLexer *lexer);
 
 		bool isCompletelyRead() const { return true; }
 		bool isCorrect() const { return m_err.isEmpty(); }
@@ -120,7 +120,7 @@ class ANALITZA_EXPORT ExpressionParser : protected $table
 
 #include <QtCore/QDebug>
 #include "expressionparser.h"
-#include "explexer.h"
+#include "abstractlexer.h"
 #include "operator.h"
 
 ExpressionParser::ExpressionParser()
@@ -149,7 +149,7 @@ void ExpressionParser::reallocateStack()
 	m_stateStack.resize(size);
 }
 
-bool ExpressionParser::parse(ExpLexer *lexer)
+bool ExpressionParser::parse(AbstractLexer *lexer)
 {
   const int INITIAL_STATE = 0;
   int yytoken = -1;

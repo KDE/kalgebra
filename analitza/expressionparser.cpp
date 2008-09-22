@@ -24,7 +24,7 @@
 
 #include <QtCore/QDebug>
 #include "expressionparser.h"
-#include "explexer.h"
+#include "abstractlexer.h"
 #include "operator.h"
 
 ExpressionParser::ExpressionParser()
@@ -53,7 +53,7 @@ void ExpressionParser::reallocateStack()
 	m_stateStack.resize(size);
 }
 
-bool ExpressionParser::parse(ExpLexer *lexer)
+bool ExpressionParser::parse(AbstractLexer *lexer)
 {
   const int INITIAL_STATE = 0;
   int yytoken = -1;

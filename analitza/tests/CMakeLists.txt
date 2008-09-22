@@ -13,3 +13,7 @@ target_link_libraries(expressiontest ${QT_QTXML_LIBRARY} ${QT_QTTEST_LIBRARY} an
 set( exptest_SRCS exptest.cpp)
 kde4_add_unit_test(exptest ${exptest_SRCS})
 target_link_libraries(exptest ${QT_QTXML_LIBRARY} ${QT_QTTEST_LIBRARY} analitza)
+
+set( mathmlpresentationlexertest_SRCS mathmlpresentationlexertest.cpp)
+kde4_add_unit_test(mathmlpresentationlexertest ${mathmlpresentationlexertest_SRCS})
+target_link_libraries(mathmlpresentationlexertest ${QT_QTXML_LIBRARY} ${QT_QTTEST_LIBRARY} analitza)
