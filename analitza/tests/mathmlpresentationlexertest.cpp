@@ -152,6 +152,41 @@ void MathMLPresentationLexerTest::testConversion_data()
 			"</mfrac>"
 		"</mrow>"
 	"</math>" << "a/(b/2)";
+	
+	QTest::newRow("13th-test") <<
+	"<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	"<mrow>"
+		"<msqrt>"
+			"<mn>1</mn>"
+			"<mo>+</mo>"
+			"<msqrt>"
+				"<mn>1</mn>"
+				"<mo>+</mo>"
+				"<msqrt>"
+					"<mn>1</mn>"
+					"<mo>+</mo>"
+					"<msqrt>"
+						"<mn>1</mn>"
+						"<mo>+</mo>"
+						"<msqrt>"
+							"<mn>1</mn>"
+							"<mo>+</mo>"
+							"<msqrt>"
+								"<mn>1</mn>"
+								"<mo>+</mo>"
+								"<msqrt>"
+									"<mn>1</mn>"
+									"<mo>+</mo>"
+									"<mi>x</mi>"
+								"</msqrt>"
+							"</msqrt>"
+						"</msqrt>"
+					"</msqrt>"
+				"</msqrt>"
+			"</msqrt>"
+		"</msqrt>"
+	"</mrow>"
+	"</math>" << "root((1+root((1+root((1+root((1+root((1+root((1+root((1+x))))))))))))))";
 }
 
 void MathMLPresentationLexerTest::testConversion()

@@ -63,6 +63,7 @@ void ExpTest::testSimple_data()
 	
 	QTest::newRow("function") << "func(x, y)" << "<math><apply><ci type='function'>func</ci>"
 												"<ci>x</ci><ci>y</ci></apply></math>";
+	QTest::newRow("function_np") << "sin 1/x" << "<math><apply><divide /><apply><sin /><cn>1</cn></apply><ci>x</ci></apply></math>";
 	QTest::newRow("block") << "blk{x, y}" << "<math><blk><ci>x</ci><ci>y</ci></blk></math>";
 	QTest::newRow("lambda") << "x->(3)" << "<math><lambda><bvar><ci>x</ci></bvar><cn>3</cn></lambda></math>";
 	

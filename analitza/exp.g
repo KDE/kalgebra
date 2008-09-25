@@ -28,6 +28,8 @@
 
 %left tComa
 %right tAssig
+--%left func_prec
+--%left tFunc
 %left otherwise_prec
 %left tQm
 %left tSub tAdd
@@ -201,31 +203,34 @@ case $rule_number:
 	break;
 ./
 
-Expression ::= Value ;
-
-Expression ::= tLpr Expression tRpr ;
+PrimaryExpression ::= Value;
+PrimaryExpressionExt ::= tLpr Expression tRpr;
 /.
 case $rule_number:
 	sym(1) = sym(2);
 	break;
 ./
 
+
+PrimaryExpressionExt ::= PrimaryExpression;
+Expression ::= PrimaryExpressionExt;
+
 -- function
-Expression ::= Func Value ;
+Expression ::= Func PrimaryExpression ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>";
 	break;
 ./
 
-Expression ::= Func tLpr FBody tRpr ;
+PrimaryExpression ::= Func tLpr FBody tRpr ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+sym(3)+"</apply>";
 	break;
 ./
 
-Expression ::= Func tLpr       tRpr ;
+PrimaryExpression ::= Func tLpr       tRpr ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+"</apply>";
@@ -243,7 +248,7 @@ case $rule_number:
 ./
 
 -- block
-Expression ::= Block tLcb Parameters tRcb ;
+PrimaryExpression ::= Block tLcb Parameters tRcb ;
 /.
 case $rule_number: {
 	QString blockName=sym(1);
@@ -275,7 +280,7 @@ case $rule_number:
 ./
 
 -- binary constructions
-Expression ::= Expression tAdd Expression ; /. case $rule_number: sym(1) = "<apply><plus />" +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tAdd Expression ; /. case $rule_number: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tSub Expression ; /. case $rule_number: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tMul Expression ; /. case $rule_number: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tDiv Expression ; /. case $rule_number: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; ./
@@ -328,7 +333,7 @@ case $rule_number:
 	break;
 ./
 
-Limits ::= Value tLimits Value;
+Limits ::= PrimaryExpressionExt tLimits PrimaryExpressionExt;
 /.
 case $rule_number:
 	sym(1) = "<uplimit>"+sym(3)+"</uplimit><downlimit>"+sym(1)+"</downlimit>";
@@ -360,16 +365,17 @@ case $rule_number:
 		m_errorLineNumber = lexer->lineNumber();
 		m_err.clear();
 		m_err.append(QString());
+		
 		if (shifts && shifts < 3) {
 			bool first = true;
-
+			
 			for (int s = 0; s < shifts; ++s) {
 				QString error;
 				if (first)
 					error += QLatin1String("Expected ");
 				else
 					error += QLatin1String(", ");
-
+				
 				first = false;
 				error += '\''+QLatin1String(spell[expected_tokens[s]])+'\'';
 				m_err.last() += error;

@@ -98,4 +98,6 @@ void ExpLexer::getToken()
 	}
 	ret.len = pos-oldpos;
 	m_tokens.append(ret);
+	
+	printQueue(m_tokens);
 }

@@ -27,6 +27,7 @@ MathMLPresentationLexer::MathMLPresentationLexer(const QString &source)
 {
 	m_tokenTags["mfrac"]=TOKEN(ExpressionTable::tDiv, 0, "divide");
 	m_tokenTags["msup"]=TOKEN(ExpressionTable::tPow, 0, "power");
+	m_tokenTags["msqrt"]=TOKEN(ExpressionTable::tPow, 0, "root");
 }
 
 void MathMLPresentationLexer::getToken()
@@ -71,6 +72,9 @@ void MathMLPresentationLexer::getToken()
 					TOKEN ret(ExpressionTable::tVal, 0, QString("<ci>%1</ci>").arg(m_xml.text().toString()));
 					m_tokens.append(ret);
 				} else if(m_tags.top()=="mo") {
+					if(!m_tokens.isEmpty() && m_tokens.last().type==ExpressionTable::tComa)
+						m_tokens.takeLast();
+					
 					int t;
 					QString op=m_xml.text().toString();
 					if(op.length()==1 && m_operators.contains(op[0])) t = m_operators[op[0]];
@@ -83,6 +87,8 @@ void MathMLPresentationLexer::getToken()
 				break;
 		}
 	}
+	
+	printQueue(m_tokens);
 	
 	if (m_xml.error())
 	{

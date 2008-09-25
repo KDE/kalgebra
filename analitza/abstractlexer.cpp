@@ -69,7 +69,7 @@ void AbstractLexer::printQueue(const QQueue<TOKEN>& q) const
 		else if(m_operators.values().contains(t.type)) res += m_operators.key(t.type);
 		else res+= (t.val + error());
 	}
-	qDebug() << "(" << res.join(QString()) << ")";
+// 	qDebug() << "(" << res.join(QString()) << ")";
 }
 
 int AbstractLexer::lex()
