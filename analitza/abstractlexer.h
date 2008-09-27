@@ -42,7 +42,8 @@ class ANALITZA_EXPORT AbstractLexer
 		AbstractLexer(const QString &source);
 		virtual ~AbstractLexer();
 		int lex();
-		int lineNumber() const { return 0; }
+		int lineNumber() const { return m_lines; }
+		bool isCompletelyRead() const { return m_openPr==0 && m_openCb==0; }
 		
 		TOKEN current;
 		QString error() const { return m_err; }
@@ -50,7 +51,8 @@ class ANALITZA_EXPORT AbstractLexer
 		QString m_err;
 		QString m_source;
 		
-		
+		int m_lines;
+		int m_openPr, m_openCb;
 		QQueue<TOKEN> m_tokens;
 		static QMap<QChar, int> m_operators;
 		static QMap<QString, int> m_longOperators;

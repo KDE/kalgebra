@@ -33,10 +33,10 @@ char Operator::m_words[nOfOps][14] = {
 	"sinh", "cosh", "tanh",
 	"sech", "csch", "coth",
 	"arcsin", "arccos", "arctan",
-	"arccot", "arcoth",
+	"arccot", //"arccoth",
 	"arccosh", "arccsc", "arccsch",
 	"arcsec", "arcsech", "arcsinh", "arctanh",
-	"exp", "ln", "log", "real",
+	"exp", "ln", "log",// "real",
 // 	"conjugate", "arg", "imaginary",
 	"sum", "product", "diff",
 	//Vector operations
@@ -134,7 +134,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case arccos:
 		case arctan:
 		case arccot:
-		case arccoth:
+// 		case arccoth:
 		case arccosh:
 		case arccsc:
 		case arccsch:
@@ -147,7 +147,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case log:
 		case _not:
 		case factorial:
-		case real:
+// 		case real:
 // 		case conjugate:
 // 		case arg:
 // 		case imaginary:
@@ -236,7 +236,7 @@ bool Operator::isTrigonometric(enum OperatorType t)
 		case arccos:
 		case arctan:
 		case arccot:
-		case arccoth:
+// 		case arccoth:
 		case arccosh:
 		case arccsc:
 		case arccsch:

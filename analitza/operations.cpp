@@ -23,7 +23,6 @@
 #include <KLocale>
 #include <cmath>
 
-
 #include "value.h"
 #include "container.h"
 #include "expression.h"
@@ -222,10 +221,18 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 		case Operator::arccosh:
 			a=log(a+sqrt(a-1.)*sqrt(a+1.));
 			break;
-// 		case Operator::arccsc:
-// 		case Operator::arccsch:
-// 		case Operator::arcsec:
-// 		case Operator::arcsech:
+		case Operator::arccsc:
+			a=1/asin(a);
+			break;
+		case Operator::arccsch:
+			a=1/(0.5*(log(1.+1./a)-log(1.-1./a)));
+			break;
+		case Operator::arcsec:
+			a=1/(acos(a));
+			break;
+		case Operator::arcsech:
+			a=1/(log(a+sqrt(a-1.)*sqrt(a+1.)));
+			break;
 		case Operator::arctanh:
 			a=atanh(a);
 			break;

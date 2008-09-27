@@ -75,7 +75,6 @@ class ANALITZA_EXPORT ExpressionParser : protected $table
 
 		bool parse(AbstractLexer *lexer);
 
-		bool isCompletelyRead() const { return true; }
 		bool isCorrect() const { return m_err.isEmpty(); }
 		int errorLineNumber() const { return m_errorLineNumber; }
 		QStringList error() const { return m_err; }

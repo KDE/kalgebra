@@ -55,7 +55,7 @@ QMap<QChar, int> AbstractLexer::m_operators=initializeOperators();
 QMap<QString, int> AbstractLexer::m_longOperators=initializeLongOperators();
 
 AbstractLexer::AbstractLexer(const QString &source)
-	: current(-1, 0), m_source(source)
+	: current(-1, 0), m_source(source), m_lines(0), m_openPr(0), m_openCb(0)
 {}
 
 AbstractLexer::~AbstractLexer() {}
@@ -80,6 +80,23 @@ int AbstractLexer::lex()
 	Q_ASSERT(!m_tokens.isEmpty());
 	current=m_tokens.takeFirst();
 // 	printQueue(m_tokens);
+	
+	switch(current.type) {
+		case ExpressionTable::tLpr:
+			m_openPr++;
+			break;
+		case ExpressionTable::tRpr:
+			m_openPr--;
+			break;
+		case ExpressionTable::tLcb:
+			m_openCb++;
+			break;
+		case ExpressionTable::tRcb:
+			m_openCb--;
+			break;
+		default:
+			break;
+	}
 	
 	return current.type;
 }

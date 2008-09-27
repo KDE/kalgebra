@@ -209,9 +209,9 @@ QString OperatorsModel::description(Operator o)
 		case Operator::arccot:
 			s = i18n("Arc cotangent");
 			break;
-		case Operator::arccoth:
-			s = i18n("Hyperbolic arc cotangent");
-			break;
+// 		case Operator::arccoth:
+// 			s = i18n("Hyperbolic arc cotangent");
+// 			break;
 		case Operator::arctanh:
 			s = i18n("Hyperbolic arc tangent");
 			break;
@@ -260,9 +260,9 @@ QString OperatorsModel::description(Operator o)
 // 		case Operator::arg:
 // 			s = "---";//i18n("Arg?");
 // 			break;
-		case Operator::real:
-			s = i18n("Real");
-			break;
+// 		case Operator::real:
+// 			s = i18n("Real");
+// 			break;
 // 		case Operator::imaginary:
 // 			s = i18n("Imaginary");
 // 			break;
@@ -424,15 +424,19 @@ QString OperatorsModel::example(Operator o)
 		case Operator::product:
 			s="product(t : t=1..3)";
 			break;
-		case Operator::factorial:
 		case Operator::card:
+			s="card(vector{x,y,z})";
+			break;
 		case Operator::scalarproduct:
+			s="scalarproduct(vector{0,x}, vector{x,0})";
+			break;
+		case Operator::factorial:
 		case Operator::diff:
 		case Operator::arcsech:
 		case Operator::arcsec:
 		case Operator::arccsch:
 		case Operator::arccsc:
-		case Operator::arccoth:
+// 		case Operator::arccoth:
 		case Operator::sin:
 		case Operator::cos:
 		case Operator::tan:
@@ -472,7 +476,7 @@ QString OperatorsModel::example(Operator o)
 		case Operator::nOfOps:
 		case Operator::none:
 		case Operator::function:
-		case Operator::real:
+// 		case Operator::real:
 // 		case Operator::conjugate:
 // 		case Operator::arg:
 // 		case Operator::imaginary:
