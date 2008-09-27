@@ -137,6 +137,8 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("uncotextualized bounds") << "x:=9..(9+9)" << false;
 	QTest::newRow("uncotextualized bounds") << "3+(9..(9+9))" << false;
 	QTest::newRow("uncotextualized bounds") << "3+9..(9+9)" << false;
+	QTest::newRow("missing )") << "(" << false;
+	QTest::newRow("missing }") << "vector{" << false;
 }
 
 void ExpressionTest::testCorrection()
@@ -149,6 +151,12 @@ void ExpressionTest::testCorrection()
 	}
 	e->setText(input);
 	QCOMPARE(e->isCorrect(), isCorrect);
+	QVERIFY(e->error().isEmpty()==isCorrect);
+	foreach(const QString& s, e->error()) {
+		QVERIFY(!s.isEmpty());
+		if(s.isEmpty())
+			qDebug() << e->error();
+	}
 }
 
 #include "expressiontest.moc"

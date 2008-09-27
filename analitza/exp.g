@@ -123,6 +123,7 @@ class ANALITZA_EXPORT ExpressionParser : protected $table
 #include "expressionparser.h"
 #include "abstractlexer.h"
 #include "operator.h"
+#include <KLocale>
 
 ExpressionParser::ExpressionParser()
 {}
@@ -362,26 +363,23 @@ case $rule_number:
 		}
 
 		m_errorLineNumber = lexer->lineNumber();
-		m_err.clear();
-		m_err.append(QString());
+		int tokFoundType=lexer->current.type;
+		QString error;
 		
-		if (shifts && shifts < 3) {
-			bool first = true;
-			
+		if (shifts && shifts<3) {
+			QString tokFound(spell[tokFoundType]);
+			QStringList expectedTokens;
 			for (int s = 0; s < shifts; ++s) {
-				QString error;
-				if (first)
-					error += QLatin1String("Expected ");
-				else
-					error += QLatin1String(", ");
-				
-				first = false;
-				error += '\''+QLatin1String(spell[expected_tokens[s]])+'\'';
-				m_err.last() += error;
+				expectedTokens += '\''+QLatin1String(spell[expected_tokens[s]])+'\'';
 			}
-			m_err.last() += " instead of " + QLatin1String(spell[lexer->current.type]);
-		}
-
+			error=i18nc("error message", "Expected %1 instead of %2", expectedTokens.join(i18n(", ")), tokFound);
+		} else if(tokFoundType==tLpr) {
+			error=i18n("Missing right parenthesis");
+		} else if(tokFoundType==tRpr || tokFoundType==tRcb) {
+			error=i18n("Unbalanced right parenthesis");
+		} else
+			error=i18n("Unexpected token %1", spell[tokFoundType]);
+		m_err.append(error);
 		return false;
 		}
 	}

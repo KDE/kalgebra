@@ -124,7 +124,7 @@ bool ConsoleHtml::loadScript(const QString& path)
 				ExpressionParser parser;
 				parser.parse(&lex);
 				
-				if(!line.isEmpty() && parser.isCompletelyRead()) {
+				if(!line.isEmpty() && lex.isCompletelyRead()) {
 					correct &= addOperation(line, Expression::isMathML(line));
 					line.clear();
 				}

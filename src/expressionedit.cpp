@@ -475,7 +475,7 @@ bool ExpressionEdit::returnPress()
 		ExpLexer lex(toPlainText());
 		ExpressionParser ex;
 		ex.parse(&lex);
-		if(ex.isCompletelyRead()) {
+		if(lex.isCompletelyRead()) {
 			setCorrect(true);
 			emit returnPressed();
 		} else {

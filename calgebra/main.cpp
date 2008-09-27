@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 			ExpLexer lex(entry);
 			ExpressionParser ex;
 			ex.parse(&lex);
-			if(ex.isCompletelyRead()) {
+			if(lex.isCompletelyRead()) {
 				Expression e(ex.mathML(), true);
 // 				qDebug() << entry << e.toString();
 				evaluate(e);
