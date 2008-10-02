@@ -145,7 +145,7 @@ bool ConsoleHtml::saveScript(const QString & path) const
 		if(correct) {
 			QTextStream out(&file);
 			QStringList::const_iterator it = m_script.begin();
-			for(; it!=m_script.end(); it++)
+			for(; it!=m_script.end(); ++it)
 				out << *it << endl;
 		}
 		file.close();

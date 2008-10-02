@@ -102,7 +102,7 @@ bool Console::saveScript(const QString & path) const
 		else {
 			QTextStream out(&file);
 			QStringList::const_iterator it = m_script.begin();
-			for(; it!=m_script.end(); it++)
+			for(; it!=m_script.end(); ++it)
 				out << *it << endl;
 			
 			correct=true;

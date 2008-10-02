@@ -32,14 +32,14 @@ Variables::Variables() : QHash<QString, Object*>()
 Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)
 {
 	QHash<QString, Object*>::iterator i;
-	for (i = this->begin(); i != this->end(); i++)
+	for (i = this->begin(); i != this->end(); ++i)
 		*i = Expression::objectCopy(*i);
 }
 
 Variables::~Variables()
 {
 	QHash<QString, Object*>::iterator i;
-	for (i = this->begin(); i != this->end(); i++)
+	for (i = this->begin(); i != this->end(); ++i)
 		delete *i;
 }
 

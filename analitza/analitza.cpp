@@ -461,7 +461,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	} else {
 		Container *cret = new Container(c->containerType());
 		Container::const_iterator it = c->m_params.begin(), end=c->m_params.end();
-		for(; it!=end; it++) {
+		for(; it!=end; ++it) {
 			cret->m_params.append(derivative(var, *it));
 		}
 		return cret;
@@ -626,7 +626,7 @@ Object* Analitza::operate(const Container* c)
 			} else {
 				QList<Object*> numbers;
 				Container::const_iterator it = c->firstValue(), itEnd=c->m_params.constEnd();
-				for(; it!=itEnd; it++) {
+				for(; it!=itEnd; ++it) {
 					numbers.append(calc(*it));
 				}
 				
@@ -1006,7 +1006,7 @@ Object* Analitza::simp(Object* root)
 					}
 				}	break;
 				case Operator::power: {
-					for(it = c->firstValue(); it!=c->m_params.end(); it++)
+					for(it = c->firstValue(); it!=c->m_params.end(); ++it)
 						*it = simp(*it);
 					
 					if(c->m_params[2]->type()==Object::value) {
@@ -1039,7 +1039,7 @@ Object* Analitza::simp(Object* root)
 					}
 				} break;
 				case Operator::divide:
-					for(it = c->firstValue(); it!=c->m_params.end(); it++)
+					for(it = c->firstValue(); it!=c->m_params.end(); ++it)
 						*it = simp(*it);
 					
 					Object *f, *g; //f/g
@@ -1075,7 +1075,7 @@ Object* Analitza::simp(Object* root)
 					}
 					break;
 				case Operator::sum:
-					for(it = c->m_params.begin(); it!=c->m_params.end(); it++) {
+					for(it = c->m_params.begin(); it!=c->m_params.end(); ++it) {
 						if((*it)->type()==Object::container) {
 							Container *limit=static_cast<Container*>(*it);
 							if(limit->containerType()==Container::uplimit || limit->containerType()==Container::downlimit)
@@ -1133,14 +1133,14 @@ Object* Analitza::simp(Object* root)
 				default:
 					it = c->firstValue();
 					
-					for(; it!=c->m_params.end(); it++)
+					for(; it!=c->m_params.end(); ++it)
 						*it = simp(*it);
 					break;
 			}
 		} else {
 			Container::iterator it = c->firstValue();
 			
-			for(; it!=c->m_params.end(); it++)
+			for(; it!=c->m_params.end(); ++it)
 				*it = simp(*it);
 		}
 	}
@@ -1489,7 +1489,7 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 			
 			QStringList scope=bvars;
 			
-			for(; !r && it!=c->m_params.end(); it++) {
+			for(; !r && it!=c->m_params.end(); ++it) {
 				if(it==first)
 					firstFound=true;
 				
