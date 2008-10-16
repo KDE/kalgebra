@@ -210,7 +210,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 			a=acos(a);
 			break;
 		case Operator::arctan:
-			a=acos(a);
+			a=atan(a);
 			break;
 		case Operator::arccot:
 			a=log(a+pow(a*a+1., 0.5));
