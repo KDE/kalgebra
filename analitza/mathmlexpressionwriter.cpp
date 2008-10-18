@@ -29,12 +29,15 @@ MathMLExpressionWriter::MathMLExpressionWriter(const Object* o)
 
 QString MathMLExpressionWriter::accept(const Ci* var)
 {
-	return var->name();
+	QString attrib;
+	if(var->isFunction())
+		attrib=" type='function'";
+	return "<ci"+attrib+'>'+var->name()+"</ci>";
 }
 
 QString MathMLExpressionWriter::accept(const Operator* op)
 {
-	return QString("<%1 />").arg(op->name());;
+	return QString("<%1 />").arg(op->name());
 }
 
 QString MathMLExpressionWriter::accept(const Cn* val)
