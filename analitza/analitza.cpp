@@ -500,7 +500,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 		if(otherwise)
 			r=otherwise->m_params[0];
 		else
-			m_err << i18nc("Error message, no proper condition found.", "Could not find a proper choince for a condition statement.");
+			m_err << i18nc("Error message, no proper condition found.", "Could not find a proper choice for a condition statement.");
 	}
 				
 	if(r)
