@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,32 +16,35 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef EXPTEST_H
-#define EXPTEST_H
+#ifndef MATHMLPRESENTATIONEXPRESSIONWRITER_H
+#define MATHMLPRESENTATIONEXPRESSIONWRITER_H
 
-#include <QObject>
+#include "expressionwriter.h"
+#include <QMap>
+#include "operator.h"
 
 /**
-	@author Aleix Pol
-*/
+ *	This class represents the mathml expression writer.
+ *
+ *	@author Aleix Pol <aleixpol@gmail.com>
+ */
 
-class MathMLPresentationLexerTest : public QObject
+class MathMLPresentationExpressionWriter : public ExpressionWriter
 {
-Q_OBJECT
 	public:
-		MathMLPresentationLexerTest(QObject *parent = 0);
-		~MathMLPresentationLexerTest();
-	
-	private slots:
-		void initTestCase();
+		typedef QString (*operatorToString)(const Container* o, MathMLPresentationExpressionWriter* w);
+		MathMLPresentationExpressionWriter(const Object* o);
 		
-		void testSimple_data();
-		void testSimple();
+		virtual QString accept(const Ci* var);
+		virtual QString accept(const Cn* var);
+		virtual QString accept(const Container* var);
+		virtual QString accept(const Operator* var);
 		
-		void testConversion();
-		void testConversion_data();
+		QString result() const { return m_result; }
 		
-		void cleanupTestCase();
+	private:
+		QString m_result;
+		static operatorToString m_operatorToPresentation[Operator::nOfOps];
 };
 
 #endif

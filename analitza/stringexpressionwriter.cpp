@@ -59,13 +59,14 @@ QString StringExpressionWriter::accept(const Container* var)
 	for(int i=0; i<var->m_params.count(); i++) {
 		Q_ASSERT(var->m_params[i]!=0);
 		
-		if(var->m_params[i]->type() == Object::oper)
+		Object::ObjectType type=var->m_params[i]->type();
+		if(type == Object::oper)
 			op = (Operator*) var->m_params[i];
-		else if(var->m_params[i]->type() == Object::variable) {
+		else if(type == Object::variable) {
 			Ci *b = (Ci*) var->m_params[i];
 			func|=b->isFunction();
 			ret << b->visit(this);
-		} else if(var->m_params[i]->type() == Object::container) {
+		} else if(type == Object::container) {
 			Container *c = (Container*) var->m_params[i];
 			QString s = c->visit(this);
 			Operator child_op = c->firstOperator();

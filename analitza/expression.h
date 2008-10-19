@@ -115,6 +115,10 @@ class ANALITZA_EXPORT Expression
 		 *	Returns the tree associated to this object.
 		 */
 		const Object* tree() const;
+		
+		/**
+		 *	Returns the tree associated to this object.
+		 */
 		Object* tree();
 		
 		void setTree(Object* o);
@@ -134,17 +138,24 @@ class ANALITZA_EXPORT Expression
 		QString toHtml() const;
 		
 		/**
+		 *	Converts the expression to MathML Presentation Markup.
+		 */
+		QString toMathMLPresentation() const;
+		
+		/**
 		 * Invalidates the data of the expression.
 		 */
 		void clear();
 		
 		/**
-		 * Lists the global bounded variables in the expression
+		 * @returns Lists the global bounded variables in the expression
 		 */
 		QStringList bvarList() const;
 		
+		/** @returns Value representation of the expression. */
 		Cn value() const;
 		
+		/** @returns true if the expression is a value, false otherwise. */
 		bool isValue() const;
 		
 		Object::ValueType valueType() const;

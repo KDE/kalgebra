@@ -51,15 +51,12 @@ Container::Container(const Object *o) : Object(o->type())
 
 Operator Container::firstOperator() const
 {
-	bool found=false;
 	const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
-	for(; it!=itEnd && !found; ++it) {
+	for(; it!=itEnd; ++it) {
 		if((*it)->type()==Object::oper) {
 			return Operator(*it);
-			found = true;
 		} else if(it==m_params.constBegin() && m_cont_type==apply && (*it)->type()==Object::variable) {
 			return Operator(Operator::function);
-			found=true;
 		}
 	}
 	

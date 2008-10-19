@@ -28,6 +28,7 @@
 #include "stringexpressionwriter.h"
 #include "htmlexpressionwriter.h"
 #include "mathmlexpressionwriter.h"
+#include "mathmlpresentationexpressionwriter.h"
 
 class Expression::ExpressionPrivate
 {
@@ -214,6 +215,15 @@ QString Expression::toHtml() const
 {
 	if(isCorrect()) {
 		HtmlExpressionWriter s(d->m_tree);
+		return s.result();
+	} else
+		return QString();
+}
+
+QString Expression::toMathMLPresentation() const
+{
+	if(isCorrect()) {
+		MathMLPresentationExpressionWriter s(d->m_tree);
 		return s.result();
 	} else
 		return QString();

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,50 +16,35 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "mathmlexpressionwriter.h"
-#include "value.h"
-#include "operator.h"
-#include "container.h"
-#include <QStringList>
+#ifndef EXPTEST_H
+#define EXPTEST_H
 
-MathMLExpressionWriter::MathMLExpressionWriter(const Object* o)
+#include <QObject>
+
+/**
+	@author Aleix Pol
+*/
+
+class MathMLPresentationTest : public QObject
 {
-	m_result=o->visit(this);
-}
-
-QString MathMLExpressionWriter::accept(const Ci* var)
-{
-	QString attrib;
-	if(var->isFunction())
-		attrib=" type='function'";
-	return "<ci"+attrib+'>'+var->name()+"</ci>";
-}
-
-QString MathMLExpressionWriter::accept(const Operator* op)
-{
-	return QString("<%1 />").arg(op->name());
-}
-
-QString MathMLExpressionWriter::accept(const Cn* val)
-{
-	if(val->isBoolean()) {
-		if(val->isTrue())
-			return "<cn type='constant'>true</cn>";
-		else
-			return "<cn type='constant'>false</cn>";
-	} else
-		return QString("<cn>%1</cn>").arg(val->value(), 0, 'g', 12);
-
-}
-
-QString MathMLExpressionWriter::accept(const Container* c)
-{
-	QString ret;
-	QList<Object*>::const_iterator i;
-	for(i=c->m_params.constBegin(); i!=c->m_params.constEnd(); ++i) {
-		Q_ASSERT(*i);
-		ret += (*i)->visit(this);
-	}
+Q_OBJECT
+	public:
+		MathMLPresentationTest(QObject *parent = 0);
+		~MathMLPresentationTest();
 	
-	return QString("<%1>%2</%1>").arg(c->tagName()).arg(ret);
-}
+	private slots:
+		void initTestCase();
+		
+		void testSimple_data();
+		void testSimple();
+		
+		void testConversion();
+		void testConversion_data();
+		
+		void testToPresentation();
+		void testToPresentation_data();
+		
+		void cleanupTestCase();
+};
+
+#endif

@@ -7,6 +7,7 @@ set(analitza_SRCS
 	expressionwriter.cpp
 	stringexpressionwriter.cpp
 	mathmlexpressionwriter.cpp
+	mathmlpresentationexpressionwriter.cpp
 	htmlexpressionwriter.cpp
 	analitza.cpp
 	container.cpp

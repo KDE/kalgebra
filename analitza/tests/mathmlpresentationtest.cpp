@@ -16,26 +16,26 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "mathmlpresentationlexertest.h"
+#include "mathmlpresentationtest.h"
 #include "mathmlpresentationlexer.h"
 #include "expressionparser.h"
 #include "expression.h"
 #include <qtest_kde.h>
 
-QTEST_KDEMAIN_CORE(MathMLPresentationLexerTest)
+QTEST_KDEMAIN_CORE(MathMLPresentationTest)
 Q_DECLARE_METATYPE(AbstractLexer::TOKEN*)
 
-MathMLPresentationLexerTest::MathMLPresentationLexerTest(QObject *parent)
+MathMLPresentationTest::MathMLPresentationTest(QObject *parent)
  : QObject(parent)
 {}
 
-MathMLPresentationLexerTest::~MathMLPresentationLexerTest()
+MathMLPresentationTest::~MathMLPresentationTest()
 {}
 
-void MathMLPresentationLexerTest::initTestCase() {}
-void MathMLPresentationLexerTest::cleanupTestCase() {}
+void MathMLPresentationTest::initTestCase() {}
+void MathMLPresentationTest::cleanupTestCase() {}
 
-void MathMLPresentationLexerTest::testSimple_data()
+void MathMLPresentationTest::testSimple_data()
 {
 	QTest::addColumn<QString>("input");
 	QTest::addColumn<AbstractLexer::TOKEN*>("output");
@@ -47,7 +47,7 @@ void MathMLPresentationLexerTest::testSimple_data()
 	QTest::newRow("1 operator") << "<mo>+</mo>" << new AbstractLexer::TOKEN(ExpressionTable::tAdd, 0, QString());
 }
 
-void MathMLPresentationLexerTest::testSimple()
+void MathMLPresentationTest::testSimple()
 {
 	QFETCH(QString, input);
 	QFETCH(AbstractLexer::TOKEN*, output);
@@ -66,7 +66,7 @@ void MathMLPresentationLexerTest::testSimple()
 	delete output;
 }
 
-void MathMLPresentationLexerTest::testConversion_data()
+void MathMLPresentationTest::testConversion_data()
 {
 	QTest::addColumn<QString>("mml_pr");
 	QTest::addColumn<QString>("expression");
@@ -84,7 +84,8 @@ void MathMLPresentationLexerTest::testConversion_data()
 		"</msup>"
 	"</mrow></math>" << "x^2*y^2";
 	
-	QTest::newRow("division") << "<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	QTest::newRow("division") <<
+	"<math>"
 	"<mrow>"
 		"<mfrac>"
 			"<mrow>"
@@ -105,7 +106,7 @@ void MathMLPresentationLexerTest::testConversion_data()
 	"</math>" << "(x+y^2)/(k+1)";
 	
 	QTest::newRow("powers") <<
-	"<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	"<math>"
 		"<mrow>"
 			"<msup>"
 				"<mn>2</mn>"
@@ -121,7 +122,7 @@ void MathMLPresentationLexerTest::testConversion_data()
 	"</math>" << "2^(2^(2^x))";
 	
 	QTest::newRow("x+y^smth") <<
-	"<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	"<math>"
 		"<mrow>"
 			"<mi>x</mi>"
 			"<mo>+</mo>"
@@ -135,12 +136,12 @@ void MathMLPresentationLexerTest::testConversion_data()
 						"<mn>1</mn>"
 					"</mrow>"
 				"</mfrac>"
-		"</msup>"
-	"</mrow>"
+			"</msup>"
+		"</mrow>"
 	"</math>" << "x+y^(2/(k+1))";
 	
-	QTest::newRow("x+y^smth") <<
-	"<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	QTest::newRow("a/(b/2)") <<
+	"<math>"
 		"<mrow>"
 			"<mfrac>"
 				"<mi>a</mi>"
@@ -154,7 +155,7 @@ void MathMLPresentationLexerTest::testConversion_data()
 	"</math>" << "a/(b/2)";
 	
 	QTest::newRow("13th-test") <<
-	"<math mode='display' xmlns='http://www.w3.org/1998/Math/MathML'>"
+	"<math>"
 	"<mrow>"
 		"<msqrt>"
 			"<mn>1</mn>"
@@ -189,7 +190,7 @@ void MathMLPresentationLexerTest::testConversion_data()
 	"</math>" << "root((1+root((1+root((1+root((1+root((1+root((1+root((1+x))))))))))))))";
 }
 
-void MathMLPresentationLexerTest::testConversion()
+void MathMLPresentationTest::testConversion()
 {
 	QFETCH(QString, mml_pr);
 	QFETCH(QString, expression);
@@ -206,7 +207,141 @@ void MathMLPresentationLexerTest::testConversion()
 	
 	Expression e(mathML, true);
 	QVERIFY(e.isCorrect());
-	QCOMPARE(e.toString(), expression);
 }
 
-#include "mathmlpresentationlexertest.moc"
+void MathMLPresentationTest::testToPresentation_data()
+{
+	QTest::addColumn<QString>("mml_pr");
+	QTest::addColumn<QString>("expression");
+	
+	QTest::newRow("square per square") <<
+	"<math><mrow>"
+		"<msup>"
+			"<mi>x</mi>"
+			"<mn>2</mn>"
+		"</msup>"
+		"<mo>*</mo>"
+		"<msup>"
+			"<mi>y</mi>"
+			"<mn>2</mn>"
+		"</msup>"
+	"</mrow></math>" << "x^2*y^2";
+	
+	QTest::newRow("division") <<
+	"<math>"
+	"<mrow>"
+		"<mfrac>"
+			"<mrow>"
+				"<mi>x</mi>"
+				"<mo>+</mo>"
+				"<msup>"
+					"<mi>y</mi>"
+					"<mn>2</mn>"
+				"</msup>"
+			"</mrow>"
+			"<mrow>"
+				"<mi>k</mi>"
+				"<mo>+</mo>"
+				"<mn>1</mn>"
+			"</mrow>"
+		"</mfrac>"
+	"</mrow>"
+	"</math>" << "(x+y^2)/(k+1)";
+	
+	QTest::newRow("powers") <<
+	"<math>"
+		"<mrow>"
+			"<msup>"
+				"<mn>2</mn>"
+				"<msup>"
+					"<mn>2</mn>"
+					"<msup>"
+						"<mn>2</mn>"
+						"<mi>x</mi>"
+					"</msup>"
+				"</msup>"
+			"</msup>"
+		"</mrow>"
+	"</math>" << "2^(2^(2^x))";
+	
+	QTest::newRow("x+y^smth") <<
+	"<math>"
+		"<mrow>"
+			"<mi>x</mi>"
+			"<mo>+</mo>"
+			"<msup>"
+				"<mi>y</mi>"
+				"<mfrac>"
+					"<mrow><mn>2</mn></mrow>"
+					"<mrow>"
+						"<mi>k</mi>"
+						"<mo>+</mo>"
+						"<mn>1</mn>"
+					"</mrow>"
+				"</mfrac>"
+			"</msup>"
+		"</mrow>"
+	"</math>" << "x+y^(2/(k+1))";
+	
+	QTest::newRow("13th-test") <<
+	"<math>"
+	"<mrow>"
+		"<msqrt>"
+			"<mn>1</mn>"
+			"<mo>+</mo>"
+			"<msqrt>"
+				"<mn>1</mn>"
+				"<mo>+</mo>"
+				"<msqrt>"
+					"<mn>1</mn>"
+					"<mo>+</mo>"
+					"<msqrt>"
+						"<mn>1</mn>"
+						"<mo>+</mo>"
+						"<msqrt>"
+							"<mn>1</mn>"
+							"<mo>+</mo>"
+							"<msqrt>"
+								"<mn>1</mn>"
+								"<mo>+</mo>"
+								"<msqrt>"
+									"<mn>1</mn>"
+									"<mo>+</mo>"
+									"<mi>x</mi>"
+								"</msqrt>"
+							"</msqrt>"
+						"</msqrt>"
+					"</msqrt>"
+				"</msqrt>"
+			"</msqrt>"
+		"</msqrt>"
+	"</mrow>"
+	"</math>" << "root((1+root((1+root((1+root((1+root((1+root((1+root((1+x))))))))))))))";
+	
+	QTest::newRow("normal function") <<
+	"<math>"
+		"<mrow>"
+			"<mi>sin</mi>"
+			"<mo>(</mo>"
+			"<mi>x</mi>"
+			"<mo>)</mo>"
+		"</mrow>"
+	"</math>" << "sin(x)";
+	
+	QTest::newRow("piecewise") <<
+	"<math><mrow><mrow><mo stretchy='true'> { </mo><mtable columnalign='left left'><mtr><mtd><mi>eq</mi><mo>(</mo><mi>x</mi><mo>,</mo> <mn>3</mn><mo>)</mo></mtd><mtd><mtext>if </mtext><mi>x</mi></mtd></mtr><mtr><mtd><mn>33</mn></mtd><mtd><mtext>otherwise</mtext></mtd></mtr></mtable></mrow></mrow></math>"
+		<< "piecewise { eq(x, 3) ? x, ? 33 }";
+}
+
+void MathMLPresentationTest::testToPresentation()
+{
+	QFETCH(QString, mml_pr);
+	QFETCH(QString, expression);
+	
+	Expression e(expression, false);
+	
+	QCOMPARE(e.toString(), expression);
+	QCOMPARE(e.toMathMLPresentation(), mml_pr);
+}
+
+#include "mathmlpresentationtest.moc"

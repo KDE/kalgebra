@@ -18,6 +18,9 @@
 
 #include "expressiontest.h"
 #include "analitza.h"
+#include "explexer.h"
+#include "expressionparser.h"
+
 #include <qtest_kde.h>
 #include <cmath>
 
@@ -82,10 +85,20 @@ void ExpressionTest::testConversion()
 {
 	QFETCH(QString, input);
 	
-	e->setText(input);
+	ExpLexer lex(input);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	
+	if(!parser.error().isEmpty())
+		qDebug() << ">>> " << parser.mathML() << "errors:" << parser.error();
+	QVERIFY(corr);
+	QVERIFY(parser.error().isEmpty());
+	
+	e->setMathML(parser.mathML());
 	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toString(), input);
 	QCOMPARE(removeTags(e->toHtml()), input);
+	QCOMPARE(parser.mathML(), e->toMathML());
 }
 
 void ExpressionTest::testCopy_data()
