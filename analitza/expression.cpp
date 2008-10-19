@@ -160,7 +160,7 @@ Object* Expression::branch(const QDomElement& elem)
 					Cn u=ul.tree(), d=ul.tree();
 					bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
 					if(dGreaterU)
-						this->d->m_err << i18nc("An error message", "The downlimit is greater than the uplimit."
+						this->d->m_err << i18nc("An error message", "The downlimit is greater than the uplimit. "
 													"Probably should be %1..%2", u.value(), d.value());
 				} else if(c->containerType()==Container::piecewise) {
 					bool correct=true;
