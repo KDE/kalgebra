@@ -40,6 +40,7 @@ int KAlgebraPlasmoid::resultSize() { return simplificationSize()*2; }
 KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 	: Applet(parent, args), m_layout(0)
 {
+	KGlobal::locale()->insertCatalog("kalgebra");
 	setBackgroundHints(TranslucentBackground);
 }
 
