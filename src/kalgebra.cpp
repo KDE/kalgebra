@@ -212,6 +212,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	//Dictionary tab
 	d_dock = new QDockWidget(i18n("Operations"), this);
+	d_dock->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
 	this->addDockWidget(Qt::RightDockWidgetArea, d_dock);
 	Dictionary *dic = new Dictionary(tabs);
 	tabs->addTab(dic, i18n("&Dictionary"));
