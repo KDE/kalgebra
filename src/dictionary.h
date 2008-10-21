@@ -27,6 +27,7 @@ class QModelIndex;
 class Graph2D;
 class FunctionsModel;
 class OperatorsModel;
+class KFormula;
 
 /**
 	@author Aleix Pol
@@ -49,6 +50,7 @@ Q_OBJECT
 		QLabel *m_descr;
 		QLabel *m_sample;
 		QLabel *m_example;
+		KFormula *m_formula;
 		Graph2D *m_graph;
 		FunctionsModel *m_funcs;
 		OperatorsModel *m_ops;

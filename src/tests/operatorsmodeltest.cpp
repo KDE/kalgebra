@@ -69,6 +69,7 @@ void OperatorsModelTest::testExamples()
 		Expression e = a.calculate();
 		if(!a.isCorrect()) qDebug() << "error" << a.errors();// QVERIFY(a.isCorrect());
 		if(!e.isCorrect()) qDebug() << "error" << e.error(); // QVERIFY(e.isCorrect());
+		QVERIFY(!a.expression()->toMathMLPresentation().isEmpty());
 	}
 }
 
