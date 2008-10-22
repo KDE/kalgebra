@@ -81,16 +81,7 @@ void ExpLexer::getToken()
 		for(; pos<a.length() && a[pos].isLetterOrNumber() && a[pos].decompositionTag()==QChar::NoDecomposition; pos++){
 			ret.val += a[pos];
 		}
-		
-		for(; pos<a.length() && a[pos].isSpace(); pos++) {}
-		
-		if(pos<a.length() && (a[pos]=='(' || a[pos].isLetterOrNumber()) && a[pos].decompositionTag()==QChar::NoDecomposition) {
-			ret.type=ExpressionTable::tId;
-		} else if(pos<a.length() && a[pos]=='{' && a[pos].decompositionTag()==QChar::NoDecomposition) {
-			ret.type=ExpressionTable::tBlock;
-		} else {
-			ret.type= ExpressionTable::tId;
-		}
+		ret.type= ExpressionTable::tId;
 		Q_ASSERT(!ret.val.isEmpty());
 	} else {
 		ret.val=-1;

@@ -193,7 +193,6 @@ case $rule_number:
 ./
 
 -- primary
-Block ::= tBlock ; /. case $rule_number: ./
 Id ::=  tId; /. case $rule_number: ./
 Value ::= tVal;
 /.
@@ -254,7 +253,7 @@ case $rule_number:
 ./
 
 -- block
-PrimaryExpression ::= Block tLcb Parameters tRcb ;
+PrimaryExpression ::= Id tLcb Parameters tRcb ;
 /.
 case $rule_number: {
 	QString blockName=sym(1);
