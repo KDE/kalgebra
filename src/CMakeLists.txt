@@ -28,12 +28,13 @@ if(OPENGL_FOUND)
    )
 endif(OPENGL_FOUND)
 
+
 #uncomment this if oxygen icons for kalgebra are available
 #kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza kformulalib)
+target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza ${KDE4_KFORMULA_LIBRARY})
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
