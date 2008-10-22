@@ -67,9 +67,9 @@ void AbstractLexer::printQueue(const QQueue<TOKEN>& q) const
 	{
 		if(m_longOperators.values().contains(t.type))  res += m_longOperators.key(t.type);
 		else if(m_operators.values().contains(t.type)) res += m_operators.key(t.type);
-		else res+= (t.val + error());
+		else res+= (t.val + ";" + QString::number(t.type) + error());
 	}
-// 	qDebug() << "(" << res.join(QString()) << ")";
+	qDebug() << q.count() << ":::" << "(" << res.join("|") << ")";
 }
 
 int AbstractLexer::lex()
@@ -77,9 +77,10 @@ int AbstractLexer::lex()
 	if(m_tokens.isEmpty())
 		getToken();
 	
+// 	printQueue(m_tokens);
+	
 	Q_ASSERT(!m_tokens.isEmpty());
 	current=m_tokens.takeFirst();
-// 	printQueue(m_tokens);
 	
 	switch(current.type) {
 		case ExpressionTable::tLpr:

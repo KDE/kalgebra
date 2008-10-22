@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2008 by Aleix Pol <aleixpol@gmail.com>                             *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -41,7 +41,7 @@ void MathMLPresentationTest::testSimple_data()
 	QTest::addColumn<AbstractLexer::TOKEN*>("output");
 	
 	QTest::newRow("1 value") << "<mn>123</mn>" << new AbstractLexer::TOKEN(ExpressionTable::tVal, 0, "<cn>123</cn>");
-	QTest::newRow("1 variable") << "<mi>x</mi>" << new AbstractLexer::TOKEN(ExpressionTable::tVal, 0, "<ci>x</ci>");
+	QTest::newRow("1 variable") << "<mi>x</mi>" << new AbstractLexer::TOKEN(ExpressionTable::tId, 0, "x");
 // 	QTest::newRow("1 variable pi") << "<mi>&pi;</mi>" << new AbstractLexer::TOKEN(ExpressionTable::tVal, 0, "<ci>&pi;</ci>");
 	
 	QTest::newRow("1 operator") << "<mo>+</mo>" << new AbstractLexer::TOKEN(ExpressionTable::tAdd, 0, QString());
@@ -339,9 +339,21 @@ void MathMLPresentationTest::testToPresentation()
 	QFETCH(QString, expression);
 	
 	Expression e(expression, false);
+	QString mmlcnt=e.toMathML();
 	
+	if(!e.isCorrect())
+		qDebug() << "error:" << e.error();
+	QVERIFY(e.isCorrect());
 	QCOMPARE(e.toString(), expression);
 	QCOMPARE(e.toMathMLPresentation(), mml_pr);
+	
+	MathMLPresentationLexer lex(mml_pr);
+	ExpressionParser parser;
+	bool corr=parser.parse(&lex);
+	if(!corr)
+		qDebug() << parser.error();
+	QVERIFY(corr);
+	QCOMPARE(mmlcnt, parser.mathML());
 }
 
 #include "mathmlpresentationtest.moc"

@@ -12,8 +12,7 @@
 %token tLimits	".."
 %token tDiv		"/"
 %token tPow		"^"
-%token tFunc	"function"
-%token tBlock	"block"
+%token tId		"identifier"
 %token tLambda	"->"
 %token tQm		"?"
 %token tComa	","
@@ -194,12 +193,19 @@ case $rule_number:
 ./
 
 -- primary
-Value ::= tVal ;   /. case $rule_number: ./
-Func ::= tFunc ;   /. case $rule_number: ./
-Block ::= tBlock ;
+Block ::= tBlock ; /. case $rule_number: ./
+Id ::=  tId; /. case $rule_number: ./
+Value ::= tVal;
 /.
 case $rule_number:
 	sym(1) = lexer->current.val;
+	break;
+./
+
+Value ::= Id;
+/.
+case $rule_number:
+	sym(1) = "<ci>"+sym(1)+"</ci>";
 	break;
 ./
 
@@ -216,21 +222,21 @@ PrimaryExpressionExt ::= PrimaryExpression;
 Expression ::= PrimaryExpressionExt;
 
 -- function
-Expression ::= Func PrimaryExpression ;
+Expression ::= Id PrimaryExpression ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>";
 	break;
 ./
 
-PrimaryExpression ::= Func tLpr FBody tRpr ;
+PrimaryExpression ::= Id tLpr FBody tRpr ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+sym(3)+"</apply>";
 	break;
 ./
 
-PrimaryExpression ::= Func tLpr       tRpr ;
+PrimaryExpression ::= Id tLpr       tRpr ;
 /.
 case $rule_number:
 	sym(1) = "<apply>"+funcToTag(sym(1))+"</apply>";

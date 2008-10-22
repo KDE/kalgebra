@@ -48,7 +48,10 @@ void MathMLPresentationLexer::getToken()
 				m_tags.push(e);
 				if(m_tokenTags.contains(e)) {
 					TOKEN t=m_tokenTags[e];
-					if(t.type>=0) m_tokens.append(TOKEN(ExpressionTable::tFunc, 0, t.val));
+					if(t.type>=0) {
+						m_tokens.append(TOKEN(ExpressionTable::tId, 0, t.val));
+					}
+					
 					m_tokens.append(TOKEN(ExpressionTable::tLpr, 0));
 				}
 				break;
@@ -69,7 +72,7 @@ void MathMLPresentationLexer::getToken()
 					TOKEN ret(ExpressionTable::tVal, 0, QString("<cn>%1</cn>").arg(m_xml.text().toString()));
 					m_tokens.append(ret);
 				} else if(m_tags.top()=="mi") {
-					TOKEN ret(ExpressionTable::tVal, 0, QString("<ci>%1</ci>").arg(m_xml.text().toString()));
+					TOKEN ret(ExpressionTable::tId, 0, m_xml.text().toString());
 					m_tokens.append(ret);
 				} else if(m_tags.top()=="mo") {
 					if(!m_tokens.isEmpty() && m_tokens.last().type==ExpressionTable::tComa)
@@ -77,8 +80,10 @@ void MathMLPresentationLexer::getToken()
 					
 					int t;
 					QString op=m_xml.text().toString();
-					if(op.length()==1 && m_operators.contains(op[0])) t = m_operators[op[0]];
-					else if(op.length()==2 && m_longOperators.contains(op)) t = m_longOperators[op];
+					if(op.length()==1 && m_operators.contains(op[0]))
+						t = m_operators[op[0]];
+					else if(op.length()==2 && m_longOperators.contains(op))
+						t = m_longOperators[op];
 					else
 						m_err= i18nc("Error message", "Unknown token %1", op);
 					m_tokens.append(TOKEN(t, 0));
@@ -88,11 +93,10 @@ void MathMLPresentationLexer::getToken()
 		}
 	}
 	
-	printQueue(m_tokens);
+// 	printQueue(m_tokens);
 	
 	if (m_xml.error())
-	{
 		m_err = m_xml.errorString();
-	}
+	
 	m_tokens.append(TOKEN(ExpressionTable::EOF_SYMBOL, 0));
 }

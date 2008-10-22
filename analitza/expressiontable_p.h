@@ -15,7 +15,7 @@ public:
     tComa = 12,
     tDiv = 6,
     tEq = 18,
-    tFunc = 8,
+    tId = 8,
     tLambda = 10,
     tLcb = 15,
     tLimits = 5,
@@ -29,15 +29,15 @@ public:
     tVal = 17,
     uminus_prec = 21,
 
-    ACCEPT_STATE = 63,
-    RULE_COUNT = 34,
-    STATE_COUNT = 70,
+    ACCEPT_STATE = 64,
+    RULE_COUNT = 35,
+    STATE_COUNT = 71,
     TERMINAL_COUNT = 22,
     NON_TERMINAL_COUNT = 14,
 
-    GOTO_INDEX_OFFSET = 70,
-    GOTO_INFO_OFFSET = 168,
-    GOTO_CHECK_OFFSET = 168
+    GOTO_INDEX_OFFSET = 71,
+    GOTO_INFO_OFFSET = 157,
+    GOTO_CHECK_OFFSET = 157
   };
 
   static const char  *const spell [];

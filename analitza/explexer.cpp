@@ -85,13 +85,13 @@ void ExpLexer::getToken()
 		for(; pos<a.length() && a[pos].isSpace(); pos++) {}
 		
 		if(pos<a.length() && (a[pos]=='(' || a[pos].isLetterOrNumber()) && a[pos].decompositionTag()==QChar::NoDecomposition) {
-			ret.type=ExpressionTable::tFunc;
+			ret.type=ExpressionTable::tId;
 		} else if(pos<a.length() && a[pos]=='{' && a[pos].decompositionTag()==QChar::NoDecomposition) {
 			ret.type=ExpressionTable::tBlock;
 		} else {
-			ret.val = QString("<ci>%1</ci>").arg(ret.val);
-			ret.type= ExpressionTable::tVal;
+			ret.type= ExpressionTable::tId;
 		}
+		Q_ASSERT(!ret.val.isEmpty());
 	} else {
 		ret.val=-1;
 		m_err=i18n("Unknown token %1", a[pos]);
@@ -99,5 +99,5 @@ void ExpLexer::getToken()
 	ret.len = pos-oldpos;
 	m_tokens.append(ret);
 	
-	printQueue(m_tokens);
+// 	printQueue(m_tokens);
 }
