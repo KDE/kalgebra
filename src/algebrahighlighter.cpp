@@ -61,9 +61,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	QPalette pal=qApp->palette();
 	QColor number(pal.color(QPalette::Active, QPalette::Link));
 	QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
-	QColor definedFunction(0,50,0);
-	QColor undefinedFunction(0,0x86,0);
-	QColor block(50,0,50);
+	QColor id(50,0,50);
 	QColor uncorrect(Qt::red);
 	QColor brHighlight(0xff,0xa0,0xff);
 	QColor prHighlight(0xff,0xff,0x80);
@@ -89,7 +87,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					setFormat(i+1, 1, negreta);
 					inside--;
 				} else if(lasttag.endsWith(QChar('/'))) {
-					setFormat(i+1, j-i-1, definedFunction);
+					setFormat(i+1, j-i-1, id);
 					setFormat(j+1, 2, negreta);
 				} else if(j!=k) {
 					setFormat(i+1, j-i-1, QColor(150,0,0));
@@ -127,17 +125,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 							f=variable;
 					}
 					break;
-				case ExpressionTable::tFunc:
-					if(a && a->variables()->contains(lex.current.val))
-						f=definedFunction;
-					else
-						f=undefinedFunction;
-					break;
-				case ExpressionTable::tBlock:
-					if(Container::toContainerType(lex.current.val))
-						f=block;
-					else
-						f=uncorrect;
+				case ExpressionTable::tId:
+					f=id;
 					break;
 				case -1:
 					m_correct = false;

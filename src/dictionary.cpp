@@ -72,6 +72,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descr->setLayout(descrLayo);
 	
 	m_funcs->clear();
+	m_formula->setMathML("<math />");
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
 }
 
