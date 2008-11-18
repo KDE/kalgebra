@@ -763,7 +763,7 @@ Object* Analitza::selector(const Object* index, const Object* vector)
 		
 		int select=cIdx->intValue();
 		if(select<1 || (select-1) > cVect->m_params.count()) {
-			m_err << i18n("Unvalid index for a container");
+			m_err << i18n("Invalid index for a container");
 			ret=new Cn(0.);
 		} else {
 			ret=Expression::objectCopy(cVect->m_params[select-1]);
