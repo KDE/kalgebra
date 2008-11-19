@@ -650,14 +650,16 @@ Object* Analitza::operate(const Container* c)
 							bool correct;
 							ret=Operations::reduce(opt, ret, *it, correct);
 							if(!correct)
-								m_err.append(i18n("Cannot calculate the %1(%2, %3)",
+								m_err.append(i18nc("%1 the operation name, %2 and %3 is the opearation we wanted to calculate",
+											"Cannot calculate the %1(%2, %3)",
 											op.toString(), ret->toString(), (*it)->toString()));
 						}
 					} else {
 						bool correct;
 						ret=Operations::reduceUnary(opt, ret, correct);
 						if(!correct)
-							m_err.append(i18n("Cannot calculate the %1 %2", ret->toString(), op.toString()));
+							m_err.append(i18nc("%1 is the opearation we wanted to calculate, %2 the operation name",
+									"Cannot calculate the %1 '%2'", ret->toString(), op.toString()));
 					}
 				} else {
 					ret = numbers.first();
