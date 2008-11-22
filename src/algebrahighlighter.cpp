@@ -61,7 +61,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	QPalette pal=qApp->palette();
 	QColor number(pal.color(QPalette::Active, QPalette::Link));
 	QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
-	QColor id(50,0,50);
+	QColor id(150,0,50);
 	QColor uncorrect(Qt::red);
 	QColor brHighlight(0xff,0xa0,0xff);
 	QColor prHighlight(0xff,0xff,0x80);
@@ -109,9 +109,9 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		else
 			m_correct=false;
 	} else {
-		ExpLexer lex(text.trimmed());
+		ExpLexer lex(text);
 		
-		while(lex.lex()!=ExpressionTable::EOF_SYMBOL) {
+		while(lex.lex()!=ExpressionTable::EOF_SYMBOL && lex.error().isEmpty()) {
 			QColor f;
 			bool isBold=false;
 			switch(lex.current.type){
@@ -139,6 +139,11 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			}
 			if(!isBold)
 				setFormat(lex.current.pos, lex.current.len, f);
+		}
+		
+		if(!lex.error().isEmpty())
+		{
+			setFormat(lex.current.pos, text.size()-lex.current.pos, uncorrect);
 		}
 		
 		bgHighlight(text, prHighlight, Parenthesis);
