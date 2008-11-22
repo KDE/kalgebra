@@ -390,7 +390,7 @@ void ExpressionEdit::ajudant(const QString& msg, const QPoint& p)
 	if(!msg.isEmpty()){
 		QFontMetrics fm(m_helptip->font());
 		m_helptip->setText(msg);
-		m_helptip->setGeometry(QRect(p, p+QPoint(fm.width(msg)+20, 23)));
+		m_helptip->setGeometry(QRect(p, p+QPoint(fm.width(msg)+20, fm.height())));
 		
 		m_helptip->show();
 		m_helptip->raise();
