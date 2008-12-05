@@ -67,7 +67,7 @@ void AbstractLexer::printQueue(const QQueue<TOKEN>& q) const
 	{
 		if(m_longOperators.values().contains(t.type))  res += m_longOperators.key(t.type);
 		else if(m_operators.values().contains(t.type)) res += m_operators.key(t.type);
-		else res+= (t.val + ";" + QString::number(t.type) + error());
+		else res+= (t.val + ';' + QString::number(t.type) + error());
 	}
 	qDebug() << q.count() << ":::" << "(" << res.join("|") << ")";
 }
