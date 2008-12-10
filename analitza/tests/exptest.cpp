@@ -22,7 +22,6 @@
 #include <qtest_kde.h>
 
 QTEST_KDEMAIN_CORE( ExpTest )
-
 ExpTest::ExpTest(QObject *parent)
  : QObject(parent)
 {}
@@ -30,7 +29,7 @@ ExpTest::ExpTest(QObject *parent)
 ExpTest::~ExpTest()
 {}
 
-Q_DECLARE_METATYPE(QList<int>)
+Q_DECLARE_METATYPE(QList<uchar>)
 
 void ExpTest::initTestCase() {}
 
@@ -151,9 +150,9 @@ void ExpTest::testExp()
 void ExpTest::testLength_data()
 {
 	QTest::addColumn<QString>("input");
-	QTest::addColumn<QList<int> >("lengths");
+	QTest::addColumn<QList<uchar> >("lengths");
 	
-	QList<int> lengths;
+	QList<uchar> lengths;
 	lengths << 1 << 1 << 1 << 1 << 1;
 	QTest::newRow("simple addition") << "2+2+2" << lengths;
 	
@@ -165,14 +164,14 @@ void ExpTest::testLength_data()
 void ExpTest::testLength()
 {
 	QFETCH(QString, input);
-	QFETCH(QList<int>, lengths);
+	QFETCH(QList<uchar>, lengths);
 	
 	ExpLexer lex=ExpLexer(input);
 	
 	int current=0;
 	while(lex.lex()!=0/*EOF*/) {
 		QVERIFY(lex.current.type>0);
-		QCOMPARE((unsigned char) lengths[current], lex.current.len);
+		QCOMPARE((int) lengths[current], (int) lex.current.len);
 		
 		current++;
 	}

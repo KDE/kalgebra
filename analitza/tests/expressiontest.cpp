@@ -78,7 +78,8 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("piecewise") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("function call") << "f(2)";
 	QTest::newRow("vector") << "vector { x, y, z }";
-	QTest::newRow("boundedfunc") << "q=0..10->q";
+	QTest::newRow("boundedlambda") << "q=0..10->q";
+	QTest::newRow("bounded") << "diff(x^2:x)";
 }
 
 void ExpressionTest::testConversion()

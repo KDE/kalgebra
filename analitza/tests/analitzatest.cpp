@@ -256,6 +256,8 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
+	QTest::newRow("wrong token") << QStringList("q-<");
+	QTest::newRow("wrong coma") << QStringList("2+2,");
 	
 	QStringList script;
 	script << "x:=x+1";

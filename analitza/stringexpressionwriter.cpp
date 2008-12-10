@@ -140,7 +140,9 @@ QString StringExpressionWriter::accept(const Container* var)
 						bounding += bvars.join(", ");
 						if(bvars.count()!=1) bounding +=')';
 						
-						bounding = ':'+bounding+'='+bounds;
+						bounding = ':'+bounding;
+						if(!bounds.isEmpty())
+							bounding+='=' +bounds;
 					}
 						
 					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(ret.join(", ")).arg(bounding);

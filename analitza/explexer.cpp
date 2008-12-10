@@ -53,7 +53,7 @@ void ExpLexer::getToken()
 		}
 		m_tokens.append(TOKEN(ExpressionTable::tPow, pos, QString(), 0));
 		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
-	} else if(a[pos].isDigit() || a[pos]=='.') {
+	} else if(a[pos].isDigit() || (a.size()>pos && a[pos]=='.' && a[pos].isDigit())) {
 		int coma=0;
 		for(; pos<a.length() && (a[pos].isDigit() || (pos+1<a.length() && a[pos]=='.' && a[pos+1]!='.')); pos++){
 			if(a[pos]=='.')
@@ -69,6 +69,9 @@ void ExpLexer::getToken()
 		QStringList attrib;
 		if(coma)
 			attrib+="type='real'";
+		
+		qDebug() << "retttt" << ret.val << a;
+		Q_ASSERT(ret.val.size()>0);
 		
 		if(coma>1)
 			m_err = i18nc("Error message", "Trying to codify an unknown value: %1", ret.val);
