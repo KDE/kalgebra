@@ -22,7 +22,7 @@
 %token tRcb		"}"
 %token tVal		"value"
 %token tEq		"="
-%token tColon	"|"
+%token tColon	":"
 
 
 %left tComa
