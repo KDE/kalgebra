@@ -104,10 +104,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			else if(lasttag=="ci")
 				setFormat(i, 1, variable);
 		}
-		if(inside==0)
-			m_correct=true;
-		else
-			m_correct=false;
+		
+		m_correct=(inside==0);
 	} else {
 		ExpLexer lex(text);
 		

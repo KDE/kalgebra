@@ -430,8 +430,10 @@ QString OperatorsModel::example(Operator o)
 		case Operator::scalarproduct:
 			s="scalarproduct(vector{0,x}, vector{x,0})";
 			break;
-		case Operator::factorial:
 		case Operator::diff:
+			s="diff(x^2 : x)";
+			break;
+		case Operator::factorial:
 		case Operator::arcsech:
 		case Operator::arcsec:
 		case Operator::arccsch:

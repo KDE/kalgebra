@@ -267,7 +267,7 @@ QString ExpressionEdit::findPrec(const QString& exp, int &act, int cur, int &par
 					return p;
 				}
 			} else act--;
-		} else if(exp.at(act) == ',') {
+		} else if(exp.at(act) == ',' || exp.at(act) == ':') {
 			nparams++;
 		} else if(exp.at(act) == '(') {
 			cat++;
@@ -311,7 +311,7 @@ void ExpressionEdit::cursorMov()
 void ExpressionEdit::helpShow(const QString& funcname, int param)
 {
 	Operator oper(Operator::toOperatorType(funcname));
-	int op=oper.nparams();
+	const int op=oper.nparams();
 	if(op) {
 		if(op == -1) {
 			ajudant(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
@@ -320,20 +320,23 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
 						i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
 			
-			int i=-oper.isBounded();
-			for(; i<op; ++i) {
-				QString current;
-				if(i<0)
-					current=i18nc("Current parameter is the bounding", "bounds");
-				else
-					current=i18nc("Parameter in function prototype", "par%1", i+1);
+			for(int i=0; i<op; ++i) {
+				QString current=i18nc("Parameter in function prototype", "par%1", i+1);
 				
-				if(i==param-oper.isBounded())
+				if(i==param)
 					current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
 				sample += current;
 				if(i<op-1)
 					sample += i18nc("Function parameter separator", ", ");
 			}
+			
+			if(oper.isBounded()) {
+				QString p=i18nc("Current parameter is the bounding", " : bounds");
+				if(param==op)
+					p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
+				sample += p;
+			}
+			
 			ajudant(sample+')');
 		}
 	} else if(a && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
