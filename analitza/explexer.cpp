@@ -70,7 +70,6 @@ void ExpLexer::getToken()
 		if(coma)
 			attrib+="type='real'";
 		
-		qDebug() << "retttt" << ret.val << a;
 		Q_ASSERT(ret.val.size()>0);
 		
 		if(coma>1)

@@ -211,6 +211,7 @@ bool Operator::isBounded() const
 		case sum:
 		case product:
 		case function:
+		case diff:
 			return true;
 		default:
 			return false;
