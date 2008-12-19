@@ -73,7 +73,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			if(text[i]=='<') { //We enter in a tag
 				lasttag.clear();
 				int j=i+1, k=0;
-				for(k=i+1; k<text.length() && text[k]!='>'; k++){
+				for(k=i+1; k<text.length() && text[k]!='>'; ++k){
 					lasttag.append(text[k]);
 					if(text[k]!=' ' && j==k-1)
 						j=k;
