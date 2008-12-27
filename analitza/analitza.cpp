@@ -491,7 +491,8 @@ Object* Analitza::calcPiecewise(const Container* c)
 		} else {
 			//it is an otherwise
 			if(otherwise)
-				m_err << i18n("Too much <em>otherwise</em> parameters");
+				m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
+					"Too much <em>otherwise</em> parameters");
 			else
 				otherwise=p;
 		}
@@ -1611,7 +1612,7 @@ void Analitza::insertVariable(const QString & name, const Object * value)
 	}
 	
 	if(!islambda && hasVars(value, name, QStringList(), m_vars)) {
-		m_err << i18n("Defined a variable cycle");
+		m_err << i18nc("By a cycle i mean a variable that depends on itself", "Defined a variable cycle");
 	} else {
 		m_vars->modify(name, value);
 	}

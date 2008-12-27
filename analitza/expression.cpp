@@ -173,7 +173,8 @@ Object* Expression::branch(const QDomElement& elem)
 							correct=false;
 							
 						if(!correct) {
-							d->m_err << i18n("%1 is not a piece/otherwise inside the piecewise", o->toString());
+							d->m_err << i18nc("there was an element that was not a conditional inside a condition",
+									"%1 is not a proper condition inside the piecewise", o->toString());
 							break;
 						}
 					}

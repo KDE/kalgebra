@@ -37,9 +37,9 @@ QString HtmlExpressionWriter::accept(const Cn* val)
 {
 	if(val->isBoolean()) {
 		if(val->isTrue())
-			return i18nc("html representation of a number", "<span class='const'>true</span>");
+			return i18nc("html representation of a true. please don't translate the true for consistency", "<span class='const'>true</span>");
 		else
-			return i18nc("html representation of a number", "<span class='const'>false</span>");
+			return i18nc("html representation of a false. please don't translate the false for consistency", "<span class='const'>false</span>");
 	} else
 		return i18nc("html representation of a number", "<span class='num'>%1</span>", val->value());
 }
