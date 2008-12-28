@@ -492,7 +492,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 			//it is an otherwise
 			if(otherwise)
 				m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
-					"Too much <em>otherwise</em> parameters");
+					"Too many <em>otherwise</em> parameters");
 			else
 				otherwise=p;
 		}
