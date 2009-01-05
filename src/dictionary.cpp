@@ -31,7 +31,7 @@
 #include <QFormLayout>
 #include <KLineEdit>
 #include <KLocale>
-#include <KFormula.h>
+//#include <KFormula.h>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
@@ -49,7 +49,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_descr=new QLabel(descr);
 	m_sample=new QLabel(descr);
 	m_example=new QLabel(descr);
-	m_formula=new KFormula(descr);
+	//m_formula=new KFormula(descr);
 	m_funcs=new FunctionsModel(descr);
 	m_graph=new Graph2D(m_funcs, descr);
 	m_graph->setReadOnly(true);
@@ -66,13 +66,13 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example); 
-	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula); 
+	//descrLayo->addRow(i18n("<b>Formula</b>"), m_formula); 
 	graphLayo->addWidget(descr);
 	graphLayo->addWidget(m_graph);
 	descr->setLayout(descrLayo);
 	
 	m_funcs->clear();
-	m_formula->setMathML("<math />");
+	//m_formula->setMathML("<math />");
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
 }
 
@@ -96,7 +96,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	m_descr->setText(description);
 	m_sample->setText(sample);
 	m_example->setText(example);
-	m_formula->setMathML(e.toMathMLPresentation());
+	//m_formula->setMathML(e.toMathMLPresentation());
 	
 	m_funcs->clear();
 	if(!example.isEmpty())
