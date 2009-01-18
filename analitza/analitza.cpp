@@ -22,6 +22,7 @@
 
 #include "operations.h"
 #include "value.h"
+#include "vector.h"
 #include "variables.h"
 #include "container.h"
 #include "object.h"
@@ -233,6 +234,15 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 // 			else
 // 				ret=Expression::objectCopy(val);
 		}
+	} else if(branch->type()==Object::vector) {
+		const Vector* v=static_cast<const Vector*>(branch);
+		Vector* nv=new Vector(v->size());
+		Vector::const_iterator it, itEnd=v->constEnd();
+		for(it=v->constBegin(); it!=itEnd; ++it) {
+			Object* res=eval(*it, resolve, unscoped);
+			nv->appendBranch(res);
+		}
+		ret=nv;
 	}
 	if(!ret)
 		ret=Expression::objectCopy(branch);
@@ -258,6 +268,15 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 			if(v->name()==var)
 				ret = new Cn(1.);
 			break;
+		case Object::vector:
+		{
+			Vector *v=(Vector*) o;
+			Vector *c1=new Vector(v->size());
+			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				c1->appendBranch(calc(*it));
+			}
+			ret=c1;
+		}	break;
 		case Object::value:
 		case Object::oper:
 		case Object::none:
@@ -528,7 +547,7 @@ Object* Analitza::calcDeclare(const Container* c)
 	Object* o = eval(c->m_params[1], true, QSet<QString>());
 	o=simp(o);
 	insertVariable(var->name(), o);
-	if(o->valueType()!=Object::Null)
+	if(o->type()==Object::vector || o->type()==Object::value)
 		ret=o;
 	else {
 		//should return NaN
@@ -541,14 +560,26 @@ Object* Analitza::calcDeclare(const Container* c)
 
 Object* Analitza::calc(const Object* root)
 {
-	Q_ASSERT(root && root->type()!=Object::none);
+	Q_ASSERT(root);
 	Object* ret=0;
 	Ci *a;
 	
+// 	objectWalker(root);
 	switch(root->type()) {
 		case Object::container:
 			ret = operate((Container*) root);
 			break;
+		case Object::vector: {
+			const Vector *v=static_cast<const Vector*>(root);
+			Vector *nv= new Vector(v->size());
+			Vector::const_iterator it, itEnd=v->constEnd();
+			
+			for(it=v->constBegin(); it!=itEnd; ++it)
+			{
+				nv->appendBranch(calc(*it));
+			}
+			ret = nv;
+		}	break;
 		case Object::value:
 			ret=Expression::objectCopy(root);
 			break;
@@ -566,7 +597,7 @@ Object* Analitza::calc(const Object* root)
 			
 			break;
 		case Object::oper:
-		default:
+		case Object::none:
 			break;
 	}
 	return ret;
@@ -590,13 +621,6 @@ Object* Analitza::operate(const Container* c)
 		case Container::lambda:
 			ret=calc(*c->firstValue());
 			break;
-		case Container::vector: {
-			Container *c1=new Container(Container::vector);
-			for(Container::const_iterator it=c->m_params.constBegin(); it!=c->m_params.constEnd(); ++it) {
-				c1->m_params.append(calc(*it));
-			}
-			ret=c1;
-		}	break;
 		case Container::apply:
 		{
 			Operator op = c->firstOperator();
@@ -760,16 +784,16 @@ Object* Analitza::product(const Container& n)
 Object* Analitza::selector(const Object* index, const Object* vector)
 {
 	Object *ret;
-	if(index->type()==Object::value && vector->valueType()==Object::Vector) {
+	if(index->type()==Object::value && vector->type()==Object::vector) {
 		const Cn *cIdx=static_cast<const Cn*>(index);
-		const Container *cVect=static_cast<const Container*>(vector);
+		const Vector *cVect=static_cast<const Vector*>(vector);
 		
 		int select=cIdx->intValue();
-		if(select<1 || (select-1) > cVect->m_params.count()) {
+		if(select<1 || (select-1) > cVect->size()) {
 			m_err << i18n("Invalid index for a container");
 			ret=new Cn(0.);
 		} else {
-			ret=Expression::objectCopy(cVect->m_params[select-1]);
+			ret=Expression::objectCopy(cVect->at(select-1));
 		}
 	} else {
 		ret = new Cn(0.);
@@ -858,6 +882,12 @@ Object* Analitza::simp(Object* root)
 			root = calc(root);
 			delete aux;
 		}
+	} else if(root->type()==Object::vector) {
+		Vector* v=static_cast<Vector*>(root);
+		Vector::iterator it = v->begin(), itEnd=v->end();
+		
+		for(; it!=itEnd; ++it)
+			*it = simp(*it);
 	} else if(root->isContainer()) {
 		Container *c= (Container*) root;
 		bool d;
@@ -951,7 +981,7 @@ Object* Analitza::simp(Object* root)
 							}
 						}
 						
-						if((*it)->valueType() && !hasVars(*it) && (*it)->isZero()) {
+						if(((*it)->type()==Object::value || (*it)->type()==Object::vector) && !hasVars(*it) && (*it)->isZero()) {
 							d=true;
 						}
 						
@@ -1110,7 +1140,7 @@ Object* Analitza::simp(Object* root)
 					break;
 				case Operator::card: {
 					Object* val=simp(*c->firstValue());
-					if(val->valueType()==Object::Vector)
+					if(val->type()==Object::vector)
 					{
 						c->m_params.last()=0;
 						bool correct;
@@ -1126,7 +1156,7 @@ Object* Analitza::simp(Object* root)
 					
 					Object* idx=c->m_params[1];
 					Object* value=c->m_params[2];
-					if(idx->valueType()==Object::Real && value->valueType()==Object::Vector)
+					if(idx->type()==Object::value && value->type()==Object::vector)
 					{
 						root=selector(*c->firstValue(), c->m_params.last());
 						delete c;
@@ -1157,7 +1187,8 @@ Object* Analitza::simpScalar(Container * c)
 	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
 		bool d=false;
 		
-		if((*i)->valueType() && !hasVars(*i)) {
+		//TODO: hasVars needed? should have already been simplifyed before, just check type==cn
+		if(((*i)->type()==Object::value || (*i)->type()==Object::vector) && !hasVars(*i)) {
 			Object* aux = *i;
 			
 			if(value) {
@@ -1175,18 +1206,19 @@ Object* Analitza::simpScalar(Container * c)
 	}
 	
 	if(value) {
-		if(!value->isZero()) {
+		if(value->isZero())
+			delete value;
+		else {
 			switch(o.operatorType()) {
 				case Operator::minus:
 				case Operator::plus:
-					c->m_params.append(Expression::objectCopy(value));
+					c->m_params.append(value);
 					break;
 				default:
-					c->m_params.insert(c->firstValue(), Expression::objectCopy(value));
+					c->m_params.insert(c->firstValue(), value);
 					break;
 			}
 		}
-		delete value;
 	}
 	return c;
 }
@@ -1221,9 +1253,8 @@ Object* Analitza::simpPolynomials(Container* c)
 	
 	QList<QPair<double, Object*> > monos;
 	Operator o(c->firstOperator());
-	bool sign=true;
+	bool sign=true, first=true;
 	Container::const_iterator it(c->firstValue());
-	bool first=true;
 	
 	for(; it!=c->m_params.constEnd(); ++it) {
 		Object *o2=*it;
@@ -1484,6 +1515,12 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 				r=hasVars(vars->value(i->name()), var, bvars, vars);
 			}
 		}	break;
+		case Object::vector: {
+			Vector *v=(Vector*) o;
+			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				r |= hasVars(*it, var, bvars, vars);
+			}
+		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
 			bool firstFound=false;
@@ -1623,6 +1660,13 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 	bool found=false;
 	const Ci* cand;
 	switch(o->type()) {
+		case Object::vector: {
+			const Vector *v=static_cast<const Vector*>(o);
+			Vector::const_iterator it, itEnd=v->constEnd();
+			for(it=v->constBegin(); it!=itEnd; ++it) {
+				found |= hasTheVar(vars, *it);
+			}
+		}	break;
 		case Object::container: {
 			const Container *c=static_cast<const Container*>(o);
 			QStringList bvars=c->bvarList(), varsCopy=vars;
@@ -1636,7 +1680,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 			cand=static_cast<const Ci*>(o);
 			found=vars.contains(cand->name());
 			break;
-		default:
+		case Object::none:
 			found=false;
 			break;
 	}

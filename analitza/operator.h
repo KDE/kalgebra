@@ -81,7 +81,7 @@ class ANALITZA_EXPORT Operator : public Object
 		bool operator==(OperatorType o) const { return m_optype==o; }
 		
 		/** Makes this operator equal to @p a. */
-		Operator operator=(const Operator &a) { setType(a.type()); m_optype=a.operatorType(); return *this;}
+		Operator operator=(const Operator &a) { m_optype=a.operatorType(); return *this;}
 		
 		/** Returns the multiplicity operator. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		OperatorType multiplicityOperator() const { return multiplicityOperator(m_optype); }

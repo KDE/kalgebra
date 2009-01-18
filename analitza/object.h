@@ -40,18 +40,13 @@ public:
 		none=0,		/**< No object type, usually means an error. */
 		value,		/**< Describes an object as a value. */
 		variable,	/**< Describes an object as a variable. */
+		vector,		/**< Describes an object as a vector. */
 		oper,		/**< Describes an object as an operator. */
 		container	/**< Describes an object as a container. */
 	};
 	
-	/** Describes the nature of the value. */
-	enum ValueType { Null=0, Real, Vector };
-	
 	/** Object destructor. Does nothing. */
 	virtual ~Object() { /*qDebug() << "Destroying " << this;*/}
-	
-	/** Assigns a type @p t value to the object */
-	void setType(enum ObjectType t) { m_type=t; }
 	
 	/** Returns the object type of the object */
 	enum ObjectType type() const { return m_type; }
@@ -77,7 +72,6 @@ public:
 	
 	void setCorrect(bool b) { m_correct = b; }
 	
-	ValueType valueType() const;
 protected:
 	/** Creates an object with a @p t type */
 	Object(enum ObjectType t) : m_correct(true), m_type(t) {}

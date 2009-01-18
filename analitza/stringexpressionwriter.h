@@ -36,6 +36,7 @@ class StringExpressionWriter : public ExpressionWriter
 		virtual QString accept(const Cn* var);
 		virtual QString accept(const Container* var);
 		virtual QString accept(const Operator* var);
+		virtual QString accept(const Vector* var);
 		
 		QString result() const { return m_result; }
 		

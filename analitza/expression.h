@@ -158,8 +158,6 @@ class ANALITZA_EXPORT Expression
 		/** @returns true if the expression is a value, false otherwise. */
 		bool isValue() const;
 		
-		Object::ValueType valueType() const;
-		
 		/**
 		 *	Converts a @p tag to an object type.
 		 */

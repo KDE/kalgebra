@@ -171,8 +171,7 @@ Operator::Operator(Object const *o) : Object(o->type())
 	if(type() == Object::oper) {
 		Operator *c = (Operator*) o;
 		m_optype = c->operatorType();
-	} else
-		setType(Object::none);
+	}
 }
 
 unsigned int Operator::operatorWeight(OperatorType op)

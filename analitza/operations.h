@@ -24,7 +24,7 @@
 #include <QStringList>
 
 class Cn;
-class Container;
+class Vector;
 
 class Operations
 {
@@ -36,10 +36,10 @@ class Operations
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, bool &correct);
 		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper, bool &correct);
 		
-		static Object* reduceRealVector(Operator::OperatorType op, Cn *oper, Container* vector, bool &correct);
-		static Object* reduceVectorReal(Operator::OperatorType op, Container* vector, Cn *oper, bool &correct);
-		static Object* reduceVectorVector(Operator::OperatorType op, Container* v1, Container* v2, bool &correct);
-		static Object* reduceUnaryVector(Operator::OperatorType op, Container* c, bool &correct);
+		static Object* reduceRealVector(Operator::OperatorType op, Cn *oper, Vector* vector, bool &correct);
+		static Object* reduceVectorReal(Operator::OperatorType op, Vector* vector, Cn *oper, bool &correct);
+		static Object* reduceVectorVector(Operator::OperatorType op, Vector* v1, Vector* v2, bool &correct);
+		static Object* reduceUnaryVector(Operator::OperatorType op, Vector* c, bool &correct);
 };
 
 #endif

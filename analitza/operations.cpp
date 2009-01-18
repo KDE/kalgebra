@@ -24,7 +24,7 @@
 #include <cmath>
 
 #include "value.h"
-#include "container.h"
+#include "vector.h"
 #include "expression.h"
 
 using namespace std;
@@ -276,13 +276,13 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 
 Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, bool &correct)
 {
-	Object::ValueType t1=val1->valueType(), t2=val2->valueType();
+	Object::ObjectType t1=val1->type(), t2=val2->type();
 	correct=true;
 	
-	if(t1==Object::Real && t2==Object::Real) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
-	if(t1==Object::Real && t2==Object::Vector) return reduceRealVector(op, (Cn*) val1, (Container*) val2, correct);
-	if(t1==Object::Vector && t2==Object::Real) return reduceVectorReal(op, (Container*) val1, (Cn*) val2, correct);
-	if(t1==Object::Vector && t2==Object::Vector) return reduceVectorVector(op, (Container*) val1, (Container*) val2, correct);
+	if(t1==Object::value && t2==Object::value) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
+	if(t1==Object::value && t2==Object::vector) return reduceRealVector(op, (Cn*) val1, (Vector*) val2, correct);
+	if(t1==Object::vector && t2==Object::value) return reduceVectorReal(op, (Vector*) val1, (Cn*) val2, correct);
+	if(t1==Object::vector && t2==Object::vector) return reduceVectorVector(op, (Vector*) val1, (Vector*) val2, correct);
 	Q_ASSERT(0);
 	return 0;
 }
@@ -290,22 +290,20 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, bool &correct)
 {
 	correct=true;
-	switch(val->valueType()) {
-		case Object::Real:
+	switch(val->type()) {
+		case Object::value:
 			return reduceUnaryReal(op, (Cn*) val, correct);
-		case Object::Vector:
-			return reduceUnaryVector(op, (Container*) val, correct);
-		case Object::Null:
-			break;
+		case Object::vector:
+			return reduceUnaryVector(op, (Vector*) val, correct);
 	}
 	
 	Q_ASSERT(0);
 	return 0;
 }
 
-Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Container * v1, bool& correct)
+Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, bool& correct)
 {
-	for(Container::iterator it=v1->m_params.begin(); it!=v1->m_params.end(); ++it)
+	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
 		*it=reduce(op, new Cn(oper), *it, correct);
 	}
@@ -314,9 +312,9 @@ Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Cont
 	return v1;
 }
 
-Object * Operations::reduceVectorReal(Operator::OperatorType op, Container * v1, Cn * oper, bool &correct)
+Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, bool &correct)
 {
-	for(Container::iterator it=v1->m_params.begin(); it!=v1->m_params.end(); ++it)
+	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
 		*it=reduce(op, *it, new Cn(oper), correct);
 	}
@@ -324,27 +322,28 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Container * v1,
 	return v1;
 }
 
-Object * Operations::reduceVectorVector(Operator::OperatorType op, Container * v1, Container * v2, bool &correct)
+Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, bool &correct)
 {
-	Q_ASSERT(v1->m_params.count()==v2->m_params.count());
+	Q_ASSERT(v1->size()==v2->size());
 	if(op==Operator::scalarproduct)
 		op=Operator::times;
-	Container::iterator it2=v2->m_params.begin();
-	for(Container::iterator it1=v1->m_params.begin(); it1!=v1->m_params.end(); ++it1, ++it2)
+	Vector::iterator it2=v2->begin();
+	for(Vector::iterator it1=v1->begin(); it1!=v1->end(); ++it1)
 	{
 		*it1=reduce(op, *it1, *it2, correct);
-		v2->m_params.erase(it2);
+		
+		it2=v2->erase(it2);
 	}
 	delete v2;
 	return v1;
 }
 
-Object * Operations::reduceUnaryVector(Operator::OperatorType op, Container * c, bool &correct)
+Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, bool &correct)
 {
 	Object *ret=0;
 	switch(op) {
 		case Operator::card:
-			ret=new Cn(double(c->m_params.count()));
+			ret=new Cn(c->size());
 			break;
 		default:
 			correct=false;

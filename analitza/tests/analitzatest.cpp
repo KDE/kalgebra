@@ -343,6 +343,7 @@ void AnalitzaTest::testVector()
 	a->setExpression(e);
 	QCOMPARE(a->isCorrect(), true);
 	QCOMPARE(a->calculate().toString(), result);
+	QCOMPARE(a->evaluate().toString(), result);
 }
 
 void AnalitzaTest::testVector_data()
@@ -350,14 +351,14 @@ void AnalitzaTest::testVector_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 
-	QTest::newRow("irreductible vector") << "vector { 1, 2, 3 }" << "vector { 1, 2, 3 }";
+	QTest::newRow("avector") << "vector { 1, 2, 3 }" << "vector { 1, 2, 3 }";
+	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
 	QTest::newRow("in-vector operations") << "vector { 2+2, 3*3, 3^3 }" << "vector { 4, 9, 27 }";
 	
 	QTest::newRow("vect+vect") << "vector { 1, 2, 3 }+vector { 3, 2, 1 }" << "vector { 4, 4, 4 }";
 	QTest::newRow("vect+vect2") << "vector { 1, 2, 3 }+vector { 3, 2, sin(pi/2) }" << "vector { 4, 4, 4 }";
 	QTest::newRow("vect*scalar") << "vector { 1, 2, 3 }*3" << "vector { 3, 6, 9 }";
 	QTest::newRow("scalar*vect") << "3*vector { 1, 2, 3 }" << "vector { 3, 6, 9 }";
-	QTest::newRow("card(vect)") << "card(vector { 1, 2, 3 })" << "3";
 	
 	QTest::newRow("sum") << "sum(vector {x,x,x} : x=1..99)" << "vector { 4950, 4950, 4950 }";
 	QTest::newRow("product") << "product(vector {x,x,x} : x=1..5)" << "vector { 120, 120, 120 }";

@@ -20,12 +20,26 @@
 #include "value.h"
 #include "operator.h"
 #include "container.h"
+#include "vector.h"
 #include <QStringList>
 #include <KLocale>
+
+QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
+QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 
 HtmlExpressionWriter::HtmlExpressionWriter(const Object* o)
 {
 	m_result=o->visit(this);
+}
+
+QString HtmlExpressionWriter::accept(const Vector* vec)
+{
+	QStringList elements;
+	for(Vector::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+	{
+		elements += (*it)->visit(this);
+	}
+	return "vector "+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const Ci* var)
@@ -43,9 +57,6 @@ QString HtmlExpressionWriter::accept(const Cn* val)
 	} else
 		return i18nc("html representation of a number", "<span class='num'>%1</span>", val->value());
 }
-
-QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
-QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 
 QString HtmlExpressionWriter::accept(const Operator* op)
 {

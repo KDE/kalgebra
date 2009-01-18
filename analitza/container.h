@@ -55,7 +55,6 @@ public:
 		piece,		/**< Describes a container as a %lt;piece&gt; tag */
 		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
 		otherwise,	/**< Describes a container as a %lt;otherwise&gt; tag */
-		vector		/**< Describes a container as a %lt;vector&gt; tag */
 	};
 	
 	typedef QList<Object*>::const_iterator const_iterator;

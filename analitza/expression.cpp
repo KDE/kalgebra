@@ -24,6 +24,7 @@
 #include "expressionparser.h"
 #include "container.h"
 #include "value.h"
+#include "vector.h"
 #include "expressionwriter.h"
 #include "stringexpressionwriter.h"
 #include "htmlexpressionwriter.h"
@@ -205,6 +206,23 @@ Object* Expression::branch(const QDomElement& elem)
 				ret=var;
 			}
 			break;
+		case Object::vector:
+		{
+			Vector* v = new Vector(n.childNodes().count());
+			n = elem.firstChild();
+			while(!n.isNull()) {
+				if(n.isElement()) {
+					Object* ob= branch(n.toElement());
+					if(ob) {
+						v->appendBranch(ob);
+					} else {
+						return 0;
+					}
+				}
+				n = n.nextSibling();
+			}
+			ret=v;
+		}	break;
 		case Object::none:
 			d->m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
 			break;
@@ -255,6 +273,8 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 		ret= Object::value;
 	else if(tag=="ci")
 		ret= Object::variable;
+	else if(tag=="vector")
+		ret= Object::vector;
 	else if(Operator::toOperatorType(tag)!=0)
 		ret= Object::oper;
 	else if(Container::toContainerType(tag)!=0)
@@ -329,6 +349,10 @@ Object* Expression::objectCopy(const Object * old)
 // 			Q_ASSERT(dynamic_cast<const Container*>(old));
 			o = new Container(old);
 			break;
+		case Object::vector:
+// 			Q_ASSERT(dynamic_cast<const Vector*>(old));
+			o = new Vector(old);
+			break;
 		case Object::none:
 			qFatal("Do not know what are we copying.");
 			break;
@@ -369,11 +393,6 @@ Cn Expression::value() const
 // 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();
 		return 0.;
 	}
-}
-
-Object::ValueType Expression::valueType() const
-{
-	return d->m_tree ? d->m_tree->valueType() : Object::Null;
 }
 
 bool Expression::isLambda() const

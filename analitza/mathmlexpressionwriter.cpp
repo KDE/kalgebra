@@ -18,6 +18,7 @@
 
 #include "mathmlexpressionwriter.h"
 #include "value.h"
+#include "vector.h"
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
@@ -49,7 +50,16 @@ QString MathMLExpressionWriter::accept(const Cn* val)
 			return "<cn type='constant'>false</cn>";
 	} else
 		return QString("<cn>%1</cn>").arg(val->value(), 0, 'g', 12);
+}
 
+QString MathMLExpressionWriter::accept(const Vector* vec)
+{
+	QStringList elements;
+	for(Vector::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+	{
+		elements += (*it)->visit(this);
+	}
+	return QString("<vector>%1</vector>").arg(elements.join(QString()));
 }
 
 QString MathMLExpressionWriter::accept(const Container* c)

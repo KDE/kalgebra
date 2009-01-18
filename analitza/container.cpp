@@ -19,6 +19,7 @@
 
 #include "expression.h"
 #include "expressionwriter.h"
+#include "vector.h"
 #include "value.h"
 
 #include <KDebug>
@@ -28,7 +29,6 @@ Container::Container(const Container& c) : Object(Object::container)
 {
 	Q_ASSERT(c.type()==Object::container);
 	if(c.type()!=Object::container) {
-		setType(Object::none);
 		return;
 	}
 	
@@ -44,7 +44,6 @@ Container::Container(const Object *o) : Object(o->type())
 		
 		m_params = c->copyParams();
 	} else {
-		setType(Object::none);
 		m_cont_type = none;
 	}
 }
@@ -108,7 +107,6 @@ enum Container::ContainerType Container::toContainerType(const QString& tag)
 	else if(tag=="piecewise") ret=piecewise;
 	else if(tag=="piece") ret=piece;
 	else if(tag=="otherwise") ret=otherwise;
-	else if(tag=="vector") ret=vector;
 	
 	return ret;
 }
@@ -346,6 +344,13 @@ void objectWalker(const Object* root, int ind)
 			var = (Ci*) root;
 			qDebug() << qPrintable(s) << "| variable: " << var->name() << "Func:" << var->isFunction();
 			break;
+		case Object::vector: {
+			const Vector* v;
+			Q_ASSERT(v=dynamic_cast<const Vector*>(root));
+			qDebug() << qPrintable(s) << "| vector: " << v->size();
+			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
+				objectWalker(*it, ind+1);
+		}	break;
 		default:
 			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type() << root;
 			break;
@@ -381,10 +386,10 @@ void print_dom(const QDomNode& in, int ind)
 bool Container::isNumber() const
 {
 	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
-		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==vector || m_cont_type==otherwise;
+		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
-QList<Object *>::iterator Container::firstValue()
+Container::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
 	bool found=false;
@@ -392,22 +397,25 @@ QList<Object *>::iterator Container::firstValue()
 		switch((*it)->type()) {
 			case Object::value:
 			case Object::variable:
+			case Object::vector:
 				found=true;
 				break;
 			case Object::container:
 				if(((Container*) *it)->isNumber())
 					found=true;
 				break;
-			default:
+			case Object::oper:
+			case Object::none:
 				break;
 		}
 		if(found)
 			break;
 	}
+	
 	return it;
 }
 
-QList<Object *>::const_iterator Container::firstValue() const
+Container::const_iterator Container::firstValue() const
 {
 	QList<Object *>::const_iterator it(m_params.constBegin()), itEnd(m_params.constEnd());
 	for(; it!=itEnd; ++it) {
@@ -415,6 +423,7 @@ QList<Object *>::const_iterator Container::firstValue() const
 		
 		switch((*it)->type()) {
 			case Object::value:
+			case Object::vector:
 			case Object::variable:
 				found=true;
 				break;
@@ -422,7 +431,8 @@ QList<Object *>::const_iterator Container::firstValue() const
 				if(((Container*) *it)->isNumber())
 					found=true;
 				break;
-			default:
+			case Object::oper:
+			case Object::none:
 				break;
 		}
 		if(found)
@@ -475,9 +485,6 @@ QString Container::tagName() const
 			break;
 		case otherwise:
 			tag="otherwise";
-			break;
-		case vector:
-			tag="vector";
 			break;
 		case none:
 			break;

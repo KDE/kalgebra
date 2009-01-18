@@ -18,6 +18,7 @@
 
 #include "stringexpressionwriter.h"
 #include "value.h"
+#include "vector.h"
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
@@ -35,6 +36,16 @@ QString StringExpressionWriter::accept(const Ci* var)
 QString StringExpressionWriter::accept(const Operator* op)
 {
 	return op->name();
+}
+
+QString StringExpressionWriter::accept(const Vector* vec)
+{
+	QStringList elements;
+	for(Vector::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+	{
+		elements += (*it)->visit(this);
+	}
+	return QString("vector { %1 }").arg(elements.join(QString(", ")));
 }
 
 QString StringExpressionWriter::accept(const Cn* var)

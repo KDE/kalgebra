@@ -39,6 +39,7 @@ class MathMLPresentationExpressionWriter : public ExpressionWriter
 		virtual QString accept(const Cn* var);
 		virtual QString accept(const Container* var);
 		virtual QString accept(const Operator* var);
+		virtual QString accept(const Vector* var) { return QString(); }
 		
 		QString result() const { return m_result; }
 		
