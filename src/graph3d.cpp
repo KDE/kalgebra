@@ -41,7 +41,7 @@ enum ActionsEnum {
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(0), alpha(60.),
-		method(Solid), trans(false), keyspressed(0), m_type(Object::Null), m_n(4)
+		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	graus[0] = 90.0;
@@ -181,7 +181,7 @@ void Graph3D::paintGL()
 	unsigned int bound=(2*mida/step)-1;
 	drawAxes();
 	
-	if(punts==NULL || !func3d.isCorrect() || m_type!=Object::Real)
+	if(punts==NULL || !func3d.isCorrect())
 		return;
 	
 	if(method==Dots) {
@@ -418,15 +418,14 @@ int Graph3D::load()
 	f3d.variables()->modify("x", 0.);
 	f3d.variables()->modify("y", 0.);
 	Expression e=f3d.calculate();
-	m_type=e.valueType();
 	
-	if(f3d.isCorrect() && m_type==Object::Real) {
+	if(f3d.isCorrect() && e.isValue()) {
 		QTime t;
 		t.restart();
 		sendStatus(i18n("Generating... Please wait"));
 		mem();
 		create();
-		// xgettext: no-c-format
+		
 		sendStatus(i18nc("3D graph done in x miliseconds", "Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
