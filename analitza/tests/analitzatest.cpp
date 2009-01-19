@@ -402,7 +402,7 @@ void AnalitzaTest::testVectorEvaluate_data()
 void AnalitzaTest::testCrash_data()
 {
 	QTest::addColumn<QString>("expression");
-
+	
 	QTest::newRow("undefined variable") << "x";
 	QTest::newRow("too few operators") << "divide(2)";
 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
@@ -439,10 +439,59 @@ void AnalitzaTest::testCrash()
 	}
 }
 
+
+void AnalitzaTest::testCompareTrees_data()
+{
+	QTest::addColumn<bool>("matches");
+	QTest::addColumn<QString>("pattern");
+	QTest::addColumn<QString>("expression");
+	QTest::addColumn<QStringList>("outputs");
+	
+	QStringList outputs = QStringList() << "x" << "2+2";
+	QStringList outputsXY = QStringList() << "x" << "2+2" << "y" << "2+3";
+	
+	QTest::newRow("tree") << true << "x" << "2+2" << outputs;
+	QTest::newRow("simple") << true << "sin(x)" << "sin(2+2)" << outputs;
+	QTest::newRow("multiple") << true << "sin(x)+sin(x)" << "sin(2+2)+sin(2+2)" << outputs;
+	QTest::newRow("deep") << true << "cos(sin(x))" << "cos(sin(2+2))" << outputs;
+	QTest::newRow("vector") << true << "vector{x,sin(x),x}" << "vector{2+2,sin(2+2),2+2}" << outputs;
+	QTest::newRow("multiple_wrong") << false << "sin(x)+sin(x)" << "sin(2+2)+sin(2+3)" << outputs;
+	QTest::newRow("multiple_vars") << true  << "sin(x)+sin(y)" << "sin(2+2)+sin(2+3)" << outputsXY;
+}
+
+void AnalitzaTest::testCompareTrees()
+{
+	QFETCH(bool, matches);
+	QFETCH(QString, pattern);
+	QFETCH(QString, expression);
+	QFETCH(QStringList, outputs);
+	
+	Expression patt(pattern, false), exp(expression, false);
+	QMap<QString, QString> outs;
+	QMap<QString, const Object*> outFunc;
+	
+	for(QStringList::const_iterator it=outputs.constBegin(); it!=outputs.constEnd(); ++it) {
+		QString key=*it++;
+		outFunc[key]=0;
+		outs[key]=*it;
+	}
+	
+	const Object* p=patt.tree();
+	bool ret=p->matches(exp.tree(), &outFunc);
+	
+	QCOMPARE(ret, matches);
+	
+	foreach(const QString& key, outs.keys()) {
+		Q_ASSERT(outFunc.value(key)!=0);
+		QCOMPARE(outs[key], outFunc[key]->toString());
+	}
+}
+
+/*
 Q_DECLARE_METATYPE(QList<double>)
 Q_DECLARE_METATYPE(Analitza::Bounds)
 
-/*void AnalitzaTest::testJumps_data()
+void AnalitzaTest::testJumps_data()
 {
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QList<double> >("values");

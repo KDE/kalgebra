@@ -62,6 +62,9 @@ Q_OBJECT
 		void testUncorrection_data();
 		void testUncorrection();
 		
+		void testCompareTrees_data();
+		void testCompareTrees();
+		
 		void testOperators();
 		
 // 		void testJumps_data();

@@ -48,6 +48,7 @@ class ANALITZA_EXPORT Vector : public Object
 		virtual void negate ();
 		virtual bool isZero() const;
 		
+		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
 	private:
 		QVector<Object*> m_elements;
 };

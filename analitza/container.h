@@ -54,7 +54,8 @@ public:
 		downlimit,	/**< Describes a container as a %lt;downlimit&gt; tag */
 		piece,		/**< Describes a container as a %lt;piece&gt; tag */
 		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
-		otherwise 	/**< Describes a container as a %lt;otherwise&gt; tag */
+		otherwise, 	/**< Describes a container as a %lt;otherwise&gt; tag */
+		last		/**< points to the last container type */
 	};
 	
 	typedef QList<Object*>::const_iterator const_iterator;
@@ -88,7 +89,7 @@ public:
 	static ContainerType toContainerType(const QString& tag);
 	
 	/** Returns whether @p o1 is equal to @p o2. */
-	static bool equalTree(Object const* o1, Object const * o2);
+	static bool equalTree(const Object * o1, const Object * o2);
 	
 	/** Adds a @p o branch at the end of the Container. */
 	void appendBranch(Object* o) { m_params.append(o); }
@@ -138,6 +139,8 @@ public:
 	
 	virtual bool isZero() const;
 	
+	virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
+	
 #if 0 //not used
 	//Monomials
 	/** Creates a monomial, just to ease the construction. */
@@ -156,8 +159,7 @@ public:
 	QList<Object*> m_params;
 private:
 	enum ContainerType m_cont_type;
+	static char m_typeStr[][10];
 };
-
-
 
 #endif

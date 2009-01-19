@@ -116,6 +116,7 @@ class ANALITZA_EXPORT Analitza
 							const QStringList& bvars=QStringList(), const Variables* vars=0);
 							
 // 		QList<double> discontinuities(const QString& var, const Bounds& b);
+		
 	protected:
 		Expression m_exp;
 		Variables *m_vars;

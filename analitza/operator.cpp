@@ -250,4 +250,10 @@ bool Operator::isTrigonometric(enum OperatorType t)
 	}
 }
 
+bool Operator::matches(const Object* exp, QMap<QString, const Object*>* ) const
+{
+	if(exp->type()!=Object::oper)
+		return false;
+	return ((const Operator*) exp)->operatorType()==m_optype;
+}
 

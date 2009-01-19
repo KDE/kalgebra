@@ -162,3 +162,10 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 	
 	return ret;
 }
+
+QString MathMLPresentationExpressionWriter::accept(const Vector* var)
+{
+	Q_UNUSED(var);
+	//TODO
+	return QString();
+}

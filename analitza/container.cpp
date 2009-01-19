@@ -25,6 +25,19 @@
 #include <KDebug>
 #include <KLocale>
 
+char Container::m_typeStr[][10] = {
+		"none",
+		"math",
+		"apply",
+		"declare",
+		"lambda",
+		"bvar",
+		"uplimit",
+		"downlimit",
+		"piece",
+		"piecewise",
+		"otherwise" };
+
 Container::Container(const Container& c) : Object(Object::container)
 {
 	Q_ASSERT(c.type()==Object::container);
@@ -185,7 +198,7 @@ bool Container::operator==(const Container& c) const
 	return eq;
 }
 
-bool Container::equalTree(Object const* o1, Object const * o2)
+bool Container::equalTree(const Object * o1, const Object * o2)
 {
 	Q_ASSERT(o1 && o2);
 	if(o1==o2)
@@ -454,40 +467,22 @@ bool Container::isCorrect() const
 
 QString Container::tagName() const
 {
-	QString tag;
-	switch(m_cont_type) {
-		case declare:
-			tag="declare";
-			break;
-		case lambda:
-			tag="lambda";
-			break;
-		case math:
-			tag="math";
-			break;
-		case apply:
-			tag="apply";
-			break;
-		case uplimit:
-			tag="uplimit";
-			break;
-		case downlimit:
-			tag="downlimit";
-			break;
-		case bvar:
-			tag="bvar";
-			break;
-		case piece:
-			tag="piece";
-			break;
-		case piecewise:
-			tag="piecewise";
-			break;
-		case otherwise:
-			tag="otherwise";
-			break;
-		case none:
-			break;
+	return QString(m_typeStr[m_cont_type]);
+}
+
+bool Container::matches(const Object* exp, QMap<QString, const Object*>* found) const
+{
+	if(Object::container!=exp->type())
+		return false;
+	const Container* c=(const Container*) exp;
+	if(m_params.count()!=c->m_params.count())
+		return false;
+	
+	bool matching=true;
+	Container::const_iterator it, it2, itEnd=m_params.constEnd();
+	for(it=m_params.constBegin(), it2=c->m_params.constBegin(); matching && it!=itEnd; ++it, ++it2)
+	{
+		matching &= (*it)->matches(*it2, found);
 	}
-	return tag;
+	return matching;
 }

@@ -70,6 +70,14 @@ public:
 	
 	virtual bool isZero() const { return false; }
 	
+	/** 
+		@p pattern is the tree that we will compare to,
+		@p found is where we will pass the variables store the results.
+		
+		It will return whether the object follows the @p pattern structure.
+	*/
+	virtual bool matches(const Object* exp, QMap<QString, const Object*>* found) const=0;
+	
 	void setCorrect(bool b) { m_correct = b; }
 	
 protected:
@@ -118,6 +126,7 @@ class Ci : public Object
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
 		
 		virtual QString visit(ExpressionWriter*) const;
+		virtual bool matches(const Object* pattern, QMap<QString, const Object*>* found) const;
 	private:
 		QString m_name;
 		bool m_function;

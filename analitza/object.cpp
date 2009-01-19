@@ -47,3 +47,23 @@ QString Ci::toMathML() const
 	else
 		return QString("<ci>%1</ci>").arg(m_name);
 }
+
+bool Ci::matches(const Object* exp, QMap<QString, const Object*>* found) const
+{
+	bool ret=false;
+	if(found->contains(m_name)) {
+		const Object* v=found->value(m_name);
+		if(v) { //If already been found
+			ret=Container::equalTree(exp, v);
+		} else {
+			found->insert(m_name, exp);
+			ret=true;
+		}
+	} else {
+		ret = (Object::variable==exp->type());
+		if(ret) {
+			ret = static_cast<const Ci*>(exp)->name()==m_name;
+		}
+	}
+	return ret;
+}

@@ -83,3 +83,19 @@ bool Vector::isZero() const
 	return true;
 }
 
+bool Vector::matches(const Object* exp, QMap< QString, const Object* >* found) const
+{
+	if(Object::vector!=exp->type())
+		return false;
+	const Vector* c=(const Vector*) exp;
+	if(m_elements.count()!=c->m_elements.count())
+		return false;
+	
+	bool matching=true;
+	Vector::const_iterator it, it2, itEnd=m_elements.constEnd();
+	for(it=m_elements.constBegin(), it2=c->m_elements.constBegin(); matching && it!=itEnd; ++it, ++it2)
+	{
+		matching &= (*it)->matches(*it2, found);
+	}
+	return matching;
+}

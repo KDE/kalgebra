@@ -112,3 +112,8 @@ Cn Cn::pi() { return Cn(3.1415926535897932384626433); }
 Cn Cn::e() { return Cn(2.718281828); }
 Cn Cn::euler() { return Cn(0.5772156649); }
 
+bool Cn::matches(const Object* exp, QMap< QString, const Object* >* found) const
+{
+	return exp->type()==type() && Cn(exp)==*this;
+}
+

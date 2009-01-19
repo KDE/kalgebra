@@ -109,6 +109,7 @@ void ExpressionTest::testCopy_data()
 	QTest::newRow("simple addition") << "2+4";
 	QTest::newRow("simple addition with var") << "2+x";
 	QTest::newRow("function definition") << "f:=x->x+1";
+	QTest::newRow("function call") << "f(x, y)";
 	QTest::newRow("summatory") << "sum(x:x=1..10)";
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("vector") << "vector { x, y, z }";
@@ -122,6 +123,7 @@ void ExpressionTest::testCopy()
 	Expression e2(*e);
 	QVERIFY(e->isCorrect() && e2.isCorrect());
 	QCOMPARE(*e, e2);
+	QCOMPARE(e->toString(), input);
 	QCOMPARE(removeTags(e->toHtml()), input);
 }
 

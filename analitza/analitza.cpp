@@ -75,6 +75,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
+	
 	//Won't calc() so would be a good idea to have it simplified
 	if(branch->isContainer()) {
 		const Container* c = (Container*) branch;
@@ -293,22 +294,22 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			case Operator::minus:
 			case Operator::plus: {
 				Container *r= new Container(Container::apply);
-				r->m_params.append(new Operator(op));
+				r->appendBranch(new Operator(op));
 				
 				Container::const_iterator it(c->firstValue());
 				for(; it!=c->m_params.end(); ++it)
-					r->m_params.append(derivative(var, *it));
+					r->appendBranch(derivative(var, *it));
 				
 				return r;
 			} break;
 			case Operator::times: {
 				Container *nx = new Container(Container::apply);
-				nx->m_params.append(new Operator(Operator::plus));
+				nx->appendBranch(new Operator(Operator::plus));
 				
 				Container::const_iterator it(c->firstValue());
 				for(;it!=c->m_params.end(); ++it) {
 					Container *neach = new Container(Container::apply);
-					neach->m_params.append(new Operator(Operator::times));
+					neach->appendBranch(new Operator(Operator::times));
 					
 					Container::const_iterator iobj(c->firstValue());
 						for(; iobj!=c->m_params.end(); ++iobj) {
@@ -317,9 +318,9 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 						if(iobj==it)
 							o=derivative(var, o);
 						
-						neach->m_params.append(o);
+						neach->appendBranch(o);
 					}
-					nx->m_params.append(neach);
+					nx->appendBranch(neach);
 				}
 				return nx;
 			} break;
@@ -328,91 +329,91 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					//http://en.wikipedia.org/wiki/Table_of_derivatives
 					//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
 					Container *nc = new Container(Container::apply);
-					nc->m_params.append(new Operator(Operator::times));
-					nc->m_params.append(Expression::objectCopy(c));
+					nc->appendBranch(new Operator(Operator::times));
+					nc->appendBranch(Expression::objectCopy(c));
 					Container *nAss = new Container(Container::apply);
-					nAss->m_params.append(new Operator(Operator::plus));
-					nc->m_params.append(nAss);
+					nAss->appendBranch(new Operator(Operator::plus));
+					nc->appendBranch(nAss);
 					
 					Container *nChain1 = new Container(Container::apply);
-					nChain1->m_params.append(new Operator(Operator::times));
-					nChain1->m_params.append(derivative(var, *c->firstValue()));
+					nChain1->appendBranch(new Operator(Operator::times));
+					nChain1->appendBranch(derivative(var, *c->firstValue()));
 					
 					Container *cDiv = new Container(Container::apply);
-					cDiv->m_params.append(new Operator(Operator::divide));
-					cDiv->m_params.append(Expression::objectCopy(*(c->firstValue()+1)));
-					cDiv->m_params.append(Expression::objectCopy(*c->firstValue()));
-					nChain1->m_params.append(cDiv);
+					cDiv->appendBranch(new Operator(Operator::divide));
+					cDiv->appendBranch(Expression::objectCopy(*(c->firstValue()+1)));
+					cDiv->appendBranch(Expression::objectCopy(*c->firstValue()));
+					nChain1->appendBranch(cDiv);
 					
 					Container *nChain2 = new Container(Container::apply);
-					nChain2->m_params.append(new Operator(Operator::times));
-					nChain2->m_params.append(derivative(var, *(c->firstValue()+1)));
+					nChain2->appendBranch(new Operator(Operator::times));
+					nChain2->appendBranch(derivative(var, *(c->firstValue()+1)));
 					
 					Container *cLog = new Container(Container::apply);
-					cLog->m_params.append(new Operator(Operator::ln));
-					cLog->m_params.append(Expression::objectCopy(*c->firstValue()));
-					nChain2->m_params.append(cLog);
+					cLog->appendBranch(new Operator(Operator::ln));
+					cLog->appendBranch(Expression::objectCopy(*c->firstValue()));
+					nChain2->appendBranch(cLog);
 					
-					nAss->m_params.append(nChain1);
-					nAss->m_params.append(nChain2);
+					nAss->appendBranch(nChain1);
+					nAss->appendBranch(nChain2);
 					return nc;
 				} else {
 					Container *cx = new Container(Container::apply);
-					cx->m_params.append(new Operator(Operator::times));
-					cx->m_params.append(Expression::objectCopy(c->m_params[2]));
-					cx->m_params.append(derivative(var, *c->firstValue()));
+					cx->appendBranch(new Operator(Operator::times));
+					cx->appendBranch(Expression::objectCopy(c->m_params[2]));
+					cx->appendBranch(derivative(var, *c->firstValue()));
 					
 					Container* nc= new Container(Container::apply);
-					nc->m_params.append(Expression::objectCopy(c->m_params[0]));
-					nc->m_params.append(Expression::objectCopy(c->m_params[1]));
-					cx->m_params.append(nc);
+					nc->appendBranch(Expression::objectCopy(c->m_params[0]));
+					nc->appendBranch(Expression::objectCopy(c->m_params[1]));
+					cx->appendBranch(nc);
 					
 					Container *degree = new Container(Container::apply);
-					degree->m_params.append(new Operator(Operator::minus));
-					degree->m_params.append(Expression::objectCopy(c->m_params[2]));
-					degree->m_params.append(new Cn(1.));
-					nc->m_params.append(degree);
+					degree->appendBranch(new Operator(Operator::minus));
+					degree->appendBranch(Expression::objectCopy(c->m_params[2]));
+					degree->appendBranch(new Cn(1.));
+					nc->appendBranch(degree);
 					return cx;
 				}
 			} break;
 			case Operator::sin: {
 				Container *ncChain = new Container(Container::apply);
-				ncChain->m_params.append(new Operator(Operator::times));
-				ncChain->m_params.append(derivative(var, *c->firstValue()));
+				ncChain->appendBranch(new Operator(Operator::times));
+				ncChain->appendBranch(derivative(var, *c->firstValue()));
 				Container *nc = new Container(Container::apply);
-				nc->m_params.append(new Operator(Operator::cos));
-				nc->m_params.append(Expression::objectCopy(*c->firstValue()));
-				ncChain->m_params.append(nc);
+				nc->appendBranch(new Operator(Operator::cos));
+				nc->appendBranch(Expression::objectCopy(*c->firstValue()));
+				ncChain->appendBranch(nc);
 				return ncChain;
 			} break;
 			case Operator::cos: {
 				Container *ncChain = new Container(Container::apply);
-				ncChain->m_params.append(new Operator(Operator::times));
-				ncChain->m_params.append(derivative(var, *c->firstValue()));
+				ncChain->appendBranch(new Operator(Operator::times));
+				ncChain->appendBranch(derivative(var, *c->firstValue()));
 				
 				Container *nc = new Container(Container::apply);
-				nc->m_params.append(new Operator(Operator::sin));
-				nc->m_params.append(Expression::objectCopy(*c->firstValue()));
+				nc->appendBranch(new Operator(Operator::sin));
+				nc->appendBranch(Expression::objectCopy(*c->firstValue()));
 				Container *negation = new Container(Container::apply);
-				negation->m_params.append(new Operator(Operator::minus));
-				negation->m_params.append(nc);
-				ncChain->m_params.append(negation);
+				negation->appendBranch(new Operator(Operator::minus));
+				negation->appendBranch(nc);
+				ncChain->appendBranch(negation);
 				return ncChain;
 			} break;
 			case Operator::tan: {
 				Container *ncChain = new Container(Container::apply);
-				ncChain->m_params.append(new Operator(Operator::divide));
-				ncChain->m_params.append(derivative(var, *c->firstValue()));
+				ncChain->appendBranch(new Operator(Operator::divide));
+				ncChain->appendBranch(derivative(var, *c->firstValue()));
 				
 				Container *nc = new Container(Container::apply);
-				nc->m_params.append(new Operator(Operator::power));
+				nc->appendBranch(new Operator(Operator::power));
 				
 				Container *lilcosine = new Container(Container::apply);
-				lilcosine->m_params.append(new Operator(Operator::cos));
-				lilcosine->m_params.append(Expression::objectCopy(*c->firstValue()));
-				nc->m_params.append(lilcosine);
-				nc->m_params.append(new Cn(2.));
-				ncChain->m_params.append(nc);
+				lilcosine->appendBranch(new Operator(Operator::cos));
+				lilcosine->appendBranch(Expression::objectCopy(*c->firstValue()));
+				nc->appendBranch(lilcosine);
+				nc->appendBranch(new Cn(2.));
+				ncChain->appendBranch(nc);
 				return ncChain;
 			} break;
 			case Operator::divide: {
@@ -421,45 +422,45 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				g=*(c->firstValue()+1);
 				
 				Container *nc = new Container(Container::apply);
-				nc->m_params.append(new Operator(Operator::divide));
+				nc->appendBranch(new Operator(Operator::divide));
 				
 				Container *cmin = new Container(Container::apply);
-				cmin->m_params.append(new Operator(Operator::minus));
+				cmin->appendBranch(new Operator(Operator::minus));
 				
 				Container *cmin1 =new Container(Container::apply);
-				cmin1->m_params.append(new Operator(Operator::times));
-				cmin1->m_params.append(derivative(var, f));
-				cmin1->m_params.append(Expression::objectCopy(g));
-				cmin->m_params.append(cmin1);
-				nc->m_params.append(cmin);
+				cmin1->appendBranch(new Operator(Operator::times));
+				cmin1->appendBranch(derivative(var, f));
+				cmin1->appendBranch(Expression::objectCopy(g));
+				cmin->appendBranch(cmin1);
+				nc->appendBranch(cmin);
 				
 				Container *cmin2 =new Container(Container::apply);
-				cmin2->m_params.append(new Operator(Operator::times));
-				cmin2->m_params.append(Expression::objectCopy(f));
-				cmin2->m_params.append(derivative(var, g));
-				cmin->m_params.append(cmin2);
+				cmin2->appendBranch(new Operator(Operator::times));
+				cmin2->appendBranch(Expression::objectCopy(f));
+				cmin2->appendBranch(derivative(var, g));
+				cmin->appendBranch(cmin2);
 				
 				Container *cquad = new Container(Container::apply);
-				cquad->m_params.append(new Operator(Operator::power));
-				cquad->m_params.append(Expression::objectCopy(g));
-				cquad->m_params.append(new Cn(2.));
-				nc->m_params.append(cquad);
+				cquad->appendBranch(new Operator(Operator::power));
+				cquad->appendBranch(Expression::objectCopy(g));
+				cquad->appendBranch(new Cn(2.));
+				nc->appendBranch(cquad);
 				
 	// 			qDebug() << "iei!" << cmin->toString();
 				return nc;
 			} break;
 			case Operator::ln: {
 				Container *nc = new Container(Container::apply);
-				nc->m_params.append(new Operator(Operator::divide));
-				nc->m_params.append(derivative(var, *c->firstValue()));
-				nc->m_params.append(Expression::objectCopy(*c->firstValue()));
+				nc->appendBranch(new Operator(Operator::divide));
+				nc->appendBranch(derivative(var, *c->firstValue()));
+				nc->appendBranch(Expression::objectCopy(*c->firstValue()));
 				return nc;
 			} break;
 			default: {
 				m_err.append(i18n("The %1 derivative has not been implemented.", op.toString()));
 				Container* obj = new Container(Container::apply);
-				obj->m_params.append(new Operator(Operator::diff));
-				obj->m_params.append(Expression::objectCopy(c));
+				obj->appendBranch(new Operator(Operator::diff));
+				obj->appendBranch(Expression::objectCopy(c));
 				return obj;
 			}
 		}
@@ -481,7 +482,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 		Container *cret = new Container(c->containerType());
 		Container::const_iterator it = c->m_params.begin(), end=c->m_params.end();
 		for(; it!=end; ++it) {
-			cret->m_params.append(derivative(var, *it));
+			cret->appendBranch(derivative(var, *it));
 		}
 		return cret;
 	}
@@ -821,11 +822,11 @@ Object* Analitza::func(const Container& n)
 		return new Cn(0.);
 	}
 	
-	Container *function = (Container*) m_vars->value(funct.name());
-	bool cont=function->isContainer();
-	if(cont) {
+	Object* obj = m_vars->value(funct.name());
+	if(obj->isContainer()) {
+		Container *function = (Container*) obj;
 		QStringList var = function->bvarList();
-	
+		
 		for(int i=0; i<var.count(); i++) {
 			Object* val=calc(n.m_params[i+1]);
 			m_vars->stack(var[i], val);
@@ -838,7 +839,7 @@ Object* Analitza::func(const Container& n)
 			m_vars->destroy(var[i]);
 		}
 	} else
-		ret=calc(function);
+		ret=calc(obj);
 	
 	return ret;
 }
@@ -1061,9 +1062,9 @@ Object* Analitza::simp(Object* root)
 							c->m_params[1] = Expression::objectCopy(cp->m_params[1]);
 							
 							Container *cm = new Container(Container::apply);
-							cm->m_params.append(new Operator(Operator::times));
-							cm->m_params.append(Expression::objectCopy(c->m_params[2]));
-							cm->m_params.append(Expression::objectCopy(cp->m_params[2]));
+							cm->appendBranch(new Operator(Operator::times));
+							cm->appendBranch(Expression::objectCopy(c->m_params[2]));
+							cm->appendBranch(Expression::objectCopy(cp->m_params[2]));
 							c->m_params[2] = cm;
 							delete cp;
 							c->m_params[2]=simp(c->m_params[2]);
@@ -1122,14 +1123,14 @@ Object* Analitza::simp(Object* root)
 					it = c->firstValue();
 					if(!hasTheVar(c->bvarList(), *it)) {
 						Container *cDiff=new Container(Container::apply);
-						cDiff->m_params.append(new Operator(Operator::minus));
-						cDiff->m_params.append(Expression::objectCopy(c->ulimit()));
-						cDiff->m_params.append(Expression::objectCopy(c->dlimit()));
+						cDiff->appendBranch(new Operator(Operator::minus));
+						cDiff->appendBranch(Expression::objectCopy(c->ulimit()));
+						cDiff->appendBranch(Expression::objectCopy(c->dlimit()));
 						
 						Container *nc=new Container(Container::apply);
-						nc->m_params.append(new Operator(Operator::times));
-						nc->m_params.append(cDiff);
-						nc->m_params.append(*it);
+						nc->appendBranch(new Operator(Operator::times));
+						nc->appendBranch(cDiff);
+						nc->appendBranch(*it);
 						
 						c->m_params.last()=0;
 						delete c;
@@ -1212,7 +1213,7 @@ Object* Analitza::simpScalar(Container * c)
 			switch(o.operatorType()) {
 				case Operator::minus:
 				case Operator::plus:
-					c->m_params.append(value);
+					c->appendBranch(value);
 					break;
 				default:
 					c->m_params.insert(c->firstValue(), value);
@@ -1232,14 +1233,14 @@ Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 		toAdd=p.second;
 	} else if(p.first==-1. && (o.operatorType()==Operator::plus || o.operatorType()==Operator::minus)) {
 		Container *cint = new Container(Container::apply);
-		cint->m_params.append(new Operator(Operator::minus));
-		cint->m_params.append(p.second);
+		cint->appendBranch(new Operator(Operator::minus));
+		cint->appendBranch(p.second);
 		toAdd=cint;
 	} else {
 		Container *cint = new Container(Container::apply);
-		cint->m_params.append(new Operator(o.multiplicityOperator()));
-		cint->m_params.append(p.second);
-		cint->m_params.append(new Cn(p.first));
+		cint->appendBranch(new Operator(o.multiplicityOperator()));
+		cint->appendBranch(p.second);
+		cint->appendBranch(new Cn(p.first));
 		if(o.multiplicityOperator()==Operator::times)
 			cint->m_params.swap(1,2);
 		toAdd=cint;
@@ -1367,7 +1368,7 @@ Object* Analitza::simpPolynomials(Container* c)
 		root=createMono(o, monos[0]);
 	} else if(monos.count()>1) {
 		c= new Container(Container::apply);
-		c->m_params.append(new Operator(o));
+		c->appendBranch(new Operator(o));
 		
 		QList<QPair<double, Object*> >::iterator i=monos.begin();
 		bool first=true;
@@ -1377,7 +1378,7 @@ Object* Analitza::simpPolynomials(Container* c)
 			Object* toAdd=createMono(o, *i);
 			
 			if(toAdd)
-				c->m_params.append(toAdd);
+				c->appendBranch(toAdd);
 			first=false;
 		}
 		root=c;
@@ -1385,8 +1386,8 @@ Object* Analitza::simpPolynomials(Container* c)
 	
 	if(!sign && root) {
 		Container *cn=new Container(Container::apply);
-		cn->m_params.append(new Operator(Operator::minus));
-		cn->m_params.append(root);
+		cn->appendBranch(new Operator(Operator::minus));
+		cn->appendBranch(root);
 		root=cn;
 	}
 	
@@ -1426,9 +1427,9 @@ Object* Analitza::simpSum(Container * c)
 		
 		if(!out.isEmpty()) {
 			Container* nc=new Container(Container::apply);
-			nc->m_params.append(new Operator(Operator::times));
+			nc->appendBranch(new Operator(Operator::times));
 			nc->m_params << out;
-			nc->m_params.append(c);
+			nc->appendBranch(c);
 			if(multCount>1)
 				cval->m_params=sum;
 			else if(multCount==1) {
@@ -1765,3 +1766,4 @@ double Analitza::derivative(const QList< QPair<QString, double > >& values )
 // 	}
 // 	return ret;
 // }
+

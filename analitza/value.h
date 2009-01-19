@@ -146,6 +146,7 @@ class ANALITZA_EXPORT Cn : public Object
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool isZero() const { return m_value==0.; }
 		
+		virtual bool matches(const Object* exp, QMap< QString, const Object* >* found) const;
 		/*/** Sets whether it is a correct Cn. 
 		void setCorrect(bool b) {m_correct = b; }*/
 		
