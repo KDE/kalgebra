@@ -669,23 +669,25 @@ Object* Analitza::operate(const Container* c)
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
 					ret = numbers.first();
 					
+					QString correct;
 					if(numbers.count()>=2) {
 						Container::const_iterator it=numbers.constBegin()+1;
 						Container::const_iterator itEnd=numbers.constEnd();
+						
 						for(; it!=itEnd; ++it) {
-							bool correct;
 							ret=Operations::reduce(opt, ret, *it, correct);
-							if(!correct)
-								m_err.append(i18nc("%1 the operation name, %2 and %3 is the opearation we wanted to calculate",
-											"Cannot calculate the %1(%2, %3)",
-											op.toString(), ret->toString(), (*it)->toString()));
+							
+							if(KDE_ISUNLIKELY(!correct.isEmpty())) {
+								m_err.append(correct);
+								correct.clear();
+							}
 						}
 					} else {
-						bool correct;
 						ret=Operations::reduceUnary(opt, ret, correct);
-						if(!correct)
-							m_err.append(i18nc("%1 is the opearation we wanted to calculate, %2 the operation name",
-									"Cannot calculate the %1 '%2'", ret->toString(), op.toString()));
+						if(KDE_ISUNLIKELY(!correct.isEmpty())) {
+							m_err.append(correct);
+							correct.clear();
+						}
 					}
 				} else {
 					ret = numbers.first();
@@ -704,6 +706,7 @@ Object* Analitza::operate(const Container* c)
 			ret=0;
 			break;
 		case Container::none:
+		case Container::last:
 			break;
 	}
 	Q_ASSERT(ret);
@@ -734,11 +737,11 @@ Object* Analitza::sum(const Container& n)
 	m_vars->stack(var, 0.);
 	Cn* c = (Cn*) m_vars->value(var);
 	
+	QString correct;
 	for(double a = dl; a<=ul; a++){
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
 		Object *val=calc(n.m_params.last());
-		bool correct;
 		ret=Operations::reduce(Operator::plus, ret, val, correct);
 	}
 	
@@ -770,11 +773,11 @@ Object* Analitza::product(const Container& n)
 	m_vars->stack(var, 0.);
 	Cn* c = (Cn*) m_vars->value(var);
 	
+	QString correct;
 	for(double a = dl; a<=ul; a++){
 		Q_ASSERT(isCorrect());
 		c->setValue(a);
 		Object *val=calc(n.m_params.last());
-		bool correct;
 		ret=Operations::reduce(Operator::times, ret, val, correct);
 	}
 	
@@ -1144,7 +1147,7 @@ Object* Analitza::simp(Object* root)
 					if(val->type()==Object::vector)
 					{
 						c->m_params.last()=0;
-						bool correct;
+						QString correct;
 						val=Operations::reduceUnary(Operator::card, val, correct);
 						//TODO: if(!correct) Handle me!
 						delete c;
@@ -1193,7 +1196,7 @@ Object* Analitza::simpScalar(Container * c)
 			Object* aux = *i;
 			
 			if(value) {
-				bool correct;
+				QString correct;
 				value=Operations::reduce(o.operatorType(), value, aux, correct);
 			} else
 				value=aux;

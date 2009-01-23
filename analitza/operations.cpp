@@ -29,7 +29,7 @@
 
 using namespace std;
 
-Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, bool &correct)
+Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
 {
 	int residu;
 	double a=oper->value(), b=oper1->value(), c;
@@ -55,7 +55,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			if(floor(b)!=0.)
 				a = remainder(a, b);
 			else
-				correct=false;
+				correct=i18n("Cannot calculate the reminder on 0.");
 			break;
 		case Operator::quotient:
 			a = floor(a / b);
@@ -63,10 +63,9 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			break;
 		case Operator::factorof:
 			if(floor(b)!=0.)
-				a = (((int)a % (int)b)==0) ? 1.0 : 0.0;
+				a = ((int(floor(a)) % int(floor(b)))==0) ? 1.0 : 0.0;
 			else {
-				a = 0.;
-				correct=false;
+				correct=i18n("Cannot calculate the factor on 0.");
 			}
 			format=Cn::Boolean;
 			break;
@@ -142,7 +141,6 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a = b==2.0 ? sqrt(a) : pow(a, 1.0/b);
 			break;
 		default:
-			correct=false;
 			break;
 	}
 	oper->setValue(a);
@@ -151,7 +149,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 	return oper;
 }
 
-Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &correct)
+Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString &correct)
 {
 	double a=val->value();
 	Cn::ValueFormat format=val->format();
@@ -265,7 +263,6 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 			format=Cn::Boolean;
 			break;
 		default:
-			correct=false;
 			break;
 	}
 	
@@ -274,10 +271,9 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, bool &c
 	return val;
 }
 
-Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, bool &correct)
+Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, QString &correct)
 {
 	Object::ObjectType t1=val1->type(), t2=val2->type();
-	correct=true;
 	
 	if(t1==Object::value && t2==Object::value) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
 	if(t1==Object::value && t2==Object::vector) return reduceRealVector(op, (Cn*) val1, (Vector*) val2, correct);
@@ -287,9 +283,8 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 	return 0;
 }
 
-Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, bool &correct)
+Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QString &correct)
 {
-	correct=true;
 	switch(val->type()) {
 		case Object::value:
 			return reduceUnaryReal(op, (Cn*) val, correct);
@@ -301,7 +296,7 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, bool &
 	return 0;
 }
 
-Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, bool& correct)
+Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, QString& correct)
 {
 	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
@@ -312,7 +307,7 @@ Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vect
 	return v1;
 }
 
-Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, bool &correct)
+Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, QString &correct)
 {
 	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
@@ -322,7 +317,7 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn
 	return v1;
 }
 
-Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, bool &correct)
+Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, QString &correct)
 {
 	Q_ASSERT(v1->size()==v2->size());
 	if(op==Operator::scalarproduct)
@@ -338,7 +333,7 @@ Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, 
 	return v1;
 }
 
-Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, bool &correct)
+Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString &correct)
 {
 	Object *ret=0;
 	switch(op) {
@@ -346,7 +341,6 @@ Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, bo
 			ret=new Cn(c->size());
 			break;
 		default:
-			correct=false;
 			ret=new Cn(0.);
 			break;
 	}
