@@ -119,7 +119,7 @@ void ExpTest::testExp_data()
 
 	QString fourX="<math><apply><plus /><ci>x</ci><ci>x</ci><ci>x</ci><ci>x</ci></apply></math>";
 
-	//FIXME: Repetition not suported
+	//FIXME: Repetition not supported
 	QTest::newRow("simple expression") << "x+x+x+x" << fourX;
 	QTest::newRow("composed expression") << QString::fromUtf8("2²")
 			<< "<math><apply><power /><cn>2</cn><cn>2</cn></apply></math>";
