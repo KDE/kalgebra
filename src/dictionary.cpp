@@ -21,6 +21,7 @@
 #include "expression.h"
 #include "graph2d.h"
 #include "operatorsmodel.h"
+#include "variables.h"
 
 #include <QLabel>
 #include <QListView>
@@ -40,6 +41,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_sortProxy->setSourceModel(m_ops);
 	m_sortProxy->sort(2, Qt::AscendingOrder);
 	m_sortProxy->setFilterKeyColumn(2);
+	
+	m_vars = new Variables;
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
 	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
@@ -76,6 +79,12 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 // 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
 }
 
+Dictionary::~Dictionary()
+{
+	delete m_vars;
+}
+
+
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
 	Q_UNUSED(prev);
@@ -100,7 +109,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	
 	m_funcs->clear();
 	if(!example.isEmpty())
-		m_funcs->addFunction(function("func", e, QColor(0,150,0)));
+		m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0)));
 }
 
 void Dictionary::filterChanged(const QString &filter)

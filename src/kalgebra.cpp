@@ -126,6 +126,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_tools->addTab(b_funcs, i18n("List"));
 	
 	b_funced = new FunctionEdit(b_tools);
+	b_funced->setVariables(new Variables);
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
@@ -250,7 +251,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 void KAlgebra::new_func()
 {
 	QString name = b_funced->name();
-	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->color());
+	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->variables(), b_funced->color());
 	
 	if(b_funced->editing()) {
 		b_funcsModel->editFunction(name, f);

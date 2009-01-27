@@ -28,7 +28,7 @@ class Expression;
 struct FunctionImpl
 {
 	enum ImplType { XType, YType, PolarType };
-	explicit FunctionImpl(const Expression& e);
+	explicit FunctionImpl(const Expression& e, Variables* v);
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
 	QStringList bvarList() { return func.bvarList(); }
@@ -52,7 +52,7 @@ struct FunctionImpl
 
 struct FunctionX : public FunctionImpl
 {
-	explicit FunctionX(const Expression &e) : FunctionImpl(e) {}
+	explicit FunctionX(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionX(const FunctionX &fx) : FunctionImpl(fx) {}
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);
@@ -64,7 +64,7 @@ struct FunctionX : public FunctionImpl
 
 struct FunctionY : public FunctionImpl
 {
-	explicit FunctionY(const Expression &e) : FunctionImpl(e) {}
+	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionY(const FunctionY &fy) : FunctionImpl(fy) {}
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);
@@ -76,7 +76,7 @@ struct FunctionY : public FunctionImpl
 
 struct FunctionPolar : public FunctionImpl
 {
-	FunctionPolar(const Expression &e) : FunctionImpl(e) {}
+	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionPolar(const FunctionPolar &fp) : FunctionImpl(fp) {}
 	
 	void updatePoints(const QRect& viewport, unsigned int resolution);

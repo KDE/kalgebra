@@ -107,7 +107,9 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 }
 
 FunctionEdit::~FunctionEdit()
-{}
+{
+	delete m_vars;
+}
 
 
 void FunctionEdit::clear()
@@ -138,7 +140,7 @@ void FunctionEdit::colorChange(int)
 
 void FunctionEdit::edit()	//Let's see if the exp is correct
 {
-	Analitza a;
+	Analitza a(m_vars);
 	QString funct = m_func->text();
 	QStringList bvl;
 
@@ -150,10 +152,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		return;
 	}
 	
-	if(!m_func->isMathML())
-		a.setExpression(Expression(funct, 0));
-	else
-		a.setExpression(Expression(funct, 1));
+	a.setExpression(Expression(funct, m_func->isMathML()));
 	
 	Expression res;
 	bool bvarCorrect=true;
@@ -174,7 +173,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 	m_correct= bvarCorrect && a.isCorrect() && res.isValue();
 	function f;
 	if(m_correct) {
-		f=function(m_name->text(), m_func->expression(), m_color->color());
+		f=function(m_name->text(), m_func->expression(), m_vars, m_color->color());
 		f.update_points(QRect(-10, 10, 10, -10), 100);
 	}
 	m_correct=m_correct && f.isCorrect();
@@ -196,7 +195,8 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		m_valid->setText(i18n("<b style='color:red'>%1</b>", errors.first()));
+		if(!errors.isEmpty())
+			m_valid->setText(i18n("<b style='color:red'>%1</b>", errors.first()));
 		m_valid->setToolTip(errors.join("\n"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}

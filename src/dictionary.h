@@ -22,6 +22,7 @@
 #include <QWidget>
 #include <QSortFilterProxyModel>
 
+class Variables;
 class QLabel;
 class QModelIndex;
 class Graph2D;
@@ -36,7 +37,7 @@ class Dictionary : public QWidget
 Q_OBJECT
 	public:
 		Dictionary(QWidget *p=0);
-		virtual ~Dictionary(){}
+		virtual ~Dictionary();
 		
 		QSortFilterProxyModel* model() const { return m_sortProxy; }
 		
@@ -53,6 +54,7 @@ Q_OBJECT
 		Graph2D *m_graph;
 		FunctionsModel *m_funcs;
 		OperatorsModel *m_ops;
+		Variables* m_vars;
 		QSortFilterProxyModel *m_sortProxy;
 };
 

@@ -20,6 +20,7 @@
 #include "function.h"
 #include "expression.h"
 #include "analitza.h"
+#include "variables.h"
 #include <qtest_kde.h>
 #include <cmath>
 
@@ -29,10 +30,14 @@ QTEST_KDEMAIN_CORE( FunctionTest )
 
 FunctionTest::FunctionTest(QObject *parent)
 	: QObject(parent)
-{}
+{
+	m_vars=new Variables;
+}
 
 FunctionTest::~FunctionTest()
-{}
+{
+	delete m_vars;
+}
 
 void FunctionTest::initTestCase()
 {}
@@ -69,7 +74,7 @@ void FunctionTest::testCopy_data()
 void FunctionTest::testCopy()
 {
 	QFETCH(QString, input);
-	function f("hola", Expression(input, false));
+	function f("hola", Expression(input, false), m_vars);
 	QVERIFY(f.isCorrect());
 	function f2(f);
 	QVERIFY(f2.isCorrect());
@@ -118,7 +123,7 @@ void FunctionTest::testCorrect()
 {
 	QFETCH(QString, input);
 	QFETCH(bool, correct);
-	function f("hola", Expression(input, false));
+	function f("hola", Expression(input, false), m_vars);
 	bool corr=f.isCorrect();
 	function f2(f);
 	corr = corr || f2.isCorrect();

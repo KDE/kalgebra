@@ -32,18 +32,18 @@ function::function()
 
 // #include "container.h"
 
-function::function(const QString &name, const Expression& newFunc, const QColor& color)
+function::function(const QString &name, const Expression& newFunc, Variables* v, const QColor& color)
 	: m_function(0), m_show(true), m_color(color), m_name(name)
 {
 	if(newFunc.isCorrect()) {
 //		objectWalker(newFunc.tree());
 		QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
 		if(firstBVar=="x")
-			m_function=new FunctionY(newFunc);
+			m_function=new FunctionY(newFunc, v);
 		else if(firstBVar=="y")
-			m_function=new FunctionX(newFunc);
+			m_function=new FunctionX(newFunc, v);
 		else if(firstBVar=="q")
-			m_function=new FunctionPolar(newFunc);
+			m_function=new FunctionPolar(newFunc, v);
 		else
 			m_err << "Function type not recognized";
 	} else {

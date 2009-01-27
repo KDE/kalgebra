@@ -25,6 +25,7 @@
 	@author Aleix Pol
 */
 class function;
+class Variables;
 
 class FunctionTest : public QObject
 {
@@ -44,7 +45,7 @@ Q_OBJECT
 		
 		void cleanupTestCase();
 	private:
-// 		function *f;
+		Variables* m_vars;
 };
 
 #endif

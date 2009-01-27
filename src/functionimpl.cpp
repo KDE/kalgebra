@@ -32,8 +32,8 @@ using std::sqrt;
 
 static const double pi=acos(-1.);
 
-FunctionImpl::FunctionImpl(const Expression& newFunc)
-	: points(), m_deriv(0)
+FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
+	: points(), func(v), m_deriv(0)
 {
 	func.setExpression(newFunc);
 	if(func.isCorrect()) {
@@ -42,13 +42,14 @@ FunctionImpl::FunctionImpl(const Expression& newFunc)
 			m_deriv = new Expression(deriv);
 		else
 			func.flushErrors();
+		
 		Q_ASSERT(func.isCorrect());
 	} else
 		func.flushErrors();
 }
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
-	: points(), m_deriv(0)
+	: points(), func(fi.func.variables()), m_deriv(0)
 {
 // 	Q_ASSERT(fi.isCorrect());
 	func.setExpression(fi.func.expression());
@@ -94,7 +95,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	double ulimit, dlimit;
 	
 	if(ulimitexp.isCorrect()) {
-		Analitza u;
+		Analitza u(func.variables());
 		u.setExpression(ulimitexp);
 		ulimitexp=u.calculate();
 	}
@@ -104,7 +105,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 		ulimit = 2.*pi;
 	
 	if(dlimitexp.isCorrect()) {
-		Analitza d;
+		Analitza d(func.variables());
 		d.setExpression(dlimitexp);
 		dlimitexp=d.calculate();
 	}
@@ -262,7 +263,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	Expression ulimitexp = e->uplimit(), dlimitexp=e->downlimit();
 	Cn ulimit, dlimit;
 	if(ulimitexp.isCorrect()) {
-		Analitza u;
+		Analitza u(func.variables());
 		u.setExpression(ulimitexp);
 		ulimitexp=u.calculate();
 	}
@@ -270,7 +271,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 		ulimit = 2.*pi;
 	
 	if(dlimitexp.isCorrect()) {
-		Analitza d;
+		Analitza d(func.variables());
 		d.setExpression(dlimitexp);
 		dlimitexp=d.calculate();
 	}
@@ -324,7 +325,7 @@ QLineF mirrorXY(const QLineF& l)
 
 QLineF FunctionX::derivative(const QPointF& p) const
 {
-	Analitza a;
+	Analitza a(func.variables());
 	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
@@ -348,7 +349,7 @@ QLineF FunctionX::derivative(const QPointF& p) const
 
 QLineF FunctionY::derivative(const QPointF& p) const
 {
-	Analitza a;
+	Analitza a(func.variables());
 	double ret;
 	if(m_deriv) {
 		a.setExpression(*m_deriv);

@@ -26,6 +26,7 @@
 
 class Analitza;
 class Expression;
+class Variables;
 
 /**
  *	Calculates 2D functions.
@@ -51,7 +52,7 @@ class function
 			@param newExp the function expression tree.
 			@param color the function representation color.
 		*/
-		function(const QString& name, const Expression& newExp, const QColor& color=Qt::red);
+		function(const QString& name, const Expression& newExp, Variables* v, const QColor& color=Qt::red);
 		
 		/** Destructor. */
 		~function();
