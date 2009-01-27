@@ -18,12 +18,13 @@
 
 #include "variablesmodel.h"
 #include "variables.h"
+#include "expression.h"
 #include <KLocale>
 #include <KApplication>
 #include <KDebug>
 
-VariablesModel::VariablesModel(QObject *parent)
-	: QAbstractTableModel(parent), m_vars(0)
+VariablesModel::VariablesModel(Variables* v, QObject *parent)
+	: QAbstractTableModel(parent), m_vars(v)
 {}
 
 QVariant VariablesModel::data(const QModelIndex & index, int role) const
@@ -37,11 +38,37 @@ QVariant VariablesModel::data(const QModelIndex & index, int role) const
 				ret=key;
 				break;
 			case 1:
-				ret=m_vars->value(key)->toString();
+				if(m_vars->value(key)->type()==Object::value) {
+					Cn* v=static_cast<Cn*>(m_vars->value(key));
+					ret=v->value();
+				} else
+					ret=m_vars->value(key)->toString();
 				break;
 		}
 	}
 	return ret;
+}
+
+bool VariablesModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+	if(role!=Qt::EditRole || !value.isValid())
+		return false;
+	
+	if(index.column()==1) { //Changing values
+		QString name=data(index.sibling(index.row(), 0)).toString();
+		if(value.canConvert<double>())
+			m_vars->modify(name, value.value<double>());
+		else
+			m_vars->modify(name, Expression(value.toString(), Expression::isMathML(value.toString())));
+		emit dataChanged(index, index);
+		return true;
+	} else if(index.column()==0) {
+		QString name=data(index.sibling(index.row(), 0)).toString();
+		m_vars->rename(name, value.toString());
+		emit dataChanged(index, index);
+		return true;
+	}
+	return false;
 }
 
 QVariant VariablesModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -67,6 +94,15 @@ int VariablesModel::rowCount(const QModelIndex &idx) const
 	else
 		return m_vars->count();
 }
+
+QFlags< Qt::ItemFlag > VariablesModel::flags(const QModelIndex& index) const
+{
+	QFlags< Qt::ItemFlag > ret = QAbstractItemModel::flags(index);
+	if(index.column()==1)
+		ret |= Qt::ItemIsEditable;
+	return ret;
+}
+
 
 void VariablesModel::updateInformation()
 {

@@ -109,12 +109,14 @@ public slots:
 	/** Zooms out */
 	void zoomOut();
 	
+	/** Force the functions from @p start to @p end to be recalculated. */
+	void update( const QModelIndex & start, const QModelIndex& end );
+	
 signals:
 	/** Emits a status when it changes. */
 	void status(const QString &msg);
 	
 private slots:
-	void update( const QModelIndex & start, const QModelIndex& end );
 	void addFuncs( const QModelIndex & parent, int start, int end);
 	void removeFuncs( const QModelIndex & parent, int start, int end);
 	

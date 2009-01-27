@@ -57,14 +57,15 @@ class KAlgebra : public KMainWindow
 		FunctionsModel* b_funcsModel;
 		QTreeView *b_funcs;
 		QTabWidget *b_tools;
-		Graph2D *grafic;
+		Graph2D *m_graph2d;
 		QDockWidget *b_dock_funcs;
+		QDockWidget *b_dock_vars;
 		FunctionEdit *b_funced;
 
 #ifdef HAVE_OPENGL
 		//graph 3d
 		ExpressionEdit *t_exp;
-		Graph3D *grafic3d;
+		Graph3D *m_graph3d;
 #endif
 		//Dictionary
 		QDockWidget *d_dock;
@@ -88,6 +89,7 @@ class KAlgebra : public KMainWindow
 		void set_res_std();
 		void set_res_fine();
 		void set_res_vfine();
+		void valueChanged();
 		
 		void new_func3d();
 		

@@ -34,7 +34,9 @@
 
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QItemDelegate>
 #include <QDockWidget>
+#include <QTableView>
 #include <KAction>
 #include <KHTMLView>
 #include <KFileDialog>
@@ -65,9 +67,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
 	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
-	
-	c_varsModel=new VariablesModel;
-	c_varsModel->setVariables(c_results->analitza()->variables());
+	c_varsModel=new VariablesModel(c_results->analitza()->variables());
 	
 	c_variables = new QTreeView(c_dock_vars);
 	c_variables->setModel(c_varsModel);
@@ -108,12 +108,11 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//////2D Graph
 	b_funcsModel=new FunctionsModel(this);
 	
-	grafic = new Graph2D(b_funcsModel, this);
+	m_graph2d = new Graph2D(b_funcsModel, this);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
 	b_tools->setTabPosition(QTabWidget::South);
-	
 	this->addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
 	b_funcs = new FunctionsView(b_tools);
@@ -130,24 +129,39 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
+	b_dock_vars=new QDockWidget(i18n("Variables"), this);
+	this->addDockWidget(Qt::LeftDockWidgetArea, b_dock_vars);
+	QTableView* b_varsView=new QTableView(b_dock_vars);
+	VariablesModel* b_varsModel=new VariablesModel(b_funced->variables());
+	b_varsView->setModel(b_varsModel);
+	b_varsView->setShowGrid(false);
+	b_varsView->verticalHeader()->hide();
+	b_varsView->horizontalHeader()->setStretchLastSection(true);
+	b_varsView->setSelectionBehavior(QAbstractItemView::SelectRows);
+	
+	QItemDelegate* delegate=new QItemDelegate(b_varsView);
+	b_varsView->setItemDelegate(delegate);
+	b_dock_vars->setWidget(b_varsView);
+	
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-	tabs->addTab(grafic, i18n("&2D Graph"));
+	tabs->addTab(m_graph2d, i18n("&2D Graph"));
 	
+	connect(b_varsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(valueChanged()));
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
-	connect(grafic, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(m_graph2d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	
 	////////menu
 	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
 	QAction* b_actions[6];
 	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
 	b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
-	b_menu->addAction(KStandardAction::zoomIn(grafic, SLOT(zoomIn()), this));
-	b_menu->addAction(KStandardAction::zoomOut(grafic, SLOT(zoomOut()), this));
+	b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
+	b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
 	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
-	b_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), grafic, SLOT(resetViewport()));
+	b_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph2d, SLOT(resetViewport()));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
 	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
@@ -176,22 +190,22 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QWidget *tridim = new QWidget(p);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new ExpressionEdit(tridim);
-	grafic3d = new Graph3D(tridim);
+	m_graph3d = new Graph3D(tridim);
 	
 	tridim->setLayout(t_layo);
 	tabs->addTab(tridim, i18n("&3D Graph"));
-	t_layo->addWidget(grafic3d);
+	t_layo->addWidget(m_graph3d);
 	t_layo->addWidget(t_exp);
 	
 	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(new_func3d()));
-	connect(grafic3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(m_graph3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	
 	////////menu
 	QMenu *t_menu = menuBar()->addMenu(i18n("3D &Graph"));
 	QAction* t_actions[5];
 	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
-	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), grafic3d, SLOT(resetView()));
+	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
 	t_menu->addSeparator()->setText(i18n("Type"));
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
 	t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
@@ -263,7 +277,7 @@ void KAlgebra::new_func()
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
 	b_funcsModel->setSelected(name);
-	grafic->setFocus();
+	m_graph2d->setFocus();
 }
 
 void KAlgebra::edit_func(const QModelIndex &idx)
@@ -335,37 +349,37 @@ void KAlgebra::saveLog()
 		c_results->saveLog(path);
 }
 
-void KAlgebra::set_res_low()	{ grafic->setResolution(416); }
-void KAlgebra::set_res_std()	{ grafic->setResolution(832); }
-void KAlgebra::set_res_fine()	{ grafic->setResolution(1664);}
-void KAlgebra::set_res_vfine()	{ grafic->setResolution(3328);}
+void KAlgebra::set_res_low()	{ m_graph2d->setResolution(416); }
+void KAlgebra::set_res_std()	{ m_graph2d->setResolution(832); }
+void KAlgebra::set_res_fine()	{ m_graph2d->setResolution(1664);}
+void KAlgebra::set_res_vfine()	{ m_graph2d->setResolution(3328);}
 
 void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
-	grafic3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
-	grafic3d->setFocus();
+	m_graph3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
+	m_graph3d->setFocus();
 #endif
 }
 
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-	grafic3d->setMethod(Graph3D::Dots);
+	m_graph3d->setMethod(Graph3D::Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-	grafic3d->setMethod(Graph3D::Lines);
+	m_graph3d->setMethod(Graph3D::Lines);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-	grafic3d->setMethod(Graph3D::Solid);
+	m_graph3d->setMethod(Graph3D::Solid);
 #endif
 }
 
@@ -374,38 +388,39 @@ void KAlgebra::save3DGraph()
 #ifdef HAVE_OPENGL
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this);
 	if(!path.isEmpty())
-		grafic3d->toPixmap().save(path, "PNG");
+		m_graph3d->toPixmap().save(path, "PNG");
 #endif
 }
 
 void KAlgebra::toggleTransparency()
 {
 #ifdef HAVE_OPENGL
-	grafic3d->setTransparency(!grafic3d->transparency());
+	m_graph3d->setTransparency(!m_graph3d->transparency());
 #endif
 }
 
 void KAlgebra::toggleSquares()
 {
-	grafic->setSquares(!grafic->squares());
+	m_graph2d->setSquares(!m_graph2d->squares());
 }
 
 void KAlgebra::toggleKeepAspect()
 {
-	grafic->setKeepAspectRatio(!grafic->keepAspectRatio());
+	m_graph2d->setKeepAspectRatio(!m_graph2d->keepAspectRatio());
 }
 
 void KAlgebra::saveGraph()
 {
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
 	if(!path.isEmpty())
-		grafic->toImage(path);
+		m_graph2d->toImage(path);
 }
 
 void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
+	b_dock_vars->hide();
 	d_dock->hide();
 	switch(n) {
 		case 0:
@@ -416,6 +431,8 @@ void KAlgebra::tabChanged(int n)
 		case 1:
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
+			b_dock_vars->show();
+			b_dock_vars->raise();
 			
 			if(b_funcsModel->rowCount()==0)
 				b_tools->setCurrentIndex(1); //We set the Add tab
@@ -446,5 +463,13 @@ void KAlgebra::updateInformation()
 	c_varsModel->updateInformation();
 	c_variables->header()->resizeSections(QHeaderView::ResizeToContents);
 }
+
+void KAlgebra::valueChanged()
+{
+	//FIXME: Should only repaint the affected ones.
+	if(b_funcsModel->rowCount()>0)
+		m_graph2d->update(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
+}
+
 
 #include "kalgebra.moc"

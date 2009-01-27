@@ -31,21 +31,20 @@ class VariablesModel : public QAbstractTableModel
 	Q_OBJECT
 	public:
 		/** Constructor. Creates a new Variable Model. */
-		explicit VariablesModel(QObject *parent=0);
+		explicit VariablesModel(Variables* v, QObject *parent=0);
 		
+		virtual QFlags< Qt::ItemFlag > flags(const QModelIndex& index) const;
+		bool setData(const QModelIndex& index, const QVariant& value, int role=Qt::EditRole);
 		QVariant data( const QModelIndex &index, int role=Qt::DisplayRole) const;
 		QVariant headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
 		int rowCount(const QModelIndex &parent=QModelIndex()) const;
 		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
-		
-		void setVariables(const Variables* v) { m_vars=v; }
-		const QSet<QString>& functions() const;
 	public slots:
 		/** Updates the variables information */
 		void updateInformation();
 		
 	private:
-		const Variables *m_vars;
+		Variables *m_vars;
 };
 
 #endif
