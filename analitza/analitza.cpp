@@ -1639,12 +1639,12 @@ Expression Analitza::derivative()
 	return exp;
 }
 
-void Analitza::insertVariable(const QString & name, const Expression & value)
+bool Analitza::insertVariable(const QString & name, const Expression & value)
 {
-	insertVariable(name, value.tree());
+	return insertVariable(name, value.tree());
 }
 
-void Analitza::insertVariable(const QString & name, const Object * value)
+bool Analitza::insertVariable(const QString & name, const Object * value)
 {
 	bool islambda=false;
 	if(value->isContainer()) {
@@ -1652,11 +1652,15 @@ void Analitza::insertVariable(const QString & name, const Object * value)
 		islambda= c->containerType()==Container::lambda;
 	}
 	
+	bool correct;
 	if(!islambda && hasVars(value, name, QStringList(), m_vars)) {
 		m_err << i18nc("By a cycle i mean a variable that depends on itself", "Defined a variable cycle");
+		correct=false;
 	} else {
 		m_vars->modify(name, value);
+		correct=true;
 	}
+	return correct;
 }
 
 bool Analitza::hasTheVar(const QStringList & vars, const Object * o)

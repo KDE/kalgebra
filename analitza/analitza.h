@@ -105,11 +105,19 @@ class ANALITZA_EXPORT Analitza
 		/** @returns Returns a way to query variables. */
 		Variables *variables() { return m_vars; }
 		
-		/** Adds a variable entry */
-		void insertVariable(const QString& name, const Expression& value);
+		/**
+			Adds a variable entry. It is the proper way to do it because tracks some possible errors.
+			May change the error in case we're trying to represent something wrong.
+			@returns Returns if it was actually inserted.
+		*/
+		bool insertVariable(const QString& name, const Expression& value);
 		
-		/** Adds a variable entry */
-		void insertVariable(const QString& name, const Object* value);
+		/**
+			Adds a variable entry. It is the proper way to do it because tracks some possible errors.
+			May change the error in case we're trying to represent something wrong.
+			@returns Returns if it was actually inserted.
+		*/
+		bool insertVariable(const QString& name, const Object* value);
 		
 		/** Returns whether there is any @p var variable in the @p o tree. @p bvars tells the already defined variables (which won't return true). */
 		static bool hasVars(const Object* o, const QString &var=QString(),
