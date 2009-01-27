@@ -61,12 +61,6 @@ void Variables::modify(const QString& name, const Object* o)
 	if(contains(name))
 		delete value(name);
 	
-	if(o->isContainer()) {
-		const Container* c=static_cast<const Container*>(o);
-		if(c->containerType()==Container::lambda)
-			m_functions.insert(name);
-	}
-	
 	insert(name, Expression::objectCopy(o));
 }
 

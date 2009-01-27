@@ -27,16 +27,18 @@
 #include "container.h"
 #include "object.h"
 
-Analitza::Analitza() : m_vars(new Variables) { }
+Analitza::Analitza() : m_vars(new Variables), m_varsOwned(true) { }
 
-Analitza::Analitza(const Analitza& a) : m_exp(a.m_exp), m_err(a.m_err)
+Analitza::Analitza(Variables* v) : m_vars(v), m_varsOwned(false) { Q_ASSERT(v); }
+
+Analitza::Analitza(const Analitza& a) : m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true)
 {
 	m_vars = new Variables(*a.m_vars);
 }
 
 Analitza::~Analitza()
 {
-	if(m_vars)
+	if(m_varsOwned)
 		delete m_vars;
 }
 
@@ -1615,13 +1617,6 @@ Object* Analitza::removeDependencies(Object * o) const
 	return o;
 }
 
-void Analitza::setVariables(Variables * v)//FIXME: Copy me!
-{
-	if(m_vars!=NULL)
-		delete m_vars;
-	m_vars = v;
-}
-
 Expression Analitza::derivative()
 {
 	m_err.clear();
@@ -1688,6 +1683,8 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 			cand=static_cast<const Ci*>(o);
 			found=vars.contains(cand->name());
 			break;
+		case Object::value:
+		case Object::oper:
 		case Object::none:
 			found=false;
 			break;

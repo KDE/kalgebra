@@ -37,7 +37,6 @@ class Container;
 
 class ANALITZA_EXPORT Analitza
 {
-	
 	//FIXME: Remove all friends. Most solved with variables getter.
 	friend class VarEdit;
 	friend class VariableView;
@@ -47,18 +46,20 @@ class ANALITZA_EXPORT Analitza
 	
 	public:
 		typedef QPair<double, double> Bounds;
-	
-		/** Constructor. Creates an empty Analitza module. */
+		
+		/** Constructor. Creates an empty Analitza module with a Variables module. */
 		Analitza();
+		
+		/** Constructor. Creates an empty Analitza module. 
+			@param v: Sets a custom variables module. This module will _not_ be deleted along with Analitza
+		*/
+		Analitza(Variables* v);
 		
 		/** Copy constructor. Creates a copy of the @p a Analitza instance. Inherits its Variable structure. */
 		Analitza(const Analitza& a);
 		
 		/** Destructor. */
 		~Analitza();
-		
-		/** Sets another Variable module so that it is used in further calculations. */
-		void setVariables(Variables* v);
 		
 		/** Sets an expression to calculate. */
 		void setExpression(const Expression &e);
@@ -67,7 +68,7 @@ class ANALITZA_EXPORT Analitza
 		const Expression* expression() { return &m_exp; }
 		
 		/** Returns the expression in use. */
-		const Expression & expression() const { return m_exp; }
+		const Expression& expression() const { return m_exp; }
 		
 		/** Calculates the expression and returns a value alone. */
 		Expression calculate();
@@ -100,10 +101,7 @@ class ANALITZA_EXPORT Analitza
 		QStringList errors() const { return m_exp.error() + m_err; }
 		
 		/** @returns Returns a way to query variables. */
-		const Variables *variables() const { return m_vars; }
-		
-		/** @returns Returns a way to query variables. */
-		Variables *variables() { return m_vars; }
+		Variables *variables() const { return m_vars; }
 		
 		/**
 			Adds a variable entry. It is the proper way to do it because tracks some possible errors.
@@ -119,7 +117,8 @@ class ANALITZA_EXPORT Analitza
 		*/
 		bool insertVariable(const QString& name, const Object* value);
 		
-		/** Returns whether there is any @p var variable in the @p o tree. @p bvars tells the already defined variables (which won't return true). */
+		/** Returns whether there is any @p var variable in the @p o tree.
+			@p bvars tells the already defined variables (which won't return true). */
 		static bool hasVars(const Object* o, const QString &var=QString(),
 							const QStringList& bvars=QStringList(), const Variables* vars=0);
 							
@@ -130,6 +129,7 @@ class ANALITZA_EXPORT Analitza
 		Variables *m_vars;
 		QStringList m_err;
 	private:
+		const bool m_varsOwned;
 		Object* calc(const Object* e);
 		Object* operate(const Container*);
 		Object* eval(const Object* e, bool vars, const QSet<QString>& unscoped);
