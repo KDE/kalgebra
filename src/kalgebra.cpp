@@ -71,12 +71,14 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
 	c_varsModel=new VariablesModel(c_results->analitza()->variables());
+	c_varsModel->setEditable(false);
 	
 	c_variables = new QTreeView(c_dock_vars);
 	c_variables->setModel(c_varsModel);
 	c_variables->setRootIsDecorated(false);
+	c_variables->header()->setStretchLastSection(true);
+	c_variables->setSelectionBehavior(QAbstractItemView::SelectRows);
 	c_variables->setSelectionMode(QAbstractItemView::SingleSelection);
-	c_variables->header()->resizeSections(QHeaderView::ResizeToContents);
 	
 	c_exp = new ExpressionEdit(console);
 	c_exp->setAnalitza(c_results->analitza());
@@ -91,7 +93,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(c_results, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
-// 	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
+	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	
 	////////menu
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));

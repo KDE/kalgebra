@@ -41,12 +41,14 @@ class VariablesModel : public QAbstractTableModel
 		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
 		
 		void insertVariable(const QString& name, const Expression& value);
+		void setEditable(bool ed) { m_editable=ed; }
 	public slots:
 		/** Updates the variables information */
 		void updateInformation();
 		
 	private:
 		Variables *m_vars;
+		bool m_editable;
 };
 
 #endif

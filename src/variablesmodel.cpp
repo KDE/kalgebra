@@ -24,7 +24,7 @@
 #include <KDebug>
 
 VariablesModel::VariablesModel(Variables* v, QObject *parent)
-	: QAbstractTableModel(parent), m_vars(v)
+	: QAbstractTableModel(parent), m_vars(v), m_editable(true)
 {}
 
 QVariant VariablesModel::data(const QModelIndex & index, int role) const
@@ -98,7 +98,7 @@ int VariablesModel::rowCount(const QModelIndex &idx) const
 QFlags< Qt::ItemFlag > VariablesModel::flags(const QModelIndex& index) const
 {
 	QFlags< Qt::ItemFlag > ret = QAbstractItemModel::flags(index);
-	if(index.column()==1)
+	if(index.column()==1 && m_editable)
 		ret |= Qt::ItemIsEditable;
 	return ret;
 }
