@@ -59,8 +59,8 @@ class KAlgebra : public KMainWindow
 		QTabWidget *b_tools;
 		Graph2D *m_graph2d;
 		QDockWidget *b_dock_funcs;
-		QDockWidget *b_dock_vars;
 		FunctionEdit *b_funced;
+		VariablesModel* b_varsModel;
 
 #ifdef HAVE_OPENGL
 		//graph 3d
@@ -90,9 +90,9 @@ class KAlgebra : public KMainWindow
 		void set_res_fine();
 		void set_res_vfine();
 		void valueChanged();
+		void varsContextMenu(const QPoint&);
 		
 		void new_func3d();
-		
 		void set_dots();
 		void set_lines();
 		void set_solid();

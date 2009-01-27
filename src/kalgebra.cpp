@@ -28,6 +28,7 @@
 #include "functionsmodel.h"
 #include "functionsview.h"
 #include "operatorsmodel.h"
+#include "askname.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif
@@ -35,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QItemDelegate>
+#include <QItemEditorFactory>
 #include <QDockWidget>
 #include <QTableView>
 #include <KAction>
@@ -45,6 +47,7 @@
 #include <KStatusBar>
 #include <KLocale>
 #include <KStandardAction>
+#include "variablesdelegate.h"
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {
@@ -85,10 +88,10 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	c_layo->addWidget(c_exp);
 	
 	connect(c_exp, SIGNAL(returnPressed()), this, SLOT(operate()));
-	connect(c_results, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(c_results, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
-	connect(c_variables, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_var(const QModelIndex &)));
+// 	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	
 	////////menu
 	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
@@ -129,19 +132,18 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
-	b_dock_vars=new QDockWidget(i18n("Variables"), this);
-	this->addDockWidget(Qt::LeftDockWidgetArea, b_dock_vars);
-	QTableView* b_varsView=new QTableView(b_dock_vars);
-	VariablesModel* b_varsModel=new VariablesModel(b_funced->variables());
+	QTableView* b_varsView=new QTableView(b_tools);
+	b_varsModel=new VariablesModel(b_funced->variables());
 	b_varsView->setModel(b_varsModel);
 	b_varsView->setShowGrid(false);
 	b_varsView->verticalHeader()->hide();
 	b_varsView->horizontalHeader()->setStretchLastSection(true);
 	b_varsView->setSelectionBehavior(QAbstractItemView::SelectRows);
+	b_varsView->setContextMenuPolicy(Qt::CustomContextMenu);
+	b_tools->addTab(b_varsView, i18n("Variables"));
 	
-	QItemDelegate* delegate=new QItemDelegate(b_varsView);
+	VariablesDelegate* delegate=new VariablesDelegate(b_varsView);
 	b_varsView->setItemDelegate(delegate);
-	b_dock_vars->setWidget(b_varsView);
 	
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
@@ -151,6 +153,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
 	connect(m_graph2d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
 	
 	////////menu
 	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
@@ -420,7 +423,6 @@ void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
-	b_dock_vars->hide();
 	d_dock->hide();
 	switch(n) {
 		case 0:
@@ -431,8 +433,6 @@ void KAlgebra::tabChanged(int n)
 		case 1:
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
-			b_dock_vars->show();
-			b_dock_vars->raise();
 			
 			if(b_funcsModel->rowCount()==0)
 				b_tools->setCurrentIndex(1); //We set the Add tab
@@ -471,5 +471,18 @@ void KAlgebra::valueChanged()
 		m_graph2d->update(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
 }
 
+void KAlgebra::varsContextMenu(const QPoint& p)
+{
+	QMenu m;
+	m.addAction(i18n("Add variable"));
+	QAction* ac=m.exec(b_dock_funcs->widget()->mapToGlobal(p));
+	
+	if(ac) {
+		AskName a(i18n("Enter a name for the new variable"), 0);
+		
+		if(a.exec()==QDialog::Accepted)
+			b_varsModel->insertVariable(a.name(), Expression(Cn(0)));
+	}
+}
 
 #include "kalgebra.moc"

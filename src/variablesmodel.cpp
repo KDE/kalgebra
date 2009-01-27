@@ -103,10 +103,14 @@ QFlags< Qt::ItemFlag > VariablesModel::flags(const QModelIndex& index) const
 	return ret;
 }
 
-
 void VariablesModel::updateInformation()
 {
 	reset();
+}
+
+void VariablesModel::insertVariable(const QString& name, const Expression& value)
+{
+	m_vars->modify(name, value);
 }
 
 #include "variablesmodel.moc"

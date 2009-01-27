@@ -16,6 +16,7 @@ set(kalgebra_SRCS
 	graph2d.cpp
 	operatorsmodel.cpp
 	variablesmodel.cpp
+	variablesdelegate.cpp
 	functionsview.cpp
 	functionimpl.cpp
 	functionsmodel.cpp

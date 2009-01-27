@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2009 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,37 +16,17 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef VARIABLESMODEL_H
-#define VARIABLESMODEL_H
+#ifndef VARIABLESDELEGATE_H
+#define VARIABLESDELEGATE_H
 
-#include <QAbstractTableModel>
-#include "operator.h"
+#include <QItemDelegate>
 
-class Variables;
-class Expression;
-
-/** Variables model is a model class that has a relation of all operators string with their VariableType. */
-class VariablesModel : public QAbstractTableModel
+class VariablesDelegate : public QItemDelegate
 {
-	Q_OBJECT
 	public:
-		/** Constructor. Creates a new Variable Model. */
-		explicit VariablesModel(Variables* v, QObject *parent=0);
-		
-		virtual QFlags< Qt::ItemFlag > flags(const QModelIndex& index) const;
-		bool setData(const QModelIndex& index, const QVariant& value, int role=Qt::EditRole);
-		QVariant data( const QModelIndex &index, int role=Qt::DisplayRole) const;
-		QVariant headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
-		int rowCount(const QModelIndex &parent=QModelIndex()) const;
-		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
-		
-		void insertVariable(const QString& name, const Expression& value);
-	public slots:
-		/** Updates the variables information */
-		void updateInformation();
-		
-	private:
-		Variables *m_vars;
+		VariablesDelegate(QObject* parent=0) : QItemDelegate(parent) {}
+		virtual QWidget* createEditor (QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
+		virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
 };
 
-#endif
+#endif // VARIABLESDELEGATE_H
