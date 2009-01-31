@@ -234,7 +234,7 @@ of the mouse and this area will be zoomed in. Move the view with the arrow keys.
 <para>In the <guimenu>2D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
 <listitem><para>Show or hide the grid</para></listitem>
-<listitem><para>Keep the aspect ration while zooming</para></listitem>
+<listitem><para>Keep the aspect ratio while zooming</para></listitem>
 <listitem><para>Zoom in (<keycombo action="simul">&Ctrl;
 <keycap>+</keycap></keycombo>) and zoom out (<keycombo action="simul">&Ctrl;
 <keycap>-</keycap></keycombo>)</para></listitem>
@@ -263,8 +263,7 @@ moment &kalgebra; only supports implicit 3d graphs dependent only on the x and y
 <para>The view can be zoomed and moved with the mouse. Using the wheel
 you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.</para>
 
-<para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view
-.</para>
+<para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view.</para>
 
 <para>In the <guimenu>3D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
