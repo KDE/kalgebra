@@ -259,6 +259,7 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("scalar+card") << QStringList("card(3)");
 	QTest::newRow("wrong token") << QStringList("q-<");
 	QTest::newRow("wrong coma") << QStringList("2+2,");
+	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	
 	QStringList script;
 	script << "x:=x+1";
@@ -283,12 +284,13 @@ void AnalitzaTest::testUncorrection()
 		
 		if(correct) {
 			b.setExpression(e);
-			correct=b.isCorrect();
 			res=b.evaluate();
+			correct=b.isCorrect();
+			res=b.calculate();
 		}
-// 		qDebug() << "cycle" << b.isCorrect();
+// 		qDebug() << "cycle" << b.isCorrect() << e.toString();
 	}
-	QVERIFY(!b.isCorrect());
+	QVERIFY(!correct);
 	
 	double val;
 	foreach(const QString &exp, expression) {

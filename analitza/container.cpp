@@ -462,7 +462,12 @@ bool Container::isUnary() const
 
 bool Container::isCorrect() const
 {
-	return m_correct && m_type==Object::container && m_cont_type!=none/* && !isEmpty()*/;
+	bool ret=m_correct && m_type==Object::container && m_cont_type!=none;
+	if(m_cont_type==Container::apply) {
+		Operator o=firstOperator();
+		ret &= o.nparams()<0 || countValues()==o.nparams();
+	}
+	return ret;
 }
 
 QString Container::tagName() const
@@ -485,4 +490,16 @@ bool Container::matches(const Object* exp, QMap<QString, const Object*>* found) 
 		matching &= (*it)->matches(*it2, found);
 	}
 	return matching;
+}
+
+int Container::countValues() const
+{
+	Container::const_iterator it=firstValue(), itEnd=m_params.constEnd();
+	int count=0;
+	
+	for(; it!=itEnd; ++it)
+	{
+		count++;
+	}
+	return count;
 }

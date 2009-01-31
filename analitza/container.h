@@ -133,6 +133,8 @@ public:
 	/** @return Returns the string associated to the container type. */
 	QString tagName() const;
 	
+	int countValues() const;
+	
 	virtual QString visit(ExpressionWriter*) const;
 	
 	virtual void negate();

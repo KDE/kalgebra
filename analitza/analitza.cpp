@@ -634,6 +634,10 @@ Object* Analitza::operate(const Container* c)
 			else if(opt==Operator::product)
 				ret = product(*c);
 			else if(opt==Operator::selector) {
+				if(KDE_ISUNLIKELY(c->m_params.size()!=3)) {
+					m_err += i18n("Wrong parameter count in a selector, should have 2 parameters, the selected index and the container.");
+					return new Cn(0.);
+				}
 				Object *idx=calc(c->m_params[1]), *vect=calc(c->m_params[2]);
 				ret = selector(idx, vect);
 				delete idx; delete vect;
@@ -907,7 +911,13 @@ Object* Analitza::simp(Object* root)
 		} else if(c->containerType()==Container::apply) {
 			Container::iterator it;
 			Operator o = c->firstOperator();
-			switch(o.operatorType()) {
+			
+			if(KDE_ISUNLIKELY(!c->isCorrect())) {
+				it = c->firstValue();
+					
+				for(; it!=c->m_params.end(); ++it)
+					*it = simp(*it);
+			} else switch(o.operatorType()) {
 				case Operator::times:
 					for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
 						d=false;
@@ -1165,8 +1175,7 @@ Object* Analitza::simp(Object* root)
 					
 					Object* idx=c->m_params[1];
 					Object* value=c->m_params[2];
-					if(idx->type()==Object::value && value->type()==Object::vector)
-					{
+					if(idx->type()==Object::value && value->type()==Object::vector) {
 						root=selector(*c->firstValue(), c->m_params.last());
 						delete c;
 					}
