@@ -263,6 +263,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString
 			format=Cn::Boolean;
 			break;
 		default:
+			correct=i18n("Could not calculate a value %1", Operator(op).toString());
 			break;
 	}
 	
@@ -279,7 +280,7 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 	if(t1==Object::value && t2==Object::vector) return reduceRealVector(op, (Cn*) val1, (Vector*) val2, correct);
 	if(t1==Object::vector && t2==Object::value) return reduceVectorReal(op, (Vector*) val1, (Cn*) val2, correct);
 	if(t1==Object::vector && t2==Object::vector) return reduceVectorVector(op, (Vector*) val1, (Vector*) val2, correct);
-	Q_ASSERT(0);
+	Q_ASSERT(false && "using reduce in a wrong way");
 	return 0;
 }
 
@@ -292,7 +293,7 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 			return reduceUnaryVector(op, (Vector*) val, correct);
 	}
 	
-	Q_ASSERT(0);
+	Q_ASSERT(false && "using reduceUnary in a wrong way");
 	return 0;
 }
 
@@ -341,6 +342,7 @@ Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QS
 			ret=new Cn(c->size());
 			break;
 		default:
+			correct=i18n("Could not calculate a vector's %1", Operator(op).toString());
 			ret=new Cn(0.);
 			break;
 	}

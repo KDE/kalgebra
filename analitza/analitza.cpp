@@ -729,19 +729,22 @@ Object* Analitza::sum(const Container& n)
 		Cn *d=static_cast<Cn*>(objdl);
 		ul=u->value();
 		dl=d->value();
-		delete u;
-		delete d;
 	} else {
 		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
-		return new Cn(0.);
 	}
+	
+	delete objul;
+	delete objdl;
+	if(!isCorrect())
+		return new Cn(0.);
 	
 	m_vars->stack(var, 0.);
 	Cn* c = (Cn*) m_vars->value(var);
 	
 	QString correct;
-	for(double a = dl; a<=ul; a++){
-		Q_ASSERT(isCorrect());
+	for(double a = dl; a<=ul; a++) {
+// 		Q_ASSERT(isCorrect());
+// 		qDebug() << "<>" << dl << ul << m_err;
 		c->setValue(a);
 		Object *val=calc(n.m_params.last());
 		ret=Operations::reduce(Operator::plus, ret, val, correct);

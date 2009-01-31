@@ -253,7 +253,8 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::addColumn<QStringList>("expression");
 	QTest::newRow("different tag") << QStringList("prp { x, y, z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
-	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
+    QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
+    QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
 	QTest::newRow("wrong token") << QStringList("q-<");
