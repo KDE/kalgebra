@@ -55,7 +55,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			if(floor(b)!=0.)
 				a = remainder(a, b);
 			else
-				correct=i18n("Cannot calculate the reminder on 0.");
+				correct=i18n("Cannot calculate the remainder on 0.");
 			break;
 		case Operator::quotient:
 			a = floor(a / b);
