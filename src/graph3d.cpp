@@ -426,6 +426,7 @@ int Graph3D::load()
 		mem();
 		create();
 		
+		// xgettext: no-c-format
 		sendStatus(i18nc("3D graph done in x miliseconds", "Done: %1ms", t.elapsed()));
 		this->repaint();
 		return 0;
