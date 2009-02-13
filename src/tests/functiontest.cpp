@@ -69,7 +69,6 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->hard") << "q=1..10->ceiling(q/(2*pi))";
 	QTest::newRow("polar->hard") << "q=2..(4+4)->ceiling(q/(2*pi))";
 	QTest::newRow("polar->strange") << "q->q/q";
-	QTest::newRow("x->lcm(vectors)") << "lcm(vector{x}, vector{x})";
 }
 
 void FunctionTest::testCopy()
@@ -118,6 +117,7 @@ void FunctionTest::testCorrect_data()
 	
 	QTest::newRow("empty function") << "" << false;
 	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
+	QTest::newRow("x->lcm(vectors)") << "lcm(vector{x}, vector{x})" << false;
 }
 
 void FunctionTest::testCorrect()

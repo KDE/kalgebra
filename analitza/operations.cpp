@@ -120,25 +120,30 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a= (a || !b)? 0.0 : 1.0;
 			format = Cn::Boolean;
 			break;
-		case Operator::gcd: //code by michael cane aka kiko :)
-			while (b > 0.) {
-				residu = (int) floor(a) % (int) floor(b);
-				a = b;
-				b = residu;
+		case Operator::gcd:  {
+			//code by michael cane aka kiko :)
+			int ia=floor(a), ib=floor(b);
+			while (ib > 0) {
+				residu = ia % ib;
+				ia = ib;
+				ib = residu;
 			}
+			a=ia; b=ib;
 			format=Cn::Integer;
-			break;
+		}	break;
 		case Operator::lcm: //code by michael cane aka kiko :)
 			if(KDE_ISUNLIKELY(a==0. || b==0.))
 				correct=i18n("Cannot calculate the lcm of 0.");
 			else {
-				c=a*b;
-				while (b > 0.) {
-					residu = (int) floor(a) % (int) floor(b);
-					a = b;
-					b = residu;
+				int ia=floor(a), ib=floor(b);
+				int ic=ia*ib;
+				while (ib > 0) {
+					residu = ia % ib;
+					ia = ib;
+					ib = residu;
 				}
-				a=(int)c/(int)a;
+				ia=c/ia;
+				a=ia; b=ib;
 			}
 			format=Cn::Integer;
 			break;

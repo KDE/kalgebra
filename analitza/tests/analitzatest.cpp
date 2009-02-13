@@ -548,16 +548,23 @@ void AnalitzaTest::testOperators()
 		v->appendBranch(new Cn(1.));
 		v->appendBranch(new Cn(2.));
 		
-		QList<Object*> values=QList<Object*>() << new Cn(0.) << v; //lets try to make it crash
+		QList<Object*> values=QList<Object*>()	<< new Cn(0.)
+												<< new Cn(0.5)
+												<< new Cn(1.)
+												<< new Cn(-1.)
+												<< new Cn(-.5)
+// 												<< new Ci("x")
+												<< v; //lets try to make it crash
 		foreach(Object* obj, values) {
 			int paramCnt=o.nparams()<0 ? 2 : o.nparams();
-			Container* math=new Container(Container::math);
-			math->appendBranch(new Operator(o));
+			Container* apply=new Container(Container::apply);
+			apply->appendBranch(new Operator(o));
 			
 			for(; paramCnt>0; paramCnt--)  {
-				math->appendBranch(Expression::objectCopy(obj));
+				apply->appendBranch(Expression::objectCopy(obj));
 			}
-			Expression e(math);
+			Expression e(apply);
+			
 			a->setExpression(e);
 			a->calculate();
 			a->evaluate();

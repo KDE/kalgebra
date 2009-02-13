@@ -137,6 +137,10 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						const Container *cbody=0;
 						QStringList bvars;
 						if(op.operatorType()==Operator::function) {
+							if(c->m_params[0]->type()!=Object::variable) {
+								m_err << i18n("The first parameter in a function construction should be the name");
+								return new Cn(0.);
+							}
 							Ci *func= (Ci*) c->m_params[0];
 							if(m_vars->contains(func->name())) { //FIXME: Don't really know if i fixed that properly
 								Object* body= (Object*) m_vars->value(func->name()); //body is the value
@@ -721,8 +725,14 @@ Object* Analitza::operate(const Container* c)
 
 Object* Analitza::sum(const Container& n)
 {
+	QStringList bvars=n.bvarList();
+	if(bvars.isEmpty()) {
+		m_err.append(i18n("No bounding variables for this sum"));
+		return new Cn(0.);
+	}
+	
 	Object* ret=new Cn(0.);
-	QString var= n.bvarList().first();
+	QString var= bvars.first();
 	
 	Object *objul=calc(Expression::uplimit(n).tree());
 	Object *objdl=calc(Expression::downlimit(n).tree());
@@ -760,8 +770,14 @@ Object* Analitza::sum(const Container& n)
 
 Object* Analitza::product(const Container& n)
 {
+	QStringList bvars=n.bvarList();
+	if(bvars.isEmpty()) {
+		m_err.append(i18n("No bounding variables for this sum"));
+		return new Cn(0.);
+	}
+	
 	Object* ret=new Cn(1.);
-	QString var= n.bvarList().first();
+	QString var= bvars.first();
 	
 	Object *objul=calc(Expression::uplimit(n).tree());
 	Object *objdl=calc(Expression::downlimit(n).tree());
@@ -826,6 +842,11 @@ bool Analitza::isFunction(const Ci& func) const
 
 Object* Analitza::func(const Container& n)
 {
+	if(n.m_params.isEmpty() || n.m_params[0]->type()!=Object::variable) {
+		m_err << i18n("Trying to call an empty or invalid function");
+		return new Cn(0.);
+	}
+	
 	Object* ret=0;
 	Ci funct(n.m_params[0]);
 	

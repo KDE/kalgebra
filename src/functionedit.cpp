@@ -82,7 +82,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
 	
-	QHBoxLayout *m_butts = new QHBoxLayout(0);
+	QHBoxLayout *m_butts = new QHBoxLayout;
 	m_ok = new QPushButton(i18n("OK"), this);
 	m_ok->setIcon(KIcon("dialog-ok"));
 	QPushButton *m_clear = new QPushButton(i18nc("@action:button", "Clear"), this);

@@ -387,7 +387,7 @@ QStringList Expression::bvarList() const
 
 Cn Expression::value() const
 {
-	if(d->m_tree && d->m_tree->type()==Object::value)
+	if(KDE_ISLIKELY(d->m_tree && d->m_tree->type()==Object::value))
 		return Cn((Cn*) d->m_tree);
 	else {
 // 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();

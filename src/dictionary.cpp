@@ -65,6 +65,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_sample->setIndent(10);
 	m_example->setIndent(10);
 	
+	m_example->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString()), m_name);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);

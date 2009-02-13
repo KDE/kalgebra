@@ -99,7 +99,7 @@ class Ci : public Object
 		explicit Ci(const Object *o);
 		
 		/** Constructor. Creates a variable with a @p b name */
-		explicit Ci(QString b=QString()) : Object(variable), m_name(b), m_function(false) {}
+		explicit Ci(const QString& b) : Object(variable), m_name(b), m_function(false) {}
 		
 		/** Sets a @p n name to a variable */
 		void setName(const QString& n) { m_name=n; }
