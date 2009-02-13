@@ -23,6 +23,7 @@
 
 #include "container.h"
 #include "variables.h"
+#include "vector.h"
 
 using namespace std;
 
@@ -253,13 +254,14 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::addColumn<QStringList>("expression");
 	QTest::newRow("different tag") << QStringList("prp { x, y, z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
-    QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
-    QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
+	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
+	QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
 	QTest::newRow("wrong token") << QStringList("q-<");
 	QTest::newRow("wrong coma") << QStringList("2+2,");
 	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
+	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
 	
 	QStringList script;
 	script << "x:=x+1";
@@ -540,6 +542,27 @@ void AnalitzaTest::testOperators()
 		QVERIFY(o.isCorrect());
 		QCOMPARE(static_cast<Operator::OperatorType>(i), o.operatorType());
 		QCOMPARE(Operator::toOperatorType(o.toString()), o.operatorType());
+		
+		Vector* v=new Vector(3);
+		v->appendBranch(new Cn(0.));
+		v->appendBranch(new Cn(1.));
+		v->appendBranch(new Cn(2.));
+		
+		QList<Object*> values=QList<Object*>() << new Cn(0.) << v; //lets try to make it crash
+		foreach(Object* obj, values) {
+			int paramCnt=o.nparams()<0 ? 2 : o.nparams();
+			Container* math=new Container(Container::math);
+			math->appendBranch(new Operator(o));
+			
+			for(; paramCnt>0; paramCnt--)  {
+				math->appendBranch(Expression::objectCopy(obj));
+			}
+			Expression e(math);
+			a->setExpression(e);
+			a->calculate();
+			a->evaluate();
+		}
+		qDeleteAll(values);
 	}
 }
 

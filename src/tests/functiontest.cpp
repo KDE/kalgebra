@@ -69,6 +69,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->hard") << "q=1..10->ceiling(q/(2*pi))";
 	QTest::newRow("polar->hard") << "q=2..(4+4)->ceiling(q/(2*pi))";
 	QTest::newRow("polar->strange") << "q->q/q";
+	QTest::newRow("x->lcm(vectors)") << "lcm(vector{x}, vector{x})";
 }
 
 void FunctionTest::testCopy()

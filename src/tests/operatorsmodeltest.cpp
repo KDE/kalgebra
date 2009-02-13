@@ -22,6 +22,7 @@
 #include "analitza.h"
 #include <qtest_kde.h>
 #include <variables.h>
+#include <cmath>
 
 using namespace std;
 
@@ -62,13 +63,18 @@ void OperatorsModelTest::testExamples()
 		
 		Analitza a;
 		a.setExpression(Expression(example, false));
-		if(!a.isCorrect()) qDebug() << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
 		a.simplify();
-		if(!a.isCorrect()) qDebug() << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
 		a.variables()->modify("x", 0.1);
 		Expression e = a.calculate();
-		if(!a.isCorrect()) qDebug() << "error" << a.errors();// QVERIFY(a.isCorrect());
-		if(!e.isCorrect()) qDebug() << "error" << e.error(); // QVERIFY(e.isCorrect());
+		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!e.isCorrect()) qDebug() << example << "error" << e.error(); // QVERIFY(e.isCorrect());
+		QVERIFY(!a.expression()->toMathMLPresentation().isEmpty());
+		
+		e = a.evaluate();
+		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!e.isCorrect()) qDebug() << example << "error" << e.error(); // QVERIFY(e.isCorrect());
 		QVERIFY(!a.expression()->toMathMLPresentation().isEmpty());
 	}
 }

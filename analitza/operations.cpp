@@ -22,6 +22,7 @@
 
 #include <KLocale>
 #include <cmath>
+#include <kdemacros.h>
 
 #include "value.h"
 #include "vector.h"
@@ -52,7 +53,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a = pow(a, b);
 			break;
 		case Operator::rem:
-			if(floor(b)!=0.)
+			if(KDE_ISLIKELY(floor(b)!=0.))
 				a = remainder(a, b);
 			else
 				correct=i18n("Cannot calculate the remainder on 0.");
@@ -62,11 +63,11 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			format=Cn::Integer;
 			break;
 		case Operator::factorof:
-			if(floor(b)!=0.)
+			if(KDE_ISLIKELY(floor(b)!=0.))
 				a = ((int(floor(a)) % int(floor(b)))==0) ? 1.0 : 0.0;
-			else {
+			else
 				correct=i18n("Cannot calculate the factor on 0.");
-			}
+			
 			format=Cn::Boolean;
 			break;
 		case Operator::min:
@@ -128,13 +129,17 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			format=Cn::Integer;
 			break;
 		case Operator::lcm: //code by michael cane aka kiko :)
-			c=a*b;
-			while (b > 0.) {
-				residu = (int) floor(a) % (int) floor(b);
-				a = b;
-				b = residu;
+			if(KDE_ISUNLIKELY(a==0. || b==0.))
+				correct=i18n("Cannot calculate the lcm of 0.");
+			else {
+				c=a*b;
+				while (b > 0.) {
+					residu = (int) floor(a) % (int) floor(b);
+					a = b;
+					b = residu;
+				}
+				a=(int)c/(int)a;
 			}
-			a=(int)c/(int)a;
 			format=Cn::Integer;
 			break;
 		case Operator::root:
