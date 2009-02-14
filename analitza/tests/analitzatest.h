@@ -65,6 +65,7 @@ Q_OBJECT
 		void testCompareTrees_data();
 		void testCompareTrees();
 		
+		void testOperators_data();
 		void testOperators();
 		
 // 		void testJumps_data();

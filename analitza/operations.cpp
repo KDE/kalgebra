@@ -131,7 +131,8 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a=ia; b=ib;
 			format=Cn::Integer;
 		}	break;
-		case Operator::lcm: //code by michael cane aka kiko :)
+		case Operator::lcm:
+			//code by michael cane aka kiko :)
 			if(KDE_ISUNLIKELY(a==0. || b==0.))
 				correct=i18n("Cannot calculate the lcm of 0.");
 			else {

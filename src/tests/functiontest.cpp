@@ -117,7 +117,6 @@ void FunctionTest::testCorrect_data()
 	
 	QTest::newRow("empty function") << "" << false;
 	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
-	QTest::newRow("x->lcm(vectors)") << "lcm(vector{x}, vector{x})" << false;
 }
 
 void FunctionTest::testCorrect()

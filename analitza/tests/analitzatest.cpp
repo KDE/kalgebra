@@ -416,6 +416,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
+	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
 	
 	QTest::newRow("wrong func") << "xsin(x)";
 }
@@ -426,9 +427,14 @@ void AnalitzaTest::testCrash()
 	Expression e(expression, Expression::isMathML(expression));
 	QCOMPARE(e.isCorrect(), true);
 	
+	qDebug() << "blaaaaaaa" << e.toString();
+	
 	a->setExpression(e);
-	QString str=a->calculate().toString();
-	str=a->evaluate().toString();
+	qDebug() << "a";
+	QString str=a->evaluate().toString();
+	qDebug() << "c" << str;
+	str=a->calculate().toString();
+	qDebug() << "b" << str;
 	
 	//We don't want it to crash, so we try to
 	for(int i=0; i<expression.size(); i++)
@@ -532,44 +538,79 @@ void AnalitzaTest::testJumps()
 	QCOMPARE(a->discontinuities("x", bounds), values);
 }*/
 
+void AnalitzaTest::testOperators_data()
+{
+	QTest::addColumn<int>("i");
+	
+	for(int i=Operator::none+1; i<Operator::nOfOps; i++) {
+		QTest::newRow( Operator::words[i] ) << i;
+	}
+}
+
 void AnalitzaTest::testOperators()
 {
-	for(int i=Operator::none+1; i<Operator::nOfOps; i++) {
-		Operator o(static_cast<Operator::OperatorType>(i));
-		QVERIFY(o.nparams()>=-1);
-		if(!o.isCorrect())
-			qDebug() << o.toString();
-		QVERIFY(o.isCorrect());
-		QCOMPARE(static_cast<Operator::OperatorType>(i), o.operatorType());
-		QCOMPARE(Operator::toOperatorType(o.toString()), o.operatorType());
+	QFETCH(int, i);
+	Operator o(static_cast<Operator::OperatorType>(i));
+	QVERIFY(o.nparams()>=-1);
+	if(!o.isCorrect())
+		qDebug() << o.toString();
+	QVERIFY(o.isCorrect());
+	QCOMPARE(static_cast<Operator::OperatorType>(i), o.operatorType());
+	QCOMPARE(Operator::toOperatorType(o.toString()), o.operatorType());
+	
+	if(o.operatorType()==Operator::function)
+		return;
+	
+	Vector* v=new Vector(3);
+	v->appendBranch(new Cn(0.));
+	v->appendBranch(new Cn(1.));
+	v->appendBranch(new Cn(2.));
+	
+	QList<Object*> values=QList<Object*>()	<< new Cn(0.)
+											<< new Cn(0.5)
+											<< new Cn(1.)
+											<< new Cn(-1.)
+											<< new Cn(-.5)
+											<< new Ci("x")
+											<< v; //lets try to make it crash
+	foreach(Object* obj, values) {
+		int paramCnt=o.nparams()<0 ? 2 : o.nparams();
+		Container* apply=new Container(Container::apply);
+		apply->appendBranch(new Operator(o));
 		
-		Vector* v=new Vector(3);
-		v->appendBranch(new Cn(0.));
-		v->appendBranch(new Cn(1.));
-		v->appendBranch(new Cn(2.));
-		
-		QList<Object*> values=QList<Object*>()	<< new Cn(0.)
-												<< new Cn(0.5)
-												<< new Cn(1.)
-												<< new Cn(-1.)
-												<< new Cn(-.5)
-// 												<< new Ci("x")
-												<< v; //lets try to make it crash
-		foreach(Object* obj, values) {
-			int paramCnt=o.nparams()<0 ? 2 : o.nparams();
-			Container* apply=new Container(Container::apply);
-			apply->appendBranch(new Operator(o));
-			
-			for(; paramCnt>0; paramCnt--)  {
-				apply->appendBranch(Expression::objectCopy(obj));
-			}
-			Expression e(apply);
-			
-			a->setExpression(e);
-			a->calculate();
-			a->evaluate();
+		for(; paramCnt>0; paramCnt--)  {
+			apply->appendBranch(Expression::objectCopy(obj));
 		}
-		qDeleteAll(values);
+		Expression e(apply);
+		
+		a->setExpression(e);
+		a->calculate();
+		a->evaluate();
+		a->derivative();
+	}
+	qDeleteAll(values);
+	
+	QList<double> diffValues = QList<double>() << 0. << 0.5 << -0.5 << 1. << -1.;
+	QString bvar="x";
+	foreach(double v, diffValues) {
+		int paramCnt=o.nparams()<0 ? 2 : o.nparams();
+		Container *diffApply=new Container(Container::apply);
+		diffApply->appendBranch(new Operator(Operator::diff));
+		
+		Container* apply=new Container(Container::apply);
+		apply->appendBranch(new Operator(o));
+		diffApply->appendBranch(apply);
+		
+		for(; paramCnt>0; paramCnt--)
+			apply->appendBranch(new Ci(bvar));
+		
+		Expression e(diffApply);
+		a->setExpression(e);
+		a->calculate();
+		a->evaluate();
+		a->simplify();
+		a->derivative();
+		a->derivative(QList< QPair<QString, double> >() << qMakePair(bvar, v));
 	}
 }
 

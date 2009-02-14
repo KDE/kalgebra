@@ -571,9 +571,9 @@ Object* Analitza::calc(const Object* root)
 	Object* ret=0;
 	Ci *a;
 	
-// 	objectWalker(root);
 	switch(root->type()) {
 		case Object::container:
+// 			objectWalker(root);
 			ret = operate((Container*) root);
 			break;
 		case Object::vector: {
@@ -582,9 +582,8 @@ Object* Analitza::calc(const Object* root)
 			Vector::const_iterator it, itEnd=v->constEnd();
 			
 			for(it=v->constBegin(); it!=itEnd; ++it)
-			{
 				nv->appendBranch(calc(*it));
-			}
+			
 			ret = nv;
 		}	break;
 		case Object::value:
@@ -649,6 +648,8 @@ Object* Analitza::operate(const Container* c)
 				//TODO: Make multibvar
 				QStringList bvar=c->bvarList();
 				Object *deriv=simp(derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last()));
+				if(!m_err.isEmpty())
+					return new Cn(0.);
 				ret=calc(deriv);
 				delete deriv;
 			} else if(opt==Operator::function) {
@@ -1146,7 +1147,7 @@ Object* Analitza::simp(Object* root)
 						*it = simp(*it);
 					}
 					break;
-				case Operator::sum:
+				case Operator::sum: {
 					for(it = c->m_params.begin(); it!=c->m_params.end(); ++it) {
 						if((*it)->type()==Object::container) {
 							Container *limit=static_cast<Container*>(*it);
@@ -1159,8 +1160,10 @@ Object* Analitza::simp(Object* root)
 							*it = simp(*it);
 					}
 					
+					//if bvars is empty, we are dealing with an invalid sum()
+					QStringList bvars=c->bvarList();
 					it = c->firstValue();
-					if(!hasTheVar(c->bvarList(), *it)) {
+					if(!bvars.isEmpty() && !hasTheVar(bvars, *it)) {
 						Container *cDiff=new Container(Container::apply);
 						cDiff->appendBranch(new Operator(Operator::minus));
 						cDiff->appendBranch(Expression::objectCopy(c->ulimit()));
@@ -1177,7 +1180,7 @@ Object* Analitza::simp(Object* root)
 					} else if((*it)->type()==Object::container)
 					   root=simpSum(c);
 					
-					break;
+				}	break;
 				case Operator::card: {
 					Object* val=simp(*c->firstValue());
 					if(val->type()==Object::vector)

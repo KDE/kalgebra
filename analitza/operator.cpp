@@ -19,7 +19,7 @@
 #include "operator.h"
 #include "expressionwriter.h"
 
-char Operator::m_words[nOfOps][14] = {
+const char Operator::words[nOfOps][14] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",
 	"power", "root", "factorial",
@@ -52,7 +52,7 @@ QString Operator::visit(ExpressionWriter* e) const
 QString Operator::name() const
 {
 	Q_ASSERT(m_optype<nOfOps);
-	return QString(m_words[m_optype]);
+	return QString(words[m_optype]);
 }
 
 enum Operator::OperatorType Operator::toOperatorType(const QString &e)
@@ -60,7 +60,7 @@ enum Operator::OperatorType Operator::toOperatorType(const QString &e)
 	//qDebug(), "lol";
 	for(int i=none; i<nOfOps; i++)
 	{
-		if(m_words[i]==e)
+		if(words[i]==e)
 			return (OperatorType) i;
 	}
 	

@@ -92,7 +92,7 @@ protected:
 };
 
 /** A variable object, name refers to MathML standard. */
-class Ci : public Object
+class ANALITZA_EXPORT Ci : public Object
 {
 	public:
 		/** Constructor. Builds a @p o variable */

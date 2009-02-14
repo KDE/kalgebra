@@ -113,8 +113,9 @@ class ANALITZA_EXPORT Operator : public Object
 		virtual bool matches(const Object*, QMap<QString, const Object*>*) const;
 		
 		virtual QString visit(ExpressionWriter*) const;
+		
+		static const char words[nOfOps][14];
 	private:
-		static char m_words[nOfOps][14];
 		enum OperatorType m_optype;
 };
 
