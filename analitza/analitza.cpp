@@ -735,8 +735,16 @@ Object* Analitza::sum(const Container& n)
 	Object* ret=new Cn(0.);
 	QString var= bvars.first();
 	
-	Object *objul=calc(Expression::uplimit(n).tree());
-	Object *objdl=calc(Expression::downlimit(n).tree());
+	Object* objectUl=n.ulimit();
+	Object* objectDl=n.dlimit();
+	
+	if(!objectDl || !objectUl) {
+		m_err += i18n("Missing bounding limits on a sum operation");
+		return new Cn(0.);
+	}
+	
+	Object *objul=calc(objectUl);
+	Object *objdl=calc(objectDl);
 	double ul, dl;
 	
 	if(objul->type()==Object::value && objdl->type()==Object::value) {
@@ -780,8 +788,16 @@ Object* Analitza::product(const Container& n)
 	Object* ret=new Cn(1.);
 	QString var= bvars.first();
 	
-	Object *objul=calc(Expression::uplimit(n).tree());
-	Object *objdl=calc(Expression::downlimit(n).tree());
+	Object* objectUl=n.ulimit();
+	Object* objectDl=n.dlimit();
+	
+	if(!objectDl || !objectUl) {
+		m_err += i18n("Missing bounding limits on a sum operation");
+		return new Cn(0.);
+	}
+	
+	Object *objul=calc(objectUl);
+	Object *objdl=calc(objectDl);
 	double ul, dl;
 	
 	if(objul->type()==Object::value && objdl->type()==Object::value) {
@@ -800,8 +816,7 @@ Object* Analitza::product(const Container& n)
 	Cn* c = (Cn*) m_vars->value(var);
 	
 	QString correct;
-	for(double a = dl; a<=ul; a++){
-		Q_ASSERT(isCorrect());
+	for(double a = dl; a<=ul; a++) {
 		c->setValue(a);
 		Object *val=calc(n.m_params.last());
 		ret=Operations::reduce(Operator::times, ret, val, correct);
@@ -819,7 +834,7 @@ Object* Analitza::selector(const Object* index, const Object* vector)
 		const Vector *cVect=static_cast<const Vector*>(vector);
 		
 		int select=cIdx->intValue();
-		if(select<1 || (select-1) > cVect->size()) {
+		if(select<1 || (select-1) >= cVect->size()) {
 			m_err << i18n("Invalid index for a container");
 			ret=new Cn(0.);
 		} else {
@@ -1576,7 +1591,10 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 				
 				if(!firstFound && (*it)->isContainer()) { //We are looking for bvar's
 					Container *cont= (Container*) *it;
-					if(cont->containerType()==Container::bvar && c->containerType()!=Container::lambda) {
+					if(cont->containerType()==Container::bvar
+						&& c->containerType()!=Container::lambda
+						&& !cont->m_params.isEmpty()
+						&& cont->m_params[0]->type()==Object::variable) {
 						Ci* bvar=(Ci*) cont->m_params[0];
 						if(bvar->isCorrect())
 							scope += bvar->name();

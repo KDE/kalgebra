@@ -417,8 +417,11 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
 	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
-	
+	QTest::newRow("wrong bvar derivative") << "diff(x:0)";
+	QTest::newRow("product_max") << "product(max(x) : x=1..5)";
+	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
+	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
 }
 
 void AnalitzaTest::testCrash()
@@ -427,14 +430,9 @@ void AnalitzaTest::testCrash()
 	Expression e(expression, Expression::isMathML(expression));
 	QCOMPARE(e.isCorrect(), true);
 	
-	qDebug() << "blaaaaaaa" << e.toString();
-	
 	a->setExpression(e);
-	qDebug() << "a";
 	QString str=a->evaluate().toString();
-	qDebug() << "c" << str;
 	str=a->calculate().toString();
-	qDebug() << "b" << str;
 	
 	//We don't want it to crash, so we try to
 	for(int i=0; i<expression.size(); i++)
@@ -574,43 +572,81 @@ void AnalitzaTest::testOperators()
 											<< new Ci("x")
 											<< v; //lets try to make it crash
 	foreach(Object* obj, values) {
-		int paramCnt=o.nparams()<0 ? 2 : o.nparams();
-		Container* apply=new Container(Container::apply);
-		apply->appendBranch(new Operator(o));
+		QList<int> params;
+		if(o.nparams()<0)
+			params << 0 << 1 << 2 << 3;
+		else
+			params << o.nparams();
 		
-		for(; paramCnt>0; paramCnt--)  {
-			apply->appendBranch(Expression::objectCopy(obj));
+		foreach(int paramCnt, params) {
+			Container* apply=new Container(Container::apply);
+			apply->appendBranch(new Operator(o));
+			
+			for(; paramCnt>0; paramCnt--)  {
+				apply->appendBranch(Expression::objectCopy(obj));
+			}
+			Expression e(apply);
+			
+			a->setExpression(e);
+			a->calculate();
+			a->evaluate();
+			a->derivative();
+			
+			if(o.isBounded()) {
+				Container *bvar=new Container(Container::bvar);
+				apply->m_params.prepend(bvar);
+				
+				a->calculate();
+				a->evaluate();
+				a->derivative();
+				
+				QList<Object*> bvarValues=QList<Object*>() << new Ci("x") << new Cn(0.);
+				foreach(Object* obvar, bvarValues) {
+					Container* cc=(Container*) Expression::objectCopy(apply);
+					Container* bvar=(Container*) cc->m_params[0];
+					bvar->appendBranch(Expression::objectCopy(obvar));
+					
+					Expression e1(cc);
+					a->setExpression(e1);
+					
+					a->calculate();
+					a->evaluate();
+					a->derivative();
+				}
+				qDeleteAll(bvarValues);
+			}
 		}
-		Expression e(apply);
-		
-		a->setExpression(e);
-		a->calculate();
-		a->evaluate();
-		a->derivative();
 	}
 	qDeleteAll(values);
 	
 	QList<double> diffValues = QList<double>() << 0. << 0.5 << -0.5 << 1. << -1.;
 	QString bvar="x";
 	foreach(double v, diffValues) {
-		int paramCnt=o.nparams()<0 ? 2 : o.nparams();
-		Container *diffApply=new Container(Container::apply);
-		diffApply->appendBranch(new Operator(Operator::diff));
+		QList<int> params;
+		if(o.nparams()<0)
+			params << 0 << 1 << 2 << 3;
+		else
+			params << o.nparams();
 		
-		Container* apply=new Container(Container::apply);
-		apply->appendBranch(new Operator(o));
-		diffApply->appendBranch(apply);
-		
-		for(; paramCnt>0; paramCnt--)
-			apply->appendBranch(new Ci(bvar));
-		
-		Expression e(diffApply);
-		a->setExpression(e);
-		a->calculate();
-		a->evaluate();
-		a->simplify();
-		a->derivative();
-		a->derivative(QList< QPair<QString, double> >() << qMakePair(bvar, v));
+		foreach(int paramCnt, params) {
+			Container *diffApply=new Container(Container::apply);
+			diffApply->appendBranch(new Operator(Operator::diff));
+			
+			Container* apply=new Container(Container::apply);
+			apply->appendBranch(new Operator(o));
+			diffApply->appendBranch(apply);
+			
+			for(; paramCnt>0; paramCnt--)
+				apply->appendBranch(new Ci(bvar));
+			
+			Expression e(diffApply);
+			a->setExpression(e);
+			a->calculate();
+			a->evaluate();
+			a->simplify();
+			a->derivative();
+			a->derivative(QList< QPair<QString, double> >() << qMakePair(bvar, v));
+		}
 	}
 }
 

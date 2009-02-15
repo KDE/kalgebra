@@ -132,7 +132,7 @@ QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of
 	for(it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
 		if((*it)->isContainer()) {
 			Container* c = (Container*) (*it);
-			if(c->containerType() == Container::bvar)
+			if(c->containerType() == Container::bvar && !c->m_params.isEmpty() && c->m_params[0]->type()==Object::variable)
 				bvars.append(((Ci*)c->m_params[0])->name());
 		}
 	}

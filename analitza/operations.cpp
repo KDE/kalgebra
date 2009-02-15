@@ -331,7 +331,11 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn
 
 Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, QString &correct)
 {
-	Q_ASSERT(v1->size()==v2->size());
+	if(v1->size()!=v2->size()) {
+		correct=i18n("Can't operate on different sized vectors.");
+		return new Cn(0.);
+	}
+	
 	if(op==Operator::scalarproduct)
 		op=Operator::times;
 	Vector::iterator it2=v2->begin();
