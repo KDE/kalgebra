@@ -34,7 +34,7 @@ class QDomElement;
 class ANALITZA_EXPORT Cn : public Object
 {
 	public:
-		enum ValueFormat { Real, Integer, Boolean };
+		enum ValueFormat { Real=7, Integer=3, Boolean=1 };
 		/** Copy constructor. Creates a Cn from another one. */
 		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) {}
 		

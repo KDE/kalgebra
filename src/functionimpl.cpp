@@ -22,6 +22,7 @@
 
 #include <KLocale>
 #include <KDebug>
+#include <container.h>
 
 using std::acos;
 using std::atan;

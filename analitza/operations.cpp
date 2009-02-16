@@ -34,7 +34,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 {
 	int residu;
 	double a=oper->value(), b=oper1->value(), c;
-	Cn::ValueFormat format=oper->format();
+	Cn::ValueFormat format=Cn::ValueFormat(oper->format() | oper1->format());
 	
 	switch(op) {
 		case Operator::plus:

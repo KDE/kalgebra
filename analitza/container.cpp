@@ -345,7 +345,7 @@ void objectWalker(const Object* root, int ind)
 		case Object::value:
 			Q_ASSERT(dynamic_cast<const Cn*>(root));
 			num= (Cn*) root;
-			qDebug() << qPrintable(s) << "| num: " << num->value();
+			qDebug() << qPrintable(s) << "| num: " << num->value() << num->format();
 			break;
 		case Object::oper:
 			Q_ASSERT(dynamic_cast<const Operator*>(root));

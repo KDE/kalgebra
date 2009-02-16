@@ -38,6 +38,8 @@
 #include "analitza.h"
 #include "functionsmodel.h"
 
+// #define DEBUG_GRAPH
+
 using namespace std;
 
 QColor const Graph2D::m_axeColor(100,100,255);
@@ -237,7 +239,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 			if(!isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
 				finestra.drawLine(ultim, act);
 				
-#if 0
+#ifdef DEBUG_GRAPH
 				QPen p(Qt::red);
 				p.setWidth(3);
 				finestra.setPen(p);
@@ -250,7 +252,8 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 						finestra.drawPoint(act);
 					nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
 				} while(!jumps.isEmpty() && jumps.first()==nextjump+1);
-#if 0
+				
+#ifdef DEBUG_GRAPH
 				qDebug() << "jumpiiiiiing" << vect.at(j);
 				QPen p(Qt::blue);
 				p.setWidth(2);
@@ -259,9 +262,12 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 				finestra.setPen(pfunc);
 #endif
 			}
-
+			
 			ultim=act;
 		}
+#ifdef DEBUG_GRAPH
+		qDebug() << "---------";
+#endif
 	}
 	
 	finestra.end();
