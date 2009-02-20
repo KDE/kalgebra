@@ -159,6 +159,10 @@ void ExpTest::testLength_data()
 	lengths.clear();
 	lengths << 1 << 0 << 1;
 	QTest::newRow("power with utf composition") << QString::fromUtf8("2²") << lengths;
+	
+	lengths.clear();
+	lengths << 1;
+	QTest::newRow("utf composed variable") << QString::fromUtf8("ç") << lengths;
 }
 
 void ExpTest::testLength()

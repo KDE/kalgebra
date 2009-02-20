@@ -80,7 +80,7 @@ void ExpLexer::getToken()
 			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
 		ret.type= ExpressionTable::tVal;
 	} else if(a[pos].isLetter()) {//es una variable o funcret.val += a[0];
-		for(; pos<a.length() && a[pos].isLetterOrNumber() && a[pos].decompositionTag()==QChar::NoDecomposition; pos++){
+		for(; pos<a.length() && a[pos].isLetterOrNumber() && (a[pos].isLetter() || a[pos].decompositionTag()==QChar::NoDecomposition); pos++){
 			ret.val += a[pos];
 		}
 		ret.type= ExpressionTable::tId;
