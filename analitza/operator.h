@@ -53,9 +53,6 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Constructor. Creates an operator with @p t type .*/
 		explicit Operator(OperatorType t) : Object(oper), m_optype(t) {}
 		
-		/** Constructor. Creates an operator copy of the @p o object. If it is not an object a onone object is created. */
-		explicit Operator(Object const *o);
-		
 		/** Destructor */
 		virtual ~Operator() {}
 		
@@ -113,6 +110,7 @@ class ANALITZA_EXPORT Operator : public Object
 		virtual bool matches(const Object*, QMap<QString, const Object*>*) const;
 		
 		virtual QString visit(ExpressionWriter*) const;
+		virtual Object* copy() const;
 		
 		static const char words[nOfOps][14];
 	private:

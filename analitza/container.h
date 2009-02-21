@@ -25,10 +25,6 @@
 #include "operator.h"
 #include "analitzaexport.h"
 
-//FIXME: Must move it somewhere
-/** Prints a dom tree from a dom node @p in indenting it by @p ind */
-void print_dom(const QDomNode& in, int ind);
-
 /** Prints an expression tree from a node @p o indenting it by @p ind */
 void ANALITZA_EXPORT objectWalker(const Object* o, int ind=0);
 
@@ -70,8 +66,7 @@ public:
 	/** Copy constructor, copies all of the branches derivated on it.*/
 	Container(const Container& c);
 	
-	/** Construtor. If @p o is a Container it is copied, otherwise a cnone container is created. */
-	Container(const Object *o);
+	virtual Container* copy() const;
 	
 	/** Destructor. Deletes all the references. */
 	virtual ~Container() { qDeleteAll(m_params); }
@@ -142,6 +137,8 @@ public:
 	virtual bool isZero() const;
 	
 	virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
+	
+	Object* extractType(Container::ContainerType t) const;
 	
 #if 0 //not used
 	//Monomials

@@ -48,17 +48,11 @@ Container::Container(const Container& c) : Object(Object::container)
 	m_params = c.copyParams();
 }
 
-Container::Container(const Object *o) : Object(o->type())
+Container* Container::copy() const
 {
-	Q_ASSERT(o!=0);
-	if(type() == Object::container) {
-		Container *c = (Container*) o;
-		m_cont_type = c->containerType();
-		
-		m_params = c->copyParams();
-	} else {
-		m_cont_type = none;
-	}
+	Container *c = new Container(m_cont_type);
+	c->m_params = copyParams();
+	return c;
 }
 
 Operator Container::firstOperator() const
@@ -66,7 +60,7 @@ Operator Container::firstOperator() const
 	const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
 	for(; it!=itEnd; ++it) {
 		if((*it)->type()==Object::oper) {
-			return Operator(*it);
+			return *static_cast<Operator*>(*it);
 		} else if(it==m_params.constBegin() && m_cont_type==apply && (*it)->type()==Object::variable) {
 			return Operator(Operator::function);
 		}
@@ -140,6 +134,7 @@ QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of
 	return bvars;
 }
 
+#warning use extractType()
 Container* Container::ulimit() const
 {
 	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
@@ -189,7 +184,6 @@ bool Container::hasVars() const
 bool Container::operator==(const Container& c) const
 {
 	bool eq=c.m_params.count()==m_params.count();
-	QList<Object*>::const_iterator it = c.m_params.begin();
 	
 	for(int i=0; eq && i<m_params.count(); ++i) {
 		Object *o=m_params[i], *o1=c.m_params[i];
@@ -203,21 +197,27 @@ bool Container::equalTree(const Object * o1, const Object * o2)
 	Q_ASSERT(o1 && o2);
 	if(o1==o2)
 		return true;
-	bool eq= o1->type()==o2->type();
+	else if(o1->type()!=o2->type())
+		return false;
+	
+	bool eq;
 	switch(o2->type()) {
 		case Object::variable:
-			eq = eq && Ci(o2)==Ci(o1);
+			eq = *static_cast<const Ci*>(o1)==*static_cast<const Ci*>(o2);
 			break;
 		case Object::value:
-			eq = eq && Cn(o2)==Cn(o1);
+			eq = *static_cast<const Cn*>(o1)==*static_cast<const Cn*>(o2);
 			break;
 		case Object::container:
-			eq = eq && Container(o2)==Container(o1);
+			eq = *static_cast<const Container*>(o1)==*static_cast<const Container*>(o2);
 			break;
 		case Object::oper:
-			eq = eq && Operator(o2)==Operator(o1);
+			eq = *static_cast<const Operator*>(o1)==*static_cast<const Operator*>(o2);
 			break;
-		default:
+		case Object::vector:
+			eq = *static_cast<const Vector*>(o1)==*static_cast<const Vector*>(o2);
+			break;
+		case Object::none:
 			break;
 	}
 	return eq;
@@ -372,30 +372,6 @@ void objectWalker(const Object* root, int ind)
 		qDebug(";");
 }
 
-void print_dom(const QDomNode& in, int ind)
-{
-	QString a;
-
-	if(ind >100){
-		qDebug("...");
-		return;
-	}
-	
-	for(int i=0; i<ind; i++)
-		a.append("______|");
-
-	if(in.hasChildNodes())
-		qDebug("%s%s(%s) -- %d", qPrintable(a), qPrintable(in.toElement().tagName()), qPrintable(in.toElement().text()), in.childNodes().length());
-	else
-		qDebug("%s%s", qPrintable(a), qPrintable(in.toElement().tagName()));
-
-	for(unsigned int i=0 ; i<in.childNodes().length(); i++){
-		if(in.childNodes().item(i).isElement())
-			print_dom(in.childNodes().item(i), ind+1);
-	}
-}
-
-
 bool Container::isNumber() const
 {
 	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
@@ -502,4 +478,14 @@ int Container::countValues() const
 		count++;
 	}
 	return count;
+}
+
+Object* Container::extractType(Container::ContainerType t) const
+{
+	for(Container::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
+		Container *c = (Container*) (*it);
+		if(c->isContainer() && c->containerType()==t)
+			return c->m_params.first();
+	}
+	return 0;
 }

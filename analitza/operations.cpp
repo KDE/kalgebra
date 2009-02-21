@@ -312,7 +312,7 @@ Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vect
 {
 	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
-		*it=reduce(op, new Cn(oper), *it, correct);
+		*it=reduce(op, new Cn(*oper), *it, correct);
 	}
 	
 	delete oper;
@@ -323,7 +323,7 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn
 {
 	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
-		*it=reduce(op, *it, new Cn(oper), correct);
+		*it=reduce(op, *it, new Cn(*oper), correct);
 	}
 	delete oper;
 	return v1;

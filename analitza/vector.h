@@ -28,7 +28,6 @@ class ANALITZA_EXPORT Vector : public Object
 		
 		Vector(const Vector& v);
 		Vector(int size);
-		Vector(const Object* o);
 		virtual ~Vector();
 		
 		void appendBranch(Object* );
@@ -49,6 +48,8 @@ class ANALITZA_EXPORT Vector : public Object
 		virtual bool isZero() const;
 		
 		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
+		virtual Object* copy() const;
+		bool operator==(const Vector& v) const;
 	private:
 		QVector<Object*> m_elements;
 };

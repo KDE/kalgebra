@@ -47,8 +47,6 @@ class ANALITZA_EXPORT Cn : public Object
 		/** Constructor. Creates a boolean value with value @p b. */
 		Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Boolean) {}
 		
-		/** Constructor. Creates a value from @p o. If @p o is not a Cn, a not correct Cn will be returned. */
-		Cn(Object const * o);
 		virtual ~Cn() {}
 		
 		/**
@@ -152,6 +150,8 @@ class ANALITZA_EXPORT Cn : public Object
 		
 		/** Returns whether it is a correct Cn. */
 		bool isCorrect() const { return m_correct; }
+		
+		virtual Object* copy() const;
 		
 		static Cn pi();
 		static Cn e();

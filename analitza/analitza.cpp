@@ -204,7 +204,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						if(op.isBounded()) {
 							newUnscoped+=c->bvarList().toSet();
 						}
-						Container *r = new Container(c);
+						Container *r = c->copy();
 						Container::iterator it(r->firstValue());
 						for(; it!=r->m_params.end(); ++it) {
 							Object *o=*it;
@@ -220,7 +220,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			QSet<QString> newUnscoped(unscoped);
 			newUnscoped+=c->bvarList().toSet();
 			
-			Container *r = new Container(c);
+			Container *r = c->copy();
 			Object* old=r->m_params.last();
 			r->m_params[1]=eval(r->m_params[1], false, newUnscoped);
 			delete old;
@@ -471,7 +471,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 			}
 		}
 	} else if(c->containerType()==Container::piecewise) {
-		Container *newPw = new Container(c);
+		Container *newPw = c->copy();
 		
 		Container::const_iterator it;
 		int i=newPw->m_params.count();
@@ -656,7 +656,7 @@ Object* Analitza::operate(const Container* c)
 				Ci* var= (Ci*) c->m_params[0];
 				
 				if(var->isFunction())
-					ret = func(c);
+					ret = func(*c);
 				else
 					ret = calc(c->m_params[0]);
 			} else {
@@ -864,7 +864,7 @@ Object* Analitza::func(const Container& n)
 	}
 	
 	Object* ret=0;
-	Ci funct(n.m_params[0]);
+	Ci funct(*static_cast<Ci*>(n.m_params[0]));
 	
 	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
 		m_err << i18n("The function <em>%1</em> does not exist", funct.name());

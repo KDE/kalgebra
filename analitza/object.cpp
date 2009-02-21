@@ -27,12 +27,11 @@ QString Object::toString() const
 	return e.result();
 }
 
-Ci::Ci(const Object * o) : Object(o->type())
+Object* Ci::copy() const
 {
-	Q_ASSERT(m_type==Object::variable);
-	const Ci *c = (Ci*) o;
-	m_name = c->name();
-	m_function = c->m_function;
+	Ci *c = new Ci(m_name);
+	c->m_function = m_function;
+	return c;
 }
 
 QString Ci::visit(ExpressionWriter* e) const

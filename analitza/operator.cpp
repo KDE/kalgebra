@@ -165,13 +165,9 @@ int Operator::nparams(Operator::OperatorType t)
 	return 0;
 }
 
-
-Operator::Operator(Object const *o) : Object(o->type())
+Object* Operator::copy() const
 {
-	if(type() == Object::oper) {
-		Operator *c = (Operator*) o;
-		m_optype = c->operatorType();
-	}
+	return new Operator(m_optype);
 }
 
 unsigned int Operator::operatorWeight(OperatorType op)

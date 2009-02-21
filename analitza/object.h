@@ -80,6 +80,9 @@ public:
 	
 	void setCorrect(bool b) { m_correct = b; }
 	
+	/** @returns a new and equal instance of the tree. */
+	virtual Object* copy() const =0;
+	
 protected:
 	/** Creates an object with a @p t type */
 	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
@@ -95,9 +98,6 @@ protected:
 class ANALITZA_EXPORT Ci : public Object
 {
 	public:
-		/** Constructor. Builds a @p o variable */
-		explicit Ci(const Object *o);
-		
 		/** Constructor. Creates a variable with a @p b name */
 		explicit Ci(const QString& b) : Object(variable), m_name(b), m_function(false) {}
 		
@@ -108,7 +108,7 @@ class ANALITZA_EXPORT Ci : public Object
 		QString name() const { return m_name; }
 		
 		/** Returns whether @p var name is equal to this variable one. */
-		bool operator==(const Ci& var) { return var.m_name==m_name; }
+		bool operator==(const Ci& var) const { return var.m_name==m_name; }
 		
 		/** Sets whether it is a function. */
 		void setFunction(bool f) { m_function=f; }
@@ -127,6 +127,7 @@ class ANALITZA_EXPORT Ci : public Object
 		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool matches(const Object* pattern, QMap<QString, const Object*>* found) const;
+		virtual Object* copy() const;
 	private:
 		QString m_name;
 		bool m_function;

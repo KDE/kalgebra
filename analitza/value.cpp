@@ -24,18 +24,14 @@
 
 #include <KLocale>
 
-Cn::Cn(Object const *o)
-	: Object(Object::value), m_value(0.), m_format(Real)
+Object* Cn::copy() const
 {
-	if(o->type()==Operator::value){
-		Cn *v = (Cn*) o;
-		m_value = v->value();
-		m_format = v->format();
-		setCorrect(v->isCorrect());
-	} else {
-		setCorrect(false);
-	}
+	Cn *v = new Cn;
+	v->m_value = m_value;
+	v->m_format = m_format;
+	return v;
 }
+
 
 QString Cn::visit(ExpressionWriter* e) const
 {

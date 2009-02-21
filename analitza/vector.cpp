@@ -17,6 +17,7 @@
 #include "vector.h"
 #include "expression.h"
 #include "expressionwriter.h"
+#include "container.h"
 
 Vector::Vector(const Vector& v)
 	: Object(Object::vector)//, m_elements(v.m_elements.size())
@@ -36,17 +37,17 @@ Vector::Vector(int size)
 	: Object(Object::vector)//, m_elements(size)
 {}
 
-Vector::Vector(const Object* o)
-	: Object(Object::vector)
+Object* Vector::copy() const
 {
-	Q_ASSERT(o->type()==Object::vector);
-	const Vector *v=static_cast<const Vector*>(o);
+	Vector *v=new Vector(size());
 // 	m_elements.reserve(v->m_elements.size());
-	foreach(const Object* o, v->m_elements)
+	foreach(const Object* o, m_elements)
 	{
-		m_elements.append(Expression::objectCopy(o));
+		v->m_elements.append(Expression::objectCopy(o));
 	}
+	return v;
 }
+
 
 void Vector::appendBranch(Object* o)
 {
@@ -98,4 +99,15 @@ bool Vector::matches(const Object* exp, QMap< QString, const Object* >* found) c
 		matching &= (*it)->matches(*it2, found);
 	}
 	return matching;
+}
+
+bool Vector::operator==(const Vector& v) const
+{
+	bool eq=v.size()==size();
+	
+	for(int i=0; eq && i<m_elements.count(); ++i) {
+		Object *o=m_elements[i], *o1=v.m_elements[i];
+		eq = eq && Container::equalTree(o, o1);
+	}
+	return true;
 }

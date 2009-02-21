@@ -31,12 +31,13 @@
 #include "mathmlexpressionwriter.h"
 #include "mathmlpresentationexpressionwriter.h"
 
+void print_dom(const QDomNode& in, int ind);
+
 class Expression::ExpressionPrivate
 {
 public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
-	static Object* extractType(const Container& c, Container::ContainerType t);
 	bool canAdd(Object* container, Object* branch);
 	
 	Object* m_tree;
@@ -291,24 +292,14 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 	return ret;
 }
 
-Object* Expression::ExpressionPrivate::extractType(const Container& c, Container::ContainerType t)
-{
-	for(QList<Object*>::const_iterator it=c.m_params.begin(); it!=c.m_params.end(); ++it) {
-		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==t)
-			return c->m_params.first();
-	}
-	return 0;
-}
-
 Expression Expression::uplimit(const Container& c)
 {
-	return Expression(objectCopy(ExpressionPrivate::extractType(c, Container::uplimit)));
+	return Expression(objectCopy(c.extractType(Container::uplimit)));
 }
 
 Expression Expression::downlimit(const Container& c)
 {
-	return Expression(objectCopy(ExpressionPrivate::extractType(c, Container::downlimit)));
+	return Expression(objectCopy(c.extractType(Container::downlimit)));
 }
 
 bool Expression::operator==(const Expression & e) const
@@ -321,51 +312,29 @@ Expression Expression::uplimit() const
 	Expression ret;
 	if(d->m_tree->type() == Object::container) {
 		Container *c= (Container*) d->m_tree;
-		ret=uplimit(c->m_params[0]);
+		if(!c->m_params.isEmpty())
+			ret=Expression(c->ulimit());
 	}
 	return ret;
 }
 
 Expression Expression::downlimit() const
 {
+	Expression ret;
 	if(d->m_tree->type() == Object::container) {
 		Container *c= (Container*) d->m_tree;
-		return downlimit(c->m_params[0]);
+		if(!c->m_params.isEmpty())
+			ret=Expression(c->dlimit());
 	}
-	return Expression();
+	return ret;
 }
 
 Object* Expression::objectCopy(const Object * old)
 {
 	if(!old)
 		return 0;
-	Object *o=0;
-	switch(old->type()) {
-		case Object::oper:
-// 			Q_ASSERT(dynamic_cast<const Operator*>(old));
-			o = new Operator(old);
-			break;
-		case Object::value:
-// 			Q_ASSERT(dynamic_cast<const Cn*>(old));
-			o = new Cn(old);
-			break;
-		case Object::variable:
-// 			Q_ASSERT(dynamic_cast<const Ci*>(old));
-			o = new Ci(old);
-			break;
-		case Object::container:
-// 			Q_ASSERT(dynamic_cast<const Container*>(old));
-			o = new Container(old);
-			break;
-		case Object::vector:
-// 			Q_ASSERT(dynamic_cast<const Vector*>(old));
-			o = new Vector(old);
-			break;
-		case Object::none:
-			qFatal("Do not know what are we copying.");
-			break;
-	}
-	return o;
+	
+	return old->copy();
 }
 
 void Expression::clear()
@@ -396,7 +365,7 @@ QStringList Expression::bvarList() const
 Cn Expression::value() const
 {
 	if(KDE_ISLIKELY(d->m_tree && d->m_tree->type()==Object::value))
-		return Cn((Cn*) d->m_tree);
+		return *static_cast<Cn*>(d->m_tree);
 	else {
 // 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();
 		return 0.;
@@ -436,4 +405,27 @@ void Expression::setTree(Object* o)
 bool Expression::isValue() const
 {
 	return d->m_tree && d->m_tree->type()==Object::value;
+}
+
+void print_dom(const QDomNode& in, int ind)
+{
+	QString a;
+
+	if(ind >100){
+		qDebug("...");
+		return;
+	}
+	
+	for(int i=0; i<ind; i++)
+		a.append("______|");
+
+	if(in.hasChildNodes())
+		qDebug("%s%s(%s) -- %d", qPrintable(a), qPrintable(in.toElement().tagName()), qPrintable(in.toElement().text()), in.childNodes().length());
+	else
+		qDebug("%s%s", qPrintable(a), qPrintable(in.toElement().tagName()));
+
+	for(unsigned int i=0 ; i<in.childNodes().length(); i++){
+		if(in.childNodes().item(i).isElement())
+			print_dom(in.childNodes().item(i), ind+1);
+	}
 }
