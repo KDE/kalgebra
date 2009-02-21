@@ -143,7 +143,17 @@ Object* Expression::branch(const QDomElement& elem)
 				while(!n.isNull()) {
 					if(n.isElement()) {
 						Object* ob= branch(n.toElement());
-						if(ob) {
+						
+						if(ob && ob->isContainer() && c->containerType()!=Container::piecewise)
+						{
+							Container* c1=static_cast<Container*>(ob);
+							if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
+								d->m_err << i18nc("there was a conditional outside a condition structure",
+												"We can only have conditionals inside piecewise structures.");
+							}
+						}
+						
+						if(ob && d->m_err.isEmpty()) {
 							c->appendBranch(ob);
 						} else {
 							delete c;
