@@ -70,6 +70,8 @@ const char* insidePrompt="... ";
 
 int main(int argc, char *argv[])
 {
+	Q_UNUSED(argc);
+	Q_UNUSED(argv);
 	bool done=false;
 	bool inside=false;
 	
