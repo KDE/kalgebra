@@ -124,12 +124,12 @@ bool Expression::setMathML(const QString & s)
 	}
 	
 	d->m_tree = branch(doc.documentElement());
-	return true;
+	return d->m_tree;
 }
 
 Object* Expression::branch(const QDomElement& elem)
 {
-	Container *c; Cn *num; Operator *op;
+	Cn *num; Operator *op;
 	QDomNode n;
 	Object* ret=0;
 	
@@ -137,7 +137,7 @@ Object* Expression::branch(const QDomElement& elem)
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			if(t!=Container::none) {
-				c=new Container(t);
+				Container *c=new Container(t);
 				
 				n = elem.firstChild();
 				while(!n.isNull()) {
@@ -182,7 +182,7 @@ Object* Expression::branch(const QDomElement& elem)
 								correct=false;
 						} else
 							correct=false;
-							
+						
 						if(!correct) {
 							d->m_err << i18nc("there was an element that was not a conditional inside a condition",
 									"%1 is not a proper condition inside the piecewise", o->toString());
@@ -223,6 +223,16 @@ Object* Expression::branch(const QDomElement& elem)
 			while(!n.isNull()) {
 				if(n.isElement()) {
 					Object* ob= branch(n.toElement());
+					
+					if(ob && ob->isContainer())
+					{
+						Container* c1=static_cast<Container*>(ob);
+						if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
+							d->m_err << i18nc("there was a conditional outside a condition structure",
+											"We can only have conditionals inside piecewise structures.");
+						}
+					}
+					
 					if(ob) {
 						v->appendBranch(ob);
 					} else {

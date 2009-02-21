@@ -156,6 +156,7 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("missing )") << "(" << false;
 	QTest::newRow("missing }") << "vector{" << false;
 	QTest::newRow("wrong piecewise") << "piecewise { 0 ? 0 ? 0 }" << false;
+	QTest::newRow("vector piece") << "vector { 0 ? 0 }" << false;
 }
 
 void ExpressionTest::testCorrection()
