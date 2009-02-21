@@ -262,12 +262,10 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("wrong coma") << QStringList("2+2,");
 	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
+	QTest::newRow("wrong sum") << QStringList("sum(x, x:10..0)");
+	QTest::newRow("recursive var") << QStringList("x:=x+1");
 	
 	QStringList script;
-	script << "x:=x+1";
-	QTest::newRow("recursive var") << script;
-	
-	script.clear();
 	script << "a:=b";
 	script << "b:=a";
 	QTest::newRow("var dependency cycle") << script;

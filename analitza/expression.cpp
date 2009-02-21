@@ -37,6 +37,7 @@ public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
 	static Object* extractType(const Container& c, Container::ContainerType t);
+	bool canAdd(Object* container, Object* branch);
 	
 	Object* m_tree;
 	QStringList m_err;
@@ -109,6 +110,42 @@ bool Expression::setText(const QString & exp)
 	return corr;
 }
 
+bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
+{
+	bool correct=true;
+	if(!branch)
+		correct=false;
+	else if(branch->isContainer()) {
+		Container* c1=static_cast<Container*>(branch);
+		if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
+			bool isPiecewise=where->isContainer() && static_cast<Container*>(where)->containerType()==Container::piecewise;
+			if(!isPiecewise) {
+				m_err << i18nc("there was a conditional outside a condition structure",
+								"We can only have conditionals inside piecewise structures.");
+				correct=false;
+			}
+		}
+	} else if(where->isContainer()) {
+		Container* cWhere=static_cast<Container*>(where);
+		
+		if(cWhere->containerType()==Container::piecewise) {
+			bool isCondition=branch->isContainer() &&
+				(static_cast<Container*>(where)->containerType()==Container::piece ||
+				static_cast<Container*>(where)->containerType()==Container::otherwise);
+			if(!isCondition) {
+				m_err << i18nc("there was an element that was not a conditional inside a condition",
+									"%1 is not a proper condition inside the piecewise", branch->toString());
+				correct=false;
+			}
+		} else if(cWhere->containerType()==Container::declare && cWhere->isEmpty() && branch->type()!=Object::variable) {
+			m_err << i18n("We can only declare variables");
+			correct=false;
+		}
+	}
+	Q_ASSERT(correct || !m_err.isEmpty());
+	return correct;
+}
+
 bool Expression::setMathML(const QString & s)
 {
 	d->m_err.clear();
@@ -144,16 +181,7 @@ Object* Expression::branch(const QDomElement& elem)
 					if(n.isElement()) {
 						Object* ob= branch(n.toElement());
 						
-						if(ob && ob->isContainer() && c->containerType()!=Container::piecewise)
-						{
-							Container* c1=static_cast<Container*>(ob);
-							if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
-								d->m_err << i18nc("there was a conditional outside a condition structure",
-												"We can only have conditionals inside piecewise structures.");
-							}
-						}
-						
-						if(ob && d->m_err.isEmpty()) {
+						if(d->canAdd(c, ob)) {
 							c->appendBranch(ob);
 						} else {
 							delete c;
@@ -163,38 +191,6 @@ Object* Expression::branch(const QDomElement& elem)
 					n = n.nextSibling();
 				}
 				
-				//Error collection
-				Expression ul=uplimit(*c);
-				Expression dl=downlimit(*c);
-				if(c->containerType()==Container::apply && ul.isValue() && dl.isValue()) {
-					//FIXME: Don't look for it, append it at 2nd position ors
-					Cn u=ul.tree(), d=ul.tree();
-					bool dGreaterU = (u.isCorrect() && d.isCorrect()) && d.value()>u.value();
-					if(dGreaterU)
-						this->d->m_err << i18nc("An error message", "The downlimit is greater than the uplimit. "
-													"Probably should be %1..%2", u.value(), d.value());
-				} else if(c->containerType()==Container::piecewise) {
-					bool correct=true;
-					foreach(Object *o, c->m_params) {
-						if(o->isContainer()) {
-							Container *cc = (Container*) o;
-							if(cc->containerType()!=Container::piece && cc->containerType()!=Container::otherwise)
-								correct=false;
-						} else
-							correct=false;
-						
-						if(!correct) {
-							d->m_err << i18nc("there was an element that was not a conditional inside a condition",
-									"%1 is not a proper condition inside the piecewise", o->toString());
-							break;
-						}
-					}
-				} else if(c->containerType()==Container::declare) {
-					if(c->m_params.first()->type()!=Object::variable) {
-						d->m_err << i18n("We can only declare variables");
-					}
-				}
-				//EOCollect
 				ret = c;
 			} else {
 				d->m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
@@ -224,18 +220,10 @@ Object* Expression::branch(const QDomElement& elem)
 				if(n.isElement()) {
 					Object* ob= branch(n.toElement());
 					
-					if(ob && ob->isContainer())
-					{
-						Container* c1=static_cast<Container*>(ob);
-						if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
-							d->m_err << i18nc("there was a conditional outside a condition structure",
-											"We can only have conditionals inside piecewise structures.");
-						}
-					}
-					
-					if(ob) {
+					if(d->canAdd(v, ob)) {
 						v->appendBranch(ob);
 					} else {
+						delete v;
 						return 0;
 					}
 				}
@@ -418,9 +406,9 @@ Cn Expression::value() const
 bool Expression::isLambda() const
 {
 	Container* c = (Container*) d->m_tree;
-	if(d->m_tree && d->m_tree->isContainer() && c->containerType()==Container::math) {
+	if(d->m_tree && d->m_tree->isContainer() && c->containerType()==Container::math && !c->m_params.isEmpty()) {
 		Container *c1 = (Container*) c->m_params.first();
-		return c->m_params[0]->isContainer() && c1->containerType()==Container::lambda;
+		return c1->isContainer() && c1->containerType()==Container::lambda;
 	} else
 		return false;
 }
