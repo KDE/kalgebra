@@ -302,6 +302,12 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 			return reduceUnaryReal(op, (Cn*) val, correct);
 		case Object::vector:
 			return reduceUnaryVector(op, (Vector*) val, correct);
+		case Object::none:
+		case Object::variable:
+		case Object::oper:
+		case Object::container:
+			//This should never happen
+			break;
 	}
 	
 	Q_ASSERT(false && "using reduceUnary in a wrong way");

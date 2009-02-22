@@ -68,7 +68,7 @@ QString StringExpressionWriter::accept(const Container* var)
 	QStringList bvars;
 	
 	for(int i=0; i<var->m_params.count(); i++) {
-		Q_ASSERT(var->m_params[i]!=0);
+		Q_ASSERT(var->m_params[i]);
 		
 		Object::ObjectType type=var->m_params[i]->type();
 		if(type == Object::oper)
@@ -87,7 +87,7 @@ QString StringExpressionWriter::accept(const Container* var)
 			}
 			
 			if(c->containerType() == Container::bvar) { //bvar
-				Container *ul = var->ulimit(), *dl = var->dlimit();
+				Object *ul = var->ulimit(), *dl = var->dlimit();
 				if(dl)
 					bounds += dl->visit(this);
 				if(dl || ul)

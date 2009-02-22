@@ -292,16 +292,6 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 	return ret;
 }
 
-Expression Expression::uplimit(const Container& c)
-{
-	return Expression(objectCopy(c.extractType(Container::uplimit)));
-}
-
-Expression Expression::downlimit(const Container& c)
-{
-	return Expression(objectCopy(c.extractType(Container::downlimit)));
-}
-
 bool Expression::operator==(const Expression & e) const
 {
 	return e.d->m_tree && d->m_tree && Container::equalTree(e.d->m_tree, d->m_tree);
@@ -368,7 +358,7 @@ Cn Expression::value() const
 		return *static_cast<Cn*>(d->m_tree);
 	else {
 // 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();
-		return 0.;
+		return Cn(0.);
 	}
 }
 

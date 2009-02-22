@@ -38,6 +38,25 @@ char Container::m_typeStr[][10] = {
 		"piecewise",
 		"otherwise" };
 
+QMap<QString, Container::ContainerType> createNameToType()
+{
+	QMap<QString, Container::ContainerType> ret;
+	ret["apply"]=Container::apply;
+	ret["declare"]=Container::declare;
+	ret["math"]=Container::math;
+	ret["lambda"]=Container::lambda;
+	ret["bvar"]=Container::bvar;
+	ret["uplimit"]=Container::uplimit;
+	ret["downlimit"]=Container::downlimit;
+	ret["piecewise"]=Container::piecewise;
+	ret["piece"]=Container::piece;
+	ret["otherwise"]=Container::otherwise;
+	
+	return ret;
+}
+
+QMap<QString, Container::ContainerType> Container::m_nameToType=createNameToType();
+
 Container::Container(const Container& c) : Object(Object::container)
 {
 	Q_ASSERT(c.type()==Object::container);
@@ -94,28 +113,15 @@ QList<Object*> Container::copyParams() const
 {
 	QList<Object*> ret;
 	
-	for(QList<Object*>::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
+	for(Container::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
 		ret.append(Expression::objectCopy(*it));
 	}
 	return ret;
 }
 
-enum Container::ContainerType Container::toContainerType(const QString& tag)
+Container::ContainerType Container::toContainerType(const QString& tag)
 {
-	ContainerType ret=none;
-	
-	if(tag=="apply") ret=apply;
-	else if(tag=="declare") ret=declare;
-	else if(tag=="math") ret=math;
-	else if(tag=="lambda") ret=lambda;
-	else if(tag=="bvar") ret=bvar;
-	else if(tag=="uplimit") ret=uplimit;
-	else if(tag=="downlimit") ret=downlimit;
-	else if(tag=="piecewise") ret=piecewise;
-	else if(tag=="piece") ret=piece;
-	else if(tag=="otherwise") ret=otherwise;
-	
-	return ret;
+	return m_nameToType[tag];
 }
 
 QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of Strings?
@@ -134,25 +140,14 @@ QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of
 	return bvars;
 }
 
-#warning use extractType()
-Container* Container::ulimit() const
+Object* Container::ulimit() const
 {
-	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
-		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::uplimit && c->m_params[0]->type()==Object::value)
-			return (Container*) c->m_params[0];
-	}
-	return 0;
+	return extractType(uplimit);
 }
 
-Container* Container::dlimit() const
+Object* Container::dlimit() const
 {
-	for(QList<Object*>::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
-		Container *c = (Container*) (*it);
-		if(c->type()==Object::container && c->containerType()==Container::downlimit && c->m_params[0]->type()==Object::value)
-			return (Container*) c->m_params[0];
-	}
-	return 0;
+	return extractType(downlimit);
 }
 
 bool Container::hasVars() const
@@ -438,7 +433,7 @@ bool Container::isUnary() const
 
 bool Container::isCorrect() const
 {
-	bool ret=m_correct && m_type==Object::container && m_cont_type!=none;
+	bool ret=m_type==Object::container && m_cont_type!=none;
 	if(m_cont_type==Container::apply) {
 		Operator o=firstOperator();
 		ret &= o.nparams()<0 || countValues()==o.nparams();

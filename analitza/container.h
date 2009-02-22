@@ -99,19 +99,19 @@ public:
 	Operator firstOperator() const;
 	
 	/** Returns an iterator pointing to the first value of the container */
-	QList<Object*>::iterator firstValue();
+	Container::iterator firstValue();
 	
 	/** Returns a constant iterator pointing to the first value of the container */
-	QList<Object*>::const_iterator firstValue() const;
+	Container::const_iterator firstValue() const;
 	
 	/** Copies all the params to a new list. */
 	QList<Object*> copyParams() const;
 	
 	/** Returns the container's uplimit. */
-	Container* ulimit() const;
+	Object* ulimit() const;
 	
 	/** Returns the container's downlimit. */
-	Container* dlimit() const;
+	Object* dlimit() const;
 	
 	/** Returns whether it is an unary container. This means that there is only one value inside. */
 	bool isUnary() const;
@@ -157,8 +157,9 @@ public:
 // protected:
 	QList<Object*> m_params;
 private:
-	enum ContainerType m_cont_type;
+	ContainerType m_cont_type;
 	static char m_typeStr[][10];
+	static QMap<QString, ContainerType> m_nameToType;
 };
 
 #endif

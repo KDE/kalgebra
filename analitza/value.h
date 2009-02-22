@@ -39,13 +39,13 @@ class ANALITZA_EXPORT Cn : public Object
 		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) {}
 		
 		/** Constructor. Creates a boolean value with @p b. */
-		Cn(const double &b=0.) : Object(Object::value), m_value(b), m_format(Real) {}
+		explicit Cn(const double &b=0.) : Object(Object::value), m_value(b), m_format(Real) {}
 		
 		/** Constructor. Creates an integer value with @p i. */
-		Cn(int i) : Object(Object::value), m_value(i), m_format(Integer) {}
+		explicit Cn(int i) : Object(Object::value), m_value(i), m_format(Integer) {}
 		
 		/** Constructor. Creates a boolean value with value @p b. */
-		Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Boolean) {}
+		explicit Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Boolean) {}
 		
 		virtual ~Cn() {}
 		
@@ -134,12 +134,12 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Increments by one the value.
 		 */
-		Cn operator++() { m_value++; return this; }
+		Cn operator++() { m_value++; return *this; }
 		
 		/**
 		 *	Increments by one the value.
 		 */
-		Cn operator++(int) { m_value++; return this; }
+		Cn operator++(int) { m_value++; return *this; }
 		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool isZero() const { return m_value==0.; }
@@ -149,7 +149,7 @@ class ANALITZA_EXPORT Cn : public Object
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		/** Returns whether it is a correct Cn. */
-		bool isCorrect() const { return m_correct; }
+		bool isCorrect() const { return m_type==Object::value; }
 		
 		virtual Object* copy() const;
 		

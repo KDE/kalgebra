@@ -90,7 +90,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			}
 			
 			if(c->containerType() == Container::bvar) { //bvar
-				Container *ul = var->ulimit(), *dl = var->dlimit();
+				Object *ul = var->ulimit(), *dl = var->dlimit();
 				if(dl)
 					bounds += dl->visit(this);
 				if(dl || ul)

@@ -169,16 +169,6 @@ class ANALITZA_EXPORT Expression
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
 		/**
-		 *	Returns the uplimit of a given @p c container.
-		 */
-		static Expression uplimit(const Container& c);
-		
-		/**
-		 *	Returns the uplimit of a given @p c container.
-		 */
-		static Expression downlimit(const Container& c);
-		
-		/**
 		 *	Copies an object @p o to a new object.
 		 */
 		static Object* objectCopy(const Object * o);

@@ -78,17 +78,12 @@ public:
 	*/
 	virtual bool matches(const Object* exp, QMap<QString, const Object*>* found) const=0;
 	
-	void setCorrect(bool b) { m_correct = b; }
-	
 	/** @returns a new and equal instance of the tree. */
 	virtual Object* copy() const =0;
 	
 protected:
 	/** Creates an object with a @p t type */
-	Object(enum ObjectType t) : m_correct(true), m_type(t) {}
-	
-	/** If it is marked as true, it is an invalid object, otherwise it may be wrong. */
-	bool m_correct;
+	Object(enum ObjectType t) : m_type(t) {}
 	
 	/** Specifies the Object type. */
 	enum ObjectType m_type;
