@@ -195,8 +195,24 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		if(!errors.isEmpty())
-			m_valid->setText(i18n("<b style='color:red'>%1</b>", errors.first()));
+		if(!errors.isEmpty()) {
+			QString errorm=errors.first(), error;
+			QFontMetrics fm(m_valid->font());
+			int textWidth=fm.width(errorm);
+			
+			if(textWidth>m_valid->width()) {
+				for(uint i=3; i<errorm.size(); ++i) {
+					QString aux=errorm.mid(0,i)+"...";
+					
+					int textWidth=fm.width(aux);
+					if(textWidth > m_valid->width()) {
+						break;
+					} else
+						error=aux;
+				}
+			}
+			m_valid->setText(i18n("<b style='color:red'>%1</b>", error));
+		}
 		m_valid->setToolTip(errors.join("\n"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
