@@ -55,16 +55,15 @@ void ExpLexer::getToken()
 		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
 	} else if(a[pos].isDigit() || (a.size()>pos && a[pos]=='.' && a[pos].isDigit())) {
 		int coma=0;
-		for(; pos<a.length() && (a[pos].isDigit() || (pos+1<a.length() && a[pos]=='.' && a[pos+1]!='.')); pos++){
-			if(a[pos]=='.')
-				coma++;
+		for(; pos<a.length() && (a[pos].isDigit() || (pos+1<a.length() && a[pos]=='.' && a[pos+1]!='.')); pos++) {
 			ret.val += a[pos];
+			if(a[pos]=='.') {
+				if(coma<2)
+					coma++;
+				else
+					m_err = i18nc("Error message", "Did not understand the real value: %1", ret.val);
+			}
 		}
-		
-		for(; pos<a.length() && a[pos].isSpace(); pos++) {}
-		
-		if(pos<a.length() && (a[pos] == '(' || a[pos].isLetter()))
-			m_tokens.append(TOKEN(ExpressionTable::tMul, 0));
 		
 		QStringList attrib;
 		if(coma)
@@ -72,14 +71,12 @@ void ExpLexer::getToken()
 		
 		Q_ASSERT(ret.val.size()>0);
 		
-		if(coma>1)
-			m_err = i18nc("Error message", "Trying to codify an unknown value: %1", ret.val);
-		else if(attrib.isEmpty())
+		if(attrib.isEmpty())
 			ret.val = QString("<cn>%2</cn>").arg(ret.val);
 		else
 			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
 		ret.type= ExpressionTable::tVal;
-	} else if(a[pos].isLetter()) {//es una variable o funcret.val += a[0];
+	} else if(a[pos].isLetter()) {
 		for(; pos<a.length() && a[pos].isLetterOrNumber() && (a[pos].isLetter() || a[pos].decompositionTag()==QChar::NoDecomposition); pos++){
 			ret.val += a[pos];
 		}

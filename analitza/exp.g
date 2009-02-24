@@ -194,13 +194,14 @@ case $rule_number:
 
 -- primary
 Id ::=  tId; /. case $rule_number: ./
-Value ::= tVal;
+Number ::= tVal;
 /.
 case $rule_number:
 	sym(1) = lexer->current.val;
 	break;
 ./
 
+Value ::= Number;
 Value ::= Id;
 /.
 case $rule_number:
@@ -221,26 +222,9 @@ PrimaryExpressionExt ::= PrimaryExpression;
 Expression ::= PrimaryExpressionExt;
 
 -- function
-Expression ::= Id PrimaryExpression ;
-/.
-case $rule_number:
-	sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>";
-	break;
-./
-
-PrimaryExpression ::= Id tLpr FBody tRpr ;
-/.
-case $rule_number:
-	sym(1) = "<apply>"+funcToTag(sym(1))+sym(3)+"</apply>";
-	break;
-./
-
-PrimaryExpression ::= Id tLpr       tRpr ;
-/.
-case $rule_number:
-	sym(1) = "<apply>"+funcToTag(sym(1))+"</apply>";
-	break;
-./
+Expression ::= Id PrimaryExpression ;      /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>"; break; ./
+PrimaryExpression ::= Id tLpr FBody tRpr ; /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+sym(3)+"</apply>"; break; ./
+PrimaryExpression ::= Id tLpr       tRpr ; /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+"</apply>"; break; ./
 
 -- function's body
 FBody ::= Parameters ;
@@ -255,10 +239,9 @@ case $rule_number:
 -- block
 PrimaryExpression ::= Id tLcb Parameters tRcb ;
 /.
-case $rule_number: {
-	QString blockName=sym(1);
-	sym(1) = '<'+blockName+'>'+sym(3)+"</"+blockName+'>';
-	} break;
+case $rule_number:
+	sym(1) = '<'+sym(1)+'>'+sym(3)+"</"+sym(1)+'>';
+	break;
 ./
 
 -- lambda
@@ -288,10 +271,11 @@ case $rule_number:
 Expression ::= Expression tAdd Expression ; /. case $rule_number: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tSub Expression ; /. case $rule_number: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tMul Expression ; /. case $rule_number: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Number PrimaryExpressionExt; /. case $rule_number: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; ./
 Expression ::= Expression tDiv Expression ; /. case $rule_number: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tPow Expression ; /. case $rule_number: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tQm  Expression ; /. case $rule_number: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; ./
-Expression ::= Value tAssig Expression ;    /. case $rule_number: sym(1) = "<declare>"+sym(1)+sym(3)+"</declare>"; break; ./
+Expression ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
 
 Parameters ::= Expression ;
 Parameters ::= Parameters tComa Expression ;
