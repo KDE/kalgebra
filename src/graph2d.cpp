@@ -401,7 +401,7 @@ void Graph2D::mouseMoveEvent(QMouseEvent *e)
 	} else if(e->buttons()&Qt::LeftButton) {
 		last = e->pos();
 	} else if(e->buttons()==0)
-		sendStatus(QString("x=%1 y=%2").arg(mark.x(),3,'f',2).arg(mark.y(),3,'f',2));
+		sendStatus(QString("x=%1 y=%2").arg(mark.x(),3,'g',5).arg(mark.y(),3,'g',5));
 	
 	this->repaint();
 }
