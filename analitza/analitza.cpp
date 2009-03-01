@@ -842,7 +842,7 @@ Object* Analitza::selector(const Object* index, const Object* vector)
 		}
 	} else {
 		ret = new Cn(0.);
-		m_err << i18n("We can only select a containers value with its integer index");
+		m_err << i18n("We can only select a container's value with its integer index");
 	}
 	return ret;
 }

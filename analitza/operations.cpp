@@ -338,7 +338,7 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn
 Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, QString &correct)
 {
 	if(v1->size()!=v2->size()) {
-		correct=i18n("Can't operate on different sized vectors.");
+		correct=i18n("Cannot operate on different sized vectors.");
 		return new Cn(0.);
 	}
 	
