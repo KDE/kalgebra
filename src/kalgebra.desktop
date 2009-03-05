@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KAlgebra
 Name[hi]=के-अलजेब्रा
+Name[hne]=के-अलजेब्रा
 Name[ml]=കെ-ആള്‍ജിബ്ര
 Name[ne]=केडीई बीजगणित
 Name[pa]=ਕੇ-ਐਲਜਬਰਾ
@@ -26,6 +27,7 @@ GenericName[gl]=Calculadora gráfica
 GenericName[gu]=આલેખ કેલ્ક્યુલેટર
 GenericName[he]=מחשבון גרפי
 GenericName[hi]=ग्राफ गणक
+GenericName[hne]=ग्राफ गनक
 GenericName[hu]=Függvényszámító
 GenericName[is]=Reiknivél fyrir gröf
 GenericName[it]=Calcolatrice grafica
@@ -70,6 +72,7 @@ Comment[gl]=Resolve e debuxa expresións matemáticas
 Comment[gu]=ગાણિતિક સૂત્રો ઉકેલનાર અને આલેખનાર
 Comment[he]=פותר ומשרטט ביטויים מתמטיים
 Comment[hi]=गणित एक्सप्रेशन सुलझाने वाला तथा प्लॉटर
+Comment[hne]=गनित एक्सप्रेसन सुलझाने वाला अउ प्लाटर
 Comment[hu]=Matematikai egyenletek megoldása, görberajzolás
 Comment[is]=Stærðfræðilausnir og plottun
 Comment[it]=Risolutore e disegnatore di espressioni matematiche
