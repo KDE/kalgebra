@@ -106,17 +106,8 @@ void VarEdit::edit()
 		return;
 	}
 	
-	Expression e;
-	if(m_exp->isMathML())
-		e.setMathML(m_exp->text());
-	else
-		e.setText(m_exp->text());
-	
-	if(!e.isCorrect()) {
-		a.m_err << i18n("From parser:") << e.error();
-		return;
-	} else
-		a.setExpression(e);
+	Expression e(m_exp->text(), m_exp->isMathML());
+	a.setExpression(e);
 	
 	if(a.isCorrect()) {
 		if(a.bvarList().count()>0)
@@ -126,7 +117,7 @@ void VarEdit::edit()
 			
 			if(!a.isCorrect()) {
 				m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-				m_valid->setToolTip(a.m_err.join("\n"));
+				m_valid->setToolTip(a.errors().join("\n"));
 				m_correct=false;
 			} else {
 				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val.toString()));
@@ -153,7 +144,7 @@ QString VarEdit::text() const
 
 void VarEdit::setAnalitza(Analitza * na)
 {
-	vars= na->m_vars;
+	vars= na->variables();
 	m_exp->setAnalitza(na);
 }
 

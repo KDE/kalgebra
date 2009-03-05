@@ -37,13 +37,6 @@ class Container;
 
 class ANALITZA_EXPORT Analitza
 {
-	//FIXME: Remove all friends. Most solved with variables getter.
-	friend class VarEdit;
-	friend class VariableView;
-	friend class function;
-	friend class Calculate3D;
-	friend class ExpressionEdit;
-	
 	public:
 		typedef QPair<double, double> Bounds;
 		

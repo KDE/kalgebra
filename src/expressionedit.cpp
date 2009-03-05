@@ -339,8 +339,8 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			
 			ajudant(sample+')');
 		}
-	} else if(a && a->m_vars->contains(funcname) && a->m_vars->value(funcname)->type()==Object::container) { //if it is a function defined by the user
-		Container *c = (Container*) a->m_vars->value(funcname);
+	} else if(a && a->variables()->contains(funcname) && a->variables()->value(funcname)->isContainer()) { //if it is a function defined by the user
+		Container *c = (Container*) a->variables()->value(funcname);
 		QStringList params = c->bvarList();
 		
 		QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way

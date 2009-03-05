@@ -41,12 +41,9 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
 		Expression deriv = func.derivative();
 		if(func.isCorrect())
 			m_deriv = new Expression(deriv);
-		else
-			func.flushErrors();
-		
-		Q_ASSERT(func.isCorrect());
-	} else
-		func.flushErrors();
+	}
+	
+	func.flushErrors();
 }
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)

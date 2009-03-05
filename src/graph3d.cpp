@@ -288,13 +288,14 @@ bool Graph3D::create()
 
 void Calculate3D::run()
 {
-	Q_ASSERT(punts && a.m_vars);
+	Variables* v=a.variables();
+	Q_ASSERT(punts && v);
 	
 	const int k= static_cast<int>(size/step)*2;
-	a.m_vars->modify("x", 0.);
-	a.m_vars->modify("y", 0.);
+	v->modify("x", 0.);
+	v->modify("y", 0.);
 	
-	Cn *x=(Cn*)a.m_vars->value("x"), *y=(Cn*)a.m_vars->value("y");
+	Cn *x=(Cn*) v->value("x"), *y=(Cn*) v->value("y");
 	
 	if(!a.isCorrect())
 		return;

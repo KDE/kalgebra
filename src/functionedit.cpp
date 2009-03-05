@@ -201,7 +201,7 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 			int textWidth=fm.width(errorm);
 			
 			if(textWidth>m_valid->width()) {
-				for(uint i=3; i<errorm.size(); ++i) {
+				for(int i=3; i<errorm.size(); ++i) {
 					QString aux=errorm.mid(0,i)+"...";
 					
 					int textWidth=fm.width(aux);
