@@ -53,6 +53,7 @@ Expression Analitza::evaluate()
 {
 	m_err.clear();
 	Expression e;
+	
 	if(m_exp.isCorrect()) {
 		Object *o=eval(m_exp.tree(), true, QSet<QString>());
 		o=simp(o);
@@ -1051,12 +1052,12 @@ Object* Analitza::simp(Object* root)
 					
 					root=c;
 					
-					if(c->isUnary() && c->firstOperator()==Operator::plus) {
+					if(c->isUnary() && o==Operator::plus) {
 						root=*c->firstValue();
 						*c->firstValue()=0;
 						delete c;
 						c=0;
-					} else if(c->isUnary() && c->firstOperator()==Operator::minus) {
+					} else if(c->isUnary() && o==Operator::minus) {
 						if(somed && !lastdel) {
 							root=*c->firstValue();
 							*c->firstValue()=0;
@@ -1239,13 +1240,14 @@ Object* Analitza::simp(Object* root)
 Object* Analitza::simpScalar(Container * c)
 {
 	Object *value=0;
+	Container::iterator i = c->firstValue();
 	Operator o = c->firstOperator();
-// 	bool sign=true;
-	for(Container::iterator i = c->firstValue(); i!=c->m_params.end();) {
+	bool firstvalue = i!=c->m_params.end() && ((*i)->type()==Object::value || ((*i)->type()==Object::vector && !hasVars(*i)));
+	for(; i!=c->m_params.end();) {
 		bool d=false;
 		
 		//TODO: hasVars needed? should have already been simplifyed before, just check type==cn
-		if(((*i)->type()==Object::value || (*i)->type()==Object::vector) && !hasVars(*i)) {
+		if((*i)->type()==Object::value || ((*i)->type()==Object::vector && !hasVars(*i))) {
 			Object* aux = *i;
 			
 			if(value) {
@@ -1255,27 +1257,19 @@ Object* Analitza::simpScalar(Container * c)
 				value=aux;
 			d=true;
 		}
-		
-		if(d) {
+		if(d)
 			i = c->m_params.erase(i);
-		} else
+		else
 			++i;
 	}
 	
 	if(value) {
 		if(value->isZero())
 			delete value;
-		else {
-			switch(o.operatorType()) {
-				case Operator::minus:
-				case Operator::plus:
-					c->appendBranch(value);
-					break;
-				default:
-					c->m_params.insert(c->firstValue(), value);
-					break;
-			}
-		}
+		else if(o==Operator::plus || (!firstvalue && o==Operator::minus))
+			c->appendBranch(value);
+		else
+			c->insertBranch(c->firstValue(), value);
 	}
 	return c;
 }

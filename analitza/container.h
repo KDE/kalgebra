@@ -89,6 +89,9 @@ public:
 	/** Adds a @p o branch at the end of the Container. */
 	void appendBranch(Object* o) { m_params.append(o); }
 	
+	/** Adds a @p o branch right after @p before of the Container. */
+	void insertBranch(Container::iterator before, Object* o) { m_params.insert(before, o); }
+	
 	/** Returns a QStringList where we have all of the bvar in the container */
 	QStringList bvarList() const;
 	
