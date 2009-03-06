@@ -33,7 +33,7 @@
 
 void print_dom(const QDomNode& in, int ind);
 
-class Expression::ExpressionPrivate
+class Expression::ExpressionPrivate : public QSharedData
 {
 public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
@@ -82,7 +82,6 @@ Expression::~Expression()
 {
 	if(d && d->m_tree)
 		delete d->m_tree;
-	delete d;
 }
 
 Expression Expression::operator=(const Expression & e)
@@ -126,13 +125,15 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 				correct=false;
 			}
 		}
-	} else if(where->isContainer()) {
+	}
+	
+	if(where->isContainer()) {
 		Container* cWhere=static_cast<Container*>(where);
 		
 		if(cWhere->containerType()==Container::piecewise) {
 			bool isCondition=branch->isContainer() &&
-				(static_cast<Container*>(where)->containerType()==Container::piece ||
-				static_cast<Container*>(where)->containerType()==Container::otherwise);
+				(static_cast<Container*>(branch)->containerType()==Container::piece ||
+				static_cast<Container*>(branch)->containerType()==Container::otherwise);
 			if(!isCondition) {
 				m_err << i18nc("there was an element that was not a conditional inside a condition",
 									"%1 is not a proper condition inside the piecewise", branch->toString());
@@ -400,7 +401,7 @@ bool Expression::isValue() const
 void print_dom(const QDomNode& in, int ind)
 {
 	QString a;
-
+	
 	if(ind >100){
 		qDebug("...");
 		return;
@@ -408,12 +409,12 @@ void print_dom(const QDomNode& in, int ind)
 	
 	for(int i=0; i<ind; i++)
 		a.append("______|");
-
+	
 	if(in.hasChildNodes())
 		qDebug("%s%s(%s) -- %d", qPrintable(a), qPrintable(in.toElement().tagName()), qPrintable(in.toElement().text()), in.childNodes().length());
 	else
 		qDebug("%s%s", qPrintable(a), qPrintable(in.toElement().tagName()));
-
+	
 	for(unsigned int i=0 ; i<in.childNodes().length(); i++){
 		if(in.childNodes().item(i).isElement())
 			print_dom(in.childNodes().item(i), ind+1);

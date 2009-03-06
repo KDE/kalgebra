@@ -266,6 +266,7 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
 	QTest::newRow("wrong sum") << QStringList("sum(x, x:10..0)");
 	QTest::newRow("recursive var") << QStringList("x:=x+1");
+	QTest::newRow("xxx") << QStringList("piecewise {scalarproduct(vector{x, 1/x})}");
 	
 	QStringList script;
 	script << "a:=b";

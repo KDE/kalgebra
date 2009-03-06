@@ -20,6 +20,7 @@
 #define EXPRESSION_H
 
 #include <QStringList>
+#include <QSharedDataPointer>
 
 #include "analitzaexport.h"
 #include "object.h"
@@ -177,7 +178,7 @@ class ANALITZA_EXPORT Expression
 		Object* branch(const QDomElement& elem);
 		
 		class ExpressionPrivate;
-		ExpressionPrivate *d;
+		QSharedDataPointer<ExpressionPrivate> d;
 };
 
 #endif
