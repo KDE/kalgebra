@@ -112,6 +112,7 @@ bool Expression::setText(const QString & exp)
 
 bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 {
+	Q_ASSERT(where && branch);
 	bool correct=true;
 	if(!branch)
 		correct=false;
@@ -183,7 +184,7 @@ Object* Expression::branch(const QDomElement& elem)
 					if(n.isElement()) {
 						Object* ob= branch(n.toElement());
 						
-						if(d->canAdd(c, ob)) {
+						if(ob && d->canAdd(c, ob)) {
 							c->appendBranch(ob);
 						} else {
 							delete c;
@@ -222,7 +223,7 @@ Object* Expression::branch(const QDomElement& elem)
 				if(n.isElement()) {
 					Object* ob= branch(n.toElement());
 					
-					if(d->canAdd(v, ob)) {
+					if(ob && d->canAdd(v, ob)) {
 						v->appendBranch(ob);
 					} else {
 						delete v;
