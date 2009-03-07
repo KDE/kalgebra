@@ -24,6 +24,7 @@
 #include <QTreeView>
 #include <QHeaderView>
 #include <QApplication>
+#include <QKeyEvent>
 
 #include <KLocale>
 
@@ -36,13 +37,10 @@
 #include "container.h"
 
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
-	: QTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")
+	: QPlainTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	this->setFixedHeight(QFontMetrics(this->currentFont()).height()+12);
 	this->setTabChangesFocus(true);
-	this->setAcceptRichText(false);
-	this->setAutoFormatting(AutoNone);
 	m_history.append(QString());
 	
 	m_helptip = new QLabel(this, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
@@ -85,6 +83,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 // 	connect(m_completer, SIGNAL(activated(const QModelIndex&)), this, SLOT(completed(const QModelIndex&)));
 	
 	setMode(inimode);
+	this->setFixedHeight(QFontMetrics(currentCharFormat().font()).height()+15);
 }
 
 ExpressionEdit::~ExpressionEdit() {}
@@ -172,7 +171,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 // 				completed(m_completer->currentCompletion());
 			{
 				if(returnPress()) {
-					QTextEdit::keyPressEvent(e);
+					QPlainTextEdit::keyPressEvent(e);
 				}
 				m_completer->popup()->hide();
 			}
@@ -199,7 +198,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				this->setTextCursor(tc);
 			}
 		default:
-			QTextEdit::keyPressEvent(e);
+			QPlainTextEdit::keyPressEvent(e);
 			m_history.last() = this->toPlainText();
 			QString last = lastWord(textCursor().selectionStart());
 			if(!last.isEmpty()) {
@@ -228,7 +227,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	}
 	
 	int lineCount=toPlainText().count('\n')+1;
-	this->setFixedHeight(QFontMetrics(this->currentFont()).height()*lineCount+12);
+	this->setFixedHeight(QFontMetrics(currentCharFormat().font()).height()*lineCount+15);
 	setCorrect(m_highlight->isCorrect());
 }
 
@@ -421,7 +420,7 @@ void ExpressionEdit::setCorrect(bool correct)
 
 void ExpressionEdit::focusInEvent ( QFocusEvent * event )
 {
-	QTextEdit::focusInEvent(event);
+	QPlainTextEdit::focusInEvent(event);
 	switch(event->reason()) {
 		case Qt::OtherFocusReason:
 		case Qt::TabFocusReason:

@@ -19,8 +19,7 @@
 #ifndef EXPRESSIONEDIT_H
 #define EXPRESSIONEDIT_H
 
-#include <QTextEdit>
-#include <QKeyEvent>
+#include <QPlainTextEdit>
 #include <QCompleter>
 #include <QLabel>
 #include <QTreeView>
@@ -29,6 +28,7 @@
 
 class Analitza;
 class OperatorsModel;
+class QKeyEvent;
 
 /**
 *	The expression edit widget is the one where we will input our expressions.
@@ -36,7 +36,7 @@ class OperatorsModel;
 *	@author Aleix Pol i Gonzalez <aleixpol@gmail.com>
 */
 
-class ExpressionEdit : public QTextEdit
+class ExpressionEdit : public QPlainTextEdit
 {
 	Q_OBJECT
 	public:
