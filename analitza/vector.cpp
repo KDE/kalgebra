@@ -24,7 +24,7 @@ Vector::Vector(const Vector& v)
 {
 	foreach(const Object* o, v.m_elements)
 	{
-		m_elements.append(Expression::objectCopy(o));
+		m_elements.append(o->copy());
 	}
 }
 
@@ -43,7 +43,7 @@ Object* Vector::copy() const
 // 	m_elements.reserve(v->m_elements.size());
 	foreach(const Object* o, m_elements)
 	{
-		v->m_elements.append(Expression::objectCopy(o));
+		v->m_elements.append(o->copy());
 	}
 	return v;
 }

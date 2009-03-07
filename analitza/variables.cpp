@@ -33,7 +33,7 @@ Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)
 {
 	QHash<QString, Object*>::iterator i;
 	for (i = this->begin(); i != this->end(); ++i)
-		*i = Expression::objectCopy(*i);
+		*i = (*i)->copy();
 }
 
 Variables::~Variables()
@@ -61,7 +61,7 @@ void Variables::modify(const QString& name, const Object* o)
 	if(contains(name))
 		delete value(name);
 	
-	insert(name, Expression::objectCopy(o));
+	insert(name, o->copy());
 }
 
 
@@ -86,7 +86,7 @@ bool Variables::destroy(const QString& s)
 
 void Variables::stack(const QString &name, const Object *o)
 {
-	insertMulti(name, Expression::objectCopy(o));
+	insertMulti(name, o->copy());
 }
 
 void Variables::stack(const QString & name, double n)

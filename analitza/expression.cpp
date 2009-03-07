@@ -66,7 +66,7 @@ Expression::Expression(const Expression & e)
 	d=new ExpressionPrivate(0);
 	d->m_err=e.d->m_err;
 	if(e.isCorrect())
-		d->m_tree = objectCopy(e.d->m_tree);
+		d->m_tree = e.d->m_tree->copy();
 }
 
 Expression::Expression(const QString & exp, bool mathml)
@@ -89,7 +89,7 @@ Expression Expression::operator=(const Expression & e)
 	if(this != &e) {
 		if(d->m_tree)
 			delete d->m_tree;
-		d->m_tree = objectCopy(e.d->m_tree);
+		d->m_tree = e.d->m_tree->copy();
 		d->m_err = e.d->m_err;
 	}
 	return *this;
@@ -313,20 +313,12 @@ Expression Expression::uplimit() const
 Expression Expression::downlimit() const
 {
 	Expression ret;
-	if(d->m_tree->type() == Object::container) {
+	if(d->m_tree->isContainer()) {
 		Container *c= (Container*) d->m_tree;
 		if(!c->m_params.isEmpty())
 			ret=Expression(c->dlimit());
 	}
 	return ret;
-}
-
-Object* Expression::objectCopy(const Object * old)
-{
-	if(!old)
-		return 0;
-	
-	return old->copy();
 }
 
 void Expression::clear()
@@ -345,10 +337,10 @@ bool Expression::isCorrect() const
 QStringList Expression::bvarList() const
 {
 	Container *c = (Container*) d->m_tree;
-	if(c!=0 && c->type()==Object::container) {
+	if(c!=0 && c->isContainer()) {
 		c = (Container*) c->m_params[0];
 		
-		if(c->type()==Object::container)
+		if(c->isContainer())
 			return c->bvarList();
 	}
 	return QStringList();

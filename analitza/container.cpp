@@ -57,21 +57,16 @@ QMap<QString, Container::ContainerType> createNameToType()
 
 QMap<QString, Container::ContainerType> Container::m_nameToType=createNameToType();
 
-Container::Container(const Container& c) : Object(Object::container)
+Container::Container(const Container& c) : Object(Object::container), m_cont_type(c.m_cont_type)
 {
 	Q_ASSERT(c.type()==Object::container);
-	if(c.type()!=Object::container) {
-		return;
-	}
 	
 	m_params = c.copyParams();
 }
 
 Container* Container::copy() const
 {
-	Container *c = new Container(m_cont_type);
-	c->m_params = copyParams();
-	return c;
+	return new Container(*this);
 }
 
 Operator Container::firstOperator() const
@@ -114,7 +109,7 @@ QList<Object*> Container::copyParams() const
 	QList<Object*> ret;
 	
 	for(Container::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
-		ret.append(Expression::objectCopy(*it));
+		ret.append((*it)->copy());
 	}
 	return ret;
 }
@@ -213,6 +208,8 @@ bool Container::equalTree(const Object * o1, const Object * o2)
 			eq = *static_cast<const Vector*>(o1)==*static_cast<const Vector*>(o2);
 			break;
 		case Object::none:
+			eq=false;
+			Q_ASSERT(false && "Should not get here");
 			break;
 	}
 	return eq;
@@ -316,7 +313,7 @@ Object* Container::monomialVar(const Container& c) //FIXME: Must improve these v
 
 void objectWalker(const Object* root, int ind)
 {
-	Container *c; Cn *num; Operator *op; Ci *var;
+	Container *c; Cn *num; Ci *var;
 	QString s;
 	
 	if(ind>100) return;
@@ -332,9 +329,9 @@ void objectWalker(const Object* root, int ind)
 		case Object::container:
 			Q_ASSERT(dynamic_cast<const Container*>(root));
 			c= (Container*) root;
-			qDebug() << qPrintable(s) << "| cont: " << c->tagName() << "=";// << c->toString();
-			for(int i=0; i<c->m_params.count(); i++)
-				objectWalker(c->m_params[i], ind+1);
+			qDebug() << qPrintable(s) << "| cont: " << c->tagName();// << "=" << c->toString();
+			for(Container::const_iterator it=c->m_params.constBegin(); it<c->m_params.constEnd(); ++it)
+				objectWalker(*it, ind+1);
 			
 			break;
 		case Object::value:
@@ -344,8 +341,7 @@ void objectWalker(const Object* root, int ind)
 			break;
 		case Object::oper:
 			Q_ASSERT(dynamic_cast<const Operator*>(root));
-			op= (Operator*) root;
-			qDebug() << qPrintable(s) << "| operator: " << op->toString();
+			qDebug() << qPrintable(s) << "| operator: " << root->toString();
 			break;
 		case Object::variable:
 			Q_ASSERT(dynamic_cast<const Ci*>(root));

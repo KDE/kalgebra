@@ -51,14 +51,10 @@ public:
 		piece,		/**< Describes a container as a %lt;piece&gt; tag */
 		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
 		otherwise, 	/**< Describes a container as a %lt;otherwise&gt; tag */
-		last		/**< points to the last container type */
 	};
 	
 	typedef QList<Object*>::const_iterator const_iterator;
 	typedef QList<Object*>::iterator iterator;
-	
-	/** Constructor. Creates an empty container with no type. */
-	Container() : Object(container), m_cont_type(none) { }
 	
 	/** Construtor. Creates an empty container with @p c type. */
 	Container(enum ContainerType c) : Object(container), m_cont_type(c) { }
@@ -75,7 +71,7 @@ public:
 	void setContainerType(enum ContainerType c) { m_cont_type = c; }
 	
 	/** Returns the type of the container. */
-	enum ContainerType containerType() const { Q_ASSERT(m_type==Object::container && m_cont_type!=none); return m_cont_type; }
+	ContainerType containerType() const { Q_ASSERT(m_type==Object::container && m_cont_type!=none); return m_cont_type; }
 	
 	/** Returns whether @p c is equal or not. */
 	bool operator==(const Container& c) const;
@@ -106,9 +102,6 @@ public:
 	
 	/** Returns a constant iterator pointing to the first value of the container */
 	Container::const_iterator firstValue() const;
-	
-	/** Copies all the params to a new list. */
-	QList<Object*> copyParams() const;
 	
 	/** Returns the container's uplimit. */
 	Object* ulimit() const;
@@ -160,6 +153,9 @@ public:
 // protected:
 	QList<Object*> m_params;
 private:
+	/** Copies all the params to a new list. */
+	QList<Object*> copyParams() const;
+	
 	ContainerType m_cont_type;
 	static char m_typeStr[][10];
 	static QMap<QString, ContainerType> m_nameToType;

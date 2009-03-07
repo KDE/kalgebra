@@ -77,6 +77,9 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns whether @p o is equal to this operator. */
 		bool operator==(OperatorType o) const { return m_optype==o; }
 		
+		/** Returns whether @p o is different to this operator. */
+		bool operator!=(OperatorType o) const { return m_optype!=o; }
+		
 		/** Makes this operator equal to @p a. */
 		Operator operator=(const Operator &a) { m_optype=a.operatorType(); return *this;}
 		

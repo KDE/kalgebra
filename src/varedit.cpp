@@ -79,7 +79,7 @@ void VarEdit::setVar(const QString& newVar)
 	if(!vars)
 		m_exp->setText(i18n("not available"));
 	else {
-		m_exp->setExpression(Expression(Expression::objectCopy(vars->value(newVar))));
+		m_exp->setExpression(Expression(vars->value(newVar)));
 	}
 }
 

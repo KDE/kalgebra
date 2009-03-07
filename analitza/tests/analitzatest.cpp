@@ -584,7 +584,7 @@ void AnalitzaTest::testOperators()
 			apply->appendBranch(new Operator(o));
 			
 			for(; paramCnt>0; paramCnt--)  {
-				apply->appendBranch(Expression::objectCopy(obj));
+				apply->appendBranch(obj->copy());
 			}
 			Expression e(apply);
 			
@@ -603,9 +603,9 @@ void AnalitzaTest::testOperators()
 				
 				QList<Object*> bvarValues=QList<Object*>() << new Ci("x") << new Cn(0.);
 				foreach(Object* obvar, bvarValues) {
-					Container* cc=(Container*) Expression::objectCopy(apply);
+					Container* cc=(Container*) apply->copy();
 					Container* bvar=(Container*) cc->m_params[0];
-					bvar->appendBranch(Expression::objectCopy(obvar));
+					bvar->appendBranch(obvar->copy());
 					
 					Expression e1(cc);
 					a->setExpression(e1);

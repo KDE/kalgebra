@@ -169,11 +169,6 @@ class ANALITZA_EXPORT Expression
 		 */
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
-		/**
-		 *	Copies an object @p o to a new object.
-		 */
-		static Object* objectCopy(const Object * o);
-		
 	private:
 		Object* branch(const QDomElement& elem);
 		
