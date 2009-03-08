@@ -30,8 +30,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2008-08-22</date>
-<releaseinfo>0.8 (&kde; 4.1.2</releaseinfo>
+<date>2009-01-28</date>
+<releaseinfo>0.8 (&kde; 4.2.0</releaseinfo>
 
 <abstract>
 <para>
@@ -131,13 +131,13 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change their values (just a way to trick the log).
 
-Every time you enter an expression, the ans variable's value will be changed to the last result.</para>
+Every time you enter an expression, the "ans" variable's value will be changed to the last result.</para>
 
 <para>Examples:</para>
 <itemizedlist>
 <listitem><para>sin(pi)</para></listitem>
 <listitem><para>k:=33</para></listitem>
-<listitem><para>sum(k*x : x=0..x)</para></listitem>
+<listitem><para>sum(k*x : x=0..10)</para></listitem>
 <listitem><para>f:=p->p*k</para></listitem>
 <listitem><para>f(pi)</para></listitem>
 </itemizedlist>
@@ -213,7 +213,7 @@ as the bounded variables.</para>
 <listitem><para>sin(x)</para></listitem>
 <listitem><para>x²</para></listitem>
 <listitem><para>y->sin(y)</para></listitem>
-<listitem><para>q->3*sin(7q)</para></listitem>
+<listitem><para>q->3*sin(7*q)</para></listitem>
 <listitem><para>q=0..100->q</para></listitem>
 </itemizedlist>
 <para>If you have entered the function click on the <guibutton>OK</guibutton> button to display the graph in the main window.</para>
@@ -227,10 +227,22 @@ you are in List mode. You can set each graph its own color.</para>
 
 <para>The view can be zoomed and moved with the mouse. Using the wheel
 you can zoom in and out. You can also select an area with the left button
-of the mouse and this area will be zoomed in.</para>
+of the mouse and this area will be zoomed in. Move the view with the arrow keys.</para>
 
 <para>In the <guilabel>List</guilabel> tab, you can open a context menu with a &RMB; click on a function and hide or remove it.</para>
 
+<para>In the <guimenu>2D Graph</guimenu> menu you find these options:</para>
+<itemizedlist>
+<listitem><para>Show or hide the grid</para></listitem>
+<listitem><para>Keep the aspect ratio while zooming</para></listitem>
+<listitem><para>Zoom in (<keycombo action="simul">&Ctrl;
+<keycap>+</keycap></keycombo>) and zoom out (<keycombo action="simul">&Ctrl;
+<keycap>-</keycap></keycombo>)</para></listitem>
+<listitem><para>Save (<keycombo action="simul">&Ctrl;
+<keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
+<listitem><para>Reset the view to the original zoom</para></listitem>
+<listitem><para>Select a resolution for the graphs</para></listitem>
+</itemizedlist>
 </sect1>
 
 </chapter>
@@ -239,15 +251,29 @@ of the mouse and this area will be zoomed in.</para>
 <title>3D Graphs</title>
 
 <para>To draw a 3D Graph with &kalgebra; you will have to go to the <guilabel>3D Graph</guilabel> tab
-and you will see an input field at the bottom where you will type your function. For the
-moment &kalgebra; only supports functions that fit f(x,y) that will define the
-Z.</para>
+and you will see an input field at the bottom where you will type your function. Z can not be defined yet, for the
+moment &kalgebra; only supports implicit 3d graphs dependent only on the x and y, such as (x,y)->x*y, where z=x*y.</para>
 
 <para>Examples:</para>
 <itemizedlist>
 <listitem><para>sin(x)*sin(y)</para></listitem>
 <listitem><para>x/y</para></listitem>
 </itemizedlist>
+
+<para>The view can be zoomed and moved with the mouse. Using the wheel
+you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.</para>
+
+<para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view.</para>
+
+<para>In the <guimenu>3D Graph</guimenu> menu you find these options:</para>
+<itemizedlist>
+<listitem><para>Enable or disable transparency</para></listitem>
+<listitem><para>Save (<keycombo action="simul">&Ctrl;
+<keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
+<listitem><para>Reset the view to the original zoom</para></listitem>
+<listitem><para>Draw the graphs with dots, lines or solid</para></listitem>
+</itemizedlist>
+
 
 </chapter>
 
