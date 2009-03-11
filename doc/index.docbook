@@ -91,7 +91,7 @@ know MathML. I have based the syntax basically on common sense, it should not
 be hard for anyone, I’ve looked closely to maxima and maple’s syntax so they look very similar.</para>
 <para>Here is a list of the available operators we have by now:</para>
 <itemizedlist>
-<listitem><para>+ - * / : Add, substract, multiplication and
+<listitem><para>+ - * / : Addition, subtraction, multiplication and
 division.</para> </listitem>
 <listitem><para>^, **: Power, you can use them both. Also it is possible to use
 the unicode ² characters. Powers are one way to make roots too, you can do it
@@ -131,7 +131,7 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 have a list of the declared variables. By double clicking on them you will see a
 dialog that lets you change their values (just a way to trick the log).
 
-Every time you enter an expression, the "ans" variable's value will be changed to the last result.</para>
+Every time you enter an expression, the "ans" variable value will be changed to the last result.</para>
 
 <para>Examples:</para>
 <itemizedlist>
