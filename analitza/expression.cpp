@@ -89,7 +89,8 @@ Expression Expression::operator=(const Expression & e)
 	if(this != &e) {
 		if(d->m_tree)
 			delete d->m_tree;
-		d->m_tree = e.d->m_tree->copy();
+		if(e.d->m_tree)
+			d->m_tree = e.d->m_tree->copy();
 		d->m_err = e.d->m_err;
 	}
 	return *this;
@@ -114,9 +115,8 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 {
 	Q_ASSERT(where && branch);
 	bool correct=true;
-	if(!branch)
-		correct=false;
-	else if(branch->isContainer()) {
+	
+	if(branch->isContainer()) {
 		Container* c1=static_cast<Container*>(branch);
 		if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
 			bool isPiecewise=where->isContainer() && static_cast<Container*>(where)->containerType()==Container::piecewise;
@@ -201,8 +201,11 @@ Object* Expression::branch(const QDomElement& elem)
 			break;}
 		case Object::value:
 			num= new Cn(0.);
-			num->setValue(elem);
-			ret = num;
+			if(!num->setValue(elem)) {
+				delete num;
+				d->m_err<< i18n("Cannot codify the %1 value.", elem.text());
+			} else
+				ret = num;
 			break;
 		case Object::oper:
 			op= new Operator(Operator::toOperatorType(elem.tagName()));

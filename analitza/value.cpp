@@ -68,7 +68,7 @@ QString Cn::visit(ExpressionWriter* e) const
 	return ret;
 }*/
 
-void Cn::setValue(const QDomElement& val)
+bool Cn::setValue(const QDomElement& val)
 {
 // 	this->m_vformat=whatValueFormat(val);
 	bool wrong;
@@ -102,6 +102,7 @@ void Cn::setValue(const QDomElement& val)
 #endif
 		}
 	}
+	return wrong;
 }
 
 Cn Cn::pi() { return Cn(3.1415926535897932384626433); }

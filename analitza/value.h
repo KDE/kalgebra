@@ -52,7 +52,7 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Extracts the number from the @p e Dom element and saves it.
 		 */
-		void setValue(const QDomElement& e);
+		bool setValue(const QDomElement& e);
 		
 		/**
 		 *	Sets the new value of this function
