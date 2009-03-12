@@ -151,18 +151,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 								}
 								cbody = (Container*) body;
 								
-								Container::const_iterator bv = cbody->m_params.constBegin();
-								for(; bv!=cbody->m_params.constEnd(); ++bv) {
-									if((*bv)->isContainer()) {
-										const Container *ibv = (Container*) *bv;
-										if(ibv->containerType()==Container::bvar) {
-											if(ibv->m_params[0]->type()==Object::variable) {
-												const Ci* ivar = (Ci*) ibv->m_params[0];
-												bvars.append(ivar->name());
-											}
-										}
-									}
-								}
+								bvars=cbody->bvarList();
 								
 								QStringList::const_iterator iBvars = bvars.constBegin();
 								int i=0;
@@ -175,16 +164,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						}
 						
 						if(cbody) {
-// 							qDebug() << "before" << cbody->toString();
-							/*Container *r = new Container(cbody);
-							Container::iterator it(r->firstValue());
-							for(; it!=r->m_params.end(); ++it) {
-								Object *o=*it;
-								*it = eval(o, resolve, unscoped);
-								delete o;
-							}*/
 							ret=eval(cbody->m_params.last(), resolve, unscoped);
-// 							qDebug() << "after" << ret->toString() << (*cbody->firstValue())->toString() << op.toString();
 						} else {
 							ret=c->copy();
 						}
@@ -193,13 +173,6 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						for(; iBvars!=bvars.constEnd(); ++iBvars)
 							m_vars->destroy(*iBvars);
 						
-						/*if(op!=Operator::function) {
-							Container *nc = new Container(c);
-							Container::iterator fval = nc->firstValue();
-							delete *fval;
-							*fval=ret;
-							ret = nc;
-						}*/
 					} else {
 						QSet<QString> newUnscoped(unscoped);
 						if(op.isBounded()) {
@@ -1037,7 +1010,8 @@ Object* Analitza::simp(Object* root)
 							}
 						}
 						
-						if(((*it)->type()==Object::value || (*it)->type()==Object::vector) && !hasVars(*it) && (*it)->isZero()) {
+						#warning review condition
+						if(((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
 							d=true;
 						}
 						
@@ -1585,9 +1559,9 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 				if(!firstFound && (*it)->isContainer()) { //We are looking for bvar's
 					Container *cont= (Container*) *it;
 					if(cont->containerType()==Container::bvar
-						&& c->containerType()!=Container::lambda
-						&& !cont->m_params.isEmpty()
-						&& cont->m_params[0]->type()==Object::variable) {
+							&& c->containerType()!=Container::lambda
+							&& !cont->m_params.isEmpty()
+							&& cont->m_params[0]->type()==Object::variable) {
 						Ci* bvar=(Ci*) cont->m_params[0];
 						if(bvar->isCorrect())
 							scope += bvar->name();
@@ -1625,13 +1599,11 @@ Object* Analitza::removeDependencies(Object * o) const
 			QStringList bvars;
 			if(op==Operator::function) {
 				Ci *func= (Ci*) c->m_params[0];
-				Object* body= (Object*) m_vars->value(func->name());
+				Object* body= m_vars->value(func->name());
 				if(body->type()!=Object::container)
 					return body;
 				cbody = (Container*) body;
-			}
-			
-			if(op==Operator::function) {
+				
 				QStringList::const_iterator iBvars(bvars.constBegin());
 				int i=0;
 				for(; iBvars!=bvars.constEnd(); ++iBvars)
@@ -1667,7 +1639,7 @@ Object* Analitza::removeDependencies(Object * o) const
 Expression Analitza::derivative()
 {
 	m_err.clear();
-	/* FIXME: Must support multiple bvars */
+	/* TODO: Must support multiple bvars */
 	Expression exp;
 	if(m_exp.isCorrect()) {
 		QStringList vars = bvarList();

@@ -190,9 +190,9 @@ void AnalitzaTest::testCorrection_data()
 	QTest::addColumn<double>("result");
 	
 	QStringList script;
-// 	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
-// 	script << "fib(6)";
-// 	QTest::newRow("piecewise fibonacci") << script << 8.;
+	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
+	script << "fib(6)";
+	QTest::newRow("piecewise fibonacci") << script << 8.;
 	
 	script.clear();
 	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
@@ -267,6 +267,7 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("wrong sum") << QStringList("sum(x, x:10..0)");
 	QTest::newRow("recursive var") << QStringList("x:=x+1");
 	QTest::newRow("xxx") << QStringList("piecewise {scalarproduct(vector{x, 1/x})}");
+	QTest::newRow("nopiece") << QStringList("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }");
 	
 	QStringList script;
 	script << "a:=b";
