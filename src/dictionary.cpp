@@ -109,7 +109,11 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 	m_descr->setText(description);
 	m_sample->setText(sample);
 	m_example->setText(example);
-	m_formula->setContent(e.toMathMLPresentation());
+	
+	QString error;
+	m_formula->setContent(e.toMathMLPresentation(), &error);
+	if(!error.isEmpty())
+		qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 	
 	m_funcs->clear();
 	if(!example.isEmpty())
