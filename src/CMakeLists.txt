@@ -20,6 +20,8 @@ set(kalgebra_SRCS
 	functionsview.cpp
 	functionimpl.cpp
 	functionsmodel.cpp
+
+	qtmmlwidget/qtmmlwidget.cpp
 )
 
 if(OPENGL_FOUND)
