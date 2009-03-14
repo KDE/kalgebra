@@ -81,6 +81,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 	QString result, newEntry;
 	Expression res;
 	Expression e(op, mathml);
+	
 	a.setExpression(e);
 	if(a.isCorrect()) {
 		if(m_mode==Evaluation) {
@@ -182,7 +183,6 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n");
 	write(m_css);
 	write("</head>\n<body>");
-	write(m_css);
 	foreach(const QString &entry, m_htmlLog) {
 		write("<p class='normal'>"+entry+"</p>");
 	}
