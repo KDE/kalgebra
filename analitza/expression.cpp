@@ -170,16 +170,16 @@ bool Expression::setMathML(const QString & s)
 Object* Expression::branch(const QDomElement& elem)
 {
 	Cn *num; Operator *op;
-	QDomNode n;
 	Object* ret=0;
 	
 	switch(whatType(elem.tagName())) {
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
+			
 			if(t!=Container::none) {
 				Container *c=new Container(t);
 				
-				n = elem.firstChild();
+				QDomNode n = elem.firstChild();
 				while(!n.isNull()) {
 					if(n.isElement()) {
 						Object* ob= branch(n.toElement());
@@ -208,8 +208,12 @@ Object* Expression::branch(const QDomElement& elem)
 				ret = num;
 			break;
 		case Object::oper:
-			op= new Operator(Operator::toOperatorType(elem.tagName()));
-			ret = op;
+			if(elem.hasChildNodes()) {
+				d->m_err << i18n("An the %1 operator can't have child contexts.", elem.tagName());
+			} else {
+				op= new Operator(Operator::toOperatorType(elem.tagName()));
+				ret = op;
+			}
 			break;
 		case Object::variable:
 			{
@@ -220,8 +224,8 @@ Object* Expression::branch(const QDomElement& elem)
 			break;
 		case Object::vector:
 		{
-			Vector* v = new Vector(n.childNodes().count());
-			n = elem.firstChild();
+			Vector* v = new Vector(elem.childNodes().count());
+			QDomNode n = elem.firstChild();
 			while(!n.isNull()) {
 				if(n.isElement()) {
 					Object* ob= branch(n.toElement());
@@ -241,6 +245,7 @@ Object* Expression::branch(const QDomElement& elem)
 			d->m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
 			break;
 	}
+	Q_ASSERT(ret || !d->m_err.isEmpty());
 	return ret;
 }
 

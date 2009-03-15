@@ -159,6 +159,7 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("vector piece") << "vector { 0 ? 0 }" << false;
 	QTest::newRow("wrong assignation") << "2:=3" << false;
 	QTest::newRow("non-condition in piecewise") << "piecewise{ 2, ?3 }" << false;
+	QTest::newRow("not-a-container") << "or{ x }" << false;
 }
 
 void ExpressionTest::testCorrection()
