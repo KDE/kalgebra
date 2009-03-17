@@ -209,7 +209,7 @@ Object* Expression::branch(const QDomElement& elem)
 			break;
 		case Object::oper:
 			if(elem.hasChildNodes()) {
-				d->m_err << i18n("An the %1 operator can't have child contexts.", elem.tagName());
+				d->m_err << i18n("The %1 operator cannot have child contexts.", elem.tagName());
 			} else {
 				op= new Operator(Operator::toOperatorType(elem.tagName()));
 				ret = op;
