@@ -1009,8 +1009,9 @@ Object* Analitza::simp(Object* root)
 // 								qDebug() << "-------- done1";
 							}
 						}
-						
+#ifndef Q_CC_MSVC
 						#warning review condition
+#endif
 						if(((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
 							d=true;
 						}
