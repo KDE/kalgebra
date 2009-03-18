@@ -75,16 +75,30 @@ QString root(const Container* c, MathMLPresentationExpressionWriter* w)
 	return "<msqrt>"+convertElements(c, w).join(QString())+"</msqrt>";
 }
 
+#ifdef Q_CC_MSVC
+const char* plus="+", *mult="*", *equal="=";
+#endif
 const char* lt="&lt;", *gt="&gt;";
 const char* leq="&lt;=", *geq="&gt;=", *neq="&NotEqual;", *implies="=&gt;", *_and="&And;", *_or="&Or;", *_xor="&CirclePlus;";
 MathMLPresentationExpressionWriter::operatorToString
 	MathMLPresentationExpressionWriter::m_operatorToPresentation[] = { 0,
-			joinOp<'+'>, joinOp<'*'>, minus, divide, quotient,
+#ifdef Q_CC_MSVC
+			joinOp<&plus>, joinOp<&mult>,
+#else
+			joinOp<'+'>, joinOp<'*'>,
+#endif
+            minus, divide, quotient,
 			power, root, /*factorial*/0,
 			joinOp<&_and>,joinOp<&_or>,joinOp<&_xor>, 0/*not*/,
 			0,0,0,0,//gcd, lcm, rem, factorof,
 			0,0,//max, min,
-			joinOp<&lt>, joinOp<&gt>, joinOp<'='>, joinOp<&neq>, joinOp<&leq>, joinOp<&geq>, joinOp<&implies>
+			joinOp<&lt>, joinOp<&gt>,
+#ifdef Q_CC_MSVC
+            joinOp<&equal>,
+#else
+            joinOp<'='>,
+#endif
+            joinOp<&neq>, joinOp<&leq>, joinOp<&geq>, joinOp<&implies>
 	};
 
 MathMLPresentationExpressionWriter::MathMLPresentationExpressionWriter(const Object* o)
