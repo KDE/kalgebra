@@ -3156,7 +3156,7 @@ void MmlDocument::_dump(const MmlNode *node, QString &indent) const
 {
     if (node == 0) return;
 
-    qWarning() << indent + node->toStr();
+    //qWarning() << indent + node->toStr();
 
     indent += "  ";
     const MmlNode *child = node->firstChild();
