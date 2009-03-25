@@ -1,4 +1,4 @@
-include_directories(../analitza)
+include_directories(../analitza ${OPENGL_INCLUDE_DIR})
 
 add_subdirectory(tests)
 
