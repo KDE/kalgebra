@@ -45,33 +45,31 @@ public:
 };
 
 Expression::Expression()
-{
-	d=new ExpressionPrivate(0);
-}
+	: d(new ExpressionPrivate(0))
+{}
 
 Expression::Expression(Object * o)
-{
-	d=new ExpressionPrivate(o);
-}
+	: d(new ExpressionPrivate(o))
+{}
 
 Expression::Expression(const Cn & e)
+	: d(new ExpressionPrivate(0))
 {
-	d=new ExpressionPrivate(0);
 	if(e.isCorrect())
 		d->m_tree = new Cn(e);
 }
 
 Expression::Expression(const Expression & e)
+	: d(new ExpressionPrivate(0))
 {
-	d=new ExpressionPrivate(0);
 	d->m_err=e.d->m_err;
 	if(e.isCorrect())
 		d->m_tree = e.d->m_tree->copy();
 }
 
 Expression::Expression(const QString & exp, bool mathml)
+	: d(new ExpressionPrivate(0))
 {
-	d=new ExpressionPrivate(0);
 	if(mathml)
 		setMathML(exp);
 	else
@@ -80,15 +78,14 @@ Expression::Expression(const QString & exp, bool mathml)
 
 Expression::~Expression()
 {
-	if(d && d->m_tree)
-		delete d->m_tree;
+	Q_ASSERT(d);
+	delete d->m_tree;
 }
 
 Expression Expression::operator=(const Expression & e)
 {
 	if(this != &e) {
-		if(d->m_tree)
-			delete d->m_tree;
+		delete d->m_tree;
 		if(e.d->m_tree)
 			d->m_tree = e.d->m_tree->copy();
 		d->m_err = e.d->m_err;
@@ -152,9 +149,7 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 bool Expression::setMathML(const QString & s)
 {
 	d->m_err.clear();
-	
-	if(d->m_tree)
-		delete d->m_tree;
+	delete d->m_tree;
 	
 	QDomDocument doc;
 	
@@ -331,8 +326,7 @@ Expression Expression::downlimit() const
 
 void Expression::clear()
 {
-	if(d->m_tree)
-		delete d->m_tree;
+	delete d->m_tree;
 	d->m_tree=0;
 	d->m_err.clear();
 }
