@@ -142,13 +142,13 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 
 void KAlgebraPlasmoid::simplify()
 {
-	Expression res;
-	a.setExpression(Expression(m_input->text(), false));
+	Expression e(m_input->text(), false);
+	if(e.isCorrect())
+		a.setExpression(e);
 	
 	if(a.isCorrect()) {
 		a.simplify();
-		res=*a.expression();
-		m_output->setText(res.toString());
+		m_output->setText(a.expression()->toString());
 		
 		plasmoidFont(false, correctColor(), true);
 	} else
