@@ -419,7 +419,6 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
 	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
-	QTest::newRow("wrong bvar derivative") << "diff(x:0)";
 	QTest::newRow("product_max") << "product(max(x) : x=1..5)";
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";

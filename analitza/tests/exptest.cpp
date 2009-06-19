@@ -207,7 +207,8 @@ void ExpTest::testCorrection()
 	ExpLexer lex(input);
 	ExpressionParser parser;
 	bool corr=parser.parse(&lex);
-	QCOMPARE(parser.error().isEmpty() && corr, correct);
+	QCOMPARE(corr, correct);
+	QCOMPARE(parser.error().isEmpty(), correct);
 }
 
 #include "exptest.moc"

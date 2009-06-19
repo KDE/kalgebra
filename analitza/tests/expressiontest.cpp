@@ -137,7 +137,8 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("functin definition") << "f:=x->x+1" << true;
 	QTest::newRow("summatory") << "sum(x : x=1..10)" << true;
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }" << true;
-	QTest::newRow("conditional") << "sum(n*x : n=1..10)" << true;
+	QTest::newRow("summatory") << "sum(n*x : n=1..10)" << true;
+	QTest::newRow("incorrect bounds") << "product(x,1:3)" << false;
 	
 	QTest::newRow("addition with missing operand") << "2+" << false;
 	QTest::newRow("function definition") << "f:=n->" << false;

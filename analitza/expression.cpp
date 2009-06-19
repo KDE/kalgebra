@@ -141,6 +141,11 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 			m_err << i18n("We can only declare variables");
 			correct=false;
 		}
+		
+		if(cWhere->containerType()==Container::bvar) {
+			if(branch->type()!=Object::variable)
+				m_err << i18n("We can only have bounded variables");
+		}
 	}
 	Q_ASSERT(correct || !m_err.isEmpty());
 	return correct;
