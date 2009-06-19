@@ -524,9 +524,12 @@ Object* Analitza::calcDeclare(const Container* c)
 	//NOTE: Should not procrastinate the variable resolution... I think :)
 	//m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
 	
-	//I wonder why eval is inside calc...
-	Object* o = eval(c->m_params[1], true, QSet<QString>());
-	o=simp(o);
+	Object* o=0;
+	if(c->m_params[1]->isContainer() && static_cast<Container*>(c->m_params[1])->containerType()==Container::lambda)
+		o = c->m_params[1]->copy();
+	else
+		o = calc(c->m_params[1]);
+	
 	insertVariable(var->name(), o);
 	if(o->type()==Object::vector || o->type()==Object::value)
 		ret=o;

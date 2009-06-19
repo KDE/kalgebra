@@ -218,7 +218,7 @@ void AnalitzaTest::testCorrection_data()
 	script.clear();
 	script << "f:=x->diff(x^2)";
 	script << "f(3)";
-	QTest::newRow("diff function") << script << 6.;
+	QTest::newRow("diff function") << script << 6.;	
 }
 
 void AnalitzaTest::testCorrection()
@@ -254,18 +254,15 @@ void AnalitzaTest::testCorrection()
 void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
-	QTest::newRow("different tag") << QStringList("prp { x, y, z }");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
 	QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
-	QTest::newRow("wrong token") << QStringList("q-<");
-	QTest::newRow("wrong coma") << QStringList("2+2,");
 	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
 	QTest::newRow("wrong sum") << QStringList("sum(x, x:10..0)");
-	QTest::newRow("recursive var") << QStringList("x:=x+1");
+	QTest::newRow("recursive var") << QStringList("ww:=ww+1");
 	QTest::newRow("xxx") << QStringList("piecewise {scalarproduct(vector{x, 1/x})}");
 	QTest::newRow("nopiece") << QStringList("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }");
 	
@@ -273,6 +270,7 @@ void AnalitzaTest::testUncorrection_data()
 	script << "a:=b";
 	script << "b:=a";
 	QTest::newRow("var dependency cycle") << script;
+	
 }
 
 void AnalitzaTest::testUncorrection()
@@ -281,32 +279,33 @@ void AnalitzaTest::testUncorrection()
 	
 	bool correct=false;
 	Analitza b;
-	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
 		
 		if(correct) {
 			b.setExpression(e);
-			res=b.evaluate();
+			Expression res=b.evaluate();
 			correct=b.isCorrect();
-			res=b.calculate();
 		}
-// 		qDebug() << "cycle" << b.isCorrect() << e.toString();
+		if(!correct) break;
+// 		qDebug() << "cycle" << b.isCorrect() << e.toString() << b.errors();
 	}
 	QVERIFY(!correct);
 	
-	double val;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
+		b.setExpression(e);
 		
 		if(correct) {
-			b.setExpression(e);
-			val=b.calculate().value().value();
+			double val=b.calculate().value().value();
+			correct=b.isCorrect();
+// 			qDebug() << "aaaaaaaaagh"  << b.errors() << val << correct;
 		}
+		if(!correct) break;
 	}
-	QVERIFY(!b.isCorrect());
+	QVERIFY(!correct);
 }
 
 void AnalitzaTest::testEvaluate_data()

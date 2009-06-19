@@ -91,6 +91,7 @@ void KAlgebraPlasmoid::addOperation()
 {
 	if ( m_input->text().isEmpty() )
 		return;
+	
 	Expression res;
 	a.setExpression(Expression(m_input->text(), false));
 	if(a.isCorrect()) {
@@ -119,7 +120,6 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 		f.setPointSize(Theme::defaultTheme()->font(Theme::DefaultFont).pointSize());
 		QFontMetrics fm(f);
 		m_output->setMinimumWidth(fm.width(m_output->text()));
-		kDebug() << "tamareeeeeeee" << m_output->text() << fm.width(m_output->text());
 	} else {
 		if(big) {
 			size=(m_output->size().height()*2)/3;
@@ -153,6 +153,8 @@ void KAlgebraPlasmoid::simplify()
 		plasmoidFont(false, correctColor(), true);
 	} else
 		m_output->setText(QString());
+	
+	m_output->setText(QString());
 }
 
 #include "kalgebraplasma.moc"

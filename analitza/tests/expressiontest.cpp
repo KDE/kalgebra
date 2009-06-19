@@ -161,6 +161,7 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("wrong assignation") << "2:=3" << false;
 	QTest::newRow("non-condition in piecewise") << "piecewise{ 2, ?3 }" << false;
 	QTest::newRow("not-a-container") << "or{ x }" << false;
+	QTest::newRow("different tag") << "prp { x, y, z }" << false;
 }
 
 void ExpressionTest::testCorrection()

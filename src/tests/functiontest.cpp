@@ -116,7 +116,8 @@ void FunctionTest::testCorrect_data()
 	QTest::addColumn<bool>("correct");
 	
 	QTest::newRow("empty function") << "" << false;
-	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
+// 	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
+	QTest::newRow("undefined var") << "x:=y" << false;
 }
 
 void FunctionTest::testCorrect()
@@ -135,8 +136,9 @@ void FunctionTest::testCorrect()
 		f3.update_points(QRect(-10, 10, 10, -10), 100);
 	corr=corr && f3.isCorrect();
 	
+// 	qDebug() << f3.errors();
 	QCOMPARE(correct, corr);
-	QCOMPARE(correct, f3.errors().isEmpty());
+	QCOMPARE(correct, f3.isCorrect());
 	
 	if(correct)
 	{

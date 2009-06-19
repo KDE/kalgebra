@@ -197,6 +197,8 @@ void ExpTest::testCorrection_data()
 	QTest::newRow("stack killing") << "k+++k" << false;
 	QTest::newRow("more stack killing") << "k-++k" << false;
 	QTest::newRow("omartinez bug") << "piecewise { gt(x,23)?a }" << true;
+	QTest::newRow("wrong coma") << "2+2," << false;
+	QTest::newRow("wrong token") << "q-<" << false;
 }
 
 void ExpTest::testCorrection()
