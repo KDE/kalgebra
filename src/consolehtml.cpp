@@ -56,6 +56,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
 	m_css +="\t.var { color: #640000; }\n";
 	m_css +="\t.func { color: #008600; }\n";
+	m_css +="\t.result { padding-left: 10%; }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
@@ -96,7 +97,7 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 		
 		a.insertVariable("ans", res);
 		m_script += op; //Script won't have the errors
-		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(e.toHtml()).arg(result);
+		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
 		QString operation=op;
 		operation.replace('%', " % "); //To avoid %1 or %2 constructions
