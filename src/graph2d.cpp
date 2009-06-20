@@ -274,7 +274,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 	valid=true;
 }
 
-void Graph2D::paintEvent( QPaintEvent * ev )
+void Graph2D::paintEvent(QPaintEvent * )
 {
 	if(!valid)
 		pintafunc(&buffer);
@@ -292,7 +292,7 @@ void Graph2D::paintEvent( QPaintEvent * ev )
 		//Draw derivative
 		ccursor.setColor(m_derivativeColor);
 		ccursor.setStyle(Qt::SolidLine);
-		QLineF sl=slope(fromWidget(ultim));
+		QLineF sl=slope(mark);
 		sl.translate(mark);
 		
 		finestra.setPen(ccursor);
@@ -339,18 +339,23 @@ void Graph2D::paintEvent( QPaintEvent * ev )
 // 	qDebug() << "xxx2 " << viewport;
 }
 
-void Graph2D::wheelEvent(QWheelEvent *e){
+void Graph2D::wheelEvent(QWheelEvent *e)
+{
 	int d = e->delta()>0 ? -1 : 1;
-	if(viewport.left()-d < 1 && viewport.top()+d > 1 && viewport.right()+d > 1 && viewport.bottom()-d < 1) {
+	
+	if(d>0 || (viewport.width()+d > 2 && viewport.height()+d < 2)) {
+		QPointF p = fromWidget(e->pos());
 		QRectF nv;
 		nv.setLeft(viewport.left() - d);
 		nv.setTop(viewport.top() + d);
 		nv.setRight(viewport.right() + d);
 		nv.setBottom(viewport.bottom() - d);
+		setViewport(nv, false);
 		
+		QPointF p2 = p-fromWidget(e->pos());
+		nv.translate(p2);		
 		setViewport(nv);
 	}
-	sendStatus(QString("(%1, %2)-(%3, %4)").arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
 }
 
 void Graph2D::mousePressEvent(QMouseEvent *e){
@@ -378,9 +383,23 @@ void Graph2D::mouseReleaseEvent(QMouseEvent *e){
 		const double mindist = fmin(fabs(pd.x()), fabs(pd.y())), rate=7.;
 		const double minrate = fmin(fabs(viewport.width()/rate), fabs(viewport.height()/rate));
 		
-		if(mindist >= minrate) //if selection is not very small
-			setViewport(QRectF(fromWidget(press), QSizeF(pd.x(), pd.y())));
-		else
+		if(mindist >= minrate) { //if selection is not very small
+			QRectF r(fromWidget(press), QSizeF(pd.x(), pd.y()));
+			
+			if(r.top()<r.bottom()) {
+				double aux = r.bottom();
+				r.setBottom(r.top());
+				r.setTop(aux);
+			}
+			
+			if(r.right()<r.left()) {
+				double aux = r.left();
+				r.setLeft(r.right());
+				r.setRight(aux);
+			}
+			
+			setViewport(r);
+		} else
 			sendStatus(i18n("Selected viewport too small"));
 	}
 	mode = None;
@@ -412,24 +431,16 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 	
 	switch(e->key()) {
 		case Qt::Key_Right:
-			userViewport.setLeft(viewport.left() +xstep);
-			userViewport.setRight(viewport.right() +xstep);
-			updateScale();
+			setViewport(userViewport.translated(xstep, 0));
 			break;
 		case Qt::Key_Left:
-			userViewport.setLeft(viewport.left() -xstep);
-			userViewport.setRight(viewport.right() -xstep);
-			updateScale();
+			setViewport(userViewport.translated(-xstep, 0));
 			break;
 		case Qt::Key_Down:
-			userViewport.setTop(viewport.top() -ystep);
-			userViewport.setBottom(viewport.bottom() -ystep);
-			updateScale();
+			setViewport(userViewport.translated(0, -ystep));
 			break;
 		case Qt::Key_Up:
-			userViewport.setTop(viewport.top() +ystep);
-			userViewport.setBottom(viewport.bottom() +ystep);
-			updateScale();
+			setViewport(userViewport.translated(0, ystep));
 			break;
 		case Qt::Key_Minus:
 			zoomOut();
@@ -440,7 +451,6 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 		default:
 			return;
 	}
-	forceRepaint();
 }
 
 QPointF Graph2D::calcImage(const QPointF& ndp)
@@ -469,7 +479,7 @@ QPointF Graph2D::toWidget(const QPointF& p) const
 	return QPointF((left + p.x()) * rang_x,  (top + p.y()) * rang_y);
 }
 
-QPointF Graph2D::fromWidget(const QPointF& p) const
+QPointF Graph2D::fromWidget(const QPoint& p) const
 {
 	double part_negativa_x = -viewport.left();
 	double part_negativa_y = -viewport.top();
@@ -486,31 +496,21 @@ void Graph2D::setResolution(int res)
 	resolucio = res;
 }
 
-void Graph2D::setViewport(const QRectF &vp)
+void Graph2D::setViewport(const QRectF& vp, bool repaint)
 {
 	userViewport = vp;
-	if(userViewport.top()<userViewport.bottom()) {
-		double aux = userViewport.bottom();
-		userViewport.setBottom(userViewport.top());
-		userViewport.setTop(aux);
-	}
-	
-	if(userViewport.right()<userViewport.left()) {
-		double aux = userViewport .left();
-		userViewport.setLeft(userViewport .right());
-		userViewport.setRight(aux);
-	}
+	Q_ASSERT(userViewport.top()>userViewport.bottom());
+	Q_ASSERT(userViewport.right()>userViewport.left());
 	
 	sendStatus(QString("(%1, %2)-(%3, %4)")
 			.arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
-	updateScale();
+	updateScale(repaint);
 }
 
 void Graph2D::resizeEvent(QResizeEvent *)
 {
 	buffer=QPixmap(this->size());
 	updateScale();
-	repaint();
 }
 
 
@@ -547,7 +547,7 @@ bool Graph2D::toImage(const QString &path)
 	return b;
 }
 
-void Graph2D::updateScale()
+void Graph2D::updateScale(bool repaint)
 {
 	viewport=userViewport;
 	rang_x= width()/viewport.width();
@@ -572,9 +572,11 @@ void Graph2D::updateScale()
 // 		Q_ASSERT(userViewport.center() == viewport.center());
 	}
 	
-	if(m_model->rowCount())
-		update(m_model->index(0,0), m_model->index(m_model->rowCount()-1,0));
-	forceRepaint();
+	if(repaint) {
+		if(m_model->rowCount())
+			update(m_model->index(0,0), m_model->index(m_model->rowCount()-1,0));
+		forceRepaint();
+	}
 }
 
 void Graph2D::zoomIn()
@@ -582,7 +584,6 @@ void Graph2D::zoomIn()
 	if(userViewport.height() < -3. && userViewport.width() > 3.){
 		setViewport(QRect(userViewport.left() +1., userViewport.top() -1.,
 					userViewport.width() -2., userViewport.height() +2.));
-		updateScale();
 	}
 }
 
@@ -592,7 +593,6 @@ void Graph2D::zoomOut()
 	//resolucio=(resolucio*viewport.width())/(viewport.width()+2.);
 	setViewport(QRect(userViewport.left() -1., userViewport.top() +1.,
 				userViewport.width() +2., userViewport.height() -2.));
-	updateScale();
 }
 
 void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
@@ -609,6 +609,8 @@ void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 
 void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 {
+	Q_ASSERT(!parent.isValid());
+	
 	for(int i=start; i<=end; i++) {
 		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
@@ -617,6 +619,10 @@ void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 
 void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
 {
+	Q_UNUSED(parent)
+	Q_UNUSED(start)
+	Q_UNUSED(end)
+	
 	valid=false;
 	repaint();
 }
@@ -624,7 +630,7 @@ void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
 void Graph2D::setKeepAspectRatio(bool ar)
 {
 	m_keepRatio=ar;
-	forceRepaint();
+	updateScale();
 }
 
 void Graph2D::setReadOnly(bool ro)

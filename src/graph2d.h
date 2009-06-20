@@ -73,7 +73,7 @@ public:
 	void unselect();
 	
 	/** Sets the graph's viewport to @p v. */
-	void setViewport(const QRectF& v);
+	void setViewport(const QRectF& v, bool repaint=true);
 	
 	/** Sets the desired maximum resolution to @p res. */
 	void setResolution(int res);
@@ -135,7 +135,7 @@ private:
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
 	QPointF toWidget(const QPointF &) const;
-	QPointF fromWidget(const QPointF& p) const;
+	QPointF fromWidget(const QPoint& p) const;
 	QPointF toViewport(const QPoint& mv) const;
 	QPointF calcImage(const QPointF& dp);
 	QLineF slope(const QPointF& dp) const;
@@ -163,7 +163,7 @@ private:
     QRectF userViewport;
 	QRectF defViewport;
 	void pintafunc(QPaintDevice*);
-	void updateScale();
+	void updateScale(bool repaint=true);
 		
 	void sendStatus(const QString& msg) { emit status(msg); }
 	bool m_framed;
