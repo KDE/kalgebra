@@ -42,6 +42,8 @@ KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 {
 	KGlobal::locale()->insertCatalog("kalgebra");
 	setBackgroundHints(TranslucentBackground);
+	
+	setAspectRatioMode(IgnoreAspectRatio);
 }
 
 KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
@@ -52,6 +54,7 @@ void KAlgebraPlasmoid::init()
 	m_input->setFocus();
 	
 	m_output = new Plasma::Label(this);
+	m_output->setMinimumSize(20, 20);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
 	
 	m_layout = new QGraphicsLinearLayout(this);
@@ -59,7 +62,7 @@ void KAlgebraPlasmoid::init()
 	m_layout->addItem(m_output);
 	
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
-	connect(m_input->nativeWidget(), SIGNAL(textChanged ( const QString & )), this, SLOT(simplify()));
+	connect(m_input->nativeWidget(), SIGNAL(textChanged(QString)), this, SLOT(simplify()));
 	
 	updateFactor();
 	resize(300,300);
@@ -69,7 +72,7 @@ void KAlgebraPlasmoid::updateFactor()
 {
 	switch(formFactor()) {
 		case Horizontal:
-			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 			m_layout->setOrientation(Qt::Horizontal);
 			break;
 		default:
@@ -125,7 +128,10 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 			size=(m_output->size().height()*2)/3;
 			f.setPointSize(size);
 			QFontMetrics fm(f);
-			for(; fm.width(m_output->text()) > m_output->nativeWidget()->width(); size--) {
+			
+			int w=m_output->nativeWidget()->width();
+			Q_ASSERT(w>0);
+			for(; fm.width(m_output->text()) > w; size--) {
 				f.setPointSize(size);
 				fm=QFontMetrics(f);
 			}
@@ -146,15 +152,13 @@ void KAlgebraPlasmoid::simplify()
 	if(e.isCorrect())
 		a.setExpression(e);
 	
-	if(a.isCorrect()) {
+	if(e.isCorrect() && a.isCorrect()) {
 		a.simplify();
 		m_output->setText(a.expression()->toString());
 		
 		plasmoidFont(false, correctColor(), true);
 	} else
 		m_output->setText(QString());
-	
-	m_output->setText(QString());
 }
 
 #include "kalgebraplasma.moc"
