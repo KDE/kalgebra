@@ -44,7 +44,7 @@ QString HtmlExpressionWriter::accept(const Vector* vec)
 
 QString HtmlExpressionWriter::accept(const Ci* var)
 {
-	return var->name();
+	return var->toHtml();
 }
 
 QString HtmlExpressionWriter::accept(const Cn* val)

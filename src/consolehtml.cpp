@@ -93,9 +93,10 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 	
 	if(a.isCorrect()) {
 		result = res.toHtml();
+		
 		a.insertVariable("ans", res);
 		m_script += op; //Script won't have the errors
-		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(a.expression()->toHtml()).arg(result);
+		newEntry = QString("%1 <br/><span align='right'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
 		QString operation=op;
 		operation.replace('%', " % "); //To avoid %1 or %2 constructions
