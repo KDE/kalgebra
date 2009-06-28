@@ -299,7 +299,7 @@ void AnalitzaTest::testUncorrection()
 		b.setExpression(e);
 		
 		if(correct) {
-			double val=b.calculate().value().value();
+			/*double val=*/b.calculate().value().value();
 			correct=b.isCorrect();
 // 			qDebug() << "aaaaaaaaagh"  << b.errors() << val << correct;
 		}
@@ -422,6 +422,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
 	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
+	QTest::newRow("unexpected lambda") << "a+a=0..10->2";
 }
 
 void AnalitzaTest::testCrash()
@@ -447,7 +448,6 @@ void AnalitzaTest::testCrash()
 		Expression e4(aux1, true);
 	}
 }
-
 
 void AnalitzaTest::testCompareTrees_data()
 {

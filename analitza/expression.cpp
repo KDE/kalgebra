@@ -86,8 +86,12 @@ Expression Expression::operator=(const Expression & e)
 {
 	if(this != &e) {
 		delete d->m_tree;
+		
 		if(e.d->m_tree)
 			d->m_tree = e.d->m_tree->copy();
+		else
+			d->m_tree=0;
+		
 		d->m_err = e.d->m_err;
 	}
 	return *this;

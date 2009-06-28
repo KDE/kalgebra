@@ -196,7 +196,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			
 			Container *r = c->copy();
 			Object* old=r->m_params.last();
-			r->m_params[1]=eval(r->m_params[1], false, newUnscoped);
+			r->m_params.last()=eval(old, false, newUnscoped);
 			delete old;
 			
 			ret=r;
