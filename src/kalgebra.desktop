@@ -2,6 +2,7 @@
 Name=KAlgebra
 Name[hi]=के-अलजेब्रा
 Name[hne]=के-अलजेब्रा
+Name[mai]=के-अलजेब्रा
 Name[ml]=കെ-ആള്‍ജിബ്ര
 Name[ne]=केडीई बीजगणित
 Name[pa]=ਕੇ-ਐਲਜਬਰਾ
@@ -37,6 +38,7 @@ GenericName[km]=ម៉ាស៊ីន​គិតលេខ​ក្រាហ្�
 GenericName[ko]=그래핑 계산기
 GenericName[lt]=Grafinis skaičiuotuvas
 GenericName[lv]=Grafiskais kalkulators
+GenericName[mai]=ग्राफ गणक
 GenericName[ml]=ഗ്രാഫ് ഗണനി
 GenericName[nb]=Grafikk-kalkulator
 GenericName[nds]=Funkschonenreekner
@@ -85,6 +87,7 @@ Comment[km]=កម្មវិធី​គ្រោង និង​ដោះស�
 Comment[ko]=수식 계산기와 그래핑 도구
 Comment[lt]=Matematinių reiškinių sprendikas ir grafikų braižiklis
 Comment[lv]=Matemātisko izteiksmju risinātājs un attēlotājs
+Comment[mai]=गणित एक्सप्रेशन सुलझाबै बला आओर प्लाटर
 Comment[ml]=ഗണിതസൂത്ര പരിഹാരകനും പ്ലോട്ടറും
 Comment[nb]=Matematisk uttrykksløser og plotter
 Comment[nds]=Löser för mathemaatsche Utdrück un Bagenschriever
