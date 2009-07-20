@@ -137,6 +137,12 @@ bool Expression::ExpressionPrivate::check(Container* c)
 				}
 			}
 			
+			if(op==Operator::function) {
+				if(c->m_params[0]->type()!=Object::variable) {
+					m_err << i18n("The first parameter in a function should be the name");
+					return new Cn(0.);
+				}
+			}
 		}	break;
 	}
 	return ret;
@@ -163,13 +169,19 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 		Container* cWhere=static_cast<Container*>(where);
 		
 		if(cWhere->containerType()==Container::piecewise) {
-			bool isCondition=branch->isContainer() &&
-				(static_cast<Container*>(branch)->containerType()==Container::piece ||
-				static_cast<Container*>(branch)->containerType()==Container::otherwise);
-			if(!isCondition) {
-				m_err << i18nc("there was an element that was not a conditional inside a condition",
-									"%1 is not a proper condition inside the piecewise", branch->toString());
-				correct=false;
+			if(branch->isContainer()) {
+				Container::ContainerType ct=static_cast<Container*>(branch)->containerType();
+				if(ct!=Container::piece && ct!=Container::otherwise) {
+					m_err << i18nc("there was an element that was not a conditional inside a condition",
+										"%1 is not a proper condition inside the piecewise", branch->toString());
+					correct=false;
+				}
+				if(ct==Container::otherwise && cWhere->extractType(Container::otherwise)) {
+					m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
+						"Only one <em>otherwise</em> parameters is enough");
+					correct=false;
+				}
+				
 			}
 		} else if(cWhere->containerType()==Container::declare && cWhere->isEmpty() && branch->type()!=Object::variable) {
 			m_err << i18n("We can only declare variables");

@@ -138,10 +138,6 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						const Container *cbody=0;
 						QStringList bvars;
 						if(op==Operator::function) {
-							if(c->m_params[0]->type()!=Object::variable) {
-								m_err << i18n("The first parameter in a function construction should be the name");
-								return new Cn(0.);
-							}
 							Ci *func= (Ci*) c->m_params[0];
 							if(m_vars->contains(func->name())) { //FIXME: Don't really know if i fixed that properly
 								Object* body= m_vars->value(func->name()); //body is the value
@@ -490,11 +486,8 @@ Object* Analitza::calcPiecewise(const Container* c)
 			delete ret;
 		} else {
 			//it is an otherwise
-			if(otherwise)
-				m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
-					"Too many <em>otherwise</em> parameters");
-			else
-				otherwise=p;
+			Q_ASSERT(!otherwise);
+			otherwise=p;
 		}
 	}
 	if(!r) {
@@ -662,10 +655,8 @@ Object* Analitza::operate(const Container* c)
 						}
 					} else {
 						ret=Operations::reduceUnary(opt, ret, correct);
-						if(KDE_ISUNLIKELY(!correct.isEmpty())) {
+						if(KDE_ISUNLIKELY(!correct.isEmpty()))
 							m_err.append(correct);
-							correct.clear();
-						}
 					}
 				} else {
 					ret = numbers.first();
@@ -692,10 +683,7 @@ Object* Analitza::operate(const Container* c)
 Object* Analitza::boundedOperation(const Container& n, const Operator& t, double initial)
 {
 	QStringList bvars=n.bvarList();
-	if(bvars.isEmpty()) {
-		m_err.append(i18n("No bounding variables for this sum"));
-		return new Cn(0.);
-	}
+	Q_ASSERT(!bvars.isEmpty());
 	
 	Object* ret=new Cn(initial);
 	QString var= bvars.first();
@@ -721,7 +709,7 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, double
 			m_err.append(i18n("The uplimit in the summatory is greater than the downlimit"));
 		}
 	} else {
-		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
+		m_err.append(i18n("Uncorrect uplimit or downlimit."));
 		
 		corr=false;
 	}
