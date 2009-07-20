@@ -31,7 +31,7 @@
 #include "mathmlexpressionwriter.h"
 #include "mathmlpresentationexpressionwriter.h"
 
-void print_dom(const QDomNode& in, int ind);
+static void print_dom(const QDomNode& in, int ind);
 
 class Expression::ExpressionPrivate : public QSharedData
 {
@@ -140,11 +140,18 @@ bool Expression::ExpressionPrivate::check(Container* c)
 			if(op==Operator::function) {
 				if(c->m_params[0]->type()!=Object::variable) {
 					m_err << i18n("The first parameter in a function should be the name");
-					return new Cn(0.);
+					ret=false;
 				}
 			}
+			
 		}	break;
 	}
+	
+	if(c->isEmpty()) {
+		m_err << i18n("Empty container: %1", c->tagName());
+		ret=false;
+	}
+	
 	return ret;
 }
 
@@ -239,6 +246,7 @@ Object* Expression::branch(const QDomElement& elem)
 					}
 					n = n.nextSibling();
 				}
+				
 				if(!d->check(c)) {
 					delete c;
 					return 0;
@@ -447,7 +455,7 @@ bool Expression::isValue() const
 	return d->m_tree && d->m_tree->type()==Object::value;
 }
 
-void print_dom(const QDomNode& in, int ind)
+static void print_dom(const QDomNode& in, int ind)
 {
 	QString a;
 	

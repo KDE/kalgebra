@@ -584,10 +584,7 @@ Object* Analitza::operate(const Container* c)
 	Q_ASSERT(c);
 	Object* ret;
 	
-	if(KDE_ISUNLIKELY(c->isEmpty())) {
-		m_err << i18n("Empty container: %1", c->tagName());
-		return new Cn(0.);
-	}
+	Q_ASSERT(!c->isEmpty());
 	
 	switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Container::math:

@@ -415,7 +415,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("undefined variable") << "x";
 // 	QTest::newRow("too few operators") << "divide(2)";
 // 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
-	QTest::newRow("empty math") << "<math />";
+// 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
