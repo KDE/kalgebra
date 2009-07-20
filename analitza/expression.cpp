@@ -130,6 +130,13 @@ bool Expression::ExpressionPrivate::check(Container* c)
 					m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
 				ret=false;
 			}
+			
+			if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
+				if(!c->ulimit() || !c->dlimit()) {
+					m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarList().join(" "), op.toString());
+				}
+			}
+			
 		}	break;
 	}
 	return ret;

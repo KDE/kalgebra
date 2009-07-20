@@ -689,7 +689,7 @@ Object* Analitza::operate(const Container* c)
 	return ret;
 }
 
-Object* Analitza::sum(const Container& n)
+Object* Analitza::boundedOperation(const Container& n, const Operator& t, double initial)
 {
 	QStringList bvars=n.bvarList();
 	if(bvars.isEmpty()) {
@@ -697,45 +697,53 @@ Object* Analitza::sum(const Container& n)
 		return new Cn(0.);
 	}
 	
-	Object* ret=new Cn(0.);
+	Object* ret=new Cn(initial);
 	QString var= bvars.first();
 	
 	Object* objectUl=n.ulimit();
 	Object* objectDl=n.dlimit();
 	
-	if(!objectDl || !objectUl) {
-		m_err += i18n("Missing bounding limits on a sum operation");
-		return new Cn(0.);
-	}
+	Q_ASSERT(objectDl && objectUl);
 	
 	Object *objul=calc(objectUl);
 	Object *objdl=calc(objectDl);
 	double ul, dl;
 	
-	if(objul->type()==Object::value && objdl->type()==Object::value) {
+	bool corr=isCorrect();
+	if(corr && objul->type()==Object::value && objdl->type()==Object::value) {
 		Cn *u=static_cast<Cn*>(objul);
 		Cn *d=static_cast<Cn*>(objdl);
 		ul=u->value();
 		dl=d->value();
+		
+		if(dl>ul) {
+			corr=false;
+			m_err.append(i18n("The uplimit in the summatory is greater than the downlimit"));
+		}
 	} else {
 		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
+		
+		corr=false;
 	}
 	
-	delete objul;
-	delete objdl;
-	if(!isCorrect())
+	if(!corr)
+	{
+		delete objul;
+		delete objdl;
 		return new Cn(0.);
+	}
 	
 	m_vars->stack(var, 0.);
 	Cn* c = (Cn*) m_vars->value(var);
 	
 	QString correct;
+	Operator::OperatorType type=t.operatorType();
 	for(double a = dl; a<=ul; a++) {
 // 		Q_ASSERT(isCorrect());
 // 		qDebug() << "<>" << dl << ul << m_err;
 		c->setValue(a);
 		Object *val=calc(n.m_params.last());
-		ret=Operations::reduce(Operator::plus, ret, val, correct);
+		ret=Operations::reduce(type, ret, val, correct);
 	}
 	
 	m_vars->destroy(var);
@@ -744,51 +752,12 @@ Object* Analitza::sum(const Container& n)
 
 Object* Analitza::product(const Container& n)
 {
-	QStringList bvars=n.bvarList();
-	if(bvars.isEmpty()) {
-		m_err.append(i18n("No bounding variables for this sum"));
-		return new Cn(0.);
-	}
-	
-	Object* ret=new Cn(1.);
-	QString var= bvars.first();
-	
-	Object* objectUl=n.ulimit();
-	Object* objectDl=n.dlimit();
-	
-	if(!objectDl || !objectUl) {
-		m_err += i18n("Missing bounding limits on a sum operation");
-		return new Cn(0.);
-	}
-	
-	Object *objul=calc(objectUl);
-	Object *objdl=calc(objectDl);
-	double ul, dl;
-	
-	if(objul->type()==Object::value && objdl->type()==Object::value) {
-		Cn *u=static_cast<Cn*>(objul);
-		Cn *d=static_cast<Cn*>(objdl);
-		ul=u->value();
-		dl=d->value();
-		delete u;
-		delete d;
-	} else {
-		m_err.append(i18n("Missing or uncorrect uplimit or downlimit."));
-		return new Cn(0.);
-	}
-	
-	m_vars->stack(var, 0.);
-	Cn* c = (Cn*) m_vars->value(var);
-	
-	QString correct;
-	for(double a = dl; a<=ul; a++) {
-		c->setValue(a);
-		Object *val=calc(n.m_params.last());
-		ret=Operations::reduce(Operator::times, ret, val, correct);
-	}
-	
-	m_vars->destroy(var);
-	return ret;
+	return boundedOperation(n, Operator(Operator::times), 1.);
+}
+
+Object* Analitza::sum(const Container& n)
+{
+	return boundedOperation(n, Operator(Operator::plus), 0.);
 }
 
 Object* Analitza::selector(const Object* index, const Object* vector)
