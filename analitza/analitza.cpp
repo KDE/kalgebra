@@ -614,10 +614,6 @@ Object* Analitza::operate(const Container* c)
 			else if(opt==Operator::product)
 				ret = product(*c);
 			else if(opt==Operator::selector) {
-				if(KDE_ISUNLIKELY(c->m_params.size()!=3)) {
-					m_err += i18n("Wrong parameter count in a selector, should have 2 parameters, the selected index and the container.");
-					return new Cn(0.);
-				}
 				Object *idx=calc(c->m_params[1]), *vect=calc(c->m_params[2]);
 				ret = selector(idx, vect);
 				delete idx; delete vect;
@@ -647,13 +643,7 @@ Object* Analitza::operate(const Container* c)
 					ret = numbers.first();
 				} else if(((op.nparams()<0 && numbers.count()<=1) ||
 							(op.nparams()>-1 && numbers.count()!=op.nparams())) && opt!=Operator::minus) {
-					if(op.nparams()<0)
-						m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());
-					else
-						m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
-					
-					qDeleteAll(numbers);
-					ret = new Cn(0.);
+					Q_ASSERT(false);
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
 					ret = numbers.first();
 					
@@ -690,8 +680,7 @@ Object* Analitza::operate(const Container* c)
 			break;
 		case Container::piece:
 		case Container::otherwise:
-			m_err << i18n("piece or otherwise in the wrong place");
-			ret=0;
+			Q_ASSERT(false && "piece or otherwise in the wrong place");
 			break;
 		case Container::none:
 			break;

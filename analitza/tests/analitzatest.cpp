@@ -254,6 +254,7 @@ void AnalitzaTest::testCorrection()
 void AnalitzaTest::testUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
+	QTest::newRow("wrong count") << QStringList("plus(1)");
 	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
 	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
 	QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
@@ -265,6 +266,7 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("recursive var") << QStringList("ww:=ww+1");
 	QTest::newRow("xxx") << QStringList("piecewise {scalarproduct(vector{x, 1/x})}");
 	QTest::newRow("nopiece") << QStringList("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }");
+	QTest::newRow("wrong piece") << QStringList("plus(piece{2+2}, 1,2,3)");
 	
 	QStringList script;
 	script << "a:=b";
@@ -410,15 +412,15 @@ void AnalitzaTest::testCrash_data()
 	QTest::addColumn<QString>("expression");
 	
 	QTest::newRow("undefined variable") << "x";
-	QTest::newRow("too few operators") << "divide(2)";
-	QTest::newRow("too much operators") << "divide(2,2,2,2)";
+// 	QTest::newRow("too few operators") << "divide(2)";
+// 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
-	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
-	QTest::newRow("product_max") << "product(max(x) : x=1..5)";
+// 	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
+// 	QTest::newRow("product_max") << "product(max(x) : x=1..5)";
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
 	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
@@ -571,13 +573,13 @@ void AnalitzaTest::testOperators()
 											<< new Cn(-.5)
 											<< new Ci("x")
 											<< v; //lets try to make it crash
+	QList<int> params;
+	if(o.nparams()<0)
+		params /*<< 0 << 1 << 2*/ << 3;
+	else
+		params << o.nparams();
+	
 	foreach(Object* obj, values) {
-		QList<int> params;
-		if(o.nparams()<0)
-			params << 0 << 1 << 2 << 3;
-		else
-			params << o.nparams();
-		
 		foreach(int paramCnt, params) {
 			Container* apply=new Container(Container::apply);
 			apply->appendBranch(new Operator(o));
@@ -622,12 +624,6 @@ void AnalitzaTest::testOperators()
 	QList<double> diffValues = QList<double>() << 0. << 0.5 << -0.5 << 1. << -1.;
 	QString bvar="x";
 	foreach(double v, diffValues) {
-		QList<int> params;
-		if(o.nparams()<0)
-			params << 0 << 1 << 2 << 3;
-		else
-			params << o.nparams();
-		
 		foreach(int paramCnt, params) {
 			Container *diffApply=new Container(Container::apply);
 			diffApply->appendBranch(new Operator(Operator::diff));

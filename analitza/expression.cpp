@@ -38,7 +38,8 @@ class Expression::ExpressionPrivate : public QSharedData
 public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
-	bool canAdd(Object* container, Object* branch);
+	bool canAdd(Object* where, Object* branch);
+	bool check(Container* c);
 	
 	Object* m_tree;
 	QStringList m_err;
@@ -110,6 +111,28 @@ bool Expression::setText(const QString & exp)
 		d->m_err << parser.error();
 	
 	return corr;
+}
+
+bool Expression::ExpressionPrivate::check(Container* c)
+{
+	bool ret=true;
+	switch(c->containerType()) {
+		case Container::apply: {
+			Operator op=c->firstOperator();
+			Operator::OperatorType opt=op.operatorType();
+			int cnt=c->countValues();
+			
+			if(((op.nparams()<0 && cnt<=1) || (op.nparams()>-1 && cnt!=op.nparams())) && opt!=Operator::minus)
+			{
+				if(op.nparams()<0)
+					m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());
+				else
+					m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
+				ret=false;
+			}
+		}	break;
+	}
+	return ret;
 }
 
 bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
@@ -197,7 +220,10 @@ Object* Expression::branch(const QDomElement& elem)
 					}
 					n = n.nextSibling();
 				}
-				
+				if(!d->check(c)) {
+					delete c;
+					return 0;
+				}
 				ret = c;
 			} else {
 				d->m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());

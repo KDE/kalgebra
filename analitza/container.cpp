@@ -465,9 +465,8 @@ int Container::countValues() const
 	int count=0;
 	
 	for(; it!=itEnd; ++it)
-	{
 		count++;
-	}
+	
 	return count;
 }
 
