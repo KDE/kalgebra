@@ -138,39 +138,40 @@ void FunctionEdit::colorChange(int)
 	setColor(m_color->color());
 }
 
-void FunctionEdit::edit()	//Let's see if the exp is correct
+///Let's see if the exp is correct
+void FunctionEdit::edit()
 {
-	Analitza a(m_vars);
-	QString funct = m_func->text();
-	QStringList bvl;
-
 	if(m_func->text().isEmpty()) {
 		m_func->setCorrect(true);
 		m_ok->setEnabled(false);
 		m_valid->setText(QString());
+		m_valid->setToolTip(QString());
 		m_validIcon->setPixmap(KIcon("flag-yellow").pixmap(QSize(16,16)));
+		
+		m_funcsModel->clear();
+		m_graph->forceRepaint();
 		return;
 	}
 	
-	a.setExpression(Expression(funct, m_func->isMathML()));
+	Analitza a(m_vars);
+	a.setExpression(m_func->expression());
 	
 	Expression res;
-	bool bvarCorrect=true;
+	QStringList errors;
 	if(a.isCorrect()) {
-		bvl = a.bvarList();
+		QStringList bvl = a.bvarList();
 		QString var = bvl.isEmpty() ? "x" : bvl[0];
 		
 		if(function::supportedBoundedVars().contains(var)) {
 			a.insertVariable(var, Cn(0.));
 		} else {
-			bvarCorrect=false;
+			errors.append(i18nc("Error message", "Unknown bounded variable: %1", bvl.join(", ")));
 		}
 		
 		res=a.calculate();
-	} else
-		a.errors() << i18n("From parser:") << a.expression()->error();
+	}
 	
-	m_correct= bvarCorrect && a.isCorrect() && res.isValue();
+	m_correct= a.isCorrect() && res.isValue();
 	function f;
 	if(m_correct) {
 		f=function(m_name->text(), m_func->expression(), m_vars, m_color->color());
@@ -182,37 +183,36 @@ void FunctionEdit::edit()	//Let's see if the exp is correct
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
-		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>").arg(m_name->text()).arg(a.expression()->toString()));
+		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>")
+			.arg(m_name->text()).arg(a.expression()->toString()));
 		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
 	} else {
-		QStringList errors=a.errors();
+		errors += a.errors();
+		errors += f.errors();
 		if(a.isCorrect() && !res.isValue())
 			errors.append(i18n("We can only draw Real results."));
-		else if(!bvarCorrect)
-			errors.append(i18nc("Error message", "Unknown bounded variable: %1", bvl.join(", ")));
-		errors += f.errors();
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		if(!errors.isEmpty()) {
-			QString errorm=errors.first(), error;
-			QFontMetrics fm(m_valid->font());
-			int textWidth=fm.width(errorm);
-			
-			if(textWidth>m_valid->width()) {
-				for(int i=3; i<errorm.size(); ++i) {
-					QString aux=errorm.mid(0,i)+"...";
-					
-					int textWidth=fm.width(aux);
-					if(textWidth > m_valid->width()) {
-						break;
-					} else
-						error=aux;
-				}
+		Q_ASSERT(!errors.isEmpty());
+		
+		QString errorm=errors.first(), error=errors.first();
+		QFontMetrics fm(m_valid->font());
+		int textWidth=fm.width(errorm);
+		
+		if(textWidth>m_valid->width()) {
+			for(int i=3; i<errorm.size(); ++i) {
+				QString aux=errorm.mid(0,i)+"...";
+				
+				int textWidth=fm.width(aux);
+				if(textWidth > m_valid->width()) {
+					break;
+				} else
+					error=aux;
 			}
-			m_valid->setText(i18n("<b style='color:red'>%1</b>", error));
 		}
+		m_valid->setText(i18n("<b style='color:red'>%1</b>", error));
 		m_valid->setToolTip(errors.join("\n"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
