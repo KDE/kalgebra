@@ -281,7 +281,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				nx->appendBranch(new Operator(Operator::plus));
 				
 				Container::const_iterator it(c->firstValue());
-				for(;it!=c->m_params.end(); ++it) {
+				for(; it!=c->m_params.end(); ++it) {
 					Container *neach = new Container(Container::apply);
 					neach->appendBranch(new Operator(Operator::times));
 					
@@ -289,7 +289,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					for(; iobj!=c->m_params.end(); ++iobj) {
 						Object* o;
 						if(iobj==it)
-							o=derivative(var, o);
+							o=derivative(var, *iobj);
 						else
 							o=(*iobj)->copy();
 						

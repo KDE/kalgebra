@@ -156,6 +156,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("power") << "x^2" << "2*x";
 	QTest::newRow("division") << "1/x" << "(-1)/x^2";
 	QTest::newRow("logarithm") << "ln x" << "1/x";
+	QTest::newRow("times") << "x*y" << "y";
 	QTest::newRow("power derivative and logarithm simplification") << "e^x" << "e^x";
 	QTest::newRow("chain rule") << "sin(x**2)" << "2*x*cos(x^2)";
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
@@ -170,6 +171,7 @@ void AnalitzaTest::testDerivativeSimple()
 	a->setExpression(Expression(expression, false));
 	Expression deriv=a->derivative();
 	QCOMPARE(deriv.toString(), result);
+	QVERIFY(deriv.isCorrect());
 	
 	double val=1.;
 	QList<QPair<QString, double> > vars;
@@ -182,6 +184,14 @@ void AnalitzaTest::testDerivativeSimple()
 	a->variables()->destroy("x");
 	
 	QCOMPARE(QString::number(valCalc), QString::number(valExp.value()));
+	
+	a->setExpression(Expression("diff("+expression+")", false));
+	a->simplify();
+	qDebug() << "ssss" << a->errors();
+	QVERIFY(a->isCorrect());
+	deriv=a->evaluate();
+	QCOMPARE(deriv.toString(), result);
+	QVERIFY(a->isCorrect());
 }
 
 void AnalitzaTest::testCorrection_data()
