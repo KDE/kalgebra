@@ -54,7 +54,7 @@ void OperatorsModelTest::testExamples()
 		QString sample=m.data(sampleIdx).toString();
 		QString example=m.data(exampleIdx).toString();
 		
-// 		qDebug() << "testing: " << name;
+// 		qDebug() << "testing: " << name << example;
 		
 		QVERIFY(!name.isEmpty());
 		QVERIFY(!description.isEmpty());
@@ -63,19 +63,19 @@ void OperatorsModelTest::testExamples()
 		
 		Analitza a;
 		a.setExpression(Expression(example, false));
-		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!a.isCorrect()) qDebug() << example << "1. error" << a.errors();// QVERIFY(a.isCorrect());
 		a.simplify();
-		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!a.isCorrect()) qDebug() << example << "2. error" << a.errors();// QVERIFY(a.isCorrect());
 		a.variables()->modify("x", 0.1);
 		Expression e = a.calculate();
-		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
-		if(!e.isCorrect()) qDebug() << example << "error" << e.error(); // QVERIFY(e.isCorrect());
-		QVERIFY(!a.expression()->toMathMLPresentation().isEmpty());
+		if(!a.isCorrect()) qDebug() << example << "3. error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!e.isCorrect()) qDebug() << example << "4. error" << e.error(); // QVERIFY(e.isCorrect());
+		QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
 		
 		e = a.evaluate();
-		if(!a.isCorrect()) qDebug() << example << "error" << a.errors();// QVERIFY(a.isCorrect());
-		if(!e.isCorrect()) qDebug() << example << "error" << e.error(); // QVERIFY(e.isCorrect());
-		QVERIFY(!a.expression()->toMathMLPresentation().isEmpty());
+		if(!a.isCorrect()) qDebug() << example << "5. error" << a.errors();// QVERIFY(a.isCorrect());
+		if(!e.isCorrect()) qDebug() << example << "6. error" << e.error(); // QVERIFY(e.isCorrect());
+		QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
 	}
 }
 
