@@ -187,7 +187,6 @@ void AnalitzaTest::testDerivativeSimple()
 	
 	a->setExpression(Expression("diff("+expression+")", false));
 	a->simplify();
-	qDebug() << "ssss" << a->errors();
 	QVERIFY(a->isCorrect());
 	deriv=a->evaluate();
 	QCOMPARE(deriv.toString(), result);

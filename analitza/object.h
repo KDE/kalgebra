@@ -60,7 +60,7 @@ public:
 	/** Converts a @p tag to a type. */
 	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
 	
-	/** Returns whether it is a correct object or not */
+	/** Returns some string depending on the visior */
 	virtual QString visit(ExpressionWriter* exp) const =0;
 	
 	/** Returns whether it is a correct object or not */

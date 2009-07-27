@@ -33,7 +33,7 @@ using namespace std;
 Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
 {
 	int residu;
-	double a=oper->value(), b=oper1->value(), c;
+	double a=oper->value(), b=oper1->value();
 	Cn::ValueFormat format=Cn::ValueFormat(oper->format() | oper1->format());
 	
 	switch(op) {
@@ -143,7 +143,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 					ia = ib;
 					ib = residu;
 				}
-				ia=c/ia;
+				ia=ic/ia;
 				a=ia; b=ib;
 			}
 			format=Cn::Integer;
