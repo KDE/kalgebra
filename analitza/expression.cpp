@@ -308,38 +308,27 @@ Object* Expression::branch(const QDomElement& elem)
 
 QString Expression::toHtml() const
 {
-	if(isCorrect()) {
-		HtmlExpressionWriter s(d->m_tree);
-		return s.result();
-	} else
-		return QString();
+	Q_ASSERT(isCorrect());
+	return HtmlExpressionWriter(d->m_tree).result();
 }
 
 QString Expression::toMathMLPresentation() const
 {
-	if(isCorrect()) {
-		MathMLPresentationExpressionWriter s(d->m_tree);
-		return s.result();
-	} else
-		return QString();
+	Q_ASSERT(isCorrect());
+	return MathMLPresentationExpressionWriter(d->m_tree).result();
 }
 
 QString Expression::toMathML() const
 {
-	if(isCorrect()) {
-		MathMLExpressionWriter s(d->m_tree);
-		return s.result();
-	} else
-		return QString();
+	Q_ASSERT(isCorrect());
+	return MathMLExpressionWriter(d->m_tree).result();
 }
 
 QString Expression::toString() const
 {
-	if(isCorrect()) {
-		StringExpressionWriter s(d->m_tree);
-		return s.result();
-	} else
-		return QString();
+	Q_ASSERT(isCorrect());
+	StringExpressionWriter s(d->m_tree);
+	return s.result();
 }
 
 enum Object::ObjectType Expression::whatType(const QString& tag)
@@ -395,7 +384,7 @@ void Expression::clear()
 
 bool Expression::isCorrect() const
 {
-	return d && d->m_tree && d->m_err.isEmpty() && d->m_tree->isCorrect();
+	return d && d->m_tree && d->m_err.isEmpty();
 }
 
 QStringList Expression::bvarList() const
