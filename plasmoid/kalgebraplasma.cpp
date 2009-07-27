@@ -154,7 +154,7 @@ void KAlgebraPlasmoid::simplify()
 	
 	if(e.isCorrect() && a.isCorrect()) {
 		a.simplify();
-		m_output->setText(a.expression()->toString());
+		m_output->setText(a.expression().toString());
 		
 		plasmoidFont(false, correctColor(), true);
 	} else

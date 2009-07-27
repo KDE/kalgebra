@@ -441,7 +441,7 @@ void ExpressionEdit::simplify()
 	a.setExpression(expression());
 	a.simplify();
 	
-	setExpression(*a.expression());
+	setExpression(a.expression());
 	this->selectAll();
 }
 

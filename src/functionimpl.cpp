@@ -83,13 +83,13 @@ bool isSimilar(const double &a, const double &b, const double& diff=0.0001)
 void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 {
 	Q_UNUSED(viewport);
-	Q_ASSERT(func.expression()->isCorrect());
+	Q_ASSERT(func.expression().isCorrect());
 	if(int(max_res)==points.capacity())
 		return;
 	unsigned int resolucio=max_res;
 	
-	const Expression *e = func.expression();
-	Expression ulimitexp = e->uplimit(), dlimitexp=e->downlimit();
+	const Expression& e = func.expression();
+	Expression ulimitexp = e.uplimit(), dlimitexp=e.downlimit();
 	double ulimit, dlimit;
 	
 	if(ulimitexp.isCorrect()) {
@@ -171,7 +171,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	
 	//TODO: Check that the last value is the end of the viewport
 	if(!func.isCorrect()) {
-		qDebug() << "func error." << func.errors() << func.expression()->toString();
+		qDebug() << "func error." << func.errors() << func.expression().toString();
 		return;
 	}
 		
@@ -257,8 +257,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
 	
-	const Expression *e = func.expression();
-	Expression ulimitexp = e->uplimit(), dlimitexp=e->downlimit();
+	const Expression& e = func.expression();
+	Expression ulimitexp = e.uplimit(), dlimitexp=e.downlimit();
 	Cn ulimit, dlimit;
 	if(ulimitexp.isCorrect()) {
 		Analitza u(func.variables());

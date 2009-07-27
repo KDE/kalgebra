@@ -114,13 +114,12 @@ bool ConsoleHtml::loadScript(const QString& path)
 	//FIXME: We have expression-only script support
 	bool correct=false;
 	if(!path.isEmpty()) {
-		QStringList lines;
 		QFile file(path);
 		QString line;
 		if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 			QTextStream stream(&file);
 			correct=true;
-			while (!stream.atEnd()) {
+			while (correct && !stream.atEnd()) {
 				line += stream.readLine(); // line of text excluding '\n'
 				
 				ExpLexer lex(line);

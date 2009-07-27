@@ -173,7 +173,7 @@ QStringList function::supportedBoundedVars()
 
 const Expression& function::expression() const
 {
-	return *analitza()->expression();
+	return analitza()->expression();
 }
 
 

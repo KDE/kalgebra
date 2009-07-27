@@ -184,7 +184,7 @@ void FunctionEdit::edit()
 		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
 		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>")
-			.arg(m_name->text()).arg(a.expression()->toString()));
+			.arg(m_name->text()).arg(a.expression().toString()));
 		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
 	} else {
 		errors += a.errors();
