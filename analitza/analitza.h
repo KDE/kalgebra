@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -33,7 +33,7 @@ class Operator;
 //FIXME: Explain that better and with examples.
 /**
  *	This is the base Math class. Analitza will be the one that will calculate things.
- *	@author Aleix Pol <aleixpol@gmail.com>
+ *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
 class ANALITZA_EXPORT Analitza

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -28,7 +28,7 @@ class ExpressionWriter;
 /**
  *	\internal
  *	The atomic mean of the expression trees. Should never used alone, always inherited.
- *	@author Aleix Pol <aleixpol@gmail.com>
+ *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
 //FIXME: Check for public -> protected on some members

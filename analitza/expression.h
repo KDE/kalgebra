@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -33,7 +33,7 @@ class QDomElement;
  *	This class represents an expression.
  *	Expression let to convert it to string, MathML and make some little queries to it, without calculating anything.
  *
- *	@author Aleix Pol <aleixpol@gmail.com>
+ *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
 class ANALITZA_EXPORT Expression

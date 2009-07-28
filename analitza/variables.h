@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -28,7 +28,7 @@ class Expression;
 
 /**
 *	Stores the variables in a hash map and make them available 
-*	@author Aleix Pol <aleixpol@gmail.com>
+*	@author Aleix Pol <aleixpol@kde.org>  
 */
 
 class ANALITZA_EXPORT Variables : public QHash<QString, Object*>

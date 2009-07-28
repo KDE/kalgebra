@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -33,7 +33,7 @@ class QKeyEvent;
 /**
 *	The expression edit widget is the one where we will input our expressions.
 *	
-*	@author Aleix Pol i Gonzalez <aleixpol@gmail.com>
+*	@author Aleix Pol i Gonzalez <aleixpol@kde.org>  
 */
 
 class ExpressionEdit : public QPlainTextEdit

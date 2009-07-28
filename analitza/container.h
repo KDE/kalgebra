@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@gmail.com>                             *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -31,7 +31,7 @@ void ANALITZA_EXPORT objectWalker(const Object* o, int ind=0);
 /**
  *	This class is the one that will correspond to MathML container.
  *	e.g. apply, mathml, bvar, uplimit...
- *	@author Aleix Pol <aleixpol@gmail.com>
+ *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
 class ANALITZA_EXPORT Container : public Object
