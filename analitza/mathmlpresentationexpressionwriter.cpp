@@ -23,7 +23,10 @@
 #include <QStringList>
 #include "vector.h"
 
-static QStringList convertElements(const Vector* c, MathMLPresentationExpressionWriter* w)
+namespace
+{
+
+QStringList convertElements(const Vector* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList elems;
 	Vector::const_iterator it=c->constBegin(), itEnd=c->constEnd();
@@ -33,7 +36,7 @@ static QStringList convertElements(const Vector* c, MathMLPresentationExpression
 	return elems;
 }
 
-static QStringList convertElements(const Container* c, MathMLPresentationExpressionWriter* w)
+QStringList convertElements(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList elems;
 	Container::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
@@ -50,14 +53,27 @@ static QString joinOp(const Container* c, MathMLPresentationExpressionWriter* w)
 	return convertElements(c, w).join(op);
 }
 
-// template <char C>
-// static QString joinOp(const Container* c, MathMLPresentationExpressionWriter* w)
-// {
-// 	QString op=QString("<mo>%1</mo>").arg(C);
-// 	return convertElements(c, w).join(op);
-// }
+template <const char **C, const char **D>
+static QString infix(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	QString exp=QString("<mo>%1</mo>%2<mo>%3</mo>").arg(*C)
+		.arg(convertElements(c, w).join(QString())).arg(*D);
+	return exp;
+}
 
-static QString minus(const Container* c, MathMLPresentationExpressionWriter* w)
+template <const char **C>
+static QString prefix(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	return QString("<mo>%1</mo>").arg(*C)+convertElements(c, w).join(QString());
+}
+
+template <const char **C>
+static QString postfix(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	return convertElements(c, w).join(QString())+QString("<mo>%1</mo>").arg(*C);
+}
+
+QString minus(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList e=convertElements(c, w);
 	if(e.count()==1)
@@ -66,50 +82,92 @@ static QString minus(const Container* c, MathMLPresentationExpressionWriter* w)
 		return e.join("<mo>-</mo>");
 }
 
-static QString power(const Container* c, MathMLPresentationExpressionWriter* w)
+QString power(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	return "<msup>"+convertElements(c, w).join(QString())+"</msup>";
 }
 
-static QString divide(const Container* c, MathMLPresentationExpressionWriter* w)
+QString divide(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	return "<mfrac><mrow>"+convertElements(c, w).join("</mrow><mrow>")+"</mrow></mfrac>";
 }
 
-static QString quotient(const Container* c, MathMLPresentationExpressionWriter* w)
+QString quotient(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	return divide(c, w);
 }
 
-static QString root(const Container* c, MathMLPresentationExpressionWriter* w)
+QString root(const Container* c, MathMLPresentationExpressionWriter* w)
 {
-	return "<msqrt>"+convertElements(c, w).join(QString())+"</msqrt>";
+	return "<mroot>"+convertElements(c, w).join(QString())+"</mroot>";
 }
 
-static QString diff(const Container* c, MathMLPresentationExpressionWriter* w)
+QString diff(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList bv=c->bvarList();
 	return "<msubsup><mrow><mo>(</mo>"+convertElements(c, w).join(QString())+"<mo>)</mo></mrow>"
 			"<mrow>"+bv.join("<mo>,</mo>")+"</mrow><mo>'</mo></msubsup>";
 }
 
+QString exp(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	return "<msup><mn>&ExponentialE;</mn>"+convertElements(c, w).first()+"</msup>";
+}
+
+QString logE(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	return "<msub><mo>log</mo><mn>&ExponentialE;</mn></msub>"+convertElements(c, w).first();
+}
+
+QString log10(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	return "<msub><mo>log</mo><mn>10</mn></msub>"+convertElements(c, w).first();
+}
+
+QString iterative(Operator::OperatorType t, const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	QString op = t==Operator::sum ? "&Sum;" : "&Prod;";
+	QString ul="<mrow>"+c->ulimit()->toString()+"</mrow>";
+	QString dl="<mrow>"+c->bvarList().join(", ")+"<mo>=</mo>"+c->dlimit()->toString()+"</mrow>";
+	
+	return "<mrow><msubsup><mo>"+op+"</mo>"+dl+ul+"</msubsup>"+convertElements(c, w).join(QString())+"</mrow>";
+}
+
+QString sum(const Container* c, MathMLPresentationExpressionWriter* w)
+{ return iterative(Operator::sum, c, w); }
+
+QString product(const Container* c, MathMLPresentationExpressionWriter* w)
+{ return iterative(Operator::product, c, w); }
+
+QString selector(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	QStringList el=convertElements(c, w);
+	return "<msub>"+el.last()+el.first()+"</msub>";
+}
+
 const char* plus="+", *times="*", *equal="=";
-const char* lt="&lt;", *gt="&gt;";
-const char* leq="&leq;", *geq="&geq;", *neq="&NotEqual;";
-const char* implies="&DoubleRightArrow;", *_and="&And;", *_or="&Or;", *_xor="&CirclePlus;";
+const char* lt="&lt;", *gt="&gt;", *_not="&not;";
+const char* leq="&leq;", *geq="&geq;", *neq="&NotEqual;", *approx="&asymp;";
+const char* implies="&DoubleRightArrow;", *_and="&and;", *_or="&or;", *_xor="&CirclePlus;";
+const char* mabs="|", *factorial="!";
+const char *lfloor="&lfloor;", *rfloor="&rfloor;";
+const char *lceil="&lceil;", *rceil="&rceil;";
+const char *cardinal="#", *scalarproduct="X";
+}
 
 MathMLPresentationExpressionWriter::operatorToString
 	MathMLPresentationExpressionWriter::m_operatorToPresentation[] = { 0,
 			joinOp<&plus>, joinOp<&times>,
 			minus, divide, quotient,
-			power, root, /*factorial*/0,
-			joinOp<&_and>,joinOp<&_or>,joinOp<&_xor>, 0/*not*/,
+			power, root, postfix<&factorial>,
+			joinOp<&_and>,joinOp<&_or>,joinOp<&_xor>, prefix<&_not>,
 			0,0,0,0,//gcd, lcm, rem, factorof,
 			0,0,//max, min,
 			joinOp<&lt>, joinOp<&gt>,
 			joinOp<&equal>,
 			joinOp<&neq>, joinOp<&leq>, joinOp<&geq>, joinOp<&implies>,
-			0,0,0,0,// approx, abs, floor, ceiling,
+			joinOp<&approx>, infix<&mabs, &mabs>, infix<&lfloor, &rfloor>, infix<&lceil, &rceil>,
+			// approx, abs, floor, ceiling,
 			0,0,0,// sin, cos, tan,
 			0,0,0,// sec, csc, cot,
 			0,0,0,// sinh, cosh, tanh,
@@ -118,10 +176,10 @@ MathMLPresentationExpressionWriter::operatorToString
 			0,// arccot,// arccoth,
 			0,0,0,// arccosh, arccsc, arccsch,
 			0,0,0,0,// arcsec, arcsech, arcsinh, arctanh,
-			0,0,0,// exp, ln, log,
+			exp, logE, log10,// exp, ln, log,
 // 			0,0,0,0,// // 			conjugate, arg, real, imaginary,
-			0,0,diff// sum, product, diff,
-			// card, scalarproduct, selector,
+			sum, product, diff,// sum, product, diff,
+			prefix<&cardinal>, joinOp<&scalarproduct>, selector
 			// function
 	};
 
@@ -163,11 +221,11 @@ QString piecewise(const Container* c, MathMLPresentationExpressionWriter* w)
 		if(piece->containerType()==Container::piece) {
 			ret += "<mtr>"
 			"<mtd>"
-				+piece->m_params.last()->visit(w)+
+				+piece->m_params.first()->visit(w)+
 			"</mtd>"
 			"<mtd>"
 				"<mtext>if </mtext>"
-				+piece->m_params.first()->visit(w)+
+				+piece->m_params.last()->visit(w)+
 			"</mtd>"
 			"</mtr>";
 		} else {
@@ -189,38 +247,54 @@ QString piecewise(const Container* c, MathMLPresentationExpressionWriter* w)
 QString MathMLPresentationExpressionWriter::accept(const Container* c)
 {
 	QString ret;
-	Operator op=c->firstOperator();
 // 	objectWalker(c);
 // 	qDebug() << "ttttttttttt" << m_operatorToPresentation << op.operatorType()
 // 			 << m_operatorToPresentation[op.operatorType()] << op.name();
 	
-	if(m_operatorToPresentation[op.operatorType()]!=0) {
-		operatorToString call=m_operatorToPresentation[op.operatorType()];
-		ret = call(c, this);
-	} else if(c->containerType()==Container::math) {
-		ret="<math><mrow>"+convertElements(c, this).join(QString())+"</mrow></math>";
-	} else if(op.operatorType()!=0) {
-		QString bvars;
-		if(!c->bvarList().isEmpty()) {
-			bvars="<mo>:</mo>"+c->bvarList().join("<mo>,</mo>");
-			if(c->bvarList().size()>1)
-				bvars="<mo>(</mo>"+bvars+"<mo>)</mo>";
-			const Object *ul=c->ulimit(), *dl=c->dlimit();
-			if(ul || dl) {
-				bvars += "<mo>=</mo>";
-				if(dl) bvars += dl->visit(this);
-				bvars += "<mo>..</mo>";
-				if(ul) bvars += ul->visit(this);
+	switch(c->containerType()) {
+		case Container::math:
+			ret="<math><mrow>"+convertElements(c, this).join(QString())+"</mrow></math>";
+			break;
+		case Container::apply: {
+			Operator op=c->firstOperator();
+			if(m_operatorToPresentation[op.operatorType()]!=0) {
+				operatorToString call=m_operatorToPresentation[op.operatorType()];
+				ret = call(c, this);
+			} else if(op.operatorType()!=0) {
+				QString bvars;
+				if(!c->bvarList().isEmpty()) {
+					bvars="<mo>:</mo>"+c->bvarList().join("<mo>,</mo>");
+					if(c->bvarList().size()>1)
+						bvars="<mo>(</mo>"+bvars+"<mo>)</mo>";
+					const Object *ul=c->ulimit(), *dl=c->dlimit();
+					if(ul || dl) {
+						bvars += "<mo>=</mo>";
+						if(dl) bvars += dl->visit(this);
+						bvars += "<mo>..</mo>";
+						if(ul) bvars += ul->visit(this);
+					}
+				}
+				
+				ret="<mi>"+op.name()+"</mi>"
+					"<mo>(</mo>"
+					+convertElements(c, this).join("<mo>,</mo> ")
+					+bvars
+					+"<mo>)</mo>";
 			}
-		}
-		
-		ret="<mi>"+op.name()+"</mi>"
-			"<mo>(</mo>"
-			+convertElements(c, this).join("<mo>,</mo> ")
-			+bvars
-			+"<mo>)</mo>";
-	} else if(c->containerType()==Container::piecewise) {
-		ret=piecewise(c, this);
+		}	break;
+		case Container::piecewise:
+			ret=piecewise(c, this);
+			break;
+		case Container::otherwise:
+		case Container::piece:
+		case Container::bvar:
+		case Container::uplimit:
+		case Container::downlimit:
+		case Container::lambda:
+		case Container::declare:
+		case Container::none:
+			Q_ASSERT(false);
+			break;
 	}
 	
 	return ret;
@@ -228,5 +302,5 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 
 QString MathMLPresentationExpressionWriter::accept(const Vector* var)
 {
-	return "<mo>&lt;</mo>"+convertElements(var, this).join("<mo>,</mo>")+"<mo>&gt;</mo>";
+	return "<mrow><mo>&lt;</mo>"+convertElements(var, this).join("<mo>,</mo>")+"<mo>&gt;</mo></mrow>";
 }
