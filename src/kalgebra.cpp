@@ -242,7 +242,8 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	d_filter=new KLineEdit(w);
 	d_filter->setClearButtonShown(true);
 	d_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(filterChanged(const QString&)));
+	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(setFilter(const QString&)));
+	connect(d_filter, SIGNAL(textChanged(const QString&)), this, SLOT(dictionaryFilterChanged(const QString&)));
 	d_list = new QListView(w);
 	d_list->setModel(dic->model());
 	d_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
@@ -485,6 +486,12 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 		if(a.exec()==QDialog::Accepted)
 			b_varsModel->insertVariable(a.name(), Expression(Cn(0)));
 	}
+}
+
+void KAlgebra::dictionaryFilterChanged(const QString& filter)
+{
+	if(d_list->model()->rowCount()==1)
+		d_list->setCurrentIndex(d_list->model()->index(0,0));
 }
 
 #include "kalgebra.moc"

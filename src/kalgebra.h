@@ -102,6 +102,8 @@ class KAlgebra : public KMainWindow
 		void saveGraph();
 		void functools ( int );
 		
+		void dictionaryFilterChanged(const QString& filter);
+		
 		void changeStatusBar ( const QString & );
 		void tabChanged ( int );
 };

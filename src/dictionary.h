@@ -44,7 +44,7 @@ Q_OBJECT
 		
 	public slots:
 		void activated(const QModelIndex& prev, const QModelIndex& );
-		void filterChanged(const QString&);
+		void setFilter(const QString&);
 		
 	private:
 		QLabel *m_name;

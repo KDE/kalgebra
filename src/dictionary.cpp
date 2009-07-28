@@ -74,8 +74,10 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example); 
-	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula); 
+	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula);
+// 	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 	graphLayo->addWidget(descr);
+// 	graphLayo->addWidget(m_formula);
 	graphLayo->addWidget(m_graph);
 	descr->setLayout(descrLayo);
 	
@@ -116,11 +118,10 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 	
 	m_funcs->clear();
-	if(!example.isEmpty())
-		m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0)));
+	m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0)));
 }
 
-void Dictionary::filterChanged(const QString &filter)
+void Dictionary::setFilter(const QString &filter)
 {
 	m_sortProxy->setFilterFixedString(filter);
 }
