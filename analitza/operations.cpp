@@ -133,7 +133,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 		}	break;
 		case Operator::lcm:
 			//code by michael cane aka kiko :)
-			if(KDE_ISUNLIKELY(a==0. || b==0.))
+			if(KDE_ISUNLIKELY(floor(a)==0. || floor(b)==0.))
 				correct=i18n("Cannot calculate the lcm of 0.");
 			else {
 				int ia=floor(a), ib=floor(b);
