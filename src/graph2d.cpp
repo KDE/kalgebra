@@ -38,7 +38,7 @@
 #include "analitza.h"
 #include "functionsmodel.h"
 
-// #define DEBUG_GRAPH
+#define DEBUG_GRAPH
 
 using namespace std;
 
@@ -230,14 +230,25 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
 			
-// 			QLineF deriv=it->derivative(ultim);
-// 			qDebug() << "inf" << deriv.dy()/deriv.dx() << deriv;
-			
-			if(isinf(act.y()) && !isnan(act.y())) qDebug() << "toma ya";
+// 			qDebug() << "xxxxx" << act << ultim << isnan(act.y()) << isnan(ultim.y());
+			if(isinf(act.y()) && !isnan(act.y())) qDebug() << "toma ya" << act << ultim;
 			else if(isinf(act.y()) && isnan(act.y())) qDebug() << "joooooooooooo";
 			
-			if(!isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
-				finestra.drawLine(ultim, act);
+			bool bothinf=(isinf(ultim.y()) && isinf(act.y())) || (isinf(ultim.x()) && isinf(act.x()));
+			if(!bothinf && !isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
+				if(isinf(ultim.y())) {
+					if(act.y()<0) ultim.setY(0);
+					if(act.y()>0) ultim.setY(qpd->height());
+				}
+// 				
+				QPointF act2(act);
+				if(isinf(act2.y())) {
+					if(ultim.y()<0) act2.setY(0);
+					if(ultim.y()>0) act2.setY(qpd->height());
+				}
+				
+// 				qDebug() << "xxxxx" << act2 << ultim << isnan(act2.y()) << isnan(ultim.y());
+				finestra.drawLine(ultim, act2);
 				
 #ifdef DEBUG_GRAPH
 				QPen p(Qt::red);
@@ -604,7 +615,6 @@ void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
 	}
 	valid=false;
-	repaint();
 }
 
 void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
