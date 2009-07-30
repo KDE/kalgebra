@@ -45,7 +45,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_vars = new Variables;
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
-	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	QFormLayout *descrLayo=new QFormLayout;
 	QVBoxLayout *graphLayo=new QVBoxLayout(this);
 	m_name=new QLabel(descr);
@@ -75,7 +75,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example); 
 	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula);
-// 	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+ 	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 	graphLayo->addWidget(descr);
 // 	graphLayo->addWidget(m_formula);
 	graphLayo->addWidget(m_graph);
