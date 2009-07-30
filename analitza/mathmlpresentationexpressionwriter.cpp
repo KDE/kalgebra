@@ -105,7 +105,7 @@ QString root(const Container* c, MathMLPresentationExpressionWriter* w)
 QString diff(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList bv=c->bvarList();
-	return "<msubsup><mrow><mo>(</mo>"+convertElements(c, w).join(QString())+"<mo>)</mo></mrow>"
+	return "<msubsup><mfenced>"+convertElements(c, w).join(QString())+"</mfenced>"
 			"<mrow>"+bv.join("<mo>,</mo>")+"</mrow><mo>'</mo></msubsup>";
 }
 
@@ -263,9 +263,9 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 			} else if(op.operatorType()!=0) {
 				QString bvars;
 				if(!c->bvarList().isEmpty()) {
-					bvars="<mo>:</mo>"+c->bvarList().join("<mo>,</mo>");
+					bvars=c->bvarList().join(QString());
 					if(c->bvarList().size()>1)
-						bvars="<mo>(</mo>"+bvars+"<mo>)</mo>";
+						bvars="<mfenced>"+bvars+"</mfenced>";
 					const Object *ul=c->ulimit(), *dl=c->dlimit();
 					if(ul || dl) {
 						bvars += "<mo>=</mo>";
@@ -273,13 +273,15 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 						bvars += "<mo>..</mo>";
 						if(ul) bvars += ul->visit(this);
 					}
+					bvars="<mo>:</mo>"+bvars;
 				}
 				
 				ret="<mi>"+op.name()+"</mi>"
-					"<mo>(</mo>"
-					+convertElements(c, this).join("<mo>,</mo> ")
+					"<mo> &ApplyFunction; </mo>"
+					"<mfenced>"
+					+convertElements(c, this).join(QString())
 					+bvars
-					+"<mo>)</mo>";
+					+"</mfenced>";
 			}
 		}	break;
 		case Container::piecewise:
