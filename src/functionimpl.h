@@ -60,6 +60,8 @@ struct FunctionX : public FunctionImpl
 	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return XType; }
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
+	
+	static QStringList supportedBVars() { return QStringList("y"); }
 };
 
 struct FunctionY : public FunctionImpl
@@ -71,7 +73,8 @@ struct FunctionY : public FunctionImpl
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	QLineF derivative(const QPointF& p) const;
 	ImplType type() const { return YType; }
-	virtual FunctionImpl* copy() { return new FunctionY(*this); ; }
+	virtual FunctionImpl* copy() { return new FunctionY(*this); }
+	static QStringList supportedBVars() { return QStringList("x"); }
 };
 
 struct FunctionPolar : public FunctionImpl
@@ -88,6 +91,7 @@ struct FunctionPolar : public FunctionImpl
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
 	QRect m_last_viewport;
+	static QStringList supportedBVars() { return QStringList("q"); }
 };
 
 #endif

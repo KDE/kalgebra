@@ -20,6 +20,7 @@ set(kalgebra_SRCS
 	functionsview.cpp
 	functionimpl.cpp
 	functionsmodel.cpp
+	functionfactory.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )

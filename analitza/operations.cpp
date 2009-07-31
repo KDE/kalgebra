@@ -170,10 +170,12 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString
 			a = -a;
 			break;
 		case Operator::factorial: {
-			double b = a;
-			for(a=1.; b>1.; b--) {
-				a*=b;
+			//Use gamma from math.h?
+			uint res=1;
+			for(; a>1.; a--) {
+				res*=floor(a);
 			}
+			a=res;
 			format=Cn::Integer;
 		}	break;
 		case Operator::sin:

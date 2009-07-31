@@ -175,7 +175,9 @@ void FunctionEdit::edit()
 	function f;
 	if(m_correct) {
 		f=function(m_name->text(), m_func->expression(), m_vars, m_color->color());
-		f.update_points(QRect(-10, 10, 10, -10), 100);
+		
+		if(f.isCorrect())
+			f.update_points(QRect(-10, 10, 10, -10), 100);
 	}
 	m_correct=m_correct && f.isCorrect();
 	

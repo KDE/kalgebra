@@ -19,6 +19,7 @@
 #include "functionimpl.h"
 #include "variables.h"
 #include "expression.h"
+#include "functionfactory.h"
 
 #include <KLocale>
 #include <KDebug>
@@ -30,6 +31,10 @@ using std::fabs;
 using std::cos;
 using std::sin;
 using std::sqrt;
+
+REGISTER_FUNCTION(FunctionY)
+REGISTER_FUNCTION(FunctionX)
+REGISTER_FUNCTION(FunctionPolar)
 
 static const double pi=acos(-1.);
 

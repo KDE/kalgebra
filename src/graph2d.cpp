@@ -38,7 +38,7 @@
 #include "analitza.h"
 #include "functionsmodel.h"
 
-#define DEBUG_GRAPH
+// #define DEBUG_GRAPH
 
 using namespace std;
 

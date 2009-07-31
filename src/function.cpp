@@ -22,6 +22,7 @@
 #include "analitza.h"
 #include "expression.h"
 #include "functionimpl.h"
+#include "functionfactory.h"
 
 #include <KLocale>
 #include <cmath>
@@ -37,15 +38,11 @@ function::function(const QString &name, const Expression& newFunc, Variables* v,
 {
 	if(newFunc.isCorrect()) {
 //		objectWalker(newFunc.tree());
-		QString firstBVar=newFunc.isLambda() ? newFunc.bvarList()[0] : "x";
-		if(firstBVar=="x")
-			m_function=new FunctionY(newFunc, v);
-		else if(firstBVar=="y")
-			m_function=new FunctionX(newFunc, v);
-		else if(firstBVar=="q")
-			m_function=new FunctionPolar(newFunc, v);
-		else
+		QStringList bvars=newFunc.isLambda() ? newFunc.bvarList() : QStringList("x");
+		if(!FunctionFactory::self()->contains(bvars))
 			m_err << "Function type not recognized";
+		else
+			m_function=FunctionFactory::self()->item(bvars, newFunc, v);
 	} else {
 		m_err << "The expression is not correct";
 	}
