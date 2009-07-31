@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -27,7 +27,6 @@ class Expression;
 
 struct FunctionImpl
 {
-	enum ImplType { XType, YType, PolarType };
 	explicit FunctionImpl(const Expression& e, Variables* v);
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
@@ -40,7 +39,6 @@ struct FunctionImpl
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 	virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
 	virtual QLineF derivative(const QPointF& p) const=0;
-	virtual ImplType type() const=0;
 	virtual FunctionImpl* copy()=0;
 	
 	QVector<QPointF> points;
@@ -48,50 +46,6 @@ struct FunctionImpl
 	Expression *m_deriv;
 	QStringList m_err;
 	QList<int> m_jumps;
-};
-
-struct FunctionX : public FunctionImpl
-{
-	explicit FunctionX(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
-	FunctionX(const FunctionX &fx) : FunctionImpl(fx) {}
-	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
-	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
-	ImplType type() const { return XType; }
-	virtual FunctionImpl* copy() { return new FunctionX(*this); }
-	
-	static QStringList supportedBVars() { return QStringList("y"); }
-};
-
-struct FunctionY : public FunctionImpl
-{
-	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
-	FunctionY(const FunctionY &fy) : FunctionImpl(fy) {}
-	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
-	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
-	ImplType type() const { return YType; }
-	virtual FunctionImpl* copy() { return new FunctionY(*this); }
-	static QStringList supportedBVars() { return QStringList("x"); }
-};
-
-struct FunctionPolar : public FunctionImpl
-{
-	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
-	FunctionPolar(const FunctionPolar &fp) : FunctionImpl(fp) {}
-	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
-	QPair<QPointF, QString> calc(const QPointF& dp);
-	function::Axe axeType() const { return function::Polar; }
-	QLineF derivative(const QPointF& p) const;
-	ImplType type() const { return PolarType; }
-	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
-	
-	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
-	QRect m_last_viewport;
-	static QStringList supportedBVars() { return QStringList("q"); }
 };
 
 #endif

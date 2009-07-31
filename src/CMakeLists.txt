@@ -21,6 +21,8 @@ set(kalgebra_SRCS
 	functionimpl.cpp
 	functionsmodel.cpp
 	functionfactory.cpp
+	functionpolar.cpp
+	functioncartesian.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )
