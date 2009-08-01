@@ -41,6 +41,9 @@ struct FunctionImpl
 	virtual QLineF derivative(const QPointF& p) const=0;
 	virtual FunctionImpl* copy()=0;
 	
+	double uplimit(double defaultValue) const;
+	double downlimit(double defaultValue) const;
+	
 	QVector<QPointF> points;
 	Analitza func;
 	Expression *m_deriv;

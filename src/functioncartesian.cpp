@@ -56,6 +56,10 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 	}
 }
 
+
+///	If there is a big difference between @p v1 and @p v2 and the sign is different,
+///	@returns true
+
 bool traverse(double v1, double v2)
 {
 // 	if(fabs(v1)>10 || fabs(v2)>10) qDebug() << "lolololo" << fabs(v1) << fabs(v2);
@@ -100,9 +104,10 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 		bool ch=addValue(p);
 		
 		if(!wasempty && ch && (m_jumps.isEmpty() || m_jumps.last()!=points.count())) {
-			if(y.format()!=Cn::Real && points[points.count()-2].y()!=y.value()) {
+			double prevY=points[points.count()-2].y();
+			if(y.format()!=Cn::Real && prevY!=y.value()) {
 				m_jumps.append(points.count()-1);
-			} else if(traverse(points[points.count()-2].y(), y.value())) {
+			} else if(traverse(prevY, y.value())) {
 				m_jumps.append(points.count()-1);
 			}
 		}

@@ -86,3 +86,29 @@ bool FunctionImpl::addValue(const QPointF& p)
 	}
 	return appended;
 }
+
+double calcExp(const Expression& exp, Variables* v, double defaultValue)
+{
+	Expression r;
+	if(exp.isCorrect())
+	{
+		Analitza d(v);
+		d.setExpression(exp);
+		r=d.calculate();
+	}
+	
+	if(r.isCorrect() && r.isValue())
+		return r.value().value();
+	else
+		return defaultValue;
+}
+
+double FunctionImpl::downlimit(double defaultValue) const
+{
+	return calcExp(func.expression().downlimit(), func.variables(), defaultValue);
+}
+
+double FunctionImpl::uplimit(double defaultValue) const
+{
+	return calcExp(func.expression().uplimit(), func.variables(), defaultValue);
+}

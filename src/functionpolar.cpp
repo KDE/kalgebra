@@ -48,43 +48,23 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	Q_ASSERT(func.expression().isCorrect());
 	if(int(max_res)==points.capacity())
 		return;
-	unsigned int resolucio=max_res;
+	unsigned int resolution=max_res;
 	
-	const Expression& e = func.expression();
-	Expression ulimitexp = e.uplimit(), dlimitexp=e.downlimit();
-	double ulimit, dlimit;
-	
-	if(ulimitexp.isCorrect()) {
-		Analitza u(func.variables());
-		u.setExpression(ulimitexp);
-		ulimitexp=u.calculate();
-	}
-	if(ulimitexp.isCorrect() && ulimitexp.isValue())
-		ulimit=ulimitexp.value().value();
-	else
-		ulimit = 2.*pi;
-	
-	if(dlimitexp.isCorrect()) {
-		Analitza d(func.variables());
-		d.setExpression(dlimitexp);
-		dlimitexp=d.calculate();
-	}
-	if(dlimitexp.isCorrect() && dlimitexp.isValue())
-		dlimit=dlimitexp.value().value();
-	else
-		dlimit = 0.;
+	double ulimit=uplimit(2*pi);
+	double dlimit=downlimit(0);
 	
 	if(ulimit<=dlimit) {
 		m_err += i18n("Cannot have downlimit ≥ uplimit");
 		return;
 	}
+	
 	points.clear();
 	points.reserve(max_res);
 	
 	func.variables()->modify("q", 0.);
 	Cn *varth = (Cn*) func.variables()->value("q");
 	
-	double inv_res= double((ulimit-dlimit)/resolucio);
+	double inv_res= double((ulimit-dlimit)/resolution);
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
 		varth->setValue(th);

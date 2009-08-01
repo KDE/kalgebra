@@ -32,6 +32,7 @@
 #include "algebrahighlighter.h"
 #include "variables.h"
 #include "functionsmodel.h"
+#include "functionfactory.h"
 
 FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 		QWidget(parent, f), m_correct(false)
@@ -153,32 +154,15 @@ void FunctionEdit::edit()
 		return;
 	}
 	
-	Analitza a(m_vars);
-	a.setExpression(m_func->expression());
+	function f(m_name->text(), m_func->expression(), m_vars, m_color->color());
+	if(f.isCorrect())
+		f.calc(QPointF());
 	
-	Expression res;
-	QStringList errors;
-	if(a.isCorrect()) {
-		QStringList bvl = a.bvarList();
-		QString var = bvl.isEmpty() ? "x" : bvl[0];
-		
-		if(function::supportedBoundedVars().contains(var)) {
-			a.insertVariable(var, Cn(0.));
-		} else {
-			errors.append(i18nc("Error message", "Unknown bounded variable: %1", bvl.join(", ")));
-		}
-		
-		res=a.calculate();
-	}
+	m_correct=f.isCorrect();
 	
-	m_correct= a.isCorrect() && res.isValue();
-	function f;
-	if(m_correct) {
-		f=function(m_name->text(), m_func->expression(), m_vars, m_color->color());
-		
-		if(f.isCorrect())
-			f.update_points(QRect(-10, 10, 10, -10), 100);
-	}
+	if(m_correct)
+		f.update_points(QRect(-10, 10, 10, -10), 100);
+	
 	m_correct=m_correct && f.isCorrect();
 	
 	if(m_correct) {
@@ -186,13 +170,14 @@ void FunctionEdit::edit()
 		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
 		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>")
-			.arg(m_name->text()).arg(a.expression().toString()));
+			.arg(m_name->text()).arg(f.expression().toString()));
 		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
 	} else {
-		errors += a.errors();
+		QStringList errors;
 		errors += f.errors();
-		if(a.isCorrect() && !res.isValue())
-			errors.append(i18n("We can only draw Real results."));
+		#warning uncomment
+// 		if(a.isCorrect() && !res.isValue())
+// 			errors.append(i18n("We can only draw Real results."));
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();

@@ -23,6 +23,7 @@ set(kalgebra_SRCS
 	functionfactory.cpp
 	functionpolar.cpp
 	functioncartesian.cpp
+	functionparametric.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )

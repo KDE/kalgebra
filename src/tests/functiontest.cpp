@@ -59,7 +59,8 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->tan") << "tan x";
 	QTest::newRow("x->factorof") << "factorof(x,x)";
 	QTest::newRow("x->sum") << "sum(t : t=0..3)";
-	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
+	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
+									"? selector(2, vector{x, 1/x} ) }";
 	QTest::newRow("x->diff") << "diff(x)";
 	QTest::newRow("x->diffx") << "diff(x^2)";
 	QTest::newRow("y->flat") << "y->1";
@@ -69,12 +70,23 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->hard") << "q=1..10->ceiling(q/(2*pi))";
 	QTest::newRow("polar->hard") << "q=2..(4+4)->ceiling(q/(2*pi))";
 	QTest::newRow("polar->strange") << "q->q/q";
+	
+	QTest::newRow("parametric") << "t->vector{t,t**2}";
 }
+
+#include "container.h"
 
 void FunctionTest::testCopy()
 {
 	QFETCH(QString, input);
-	function f("hola", Expression(input, false), m_vars);
+	Expression exp(input, false);
+	if(input.contains("..")) {
+		QVERIFY(exp.uplimit().isCorrect());
+		QVERIFY(exp.downlimit().isCorrect());
+	}
+	
+	function f("hola", exp, m_vars);
+	if(!f.isCorrect()) qDebug() << "xxxxxx" << f.errors();
 	QVERIFY(f.isCorrect());
 	function f2(f);
 	QVERIFY(f2.isCorrect());
@@ -118,22 +130,21 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("empty function") << "" << false;
 // 	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
 	QTest::newRow("undefined var") << "x:=y" << false;
+	QTest::newRow("parametric-novector") << "t->3" << false;
+	QTest::newRow("parametric-wrongvector") << "t->vector{}" << false;
 }
 
 void FunctionTest::testCorrect()
 {
 	QFETCH(QString, input);
 	QFETCH(bool, correct);
-	function f("hola", Expression(input, false), m_vars);
-	bool corr=f.isCorrect();
-	function f2(f);
-	corr = corr || f2.isCorrect();
-	function f3;
-	f3=f2;
+	function f3("hola", Expression(input, false), m_vars);
+	bool corr=f3.isCorrect();
 	
-	corr=corr || f3.isCorrect();
-	if(corr)
+	if(corr) {
+		f3.calc(QPointF(0,0));
 		f3.update_points(QRect(-10, 10, 10, -10), 100);
+	}
 	corr=corr && f3.isCorrect();
 	
 // 	qDebug() << f3.errors();

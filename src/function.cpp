@@ -148,8 +148,10 @@ bool function::isCorrect() const
 QStringList function::errors() const
 {
 	QStringList err(m_err);
-	if(m_function)
+	if(m_function) {
 		err += m_function->m_err;
+		err += m_function->func.errors();
+	}
 	return err;
 }
 
@@ -157,15 +159,6 @@ QString function::toString() const
 {
 	Q_ASSERT(m_function);
 	return m_function->toString();
-}
-
-QStringList function::supportedBoundedVars()
-{
-	QStringList ret;
-	ret.append("x");
-	ret.append("y");
-	ret.append("q");
-	return ret;
 }
 
 const Expression& function::expression() const
