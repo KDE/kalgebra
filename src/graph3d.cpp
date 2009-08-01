@@ -304,7 +304,7 @@ void Calculate3D::run()
 		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
 			y->setValue(j*step-size);
-			punts[i][j] = -a.calculate().value().value();
+			punts[i][j] = -a.calculate().toReal().value();
 		}
 	}
 }
@@ -420,7 +420,7 @@ int Graph3D::load()
 	f3d.variables()->modify("y", 0.);
 	Expression e=f3d.calculate();
 	
-	if(f3d.isCorrect() && e.isValue()) {
+	if(f3d.isCorrect() && e.isReal()) {
 		QTime t;
 		t.restart();
 		sendStatus(i18n("Generating... Please wait"));

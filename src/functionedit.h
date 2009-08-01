@@ -86,9 +86,6 @@ public:
 	/** Sets the selected color for the function.*/
 	void setColor(const QColor &newColor);
 	
-	/** Returns whether there is a correct function. */
-	bool isCorrect() const { return m_correct; }
-	
 	/** Returns whether it is a MathML function. */
 	bool isMathML() const { return m_func->isMathML();}
 	
@@ -127,7 +124,6 @@ private:
 	FunctionsModel *m_funcsModel;
 	Variables* m_vars;
 	
-	bool m_correct;
 	bool m_modmode;
 	
 	void focusInEvent(QFocusEvent*);

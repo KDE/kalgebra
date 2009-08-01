@@ -132,6 +132,9 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("undefined var") << "x:=y" << false;
 	QTest::newRow("parametric-novector") << "t->3" << false;
 	QTest::newRow("parametric-wrongvector") << "t->vector{}" << false;
+	QTest::newRow("wrong-dimension") << "vector{2,3}" << false;
+	QTest::newRow("wrong-dimension-y") << "y->vector{2,3}" << false;
+	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}" << false;
 }
 
 void FunctionTest::testCorrect()
@@ -139,16 +142,13 @@ void FunctionTest::testCorrect()
 	QFETCH(QString, input);
 	QFETCH(bool, correct);
 	function f3("hola", Expression(input, false), m_vars);
-	bool corr=f3.isCorrect();
 	
-	if(corr) {
-		f3.calc(QPointF(0,0));
+	if(f3.isCorrect()) {
 		f3.update_points(QRect(-10, 10, 10, -10), 100);
+		f3.calc(QPointF(1,1));
 	}
-	corr=corr && f3.isCorrect();
 	
-// 	qDebug() << f3.errors();
-	QCOMPARE(correct, corr);
+	qDebug() << f3.errors();
 	QCOMPARE(correct, f3.isCorrect());
 	
 	if(correct)

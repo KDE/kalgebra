@@ -68,7 +68,7 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
 		varth->setValue(th);
-		double r = func.calculate().value().value();
+		double r = func.calculate().toReal().value();
 		
 		addValue(fromPolar(r, th));
 	}
@@ -84,38 +84,22 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
 	
-	const Expression& e = func.expression();
-	Expression ulimitexp = e.uplimit(), dlimitexp=e.downlimit();
-	Cn ulimit, dlimit;
-	if(ulimitexp.isCorrect()) {
-		Analitza u(func.variables());
-		u.setExpression(ulimitexp);
-		ulimitexp=u.calculate();
-	}
-	if(!ulimitexp.isCorrect())
-		ulimit = 2.*pi;
+	double ulimit=uplimit(2*pi);
+	double dlimit=downlimit(0);
 	
-	if(dlimitexp.isCorrect()) {
-		Analitza d(func.variables());
-		d.setExpression(dlimitexp);
-		dlimitexp=d.calculate();
-	}
-	if(!dlimitexp.isCorrect())
-		dlimit = 0.;
-	
-	if(th<dlimit.value()) th=dlimit.value();
-	if(th>ulimit.value()) th=ulimit.value();
+	if(th<dlimit) th=dlimit;
+	if(th>ulimit) th=ulimit;
 	
 	QPointF dist;
 	do {
 		func.variables()->modify("q", th);
-		r = func.calculate().value().value();
+		r = func.calculate().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
 		
 		func.variables()->modify("q", th+2.*pi);
-		r = func.calculate().value().value();
+		r = func.calculate().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d2 = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
@@ -124,8 +108,13 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	} while(d>d2);
 	
 	func.variables()->modify("q", th);
-	r = func.calculate().value().value();
+	Expression res=func.calculate();
+	
+	if(!res.isReal())
+		m_err += i18n("We can only draw Real results.");
+	r = res.toReal().value();
 	dp = fromPolar(r, th);
+	
 	pos = QString("r=%1 th=%2").arg(r,3,'f',2).arg(th,3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }

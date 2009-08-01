@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -35,18 +35,9 @@
 #include "functionfactory.h"
 
 FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
-		QWidget(parent, f), m_correct(false)
+		QWidget(parent, f)
 {
 	this->setWindowTitle(i18n("Add/Edit a function"));
-	/*buttonBox = new QDialogButtonBox(this);
-	buttonBox->setOrientation(Qt::Horizontal);
-	buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok);
-	QObject::connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	QObject::connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));*/
-
-// 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-// 	this->setFixedWidth(400);
-// 	this->setFixedHeight(350);
 	
 	QVBoxLayout *topLayout = new QVBoxLayout(this);
 	topLayout->setMargin(2);
@@ -112,7 +103,6 @@ FunctionEdit::~FunctionEdit()
 	delete m_vars;
 }
 
-
 void FunctionEdit::clear()
 {
 	m_func->setText(QString());
@@ -158,14 +148,10 @@ void FunctionEdit::edit()
 	if(f.isCorrect())
 		f.calc(QPointF());
 	
-	m_correct=f.isCorrect();
-	
-	if(m_correct)
+	if(f.isCorrect())
 		f.update_points(QRect(-10, 10, 10, -10), 100);
 	
-	m_correct=m_correct && f.isCorrect();
-	
-	if(m_correct) {
+	if(f.isCorrect()) {
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(f);
 		m_valid->setToolTip(QString());
@@ -175,9 +161,6 @@ void FunctionEdit::edit()
 	} else {
 		QStringList errors;
 		errors += f.errors();
-		#warning uncomment
-// 		if(a.isCorrect() && !res.isValue())
-// 			errors.append(i18n("We can only draw Real results."));
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
@@ -188,11 +171,12 @@ void FunctionEdit::edit()
 		QFontMetrics fm(m_valid->font());
 		int textWidth=fm.width(errorm);
 		
+		//FIXME: Sometimes it doesn't work
 		if(textWidth>m_valid->width()) {
 			for(int i=3; i<errorm.size(); ++i) {
 				QString aux=errorm.mid(0,i)+"...";
 				
-				int textWidth=fm.width(aux);
+				textWidth=fm.width(aux);
 				if(textWidth > m_valid->width()) {
 					break;
 				} else
@@ -203,13 +187,13 @@ void FunctionEdit::edit()
 		m_valid->setToolTip(errors.join("\n"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
-	m_func->setCorrect(m_correct);
-	m_ok->setEnabled(m_correct);
+	m_func->setCorrect(f.isCorrect());
+	m_ok->setEnabled(f.isCorrect());
 }
 
 void FunctionEdit::ok()
 {
-	if(m_correct)
+	if(m_ok->isEnabled())
 		emit accept();
 }
 
@@ -217,45 +201,5 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 {
 	m_func->setFocus();
 }
-
-#if 0
-//////////////////////////////////////////
-///////////ColorCombo is deprecated.//////
-ColorCombo::ColorCombo(QWidget* parent) : QComboBox(parent)
-{
-	setIconSize(QSize(width()*2, QFontMetrics(font()).height()));
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	
-	setColor(Qt::green);
-	setColor(Qt::black);
-	setColor(Qt::blue);
-	setColor(Qt::red);
-}
-
-void ColorCombo::resizeEvent(QResizeEvent * e)
-{
-	QWidget::resizeEvent(e);
-	QSize s = QSize(width(), QFontMetrics(font()).height()+2);
-// 	setIconSize(s);
-}
-
-void ColorCombo::setColor(const QColor &color)
-{
-	int pos = findData(color.name());
-	if(pos==-1) {
-		QPixmap p(iconSize());
-		p.fill(color);
-		addItem(p, QString(), color.name());
-		setCurrentIndex(count()-1);
-	} else {
-		setCurrentIndex(pos);
-	}
-}
-
-QColor ColorCombo::color() const
-{
-	return QColor(itemData(currentIndex()).toString());
-}
-#endif
 
 #include "functionedit.moc"

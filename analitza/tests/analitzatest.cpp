@@ -80,8 +80,8 @@ void AnalitzaTest::testTrivialCalculate()
 	
 	a->setExpression(e);
 	QVERIFY(a->isCorrect());
-	QCOMPARE(a->evaluate().value().value(), result);
-	QCOMPARE(a->calculate().value().value(), result);
+	QCOMPARE(a->evaluate().toReal().value(), result);
+	QCOMPARE(a->calculate().toReal().value(), result);
 }
 
 void AnalitzaTest::testTrivialEvaluate_data()
@@ -180,7 +180,7 @@ void AnalitzaTest::testDerivativeSimple()
 	double valCalc=a->derivative(vars);
 	a->variables()->modify("x", val);
 	a->setExpression(deriv);
-	Cn valExp(a->calculate().value());
+	Cn valExp(a->calculate().toReal());
 	a->variables()->destroy("x");
 	
 	QCOMPARE(QString::number(valCalc), QString::number(valExp.value()));
@@ -244,7 +244,7 @@ void AnalitzaTest::testCorrection()
 		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
-		val=b.calculate().value().value();
+		val=b.calculate().toReal().value();
 	}
 	QCOMPARE(val, result);
 	
@@ -311,7 +311,7 @@ void AnalitzaTest::testUncorrection()
 		b.setExpression(e);
 		
 		if(correct) {
-			/*double val=*/b.calculate().value().value();
+			/*double val=*/b.calculate().toReal().value();
 			correct=b.isCorrect();
 // 			qDebug() << "aaaaaaaaagh"  << b.errors() << val << correct;
 		}

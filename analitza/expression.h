@@ -154,10 +154,10 @@ class ANALITZA_EXPORT Expression
 		QStringList bvarList() const;
 		
 		/** @returns Value representation of the expression. */
-		Cn value() const;
+		Cn toReal() const;
 		
 		/** @returns true if the expression is a value, false otherwise. */
-		bool isValue() const;
+		bool isReal() const;
 		
 		/**
 		 *	Converts a @p tag to an object type.

@@ -420,12 +420,12 @@ QStringList Expression::bvarList() const
 	return QStringList();
 }
 
-Cn Expression::value() const
+Cn Expression::toReal() const
 {
 	if(KDE_ISLIKELY(d->m_tree && d->m_tree->type()==Object::value))
 		return *static_cast<Cn*>(d->m_tree);
 	else {
-// 		qDebug() << "trying to return an invalid value" << d->m_tree ? d->m_tree->toString() : QString();
+		qDebug() << "trying to return an invalid value";
 		return Cn(0.);
 	}
 }
@@ -460,7 +460,7 @@ void Expression::setTree(Object* o)
 	d->m_tree=o;
 }
 
-bool Expression::isValue() const
+bool Expression::isReal() const
 {
 	return d->m_tree && d->m_tree->type()==Object::value;
 }

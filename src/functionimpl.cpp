@@ -97,8 +97,8 @@ double calcExp(const Expression& exp, Variables* v, double defaultValue)
 		r=d.calculate();
 	}
 	
-	if(r.isCorrect() && r.isValue())
-		return r.value().value();
+	if(r.isCorrect() && r.isReal())
+		return r.toReal().value();
 	else
 		return defaultValue;
 }

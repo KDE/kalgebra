@@ -4,6 +4,7 @@
 #include "variables.h"
 
 #include <KDebug>
+#include <KLocale>
 
 struct FunctionX : public FunctionImpl
 {
@@ -50,7 +51,7 @@ void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
 	double inv_res=double((-b_lim+t_lim)/max_res);
 	for(double y=t_lim; y>b_lim; y-=inv_res) {
 		yval->setValue(y);
-		double x = func.calculate().value().value();
+		double x = func.calculate().toReal().value();
 		
 		addValue(QPointF(x, y));
 	}
@@ -98,7 +99,7 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 	
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
-		Cn y = func.calculate().value();
+		Cn y = func.calculate().toReal();
 		QPointF p(x, y.value());
 		bool wasempty=points.isEmpty();
 		bool ch=addValue(p);
@@ -119,7 +120,9 @@ QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	func.variables()->modify("y", dp.y());
-	dp.setX(func.calculate().value().value());
+	if(!func.calculate().isReal())
+		m_err += i18n("We can only draw Real results.");
+	dp.setX(func.calculate().toReal().value());
 	QString pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
@@ -129,7 +132,10 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	QPointF dp=p;
 	QString pos;
 	func.variables()->modify(QString("x"), dp.x());
-	dp.setY(func.calculate().value().value());
+	if(!func.calculate().isReal())
+		m_err += i18n("We can only draw Real results.");
+	
+	dp.setY(func.calculate().toReal().value());
 	pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
@@ -161,7 +167,7 @@ QLineF FunctionX::derivative(const QPointF& p) const
 		a.variables()->modify("y", p.y());
 		
 		if(a.isCorrect())
-			ret = a.calculate().value().value();
+			ret = a.calculate().toReal().value();
 	
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();
@@ -185,7 +191,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		a.variables()->modify("x", p.x());
 		
 		if(a.isCorrect())
-			ret = a.calculate().value().value();
+			ret = a.calculate().toReal().value();
 		
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();
