@@ -38,8 +38,8 @@ class Expression::ExpressionPrivate : public QSharedData
 public:
 	ExpressionPrivate(Object* t) : m_tree(t) {}
 	
-	bool canAdd(Object* where, Object* branch);
-	bool check(Container* c);
+	bool canAdd(const Object* where, const Object* branch);
+	bool check(const Container* c);
 	
 	Object* m_tree;
 	QStringList m_err;
@@ -113,7 +113,7 @@ bool Expression::setText(const QString & exp)
 	return corr;
 }
 
-bool Expression::ExpressionPrivate::check(Container* c)
+bool Expression::ExpressionPrivate::check(const Container* c)
 {
 	bool ret=true;
 	switch(c->containerType()) {
@@ -155,15 +155,16 @@ bool Expression::ExpressionPrivate::check(Container* c)
 	return ret;
 }
 
-bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
+bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* branch)
 {
 	Q_ASSERT(where && branch);
 	bool correct=true;
 	
 	if(branch->isContainer()) {
-		Container* c1=static_cast<Container*>(branch);
+		const Container* c1=static_cast<const Container*>(branch);
 		if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
-			bool isPiecewise=where->isContainer() && static_cast<Container*>(where)->containerType()==Container::piecewise;
+			bool isPiecewise=where->isContainer()
+				&& static_cast<const Container*>(where)->containerType()==Container::piecewise;
 			if(!isPiecewise) {
 				m_err << i18nc("there was a conditional outside a condition structure",
 								"We can only have conditionals inside piecewise structures.");
@@ -173,16 +174,14 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 	}
 	
 	if(where->isContainer()) {
-		Container* cWhere=static_cast<Container*>(where);
+		const Container* cWhere=static_cast<const Container*>(where);
 		
 		if(cWhere->containerType()==Container::piecewise) {
+			bool isCondition=false;
 			if(branch->isContainer()) {
-				Container::ContainerType ct=static_cast<Container*>(branch)->containerType();
-				if(ct!=Container::piece && ct!=Container::otherwise) {
-					m_err << i18nc("there was an element that was not a conditional inside a condition",
-										"%1 is not a proper condition inside the piecewise", branch->toString());
-					correct=false;
-				}
+				Container::ContainerType ct=static_cast<const Container*>(branch)->containerType();
+				isCondition=ct==Container::piece || ct==Container::otherwise;
+				
 				if(ct==Container::otherwise && cWhere->extractType(Container::otherwise)) {
 					m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
 						"Only one <em>otherwise</em> parameters is enough");
@@ -190,17 +189,27 @@ bool Expression::ExpressionPrivate::canAdd(Object* where, Object* branch)
 				}
 				
 			}
+			
+			if(!isCondition) {
+				m_err << i18nc("there was an element that was not a conditional inside a condition",
+									"%1 is not a proper condition inside the piecewise", branch->toString());
+				correct=false;
+			}
+			
 		} else if(cWhere->containerType()==Container::declare && cWhere->isEmpty() && branch->type()!=Object::variable) {
 			m_err << i18n("We can only declare variables");
 			correct=false;
 		}
 		
 		if(cWhere->containerType()==Container::bvar) {
-			if(branch->type()!=Object::variable)
+			if(branch->type()!=Object::variable) {
 				m_err << i18n("We can only have bounded variables");
+				correct=false;
+			}
 		}
 	}
 	Q_ASSERT(correct || !m_err.isEmpty());
+	
 	return correct;
 }
 
@@ -356,11 +365,17 @@ bool Expression::operator==(const Expression & e) const
 Expression Expression::uplimit() const
 {
 	Expression ret;
-	if(d->m_tree->type() == Object::container) {
-		Container *c= (Container*) d->m_tree;
-		if(!c->m_params.isEmpty())
-			ret=Expression(c->ulimit());
+	if(d->m_tree->isContainer()) {
+		Container *c=static_cast<Container*>(d->m_tree);
+		
+		Container::const_iterator value=c->firstValue();
+		if((*value)->isContainer()) {
+			Object* limit=static_cast<Container*>(*value)->ulimit();
+			if(limit)
+				ret=Expression(limit->copy());
+		}
 	}
+	
 	return ret;
 }
 
@@ -368,10 +383,16 @@ Expression Expression::downlimit() const
 {
 	Expression ret;
 	if(d->m_tree->isContainer()) {
-		Container *c= (Container*) d->m_tree;
-		if(!c->m_params.isEmpty())
-			ret=Expression(c->dlimit());
+		Container *c=static_cast<Container*>(d->m_tree);
+		
+		Container::const_iterator value=c->firstValue();
+		if((*value)->isContainer()) {
+			Object* limit=static_cast<Container*>(*value)->dlimit();
+			if(limit)
+				ret=Expression(limit->copy());
+		}
 	}
+	
 	return ret;
 }
 

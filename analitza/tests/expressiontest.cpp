@@ -45,7 +45,7 @@ void ExpressionTest::cleanupTestCase()
 	delete e;
 }
 
-QString removeTags(const QString& in)
+static QString removeTags(const QString& in)
 {
 	bool tag=false;
 	QString out;
