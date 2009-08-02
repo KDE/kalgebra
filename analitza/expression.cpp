@@ -366,11 +366,11 @@ Expression Expression::uplimit() const
 {
 	Expression ret;
 	if(d->m_tree->isContainer()) {
-		Container *c=static_cast<Container*>(d->m_tree);
+		const Container *c=static_cast<const Container*>(d->m_tree);
 		
-		Container::iterator value=c->firstValue();
+		Container::const_iterator value=c->firstValue();
 		if((*value)->isContainer()) {
-			Object* limit=static_cast<Container*>(*value)->ulimit();
+			const Object* limit=static_cast<const Container*>(*value)->ulimit();
 			if(limit)
 				ret=Expression(limit->copy());
 		}
@@ -383,11 +383,11 @@ Expression Expression::downlimit() const
 {
 	Expression ret;
 	if(d->m_tree->isContainer()) {
-		Container *c=static_cast<Container*>(d->m_tree);
+		const Container *c=static_cast<const Container*>(d->m_tree);
 		
-		Container::iterator value=c->firstValue();
+		Container::const_iterator value=c->firstValue();
 		if((*value)->isContainer()) {
-			Object* limit=static_cast<Container*>(*value)->dlimit();
+			const Object* limit=static_cast<const Container*>(*value)->dlimit();
 			if(limit)
 				ret=Expression(limit->copy());
 		}
