@@ -46,6 +46,7 @@ struct FunctionImpl
 	virtual void updatePoints(const QRect& viewport)=0;
 	virtual QLineF derivative(const QPointF& p) const=0;
 	virtual FunctionImpl* copy()=0;
+	virtual QStringList boundings() const=0;
 	
 	double uplimit(double defaultValue) const;
 	double downlimit(double defaultValue) const;

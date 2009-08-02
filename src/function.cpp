@@ -85,7 +85,7 @@ void function::update_points(const QRect& viewport)
 	Q_ASSERT(resolution()>2);
 	
 	m_function->updatePoints(viewport);
-	
+	cleanupBoundings();
 	Q_ASSERT(m_function->points.size()>=2);
 }
 
@@ -113,13 +113,8 @@ bool function::isShown() const
 QLineF function::derivative(const QPointF & p) const
 {
 	Q_ASSERT(m_function);
-	return m_function->derivative(p);
-}
-
-Analitza * function::analitza() const
-{
-	Q_ASSERT(m_function);
-	return &m_function->func;
+	QLineF ret=m_function->derivative(p);
+	return ret;
 }
 
 const QVector<QPointF>& function::points() const
@@ -132,7 +127,9 @@ const QVector<QPointF>& function::points() const
 QPair< QPointF, QString > function::calc(const QPointF & dp)
 {
 	Q_ASSERT(m_function);
-	return m_function->calc(dp);
+	QPair< QPointF, QString > ret=m_function->calc(dp);
+	cleanupBoundings();
+	return ret;
 }
 
 bool function::isCorrect() const
@@ -158,10 +155,16 @@ QString function::toString() const
 
 const Expression& function::expression() const
 {
-	return analitza()->expression();
+	return m_function->func.expression();
 }
 
 QList<int> function::jumps() const
 {
 	return m_function->m_jumps;
+}
+
+void function::cleanupBoundings()
+{
+	foreach(const QString& var, m_function->boundings())
+		m_function->func.variables()->destroy(var);
 }

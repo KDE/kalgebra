@@ -23,6 +23,10 @@
 
 #include <KLocale>
 
+using std::acos;
+using std::atan;
+using std::sqrt;
+
 struct FunctionPolar : public FunctionImpl
 {
 	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
@@ -36,6 +40,7 @@ struct FunctionPolar : public FunctionImpl
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
 	QRect m_last_viewport;
+	QStringList boundings() const { return supportedBVars(); }
 	static QStringList supportedBVars() { return QStringList("q"); }
 };
 
@@ -105,6 +110,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 		
 		th += 2.*pi;
 	} while(d>d2);
+	th -= 2.*pi;
 	
 	func.variables()->modify("q", th);
 	Expression res=func.calculate();

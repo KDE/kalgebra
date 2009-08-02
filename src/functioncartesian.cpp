@@ -36,7 +36,7 @@ struct FunctionY : public FunctionImpl
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
 	
-	virtual QString bounding() const { return "x";}
+	QStringList boundings() const { return supportedBVars(); }
 	
 	void calculateValues(double, double);
 };
@@ -53,7 +53,7 @@ struct FunctionX : public FunctionY
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("y"); }
-	virtual QString bounding() const { return "y";}
+	QStringList boundings() const { return supportedBVars(); }
 };
 
 REGISTER_FUNCTION(FunctionY)
@@ -97,8 +97,8 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 	
 	double step= double((-l_lim+r_lim)/resolution());
 	
-	func.variables()->modify(bounding(), 0.);
-	Cn *vx = (Cn*) func.variables()->value(bounding());
+	func.variables()->modify(boundings().first(), 0.);
+	Cn *vx = (Cn*) func.variables()->value(boundings().first());
 	
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
@@ -135,7 +135,7 @@ void FunctionY::updatePoints(const QRect& viewport)
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	func.variables()->modify(bounding(), dp.y());
+	func.variables()->modify(boundings().first(), dp.y());
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
 	
@@ -148,7 +148,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	QString pos;
-	func.variables()->modify(QString(bounding()), dp.x());
+	func.variables()->modify(boundings().first(), dp.x());
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
 	
@@ -164,7 +164,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 	
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
-		a.variables()->modify(bounding(), p.x());
+		a.variables()->modify(boundings().first(), p.x());
 		
 		if(a.isCorrect())
 			ret = a.calculate().toReal().value();
@@ -175,7 +175,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		}
 	} else {
 		QList<QPair<QString, double> > vars;
-		vars.append(QPair<QString, double>(bounding(), p.x()));
+		vars.append(QPair<QString, double>(boundings().first(), p.x()));
 		a.setExpression(func.expression());
 		ret=a.derivative(vars);
 	}

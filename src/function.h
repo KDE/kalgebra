@@ -91,18 +91,12 @@ class function
 		/** Copies a function */
 		function operator=(const function& f);
 		
-		/** Retrieves the function evaluator. */
-		Analitza* analitza() const;
-		
 		/** Returns the type of axe that the function has. */
 		Axe axeType() const;
 		
 		/** Returns the slope of the current function in the point @p p. */
 		QLineF derivative(const QPointF& p) const;
 		
-		/** Returns the bounded variables of the function. */
-		QStringList bvars() const;
-	
 		/** Retrieves the calculated points of the function. */
 		const QVector<QPointF>& points() const;
 		
@@ -120,6 +114,8 @@ class function
 		QList<int> jumps() const;
 		
 	private:
+		void cleanupBoundings();
+		
 		FunctionImpl* m_function;
 		bool m_show;
 		QColor m_color;

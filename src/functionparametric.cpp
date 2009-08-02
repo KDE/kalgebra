@@ -19,6 +19,7 @@ struct FunctionParametric : public FunctionImpl
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
+	QStringList boundings() const { return supportedBVars(); }
 };
 REGISTER_FUNCTION(FunctionParametric)
 
