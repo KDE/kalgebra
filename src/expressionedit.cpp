@@ -197,6 +197,9 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				tc.setPosition(m_ans.length());
 				this->setTextCursor(tc);
 			}
+		case Qt::Key_Alt:
+			QPlainTextEdit::keyPressEvent(e);
+			break;
 		default:
 			QPlainTextEdit::keyPressEvent(e);
 			m_history.last() = this->toPlainText();
