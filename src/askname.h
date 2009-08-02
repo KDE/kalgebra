@@ -24,6 +24,7 @@
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QRegExpValidator>
 
 class AskName : public QDialog
 {
@@ -31,6 +32,7 @@ class AskName : public QDialog
 		AskName(const QString& text, QWidget* parent) : QDialog(parent)
 		{
 			edit=new QLineEdit(this);
+			edit->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z][\\w]*"), edit));
 			
 			QDialogButtonBox * buttonBox;
 			QVBoxLayout *items=new QVBoxLayout(this);
