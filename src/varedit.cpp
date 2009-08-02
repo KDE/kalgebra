@@ -72,7 +72,7 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	m_exp->setFocus();
 }
 
-void VarEdit::setVar(const QString& newVar)
+void VarEdit::setName(const QString& newVar)
 {
 	m_var=newVar;
 	this->setWindowTitle(i18n("Edit '%1' value", newVar));

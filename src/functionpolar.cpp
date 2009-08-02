@@ -28,7 +28,7 @@ struct FunctionPolar : public FunctionImpl
 	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionPolar(const FunctionPolar &fp) : FunctionImpl(fp) {}
 	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
+	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	function::Axe axeType() const { return function::Polar; }
 	QLineF derivative(const QPointF& p) const;
@@ -42,13 +42,12 @@ struct FunctionPolar : public FunctionImpl
 REGISTER_FUNCTION(FunctionPolar)
 static const double pi=acos(-1.);
 
-void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
+void FunctionPolar::updatePoints(const QRect& viewport)
 {
 	Q_UNUSED(viewport);
 	Q_ASSERT(func.expression().isCorrect());
-	if(int(max_res)==points.capacity())
+	if(int(resolution())==points.capacity())
 		return;
-	unsigned int resolution=max_res;
 	
 	double ulimit=uplimit(2*pi);
 	double dlimit=downlimit(0);
@@ -59,12 +58,12 @@ void FunctionPolar::updatePoints(const QRect& viewport, unsigned int max_res)
 	}
 	
 	points.clear();
-	points.reserve(max_res);
+	points.reserve(resolution());
 	
 	func.variables()->modify("q", 0.);
 	Cn *varth = (Cn*) func.variables()->value("q");
 	
-	double inv_res= double((ulimit-dlimit)/resolution);
+	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
 		varth->setValue(th);

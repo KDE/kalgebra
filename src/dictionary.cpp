@@ -57,10 +57,10 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_formula->setBaseFontPointSize(10);
 	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_funcs=new FunctionsModel(descr);
+	m_funcs->setResolution(400);
 	m_graph=new Graph2D(m_funcs, descr);
 	m_graph->setReadOnly(true);
 	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
-	m_graph->setResolution(400);
 	m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	
 	m_name->setIndent(10);

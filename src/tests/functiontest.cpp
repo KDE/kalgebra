@@ -86,6 +86,7 @@ void FunctionTest::testCopy()
 	}
 	
 	function f("hola", exp, m_vars);
+	f.setResolution(100);
 	if(!f.isCorrect()) qDebug() << "xxxxxx" << f.errors();
 	QVERIFY(f.isCorrect());
 	function f2(f);
@@ -94,12 +95,11 @@ void FunctionTest::testCopy()
 	f3=f2;
 	QVERIFY(f3.isCorrect());
 	QRectF viewp(QPoint(-12, 10), QPoint(12, -10));
-	int resolution=800;
-	f3.update_points(viewp.toRect(), resolution);
+	f3.update_points(viewp.toRect());
 	
 	QVERIFY(f3.points().size()>1);
-	QVERIFY(f3.points().size()<=resolution);
-	f3.update_points(viewp.toRect(), resolution);
+	QVERIFY(f3.points().size()<=int(f3.resolution()));
+	f3.update_points(viewp.toRect());
 	
 // 	bool found=false;
 // 	foreach(const QPointF& pt, f3.points()) {
@@ -144,7 +144,8 @@ void FunctionTest::testCorrect()
 	function f3("hola", Expression(input, false), m_vars);
 	
 	if(f3.isCorrect()) {
-		f3.update_points(QRect(-10, 10, 10, -10), 100);
+		f3.setResolution(100);
+		f3.update_points(QRect(-10, 10, 10, -10));
 		f3.calc(QPointF(1,1));
 	}
 	
@@ -153,7 +154,7 @@ void FunctionTest::testCorrect()
 	
 	if(correct)
 	{
-		f3.update_points(QRect(-10, 10, 10, -10), 100);
+		f3.update_points(QRect(-10, 10, 10, -10));
 		QVERIFY(f3.points().size()>1);
 		QVERIFY(f3.points().size()<=100);
 	}

@@ -1,3 +1,21 @@
+/*************************************************************************************
+ *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "functionimpl.h"
 #include "functionfactory.h"
 #include "value.h"
@@ -6,96 +24,81 @@
 #include <KDebug>
 #include <KLocale>
 
-struct FunctionX : public FunctionImpl
-{
-	explicit FunctionX(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
-	FunctionX(const FunctionX &fx) : FunctionImpl(fx) {}
-	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
-	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
-	virtual FunctionImpl* copy() { return new FunctionX(*this); }
-	
-	static QStringList supportedBVars() { return QStringList("y"); }
-};
-
+///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
 	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionY(const FunctionY &fy) : FunctionImpl(fy) {}
 	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
+	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	QLineF derivative(const QPointF& p) const;
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
+	
+	virtual QString bounding() const { return "x";}
+	
+	void calculateValues(double, double);
+};
+
+///Functions where the y is bounding. like y->sin(y). FunctionY mirrored
+struct FunctionX : public FunctionY
+{
+	explicit FunctionX(const Expression &e, Variables* v) : FunctionY(e, v) {}
+	FunctionX(const FunctionX &fx) : FunctionY(fx) {}
+	
+	void updatePoints(const QRect& viewport);
+	QPair<QPointF, QString> calc(const QPointF& dp);
+	QLineF derivative(const QPointF& p) const;
+	virtual FunctionImpl* copy() { return new FunctionX(*this); }
+	
+	static QStringList supportedBVars() { return QStringList("y"); }
+	virtual QString bounding() const { return "y";}
 };
 
 REGISTER_FUNCTION(FunctionY)
 REGISTER_FUNCTION(FunctionX)
 
-bool isSimilar(const double &a, const double &b, const double& diff=0.0001);
-
-void FunctionX::updatePoints(const QRect& viewport, unsigned int max_res)
+namespace
 {
-	double t_lim=viewport.top()+.1, b_lim=viewport.bottom()-.1;
-	if(!points.isEmpty() && isSimilar(points.first().y(), t_lim) && isSimilar(points.last().y(), b_lim) &&
-			int(max_res)==points.capacity())
-		return;
+	///	If there is a big difference between @p v1 and @p v2 and the sign is different,
+	///	@returns true
 	
-	points.clear();
-	points.reserve( max_res );
-	func.variables()->modify("y", 0.);
-	Cn *yval=(Cn*) func.variables()->value("y");
-	
-	double inv_res=double((-b_lim+t_lim)/max_res);
-	for(double y=t_lim; y>b_lim; y-=inv_res) {
-		yval->setValue(y);
-		double x = func.calculate().toReal().value();
-		
-		addValue(QPointF(x, y));
+	bool traverse(double v1, double v2)
+	{
+	// 	if(fabs(v1)>10 || fabs(v2)>10) qDebug() << "lolololo" << fabs(v1) << fabs(v2);
+		return ((v1<0. && v2>0.) || (v2<0. && v1>0.)) && fabs(v1)>10 && fabs(v2)>10;
+	}
+
+	QLineF slopeToLine(const double &der)
+	{
+		double arcder = atan(der);
+		const double len=3.*der;
+		QPointF from, to;
+		from.setX(len*cos(arcder));
+		from.setY(len*sin(arcder));
+
+		to.setX(-len*cos(arcder));
+		to.setY(-len*sin(arcder));
+		return QLineF(from, to);
+	}
+
+	QLineF mirrorXY(const QLineF& l)
+	{
+		return QLineF(l.y1(), l.x1(), l.y2(), l.x2());
 	}
 }
 
-
-///	If there is a big difference between @p v1 and @p v2 and the sign is different,
-///	@returns true
-
-bool traverse(double v1, double v2)
+void FunctionY::calculateValues(double l_lim, double r_lim)
 {
-// 	if(fabs(v1)>10 || fabs(v2)>10) qDebug() << "lolololo" << fabs(v1) << fabs(v2);
-	return ((v1<0. && v2>0.) || (v2<0. && v1>0.)) && fabs(v1)>10 && fabs(v2)>10;
-}
-
-void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
-{
-	double l_lim=viewport.left()-.1, r_lim=viewport.right()+.1;
-	
-	/*if(!points.isEmpty()) {
-		qDebug() << isSimilar(points.first().x(), l_lim) << isSimilar(points.last().x(), r_lim) <<
-			(int(max_res)==points.capacity());
-		qDebug() << points.last().x() << r_lim;
-	}*/
-	
-	//TODO: Check that the last value is the end of the viewport
-	if(!func.isCorrect()) {
-		qDebug() << "func error." << func.errors() << func.expression().toString();
-		return;
-	}
-		
-	if(!points.isEmpty() && isSimilar(points.first().x(), l_lim) && isSimilar(points.last().x(), r_lim) &&
-			int(max_res)==points.capacity()) {
-		return;
-	}
-	
 	m_jumps.clear();
 	points.clear();
-	points.reserve(max_res);
+	points.reserve(resolution());
 	
-	double step= double((-l_lim+r_lim)/max_res);
+	double step= double((-l_lim+r_lim)/resolution());
 	
-	func.variables()->modify("x", 0.);
-	Cn *vx = (Cn*) func.variables()->value("x");
+	func.variables()->modify(bounding(), 0.);
+	Cn *vx = (Cn*) func.variables()->value(bounding());
 	
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
@@ -113,15 +116,29 @@ void FunctionY::updatePoints(const QRect& viewport, unsigned int max_res)
 			}
 		}
 	}
+}
+
+void FunctionY::updatePoints(const QRect& viewport)
+{
+	double l_lim=viewport.left()-.1, r_lim=viewport.right()+.1;
+	
+	if(!points.isEmpty()
+			&& isSimilar(points.first().x(), l_lim)
+			&& isSimilar(points.last().x(), r_lim)) {
+		return;
+	}
+	
+	calculateValues(l_lim, r_lim);
 // 	qDebug() << "end." << m_jumps;
 }
 
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	func.variables()->modify("y", dp.y());
+	func.variables()->modify(bounding(), dp.y());
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
+	
 	dp.setX(func.calculate().toReal().value());
 	QString pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
@@ -131,7 +148,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	QString pos;
-	func.variables()->modify(QString("x"), dp.x());
+	func.variables()->modify(QString(bounding()), dp.x());
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
 	
@@ -140,55 +157,14 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	return QPair<QPointF, QString>(dp, pos);
 }
 
-QLineF slopeToLine(const double &der)
-{
-	double arcder = atan(der);
-	const double len=3.*der;
-	QPointF from, to;
-	from.setX(len*cos(arcder));
-	from.setY(len*sin(arcder));
-
-	to.setX(-len*cos(arcder));
-	to.setY(-len*sin(arcder));
-	return QLineF(from, to);
-}
-
-QLineF mirrorXY(const QLineF& l)
-{
-	return QLineF(l.y1(), l.x1(), l.y2(), l.x2());
-}
-
-QLineF FunctionX::derivative(const QPointF& p) const
-{
-	Analitza a(func.variables());
-	double ret;
-	if(m_deriv) {
-		a.setExpression(*m_deriv);
-		a.variables()->modify("y", p.y());
-		
-		if(a.isCorrect())
-			ret = a.calculate().toReal().value();
-	
-		if(!a.isCorrect()) {
-			kDebug() << "Derivative error: " <<  a.errors();
-			return QLineF();
-		}
-	} else {
-		QList<QPair<QString, double> > vars;
-		vars.append(QPair<QString, double>("y", p.y()));
-		a.setExpression(func.expression());
-		ret=a.derivative(vars);
-	}
-	return mirrorXY(slopeToLine(ret));
-}
-
 QLineF FunctionY::derivative(const QPointF& p) const
 {
 	Analitza a(func.variables());
 	double ret;
+	
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
-		a.variables()->modify("x", p.x());
+		a.variables()->modify(bounding(), p.x());
 		
 		if(a.isCorrect())
 			ret = a.calculate().toReal().value();
@@ -199,10 +175,27 @@ QLineF FunctionY::derivative(const QPointF& p) const
 		}
 	} else {
 		QList<QPair<QString, double> > vars;
-		vars.append(QPair<QString, double>("x", p.x()));
+		vars.append(QPair<QString, double>(bounding(), p.x()));
 		a.setExpression(func.expression());
 		ret=a.derivative(vars);
 	}
 	
 	return slopeToLine(ret);
+}
+
+void FunctionX::updatePoints(const QRect& viewport)
+{
+	double l_lim=viewport.bottom()-.1, r_lim=viewport.top()+.1;
+	calculateValues(l_lim, r_lim);
+	for(int i=0; i<points.size(); i++) {
+		QPointF p=points[i];
+		points[i]=QPointF(p.y(), p.x());
+	}
+}
+
+QLineF FunctionX::derivative(const QPointF& p) const
+{
+	QPointF p1(p.y(), p.x());
+	QLineF ret=FunctionY::derivative(p1);
+	return mirrorXY(ret);
 }

@@ -46,7 +46,7 @@ class VarEdit : public KDialog
 		QString text() const;
 		
 		/** Sets the editing variable name */
-		void setVar(const QString& newVar);	//This should edit the variable name
+		void setName(const QString& newVar);	//This should edit the variable name
 		
 		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
 		void setAnalitza(Analitza *na);

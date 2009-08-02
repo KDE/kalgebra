@@ -48,21 +48,6 @@ function::function(const QString &name, const Expression& newFunc, Variables* v,
 	}
 }
 
-/*FunctionImpl* copy(FunctionImpl* fi)
-{
-	FunctionX *fx;
-	FunctionY *fy;
-	FunctionPolar *fp;
-	if(fx=dynamic_cast<FunctionX*>(fi))
-		return new FunctionX(*fx);
-	else if(fy=dynamic_cast<FunctionY*>(fi))
-		return new FunctionY(*fy);
-	else if(fp=dynamic_cast<FunctionPolar*>(fi))
-		return new FunctionPolar(*fp);
-	else 
-		return 0;
-}*/
-
 function::function(const function& f)
 	: m_function(0), m_show(f.m_show), m_color(f.m_color), m_name(f.m_name), m_err(f.m_err)
 {
@@ -72,15 +57,13 @@ function::function(const function& f)
 
 function::~function()
 {
-	if(m_function)
-		delete m_function;
+	delete m_function;
 }
 
 function function::operator=(const function& f)
 {
 	if(&f!=this) {
-		if(m_function)
-			delete m_function;
+		delete m_function;
 		
 		if(f.m_function) {
 			m_function=f.m_function->copy();
@@ -96,10 +79,25 @@ function function::operator=(const function& f)
 	return *this;
 }
 
-void function::update_points(const QRect& viewport, unsigned int max_res)
+void function::update_points(const QRect& viewport)
 {
 	Q_ASSERT(m_function);
-	m_function->updatePoints(viewport, max_res);
+	Q_ASSERT(resolution()>2);
+	
+	m_function->updatePoints(viewport);
+	
+	Q_ASSERT(m_function->points.size()>=2);
+}
+
+void function::setResolution(unsigned int resolution)
+{
+	Q_ASSERT(m_function);
+	m_function->setResolution(resolution);
+}
+
+uint function::resolution() const
+{
+	return m_function->resolution();
 }
 
 function::Axe function::axeType() const
@@ -118,11 +116,6 @@ QLineF function::derivative(const QPointF & p) const
 	return m_function->derivative(p);
 }
 
-QStringList function::bvars() const
-{
-	return m_function->bvarList();
-}
-
 Analitza * function::analitza() const
 {
 	Q_ASSERT(m_function);
@@ -131,6 +124,8 @@ Analitza * function::analitza() const
 
 const QVector<QPointF>& function::points() const
 {
+	Q_ASSERT(m_function);
+	Q_ASSERT(m_function->points.size()>1);
 	return m_function->points;
 }
 
@@ -165,7 +160,6 @@ const Expression& function::expression() const
 {
 	return analitza()->expression();
 }
-
 
 QList<int> function::jumps() const
 {

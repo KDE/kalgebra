@@ -30,14 +30,20 @@ struct FunctionImpl
 	explicit FunctionImpl(const Expression& e, Variables* v);
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
-	QStringList bvarList() { return func.bvarList(); }
 	bool isCorrect() const { return m_err.isEmpty() && func.isCorrect(); }
 	QString toString() const { return func.expression().toString(); }
-	bool addValue(const QPointF& p);
 	
+	uint resolution() const { return m_res; }
+	void setResolution(uint res);
+	
+	//helpers
+	bool addValue(const QPointF& p);
+	bool isSimilar(const double &a, const double &b, const double& diff=0.0001);
+	
+	//To reimplement
 	virtual function::Axe axeType() const { return function::Cartesian; }
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
-	virtual void updatePoints(const QRect& viewport, unsigned int resolution)=0;
+	virtual void updatePoints(const QRect& viewport)=0;
 	virtual QLineF derivative(const QPointF& p) const=0;
 	virtual FunctionImpl* copy()=0;
 	
@@ -45,10 +51,11 @@ struct FunctionImpl
 	double downlimit(double defaultValue) const;
 	
 	QVector<QPointF> points;
+	QList<int> m_jumps;
 	Analitza func;
 	Expression *m_deriv;
 	QStringList m_err;
-	QList<int> m_jumps;
+	uint m_res;
 };
 
 #endif

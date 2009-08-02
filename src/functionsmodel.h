@@ -49,10 +49,12 @@ class FunctionsModel : public QAbstractTableModel
 		
 		inline bool isSelected(int i) const { return i==m_selectedRow; }
 	
-		/** Specifies that the @p exp function is shown. Returns whether another function like @p exp existed. */
+		/** Specifies that the @p exp function is shown.
+			@returns whether another function like @p exp existed. */
 		bool setShown(const QString& exp, bool shown);
 	
-		/** Edits the @p num nth function. The @p num should be less than the number of functions, because you are editing. */
+		/** Edits the @p num nth function. The @p num should be less than the number of functions,
+			because you are editing. */
 		void editFunction(int num, const function& func);
 	
 		/** Edits the @p exp function. Returns whether another function like @p exp existed. */
@@ -61,13 +63,15 @@ class FunctionsModel : public QAbstractTableModel
 		/** Returns a pointer to the @p num nth function. */
 		function* editFunction(int num);
 		
+		void setResolution(uint res);
+		
 		void unselect();
 		
 		void clear();
 		
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
-		void updatePoints(int i, const QRect& viewport, int resolution);
+		void updatePoints(int i, const QRect& viewport);
 		
 		const function& currentFunction() const;
 		
@@ -103,6 +107,7 @@ class FunctionsModel : public QAbstractTableModel
 		
 		QList<function> funclist;
 		int m_selectedRow;
+		uint m_resolution;
 
 };
 

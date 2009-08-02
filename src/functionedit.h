@@ -29,34 +29,9 @@
 
 #include "expressionedit.h"
 
+class function;
 class Graph2D;
 class Variables;
-
-/**
- *	The color combo shows a different colors list.
- *	\deprecated
- *	@author Aleix Pol i Gonzalez
- */
-#if 0
-class ColorCombo : public QComboBox
-{
-Q_OBJECT
-public:
-	/** Constructor. Creates a new ColorCombo. */
-	ColorCombo(QWidget* parent=0);
-	
-	/** Destructor. */
-	~ColorCombo(){}
-	
-	/** Returns the selected Color. */
-	QColor color() const;
-	
-	/** Sets a color to the selected color. If it didn't exist, it is added to the list. */
-	void setColor(const QColor &);
-private:
-	void resizeEvent(QResizeEvent * event);
-};
-#endif
 class FunctionsModel;
 
 /**
@@ -75,7 +50,9 @@ public:
 	~FunctionEdit();
 	
 	/** Retrieves the resulting expression text. */
-	QString text() const { return m_func->toPlainText(); }
+	Expression expression() const { return m_func->expression(); }
+	
+	function createFunction() const;
 	
 	/** Sets an expression text to the ExpressionEdit widget. */
 	void setFunction(const QString &newText);

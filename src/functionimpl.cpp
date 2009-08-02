@@ -33,7 +33,7 @@ using std::sin;
 using std::sqrt;
 
 FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
-	: points(), func(v), m_deriv(0)
+	: points(), func(v), m_deriv(0), m_res(0)
 {
 	func.setExpression(newFunc);
 	if(func.isCorrect()) {
@@ -46,7 +46,7 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
 }
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
-	: points(), func(fi.func.variables()), m_deriv(0)
+	: points(), func(fi.func.variables()), m_deriv(0), m_res(fi.m_res)
 {
 // 	Q_ASSERT(fi.isCorrect());
 	func.setExpression(fi.func.expression());
@@ -61,7 +61,7 @@ FunctionImpl::~FunctionImpl()
 	delete m_deriv;
 }
 
-bool isSimilar(const double &a, const double &b, const double& diff=0.0001)
+bool FunctionImpl::isSimilar(const double &a, const double &b, const double& diff)
 {
 	return a<b+diff && a>b-diff;
 }
@@ -111,4 +111,15 @@ double FunctionImpl::downlimit(double defaultValue) const
 double FunctionImpl::uplimit(double defaultValue) const
 {
 	return calcExp(func.expression().uplimit(), func.variables(), defaultValue);
+}
+
+void FunctionImpl::setResolution(uint res)
+{
+	Q_ASSERT(res>2);
+	
+	if(res!=m_res) {
+		points.clear();
+		m_jumps.clear();
+	}
+	m_res=res;
 }

@@ -48,7 +48,7 @@ QColor const Graph2D::m_derivativeColor(90,90,160);
 
 Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	QWidget(parent), m_model(fm),
-	valid(false), mode(None), m_squares(true), m_keepRatio(true), resolucio(800),
+	valid(false), mode(None), m_squares(true), m_keepRatio(true),
 	m_framed(false), m_readonly(false), m_posText()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
@@ -58,7 +58,7 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	
 	setViewport(QRectF(QPointF(-12., 10.), QSizeF(24., -20.)));
-	defViewport = viewport;
+	defViewport = userViewport;
 	this->setAutoFillBackground(false);
 	
 	connect(m_model, SIGNAL(dataChanged( const QModelIndex&, const QModelIndex& )),
@@ -66,7 +66,7 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	connect(m_model, SIGNAL( rowsInserted ( const QModelIndex &, int, int ) ),
 		this, SLOT(addFuncs(const QModelIndex&, int, int)));
 	connect(m_model, SIGNAL( rowsRemoved ( const QModelIndex &, int, int ) ),
-			this, SLOT(removeFuncs(const QModelIndex&, int, int)));
+		this, SLOT(removeFuncs(const QModelIndex&, int, int)));
 }
 
 Graph2D::~Graph2D() {}
@@ -187,7 +187,7 @@ void Graph2D::drawCartesianAxes(QPainter *finestra)
 	finestra->drawPie(rectY, startAngleY, spanAngle);
 }
 
-void Graph2D::pintafunc(QPaintDevice *qpd)
+void Graph2D::drawFunctions(QPaintDevice *qpd)
 {
 	QPalette p=qApp->palette();
 	QPen pfunc;
@@ -220,7 +220,6 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 		finestra.setPen(pfunc);
 		
 		const QVector<QPointF> &vect=it->points();
-		Q_ASSERT(!vect.isEmpty());
 		QList<int> jumps=it->jumps();
 		
 		unsigned int pointsCount = vect.count();
@@ -288,7 +287,7 @@ void Graph2D::pintafunc(QPaintDevice *qpd)
 void Graph2D::paintEvent(QPaintEvent * )
 {
 	if(!valid)
-		pintafunc(&buffer);
+		drawFunctions(&buffer);
 	
 	QPainter finestra(this);
 	finestra.drawPixmap(0,0,width(),height(), buffer);
@@ -502,11 +501,6 @@ QPointF Graph2D::toViewport(const QPoint &mv) const
 	return QPointF(mv.x()/rang_x, mv.y()/rang_y);
 }
 
-void Graph2D::setResolution(int res)
-{
-	resolucio = res;
-}
-
 void Graph2D::setViewport(const QRectF& vp, bool repaint)
 {
 	userViewport = vp;
@@ -523,8 +517,6 @@ void Graph2D::resizeEvent(QResizeEvent *)
 	buffer=QPixmap(this->size());
 	updateScale();
 }
-
-
 
 QRect Graph2D::toBiggerRect(const QRectF& ent)
 {
@@ -546,8 +538,7 @@ bool Graph2D::toImage(const QString &path)
 		QSvgGenerator gen;
 		gen.setOutputDevice(&f);
 		gen.setSize(this->size());
-//		gen.setResolution(100);
-		pintafunc(&gen);
+		drawFunctions(&gen);
 		b=true;
 		forceRepaint();
 	} else if(!path.isEmpty() && path.endsWith(".png")) {
@@ -612,9 +603,10 @@ void Graph2D::update(const QModelIndex & startIdx, const QModelIndex & endIdx)
 	int start=startIdx.row(), end=endIdx.row();
 	
 	for(int i=start; i<=end; i++) {
-		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
+		m_model->updatePoints(i, toBiggerRect(viewport));
 	}
 	valid=false;
+	repaint();
 }
 
 void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
@@ -622,9 +614,10 @@ void Graph2D::addFuncs(const QModelIndex & parent, int start, int end)
 	Q_ASSERT(!parent.isValid());
 	
 	for(int i=start; i<=end; i++) {
-		m_model->updatePoints(i, toBiggerRect(viewport), static_cast<int>(floor(resolucio)));
+		m_model->updatePoints(i, toBiggerRect(viewport));
 	}
 	valid=false;
+	repaint();
 }
 
 void Graph2D::removeFuncs(const QModelIndex & parent, int start, int end)
@@ -648,6 +641,10 @@ void Graph2D::setReadOnly(bool ro)
 	m_readonly=ro;
 	this->setCursor(ro ? Qt::ArrowCursor : Qt::CrossCursor);
 	setMouseTracking(!ro);
+}
+void Graph2D::setModel(FunctionsModel* f)
+{
+	m_model=f;
 }
 
 #include "graph2d.moc"

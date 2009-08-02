@@ -56,7 +56,7 @@ public:
 	/** Destructor. */
 	~Graph2D();
 	
-	void setModel(FunctionsModel* f) { m_model=f; }
+	void setModel(FunctionsModel* f);
 	
 	QSize sizeHint() const { return QSize(100, 100); }
 	
@@ -74,9 +74,6 @@ public:
 	
 	/** Sets the graph's viewport to @p v. */
 	void setViewport(const QRectF& v, bool repaint=true);
-	
-	/** Sets the desired maximum resolution to @p res. */
-	void setResolution(int res);
 	
 	/** Returns whether it has a little border frame. */
 	bool isFramed() const { return m_framed; }
@@ -97,7 +94,7 @@ public:
 	bool keepAspectRatio() const { return m_keepRatio; }
 	
 public slots:
-	/** Makes the image as dirty and repaints everything. */
+	/** Marks the image as dirty and repaints everything. */
 	void forceRepaint() { valid=false; repaint(); }
 
 	/** Sets the viewport to a default viewport. */
@@ -156,13 +153,12 @@ private:
 	//presentation
 	bool m_squares;
 	bool m_keepRatio;
-	double resolucio;
 	double rang_x, rang_y;
     QPointF ant;
     QRectF viewport;
     QRectF userViewport;
 	QRectF defViewport;
-	void pintafunc(QPaintDevice*);
+	void drawFunctions(QPaintDevice*);
 	void updateScale(bool repaint=true);
 		
 	void sendStatus(const QString& msg) { emit status(msg); }

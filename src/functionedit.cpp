@@ -34,6 +34,10 @@
 #include "functionsmodel.h"
 #include "functionfactory.h"
 
+namespace {
+	static int resolution = 200;
+}
+
 FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 		QWidget(parent, f)
 {
@@ -51,7 +55,12 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));
 	
 	m_valid = new QLabel(this);
-	m_valid->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	m_valid->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+	
+	QPalette p=palette();
+	p.setColor(QPalette::Active, QPalette::Base, Qt::white);
+	m_valid->setPalette(p);
+	
 	m_validIcon = new QLabel(this);
 	m_validIcon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	QLayout* validLayout=new QHBoxLayout;
@@ -63,11 +72,11 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	
 	m_funcsModel=new FunctionsModel;
+	m_funcsModel->setResolution(resolution);
 //	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
 	
 	m_graph = new Graph2D(m_funcsModel, this);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
-	m_graph->setResolution(200);
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
@@ -144,12 +153,14 @@ void FunctionEdit::edit()
 		return;
 	}
 	
-	function f(m_name->text(), m_func->expression(), m_vars, m_color->color());
-	if(f.isCorrect())
+	function f=createFunction();
+	if(f.isCorrect()) {
+		f.setResolution(resolution);
 		f.calc(QPointF());
+	}
 	
 	if(f.isCorrect())
-		f.update_points(QRect(-10, 10, 10, -10), 100);
+		f.update_points(QRect(-10, 10, 20, -20));
 	
 	if(f.isCorrect()) {
 		m_funcsModel->clear();
@@ -173,8 +184,6 @@ void FunctionEdit::edit()
 		QFontMetrics fm(errorFont);
 		int textWidth=fm.width(errorm);
 		
-		qDebug() << "gtagtaca" << textWidth << m_valid->width();
-		//FIXME: Sometimes it doesn't work
 		if(textWidth>m_valid->width()) {
 			for(int i=3; i<errorm.size(); ++i) {
 				QString aux=errorm.mid(0,i)+"...";
@@ -203,6 +212,11 @@ void FunctionEdit::ok()
 void FunctionEdit::focusInEvent(QFocusEvent *)
 {
 	m_func->setFocus();
+}
+
+function FunctionEdit::createFunction() const
+{
+	return function(name(), expression(), m_vars, color());
 }
 
 #include "functionedit.moc"

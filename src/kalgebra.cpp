@@ -166,7 +166,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
 	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
-	b_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph2d, SLOT(resetViewport()));
+	b_menu->addAction(KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
 	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
@@ -188,6 +188,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_actions[3]->setChecked(true);
 	b_actions[4]->setCheckable(true);
 	b_actions[5]->setCheckable(true);
+	set_res_std();
 	//////EO2D Graph
 	
 	/////3DGraph
@@ -270,11 +271,10 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 
 void KAlgebra::new_func()
 {
-	QString name = b_funced->name();
-	function f(b_funced->name(), Expression(b_funced->text(), b_funced->isMathML()), b_funced->variables(), b_funced->color());
+	function f=b_funced->createFunction();
 	
 	if(b_funced->editing()) {
-		b_funcsModel->editFunction(name, f);
+		b_funcsModel->editFunction(f.name(), f);
 	} else {
 		b_funcsModel->addFunction(f);
 	}
@@ -282,7 +282,7 @@ void KAlgebra::new_func()
 	b_funced->setEditing(false);
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
-	b_funcsModel->setSelected(name);
+	b_funcsModel->setSelected(f.name());
 	m_graph2d->setFocus();
 }
 
@@ -314,7 +314,7 @@ void KAlgebra::edit_var(const QModelIndex &idx)
 	QString var = c_variables->model()->data(idxName, Qt::DisplayRole).toString();
 	
 	e.setAnalitza(c_results->analitza());
-	e.setVar(var);
+	e.setName(var);
 	
 	if(e.exec() == QDialog::Accepted)
 		c_results->analitza()->insertVariable(var, e.val());
@@ -355,10 +355,10 @@ void KAlgebra::saveLog()
 		c_results->saveLog(path);
 }
 
-void KAlgebra::set_res_low()	{ m_graph2d->setResolution(416); }
-void KAlgebra::set_res_std()	{ m_graph2d->setResolution(832); }
-void KAlgebra::set_res_fine()	{ m_graph2d->setResolution(1664);}
-void KAlgebra::set_res_vfine()	{ m_graph2d->setResolution(3328);}
+void KAlgebra::set_res_low()	{ b_funcsModel->setResolution(416); }
+void KAlgebra::set_res_std()	{ b_funcsModel->setResolution(832); }
+void KAlgebra::set_res_fine()	{ b_funcsModel->setResolution(1664);}
+void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
 
 void KAlgebra::new_func3d()
 {
@@ -488,7 +488,7 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 	}
 }
 
-void KAlgebra::dictionaryFilterChanged(const QString& filter)
+void KAlgebra::dictionaryFilterChanged(const QString&)
 {
 	if(d_list->model()->rowCount()==1)
 		d_list->setCurrentIndex(d_list->model()->index(0,0));

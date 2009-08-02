@@ -25,7 +25,7 @@
 #include <cmath>
 
 FunctionsModel::FunctionsModel(QObject *parent)
-	: QAbstractTableModel(parent), m_selectedRow(-1)
+	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500)
 {}
 
 QVariant FunctionsModel::data(const QModelIndex & index, int role) const
@@ -100,9 +100,11 @@ bool FunctionsModel::addFunction(const function& func)
 	if(!exists) {
 		beginInsertRows (QModelIndex(), rowCount(), rowCount());
 		funclist.append(func);
+		funclist.last().setResolution(m_resolution);
 		m_selectedRow=funclist.count()-1;
 		endInsertRows();
 		sendStatus(i18n("%1 function added", func.toString()));
+		
 		emit functionModified(func.name(), func.expression());
 	}
 	
@@ -201,12 +203,12 @@ void FunctionsModel::editFunction(int num, const function& func)
 {
 	Q_ASSERT(num<funclist.count());
 	funclist[num]=func;
+	funclist[num].setResolution(m_resolution);
 	
 	QModelIndex idx=index(num, 0), idxEnd=index(num, columnCount()-1);
 	emit dataChanged(idx, idxEnd);
 	emit functionModified(func.name(), func.expression());
 	
-// 	update_points();
 // 	this->repaint(); emit update
 }
 
@@ -220,6 +222,7 @@ bool FunctionsModel::editFunction(const QString& toChange, const function& func)
 			exist=true;
 			*it = func;
 			it->setName(toChange);
+			it->setResolution(m_resolution);
 			QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
 			emit dataChanged(idx, idxEnd);
 			emit functionModified(toChange, func.expression());
@@ -242,10 +245,10 @@ bool FunctionsModel::setData(const QModelIndex & idx, const QVariant &value, int
 	return false;
 }
 
-void FunctionsModel::updatePoints(int i, const QRect & viewport, int resolution)
+void FunctionsModel::updatePoints(int i, const QRect & viewport)
 {
 	Q_ASSERT(i<funclist.count());
-	funclist[i].update_points(viewport, static_cast<int>(std::floor((double)resolution)));
+	funclist[i].update_points(viewport);
 }
 
 const function & FunctionsModel::currentFunction() const
@@ -297,6 +300,17 @@ Qt::ItemFlags FunctionsModel::flags(const QModelIndex &idx) const
 void FunctionsModel::unselect()
 {
 	m_selectedRow=-1;
+}
+
+void FunctionsModel::setResolution(uint res)
+{
+	m_resolution=res;
+	if(!funclist.isEmpty()) {
+		for (QList<function>::iterator it=funclist.begin(); it!=funclist.end(); ++it)
+			it->setResolution(res);
+		QModelIndex idx=index(0, 0), idxEnd=index(rowCount()-1, 0);
+		emit dataChanged(idx, idxEnd);
+	}
 }
 
 #include "functionsmodel.moc"

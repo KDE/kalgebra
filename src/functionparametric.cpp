@@ -13,7 +13,7 @@ struct FunctionParametric : public FunctionImpl
 	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
 	FunctionParametric(const FunctionParametric &fx) : FunctionImpl(fx) {}
 	
-	void updatePoints(const QRect& viewport, unsigned int resolution);
+	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	QLineF derivative(const QPointF& p) const;
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
@@ -22,29 +22,28 @@ struct FunctionParametric : public FunctionImpl
 };
 REGISTER_FUNCTION(FunctionParametric)
 
-void FunctionParametric::updatePoints(const QRect& viewport, unsigned int max_res)
+void FunctionParametric::updatePoints(const QRect& viewport)
 {
 	Q_UNUSED(viewport);
 	Q_ASSERT(func.expression().isCorrect());
-	if(int(max_res)==points.capacity())
+	if(int(resolution())==points.capacity())
 		return;
-	unsigned int resolution=max_res;
 	
 	double ulimit=uplimit(2*M_PI);
 	double dlimit=downlimit(0);
 	
 	if(ulimit<=dlimit) {
-		m_err += i18n("Cannot have downlimit ≥ uplimit");
+		kDebug() << "Cannot have downlimit ≥ uplimit";
 		return;
 	}
 	
 	points.clear();
-	points.reserve(max_res);
+	points.reserve(resolution());
 	
 	func.variables()->modify("t", 0.);
 	Cn *theT = (Cn*) func.variables()->value("t");
 	
-	double inv_res= double((ulimit-dlimit)/resolution);
+	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
 	for(double t=dlimit; t<final; t+=inv_res) {
 		theT->setValue(t);

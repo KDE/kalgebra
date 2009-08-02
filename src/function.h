@@ -59,9 +59,13 @@ class function
 		
 		/** Defines a new function behaviour.
 			@param viewport sets the coordinates the function will fit to.
-			@param resolution sets how many points will the function have.
 		*/
-		void update_points(const QRect& viewport, unsigned int resolution);
+		void update_points(const QRect& viewport);
+		
+		/** @param resolution sets how many points will the function have. */
+		void setResolution(unsigned int resolution);
+		
+		uint resolution() const;
 		
 		/** Retrieves the color of the function. */
 		QColor color() const { return m_color; }
