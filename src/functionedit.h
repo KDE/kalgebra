@@ -78,7 +78,7 @@ public:
 	QString text() const { return m_func->toPlainText(); }
 	
 	/** Sets an expression text to the ExpressionEdit widget. */
-	void setText(const QString &newText);
+	void setFunction(const QString &newText);
 	
 	/** Retrieves the selected color for the function */
 	QColor color() const { return m_color->color(); }

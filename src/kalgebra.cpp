@@ -291,7 +291,7 @@ void KAlgebra::edit_func(const QModelIndex &idx)
 	b_tools->setTabText(1, i18n("&Editing"));
 	b_tools->setCurrentIndex(1);
 	b_funced->setName(b_funcsModel->data(idx.sibling(idx.row(), 0)).toString());
-	b_funced->setText(b_funcsModel->data(idx.sibling(idx.row(), 1)).toString());
+	b_funced->setFunction(b_funcsModel->data(idx.sibling(idx.row(), 1)).toString());
 	b_funced->setEditing(true);
 	b_funced->setFocus();
 }

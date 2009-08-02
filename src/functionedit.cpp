@@ -51,7 +51,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));
 	
 	m_valid = new QLabel(this);
-	m_valid->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	m_valid->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	m_validIcon = new QLabel(this);
 	m_validIcon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	QLayout* validLayout=new QHBoxLayout;
@@ -110,7 +110,7 @@ void FunctionEdit::clear()
 	edit();
 }
 
-void FunctionEdit::setText(const QString &newText)
+void FunctionEdit::setFunction(const QString &newText)
 {
 	m_func->setText(newText);
 	m_func->document()->setModified(true);
@@ -159,18 +159,21 @@ void FunctionEdit::edit()
 			.arg(m_name->text()).arg(f.expression().toString()));
 		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
 	} else {
-		QStringList errors;
-		errors += f.errors();
+		QStringList errors = f.errors();
+		Q_ASSERT(!errors.isEmpty());
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		Q_ASSERT(!errors.isEmpty());
+		
+		QFont errorFont=m_valid->font();
+		errorFont.setBold(true);
 		
 		QString errorm=errors.first(), error=errors.first();
-		QFontMetrics fm(m_valid->font());
+		QFontMetrics fm(errorFont);
 		int textWidth=fm.width(errorm);
 		
+		qDebug() << "gtagtaca" << textWidth << m_valid->width();
 		//FIXME: Sometimes it doesn't work
 		if(textWidth>m_valid->width()) {
 			for(int i=3; i<errorm.size(); ++i) {

@@ -73,13 +73,16 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 	Expression res=func.calculate();
 	Object* vo=res.tree();
 	if(vo->type()!=Object::vector) {
-		m_err += i18n("The parametric function does not return an vector");
+		m_err += i18nc("if the specified function is not a vector",
+					  "The parametric function does not return a vector");
 	} else {
 		Vector* v=static_cast<Vector*>(vo);
 		if(v->size()!=2)
-			m_err += i18n("The parametric function does not return an vector");
+			m_err += i18nc("If it is a vector but the wrong size. We work in R2 here",
+						   "We want a 2 dimension vector");
 		else if(v->at(0)->type()!=Object::value || v->at(1)->type()!=Object::value)
-			m_err += i18n("The parametric function items should be scalars");
+			m_err += i18nc("The vector has to be composed by integer members",
+						   "The parametric function items should be scalars");
 	}
 	return QPair<QPointF, QString>(p, QString());
 }
