@@ -27,23 +27,25 @@
 
 class AskName : public QDialog
 {
-    public:
-        AskName(const QString& text, QWidget* parent) : QDialog(parent)
-        {
-            QDialogButtonBox * buttonBox;
-            QVBoxLayout *items=new QVBoxLayout(this);
-            items->addWidget(new QLabel(text, this));
-            items->addWidget(edit=new QLineEdit(this));
-    //         items->addItem(new QSpacerItem());
-            items->addWidget(buttonBox=new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal, this));
-            
-            connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-            connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-        }
-        
-        QString name() const { return edit->text(); }
-    private:
-        QLineEdit *edit;
+	public:
+		AskName(const QString& text, QWidget* parent) : QDialog(parent)
+		{
+			edit=new QLineEdit(this);
+			
+			QDialogButtonBox * buttonBox;
+			QVBoxLayout *items=new QVBoxLayout(this);
+			items->addWidget(new QLabel(text, this));
+			items->addWidget(edit);
+// 			items->addItem(new QSpacerItem());
+			items->addWidget(buttonBox=new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal, this));
+			
+			connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+			connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+		}
+		
+		QString name() const { return edit->text(); }
+	private:
+		QLineEdit *edit;
 };
 
 #endif
