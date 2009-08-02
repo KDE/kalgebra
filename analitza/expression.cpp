@@ -368,7 +368,7 @@ Expression Expression::uplimit() const
 	if(d->m_tree->isContainer()) {
 		Container *c=static_cast<Container*>(d->m_tree);
 		
-		Container::const_iterator value=c->firstValue();
+		Container::iterator value=c->firstValue();
 		if((*value)->isContainer()) {
 			Object* limit=static_cast<Container*>(*value)->ulimit();
 			if(limit)
@@ -385,7 +385,7 @@ Expression Expression::downlimit() const
 	if(d->m_tree->isContainer()) {
 		Container *c=static_cast<Container*>(d->m_tree);
 		
-		Container::const_iterator value=c->firstValue();
+		Container::iterator value=c->firstValue();
 		if((*value)->isContainer()) {
 			Object* limit=static_cast<Container*>(*value)->dlimit();
 			if(limit)
