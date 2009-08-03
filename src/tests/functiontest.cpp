@@ -145,8 +145,9 @@ void FunctionTest::testCorrect()
 	
 	if(f3.isCorrect()) {
 		f3.setResolution(100);
-		f3.update_points(QRect(-10, 10, 10, -10));
 		f3.calc(QPointF(1,1));
+		if(f3.isCorrect())
+			f3.update_points(QRect(-10, 10, 10, -10));
 	}
 	
 	qDebug() << f3.errors();
@@ -158,6 +159,32 @@ void FunctionTest::testCorrect()
 		QVERIFY(f3.points().size()>1);
 		QVERIFY(f3.points().size()<=100);
 	}
+}
+
+void FunctionTest::testJumps_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<int>("jumps");
+	
+	QTest::newRow("tanx") << "tan x" << 6;
+	QTest::newRow("divx") << "1/x" << 1;
+}
+
+void FunctionTest::testJumps()
+{
+	QFETCH(QString, input);
+	QFETCH(int, jumps);
+	
+	function f3("hola", Expression(input, false), m_vars);
+	QVERIFY(f3.isCorrect());
+	
+	f3.setResolution(100);
+	f3.calc(QPointF(1,1));
+	QVERIFY(f3.isCorrect());
+	f3.update_points(QRect(-10, 10, 20, -20));
+	
+	QVERIFY(f3.isCorrect());
+	QCOMPARE(f3.jumps().count(), jumps);
 }
 
 #include "functiontest.moc"

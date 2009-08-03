@@ -61,9 +61,9 @@ FunctionImpl::~FunctionImpl()
 	delete m_deriv;
 }
 
-bool FunctionImpl::isSimilar(const double &a, const double &b, const double& diff)
+bool FunctionImpl::isSimilar(double a, double b, double diff)
 {
-	return a<b+diff && a>b-diff;
+	return fabs(a-b)<diff;
 }
 
 bool FunctionImpl::addValue(const QPointF& p)
@@ -74,10 +74,13 @@ bool FunctionImpl::addValue(const QPointF& p)
 		return false;
 	}
 	
+	//TODO: Think of some optimization if needed
 	bool appended;
-	double slope1=(points[count-1].x()-p.x())/(points[count-1].y()-p.y());
-	double slope2=(points[count-2].x()-p.x())/(points[count-2].y()-p.y());
+	double slope1=(points[count-1].y()-points[count-2].y())/(points[count-1].x()-points[count-2].x());
+	double slope2=(points[count-1].y()-p.y())/(points[count-1].x()-p.x());
 	if(isSimilar(slope1, slope2) || (p.y()==points[count-1].y() && p.y()==points[count-2].y())) {
+// 		qDebug() << "join" << points[count-2] << points[count-1] << p;
+// 		qDebug() << "because" << slope1 << slope2 << isSimilar(slope1, slope2);
 		points.last()=p;
 		appended=false;
 	} else {

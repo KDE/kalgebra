@@ -24,6 +24,11 @@
 #include <KDebug>
 #include <KLocale>
 
+using std::sin;
+using std::cos;
+using std::atan;
+using std::fabs;
+
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
@@ -61,13 +66,22 @@ REGISTER_FUNCTION(FunctionX)
 
 namespace
 {
-	///	If there is a big difference between @p v1 and @p v2 and the sign is different,
-	///	@returns true
+	/// The @p p1 and @p p2 parameters are the last 2 values found
+	/// @p next is the next value found
+	///	@returns whether we've found the gap
 	
-	bool traverse(double v1, double v2)
+	bool traverse(double p1, double p2, double next)
 	{
-	// 	if(fabs(v1)>10 || fabs(v2)>10) qDebug() << "lolololo" << fabs(v1) << fabs(v2);
-		return ((v1<0. && v2>0.) || (v2<0. && v1>0.)) && fabs(v1)>10 && fabs(v2)>10;
+		static const double delta=3;
+		double diff=p2-p1, diff2=next-p2;
+		bool ret=false;
+		
+		if(diff>0 && diff2<-delta)
+			ret=true;
+		else if(diff<0 && diff2>delta)
+			ret=true;
+		
+		return ret;
 	}
 
 	QLineF slopeToLine(const double &der)
@@ -99,23 +113,30 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 	
 	func.variables()->modify(boundings().first(), 0.);
 	Cn *vx = (Cn*) func.variables()->value(boundings().first());
-	
+		
+	//TODO Finish that
+	bool jumping=true;
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
 		Cn y = func.calculate().toReal();
 		QPointF p(x, y.value());
-		bool wasempty=points.isEmpty();
 		bool ch=addValue(p);
 		
-		if(!wasempty && ch && (m_jumps.isEmpty() || m_jumps.last()!=points.count())) {
+		bool jj=jumping;
+		jumping=false;
+		if(ch && !jj) {
+// 			if(!m_jumps.isEmpty()) qDebug() << "popopo" << m_jumps.last() << points.count();
 			double prevY=points[points.count()-2].y();
 			if(y.format()!=Cn::Real && prevY!=y.value()) {
 				m_jumps.append(points.count()-1);
-			} else if(traverse(prevY, y.value())) {
+				jumping=true;
+			} else if(points.count()>3 && traverse(points[points.count()-3].y(), prevY, y.value())) {
 				m_jumps.append(points.count()-1);
+				jumping=true;
 			}
 		}
 	}
+// 	qDebug() << "juuuumps" << m_jumps << resolution();
 }
 
 void FunctionY::updatePoints(const QRect& viewport)

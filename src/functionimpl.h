@@ -38,7 +38,7 @@ struct FunctionImpl
 	
 	//helpers
 	bool addValue(const QPointF& p);
-	bool isSimilar(const double &a, const double &b, const double& diff=0.0001);
+	bool isSimilar(double a, double b, double diff=0.0001);
 	
 	//To reimplement
 	virtual function::Axe axeType() const { return function::Cartesian; }

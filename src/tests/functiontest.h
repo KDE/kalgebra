@@ -43,6 +43,9 @@ Q_OBJECT
 		void testCopy();
 		void testCopy_data();
 		
+		void testJumps();
+		void testJumps_data();
+		
 		void cleanupTestCase();
 	private:
 		Variables* m_vars;

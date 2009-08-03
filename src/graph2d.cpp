@@ -226,6 +226,9 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 		QPointF ultim(toWidget(vect[0]));
 		
 		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
+#ifdef DEBUG_GRAPH
+		qDebug() << "---------" << jumps.count()+1;
+#endif
 		for(unsigned int j=0; j<pointsCount; j++) {
 			QPointF act=toWidget(vect.at(j));
 			
@@ -264,7 +267,7 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 				} while(!jumps.isEmpty() && jumps.first()==nextjump+1);
 				
 #ifdef DEBUG_GRAPH
-				qDebug() << "jumpiiiiiing" << vect.at(j);
+				qDebug() << "jumpiiiiiing" << ultim << toWidget(vect.at(j));
 				QPen p(Qt::blue);
 				p.setWidth(2);
 				finestra.setPen(p);
@@ -275,9 +278,6 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 			
 			ultim=act;
 		}
-#ifdef DEBUG_GRAPH
-		qDebug() << "---------";
-#endif
 	}
 	
 	finestra.end();
