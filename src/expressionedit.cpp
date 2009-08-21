@@ -90,10 +90,14 @@ ExpressionEdit::~ExpressionEdit() {}
 
 void ExpressionEdit::setExpression(const Expression& e)
 {
-	if(isMathML())
+	if(!e.isCorrect())
+		setText(QString());
+	else if(isMathML())
 		setText(e.toMathML());
 	else
 		setText(e.toString());
+	
+	setCorrect(e.isCorrect());
 }
 
 void ExpressionEdit::updateCompleter()
@@ -414,7 +418,7 @@ void ExpressionEdit::setCorrect(bool correct)
 		c = p.color(QPalette::Active, QPalette::Base);
 	else if(m_correct)
 		c = QColor(255,255,200);
-	else
+	else //if mathml
 		c = QColor(255,222,222);
 	
 	p.setColor(QPalette::Base, c);
@@ -440,11 +444,14 @@ void ExpressionEdit::focusOutEvent ( QFocusEvent * )
 
 void ExpressionEdit::simplify()
 {
-	Analitza a;
-	a.setExpression(expression());
-	a.simplify();
-	
-	setExpression(a.expression());
+	Expression e=expression();
+	if(e.isCorrect()) {
+		Analitza a;
+		a.setExpression(e);
+		a.simplify();
+		
+		setExpression(a.expression());
+	}
 	this->selectAll();
 }
 

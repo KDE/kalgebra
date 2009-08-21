@@ -582,9 +582,6 @@ Object* Analitza::operate(const Container* c)
 	
 	switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Container::math:
-		case Container::bvar:
-		case Container::uplimit:
-		case Container::downlimit:
 		case Container::lambda:
 			ret=calc(*c->firstValue());
 			break;
@@ -623,11 +620,12 @@ Object* Analitza::operate(const Container* c)
 					numbers.append(calc(*it));
 				}
 				
+				Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
+							(op.nparams()>-1 && numbers.count()==op.nparams()) ||
+							opt==Operator::minus);
+				
 				if(!opt) {
 					ret = numbers.first();
-				} else if(((op.nparams()<0 && numbers.count()<=1) ||
-							(op.nparams()>-1 && numbers.count()!=op.nparams())) && opt!=Operator::minus) {
-					Q_ASSERT(false);
 				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
 					ret = numbers.first();
 					
@@ -662,9 +660,11 @@ Object* Analitza::operate(const Container* c)
 			break;
 		case Container::piece:
 		case Container::otherwise:
-			Q_ASSERT(false && "piece or otherwise in the wrong place");
-			break;
+		case Container::bvar:
+		case Container::uplimit:
+		case Container::downlimit:
 		case Container::none:
+			Q_ASSERT(false && "tried to calculate a wrong item");
 			break;
 	}
 	Q_ASSERT(ret);

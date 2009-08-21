@@ -28,6 +28,8 @@ using namespace std;
 
 QTEST_KDEMAIN_CORE( FunctionTest )
 
+static const int resolution=3000;
+
 FunctionTest::FunctionTest(QObject *parent)
 	: QObject(parent)
 {
@@ -86,7 +88,7 @@ void FunctionTest::testCopy()
 	}
 	
 	function f("hola", exp, m_vars);
-	f.setResolution(100);
+	f.setResolution(resolution);
 	if(!f.isCorrect()) qDebug() << "xxxxxx" << f.errors();
 	QVERIFY(f.isCorrect());
 	function f2(f);
@@ -144,7 +146,7 @@ void FunctionTest::testCorrect()
 	function f3("hola", Expression(input, false), m_vars);
 	
 	if(f3.isCorrect()) {
-		f3.setResolution(100);
+		f3.setResolution(resolution);
 		f3.calc(QPointF(1,1));
 		if(f3.isCorrect())
 			f3.update_points(QRect(-10, 10, 10, -10));
@@ -178,7 +180,7 @@ void FunctionTest::testJumps()
 	function f3("hola", Expression(input, false), m_vars);
 	QVERIFY(f3.isCorrect());
 	
-	f3.setResolution(100);
+	f3.setResolution(resolution);
 	f3.calc(QPointF(1,1));
 	QVERIFY(f3.isCorrect());
 	f3.update_points(QRect(-10, 10, 20, -20));
