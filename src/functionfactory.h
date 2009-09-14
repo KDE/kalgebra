@@ -26,7 +26,7 @@
 #include <QMap>
 #include <QStringList>
 
-class FunctionImpl;
+struct FunctionImpl;
 class QStringList;
 class Expression;
 class Variables;
