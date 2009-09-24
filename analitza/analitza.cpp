@@ -133,56 +133,56 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						ret = eval(c->m_params[0], resolve, unscoped);
 						break;
 					case Operator::function: {
-							//it is a function. I'll take only this case for the moment
-							//it is only meant for operations with scoped variables that _change_ its value => have a value
-							const Container *cbody=0;
-							
-							Object* body=eval(c->m_params[0], true, unscoped);
-							
-							if(body && body->isContainer())
-								cbody = (Container*) body;
-							else {
-								if(body)
-									m_err << i18n("We can only call lambda values");
-								ret=c->copy();
-								delete body;
-								break;
-							}
-							Q_ASSERT(cbody);
-							
-							QStringList bvars=cbody->bvarList();
-							
-							int i=0;
-							foreach(const QString& bvar, bvars) {
-								Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
-								m_vars->stack(bvar, val);
-								delete val;
-							}
-							
-							ret=eval(cbody->m_params.last(), resolve, unscoped);
-							
-							foreach(const QString & bvar, bvars)
-								m_vars->destroy(bvar);
-							
+						//it is a function. I'll take only this case for the moment
+						//it is only meant for operations with scoped variables that _change_ its value => have a value
+						const Container *cbody=0;
+						
+						Object* body=eval(c->m_params[0], true, unscoped);
+						
+						if(body && body->isContainer())
+							cbody = (Container*) body;
+						else {
+							if(body)
+								m_err << i18n("We can only call lambda values");
+							ret=c->copy();
 							delete body;
-						}	break;
+							break;
+						}
+						Q_ASSERT(cbody);
+						
+						QStringList bvars=cbody->bvarList();
+						
+						int i=0;
+						foreach(const QString& bvar, bvars) {
+							Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
+							m_vars->stack(bvar, val);
+							delete val;
+						}
+						
+						ret=eval(cbody->m_params.last(), resolve, unscoped);
+						
+						foreach(const QString & bvar, bvars)
+							m_vars->destroy(bvar);
+						
+						delete body;
+					}	break;
 					default: {
-							QSet<QString> newUnscoped(unscoped);
-							if(op.isBounded()) {
-								newUnscoped+=c->bvarList().toSet();
-							}
-							Container *r = c->copy();
-							Container::iterator it(r->firstValue());
-							for(; it!=r->m_params.end(); ++it) {
-								Object *o=*it;
-								*it= eval(*it, resolve, newUnscoped);
-								delete o;
-							}
-							
-							ret=r;
-						}	break;
-				}	break;
-			}
+						QSet<QString> newUnscoped(unscoped);
+						if(op.isBounded()) {
+							newUnscoped+=c->bvarList().toSet();
+						}
+						Container *r = c->copy();
+						Container::iterator it(r->firstValue());
+						for(; it!=r->m_params.end(); ++it) {
+							Object *o=*it;
+							*it= eval(*it, resolve, newUnscoped);
+							delete o;
+						}
+						
+						ret=r;
+					}	break;
+				}
+			}	break;
 			case Container::lambda: {
 				QSet<QString> newUnscoped(unscoped);
 				newUnscoped+=c->bvarList().toSet();
