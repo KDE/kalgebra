@@ -80,6 +80,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("vector") << "vector { x, y, z }";
 	QTest::newRow("boundedlambda") << "q=0..10->q";
 	QTest::newRow("bounded") << "diff(x^2:x)";
+	QTest::newRow("lambda call") << "(x->x+2)(2)";
 }
 
 void ExpressionTest::testConversion()
@@ -96,6 +97,8 @@ void ExpressionTest::testConversion()
 	QVERIFY(parser.error().isEmpty());
 	
 	e->setMathML(parser.mathML());
+	if(!e->isCorrect())
+		qDebug() << "semantic errors: " << e->error();
 	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toString(), input);
 	QCOMPARE(removeTags(e->toHtml()), input);
@@ -163,6 +166,9 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("not-a-container") << "or{ x }" << false;
 	QTest::newRow("different tag") << "prp { x, y, z }" << false;
 	QTest::newRow("different tag") << "a+a=10.." << false;
+	QTest::newRow("xxx") << "piecewise {scalarproduct(vector{x, 1/x})}" << false;
+	QTest::newRow("wrong piece") << "plus(piece{2+2}, 1,2,3)" << false;
+	QTest::newRow("wrong sum") << "sum(x : x)" << false;
 }
 
 void ExpressionTest::testCorrection()

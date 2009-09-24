@@ -75,7 +75,10 @@ Operator Container::firstOperator() const
 	for(; it!=itEnd; ++it) {
 		if((*it)->type()==Object::oper) {
 			return *static_cast<Operator*>(*it);
-		} else if(it==m_params.constBegin() && m_cont_type==apply && (*it)->type()==Object::variable) {
+		} else if(it==m_params.constBegin() && m_cont_type==apply
+				&& (((*it)->type()==Object::variable) || 
+				((*it)->isContainer() &&
+					static_cast<const Container*>(*it)->containerType()==Container::lambda))) {
 			return Operator(Operator::function);
 		}
 	}

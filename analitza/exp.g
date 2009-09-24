@@ -185,7 +185,8 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
           switch (r) {
 ./
 
-Program ::= Expression ;
+Program ::= LambdaExpression; /. case $rule_number: ./
+Program ::= Expression;
 /.
 case $rule_number:
 	m_exp = "<math>"+sym(1)+"</math>";
@@ -222,9 +223,12 @@ PrimaryExpressionExt ::= PrimaryExpression;
 Expression ::= PrimaryExpressionExt;
 
 -- function
-Expression ::= Id PrimaryExpression ;      /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+sym(2)+"</apply>"; break; ./
-PrimaryExpression ::= Id tLpr FBody tRpr ; /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+sym(3)+"</apply>"; break; ./
-PrimaryExpression ::= Id tLpr       tRpr ; /. case $rule_number: sym(1) = "<apply>"+funcToTag(sym(1))+"</apply>"; break; ./
+FunctionId ::= Id; /. case $rule_number: sym(1)=funcToTag(sym(1)); break; ./
+FunctionId ::= tLpr LambdaExpression tRpr; /. case $rule_number: sym(1)=sym(2); break; ./
+
+Expression ::= FunctionId PrimaryExpression ;      /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; ./
+PrimaryExpression ::= FunctionId tLpr FBody tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
+PrimaryExpression ::= FunctionId tLpr       tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+"</apply>"; break; ./
 
 -- function's body
 FBody ::= Parameters ;
@@ -245,7 +249,7 @@ case $rule_number:
 ./
 
 -- lambda
-Expression ::= BVars tLambda Expression;
+LambdaExpression ::= BVars tLambda Expression;
 /.
 case $rule_number:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
@@ -276,6 +280,7 @@ Expression ::= Expression tDiv Expression ; /. case $rule_number: sym(1) = "<app
 Expression ::= Expression tPow Expression ; /. case $rule_number: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tQm  Expression ; /. case $rule_number: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; ./
 Expression ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
+Expression ::= Id tAssig LambdaExpression;  /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
 
 Parameters ::= Expression ;
 Parameters ::= Parameters tComa Expression ;
@@ -285,17 +290,17 @@ case $rule_number:
 	break;
 ./
 
-BValue ::= Value;
+BValue ::= Id;
 /.
 case $rule_number:
-	sym(1) = "<bvar>"+sym(1)+"</bvar>";
+	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>";
 	break;
 ./
 
-BValue ::= Value tEq Limits;
+BValue ::= Id tEq Limits;
 /.
 case $rule_number:
-	sym(1) = "<bvar>"+sym(1)+"</bvar>"+sym(3);
+	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>"+sym(3);
 	break;
 ./
 

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -56,6 +56,7 @@ Expression Analitza::evaluate()
 	
 	if(m_exp.isCorrect()) {
 		Object *o=eval(m_exp.tree(), true, QSet<QString>());
+		
 		o=simp(o);
 		e.setTree(o);
 	} else {
@@ -84,119 +85,125 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		const Container* c = (Container*) branch;
 		
 // 		Q_ASSERT(!c->isEmpty());
-		if(c->containerType()==Container::declare) {
-			Ci *var = (Ci*) c->m_params[0];
-			ret = eval(c->m_params[1], true, unscoped);
-			ret=simp(ret);
-			insertVariable(var->name(), ret);
-		} else if(c->containerType()==Container::piecewise) {
-			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
-			
-			bool boundeddep=false;
-			for(; !ret && it!=itEnd; ++it) {
-				Container *p=static_cast<Container*>(*it);
-				Q_ASSERT( (*it)->isContainer() &&
-					(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
-				bool isPiece = p->containerType()==Container::piece;
-				if(isPiece) {
-					Object *cond=eval(p->m_params[1], resolve, unscoped);
-					cond=simp(cond);
-					boundeddep=boundeddep || hasTheVar(unscoped.toList(), cond);
-					if(cond->type()==Object::value) {
-						Cn* cval=static_cast<Cn*>(cond);
-						if(cval->isTrue()) {
-							ret=eval(p->m_params[0], resolve, unscoped);
-						}
-					}
-					delete cond;
-				} else { //FIXME: Maybe should look for more pieces?
-					if(!boundeddep)
-						ret=eval(p->m_params[0], resolve, unscoped);
-				}
-			}
-			
-			if(!ret)
-				ret=c->copy();
-		} else if(c->containerType()==Container::apply) {
-			Operator op = c->firstOperator();
-			switch(op.operatorType()) {
-				case Operator::diff: {
-					//FIXME: Must support multiple bvars
-					QStringList bvars = c->bvarList();
-					ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
-					break;
-				} case Operator::none:
-					ret = eval(c->m_params[0], resolve, unscoped);
-					break;
-				default: { //FIXME: Should we replace the function? the only problem appears if undeclared var in func
-					//This code aims to scope any bounded function
-					const Container *c = (Container*) branch;
-					Operator op(c->firstOperator());
-					if(op==Operator::function && op.isBounded()) {
-						//it is a function. I'll take only this case for the moment
-						//it is only meant for operations with scoped variables that _change_ its value => have a value
-						const Container *cbody=0;
-						QStringList bvars;
-						if(op==Operator::function) {
-							Ci *func= (Ci*) c->m_params[0];
-							if(m_vars->contains(func->name())) { //FIXME: Don't really know if i fixed that properly
-								Object* body= m_vars->value(func->name()); //body is the value
-								if(!body->isContainer()) { //if it is a value variable
-									ret = eval(body, resolve, unscoped);
-									break;
-								}
-								cbody = (Container*) body;
-								
-								bvars=cbody->bvarList();
-								
-								int i=0;
-								foreach(const QString& bvar, bvars) {
-									Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
-									m_vars->stack(bvar, val);
-									delete val;
-								}
+		switch(c->containerType()) {
+			case Container::declare: {
+				Ci *var = (Ci*) c->m_params[0];
+				ret = eval(c->m_params[1], true, unscoped);
+				ret=simp(ret);
+				insertVariable(var->name(), ret);
+			}	break;
+			case Container::piecewise: {
+				Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+				
+				bool boundeddep=false;
+				for(; !ret && it!=itEnd; ++it) {
+					Container *p=static_cast<Container*>(*it);
+					Q_ASSERT( (*it)->isContainer() &&
+						(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
+					bool isPiece = p->containerType()==Container::piece;
+					if(isPiece) {
+						Object *cond=eval(p->m_params[1], resolve, unscoped);
+						cond=simp(cond);
+						boundeddep=hasTheVar(unscoped, cond);
+						if(cond->type()==Object::value) {
+							Cn* cval=static_cast<Cn*>(cond);
+							if(cval->isTrue()) {
+								ret=eval(p->m_params[0], resolve, unscoped);
 							}
 						}
-						
-						if(cbody) {
-							ret=eval(cbody->m_params.last(), resolve, unscoped);
-						} else {
-							ret=c->copy();
-						}
-						
-						foreach(const QString & bvar, bvars)
-							m_vars->destroy(bvar);
-						
-					} else {
-						QSet<QString> newUnscoped(unscoped);
-						if(op.isBounded()) {
-							newUnscoped+=c->bvarList().toSet();
-						}
-						Container *r = c->copy();
-						Container::iterator it(r->firstValue());
-						for(; it!=r->m_params.end(); ++it) {
-							Object *o=*it;
-							*it= eval(*it, resolve, newUnscoped);
-							delete o;
-						}
-						
-						ret=r;
+						delete cond;
+					} else { //FIXME: Maybe should look for more pieces?
+						if(!boundeddep)
+							ret=eval(p->m_params[0], resolve, unscoped);
 					}
-				} break;
+				}
+				
+				if(!ret)
+					ret=c->copy();
+			} 	break;
+			case Container::apply: {
+				Operator op = c->firstOperator();
+				switch(op.operatorType()) {
+					case Operator::diff: {
+						//FIXME: Must support multiple bvars
+						QStringList bvars = c->bvarList();
+						ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
+						break;
+					} case Operator::none:
+						ret = eval(c->m_params[0], resolve, unscoped);
+						break;
+					case Operator::function: {
+							//it is a function. I'll take only this case for the moment
+							//it is only meant for operations with scoped variables that _change_ its value => have a value
+							const Container *cbody=0;
+							
+							Object* body=eval(c->m_params[0], true, unscoped);
+							
+							if(body && body->isContainer())
+								cbody = (Container*) body;
+							else {
+								if(body)
+									m_err << i18n("We can only call lambda values");
+								ret=c->copy();
+								delete body;
+								break;
+							}
+							Q_ASSERT(cbody);
+							
+							QStringList bvars=cbody->bvarList();
+							
+							int i=0;
+							foreach(const QString& bvar, bvars) {
+								Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
+								m_vars->stack(bvar, val);
+								delete val;
+							}
+							
+							ret=eval(cbody->m_params.last(), resolve, unscoped);
+							
+							foreach(const QString & bvar, bvars)
+								m_vars->destroy(bvar);
+							
+							delete body;
+						}	break;
+					default: {
+							QSet<QString> newUnscoped(unscoped);
+							if(op.isBounded()) {
+								newUnscoped+=c->bvarList().toSet();
+							}
+							Container *r = c->copy();
+							Container::iterator it(r->firstValue());
+							for(; it!=r->m_params.end(); ++it) {
+								Object *o=*it;
+								*it= eval(*it, resolve, newUnscoped);
+								delete o;
+							}
+							
+							ret=r;
+						}	break;
+				}	break;
 			}
-		} else if(c->containerType()==Container::lambda) {
-			QSet<QString> newUnscoped(unscoped);
-			newUnscoped+=c->bvarList().toSet();
-			
-			Container *r = c->copy();
-			Object* old=r->m_params.last();
-			r->m_params.last()=eval(old, false, newUnscoped);
-			delete old;
-			
-			ret=r;
-		} else if(c->containerType()==Container::math && !c->m_params.isEmpty()) {
-			//TODO: Multiline. Add a loop here!
-			ret=eval(c->m_params[0], resolve, unscoped);
+			case Container::lambda: {
+				QSet<QString> newUnscoped(unscoped);
+				newUnscoped+=c->bvarList().toSet();
+				
+				Container *r = c->copy();
+				Object* old=r->m_params.last();
+				r->m_params.last()=eval(old, false, newUnscoped);
+				delete old;
+				
+				ret=r;
+			} break;
+			case Container::math:
+				ret=0;
+				foreach(const Object* o, c->m_params) {
+					delete ret;
+					ret=eval(o, resolve, unscoped);
+				}
+				break;
+			default:
+				Q_ASSERT(false);
+				break;
 		}
 	} else if(resolve && branch->type()==Object::variable) {
 		//FIXME: Should check if it is that crappy 
@@ -219,6 +226,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		}
 		ret=nv;
 	}
+	
 	if(!ret)
 		ret=branch->copy();
 	Q_ASSERT(ret);
@@ -576,14 +584,16 @@ Object* Analitza::calc(const Object* root)
 Object* Analitza::operate(const Container* c)
 {
 	Q_ASSERT(c);
-	Object* ret;
+	Object* ret=0;
 	
 	Q_ASSERT(!c->isEmpty());
 	
 	switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Container::math:
-		case Container::lambda:
 			ret=calc(*c->firstValue());
+			break;
+		case Container::lambda:
+			return c->copy();
 			break;
 		case Container::apply:
 		{
@@ -607,12 +617,7 @@ Object* Analitza::operate(const Container* c)
 				ret=calc(deriv);
 				delete deriv;
 			} else if(opt==Operator::function) {
-				Ci* var= (Ci*) c->m_params[0];
-				
-				if(var->isFunction())
-					ret = func(*c);
-				else
-					ret = calc(c->m_params[0]);
+				ret = func(*c);
 			} else {
 				QList<Object*> numbers;
 				Container::const_iterator it = c->firstValue(), itEnd=c->m_params.constEnd();
@@ -671,12 +676,12 @@ Object* Analitza::operate(const Container* c)
 	return ret;
 }
 
-Object* Analitza::boundedOperation(const Container& n, const Operator& t, double initial)
+Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
 {
 	QStringList bvars=n.bvarList();
 	Q_ASSERT(!bvars.isEmpty());
 	
-	Object* ret=new Cn(initial);
+	Object* ret=initial;
 	QString var= bvars.first();
 	
 	Object* objectUl=n.ulimit();
@@ -697,7 +702,7 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, double
 		
 		if(dl>ul) {
 			corr=false;
-			m_err.append(i18n("The uplimit in the summatory is greater than the downlimit"));
+			m_err.append(i18n("The uplimit is greater than the downlimit"));
 		}
 	} else {
 		m_err.append(i18n("Uncorrect uplimit or downlimit."));
@@ -731,12 +736,12 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, double
 
 Object* Analitza::product(const Container& n)
 {
-	return boundedOperation(n, Operator(Operator::times), 1.);
+	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
 }
 
 Object* Analitza::sum(const Container& n)
 {
-	return boundedOperation(n, Operator(Operator::plus), 0.);
+	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
 }
 
 Object* Analitza::selector(const Object* index, const Object* vector)
@@ -771,37 +776,29 @@ bool Analitza::isFunction(const Ci& func) const
 
 Object* Analitza::func(const Container& n)
 {
-	if(n.m_params.isEmpty() || n.m_params[0]->type()!=Object::variable) {
-		m_err << i18n("Trying to call an empty or invalid function");
+	Object* obj=calc(n.m_params[0]);
+	
+	if(!obj->isContainer() || static_cast<Container*>(obj)->containerType()!=Container::lambda) {
+		m_err << i18n("Trying to call an invalid function");
 		return new Cn(0.);
 	}
 	
 	Object* ret=0;
-	Ci funct(*static_cast<Ci*>(n.m_params[0]));
+	Container *function = (Container*) obj;
+	QStringList vars = function->bvarList();
 	
-	if(funct.type()!=Object::variable || !funct.isFunction() || !m_vars->contains(funct.name())) {
-		m_err << i18n("The function <em>%1</em> does not exist", funct.name());
-		return new Cn(0.);
+	int i=0;
+	
+	foreach(const QString& param, vars) {
+		Object* val=calc(n.m_params[++i]);
+		m_vars->stack(param, val);
+		delete val;
 	}
 	
-	Object* obj = m_vars->value(funct.name());
-	if(obj->isContainer()) {
-		Container *function = (Container*) obj;
-		QStringList var = function->bvarList();
-		
-		for(int i=0; i<var.count(); i++) {
-			Object* val=calc(n.m_params[i+1]);
-			m_vars->stack(var[i], val);
-			delete val;
-		}
-		
-		ret=calc(function->m_params[var.count()]);
-		
-		for(int i=0; i<var.count(); i++) {
-			m_vars->destroy(var[i]);
-		}
-	} else
-		ret=calc(obj);
+	ret=calc(function->m_params.last());
+	
+	foreach(const QString& param, vars)
+		m_vars->destroy(param);
 	
 	return ret;
 }
@@ -1089,7 +1086,7 @@ Object* Analitza::simp(Object* root)
 					//if bvars is empty, we are dealing with an invalid sum()
 					QStringList bvars=c->bvarList();
 					it = c->firstValue();
-					if(!bvars.isEmpty() && !hasTheVar(bvars, *it)) {
+					if(!bvars.isEmpty() && !hasTheVar(bvars.toSet(), *it)) {
 						Container *cDiff=new Container(Container::apply);
 						cDiff->appendBranch(new Operator(Operator::minus));
 						cDiff->appendBranch(c->ulimit()->copy());
@@ -1374,7 +1371,7 @@ Object* Analitza::simpSum(Container * c)
 			if(it==firstV)
 				firstFound=true;
 			
-			if(!firstFound || hasTheVar(bvars, *it)) {
+			if(!firstFound || hasTheVar(bvars.toSet(), *it)) {
 				if(firstFound)
 					multCount++;
 				sum.append(*it);
@@ -1614,7 +1611,7 @@ bool Analitza::insertVariable(const QString & name, const Object * value)
 	return correct;
 }
 
-bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
+bool Analitza::hasTheVar(const QSet<QString> & vars, const Object * o)
 {
 	bool found=false;
 	const Ci* cand;
@@ -1628,10 +1625,10 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 		}	break;
 		case Object::container: {
 			const Container *c=static_cast<const Container*>(o);
-			QStringList bvars=c->bvarList(), varsCopy=vars;
+			QSet<QString> bvars=c->bvarList().toSet(), varsCopy=vars;
 			foreach(const QString &var, bvars) {
 				if(varsCopy.contains(var))
-					varsCopy.removeAll(var);
+					varsCopy.remove(var);
 			}
 			found=hasTheVar(varsCopy, c);
 		}	break;
@@ -1648,7 +1645,7 @@ bool Analitza::hasTheVar(const QStringList & vars, const Object * o)
 	return found;
 }
 
-bool Analitza::hasTheVar(const QStringList & vars, const Container * c)
+bool Analitza::hasTheVar(const QSet<QString> & vars, const Container * c)
 {
 	bool found=false;
 	if(c->containerType()!=Container::bvar) {

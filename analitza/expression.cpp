@@ -138,8 +138,21 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 			}
 			
 			if(op==Operator::function) {
-				if(c->m_params[0]->type()!=Object::variable) {
-					m_err << i18n("The first parameter in a function should be the name");
+				const Object *o=c->m_params[0];
+				bool isLambda=o->isContainer() &&
+					static_cast<const Container*>(o)->containerType()==Container::lambda;
+				bool isFunc = isLambda || o->type()==Object::variable;
+				
+				if(isLambda) {
+					const Container* lambda=static_cast<const Container*>(o);
+					QStringList bvars=lambda->bvarList();
+					if(bvars.count()!=cnt-1) {
+						m_err << i18n("Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
+					}
+				}
+				
+				if(!isFunc) {
+					m_err << i18n("Wrong function definition");
 					ret=false;
 				}
 			}
@@ -277,8 +290,11 @@ Object* Expression::branch(const QDomElement& elem)
 			if(elem.hasChildNodes()) {
 				d->m_err << i18n("The %1 operator cannot have child contexts.", elem.tagName());
 			} else {
-				op= new Operator(Operator::toOperatorType(elem.tagName()));
-				ret = op;
+				Operator::OperatorType type=Operator::toOperatorType(elem.tagName());
+				if(type==Operator::none)
+					d->m_err << i18n("The element '%1' is not an operator.", elem.tagName());
+				else
+					ret = op = new Operator(type);
 			}
 			break;
 		case Object::variable:

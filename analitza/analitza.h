@@ -143,10 +143,10 @@ class ANALITZA_EXPORT Analitza
 		Object* derivative(const QString &var, const Container*);
 		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
-		Object* boundedOperation(const Container& n, const Operator& t, double initial);
+		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
 		
-		static bool hasTheVar(const QStringList& vars, const Object* o);
-		static bool hasTheVar(const QStringList& vars, const Container* c);
+		static bool hasTheVar(const QSet<QString> &vars, const Object *o);
+		static bool hasTheVar(const QSet<QString>& vars, const Container* c);
 };
 
 #endif

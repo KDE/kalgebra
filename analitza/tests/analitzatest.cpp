@@ -69,6 +69,7 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("boolean and") << "and(1,0)" << 0.;
 	QTest::newRow("boolean or") << "or(0,1)" << 1.;
 	QTest::newRow("boolean not") << "not(0)" << 1.;
+	QTest::newRow("lambda") << "(x->x+2)(2)" << 4.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
@@ -81,7 +82,9 @@ void AnalitzaTest::testTrivialCalculate()
 	a->setExpression(e);
 	QVERIFY(a->isCorrect());
 	QCOMPARE(a->evaluate().toReal().value(), result);
+	QVERIFY(a->isCorrect());
 	QCOMPARE(a->calculate().toReal().value(), result);
+	QVERIFY(a->isCorrect());
 }
 
 void AnalitzaTest::testTrivialEvaluate_data()
@@ -130,7 +133,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33}" << "33";
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << "33";
 	
-	QTest::newRow("lambda") << "f:=q->2" << "2";
+	QTest::newRow("lambda") << "f:=q->2" << "q->2";
 // 	QTest::newRow("boolean and") << "and(x,0)" << "false";
 }
 
@@ -227,7 +230,7 @@ void AnalitzaTest::testCorrection_data()
 	script.clear();
 	script << "f:=x->diff(x^2)";
 	script << "f(3)";
-	QTest::newRow("diff function") << script << 6.;	
+	QTest::newRow("diff function") << script << 6.;
 }
 
 void AnalitzaTest::testCorrection()
@@ -272,17 +275,18 @@ void AnalitzaTest::testUncorrection_data()
 	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
 	QTest::newRow("wrong sum") << QStringList("sum(x : x=10..0)");
-	QTest::newRow("wrong sum2") << QStringList("sum(x : x)");
 	QTest::newRow("recursive var") << QStringList("ww:=ww+1");
-	QTest::newRow("xxx") << QStringList("piecewise {scalarproduct(vector{x, 1/x})}");
 	QTest::newRow("nopiece") << QStringList("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }");
-	QTest::newRow("wrong piece") << QStringList("plus(piece{2+2}, 1,2,3)");
 	
 	QStringList script;
 	script << "a:=b";
 	script << "b:=a";
 	QTest::newRow("var dependency cycle") << script;
 	
+	script.clear();
+	script << "x:=3";
+	script << "x(3)";
+	QTest::newRow("value call") << script;
 }
 
 void AnalitzaTest::testUncorrection()
@@ -434,7 +438,6 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
 	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
-	QTest::newRow("unexpected lambda") << "a+a=0..10->2";
 }
 
 void AnalitzaTest::testCrash()

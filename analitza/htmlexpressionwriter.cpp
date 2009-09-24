@@ -85,6 +85,9 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			QString s = c->visit(this);
 			Operator child_op = c->firstOperator();
 			
+			if(i==0 && c->containerType()==Container::lambda)
+				func=true;
+			
 			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
 				s=oper('(')+s+oper(')');
 			}
@@ -125,6 +128,9 @@ QString HtmlExpressionWriter::accept(const Container* var)
 		case Container::apply:
 			if(func){
 				QString n = ret.takeFirst();
+				if(n.contains('-'))
+					n='('+n+')';
+				
 				toret += n+oper('(')+ret.join(oper(", "))+oper(')');
 			} else if(op==0)
 				toret += ret.join(" ");

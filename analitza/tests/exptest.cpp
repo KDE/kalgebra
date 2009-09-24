@@ -42,6 +42,7 @@ void ExpTest::testSimple_data()
 	
 	QTest::newRow("1 value") << "1" << "<math><cn>1</cn></math>";
 	QTest::newRow("addition") << "1+2" << "<math><apply><plus /><cn>1</cn><cn>2</cn></apply></math>";
+	QTest::newRow("equality") << "1=2" << "<math><apply><eq /><cn>1</cn><cn>2</cn></apply></math>";
 	QTest::newRow("substraction") << "2-3" << "<math><apply><minus /><cn>2</cn><cn>3</cn></apply></math>";
 	QTest::newRow("unary minus alone") << "-3" << "<math><apply><minus /><cn>3</cn></apply></math>";
 	QTest::newRow("x*unary minus") << "x*(-3)" << "<math><apply><times /><ci>x</ci>"
@@ -64,7 +65,6 @@ void ExpTest::testSimple_data()
 												"<ci>x</ci><ci>y</ci></apply></math>";
 	QTest::newRow("function_np") << "sin 1/x" << "<math><apply><divide /><apply><sin /><cn>1</cn></apply><ci>x</ci></apply></math>";
 	QTest::newRow("block") << "blk{x, y}" << "<math><blk><ci>x</ci><ci>y</ci></blk></math>";
-	QTest::newRow("lambda") << "x->(3)" << "<math><lambda><bvar><ci>x</ci></bvar><cn>3</cn></lambda></math>";
 	
 	QTest::newRow("sum") << "sum(x : x=1..10)" << "<math>"
 			"<apply><sum /><bvar><ci>x</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit>"
@@ -78,14 +78,13 @@ void ExpTest::testSimple_data()
 	
 	QTest::newRow("piecewise2") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }" << "<math><declare><ci>fib</ci><lambda><bvar><ci>n</ci></bvar><piecewise><piece><cn>0</cn><apply><eq /><ci>n</ci><cn>0</cn></apply></piece><piece><cn>1</cn><apply><eq /><ci>n</ci><cn>1</cn></apply></piece><otherwise><apply><plus /><apply><ci type='function'>fib</ci><apply><minus /><ci>n</ci><cn>1</cn></apply></apply><apply><ci type='function'>fib</ci><apply><minus /><ci>n</ci><cn>2</cn></apply></apply></apply></otherwise></piecewise></lambda></declare></math>";
 	
-	QTest::newRow("lambda2") << "(x, y)->(x+y)" << "<math><lambda><bvar><ci>x</ci></bvar><bvar><ci>y</ci></bvar>"
-								"<apply><plus /><ci>x</ci><ci>y</ci></apply></lambda></math>";
-	QTest::newRow("lambda3") << "y->y" << "<math><lambda><bvar><ci>y</ci></bvar>"
-								"<ci>y</ci></lambda></math>";
+	QTest::newRow("lambda") << "f:=x->(3)" << "<math><declare><ci>f</ci><lambda><bvar><ci>x</ci></bvar><cn>3</cn></lambda></declare></math>";
+	QTest::newRow("lambda2") << "f:=(x, y)->(x+y)"
+				<< "<math><declare><ci>f</ci><lambda><bvar><ci>x</ci></bvar><bvar><ci>y</ci></bvar><apply><plus /><ci>x</ci><ci>y</ci></apply></lambda></declare></math>";
+	QTest::newRow("lambda3") << "g:=y->y" << "<math><declare><ci>g</ci><lambda><bvar><ci>y</ci></bvar><ci>y</ci></lambda></declare></math>";
 	QTest::newRow("unary minus") << "1*(-2)" << "<math><apply><times /><cn>1</cn><apply>"
 												"<minus /><cn>2</cn></apply></apply></math>";
-	QTest::newRow("boundedlambda") << "q=0..10->q" << "<math><lambda><bvar><ci>q</ci></bvar><uplimit><cn>10</cn>"
-										"</uplimit><downlimit><cn>0</cn></downlimit><ci>q</ci></lambda></math>";
+	QTest::newRow("boundedlambda") << "f:=q=0..10->q" << "<math><declare><ci>f</ci><lambda><bvar><ci>q</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit><cn>0</cn></downlimit><ci>q</ci></lambda></declare></math>";
 	QTest::newRow("bounds and !limit") << "func(x:x)" << "<math><apply><ci type='function'>func</ci>"
 									"<bvar><ci>x</ci></bvar><ci>x</ci></apply></math>";
 	QTest::newRow("bounds and limit") << "func(x+y : x=0..1)" << 
@@ -94,6 +93,7 @@ void ExpTest::testSimple_data()
 				"<apply><plus /><ci>x</ci><ci>y</ci></apply></apply></math>";
 	QTest::newRow("bounds and limit") << "card(vector { x, y, z })"
 				<< "<math><apply><card /><vector><ci>x</ci><ci>y</ci><ci>z</ci></vector></apply></math>";
+	QTest::newRow("lambda call") << "(x->x+2)(2)" << "<math><apply><lambda><bvar><ci>x</ci></bvar><apply><plus /><ci>x</ci><cn>2</cn></apply></lambda><cn>2</cn></apply></math>";
 }
 
 void ExpTest::testSimple()
