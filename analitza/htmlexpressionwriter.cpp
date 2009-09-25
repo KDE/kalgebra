@@ -66,7 +66,6 @@ QString HtmlExpressionWriter::accept(const Operator* op)
 QString HtmlExpressionWriter::accept(const Container* var)
 {
 	QStringList ret;
-	bool func=false;
 	Operator *op=0;
 	QString bounds;
 	QStringList bvars;
@@ -78,15 +77,11 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			op = (Operator*) var->m_params[i];
 		else if(var->m_params[i]->type() == Object::variable) {
 			Ci *b = (Ci*) var->m_params[i];
-			func|=b->isFunction();
 			ret << b->visit(this);
 		} else if(var->m_params[i]->type() == Object::container) {
 			Container *c = (Container*) var->m_params[i];
 			QString s = c->visit(this);
 			Operator child_op = c->firstOperator();
-			
-			if(i==0 && c->containerType()==Container::lambda)
-				func=true;
 			
 			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
 				s=oper('(')+s+oper(')');
@@ -108,6 +103,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 		} else 
 			ret << var->m_params[i]->visit(this);
 	}
+	bool func=!op || (op->operatorType()==Operator::function);
 	
 	QString toret;
 	switch(var->containerType()) {
@@ -128,7 +124,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 		case Container::apply:
 			if(func){
 				QString n = ret.takeFirst();
-				if(n.contains('-'))
+				if(var->m_params.first()->type()!=Object::variable)
 					n='('+n+')';
 				
 				toret += n+oper('(')+ret.join(oper(", "))+oper(')');

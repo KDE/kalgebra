@@ -134,6 +134,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33}" << "33";
 	
 	QTest::newRow("lambda") << "f:=q->2" << "q->2";
+// 	QTest::newRow("selector lambda") << "selector(2, vector{x->x, x->x+2})" << "x->x+2";
 // 	QTest::newRow("boolean and") << "and(x,0)" << "false";
 }
 
@@ -231,8 +232,14 @@ void AnalitzaTest::testCorrection_data()
 	script << "f:=x->diff(x^2)";
 	script << "f(3)";
 	QTest::newRow("diff function") << script << 6.;
+	
+	script.clear();
+	script << "fv:=vector{x->x, x->x+2}";
+	script << "(selector(1, fv))(1)+(selector(2, fv))(2)";
+	QTest::newRow("selector+lambda") << script << 5.;
 }
 
+//testCalculate
 void AnalitzaTest::testCorrection()
 {
 	QFETCH(QStringList, expression);
@@ -240,16 +247,17 @@ void AnalitzaTest::testCorrection()
 	
 	Analitza b;
 	Expression res;
-	double val;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
+		if(!e.isCorrect()) qDebug() << "error" << e.error();
 		QVERIFY(e.isCorrect());
 		
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
-		val=b.calculate().toReal().value();
+		b.calculate();
+		QVERIFY(b.isCorrect());
 	}
-	QCOMPARE(val, result);
+	QCOMPARE(b.calculate().toReal().value(), result);
 	
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -259,6 +267,7 @@ void AnalitzaTest::testCorrection()
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
+		QVERIFY(b.isCorrect());
 	}
 	QCOMPARE(res.toString(), Cn(result).toString());
 }
@@ -344,6 +353,7 @@ void AnalitzaTest::testEvaluate()
 	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
+		if(!e.isCorrect()) qDebug() << "XXXX" << e.error();
 		QVERIFY(e.isCorrect());
 		
 		b.setExpression(e);

@@ -88,135 +88,131 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
           act = m_stateStack.at(m_tos++);
           switch (r) {
 
-#line 188 "exp.g"
- case 0: 
-#line 190 "exp.g"
+#line 189 "exp.g"
 
-case 1:
+case 0:
 	m_exp = "<math>"+sym(1)+"</math>";
 	break;
 
-#line 197 "exp.g"
- case 2: 
-#line 199 "exp.g"
+#line 196 "exp.g"
+ case 1: 
+#line 198 "exp.g"
 
-case 3:
+case 2:
 	sym(1) = lexer->current.val;
 	break;
 
-#line 207 "exp.g"
+#line 206 "exp.g"
 
-case 5:
+case 4:
 	sym(1) = "<ci>"+sym(1)+"</ci>";
 	break;
 
-#line 215 "exp.g"
+#line 214 "exp.g"
 
-case 7:
+case 6:
 	sym(1) = sym(2);
 	break;
 
+#line 225 "exp.g"
+ case 9: sym(1)=sym(2); break; 
 #line 226 "exp.g"
  case 10: sym(1)=funcToTag(sym(1)); break; 
-#line 227 "exp.g"
- case 11: sym(1)=sym(2); break; 
+#line 228 "exp.g"
+ case 11: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; 
 #line 229 "exp.g"
- case 12: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; 
+ case 12: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; 
 #line 230 "exp.g"
- case 13: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; 
-#line 231 "exp.g"
- case 14: sym(1) = "<apply>"+sym(1)+"</apply>"; break; 
-#line 237 "exp.g"
+ case 13: sym(1) = "<apply>"+sym(1)+"</apply>"; break; 
+#line 236 "exp.g"
 
-case 16:
+case 15:
 	sym(1) = sym(3)+sym(1);
 	break;
 
-#line 245 "exp.g"
+#line 244 "exp.g"
 
-case 17:
+case 16:
 	sym(1) = '<'+sym(1)+'>'+sym(3)+"</"+sym(1)+'>';
 	break;
 
-#line 253 "exp.g"
+#line 252 "exp.g"
 
-case 18:
+case 17:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
 	break;
 
-#line 261 "exp.g"
+#line 260 "exp.g"
 
-case 19:
+case 18:
 	sym(1) = "<apply><minus />"+sym(2)+"</apply>";
 	break;
 
-#line 268 "exp.g"
+#line 267 "exp.g"
 
-case 20:
+case 19:
 	sym(1) = "<otherwise>"+sym(2)+"</otherwise>";
 	break;
 
+#line 274 "exp.g"
+ case 20: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
 #line 275 "exp.g"
- case 21: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
+ case 21: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 276 "exp.g"
- case 22: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 22: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 277 "exp.g"
- case 23: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 23: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
 #line 278 "exp.g"
- case 24: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
+ case 24: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
 #line 279 "exp.g"
- case 25: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
+ case 25: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 280 "exp.g"
- case 26: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 26: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
 #line 281 "exp.g"
- case 27: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
-#line 282 "exp.g"
- case 28: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; 
-#line 283 "exp.g"
- case 29: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; 
-#line 287 "exp.g"
+ case 27: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; 
+#line 285 "exp.g"
 
-case 31:
+case 29:
 	sym(1) += sym(3);
 	break;
 
-#line 294 "exp.g"
+#line 292 "exp.g"
 
-case 32:
+case 30:
 	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>";
 	break;
 
-#line 301 "exp.g"
+#line 299 "exp.g"
 
-case 33:
+case 31:
 	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>"+sym(3);
 	break;
 
-#line 310 "exp.g"
+#line 308 "exp.g"
 
-case 35:
+case 33:
 	sym(1) = sym(2);
 	break;
 
-#line 317 "exp.g"
+#line 315 "exp.g"
 
-case 36:
+case 34:
 	sym(1) = sym(1)+sym(3);
 	break;
 
-#line 324 "exp.g"
+#line 322 "exp.g"
 
-case 37:
+case 35:
 	sym(1) += sym(3);
 	break;
 
-#line 331 "exp.g"
+#line 329 "exp.g"
 
-case 38:
+case 36:
 	sym(1) = "<uplimit>"+sym(3)+"</uplimit><downlimit>"+sym(1)+"</downlimit>";
 	break;
 
-#line 337 "exp.g"
+#line 335 "exp.g"
 
 		} // switch
 		m_stateStack[m_tos] = nt_action(act, lhs[r] - TERMINAL_COUNT);
@@ -249,7 +245,7 @@ case 38:
 			for (int s = 0; s < shifts; ++s) {
 				expectedTokens += '\''+QLatin1String(spell[expected_tokens[s]])+'\'';
 			}
-			error=i18nc("error message", "Expected %1 instead of %2", expectedTokens.join(i18n(", ")), tokFound);
+			error=i18nc("error message", "Expected %1 instead of '%2'", expectedTokens.join(i18n(", ")), tokFound);
 		} else if(tokFoundType==tLpr) {
 			error=i18n("Missing right parenthesis");
 		} else if(tokFoundType==tRpr || tokFoundType==tRcb) {

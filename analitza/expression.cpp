@@ -141,19 +141,14 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 				const Object *o=c->m_params[0];
 				bool isLambda=o->isContainer() &&
 					static_cast<const Container*>(o)->containerType()==Container::lambda;
-				bool isFunc = isLambda || o->type()==Object::variable;
 				
 				if(isLambda) {
 					const Container* lambda=static_cast<const Container*>(o);
 					QStringList bvars=lambda->bvarList();
 					if(bvars.count()!=cnt-1) {
 						m_err << i18n("Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
+						ret=false;
 					}
-				}
-				
-				if(!isFunc) {
-					m_err << i18n("Wrong function definition");
-					ret=false;
 				}
 			}
 			

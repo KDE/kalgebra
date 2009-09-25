@@ -185,7 +185,6 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
           switch (r) {
 ./
 
-Program ::= LambdaExpression; /. case $rule_number: ./
 Program ::= Expression;
 /.
 case $rule_number:
@@ -223,12 +222,12 @@ PrimaryExpressionExt ::= PrimaryExpression;
 Expression ::= PrimaryExpressionExt;
 
 -- function
+FunctionId ::= tLpr Expression tRpr; /. case $rule_number: sym(1)=sym(2); break; ./
 FunctionId ::= Id; /. case $rule_number: sym(1)=funcToTag(sym(1)); break; ./
-FunctionId ::= tLpr LambdaExpression tRpr; /. case $rule_number: sym(1)=sym(2); break; ./
 
 Expression ::= FunctionId PrimaryExpression ;      /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; ./
-PrimaryExpression ::= FunctionId tLpr FBody tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
-PrimaryExpression ::= FunctionId tLpr       tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+"</apply>"; break; ./
+Expression ::= FunctionId tLpr FBody tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= FunctionId tLpr       tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+"</apply>"; break; ./
 
 -- function's body
 FBody ::= Parameters ;
@@ -249,7 +248,7 @@ case $rule_number:
 ./
 
 -- lambda
-LambdaExpression ::= BVars tLambda Expression;
+Expression ::= BVars tLambda Expression;
 /.
 case $rule_number:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
@@ -280,7 +279,6 @@ Expression ::= Expression tDiv Expression ; /. case $rule_number: sym(1) = "<app
 Expression ::= Expression tPow Expression ; /. case $rule_number: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tQm  Expression ; /. case $rule_number: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; ./
 Expression ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
-Expression ::= Id tAssig LambdaExpression;  /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
 
 Parameters ::= Expression ;
 Parameters ::= Parameters tComa Expression ;
@@ -366,7 +364,7 @@ case $rule_number:
 			for (int s = 0; s < shifts; ++s) {
 				expectedTokens += '\''+QLatin1String(spell[expected_tokens[s]])+'\'';
 			}
-			error=i18nc("error message", "Expected %1 instead of %2", expectedTokens.join(i18n(", ")), tokFound);
+			error=i18nc("error message", "Expected %1 instead of '%2'", expectedTokens.join(i18n(", ")), tokFound);
 		} else if(tokFoundType==tLpr) {
 			error=i18n("Missing right parenthesis");
 		} else if(tokFoundType==tRpr || tokFoundType==tRcb) {

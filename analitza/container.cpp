@@ -71,19 +71,12 @@ Container* Container::copy() const
 
 Operator Container::firstOperator() const
 {
-	const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
-	for(; it!=itEnd; ++it) {
-		if((*it)->type()==Object::oper) {
-			return *static_cast<Operator*>(*it);
-		} else if(it==m_params.constBegin() && m_cont_type==apply
-				&& (((*it)->type()==Object::variable) || 
-				((*it)->isContainer() &&
-					static_cast<const Container*>(*it)->containerType()==Container::lambda))) {
-			return Operator(Operator::function);
-		}
+	foreach(const Object* o, m_params) {
+		if(o->type()==Object::oper)
+			return *static_cast<const Operator*>(o);
 	}
 	
-	return Operator(Operator::none);
+	return Operator(Operator::function);
 }
 
 QString Container::visit(ExpressionWriter* e) const

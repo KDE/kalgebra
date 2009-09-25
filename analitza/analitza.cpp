@@ -102,8 +102,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
 					bool isPiece = p->containerType()==Container::piece;
 					if(isPiece) {
-						Object *cond=eval(p->m_params[1], resolve, unscoped);
-						cond=simp(cond);
+						Object *cond=simp(eval(p->m_params[1], resolve, unscoped));
 						boundeddep=hasTheVar(unscoped, cond);
 						if(cond->type()==Object::value) {
 							Cn* cval=static_cast<Cn*>(cond);
@@ -137,7 +136,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						//it is only meant for operations with scoped variables that _change_ its value => have a value
 						const Container *cbody=0;
 						
-						Object* body=eval(c->m_params[0], true, unscoped);
+						Object* body=simp(eval(c->m_params[0], true, unscoped));
 						
 						if(body && body->isContainer())
 							cbody = (Container*) body;
@@ -155,6 +154,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						int i=0;
 						foreach(const QString& bvar, bvars) {
 							Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
+							
 							m_vars->stack(bvar, val);
 							delete val;
 						}
@@ -572,7 +572,6 @@ Object* Analitza::calc(const Object* root)
 					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
 				ret = new Cn(0.);
 			}
-			
 			break;
 		case Object::oper:
 		case Object::none:

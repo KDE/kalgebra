@@ -131,10 +131,10 @@ void ExpTest::testExp_data()
 	QTest::newRow("lol") << "times((x),(y))" << "<math><apply><times /><ci>x</ci><ci>y</ci></apply></math>";
 	QTest::newRow("lol1") << "times((x),(y),((z)))" << "<math><apply><times /><ci>x</ci><ci>y</ci><ci>z</ci></apply></math>";
 	QTest::newRow("notimes") << "2x" << "<math><apply><times /><cn>2</cn><ci>x</ci></apply></math>";
-	QTest::newRow("notimes_sin") << "2(sin x)" <<
-		"<math><apply><times /><cn>2</cn><apply><sin /><ci>x</ci></apply></apply></math>";
-	QTest::newRow("notimes_sin") << "2sin(x)" <<
-		"<math><apply><times /><cn>2</cn><apply><sin /><ci>x</ci></apply></apply></math>";
+// 	QTest::newRow("notimes_sin") << "2(sin x)" <<
+// 		"<math><apply><times /><cn>2</cn><apply><sin /><ci>x</ci></apply></apply></math>";
+// 	QTest::newRow("notimes_sin") << "2sin(x)" <<
+// 		"<math><apply><times /><cn>2</cn><apply><sin /><ci>x</ci></apply></apply></math>";
 }
 
 void ExpTest::testExp()
