@@ -84,7 +84,6 @@ void ExpTest::testSimple_data()
 	QTest::newRow("lambda3") << "g:=y->y" << "<math><declare><ci>g</ci><lambda><bvar><ci>y</ci></bvar><ci>y</ci></lambda></declare></math>";
 	QTest::newRow("unary minus") << "1*(-2)" << "<math><apply><times /><cn>1</cn><apply>"
 												"<minus /><cn>2</cn></apply></apply></math>";
-	QTest::newRow("boundedlambda") << "f:=q=0..10->q" << "<math><declare><ci>f</ci><lambda><bvar><ci>q</ci></bvar><uplimit><cn>10</cn></uplimit><downlimit><cn>0</cn></downlimit><ci>q</ci></lambda></declare></math>";
 	QTest::newRow("bounds and !limit") << "func(x:x)" << "<math><apply><ci type='function'>func</ci>"
 									"<bvar><ci>x</ci></bvar><ci>x</ci></apply></math>";
 	QTest::newRow("bounds and limit") << "func(x+y : x=0..1)" << 

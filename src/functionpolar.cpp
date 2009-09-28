@@ -29,7 +29,7 @@ using std::sqrt;
 
 struct FunctionPolar : public FunctionImpl
 {
-	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
+	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v, 0, 2*M_PI) {}
 	FunctionPolar(const FunctionPolar &fp) : FunctionImpl(fp) {}
 	
 	void updatePoints(const QRect& viewport);
@@ -54,8 +54,8 @@ void FunctionPolar::updatePoints(const QRect& viewport)
 	if(int(resolution())==points.capacity())
 		return;
 	
-	double ulimit=uplimit(2*pi);
-	double dlimit=downlimit(0);
+	double ulimit=uplimit();
+	double dlimit=downlimit();
 	
 	if(ulimit<=dlimit) {
 		m_err += i18n("Cannot have downlimit ≥ uplimit");
@@ -88,8 +88,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
 	
-	double ulimit=uplimit(2*pi);
-	double dlimit=downlimit(0);
+	double ulimit=uplimit();
+	double dlimit=downlimit();
 	
 	if(th<dlimit) th=dlimit;
 	if(th>ulimit) th=ulimit;

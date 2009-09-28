@@ -33,23 +33,28 @@ function::function()
 
 // #include "container.h"
 
-function::function(const QString &name, const Expression& newFunc, Variables* v, const QColor& color)
-	: m_function(0), m_show(true), m_color(color), m_name(name)
+function::function(const QString &name, const Expression& newFunc, Variables* v,
+				   const QColor& color, double uplimit, double downlimit)
+	: m_function(0), m_expression(newFunc), m_show(true), m_color(color), m_name(name)
 {
 	if(newFunc.isCorrect()) {
 //		objectWalker(newFunc.tree());
 		QStringList bvars=newFunc.isLambda() ? newFunc.bvarList() : QStringList("x");
 		if(!FunctionFactory::self()->contains(bvars))
 			m_err << "Function type not recognized";
-		else
+		else {
 			m_function=FunctionFactory::self()->item(bvars, newFunc, v);
+			if(downlimit!=uplimit)
+				m_function->setLimits(downlimit, uplimit);
+		}
 	} else {
 		m_err << "The expression is not correct";
 	}
 }
 
 function::function(const function& f)
-	: m_function(0), m_show(f.m_show), m_color(f.m_color), m_name(f.m_name), m_err(f.m_err)
+	: m_function(0), m_expression(f.expression()), m_show(f.m_show), m_color(f.m_color)
+	, m_name(f.m_name), m_err(f.m_err)
 {
 	if(f.m_function)
 		m_function=f.m_function->copy();
@@ -71,6 +76,7 @@ function function::operator=(const function& f)
 			Q_ASSERT(m_function);
 		} else
 			m_function=0;
+		m_expression=f.m_expression;
 		m_show=f.m_show;
 		m_color=f.m_color;
 		m_name=f.m_name;
@@ -147,15 +153,9 @@ QStringList function::errors() const
 	return err;
 }
 
-QString function::toString() const
-{
-	Q_ASSERT(m_function);
-	return m_function->toString();
-}
-
 const Expression& function::expression() const
 {
-	return m_function->func.expression();
+	return m_expression;
 }
 
 QList<int> function::jumps() const
@@ -168,3 +168,4 @@ void function::cleanupBoundings()
 	foreach(const QString& var, m_function->boundings())
 		m_function->func.variables()->destroy(var);
 }
+

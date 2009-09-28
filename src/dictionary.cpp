@@ -118,7 +118,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 	
 	m_funcs->clear();
-	m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0)));
+	m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0), 0, 0));
 }
 
 void Dictionary::setFilter(const QString &filter)

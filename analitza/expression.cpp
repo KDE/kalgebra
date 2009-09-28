@@ -373,40 +373,6 @@ bool Expression::operator==(const Expression & e) const
 	return e.d->m_tree && d->m_tree && Container::equalTree(e.d->m_tree, d->m_tree);
 }
 
-Expression Expression::uplimit() const
-{
-	Expression ret;
-	if(d->m_tree->isContainer()) {
-		const Container *c=static_cast<const Container*>(d->m_tree);
-		
-		Container::const_iterator value=c->firstValue();
-		if((*value)->isContainer()) {
-			const Object* limit=static_cast<const Container*>(*value)->ulimit();
-			if(limit)
-				ret=Expression(limit->copy());
-		}
-	}
-	
-	return ret;
-}
-
-Expression Expression::downlimit() const
-{
-	Expression ret;
-	if(d->m_tree->isContainer()) {
-		const Container *c=static_cast<const Container*>(d->m_tree);
-		
-		Container::const_iterator value=c->firstValue();
-		if((*value)->isContainer()) {
-			const Object* limit=static_cast<const Container*>(*value)->dlimit();
-			if(limit)
-				ret=Expression(limit->copy());
-		}
-	}
-	
-	return ret;
-}
-
 void Expression::clear()
 {
 	delete d->m_tree;

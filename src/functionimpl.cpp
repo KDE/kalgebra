@@ -32,10 +32,19 @@ using std::cos;
 using std::sin;
 using std::sqrt;
 
-FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
-	: points(), func(v), m_deriv(0), m_res(0)
+FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl, double defUl)
+	: points(), func(v), m_deriv(0), m_res(0), mUplimit(defUl), mDownlimit(defDl)
 {
-	func.setExpression(newFunc);
+	Expression e;
+	if(newFunc.bvarList().isEmpty())
+		e=newFunc;
+	else { //It's a lambda, we need to take it off
+		const Container* c=dynamic_cast<const Container*>(newFunc.tree());
+		const Container* d=dynamic_cast<const Container*>(c->m_params.last());
+		e=Expression(d->m_params.last()->copy());
+	}
+	
+	func.setExpression(e);
 	if(func.isCorrect()) {
 		Expression deriv = func.derivative();
 		if(func.isCorrect())
@@ -47,6 +56,7 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v)
 
 FunctionImpl::FunctionImpl(const FunctionImpl& fi)
 	: points(), func(fi.func.variables()), m_deriv(0), m_res(fi.m_res)
+	, mUplimit(fi.mUplimit), mDownlimit(fi.mDownlimit)
 {
 // 	Q_ASSERT(fi.isCorrect());
 	func.setExpression(fi.func.expression());
@@ -90,32 +100,6 @@ bool FunctionImpl::addValue(const QPointF& p)
 	return appended;
 }
 
-double calcExp(const Expression& exp, Variables* v, double defaultValue)
-{
-	Expression r;
-	if(exp.isCorrect())
-	{
-		Analitza d(v);
-		d.setExpression(exp);
-		r=d.calculate();
-	}
-	
-	if(r.isCorrect() && r.isReal())
-		return r.toReal().value();
-	else
-		return defaultValue;
-}
-
-double FunctionImpl::downlimit(double defaultValue) const
-{
-	return calcExp(func.expression().downlimit(), func.variables(), defaultValue);
-}
-
-double FunctionImpl::uplimit(double defaultValue) const
-{
-	return calcExp(func.expression().uplimit(), func.variables(), defaultValue);
-}
-
 void FunctionImpl::setResolution(uint res)
 {
 	Q_ASSERT(res>2);
@@ -125,4 +109,21 @@ void FunctionImpl::setResolution(uint res)
 		m_jumps.clear();
 	}
 	m_res=res;
+}
+
+double FunctionImpl::uplimit() const
+{
+	return mUplimit;
+}
+
+double FunctionImpl::downlimit() const
+{
+	return mDownlimit;
+}
+
+void FunctionImpl::setLimits(double d, double u)
+{
+	Q_ASSERT(u>=d);
+	mUplimit=u;
+	mDownlimit=d;
 }

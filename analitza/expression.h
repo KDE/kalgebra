@@ -98,16 +98,6 @@ class ANALITZA_EXPORT Expression
 		Expression operator=(const Expression& e);
 		
 		/**
-		 *	Returns the uplimit field tree.
-		 */
-		Expression uplimit() const;
-		
-		/**
-		 *	Returns the downlimit field tree.
-		 */
-		Expression downlimit() const;
-		
-		/**
 		 *	Returns whether it is a lambda-expression.
 		 */
 		bool isLambda() const;

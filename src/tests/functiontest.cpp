@@ -69,8 +69,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";
 	QTest::newRow("polar->function") << "q->sin q";
-	QTest::newRow("polar->hard") << "q=1..10->ceiling(q/(2*pi))";
-	QTest::newRow("polar->hard") << "q=2..(4+4)->ceiling(q/(2*pi))";
+	QTest::newRow("polar->hard") << "q->ceiling(q/(2*pi))";
 	QTest::newRow("polar->strange") << "q->q/q";
 	
 	QTest::newRow("parametric") << "t->vector{t,t**2}";
@@ -82,14 +81,11 @@ void FunctionTest::testCopy()
 {
 	QFETCH(QString, input);
 	Expression exp(input, false);
-	if(input.contains("..")) {
-		QVERIFY(exp.uplimit().isCorrect());
-		QVERIFY(exp.downlimit().isCorrect());
-	}
 	
-	function f("hola", exp, m_vars);
+	function f("hola", exp, m_vars, Qt::red, 0,0);
+	QVERIFY(f.isCorrect());
 	f.setResolution(resolution);
-	if(!f.isCorrect()) qDebug() << "xxxxxx" << f.errors();
+	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
 	QVERIFY(f.isCorrect());
 	function f2(f);
 	QVERIFY(f2.isCorrect());
@@ -111,6 +107,8 @@ void FunctionTest::testCopy()
 // 		}
 // 	}
 // 	QVERIFY(found);
+	
+	QCOMPARE(f3.expression(), exp);
 	
 	int ant=-1;
 	foreach(int pos, f3.jumps()) {
@@ -143,7 +141,7 @@ void FunctionTest::testCorrect()
 {
 	QFETCH(QString, input);
 	QFETCH(bool, correct);
-	function f3("hola", Expression(input, false), m_vars);
+	function f3("hola", Expression(input, false), m_vars, Qt::red, 0,0);
 	
 	if(f3.isCorrect()) {
 		f3.setResolution(resolution);
@@ -177,7 +175,7 @@ void FunctionTest::testJumps()
 	QFETCH(QString, input);
 	QFETCH(int, jumps);
 	
-	function f3("hola", Expression(input, false), m_vars);
+	function f3("hola", Expression(input, false), m_vars, Qt::red, 0,0);
 	QVERIFY(f3.isCorrect());
 	
 	f3.setResolution(resolution);

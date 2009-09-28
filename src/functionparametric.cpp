@@ -10,7 +10,7 @@
 
 struct FunctionParametric : public FunctionImpl
 {
-	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
+	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI) {}
 	FunctionParametric(const FunctionParametric &fx) : FunctionImpl(fx) {}
 	
 	void updatePoints(const QRect& viewport);
@@ -30,8 +30,8 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	if(int(resolution())==points.capacity())
 		return;
 	
-	double ulimit=uplimit(2*M_PI);
-	double dlimit=downlimit(0);
+	double ulimit=uplimit();
+	double dlimit=downlimit();
 	
 	if(ulimit<=dlimit) {
 		kDebug() << "Cannot have downlimit ≥ uplimit";
@@ -89,5 +89,5 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 
 QLineF FunctionParametric::derivative(const QPointF& p) const
 {
-	return QLineF();
+	return QLineF(p,p);
 }

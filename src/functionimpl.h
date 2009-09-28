@@ -27,16 +27,16 @@ class Expression;
 
 struct FunctionImpl
 {
-	explicit FunctionImpl(const Expression& e, Variables* v);
+	explicit FunctionImpl(const Expression& e, Variables* v, double defDl, double defUl);
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
 	bool isCorrect() const { return m_err.isEmpty() && func.isCorrect(); }
-	QString toString() const { return func.expression().toString(); }
 	
 	uint resolution() const { return m_res; }
 	void setResolution(uint res);
 	
 	//helpers
+	/** adds a value to the points vector is needed. @returns if it was added. */
 	bool addValue(const QPointF& p);
 	bool isSimilar(double a, double b, double diff=0.0001);
 	
@@ -48,8 +48,9 @@ struct FunctionImpl
 	virtual FunctionImpl* copy()=0;
 	virtual QStringList boundings() const=0;
 	
-	double uplimit(double defaultValue) const;
-	double downlimit(double defaultValue) const;
+	double uplimit() const;
+	double downlimit() const;
+	void setLimits(double downlimit, double uplimit);
 	
 	QVector<QPointF> points;
 	QList<int> m_jumps;
@@ -57,6 +58,7 @@ struct FunctionImpl
 	Expression *m_deriv;
 	QStringList m_err;
 	uint m_res;
+	double mUplimit, mDownlimit;
 };
 
 #endif

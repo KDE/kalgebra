@@ -114,105 +114,107 @@ case 6:
 	sym(1) = sym(2);
 	break;
 
-#line 225 "exp.g"
+#line 224 "exp.g"
  case 9: sym(1)=sym(2); break; 
-#line 226 "exp.g"
+#line 225 "exp.g"
  case 10: sym(1)=funcToTag(sym(1)); break; 
-#line 228 "exp.g"
+#line 227 "exp.g"
  case 11: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; 
-#line 229 "exp.g"
+#line 228 "exp.g"
  case 12: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; 
-#line 230 "exp.g"
- case 13: sym(1) = "<apply>"+sym(1)+"</apply>"; break; 
-#line 236 "exp.g"
+#line 229 "exp.g"
+ case 13: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; 
+#line 235 "exp.g"
 
 case 15:
-	sym(1) = sym(3)+sym(1);
+	sym(1).prepend(sym(3));
 	break;
 
-#line 244 "exp.g"
+#line 242 "exp.g"
 
 case 16:
+	sym(1)=sym(3)+sym(5)+sym(1);
+	break;
+
+#line 250 "exp.g"
+
+case 17:
 	sym(1) = '<'+sym(1)+'>'+sym(3)+"</"+sym(1)+'>';
 	break;
 
-#line 252 "exp.g"
+#line 258 "exp.g"
 
-case 17:
+case 18:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
 	break;
 
-#line 260 "exp.g"
+#line 266 "exp.g"
 
-case 18:
+case 19:
 	sym(1) = "<apply><minus />"+sym(2)+"</apply>";
 	break;
 
-#line 267 "exp.g"
+#line 273 "exp.g"
 
-case 19:
+case 20:
 	sym(1) = "<otherwise>"+sym(2)+"</otherwise>";
 	break;
 
-#line 274 "exp.g"
- case 20: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
-#line 275 "exp.g"
- case 21: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
-#line 276 "exp.g"
- case 22: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
-#line 277 "exp.g"
- case 23: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
-#line 278 "exp.g"
- case 24: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
-#line 279 "exp.g"
- case 25: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 280 "exp.g"
- case 26: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
+ case 21: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
 #line 281 "exp.g"
- case 27: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; 
+ case 22: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
+#line 282 "exp.g"
+ case 23: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
+#line 283 "exp.g"
+ case 24: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
+#line 284 "exp.g"
+ case 25: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
 #line 285 "exp.g"
+ case 26: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
+#line 286 "exp.g"
+ case 27: sym(1) = "<apply><eq />"    +sym(1)+sym(3)+"</apply>"; break; 
+#line 288 "exp.g"
+ case 28: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
+#line 289 "exp.g"
+ case 29: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; 
+#line 294 "exp.g"
 
-case 29:
+case 31:
 	sym(1) += sym(3);
 	break;
 
-#line 292 "exp.g"
-
-case 30:
-	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>";
-	break;
-
-#line 299 "exp.g"
-
-case 31:
-	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>"+sym(3);
-	break;
-
-#line 308 "exp.g"
+#line 303 "exp.g"
 
 case 33:
 	sym(1) = sym(2);
 	break;
 
-#line 315 "exp.g"
+#line 310 "exp.g"
 
 case 34:
-	sym(1) = sym(1)+sym(3);
+	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>";
 	break;
 
-#line 322 "exp.g"
+#line 317 "exp.g"
 
 case 35:
 	sym(1) += sym(3);
 	break;
 
-#line 329 "exp.g"
+#line 324 "exp.g"
 
 case 36:
+	sym(1) += sym(3);
+	break;
+
+#line 331 "exp.g"
+
+case 37:
 	sym(1) = "<uplimit>"+sym(3)+"</uplimit><downlimit>"+sym(1)+"</downlimit>";
 	break;
 
-#line 335 "exp.g"
+#line 337 "exp.g"
 
 		} // switch
 		m_stateStack[m_tos] = nt_action(act, lhs[r] - TERMINAL_COUNT);

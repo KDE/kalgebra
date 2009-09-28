@@ -32,7 +32,7 @@ using std::fabs;
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
-	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v) {}
+	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v ,0,0) {}
 	FunctionY(const FunctionY &fy) : FunctionImpl(fy) {}
 	
 	void updatePoints(const QRect& viewport);

@@ -23,6 +23,7 @@
 #include <QPixmap>
 #include <QFont>
 #include <cmath>
+#include <expression.h>
 
 FunctionsModel::FunctionsModel(QObject *parent)
 	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500)
@@ -42,7 +43,7 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 				ret=f.name();
 				break;
 			case 1:
-				ret=f.toString();
+				ret=f.expression().toString();
 				break;
 		}
 	} else if(role==Qt::DecorationRole) {
@@ -103,7 +104,7 @@ bool FunctionsModel::addFunction(const function& func)
 		funclist.last().setResolution(m_resolution);
 		m_selectedRow=funclist.count()-1;
 		endInsertRows();
-		sendStatus(i18n("%1 function added", func.toString()));
+		sendStatus(i18n("%1 function added", func.name()));
 		
 		emit functionModified(func.name(), func.expression());
 	}

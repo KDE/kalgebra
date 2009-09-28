@@ -44,7 +44,7 @@ class FunctionEdit : public QWidget
 Q_OBJECT
 public:
 	/** Constructor. */
-	explicit FunctionEdit(QWidget *parent=0, Qt::WFlags f = 0 );
+	explicit FunctionEdit(QWidget *parent=0);
 	
 	/** Destructor. */
 	~FunctionEdit();
@@ -90,8 +90,20 @@ public slots:
 signals:
 	/** Tells that the result has been accepted. */
 	void accept();
+	
+private slots:
+	void edit();
+	void ok();
+	void colorChange(int);
+	void updateUplimit();
+	void updateDownlimit();
+	
 private:
+	void setState(const QString& text, const QColor& state);
+	
 	ExpressionEdit *m_func;
+	ExpressionEdit *m_uplimit, *m_downlimit;
+	double m_calcUplimit, m_calcDownlimit;
 	KLineEdit *m_name;
 	QPushButton *m_ok;
 	QLabel *m_valid;
@@ -104,10 +116,6 @@ private:
 	bool m_modmode;
 	
 	void focusInEvent(QFocusEvent*);
-private slots:
-	void edit();
-	void ok();
-	void colorChange(int);
 };
 
 #endif

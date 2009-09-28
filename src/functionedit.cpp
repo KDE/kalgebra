@@ -33,13 +33,14 @@
 #include "variables.h"
 #include "functionsmodel.h"
 #include "functionfactory.h"
+#include <KTabWidget>
 
 namespace {
-	static int resolution = 200;
+	static const int resolution = 200;
 }
 
-FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
-		QWidget(parent, f)
+FunctionEdit::FunctionEdit(QWidget *parent)
+	: QWidget(parent), m_calcUplimit(0), m_calcDownlimit(0)
 {
 	this->setWindowTitle(i18n("Add/Edit a function"));
 	
@@ -75,13 +76,31 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	m_funcsModel->setResolution(resolution);
 //	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
 	
-	m_graph = new Graph2D(m_funcsModel, this);
+	KTabWidget* viewTabs=new KTabWidget(this);
+	
+	m_graph = new Graph2D(m_funcsModel, viewTabs);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
+	
+	viewTabs->addTab(m_graph, i18n("Preview"));
+	QWidget *options=new QWidget(viewTabs);
+	options->setLayout(new QVBoxLayout);
+	m_uplimit=new ExpressionEdit(options);
+	m_downlimit=new ExpressionEdit(options);
+	m_uplimit->setText("2*pi");
+	m_downlimit->setText("0");
+	options->layout()->addWidget(new QLabel(i18n("From:"), options));
+	options->layout()->addWidget(m_downlimit);
+	options->layout()->addWidget(new QLabel(i18n("To:"), options));
+	options->layout()->addWidget(m_uplimit);
+	options->layout()->addItem(new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+	viewTabs->addTab(options, i18n("Options"));
+	connect(m_uplimit, SIGNAL(textChanged()), this, SLOT(updateUplimit()));
+	connect(m_downlimit, SIGNAL(textChanged()), this, SLOT(updateDownlimit()));
 	
 	QHBoxLayout *m_butts = new QHBoxLayout;
 	m_ok = new QPushButton(i18n("OK"), this);
@@ -95,7 +114,7 @@ FunctionEdit::FunctionEdit(QWidget *parent, Qt::WFlags f) :
 	topLayout->addWidget(m_func);
 	topLayout->addWidget(m_color);
 	topLayout->addLayout(validLayout);
-	topLayout->addWidget(m_graph);
+	topLayout->addWidget(viewTabs);
 	topLayout->addLayout(m_butts);
 	
 	m_name->hide(); //FIXME: Remove this when the name has any sense
@@ -138,18 +157,100 @@ void FunctionEdit::colorChange(int)
 	setColor(m_color->color());
 }
 
+static double calcExp(const Expression& exp, Variables* v, bool* corr)
+{
+	Q_ASSERT(exp.isCorrect());
+	Analitza d(v);
+	d.setExpression(exp);
+	Expression r=d.calculate();
+	
+	*corr=r.isCorrect() && r.isReal();
+	
+	if(*corr)
+		return r.toReal().value();
+	else
+		return 0.;
+}
+
+void FunctionEdit::updateUplimit()
+{
+	bool corr;
+	Expression e=m_uplimit->expression();
+	if(e.isCorrect()) {
+		m_calcUplimit=calcExp(e, m_vars, &corr);
+		m_uplimit->setCorrect(corr);
+		if(corr)
+			edit();
+	}
+}
+
+void FunctionEdit::updateDownlimit()
+{
+	bool corr;
+	Expression e=m_downlimit->expression();
+	if(e.isCorrect()) {
+		m_calcDownlimit=calcExp(e, m_vars, &corr);
+		m_downlimit->setCorrect(corr);
+		if(corr)
+			edit();
+	}
+}
+
+void FunctionEdit::setState(const QString& text, const QColor& state)
+{
+	QFont errorFont=m_valid->font();
+	errorFont.setBold(true);
+	m_valid->setFont(errorFont);
+	
+	QString errorm=text, error=text;
+	QFontMetrics fm(errorFont);
+	int textWidth=fm.width(errorm);
+	
+	if(textWidth>m_valid->width()) {
+		for(int i=3; i<errorm.size(); ++i) {
+			QString aux=i18nc("text ellipsis", "%1...", errorm.mid(0,i));
+			
+			textWidth=fm.width(aux);
+			if(textWidth > m_valid->width()) {
+				break;
+			} else
+				error=aux;
+		}
+	}
+	m_valid->setText(text);
+	
+	QPalette p=m_valid->palette();
+	p.setColor(foregroundRole(), state);
+	m_valid->setPalette(p);
+	
+	if(state==Qt::red)
+		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
+	else
+		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
+}
+
 ///Let's see if the exp is correct
 void FunctionEdit::edit()
 {
 	if(m_func->text().isEmpty()) {
 		m_func->setCorrect(true);
 		m_ok->setEnabled(false);
-		m_valid->setText(QString());
+		m_valid->clear();
 		m_valid->setToolTip(QString());
 		m_validIcon->setPixmap(KIcon("flag-yellow").pixmap(QSize(16,16)));
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();
+		return;
+	}
+	
+	if(!m_uplimit->isCorrect() || !m_downlimit->isCorrect()) {
+		setState(i18n("The options you specified are not correct"), Qt::red);
+		return;
+	}
+	
+	if(m_calcDownlimit>m_calcUplimit) {
+		setState(i18n("Downlimit can't be smaller than uplimit"), Qt::red);
 		return;
 	}
 	
@@ -165,10 +266,8 @@ void FunctionEdit::edit()
 	if(f.isCorrect()) {
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(f);
-		m_valid->setToolTip(QString());
-		m_valid->setText(QString("<b style='color:#090'>%1:=%2</b>")
-			.arg(m_name->text()).arg(f.expression().toString()));
-		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
+		setState(QString("%1:=%2")
+			.arg(m_name->text()).arg(f.expression().toString()), QColor(0, 140, 0));
 	} else {
 		QStringList errors = f.errors();
 		Q_ASSERT(!errors.isEmpty());
@@ -177,25 +276,7 @@ void FunctionEdit::edit()
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		
-		QFont errorFont=m_valid->font();
-		errorFont.setBold(true);
-		
-		QString errorm=errors.first(), error=errors.first();
-		QFontMetrics fm(errorFont);
-		int textWidth=fm.width(errorm);
-		
-		if(textWidth>m_valid->width()) {
-			for(int i=3; i<errorm.size(); ++i) {
-				QString aux=errorm.mid(0,i)+"...";
-				
-				textWidth=fm.width(aux);
-				if(textWidth > m_valid->width()) {
-					break;
-				} else
-					error=aux;
-			}
-		}
-		m_valid->setText(i18n("<b style='color:red'>%1</b>", error));
+		setState(errors.first(), Qt::red);
 		m_valid->setToolTip(errors.join("\n"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
@@ -216,7 +297,7 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 
 function FunctionEdit::createFunction() const
 {
-	return function(name(), expression(), m_vars, color());
+	return function(name(), expression(), m_vars, color(), m_calcUplimit, m_calcDownlimit);
 }
 
 #include "functionedit.moc"

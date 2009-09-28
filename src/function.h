@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -23,9 +23,9 @@
 #include <QRect>
 #include <QLine>
 #include <QPair>
+#include <expression.h>
 
 class Analitza;
-class Expression;
 class Variables;
 
 /**
@@ -52,7 +52,8 @@ class function
 			@param newExp the function expression tree.
 			@param color the function representation color.
 		*/
-		function(const QString& name, const Expression& newExp, Variables* v, const QColor& color=Qt::red);
+		function(const QString& name, const Expression& newExp, Variables* v, const QColor& color,
+				double uplimit, double downlimit);
 		
 		/** Destructor. */
 		~function();
@@ -102,8 +103,6 @@ class function
 		
 		QPair<QPointF, QString> calc(const QPointF& dp);
 		
-		QString toString() const;
-		
 		/** Queries if it is a correct function. */
 		bool isCorrect() const;
 		
@@ -113,10 +112,14 @@ class function
 		
 		QList<int> jumps() const;
 		
+		void setUplimit(const Expression& e);
+		void setDownlimit(const Expression& e);
+		
 	private:
 		void cleanupBoundings();
 		
 		FunctionImpl* m_function;
+		Expression m_expression;
 		bool m_show;
 		QColor m_color;
 		QString m_name;
