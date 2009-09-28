@@ -22,6 +22,11 @@
 %token tRcb		"}"
 %token tVal		"value"
 %token tEq		"="
+%token tLt		"<"
+%token tGt		">"
+%token tLeq		">="
+%token tGeq		"<="
+%token tNeq		"!="
 %token tColon	":"
 
 
@@ -30,7 +35,7 @@
 %left tLambda
 %left otherwise_prec
 %left tQm
-%left tEq
+%left tEq tNeq tLt tLeq tGt tGeq
 %left tSub tAdd
 %left tMul tDiv
 %left tPow
@@ -284,6 +289,11 @@ Expression ::= Number PrimaryExpressionExt; /. case $rule_number: sym(1) = "<app
 Expression ::= Expression tDiv Expression ; /. case $rule_number: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tPow Expression ; /. case $rule_number: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; ./
 Expression ::= Expression tEq  Expression ; /. case $rule_number: sym(1) = "<apply><eq />"    +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tLeq Expression ; /. case $rule_number: sym(1) = "<apply><leq />"   +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tGeq Expression ; /. case $rule_number: sym(1) = "<apply><geq />"   +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tLt  Expression ; /. case $rule_number: sym(1) = "<apply><lt />"    +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tGt  Expression ; /. case $rule_number: sym(1) = "<apply><gt />"    +sym(1)+sym(3)+"</apply>"; break; ./
+Expression ::= Expression tNeq Expression ; /. case $rule_number: sym(1) = "<apply><neq />"   +sym(1)+sym(3)+"</apply>"; break; ./
 
 Expression ::= Expression tQm  Expression ; /. case $rule_number: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; ./
 Expression ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./

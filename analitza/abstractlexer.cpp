@@ -38,6 +38,8 @@ QMap<QChar, int> initializeOperators()
 	operators['?']=ExpressionTable::tQm;
 	operators[':']=ExpressionTable::tColon;
 	operators['=']=ExpressionTable::tEq;
+	operators['<']=ExpressionTable::tLt;
+	operators['>']=ExpressionTable::tGt;
 	return operators;
 }
 
@@ -48,6 +50,9 @@ QMap<QString, int> initializeLongOperators()
 	longOperators[":="]=ExpressionTable::tAssig;
 	longOperators[".."]=ExpressionTable::tLimits;
 	longOperators["**"]=ExpressionTable::tPow;
+	longOperators["<="]=ExpressionTable::tLeq;
+	longOperators[">="]=ExpressionTable::tGeq;
+	longOperators["!="]=ExpressionTable::tNeq;
 	return longOperators;
 }
 

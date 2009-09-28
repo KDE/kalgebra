@@ -81,6 +81,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("bounded") << "diff(x^2:x)";
 	QTest::newRow("lambda call") << "(x->x+2)(2)";
 	QTest::newRow("lambda call") << "(selector(f, 1))(2)";
+	QTest::newRow("eq") << "2=2";
 }
 
 void ExpressionTest::testConversion()

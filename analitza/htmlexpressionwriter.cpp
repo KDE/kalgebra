@@ -131,15 +131,15 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			} else if(op==0)
 				toret += ret.join(" ");
 			else switch(op->operatorType()) {
-				case Operator::plus:
-					toret += ret.join(oper('+'));
-					break;
-				case Operator::times:
-					toret += ret.join(oper('*'));
-					break;
-				case Operator::divide:
-					toret += ret.join(oper('/'));
-					break;
+				case Operator::plus:	toret += ret.join(oper('+')); break;
+				case Operator::times:	toret += ret.join(oper('*')); break;
+				case Operator::divide:	toret += ret.join(oper('/')); break;
+				case Operator::eq:		toret += ret.join(oper("=")); break;
+				case Operator::neq:		toret += ret.join(oper("!=")); break;
+				case Operator::lt:		toret += ret.join(oper("&lt;"));  break;
+				case Operator::leq:		toret += ret.join(oper("&lt;=")); break;
+				case Operator::gt:		toret += ret.join(oper("&gt;"));  break;
+				case Operator::geq:		toret += ret.join(oper("&gt;=")); break;
 				case Operator::minus:
 					if(ret.count()==1)
 						toret += oper('-')+ret[0];

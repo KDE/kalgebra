@@ -7,36 +7,41 @@ class ExpressionTable
 public:
   enum {
     EOF_SYMBOL = 0,
-    otherwise_prec = 19,
+    otherwise_prec = 24,
     tAdd = 1,
     tAssig = 4,
-    tColon = 18,
+    tColon = 23,
     tComa = 11,
     tDiv = 6,
     tEq = 17,
+    tGeq = 21,
+    tGt = 19,
     tId = 8,
     tLambda = 9,
     tLcb = 14,
+    tLeq = 20,
     tLimits = 5,
     tLpr = 12,
+    tLt = 18,
     tMul = 3,
+    tNeq = 22,
     tPow = 7,
     tQm = 10,
     tRcb = 15,
     tRpr = 13,
     tSub = 2,
     tVal = 16,
-    uminus_prec = 20,
+    uminus_prec = 25,
 
-    ACCEPT_STATE = 68,
-    RULE_COUNT = 39,
-    STATE_COUNT = 75,
-    TERMINAL_COUNT = 21,
+    ACCEPT_STATE = 78,
+    RULE_COUNT = 44,
+    STATE_COUNT = 85,
+    TERMINAL_COUNT = 26,
     NON_TERMINAL_COUNT = 15,
 
-    GOTO_INDEX_OFFSET = 75,
-    GOTO_INFO_OFFSET = 197,
-    GOTO_CHECK_OFFSET = 197
+    GOTO_INDEX_OFFSET = 85,
+    GOTO_INFO_OFFSET = 247,
+    GOTO_CHECK_OFFSET = 247
   };
 
   static const char  *const spell [];
