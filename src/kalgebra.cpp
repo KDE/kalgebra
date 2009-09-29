@@ -93,6 +93,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(c_results, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
+	connect(c_results, SIGNAL(paste(QString)), c_exp, SLOT(insertText(QString)));
 	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	
 	////////menu
@@ -162,10 +163,10 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QAction* b_actions[6];
 	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
 	b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
+	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
+	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
 	b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
-	b_menu->addSeparator();
-	b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
 	b_menu->addAction(KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this));
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));

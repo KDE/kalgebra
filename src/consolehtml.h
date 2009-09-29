@@ -83,11 +83,16 @@ class ConsoleHtml : public KHTMLPart
 		/** Emits that something has changed. */
 		void changed();
 		
+		/** Emits the selected code to be pasted somewhere */
+		void paste(const QString& code);
+		
 	private slots:
 		void context(const QString&, const QPoint& p);
 		
 		void modifyVariable(const QString& name, const Expression& exp);
 		void removeVariable(const QString& name);
+		void paste();
+		
 	private:
 		Analitza a;
 		void sendStatus(const QString& msg) { emit status(msg); }
@@ -95,10 +100,7 @@ class ConsoleHtml : public KHTMLPart
 		QStringList m_script;
 		QStringList m_htmlLog;
 		
-		bool addEvaluation(Expression&);
-		bool addCalculation(Expression&);
-		
-		void updateView(const QString& e=QString());
+		void updateView(const QString& e);
 		
 		QString m_css;
 };

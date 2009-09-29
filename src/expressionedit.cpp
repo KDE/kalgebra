@@ -78,7 +78,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	
 	connect(this, SIGNAL(returnPressed()), this, SLOT(returnP()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMov()));
-	connect(this, SIGNAL(signalHelper(const QString&)), this, SLOT(ajudant(const QString&)));
+	connect(this, SIGNAL(signalHelper(const QString&)), this, SLOT(helper(const QString&)));
 	connect(m_completer, SIGNAL(activated(const QString&)), this, SLOT(completed(const QString&)));
 // 	connect(m_completer, SIGNAL(activated(const QModelIndex&)), this, SLOT(completed(const QModelIndex&)));
 	
@@ -320,7 +320,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 	const int op=oper.nparams();
 	if(op) {
 		if(op == -1) {
-			ajudant(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
+			helper(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
 		} else {
 			QString sample = (param < op+oper.isBounded()) ?
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
@@ -343,7 +343,7 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 				sample += p;
 			}
 			
-			ajudant(sample+')');
+			helper(sample+')');
 		}
 	} else if(a && a->variables()->contains(funcname) && a->variables()->value(funcname)->isContainer()) { //if it is a function defined by the user
 		Container *c = (Container*) a->variables()->value(funcname);
@@ -362,9 +362,9 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			if(i<params.count()-1)
 				sample+= i18nc("Function parameter separator", ", ");
 		}
-		ajudant(sample+')');
+		helper(sample+')');
 	} else
-		ajudant(QString());
+		helper(QString());
 }
 
 void ExpressionEdit::setAutocomplete(bool a)
@@ -382,7 +382,7 @@ void ExpressionEdit::removenl()
 	this->setPlainText(this->toPlainText().remove('\n'));
 }
 
-void ExpressionEdit::ajudant(const QString& msg)
+void ExpressionEdit::helper(const QString& msg)
 {
 	QFontMetrics fm( font() );
 	int curPos = 0;
@@ -391,10 +391,10 @@ void ExpressionEdit::ajudant(const QString& msg)
 // 	pixelsOffset -= contentsX();
 	QPoint pos = mapToGlobal( QPoint( pixelsOffset, height() ) );
 	
-	ajudant(msg, pos-QPoint(0, 50));
+	helper(msg, pos-QPoint(0, 50));
 }
 
-void ExpressionEdit::ajudant(const QString& msg, const QPoint& p)
+void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 {
 	if(!msg.isEmpty()){
 		QFontMetrics fm(m_helptip->font());
@@ -498,4 +498,9 @@ bool ExpressionEdit::returnPress()
 	return haveToPress;
 }
 
+void ExpressionEdit::insertText(const QString& text)
+{
+	QTextCursor tc=textCursor();
+	tc.insertText(text);
+}
 #include "expressionedit.moc"

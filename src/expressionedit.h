@@ -92,27 +92,27 @@ class ExpressionEdit : public QPlainTextEdit
 		Expression expression() const { return Expression(text(), isMathML()); }
 	public slots:
 		
-		/** Notifies that the cursor has moved. */
+		/** Inserts @p text text where the cursor is and selects it */
+		void insertText(const QString& text);
+		
+	private slots:
 		void cursorMov();
+		void updateCompleter();
 		
 		/** Shows a little tip widget containing the string @p str. If @p str is empty the widget is hidden. */
-		void ajudant(const QString& str);
-	// 	void completed(const QModelIndex &);
+		void helper(const QString& str);
 		
 		/** Tries to complete the currently edited word with the @p word. */
 		void completed(const QString &word);
-		
-		/** Updates the completer text list. */
-		void updateCompleter();
-		
-		/** Simplify the current expression. */
-		void simplify();
 		
 		/** Sets the Mode to MathML */
 		void toMathML() { setMode(AlgebraHighlighter::MathML); }
 		
 		/** Sets the Mode to Expression */
 		void toExpression() { setMode(AlgebraHighlighter::Expression); }
+		
+		/** Simplify the current expression. */
+		void simplify();
 		
 		/** Is the execution function, when return is pressed. */
 		void returnP(); //FIXME: Change my name please
@@ -123,6 +123,7 @@ class ExpressionEdit : public QPlainTextEdit
 		
 		/** Deprecated. */
 		void signalHelper(QString);
+		
 	protected:
 		/** Inherited from QTextEdit, just deals with the menu. */
 		void contextMenuEvent(QContextMenuEvent * e);
@@ -135,7 +136,7 @@ class ExpressionEdit : public QPlainTextEdit
 		bool returnPress();
 		void helpShow(const QString& funcname, int param=0);
 		static QString findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit);
-		void ajudant(const QString&, const QPoint& p);
+		void helper(const QString&, const QPoint& p);
 		QString lastWord(int);
 		QString editingWord(int pos, int &param);
 		void focusInEvent (QFocusEvent * event);

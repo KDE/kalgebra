@@ -23,9 +23,9 @@
 
 int main(int argc, char *argv[])
 {
-	KAboutData about("kalgebra", 0, ki18n(("KAlgebra")), "0.8", ki18n("A calculator"),
-			 KAboutData::License_GPL, ki18n("(C) 2006-2008 Aleix Pol Gonzalez"));
-	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@gmail.com" );
+	KAboutData about("kalgebra", 0, ki18n(("KAlgebra")), "0.9", ki18n("A calculator"),
+			 KAboutData::License_GPL, ki18n("(C) 2006-2009 Aleix Pol Gonzalez"));
+	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KApplication app;
 	

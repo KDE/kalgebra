@@ -382,7 +382,8 @@ void Graph2D::mousePressEvent(QMouseEvent *e){
 	}
 }
 
-void Graph2D::mouseReleaseEvent(QMouseEvent *e){
+void Graph2D::mouseReleaseEvent(QMouseEvent *e)
+{
 	if(m_readonly)
 		this->setCursor(Qt::ArrowCursor);
 	else

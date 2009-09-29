@@ -194,8 +194,6 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	write("</body></html>");
 	end();
 	
-// 	qDebug() << "puto!" << m_htmlLog.join("<p />\n");
-	
 	qApp->processEvents();
 // 	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
 	view()->scrollBy(0, 200);
@@ -208,11 +206,16 @@ void ConsoleHtml::copy() const
 	clipboard->setText(selectedText());
 }
 
-void ConsoleHtml::context(const QString &, const QPoint & p)
+void ConsoleHtml::context(const QString & /*url*/, const QPoint & p)
 {
 	KMenu popup;
-	if(hasSelection())
+	if(hasSelection()) {
 		popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
+		KAction *act=new KAction(KIcon("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
+		connect(act, SIGNAL(triggered()), SLOT(paste()));
+		popup.addAction(act);
+		popup.addSeparator();
+	}
 	popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
 	
 	popup.exec(p);
@@ -222,7 +225,7 @@ void ConsoleHtml::clear()
 {
 	m_script.clear();
 	m_htmlLog.clear();
-	updateView();
+	updateView(QString());
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Expression& exp)
@@ -233,6 +236,11 @@ void ConsoleHtml::modifyVariable(const QString& name, const Expression& exp)
 void ConsoleHtml::removeVariable(const QString & name)
 {
 	a.variables()->remove(name);
+}
+
+void ConsoleHtml::paste()
+{
+	emit paste(selectedText());
 }
 
 #include "consolehtml.moc"
