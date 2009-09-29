@@ -204,20 +204,18 @@ void FunctionEdit::setState(const QString& text, const QColor& state)
 	
 	QString errorm=text, error=text;
 	QFontMetrics fm(errorFont);
-	int textWidth=fm.width(errorm);
 	
-	if(textWidth>m_valid->width()) {
+	if(fm.width(errorm)>m_valid->width()) {
 		for(int i=3; i<errorm.size(); ++i) {
 			QString aux=i18nc("text ellipsis", "%1...", errorm.mid(0,i));
 			
-			textWidth=fm.width(aux);
-			if(textWidth > m_valid->width()) {
-				break;
-			} else
+			if(fm.width(aux) <= m_valid->width())
 				error=aux;
+			else
+				break;
 		}
 	}
-	m_valid->setText(text);
+	m_valid->setText(error);
 	
 	QPalette p=m_valid->palette();
 	p.setColor(foregroundRole(), state);
@@ -277,7 +275,7 @@ void FunctionEdit::edit()
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		
 		setState(errors.first(), Qt::red);
-		m_valid->setToolTip(errors.join("\n"));
+		m_valid->setToolTip(errors.join("<br />"));
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
 	m_func->setCorrect(f.isCorrect());
