@@ -356,7 +356,7 @@ QString OperatorsModel::example(Operator o)
 			s="x-2";
 			break;
 		case Operator::power:
-			s="x**2";
+			s="x^2";
 			break;
 		case Operator::rem:
 			s="rem(x, 5)";
@@ -374,37 +374,37 @@ QString OperatorsModel::example(Operator o)
 			s="max(x, 4)";
 			break;
 		case Operator::gt:
-			s="gt(x, 4)";
+			s="x>4";
 			break;
 		case Operator::lt:
-			s="lt(x, 4)";
+			s="x<4";
 			break;
 		case Operator::eq:
-			s="eq(x, 4)";
+			s="x=4";
 			break;
 		case Operator::approx:
 			s="approx(x, 4)";
 			break;
 		case Operator::neq:
-			s="neq(x, 4)";
+			s="x!=4";
 			break;
 		case Operator::geq:
-			s="geq(x, 4)";
+			s="x>=4";
 			break;
 		case Operator::leq:
-			s="leq(x, 4)";
+			s="x<=4";
 			break;
 		case Operator::_and:
-			s="and(gt(x,-2), lt(x,2))";
+			s="and((x>-2), (x<2))";
 			break;
 		case Operator::_or:
-			s="or(gt(x,2), lt(x,-2))";
+			s="or((x>2), (x>-2))";
 			break;
 		case Operator::_xor:
-			s="xor(lt(x, 0), lt(x, 3))";
+			s="xor((x>0), (x<3))";
 			break;
 		case Operator::implies:
-			s="implies(lt(x, 0), lt(x, 3))";
+			s="implies((x<0), (x<3))";
 			break;
 		case Operator::gcd:
 			s="gcd(x, 3)";
@@ -416,22 +416,22 @@ QString OperatorsModel::example(Operator o)
 			s="root(x, 2)";
 			break;
 		case Operator::selector:
-			s="piecewise { gt(x,0) ? selector(1, vector{x, 1/x}), ? selector(2, vector{x, 1/x} ) }";
+			s="piecewise { x>0 ? selector(1, vector { x, 1/x }), ? selector(2, vector { x, 1/x }) }";
 			break;
 		case Operator::sum:
-			s="x*sum(t : t=0..3)";
+			s="x*sum(t:t=0..3)";
 			break;
 		case Operator::product:
-			s="product(t : t=1..3)";
+			s="product(t:t=1..3)";
 			break;
 		case Operator::card:
-			s="card(vector{x,y,z})";
+			s="card(vector { x, y, z })";
 			break;
 		case Operator::scalarproduct:
-			s="scalarproduct(vector{0,x}, vector{x,0})";
+			s="scalarproduct(vector { 0, x }, vector { x, 0 })";
 			break;
 		case Operator::diff:
-			s="diff(x^2 : x)";
+			s="diff(x^2:x)";
 			break;
 		case Operator::factorial:
 		case Operator::arcsech:

@@ -60,9 +60,11 @@ void OperatorsModelTest::testExamples()
 		QVERIFY(!description.isEmpty());
 		QVERIFY(!sample.isEmpty());
 		QVERIFY(!example.isEmpty());
+		Expression ex(example, false);
+		QCOMPARE(ex.toString(), example);
 		
 		Analitza a;
-		a.setExpression(Expression(example, false));
+		a.setExpression(ex);
 		if(!a.isCorrect()) qDebug() << example << "1. error" << a.errors();// QVERIFY(a.isCorrect());
 		a.simplify();
 		if(!a.isCorrect()) qDebug() << example << "2. error" << a.errors();// QVERIFY(a.isCorrect());

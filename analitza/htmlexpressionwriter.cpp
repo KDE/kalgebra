@@ -134,7 +134,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 				case Operator::plus:	toret += ret.join(oper('+')); break;
 				case Operator::times:	toret += ret.join(oper('*')); break;
 				case Operator::divide:	toret += ret.join(oper('/')); break;
-				case Operator::eq:		toret += ret.join(oper("=")); break;
+				case Operator::eq:		toret += ret.join(oper('=')); break;
 				case Operator::neq:		toret += ret.join(oper("!=")); break;
 				case Operator::lt:		toret += ret.join(oper("&lt;"));  break;
 				case Operator::leq:		toret += ret.join(oper("&lt;=")); break;
