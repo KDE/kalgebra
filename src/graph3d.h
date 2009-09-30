@@ -137,10 +137,10 @@ class Graph3D : public QGLWidget
 		double default_step;
 		double default_size;
 		double zoom;
-		double **punts;
-		float graus[3];
+		double **points;
+		float rotation[3];
 		float alpha;
-		enum Type method;
+		Type method;
 		bool trans;
 		unsigned short keyspressed;
 		

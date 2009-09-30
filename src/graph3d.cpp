@@ -35,29 +35,32 @@
 #include "analitza.h"
 #include "variables.h"
 
+using std::fabs;
+using std::log10;
+
 enum ActionsEnum {
     KEYRIGHT=1<<0, KEYLEFT=1<<1, KEYUP=1<<2, KEYDOWN=1<<3, KEYAVPAG=1<<4, KEYREPAG=1<<5, KEYS=1<<6, KEYW=1<<7,
     KEYQ=1<<8, KEYE=1<<9, LCLICK=1<<10, RCLICK=1<<11, MCLICK=1<<12 };
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
-		default_step(0.15f), default_size(8.0f), zoom(1.0f), punts(0), alpha(60.),
+		default_step(0.15f), default_size(8.0f), zoom(1.0f), points(0), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
 	this->setFocusPolicy(Qt::ClickFocus);
-	graus[0] = 90.0;
-	graus[1] = 0.0;
-	graus[2] = 0.0;
+	rotation[0] = 90.0;
+	rotation[1] = 0.0;
+	rotation[2] = 0.0;
 }
 
 
 Graph3D::~Graph3D()
 {
-	if(punts) {
+	if(points) {
 		const int j= 2*static_cast<int>(default_size/default_step);
 		
 		for(int i=0; i<j; i++)
-			delete [] punts[i];
-		delete [] punts;
+			delete [] points[i];
+		delete [] points;
 	}
 }
 
@@ -118,8 +121,8 @@ void Graph3D::mouseMoveEvent(QMouseEvent *e)
 {
 	if(keyspressed & LCLICK){
 		QPoint rel = e->pos() - press;
-		graus[0] += rel.y();
-		graus[2] -= rel.x();
+		rotation[0] += rel.y();
+		rotation[2] -= rel.x();
 		
 		press = e->pos();
 		this->repaint();
@@ -150,20 +153,20 @@ void Graph3D::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	if(keyspressed & KEYDOWN)	graus[0]+=3.f;
-	if(keyspressed & KEYUP)		graus[0]-=3.f;
-	if(keyspressed & KEYAVPAG)	graus[1]+=3.f;
-	if(keyspressed & KEYREPAG)	graus[1]-=3.f;
-	if(keyspressed & KEYLEFT)	graus[2]+=3.f;
-	if(keyspressed & KEYRIGHT)	graus[2]-=3.f;
+	if(keyspressed & KEYDOWN)	rotation[0]+=3.f;
+	if(keyspressed & KEYUP)		rotation[0]-=3.f;
+	if(keyspressed & KEYAVPAG)	rotation[1]+=3.f;
+	if(keyspressed & KEYREPAG)	rotation[1]-=3.f;
+	if(keyspressed & KEYLEFT)	rotation[2]+=3.f;
+	if(keyspressed & KEYRIGHT)	rotation[2]-=3.f;
 	if(keyspressed & KEYW)		alpha/=2.f;
 	if(keyspressed & KEYS && alpha<=90.f)	alpha*=2.f;
 	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(); }
 	if(keyspressed & KEYE)		{ zoom*=2.0f; create(); }
 	
-	if(graus[0]>=360.f) graus[0]-=360.f;
-	if(graus[1]>=360.f) graus[1]-=360.f;
-	if(graus[2]>=360.f) graus[2]-=360.f;
+	if(rotation[0]>=360.f) rotation[0]-=360.f;
+	if(rotation[1]>=360.f) rotation[1]-=360.f;
+	if(rotation[2]>=360.f) rotation[2]-=360.f;
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -173,38 +176,48 @@ void Graph3D::paintGL()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(0,0,-z);
-	glRotatef(graus[0], 1.0, 0.0, 0.0);
-	glRotatef(graus[1], 0.0, 1.0, 0.0);
-	glRotatef(graus[2], 0.0, 0.0, 1.0);
+	glRotatef(rotation[0], 1.0, 0.0, 0.0);
+	glRotatef(rotation[1], 0.0, 1.0, 0.0);
+	glRotatef(rotation[2], 0.0, 0.0, 1.0);
 	
 	const double mida=default_size*zoom, step=default_step*zoom;
-	unsigned int bound=(2*mida/step)-1;
+	uint bound=(2*mida/step)-1;
 	drawAxes();
 	
-	if(punts==NULL || !func3d.isCorrect())
+	if(!points || !func3d.isCorrect())
 		return;
 	
 	if(method==Dots) {
 		glBegin(GL_POINTS);
-		for(unsigned int i=0; i<bound; i++) {
-			for(unsigned int j=0; j<bound; j++) {
-				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
-				glVertex3d(i*step-mida, j*step-mida, punts[i][j]);
+		for(uint i=0; i<bound; i++) {
+			double red=i*step/mida;
+			double x=i*step-mida;
+			for(uint j=0; j<bound; j++) {
+				double curr=points[i][j];
+				glColor3d(red, j*step/mida, curr/5);
+				glVertex3d(x,  j*step-mida, curr);
 			}
 		}
 		glEnd();
 	} else if(method == Lines) {
 		glBegin(GL_LINES);
 		
-		for(unsigned int i=0; i<bound; i++) {
-			for(unsigned int j=0; j<bound; j++) {
-				glColor3d( i*step/mida, j*step/mida, punts[i][j]/5);
+		for(uint i=0; i<bound; i++) {
+			double x=i*step-mida;
+			double red=i*step/mida;
+			int ii=i?i-1:i;
+			
+			for(uint j=0; j<bound; j++) {
+				double y=j*step - mida;
+				double curr=points[i][j];
+				glColor3d( red, j*step/mida, curr/5);
 				
-				glVertex3d( i*step-mida, j*step - mida, punts[i][j]);
-				glVertex3d( (i?i-1:i)*step-mida, j*step - mida, punts[i?i-1:i][j]);
+				glVertex3d( x, y, curr);
+				glVertex3d( ii*step-mida, y, points[ii][j]);
 				
-				glVertex3d( i*step-mida, j*step - mida, punts[i][j]);
-				glVertex3d( i*step-mida, (j?j-1:j)*step - mida, punts[i][j?j-1:j]);
+				int jj=j?j-1:j;
+				glVertex3d( x, y, curr);
+				glVertex3d( x, jj*step-mida, points[i][jj]);
 			}
 		}
 		glEnd();
@@ -222,20 +235,28 @@ void Graph3D::paintGL()
 		double transf=0.8;
 		
 		glPushMatrix();
-		for(unsigned int i=0; i<bound-1; i++) {
+		for(uint i=0; i<bound-1; i++) {
 			glPopMatrix();
 			
 			glPushMatrix();
 			glTranslatef(i*step-mida, -mida, 0);
 			glBegin(GL_TRIANGLE_STRIP);
-			for(unsigned int j=0; j<bound; j++) {
-				glTexCoord2f(j%2 ? .0f : 1.f, 0.f);
-				glColor4d((i*step-mida)/mida, (j*step-mida)/mida, 1./std::fabs(std::log10(5.+punts[i][j])), transf);
-				glVertex3d(0., j*step, punts[i][j]);
+			
+			double red=(i*step-mida)/mida;
+			double nextRed=((i+1)*step-mida)/mida;
+			for(uint j=0; j<bound; j++) {
+				float s=j%2 ? .0f : 1.f;
+				double green=(j*step-mida)/mida;
 				
-				glTexCoord2f(j%2 ? .0f : 1.f, 1.f);
-				glColor4d(((i+1)*step-mida)/mida, (j*step-mida)/mida, 1./std::fabs(std::log10(5.+punts[i+1][j])), transf);
-				glVertex3d(step, j*step, punts[i+1][j]);
+				double z=points[i][j];
+				glTexCoord2f(s, 0.f);
+				glColor4d(red, green, 1./fabs(log10(5.+z)), transf);
+				glVertex3d(0., j*step, z);
+				
+				z=points[i+1][j];
+				glTexCoord2f(s, 1.f);
+				glColor4d(nextRed, green, 1./fabs(log10(5.+z)), transf);
+				glVertex3d(step, j*step, z);
 			}
 			glEnd();
 		}
@@ -263,7 +284,7 @@ bool Graph3D::create()
 	t.restart();
 	
 	for(int i=0; i<m_n; ++i) {
-		Calculate3D *r = new Calculate3D(this, Analitza(a), punts, part*i, part*(i+1), mida, step);
+		Calculate3D *r = new Calculate3D(this, Analitza(a), points, part*i, part*(i+1), mida, step);
 		if(i+1==m_n)
 			r->setTo(2*static_cast<int>(default_size/default_step));
 		
@@ -288,8 +309,11 @@ bool Graph3D::create()
 
 void Calculate3D::run()
 {
+	if(!a.isCorrect())
+		return;
+	
 	Variables* v=a.variables();
-	Q_ASSERT(punts && v);
+	Q_ASSERT(points && v);
 	
 	const int k= static_cast<int>(size/step)*2;
 	v->modify("x", 0.);
@@ -297,14 +321,11 @@ void Calculate3D::run()
 	
 	Cn *x=(Cn*) v->value("x"), *y=(Cn*) v->value("y");
 	
-	if(!a.isCorrect())
-		return;
-	
 	for(int i=from; i<to; i++) {
 		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
 			y->setValue(j*step-size);
-			punts[i][j] = -a.calculate().toReal().value();
+			points[i][j] = -a.calculate().toReal().value();
 		}
 	}
 }
@@ -397,9 +418,9 @@ void Graph3D::keyReleaseEvent( QKeyEvent *e )
 
 void Graph3D::timeOut()
 {
-	graus[0] += 20.0;
-	graus[1] += 20.0;
-	graus[2] += 20.0;
+	rotation[0] += 20.0;
+	rotation[1] += 20.0;
+	rotation[2] += 20.0;
 	this->repaint();
 }
 
@@ -444,18 +465,18 @@ int Graph3D::load()
 void Graph3D::mem()
 {
 	const int j= 2*static_cast<int>(default_size/default_step);
-	if(punts!=0){
+	if(points!=0){
 		for(int i=0; i<j; i++)
-			delete [] punts[i];
-		delete [] punts;
+			delete [] points[i];
+		delete [] points;
 	}
 	
 	int graphsize=0;
-	punts = new double* [j];
-	Q_CHECK_PTR(punts);
+	points = new double* [j];
+	Q_CHECK_PTR(points);
 	for(int i=0; i<j; i++){
-		punts[i] = new double[j];
-		Q_CHECK_PTR(punts[i]);
+		points[i] = new double[j];
+		Q_CHECK_PTR(points[i]);
 	}
 	graphsize=sizeof(double)*j*j;
 	qDebug() << "Size: " << graphsize;
@@ -500,9 +521,9 @@ void Graph3D::resetView()
 	}
 	alpha=60.;
 	
-	graus[0] = 90.0;
-	graus[1] = 0.0;
-	graus[2] = 0.0;
+	rotation[0] = 90.0;
+	rotation[1] = 0.0;
+	rotation[2] = 0.0;
 	updateGL();
 }
 
