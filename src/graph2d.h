@@ -72,9 +72,6 @@ public:
 	/** Makes that no function is selected. */
 	void unselect();
 	
-	/** Sets the graph's viewport to @p v. */
-	void setViewport(const QRectF& v, bool repaint=true);
-	
 	/** Returns whether it has a little border frame. */
 	bool isFramed() const { return m_framed; }
 	
@@ -93,6 +90,9 @@ public:
 	/** Sets whether it is keeping the aspect ratio (1:1 grid). */
 	bool keepAspectRatio() const { return m_keepRatio; }
 	
+	/** Returns the viewing port */
+	QRectF definedViewport() const;
+	
 public slots:
 	/** Marks the image as dirty and repaints everything. */
 	void forceRepaint() { valid=false; repaint(); }
@@ -109,9 +109,14 @@ public slots:
 	/** Force the functions from @p start to @p end to be recalculated. */
 	void update( const QModelIndex & start, const QModelIndex& end );
 	
+	/** Sets the graph's viewport to @p v. */
+	void setViewport(const QRectF& v, bool repaint=true);
+	
 signals:
 	/** Emits a status when it changes. */
 	void status(const QString &msg);
+	
+	void viewportChanged(const QRectF&);
 	
 private slots:
 	void addFuncs( const QModelIndex & parent, int start, int end);

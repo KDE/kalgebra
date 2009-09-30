@@ -48,6 +48,7 @@
 #include <KLocale>
 #include <KStandardAction>
 #include "variablesdelegate.h"
+#include "viewportwidget.h"
 
 KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 {
@@ -143,10 +144,13 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_varsView->horizontalHeader()->setStretchLastSection(true);
 	b_varsView->setSelectionBehavior(QAbstractItemView::SelectRows);
 	b_varsView->setContextMenuPolicy(Qt::CustomContextMenu);
-	b_tools->addTab(b_varsView, i18n("Variables"));
-	
 	VariablesDelegate* delegate=new VariablesDelegate(b_varsView);
 	b_varsView->setItemDelegate(delegate);
+	b_tools->addTab(b_varsView, i18n("Variables"));
+	
+	ViewportWidget* b_viewport = new ViewportWidget(this);
+	b_viewport->setViewport(m_graph2d->definedViewport());
+	b_tools->addTab(b_viewport, i18n("Viewport"));
 	
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
@@ -156,6 +160,8 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
 	connect(m_graph2d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(m_graph2d, SIGNAL(viewportChanged(QRectF)), b_viewport, SLOT(setViewport(QRectF)));
+	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(setViewport(QRectF)));
 	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
 	
 	////////menu

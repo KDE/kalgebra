@@ -24,6 +24,7 @@ set(kalgebra_SRCS
 	functionpolar.cpp
 	functioncartesian.cpp
 	functionparametric.cpp
+	viewportwidget.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )

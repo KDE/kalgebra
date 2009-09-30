@@ -511,6 +511,8 @@ void Graph2D::setViewport(const QRectF& vp, bool repaint)
 	sendStatus(QString("(%1, %2)-(%3, %4)")
 			.arg(viewport.left()).arg(viewport.top()).arg(viewport.right()).arg(viewport.bottom()));
 	updateScale(repaint);
+	
+	emit viewportChanged(userViewport);
 }
 
 void Graph2D::resizeEvent(QResizeEvent *)
@@ -646,6 +648,11 @@ void Graph2D::setReadOnly(bool ro)
 void Graph2D::setModel(FunctionsModel* f)
 {
 	m_model=f;
+}
+
+QRectF Graph2D::definedViewport() const
+{
+	return userViewport;
 }
 
 #include "graph2d.moc"
