@@ -42,7 +42,7 @@ public:
 		@param s	Step between each 2 values.
 	*/
 	Calculate3D(QObject *p, const Analitza &na, double** poi, int fr, int to, double m, double s) : 
-		QThread(p), a(na), punts(poi), from(fr), to(to), size(m), step(s) {}
+		QThread(p), a(na), points(poi), from(fr), to(to), size(m), step(s) {}
 	
 	/** Runs the thread. */
 	void run();
@@ -51,7 +51,7 @@ public:
 	void setTo(int nto) { to = nto; }
 private:
 	Analitza a;
-	double **punts;
+	double **points;
 	int from;
 	int to;
 	
