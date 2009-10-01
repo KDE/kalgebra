@@ -119,8 +119,8 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("minus order") << "1-x" << "1-x";
 	QTest::newRow("minus order2") << "x-1" << "x-1";
 	QTest::newRow("after simp(minus) --simplification") << "-(x-x-x)" << "x";
-	QTest::newRow("and") << "and(gt(6,5), lt(4,5))" << "true";
-	QTest::newRow("or") << "or(gt(6,5), lt(6,5))" << "true";
+	QTest::newRow("and") << "and(6>5, 4<5)" << "true";
+	QTest::newRow("or") << "or(6>5, 6<5)" << "true";
 	
 	QTest::newRow("sum") << "sum(n : n=1..99)" << "4950";
 	QTest::newRow("sum times simplification") << "sum(n*x : n=0..99)" << "4950*x";
@@ -136,6 +136,19 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("lambda") << "f:=q->2" << "q->2";
 // 	QTest::newRow("selector lambda") << "selector(2, vector{x->x, x->x+2})" << "x->x+2";
 // 	QTest::newRow("boolean and") << "and(x,0)" << "false";
+
+	QTest::newRow("irreductible vector") << "vector { x, y, z }" << "vector { x, y, z }";
+	QTest::newRow("in-vector operations") << "vector { x+x, y+y, z-z }" << "vector { 2*x, 2*y, 0 }";
+	
+	QTest::newRow("vect+vect") << "x+vector { 2, 3, 4 }+vector { 4, 3, 2 }" << "x+vector { 6, 6, 6 }";
+	QTest::newRow("vect+2vect") << "2*vector { x, y, z }+vector{x,y,z}" << "3*vector { x, y, z }";
+	QTest::newRow("vect+null") << "vector { x, y, z }+vector{0,0,0}" << "vector { x, y, z }";
+	QTest::newRow("card") << "card(vector { x, y, z })" << "3";
+	QTest::newRow("card+var") << "card(x)" << "card(x)";
+	
+	QTest::newRow("selector+idx") << "selector(1, vector{x,y,z})" << "x";
+	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "selector(x, vector { x, y, z })";
+	QTest::newRow("selector+impossible") << "selector(1, v)" << "selector(1, v)";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -164,7 +177,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("power derivative and logarithm simplification") << "e^x" << "e^x";
 	QTest::newRow("chain rule") << "sin(x**2)" << "2*x*cos(x^2)";
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
-	QTest::newRow("piecewise") << "piecewise { lt(x, 0) ? x**2, ? x } " << "piecewise { lt(x, 0) ? 2*x, ? 1 }";
+	QTest::newRow("piecewise") << "piecewise { x<0 ? x**2, ? x } " << "piecewise { x<0 ? 2*x, ? 1 }";
 }
 
 void AnalitzaTest::testDerivativeSimple()
@@ -400,37 +413,6 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("selector3") << "selector(3, vector{1,2,3})" << "3";
 }
 
-void AnalitzaTest::testVectorEvaluate()
-{
-	QFETCH(QString, expression);
-	QFETCH(QString, result);
-	Expression e(expression, false);
-	QCOMPARE(e.isCorrect(), true);
-	
-	a->setExpression(e);
-	QCOMPARE(a->isCorrect(), true);
-	QCOMPARE(a->evaluate().toString(), result);
-}
-
-void AnalitzaTest::testVectorEvaluate_data()
-{
-	QTest::addColumn<QString>("expression");
-	QTest::addColumn<QString>("result");
-
-	QTest::newRow("irreductible vector") << "vector { x, y, z }" << "vector { x, y, z }";
-	QTest::newRow("in-vector operations") << "vector { x+x, y+y, z-z }" << "vector { 2*x, 2*y, 0 }";
-	
-	QTest::newRow("vect+vect") << "x+vector { 2, 3, 4 }+vector { 4, 3, 2 }" << "x+vector { 6, 6, 6 }";
-	QTest::newRow("vect+2vect") << "2*vector { x, y, z }+vector{x,y,z}" << "3*vector { x, y, z }";
-	QTest::newRow("vect+null") << "vector { x, y, z }+vector{0,0,0}" << "vector { x, y, z }";
-	QTest::newRow("card") << "card(vector { x, y, z })" << "3";
-	QTest::newRow("card+var") << "card(x)" << "card(x)";
-	
-	QTest::newRow("selector+idx") << "selector(1, vector{x,y,z})" << "x";
-	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "selector(x, vector { x, y, z })";
-	QTest::newRow("selector+impossible") << "selector(1, v)" << "selector(1, v)";
-}
-
 void AnalitzaTest::testCrash_data()
 {
 	QTest::addColumn<QString>("expression");
@@ -441,7 +423,7 @@ void AnalitzaTest::testCrash_data()
 // 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
-	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }";
+	QTest::newRow("simple piecewise") << "piecewise { pi=0? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
 // 	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
 // 	QTest::newRow("product_max") << "product(max(x) : x=1..5)";

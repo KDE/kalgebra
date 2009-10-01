@@ -45,9 +45,6 @@ Q_OBJECT
 		void testVector_data();
 		void testVector();
 		
-		void testVectorEvaluate_data();
-		void testVectorEvaluate();
-		
 		void testCrash_data();
 		void testCrash();
 		
