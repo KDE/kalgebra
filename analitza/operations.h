@@ -20,9 +20,7 @@
 #define OPERATIONS_H
 
 #include "operator.h"
-
-#include <QStringList>
-
+class List;
 class Cn;
 class Vector;
 
@@ -40,6 +38,10 @@ class Operations
 		static Object* reduceVectorReal(Operator::OperatorType op, Vector* vector, Cn *oper, QString &correct);
 		static Object* reduceVectorVector(Operator::OperatorType op, Vector* v1, Vector* v2, QString &correct);
 		static Object* reduceUnaryVector(Operator::OperatorType op, Vector* c, QString &correct);
+		
+		static Object* reduceRealList(Operator::OperatorType op, Cn *oper, List* vector, QString &correct);
+		static Object* reduceListList(Operator::OperatorType op, List* l1, List* l2, QString &correct);
+		static Object* reduceUnaryList(Operator::OperatorType op, List* l, QString &correct);
 };
 
 #endif

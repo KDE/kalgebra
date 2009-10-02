@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2008 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2009 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,37 +16,46 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef MATHMLPRESENTATIONEXPRESSIONWRITER_H
-#define MATHMLPRESENTATIONEXPRESSIONWRITER_H
+#ifndef LIST_H
+#define LIST_H
 
-#include "expressionwriter.h"
-#include <QMap>
-#include "operator.h"
+#include "object.h"
+#include "analitzaexport.h"
 
-/**
- *	This class represents the mathml expression writer.
- *
- *	@author Aleix Pol <aleixpol@kde.org>  
- */
-
-class MathMLPresentationExpressionWriter : public ExpressionWriter
+class ANALITZA_EXPORT List : public Object
 {
 	public:
-		typedef QString (*operatorToString)(const Container* o, MathMLPresentationExpressionWriter* w);
-		MathMLPresentationExpressionWriter(const Object* o);
+		typedef QList<Object*>::iterator iterator;
+		typedef QList<Object*>::const_iterator const_iterator;
 		
-		virtual QString accept(const Ci* var);
-		virtual QString accept(const Cn* var);
-		virtual QString accept(const Container* var);
-		virtual QString accept(const Operator* var);
-		virtual QString accept(const Vector* var);
-		virtual QString accept(const List* l);
+		List(const List& v);
+		List();
+		virtual ~List();
 		
-		QString result() const { return m_result; }
+		void appendBranch(Object* );
+		int size() const { return m_elements.size(); }
+		
+		iterator erase(const iterator& it) { return m_elements.erase(it); }
+		
+		iterator begin() { return m_elements.begin(); }
+		iterator end() { return m_elements.end(); }
+		const_iterator constBegin() const { return m_elements.constBegin(); }
+		const_iterator constEnd() const { return m_elements.constEnd(); }
+		
+		Object* at(int i) const { return m_elements.at(i); }
+		void setAt(int i, Object* o) { m_elements[i]=o; }
+		
+		virtual QString visit (ExpressionWriter* e) const;
+		virtual bool isCorrect() const;
+		virtual void negate();
+		virtual bool isZero() const;
+		
+		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
+		virtual Object* copy() const;
+		bool operator==(const List& v) const;
 		
 	private:
-		QString m_result;
-		static operatorToString m_operatorToPresentation[Operator::nOfOps];
+		QList<Object*> m_elements;
 };
 
-#endif
+#endif // VECTOR_H

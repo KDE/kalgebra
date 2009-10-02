@@ -17,6 +17,7 @@ set(analitza_SRCS
 	object.cpp
 	value.cpp
 	vector.cpp
+	list.cpp
 	
 	expressiontable.cpp	#generated
 	expressionparser.cpp	#   ''

@@ -47,7 +47,7 @@ class ANALITZA_EXPORT Operator : public Object
 			exp, ln, log,
 // 			conjugate, arg, real, imaginary,
 			sum, product, diff,
-			card, scalarproduct, selector,
+			card, scalarproduct, selector, _union,
 			function, nOfOps
 		};
 		/** Constructor. Creates an operator with @p t type .*/

@@ -21,6 +21,7 @@
 #include "expressionwriter.h"
 #include "vector.h"
 #include "value.h"
+#include "list.h"
 
 #include <KDebug>
 #include <KLocale>
@@ -178,6 +179,7 @@ bool Container::operator==(const Container& c) const
 	return eq;
 }
 
+//TODO: Deprecate that
 bool Container::equalTree(const Object * o1, const Object * o2)
 {
 	Q_ASSERT(o1 && o2);
@@ -202,6 +204,9 @@ bool Container::equalTree(const Object * o1, const Object * o2)
 			break;
 		case Object::vector:
 			eq = *static_cast<const Vector*>(o1)==*static_cast<const Vector*>(o2);
+			break;
+		case Object::list:
+			eq = *static_cast<const List*>(o1)==*static_cast<const List*>(o2);
 			break;
 		case Object::none:
 			eq=false;
@@ -307,56 +312,75 @@ Object* Container::monomialVar(const Container& c) //FIXME: Must improve these v
 }
 #endif
 
-void objectWalker(const Object* root, int ind)
+struct ObjectWalker : public ExpressionWriter
 {
-	Container *c; Cn *num; Ci *var;
-	QString s;
+	ObjectWalker() : ind(0) {}
 	
-	if(ind>100) return;
+	virtual QString accept(const Operator* root)
+	{ qDebug() << prefix() << "| operator: " << root->toString(); return QString(); }
 	
-	for(int i=0; i<ind; i++)
-		s += " |_____";
+	virtual QString accept(const Ci* var)
+	{ qDebug() << prefix() << "| variable: " << var->name() << "Func:" << var->isFunction(); return QString(); }
+	
+	virtual QString accept(const Cn* num)
+	{ qDebug() << prefix() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
+	
+	virtual QString accept(const Container* c)
+	{
+		qDebug() << prefix() << "| cont: " << c->tagName();// << "=" << c->toString();
+		ind++;
+		for(Container::const_iterator it=c->m_params.constBegin(); it<c->m_params.constEnd(); ++it)
+			visitNow(*it);
+		ind--;
+		return QString();
+	}
+	
+	virtual QString accept(const Vector* v)
+	{
+		qDebug() << prefix() << "| vector: " << v->size();
+		ind++;
+		for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
+			visitNow(*it);
+		ind--;
+		return QString();
+	}
+	
+	virtual QString accept(const List* v)
+	{
+		qDebug() << prefix() << "| list: " << v->size();
+		ind++;
+		for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
+			visitNow(*it);
+		ind--;
+		return QString();
+	}
+	
+	QByteArray prefix()
+	{
+		QByteArray ret;
+		for(int i=0; i<ind; i++)
+			ret += " |_____";
+		return ret;
+	}
+	
+	void visitNow(Object* o) { if(o) o->visit(this); else qDebug() << "Null" ;}
+	
+	QString result() const { return QString(); }
+	
+	int ind;
+};
+
+void objectWalker(const Object* root)
+{
 	if(!root) {
-		qDebug() << qPrintable(s) << "This is an null object: " << root;
+		qDebug() << "Walker: This is an null object";
 		return;
 	}
 	
-	switch(root->type()) { //TODO: include the function into a module and use toString
-		case Object::container:
-			Q_ASSERT(dynamic_cast<const Container*>(root));
-			c= (Container*) root;
-			qDebug() << qPrintable(s) << "| cont: " << c->tagName();// << "=" << c->toString();
-			for(Container::const_iterator it=c->m_params.constBegin(); it<c->m_params.constEnd(); ++it)
-				objectWalker(*it, ind+1);
-			
-			break;
-		case Object::value:
-			Q_ASSERT(dynamic_cast<const Cn*>(root));
-			num= (Cn*) root;
-			qDebug() << qPrintable(s) << "| num: " << num->value() << " format: " << num->format();
-			break;
-		case Object::oper:
-			Q_ASSERT(dynamic_cast<const Operator*>(root));
-			qDebug() << qPrintable(s) << "| operator: " << root->toString();
-			break;
-		case Object::variable:
-			Q_ASSERT(dynamic_cast<const Ci*>(root));
-			var = (Ci*) root;
-			qDebug() << qPrintable(s) << "| variable: " << var->name() << "Func:" << var->isFunction();
-			break;
-		case Object::vector: {
-			const Vector* v;
-			Q_ASSERT(v=dynamic_cast<const Vector*>(root));
-			qDebug() << qPrintable(s) << "| vector: " << v->size();
-			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
-				objectWalker(*it, ind+1);
-		}	break;
-		default:
-			qDebug() << qPrintable(s) << "| dunno: " << (int) root->type() << root;
-			break;
-	}
-	if(ind==0)
-		qDebug(";");
+	ObjectWalker o;
+	root->visit(&o);
+	
+	qDebug(";");
 }
 
 bool Container::isNumber() const
@@ -365,26 +389,32 @@ bool Container::isNumber() const
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
+bool isValue(Object* o)
+{
+	bool ret=false;
+	switch(o->type()) {
+		case Object::value:
+		case Object::variable:
+		case Object::vector:
+		case Object::list:
+			ret=true;
+			break;
+		case Object::container:
+			if(((Container*) o)->isNumber())
+				ret=true;
+			break;
+		case Object::oper:
+		case Object::none:
+			break;
+	}
+	return ret;
+}
+
 Container::iterator Container::firstValue()
 {
 	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
-	bool found=false;
 	for(; it!=itEnd; ++it) {
-		switch((*it)->type()) {
-			case Object::value:
-			case Object::variable:
-			case Object::vector:
-				found=true;
-				break;
-			case Object::container:
-				if(((Container*) *it)->isNumber())
-					found=true;
-				break;
-			case Object::oper:
-			case Object::none:
-				break;
-		}
-		if(found)
+		if(isValue(*it))
 			break;
 	}
 	
@@ -395,25 +425,10 @@ Container::const_iterator Container::firstValue() const
 {
 	QList<Object *>::const_iterator it(m_params.constBegin()), itEnd(m_params.constEnd());
 	for(; it!=itEnd; ++it) {
-		bool found=false;
-		
-		switch((*it)->type()) {
-			case Object::value:
-			case Object::vector:
-			case Object::variable:
-				found=true;
-				break;
-			case Object::container:
-				if(((Container*) *it)->isNumber())
-					found=true;
-				break;
-			case Object::oper:
-			case Object::none:
-				break;
-		}
-		if(found)
+		if(isValue(*it))
 			break;
 	}
+	
 	return it;
 }
 

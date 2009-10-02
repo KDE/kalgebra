@@ -160,7 +160,6 @@ class ANALITZA_EXPORT Expression
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
 	private:
-		Object* branch(const QDomElement& elem);
 		
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;

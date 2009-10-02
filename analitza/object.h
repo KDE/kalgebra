@@ -41,6 +41,7 @@ public:
 		value,		/**< Describes an object as a value. */
 		variable,	/**< Describes an object as a variable. */
 		vector,		/**< Describes an object as a vector. */
+		list,		/**< Describes an object as a list. */
 		oper,		/**< Describes an object as an operator. */
 		container	/**< Describes an object as a container. */
 	};
@@ -71,7 +72,7 @@ public:
 	virtual bool isZero() const { return false; }
 	
 	/** 
-		@p pattern is the tree that we will compare to,
+		@p exp is the tree that we will compare to,
 		@p found is where we will pass the variables store the results.
 		
 		It will return whether the object follows the @p pattern structure.

@@ -30,6 +30,7 @@
 #include "htmlexpressionwriter.h"
 #include "mathmlexpressionwriter.h"
 #include "mathmlpresentationexpressionwriter.h"
+#include "list.h"
 
 static void print_dom(const QDomNode& in, int ind);
 
@@ -40,6 +41,28 @@ public:
 	
 	bool canAdd(const Object* where, const Object* branch);
 	bool check(const Container* c);
+	Object* branch(const QDomElement& elem);
+	
+	template <class T>
+	T* addElements(T* v, const QDomElement* elem)
+	{
+		QDomNode n = elem->firstChild();
+		while(!n.isNull()) {
+			if(n.isElement()) {
+				Object* ob= branch(n.toElement());
+				
+				if(ob && canAdd(v, ob)) {
+					v->appendBranch(ob);
+				} else {
+// 					delete ob;
+					delete v;
+					return 0;
+				}
+			}
+			n = n.nextSibling();
+		}
+		return v;
+	}
 	
 	Object* m_tree;
 	QStringList m_err;
@@ -116,6 +139,7 @@ bool Expression::setText(const QString & exp)
 bool Expression::ExpressionPrivate::check(const Container* c)
 {
 	bool ret=true;
+	
 	switch(c->containerType()) {
 		case Container::apply: {
 			Operator op=c->firstOperator();
@@ -153,6 +177,9 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 			}
 			
 		}	break;
+		default:
+			//should never do anything here,
+			break;
 	}
 	
 	if(c->isEmpty()) {
@@ -233,11 +260,11 @@ bool Expression::setMathML(const QString & s)
 		return false;
 	}
 	
-	d->m_tree = branch(doc.documentElement());
+	d->m_tree = d->branch(doc.documentElement());
 	return d->m_tree;
 }
 
-Object* Expression::branch(const QDomElement& elem)
+Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 {
 	Cn *num; Operator *op;
 	Object* ret=0;
@@ -247,47 +274,31 @@ Object* Expression::branch(const QDomElement& elem)
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			
 			if(t!=Container::none) {
-				Container *c=new Container(t);
+				Container* c=addElements<Container>(new Container(t), &elem);
 				
-				QDomNode n = elem.firstChild();
-				while(!n.isNull()) {
-					if(n.isElement()) {
-						Object* ob= branch(n.toElement());
-						
-						if(ob && d->canAdd(c, ob)) {
-							c->appendBranch(ob);
-						} else {
-							delete c;
-							return 0;
-						}
-					}
-					n = n.nextSibling();
-				}
-				
-				if(!d->check(c)) {
+				if(c && !check(c)) {
 					delete c;
-					return 0;
+					c=0;
 				}
 				ret = c;
-			} else {
-				d->m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
-			}
-			break;}
+			} else
+				m_err << i18nc("An error message", "Container unknown: %1", elem.tagName());
+		}	break;
 		case Object::value:
 			num= new Cn(0.);
 			if(!num->setValue(elem)) {
 				delete num;
-				d->m_err<< i18n("Cannot codify the %1 value.", elem.text());
+				m_err<< i18n("Cannot codify the %1 value.", elem.text());
 			} else
 				ret = num;
 			break;
 		case Object::oper:
 			if(elem.hasChildNodes()) {
-				d->m_err << i18n("The %1 operator cannot have child contexts.", elem.tagName());
+				m_err << i18n("The %1 operator cannot have child contexts.", elem.tagName());
 			} else {
 				Operator::OperatorType type=Operator::toOperatorType(elem.tagName());
 				if(type==Operator::none)
-					d->m_err << i18n("The element '%1' is not an operator.", elem.tagName());
+					m_err << i18n("The element '%1' is not an operator.", elem.tagName());
 				else
 					ret = op = new Operator(type);
 			}
@@ -300,29 +311,17 @@ Object* Expression::branch(const QDomElement& elem)
 			}
 			break;
 		case Object::vector:
-		{
-			Vector* v = new Vector(elem.childNodes().count());
-			QDomNode n = elem.firstChild();
-			while(!n.isNull()) {
-				if(n.isElement()) {
-					Object* ob= branch(n.toElement());
-					
-					if(ob && d->canAdd(v, ob)) {
-						v->appendBranch(ob);
-					} else {
-						delete v;
-						return 0;
-					}
-				}
-				n = n.nextSibling();
-			}
-			ret=v;
-		}	break;
+			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem);
+			break;
+		case Object::list:
+			ret=addElements<List>(new List, &elem);
+			break;
 		case Object::none:
-			d->m_err << i18nc("Error message due to an unrecognized input", "Not supported/unknown: %1", elem.tagName());
+			m_err << i18nc("Error message due to an unrecognized input",
+							  "Not supported/unknown: %1", elem.tagName());
 			break;
 	}
-	Q_ASSERT(ret || !d->m_err.isEmpty());
+	Q_ASSERT(ret || !m_err.isEmpty());
 	return ret;
 }
 
@@ -360,6 +359,8 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 		ret= Object::variable;
 	else if(tag=="vector")
 		ret= Object::vector;
+	else if(tag=="list")
+		ret= Object::list;
 	else if(Operator::toOperatorType(tag)!=0)
 		ret= Object::oper;
 	else if(Container::toContainerType(tag)!=0)

@@ -27,6 +27,7 @@
 #include "value.h"
 #include "vector.h"
 #include "expression.h"
+#include "list.h"
 
 using namespace std;
 
@@ -293,7 +294,10 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 	if(t1==Object::value && t2==Object::vector) return reduceRealVector(op, (Cn*) val1, (Vector*) val2, correct);
 	if(t1==Object::vector && t2==Object::value) return reduceVectorReal(op, (Vector*) val1, (Cn*) val2, correct);
 	if(t1==Object::vector && t2==Object::vector) return reduceVectorVector(op, (Vector*) val1, (Vector*) val2, correct);
-	Q_ASSERT(false && "using reduce in a wrong way");
+	if(t1==Object::list && t2==Object::list) return reduceListList(op, (List*) val1, (List*) val2, correct);
+	if(t1==Object::value && t2==Object::list) return reduceRealList(op, (Cn*) val1, (List*) val2, correct);
+	
+	correct = i18n("Could not reduce '%1' and '%2'.", val1->toString(), val2->toString());
 	return 0;
 }
 
@@ -304,6 +308,8 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 			return reduceUnaryReal(op, (Cn*) val, correct);
 		case Object::vector:
 			return reduceUnaryVector(op, (Vector*) val, correct);
+		case Object::list:
+			return reduceUnaryList(op, (List*) val, correct);
 		case Object::none:
 		case Object::variable:
 		case Object::oper:
@@ -318,13 +324,29 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 
 Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, QString& correct)
 {
-	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
-	{
-		*it=reduce(op, new Cn(*oper), *it, correct);
+	switch(op) {
+		case Operator::selector: {
+			int select=oper->intValue();
+			Object* ret=0;
+			if(select<1 || (select-1) >= v1->size()) {
+				correct=i18n("Invalid index for a container");
+			} else {
+				ret=v1->at(select-1);
+				v1->setAt(select-1, 0);
+			}
+			delete oper;
+			delete v1;
+			return ret;
+		}	break;
+		default:
+			for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
+			{
+				*it=reduce(op, new Cn(*oper), *it, correct);
+			}
+			
+			delete oper;
+			return v1;
 	}
-	
-	delete oper;
-	return v1;
 }
 
 Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, QString &correct)
@@ -371,4 +393,61 @@ Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QS
 	}
 	delete c;
 	return ret;
+}
+
+Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2, QString &correct)
+{
+	Object* ret=0;
+	switch(op) {
+		case Operator::_union: {
+			List::iterator itEnd=l2->end();
+			for(List::iterator it=l2->begin(); it!=itEnd;) {
+				l1->appendBranch(*it);
+				it=l2->erase(it);
+			}
+			
+// 			delete l2;
+			ret=l1;
+		}	break;
+		default:
+			correct=i18n("Could not calculate a list's %1", Operator(op).toString());
+			ret=new Cn(0.);
+			break;
+	}
+	return ret;
+}
+
+Object* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &correct)
+{
+	Object *ret=0;
+	switch(op) {
+		case Operator::card:
+			ret=new Cn(l->size());
+			break;
+		default:
+			correct=i18n("Could not calculate a list's %1", Operator(op).toString());
+			ret=new Cn(0.);
+			break;
+	}
+	delete l;
+	return ret;
+}
+
+Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1, QString& correct)
+{
+	switch(op) {
+		case Operator::selector: {
+			int select=oper->intValue();
+			Object* ret=0;
+			if(select<1 || (select-1) >= v1->size()) {
+				correct=i18n("Invalid index for a container");
+			} else {
+				ret=v1->at(select-1);
+				v1->setAt(select-1, 0);
+			}
+			delete oper;
+			delete v1;
+			return ret;
+		}	break;
+	}
 }

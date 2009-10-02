@@ -29,6 +29,7 @@ class Cn;
 class Container;
 class Operator;
 class Vector;
+class List;
 
 /**
  *	This class represents an expression writer.
@@ -46,6 +47,7 @@ class ExpressionWriter
 		virtual QString accept(const Cn* var) = 0;
 		virtual QString accept(const Container* var) = 0;
 		virtual QString accept(const Vector* var) = 0;
+		virtual QString accept(const List* l) = 0;
 		
 		virtual QString result() const=0;
 };

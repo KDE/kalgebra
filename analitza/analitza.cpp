@@ -26,6 +26,7 @@
 #include "variables.h"
 #include "container.h"
 #include "object.h"
+#include "list.h"
 
 Analitza::Analitza() : m_vars(new Variables), m_varsOwned(true) { }
 
@@ -251,11 +252,18 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 			if(v->name()==var)
 				ret = new Cn(1.);
 			break;
-		case Object::vector:
-		{
+		case Object::vector: {
 			Vector *v=(Vector*) o;
 			Vector *c1=new Vector(v->size());
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				c1->appendBranch(calc(*it));
+			}
+			ret=c1;
+		}	break;
+		case Object::list: {
+			List *v=(List*) o;
+			List *c1=new List;
+			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
 				c1->appendBranch(calc(*it));
 			}
 			ret=c1;
@@ -558,13 +566,24 @@ Object* Analitza::calc(const Object* root)
 			
 			ret = nv;
 		}	break;
+		case Object::list: {
+			const List *v=static_cast<const List*>(root);
+			List *nv= new List;
+			List::const_iterator it, itEnd=v->constEnd();
+			
+			for(it=v->constBegin(); it!=itEnd; ++it)
+				nv->appendBranch(calc(*it));
+			
+			ret = nv;
+		}	break;
 		case Object::value:
 			ret=root->copy();
 			break;
-		case Object::variable:
+		case Object::variable: {
 			a=(Ci*) root;
-			if(KDE_ISLIKELY(m_vars->contains(a->name())))
-				ret = calc(m_vars->value(a->name()));
+			Object* o=m_vars->value(a->name());
+			if(KDE_ISLIKELY(o))
+				ret = calc(o);
 			else {
 				if(a->isFunction())
 					m_err << i18n("The function <em>%1</em> does not exist", a->name());
@@ -572,7 +591,7 @@ Object* Analitza::calc(const Object* root)
 					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
 				ret = new Cn(0.);
 			}
-			break;
+		}	break;
 		case Object::oper:
 		case Object::none:
 			break;
@@ -603,11 +622,7 @@ Object* Analitza::operate(const Container* c)
 				ret = sum(*c);
 			else if(opt==Operator::product)
 				ret = product(*c);
-			else if(opt==Operator::selector) {
-				Object *idx=calc(c->m_params[1]), *vect=calc(c->m_params[2]);
-				ret = selector(idx, vect);
-				delete idx; delete vect;
-			} else if(opt==Operator::diff) {
+			else if(opt==Operator::diff) {
 				//TODO: Make multibvar
 				QStringList bvar=c->bvarList();
 				Object *deriv=simp(derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last()));
@@ -644,6 +659,8 @@ Object* Analitza::operate(const Container* c)
 							if(KDE_ISUNLIKELY(!correct.isEmpty())) {
 								m_err.append(correct);
 								correct.clear();
+								if(!ret)
+									ret=new Cn(0.);
 							}
 						}
 					} else {
@@ -741,27 +758,6 @@ Object* Analitza::product(const Container& n)
 Object* Analitza::sum(const Container& n)
 {
 	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
-}
-
-Object* Analitza::selector(const Object* index, const Object* vector)
-{
-	Object *ret;
-	if(index->type()==Object::value && vector->type()==Object::vector) {
-		const Cn *cIdx=static_cast<const Cn*>(index);
-		const Vector *cVect=static_cast<const Vector*>(vector);
-		
-		int select=cIdx->intValue();
-		if(select<1 || (select-1) >= cVect->size()) {
-			m_err << i18n("Invalid index for a container");
-			ret=new Cn(0.);
-		} else {
-			ret=cVect->at(select-1)->copy();
-		}
-	} else {
-		ret = new Cn(0.);
-		m_err << i18n("We can only select a container's value with its integer index");
-	}
-	return ret;
 }
 
 bool Analitza::isFunction(const Ci& func) const
@@ -1122,9 +1118,53 @@ Object* Analitza::simp(Object* root)
 					Object* idx=c->m_params[1];
 					Object* value=c->m_params[2];
 					if(idx->type()==Object::value && value->type()==Object::vector) {
-						root=selector(*c->firstValue(), c->m_params.last());
-						delete c;
+						QString err;
+						Object* ret=Operations::reduce(Operator::selector, idx->copy(), value->copy(), err);
+						
+						if(ret) {
+							root=ret;
+							c->m_params[1]=0;
+							c->m_params[2]=0;
+							
+							delete c;
+						}
 					}
+				}	break;
+				case Operator::_union: {
+					Container::iterator it=c->firstValue(), itEnd=c->m_params.end();
+					
+					QList<Object*> newParams;
+					newParams.append(0);
+					for(; it!=itEnd; ++it) {
+						*it=simp(*it);
+						
+						if(newParams.last()) {
+							QString err;
+							Object* ret=Operations::reduce(Operator::_union, newParams.last(), *it, err);
+							if(ret) {
+								newParams.last()=ret;
+								delete *it;
+							} else {
+								newParams.append(*it);
+								newParams.append(0);
+							}
+						} else {
+							newParams.last()=*it;
+						}
+						*it=0;
+					}
+					
+					//if only one, remove union
+					if(newParams.size()==1) {
+						delete c;
+						root=newParams.last();
+					} else {
+						newParams.prepend(c->m_params.takeFirst());
+						qDeleteAll(c->m_params);
+						c->m_params=newParams;
+						root=c;
+					}
+					
 				}	break;
 				default:
 					it = c->firstValue();
@@ -1478,6 +1518,12 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 				r |= hasVars(*it, var, bvars, vars);
 			}
 		}	break;
+		case Object::list: {
+			List *v=(List*) o;
+			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				r |= hasVars(*it, var, bvars, vars);
+			}
+		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
 			bool firstFound=false;
@@ -1618,6 +1664,13 @@ bool Analitza::hasTheVar(const QSet<QString> & vars, const Object * o)
 		case Object::vector: {
 			const Vector *v=static_cast<const Vector*>(o);
 			Vector::const_iterator it, itEnd=v->constEnd();
+			for(it=v->constBegin(); it!=itEnd; ++it) {
+				found |= hasTheVar(vars, *it);
+			}
+		}	break;
+		case Object::list: {
+			const List *v=static_cast<const List*>(o);
+			List::const_iterator it, itEnd=v->constEnd();
 			for(it=v->constBegin(); it!=itEnd; ++it) {
 				found |= hasTheVar(vars, *it);
 			}

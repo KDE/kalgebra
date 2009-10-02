@@ -82,6 +82,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("lambda call") << "(x->x+2)(2)";
 	QTest::newRow("lambda call") << "(selector(f, 1))(2)";
 	QTest::newRow("eq") << "2=2";
+	QTest::newRow("vector") << "vector { 1, 2, 3 }";
 }
 
 void ExpressionTest::testConversion()

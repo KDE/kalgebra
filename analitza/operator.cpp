@@ -40,7 +40,7 @@ const char Operator::words[nOfOps][14] = {
 // 	"conjugate", "arg", "imaginary",
 	"sum", "product", "diff",
 	//Vector operations
-	"card", "scalarproduct", "selector",
+	"card", "scalarproduct", "selector", "union",
 	"function"
 };
 
@@ -55,16 +55,15 @@ QString Operator::name() const
 	return QString(words[m_optype]);
 }
 
-enum Operator::OperatorType Operator::toOperatorType(const QString &e)
+Operator::OperatorType Operator::toOperatorType(const QString &e)
 {
-	//qDebug(), "lol";
-	for(int i=none; i<nOfOps; i++)
-	{
+	OperatorType ret=none;
+	for(int i=none; ret==none && i<nOfOps; i++) {
 		if(words[i]==e)
-			return (OperatorType) i;
+			ret = (OperatorType) i;
 	}
 	
-	return none;
+	return ret;
 }
 
 Operator::OperatorType Operator::multiplicityOperator(const Operator::OperatorType& t)
@@ -100,6 +99,7 @@ int Operator::nparams(Operator::OperatorType t)
 		case lcm:
 		case function:
 		case scalarproduct:
+		case _union:
 			return -1;
 		case quotient:
 		case power:

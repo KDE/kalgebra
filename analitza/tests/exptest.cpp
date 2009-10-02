@@ -93,6 +93,7 @@ void ExpTest::testSimple_data()
 	QTest::newRow("bounds and limit") << "card(vector { x, y, z })"
 				<< "<math><apply><card /><vector><ci>x</ci><ci>y</ci><ci>z</ci></vector></apply></math>";
 	QTest::newRow("lambda call") << "(x->x+2)(2)" << "<math><apply><lambda><bvar><ci>x</ci></bvar><apply><plus /><ci>x</ci><cn>2</cn></apply></lambda><cn>2</cn></apply></math>";
+	QTest::newRow("union") << "union(list{1}, list {2})" << "<math><apply><union /><list><cn>1</cn></list><list><cn>2</cn></list></apply></math>";
 }
 
 void ExpTest::testSimple()

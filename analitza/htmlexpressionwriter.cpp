@@ -23,6 +23,7 @@
 #include "vector.h"
 #include <QStringList>
 #include <KLocale>
+#include "list.h"
 
 QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
@@ -40,6 +41,16 @@ QString HtmlExpressionWriter::accept(const Vector* vec)
 		elements += (*it)->visit(this);
 	}
 	return "vector "+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
+}
+
+QString HtmlExpressionWriter::accept(const List* vec)
+{
+	QStringList elements;
+	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+	{
+		elements += (*it)->visit(this);
+	}
+	return "list "+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const Ci* var)

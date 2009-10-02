@@ -22,6 +22,7 @@
 #include "container.h"
 #include <QStringList>
 #include "vector.h"
+#include "list.h"
 
 namespace
 {
@@ -30,6 +31,16 @@ QStringList convertElements(const Vector* c, MathMLPresentationExpressionWriter*
 {
 	QStringList elems;
 	Vector::const_iterator it=c->constBegin(), itEnd=c->constEnd();
+	for(; it!=itEnd; ++it) {
+		elems += (*it)->visit(w);
+	}
+	return elems;
+}
+
+QStringList convertElements(const List* c, MathMLPresentationExpressionWriter* w)
+{
+	QStringList elems;
+	List::const_iterator it=c->constBegin(), itEnd=c->constEnd();
 	for(; it!=itEnd; ++it) {
 		elems += (*it)->visit(w);
 	}
@@ -305,4 +316,9 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 QString MathMLPresentationExpressionWriter::accept(const Vector* var)
 {
 	return "<mrow><mo>&lt;</mo>"+convertElements(var, this).join("<mo>,</mo>")+"<mo>&gt;</mo></mrow>";
+}
+
+QString MathMLPresentationExpressionWriter::accept(const List* var)
+{
+	return "<mrow><mo>[</mo>"+convertElements(var, this).join("<mo>,</mo>")+"<mo>]</mo></mrow>";
 }

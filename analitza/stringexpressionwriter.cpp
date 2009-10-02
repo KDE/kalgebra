@@ -22,6 +22,7 @@
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
+#include "list.h"
 
 StringExpressionWriter::StringExpressionWriter(const Object* o)
 {
@@ -46,6 +47,16 @@ QString StringExpressionWriter::accept(const Vector* vec)
 		elements += (*it)->visit(this);
 	}
 	return QString("vector { %1 }").arg(elements.join(QString(", ")));
+}
+
+QString StringExpressionWriter::accept(const List* vec)
+{
+	QStringList elements;
+	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+	{
+		elements += (*it)->visit(this);
+	}
+	return QString("list { %1 }").arg(elements.join(QString(", ")));
 }
 
 QString StringExpressionWriter::accept(const Cn* var)

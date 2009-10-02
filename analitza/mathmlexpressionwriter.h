@@ -37,6 +37,7 @@ class MathMLExpressionWriter : public ExpressionWriter
 		virtual QString accept(const Container* var);
 		virtual QString accept(const Operator* var);
 		virtual QString accept(const Vector* var);
+		virtual QString accept(const List* l);
 		
 		QString result() const { return m_result; }
 		

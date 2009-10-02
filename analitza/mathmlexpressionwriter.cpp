@@ -22,6 +22,7 @@
 #include "operator.h"
 #include "container.h"
 #include <QStringList>
+#include "list.h"
 
 MathMLExpressionWriter::MathMLExpressionWriter(const Object* o)
 {
@@ -60,6 +61,15 @@ QString MathMLExpressionWriter::accept(const Vector* vec)
 		elements += (*it)->visit(this);
 	}
 	return QString("<vector>%1</vector>").arg(elements.join(QString()));
+}
+
+QString MathMLExpressionWriter::accept(const List* vec)
+{
+	QStringList elements;
+	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+		elements += (*it)->visit(this);
+	
+	return QString("<list>%1</list>").arg(elements.join(QString()));
 }
 
 QString MathMLExpressionWriter::accept(const Container* c)

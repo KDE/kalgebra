@@ -1,18 +1,20 @@
-/*
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License version 2 as published by the Free Software Foundation.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
-*/
+/*************************************************************************************
+ *  Copyright (C) 2009 by Aleix Pol <aleixpol@kde.org>                               *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 2                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
 
 #ifndef VECTOR_H
 #define VECTOR_H
@@ -40,11 +42,12 @@ class ANALITZA_EXPORT Vector : public Object
 		const_iterator constBegin() const { return m_elements.constBegin(); }
 		const_iterator constEnd() const { return m_elements.constEnd(); }
 		
-		Object* at(int i) const { return m_elements.at(i); }
+		Object* at(int i) const { return m_elements[i]; }
+		void setAt(int i, Object* o) { m_elements[i]=o; }
 		
 		virtual QString visit (ExpressionWriter* e) const;
 		virtual bool isCorrect() const;
-		virtual void negate ();
+		virtual void negate();
 		virtual bool isZero() const;
 		
 		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;

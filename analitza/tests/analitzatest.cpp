@@ -149,6 +149,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("selector+idx") << "selector(1, vector{x,y,z})" << "x";
 	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "selector(x, vector { x, y, z })";
 	QTest::newRow("selector+impossible") << "selector(1, v)" << "selector(1, v)";
+	
+	QTest::newRow("lists") << "union(list{w}, list{x}, list{y,z})" << "list { w, x, y, z }";
+	QTest::newRow("lists2") << "union(list{w}, x, list{y}, list{z})" << "union(list { w }, x, list { y, z })";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -213,50 +216,52 @@ void AnalitzaTest::testDerivativeSimple()
 void AnalitzaTest::testCorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
-	QTest::addColumn<double>("result");
+	QTest::addColumn<QString>("result");
 	
 	QStringList script;
 	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
 	script << "fib(6)";
-	QTest::newRow("piecewise fibonacci") << script << 8.;
+	QTest::newRow("piecewise fibonacci") << script << "8";
 	
 	script.clear();
 	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
 	script << "fact(5)";
-	QTest::newRow("piecewise factorial") << script << 120.;
+	QTest::newRow("piecewise factorial") << script << "120";
 	
 	script.clear();
 	script << "func:=n->n+1";
 	script << "func(5)";
-	QTest::newRow("simple function") << script << 6.;
+	QTest::newRow("simple function") << script << "6";
 	
 	script.clear();
 	script << "n:=9";
 	script << "func:=n->n+1";
 	script << "func(5)";
-	QTest::newRow("simple function, shadowed parameter") << script << 6.;
+	QTest::newRow("simple function, shadowed parameter") << script << "6";
 	
 	script.clear();
 	script << "x:=3";
 	script << "x*sum(x : x=0..99)";
-	QTest::newRow("bounded scope") << script << 14850.;
+	QTest::newRow("bounded scope") << script << "14850";
 	
 	script.clear();
 	script << "f:=x->diff(x^2)";
 	script << "f(3)";
-	QTest::newRow("diff function") << script << 6.;
+	QTest::newRow("diff function") << script << "6";
 	
 	script.clear();
 	script << "fv:=vector{x->x, x->x+2}";
 	script << "(selector(1, fv))(1)+(selector(2, fv))(2)";
-	QTest::newRow("selector+lambda") << script << 5.;
+	QTest::newRow("selector+lambda") << script << "5";
+	
+	QTest::newRow("lists") << QStringList("union(list{0}, list{1}, list{2,3})") << "list { 0, 1, 2, 3 }";
 }
 
 //testCalculate
 void AnalitzaTest::testCorrection()
 {
 	QFETCH(QStringList, expression);
-	QFETCH(double, result);
+	QFETCH(QString, result);
 	
 	Analitza b;
 	Expression res;
@@ -268,9 +273,10 @@ void AnalitzaTest::testCorrection()
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		b.calculate();
+		if(!b.isCorrect()) qDebug() << "errors:" << b.errors();
 		QVERIFY(b.isCorrect());
 	}
-	QCOMPARE(b.calculate().toReal().value(), result);
+	QCOMPARE(b.calculate().toString(), result);
 	
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -282,7 +288,7 @@ void AnalitzaTest::testCorrection()
 		res=b.evaluate();
 		QVERIFY(b.isCorrect());
 	}
-	QCOMPARE(res.toString(), Cn(result).toString());
+	QCOMPARE(res.toString(), result);
 }
 
 void AnalitzaTest::testUncorrection_data()
@@ -408,9 +414,13 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("sum") << "sum(vector {x,x,x} : x=1..99)" << "vector { 4950, 4950, 4950 }";
 	QTest::newRow("product") << "product(vector {x,x,x} : x=1..5)" << "vector { 120, 120, 120 }";
 	
-	QTest::newRow("selector1") << "selector(1, vector{1,2,3})" << "1";
-	QTest::newRow("selector2") << "selector(2, vector{1,2,3})" << "2";
-	QTest::newRow("selector3") << "selector(3, vector{1,2,3})" << "3";
+	QTest::newRow("selector1+vector") << "selector(1, vector{1,2,3})" << "1";
+	QTest::newRow("selector2+vector") << "selector(2, vector{1,2,3})" << "2";
+	QTest::newRow("selector3+vector") << "selector(3, vector{1,2,3})" << "3";
+	
+	QTest::newRow("selector1+list") << "selector(1, list{1,2,3})" << "1";
+	QTest::newRow("selector2+list") << "selector(2, list{1,2,3})" << "2";
+	QTest::newRow("selector3+list") << "selector(3, list{1,2}+list{3})" << "3";
 }
 
 void AnalitzaTest::testCrash_data()
