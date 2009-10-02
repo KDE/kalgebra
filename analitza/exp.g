@@ -251,6 +251,13 @@ case $rule_number:
 ./
 
 -- block
+PrimaryExpression ::= Id tLcb            tRcb ;
+/.
+case $rule_number:
+	sym(1) = '<'+sym(1)+" />";
+	break;
+./
+
 PrimaryExpression ::= Id tLcb Parameters tRcb ;
 /.
 case $rule_number:

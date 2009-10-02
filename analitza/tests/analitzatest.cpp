@@ -110,7 +110,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("strange") << "0*x-1*1" << "-1";
 	QTest::newRow("strange2") << "x-x" << "0";
 	QTest::newRow("old leak") << "x^1" << "x";
-	QTest::newRow("declare") << "w:=3" << "3";
+	QTest::newRow("declare") << "wockawocka:=3" << "3";
 	QTest::newRow("nested multiplication") << "x*(x+x)" << "2*x^2";
 	QTest::newRow("multiplication") << "x*x" << "x^2";
 	QTest::newRow("undefined function call") << "f(2)" << "f(2)";
@@ -150,6 +150,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "selector(x, vector { x, y, z })";
 	QTest::newRow("selector+impossible") << "selector(1, v)" << "selector(1, v)";
 	
+	QTest::newRow("in lists") << "list{w+w}" << "list { 2*w }";
 	QTest::newRow("lists") << "union(list{w}, list{x}, list{y,z})" << "list { w, x, y, z }";
 	QTest::newRow("lists2") << "union(list{w}, x, list{y}, list{z})" << "union(list { w }, x, list { y, z })";
 }
@@ -255,6 +256,14 @@ void AnalitzaTest::testCorrection_data()
 	QTest::newRow("selector+lambda") << script << "5";
 	
 	QTest::newRow("lists") << QStringList("union(list{0}, list{1}, list{2,3})") << "list { 0, 1, 2, 3 }";
+	
+	script.clear();
+	script <<	"valueTableRec := (func, antimages, i) ->"
+				"piecewise { i=0 ? list{}, "
+					"? union(list{func(selector(i, antimages))}, valueTableRec(func, antimages, i-1))"
+				" }"
+			<< "valueTableRec(x->x**2, list{1,2,3}, 3)";
+	QTest::newRow("yay") << script << "list { 9, 4, 1 }";
 }
 
 //testCalculate

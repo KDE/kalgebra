@@ -226,6 +226,15 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			nv->appendBranch(res);
 		}
 		ret=nv;
+	} else if(branch->type()==Object::list) {
+		const List* v=static_cast<const List*>(branch);
+		List* nv=new List;
+		List::const_iterator it, itEnd=v->constEnd();
+		for(it=v->constBegin(); it!=itEnd; ++it) {
+			Object* res=eval(*it, resolve, unscoped);
+			nv->appendBranch(res);
+		}
+		ret=nv;
 	}
 	
 	if(!ret)
@@ -534,7 +543,7 @@ Object* Analitza::calcDeclare(const Container* c)
 		o = calc(c->m_params[1]);
 	
 	insertVariable(var->name(), o);
-	if(o->type()==Object::vector || o->type()==Object::value)
+	if(o->type()==Object::vector || o->type()==Object::list || o->type()==Object::value)
 		ret=o;
 	else {
 		//should return NaN
@@ -656,11 +665,12 @@ Object* Analitza::operate(const Container* c)
 						for(; it!=itEnd; ++it) {
 							ret=Operations::reduce(opt, ret, *it, correct);
 							
-							if(KDE_ISUNLIKELY(!correct.isEmpty())) {
+							if(KDE_ISUNLIKELY(!ret || !correct.isEmpty())) {
 								m_err.append(correct);
 								correct.clear();
 								if(!ret)
 									ret=new Cn(0.);
+								break;
 							}
 						}
 					} else {
@@ -840,6 +850,12 @@ Object* Analitza::simp(Object* root)
 	} else if(root->type()==Object::vector) {
 		Vector* v=static_cast<Vector*>(root);
 		Vector::iterator it = v->begin(), itEnd=v->end();
+		
+		for(; it!=itEnd; ++it)
+			*it = simp(*it);
+	} else if(root->type()==Object::list) {
+		List* v=static_cast<List*>(root);
+		List::iterator it = v->begin(), itEnd=v->end();
 		
 		for(; it!=itEnd; ++it)
 			*it = simp(*it);
@@ -1134,11 +1150,12 @@ Object* Analitza::simp(Object* root)
 					Container::iterator it=c->firstValue(), itEnd=c->m_params.end();
 					
 					QList<Object*> newParams;
-					newParams.append(0);
 					for(; it!=itEnd; ++it) {
 						*it=simp(*it);
 						
-						if(newParams.last()) {
+						if(newParams.isEmpty())
+							newParams.append(*it);
+						else {
 							QString err;
 							Object* ret=Operations::reduce(Operator::_union, newParams.last(), *it, err);
 							if(ret) {
@@ -1146,13 +1163,13 @@ Object* Analitza::simp(Object* root)
 								delete *it;
 							} else {
 								newParams.append(*it);
-								newParams.append(0);
 							}
-						} else {
-							newParams.last()=*it;
 						}
 						*it=0;
 					}
+					
+					if(newParams.last()==0)
+						newParams.removeLast();
 					
 					//if only one, remove union
 					if(newParams.size()==1) {

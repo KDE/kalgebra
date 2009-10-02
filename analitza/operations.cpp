@@ -450,4 +450,5 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 			return ret;
 		}	break;
 	}
+	return 0;
 }

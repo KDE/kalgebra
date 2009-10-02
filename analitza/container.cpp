@@ -108,6 +108,7 @@ QList<Object*> Container::copyParams() const
 	for(Container::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
 		ret.append((*it)->copy());
 	}
+	
 	return ret;
 }
 
@@ -317,17 +318,17 @@ struct ObjectWalker : public ExpressionWriter
 	ObjectWalker() : ind(0) {}
 	
 	virtual QString accept(const Operator* root)
-	{ qDebug() << prefix() << "| operator: " << root->toString(); return QString(); }
+	{ qDebug() << prefix().constData() << "| operator: " << root->toString(); return QString(); }
 	
 	virtual QString accept(const Ci* var)
-	{ qDebug() << prefix() << "| variable: " << var->name() << "Func:" << var->isFunction(); return QString(); }
+	{ qDebug() << prefix().constData() << "| variable: " << var->name() << "Func:" << var->isFunction(); return QString(); }
 	
 	virtual QString accept(const Cn* num)
-	{ qDebug() << prefix() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
+	{ qDebug() << prefix().constData() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
 	
 	virtual QString accept(const Container* c)
 	{
-		qDebug() << prefix() << "| cont: " << c->tagName();// << "=" << c->toString();
+		qDebug() << prefix().constData() << "| cont: " << c->tagName();// << "=" << c->toString();
 		ind++;
 		for(Container::const_iterator it=c->m_params.constBegin(); it<c->m_params.constEnd(); ++it)
 			visitNow(*it);
@@ -337,7 +338,7 @@ struct ObjectWalker : public ExpressionWriter
 	
 	virtual QString accept(const Vector* v)
 	{
-		qDebug() << prefix() << "| vector: " << v->size();
+		qDebug() << prefix().constData() << "| vector: " << v->size();
 		ind++;
 		for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
 			visitNow(*it);
@@ -347,7 +348,7 @@ struct ObjectWalker : public ExpressionWriter
 	
 	virtual QString accept(const List* v)
 	{
-		qDebug() << prefix() << "| list: " << v->size();
+		qDebug() << prefix().constData() << "| list: " << v->size();
 		ind++;
 		for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
 			visitNow(*it);
@@ -363,7 +364,7 @@ struct ObjectWalker : public ExpressionWriter
 		return ret;
 	}
 	
-	void visitNow(Object* o) { if(o) o->visit(this); else qDebug() << "Null" ;}
+	void visitNow(Object* o) { if(o) o->visit(this); else qDebug() << prefix() << "Null" ;}
 	
 	QString result() const { return QString(); }
 	

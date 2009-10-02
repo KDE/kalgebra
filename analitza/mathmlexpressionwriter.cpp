@@ -66,10 +66,14 @@ QString MathMLExpressionWriter::accept(const Vector* vec)
 QString MathMLExpressionWriter::accept(const List* vec)
 {
 	QStringList elements;
-	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
-		elements += (*it)->visit(this);
-	
-	return QString("<list>%1</list>").arg(elements.join(QString()));
+	if(vec->size()==0)
+		return "<list />";
+	else {
+		for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
+			elements += (*it)->visit(this);
+		
+		return QString("<list>%1</list>").arg(elements.join(QString()));
+	}
 }
 
 QString MathMLExpressionWriter::accept(const Container* c)

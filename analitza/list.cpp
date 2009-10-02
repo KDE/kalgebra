@@ -76,11 +76,7 @@ void List::negate()
 
 bool List::isZero() const
 {
-	foreach(const Object* o, m_elements) {
-		if(!o->isZero())
-			return false;
-	}
-	return true;
+	return m_elements.isEmpty();
 }
 
 bool List::matches(const Object* exp, QMap< QString, const Object* >* found) const
