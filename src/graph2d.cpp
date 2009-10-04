@@ -394,10 +394,11 @@ void Graph2D::mouseReleaseEvent(QMouseEvent *e)
 	
 	if(!m_readonly && mode==Selection) {
 		QPointF pd = toViewport(e->pos())-toViewport(press);
-		const double mindist = fmin(fabs(pd.x()), fabs(pd.y())), rate=7.;
-		const double minrate = fmin(fabs(viewport.width()/rate), fabs(viewport.height()/rate));
 		
-		if(mindist >= minrate) { //if selection is not very small
+		QPoint pd2 = e->pos()-press;
+		QRect rr(press, QSize(pd2.x(), pd2.y()));
+		
+		if(rr.width()>20 && rr.height()>20) { //if selection is not very small
 			QRectF r(fromWidget(press), QSizeF(pd.x(), pd.y()));
 			
 			if(r.top()<r.bottom()) {
