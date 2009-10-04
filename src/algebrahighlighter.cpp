@@ -67,7 +67,7 @@ struct FuncItem
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
 	m_correct=true;
-	if(m_pos>=text.length())
+	if(int(m_pos)>=text.length())
 		m_pos=text.length();
 	
 	QPalette pal=qApp->palette();

@@ -58,7 +58,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		bool isCorrect() const { return m_correct; }
 		
 		/** Sets the cursor position. */
-		void setPos(int p) { m_pos=p; }
+		void setPos(uint p) { m_pos=p; }
 		
 		/** Sets the corresponding Analitza class. */
 		void setAnalitza(const Analitza* na) { a = na; }
@@ -82,7 +82,7 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		bool m_correct;
 		int antnum;
 		Mode m_mode;
-		int m_pos;
+		uint m_pos;
 		int m_editingParameter;
 		QString m_editingName;
 		bool m_editingBounds;
