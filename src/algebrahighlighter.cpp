@@ -1,3 +1,4 @@
+
 /*************************************************************************************
  *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
@@ -25,11 +26,12 @@
 #include "analitza.h"
 #include "variables.h"
 #include "container.h"
+#include <QStack>
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
 	: QSyntaxHighlighter(doc), m_correct(true), m_mode(Autodetect), m_pos(0), a(na)
 {
-	negreta.setFontWeight(QFont::Bold);
+	bold.setFontWeight(QFont::Bold);
 }
 
 QString removeTags(const QString& in)
@@ -52,6 +54,16 @@ QString removeTags(const QString& in)
 	return out;
 }
 
+struct FuncItem
+{
+	FuncItem() : parameter(-1), pos(-1), bounding(false) {}
+	FuncItem(const QString& name, int p) : id(name), parameter(p), pos(-1), bounding(false) {}
+	QString id;
+	int parameter;
+	int pos;
+	bool bounding;
+};
+
 void AlgebraHighlighter::highlightBlock(const QString &text)
 {
 	m_correct=true;
@@ -65,6 +77,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	QColor uncorrect(Qt::red);
 	QColor brHighlight(0xff,0xa0,0xff);
 	QColor prHighlight(0xff,0xff,0x80);
+	m_editingParameter=0;
+	m_editingName.clear();
 	
 	if(Expression::isMathML(text)) {
 		QString lasttag;
@@ -80,15 +94,15 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				}
 				j++;
 				
-				setFormat(i, 1, negreta);
-				setFormat(j, 1, negreta);
+				setFormat(i, 1, bold);
+				setFormat(j, 1, bold);
 				if(lasttag.startsWith(QChar('/'))){
 					setFormat(i+1, j-i-1, QColor(100,0,0));
-					setFormat(i+1, 1, negreta);
+					setFormat(i+1, 1, bold);
 					inside--;
 				} else if(lasttag.endsWith(QChar('/'))) {
 					setFormat(i+1, j-i-1, id);
-					setFormat(j+1, 2, negreta);
+					setFormat(j+1, 2, bold);
 				} else if(j!=k) {
 					setFormat(i+1, j-i-1, QColor(150,0,0));
 					setFormat(j+1, k-j-1, QColor(150,100,0));
@@ -108,6 +122,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 		m_correct=(inside==0);
 	} else {
 		ExpLexer lex(text);
+		QStack<ExpLexer::TOKEN> paren;
+		QStack<FuncItem> parameter;
 		
 		while(lex.lex()!=ExpressionTable::EOF_SYMBOL && lex.error().isEmpty()) {
 			QColor f;
@@ -125,14 +141,61 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 					break;
 				case ExpressionTable::tId:
 					f=id;
+					m_aName=lex.current.val;
 					break;
 				case -1:
 					m_correct = false;
 					f=uncorrect;
 					break;
-				default:
+				case ExpressionTable::tLpr:
+				case ExpressionTable::tLcb:
+					paren.push(lex.current);
+					if(m_pos>lex.current.pos)
+						parameter.push(FuncItem(m_aName, 0));
 					isBold=true;
-					setFormat(lex.current.pos, lex.current.len, negreta);
+					setFormat(lex.current.pos, lex.current.len, bold);
+					break;
+				case ExpressionTable::tRpr:
+				case ExpressionTable::tRcb: {
+					isBold=true;
+					setFormat(lex.current.pos, lex.current.len, bold);
+					
+					bool corr=!paren.isEmpty();
+					if(corr) {
+						if(lex.current.type==ExpressionTable::tRpr && paren.top().type!=ExpressionTable::tLpr)
+							corr=false;
+						
+						if(m_pos==lex.current.pos || m_pos==paren.top().pos) {
+							QTextCharFormat bg=bold;
+							bg.setBackground(Qt::yellow);
+							
+							setFormat(lex.current.pos, lex.current.len, bg);
+							setFormat(paren.top().pos, paren.top().len, bg);
+						}
+						
+						paren.pop();
+						if(m_pos>lex.current.pos)
+							parameter.pop();
+					}
+					
+					if(!corr)
+						setFormat(lex.current.pos, lex.current.len, uncorrect); // error
+				}	break;
+				default:
+					if(m_pos>lex.current.pos && !parameter.isEmpty()
+							&& lex.current.type==ExpressionTable::tComa) {
+						parameter.top().parameter++;
+						parameter.top().pos=lex.current.pos;
+					}
+					
+					if(m_pos>lex.current.pos && !parameter.isEmpty()
+							&& lex.current.type==ExpressionTable::tColon) {
+						parameter.top().bounding=true;
+						parameter.top().pos=lex.current.pos;
+					}
+					
+					isBold=true;
+					setFormat(lex.current.pos, lex.current.len, bold);
 					break;
 			}
 			if(!isBold)
@@ -144,64 +207,31 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 			setFormat(lex.current.pos, text.size()-lex.current.pos, uncorrect);
 		}
 		
-		bgHighlight(text, prHighlight, Parenthesis);
-		bgHighlight(text, brHighlight, Brace);
+		if(!parameter.isEmpty()) {
+			m_editingName=parameter.top().id;
+			m_editingParameter=parameter.top().parameter;
+			m_editingBounds=parameter.top().bounding;
+			
+			if(m_editingParameter!=0 || m_editingBounds) {
+				QTextCharFormat currentComa=bold;
+				currentComa.setBackground(Qt::yellow);
+				setFormat(parameter.top().pos, 1, currentComa);
+			}
+		}
 	}
 }
 
-void AlgebraHighlighter::bgHighlight(const QString& text, const QColor& bgColor, ComplMode c)
+QString AlgebraHighlighter::editingName() const
 {
-	int p=-1;
-	if(m_pos>0 && (
-		(c==Parenthesis && (text[m_pos-1]=='(' || text[m_pos-1]==')')) ||
-		(c==Brace && (text[m_pos-1]=='{' || text[m_pos-1]=='}'))
-	))
-		p=m_pos-1;
-	else if(text.length()>m_pos && (
-		(c==Parenthesis && (text[m_pos]=='(' || text[m_pos]==')')) ||
-		(c==Brace && (text[m_pos]=='{' || text[m_pos]=='}'))
-	))
-		p=m_pos;
-	
-	if(p>-1) {
-		QTextCharFormat form = format(p);
-		form.setBackground(bgColor);
-		setFormat(p, 1, form);
-		int compp=complementary(text, p, c);
-		if(compp==-3)
-			form.setBackground(Qt::red);
-		setFormat(p, 1, form);
-	}
+	return m_editingName;
 }
 
-int AlgebraHighlighter::complementary(const QString& t, int p, ComplMode m)
+int AlgebraHighlighter::editingParameter() const
 {
-	char open, close;
-	if(m==Brace) {
-		open='{'; close='}';
-	} else {
-		open='('; close=')';
-	}
-	
-	Q_ASSERT(p<t.length());
-	bool opening = (t[p]==open);
-	int cat=0;
-	if(p<1 && !opening)
-		return -1;
-	do {
-		if(t[p]==close)
-			--cat;
-		else if(t[p]==open)
-			++cat;
-		
-		p += opening ? 1 : -1;
-	} while(p>=0 && p<t.length() && cat!=0);
-	
-	p -= opening ? 1 : -1;
-	
-	if(cat>0)
-		return -2;
-	else if(cat<0)
-		return -3;
-	return p;
+	return m_editingParameter;
+}
+
+bool AlgebraHighlighter::editingBounds() const
+{
+	return m_editingBounds;
 }

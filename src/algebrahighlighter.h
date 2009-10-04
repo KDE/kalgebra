@@ -62,27 +62,34 @@ class AlgebraHighlighter : public QSyntaxHighlighter
 		
 		/** Sets the corresponding Analitza class. */
 		void setAnalitza(const Analitza* na) { a = na; }
+		
+		///@returns the name of the function that's being edited, if any
+		QString editingName() const;
+		
+		///@returns the number of the parameter that's being edited
+		int editingParameter() const;
+		bool editingBounds() const;
 	private:
 		void highlightBlock(const QString &text);
 		
-		typedef enum { //For mathml highlighting
+		enum MMLtokEnum { //For mathml highlighting
 			gt,	
 			lt,
 			tag,
 			value
-		} MMLtokEnum;
+		};
 		
 		bool m_correct;
 		int antnum;
 		Mode m_mode;
 		int m_pos;
+		int m_editingParameter;
+		QString m_editingName;
+		bool m_editingBounds;
+		QString m_aName;
 		
-		QTextCharFormat negreta;
-		enum ComplMode { Parenthesis, Brace };
-		int complementary(const QString&, int p, ComplMode m);
+		QTextCharFormat bold;
 		const Analitza* a;
-		
-		void bgHighlight(const QString& text, const QColor& bgColor, ComplMode c);
 };
 
 #endif

@@ -247,82 +247,30 @@ QString ExpressionEdit::lastWord(int pos)
 	return exp.mid(act+1, pos-act-1);
 }
 
-QString ExpressionEdit::findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit)
-{
-	QString paraula=tit, p;
-	int nparams=0, cat=0;
-	if(!tit.isNull())
-		cat=1;
-	
-	for(; act<cur; ++act){
-		if(exp.at(act).isLetter()) {
-			paraula.clear();
-			for(; act<exp.length() && exp[act].isLetter(); act++){
-				paraula += exp[act];
-			}
-			
-			if(act<exp.length() && exp[act]=='(' && act<cur) {//This is a function
-				int param_rec=0;
-				
-				act++;
-				p=findPrec(exp, act, cur, param_rec, paraula);
-				
-				if(param_rec != -1){
-					param = param_rec;
-//					qDebug("****out2***<%s> %s %s", p.ascii(), paraula.ascii(), tit.ascii());
-					return p;
-				}
-			} else act--;
-		} else if(exp.at(act) == ',' || exp.at(act) == ':') {
-			nparams++;
-		} else if(exp.at(act) == '(') {
-			cat++;
-		} else if(exp.at(act) == ')') {
-			cat--;
-//			qDebug("cat: %d", cat);
-			if(cat == 0) { //FIXME: Better to put outside the if?
-				param=-1; //Means this is a useless func
-				return QString();
-			} else if(cat <0){
-				param=-3;
-				return QString();
-			}
-		}
-//		qDebug("word: %s", exp.mid(act, exp.length()-act).ascii());
-	}
-	param=nparams;
-	
-//	qDebug("####out###%s %s <%s>", p.ascii(), paraula.ascii(), tit.ascii());
-	return tit;
-}
-
-QString ExpressionEdit::editingWord(int pos, int &param)
-{ //simplification use only
-	int p=0;
-	param=0;
-	return findPrec(this->toPlainText().mid(0,pos), p, pos, param, QString());
-}
-
 void ExpressionEdit::cursorMov()
 {
-	int param=0, pos=this->textCursor().position();
+	int pos=this->textCursor().position();
 	m_highlight->setPos(pos);
 	if(text().isEmpty())
 		setCorrect(true);
-	QString s = editingWord(pos, param);
-	helpShow(s, param);
 	m_highlight->rehighlight();
+	
+	helpShow(m_highlight->editingName(), m_highlight->editingParameter(), m_highlight->editingBounds());
 }
 
-void ExpressionEdit::helpShow(const QString& funcname, int param)
+void ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds)
 {
-	Operator oper(Operator::toOperatorType(funcname));
-	const int op=oper.nparams();
-	if(op) {
+	Operator::OperatorType o=Operator::toOperatorType(funcname);
+	
+	static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
+	if(o!=Operator::none) {
+		Operator oper(o);
+		const int op=oper.nparams();
 		if(op == -1) {
-			helper(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)", funcname, param+1));
+			helper(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
+							 funcname, param+1));
 		} else {
-			QString sample = (param < op+oper.isBounded()) ?
+			QString sample = (param < op && (inbounds || oper.isBounded())) ?
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
 						i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
 			
@@ -337,8 +285,8 @@ void ExpressionEdit::helpShow(const QString& funcname, int param)
 			}
 			
 			if(oper.isBounded()) {
-				QString p=i18nc("Current parameter is the bounding", " : bounds");
-				if(param==op)
+				QString p=bounds;
+				if(inbounds)
 					p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
 				sample += p;
 			}

@@ -134,11 +134,9 @@ class ExpressionEdit : public QPlainTextEdit
 		AlgebraHighlighter *m_highlight;
 		
 		bool returnPress();
-		void helpShow(const QString& funcname, int param=0);
-		static QString findPrec(const QString& exp, int &act, int cur, int &param, const QString& tit);
+		void helpShow(const QString& funcname, int param, bool bounds);
 		void helper(const QString&, const QPoint& p);
 		QString lastWord(int);
-		QString editingWord(int pos, int &param);
 		void focusInEvent (QFocusEvent * event);
 		void focusOutEvent ( QFocusEvent * event );
 		
