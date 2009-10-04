@@ -84,10 +84,13 @@ void Graph2D::drawAxes(QPainter *f, function::Axe a)
 	}
 	
 	//write coords
-	f->drawText(QPointF(3.+this->width()/2., 13.               ), QString::number(viewport.top()));
-	f->drawText(QPointF(3.+this->width()/2., this->height()-5. ), QString::number(viewport.bottom()));
+	QString rightBound=QString::number(viewport.right());
+	int width=f->fontMetrics().width(rightBound);
+	
+	f->drawText(QPointF(3.+this->width()/2., 13.                 ), QString::number(viewport.top()));
+	f->drawText(QPointF(3.+this->width()/2., this->height()-5.   ), QString::number(viewport.bottom()));
 	f->drawText(QPointF(8.                 , this->height()/2.-5.), QString::number(viewport.left()));
-	f->drawText(QPointF(this->width()-30.  , this->height()/2.-5.),QString::number(viewport.right()));
+	f->drawText(QPointF(this->width()-width, this->height()/2.-5.), rightBound);
 	//EO write coords
 }
 
