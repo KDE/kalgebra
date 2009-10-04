@@ -433,6 +433,9 @@ QString OperatorsModel::example(Operator o)
 		case Operator::diff:
 			s="diff(x^2:x)";
 			break;
+		case Operator::_union:
+			s="union(list { 1, 2, 3 }, list { 4, 5, 6 })";
+			break;
 		case Operator::factorial:
 		case Operator::arcsech:
 		case Operator::arcsec:
