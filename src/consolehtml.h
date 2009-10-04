@@ -92,6 +92,7 @@ class ConsoleHtml : public KHTMLPart
 		void modifyVariable(const QString& name, const Expression& exp);
 		void removeVariable(const QString& name);
 		void paste();
+		void scrollDown();
 		
 	private:
 		Analitza a;

@@ -21,6 +21,7 @@
 #include <QHeaderView>
 #include <QClipboard>
 #include <QApplication>
+#include <QScrollBar>
 
 #include <KLocale>
 #include <KStandardAction>
@@ -32,6 +33,7 @@
 #include "expressionparser.h"
 #include "variables.h"
 #include "expression.h"
+#include <qtimer.h>
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -194,10 +196,14 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	write("</body></html>");
 	end();
 	
-	qApp->processEvents();
-// 	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
-	view()->scrollBy(0, 200);
 	emit changed();
+	
+	QTimer::singleShot(0, this, SLOT(scrollDown()));
+}
+
+void ConsoleHtml::scrollDown()
+{
+	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
 }
 
 void ConsoleHtml::copy() const

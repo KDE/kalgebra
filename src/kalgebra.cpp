@@ -67,6 +67,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	QWidget *console = new QWidget(p);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
 	c_results = new ConsoleHtml(this);
+	c_results->view()->setFocusPolicy(Qt::NoFocus);
 	c_dock_vars = new QDockWidget(i18n("Variables"), this);
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
 	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
