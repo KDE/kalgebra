@@ -140,7 +140,6 @@ class ANALITZA_EXPORT Analitza
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
-		Object* removeDependencies(Object* o) const;
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
 		

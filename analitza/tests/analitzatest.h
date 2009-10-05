@@ -41,6 +41,8 @@ Q_OBJECT
 		void testTrivialCalculate();
 		void testDerivativeSimple_data();
 		void testDerivativeSimple();
+		void testSimplify_data();
+		void testSimplify();
 		
 		void testVector_data();
 		void testVector();

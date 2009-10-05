@@ -264,6 +264,14 @@ void AnalitzaTest::testCorrection_data()
 				" }"
 			<< "valueTableRec(x->x**2, list{1,2,3}, 3)";
 	QTest::newRow("yay") << script << "list { 9, 4, 1 }";
+	
+	script.clear();
+	script <<	"findroot:=(der, dee)->piecewise { dee>1 ?"
+				"piecewise { rem(der, dee)=0 ? true, ? findroot(der, dee-1)  }, ? false }";
+	script << "isprime:=n->not(findroot(n, floor(root(n, 2))))";
+// 	script << "list {findroot(2), isprime(33), isprime(17) }";
+	script << "list { isprime(33) }";
+	QTest::newRow("primes") << script << "list { false }";
 }
 
 //testCalculate
@@ -292,6 +300,7 @@ void AnalitzaTest::testCorrection()
 // 		qDebug() << e.error();
 		QVERIFY(e.isCorrect());
 		
+		qDebug() << "...........";
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
@@ -359,6 +368,28 @@ void AnalitzaTest::testUncorrection()
 		if(!correct) break;
 	}
 	QVERIFY(!correct);
+}
+
+void AnalitzaTest::testSimplify_data()
+{
+	QTest::addColumn<QString>("expression");
+	QTest::addColumn<QString>("result");
+	
+	QTest::newRow("no var") << "2+2" << "4";
+	QTest::newRow("simple") << "x+x" << "2*x";
+	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
+// 	QTest::newRow("lambda2") << "(x->x+1)(y+y)" << "2*y+1";
+}
+
+void AnalitzaTest::testSimplify()
+{
+	QFETCH(QString, expression);
+	QFETCH(QString, result);
+	
+	a->setExpression(Expression(expression, false));
+	QVERIFY(a->isCorrect());
+	a->simplify();
+	QCOMPARE(a->expression().toString(), result);
 }
 
 void AnalitzaTest::testEvaluate_data()

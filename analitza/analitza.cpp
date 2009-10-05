@@ -1576,62 +1576,6 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 	return r;
 }
 
-Object* Analitza::removeDependencies(Object * o) const
-{
-	Q_ASSERT(o);
-	if(o->type()==Object::variable) {
-		Ci* var=(Ci*) o;
-		if(m_vars->contains(var->name()) && m_vars->value(var->name())) {
-			Object *value=m_vars->value(var->name())->copy();
-			Object *no = removeDependencies(value);
-			delete o;
-			return no;
-		}
-	} else if(o->isContainer()) {
-		Container *c = (Container*) o;
-		Operator op(c->firstOperator());
-		if(c->containerType()==Container::apply && op.isBounded()) { //it is a function
-			Container *cbody = c;
-			QStringList bvars;
-			if(op==Operator::function) {
-				Ci *func= (Ci*) c->m_params[0];
-				Object* body= m_vars->value(func->name());
-				if(body->type()!=Object::container)
-					return body;
-				cbody = (Container*) body;
-				
-				QStringList::const_iterator iBvars(bvars.constBegin());
-				int i=0;
-				for(; iBvars!=bvars.constEnd(); ++iBvars)
-					m_vars->stack(*iBvars, c->m_params[++i]);
-				delete c;
-				c = 0;
-			}
-			
-			Container::iterator fval(cbody->firstValue());
-			Object *ret= removeDependencies((*fval)->copy());
-			
-			QStringList::const_iterator iBvars(bvars.constBegin());
-			for(; iBvars!=bvars.constEnd(); ++iBvars)
-				m_vars->destroy(*iBvars);
-			
-			
-			if(op==Operator::function)
-				return ret;
-			else {
-				delete *fval;
-				*fval=ret;
-				return c;
-			}
-		} else {
-			Container::iterator it(c->firstValue());
-			for(; it!=c->m_params.end(); ++it)
-				*it = removeDependencies(*it);
-		}
-	}
-	return o;
-}
-
 Expression Analitza::derivative()
 {
 	m_err.clear();
