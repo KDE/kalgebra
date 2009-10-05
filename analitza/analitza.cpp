@@ -90,7 +90,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			case Container::declare: {
 				Ci *var = (Ci*) c->m_params[0];
 				ret = eval(c->m_params[1], true, unscoped);
-				ret=simp(ret);
+				ret = simp(ret);
 				insertVariable(var->name(), ret);
 			}	break;
 			case Container::piecewise: {
@@ -132,19 +132,19 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					case Operator::function: {
 						//it is a function. I'll take only this case for the moment
 						//it is only meant for operations with scoped variables that _change_ its value => have a value
-						
 						Object* body=simp(eval(c->m_params[0], true, unscoped));
 						
-						if(body && body->isContainer()) {
+						if(resolve && body && body->isContainer()) {
 							const Container *cbody = (Container*) body;
 							QStringList bvars=cbody->bvarList();
 							
-							int i=0;
+							int i=1;
 							foreach(const QString& bvar, bvars) {
-								Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
+								Object *val = simp(eval(c->m_params[i], resolve, unscoped));
 								
 								m_vars->stack(bvar, val);
 								delete val;
+								++i;
 							}
 							
 							ret=eval(cbody->m_params.last(), resolve, unscoped);
@@ -152,8 +152,6 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 							foreach(const QString & bvar, bvars)
 								m_vars->destroy(bvar);
 						} else {
-							if(body)
-								m_err << i18n("We can only call lambda values");
 							ret=c->copy();
 						}
 						

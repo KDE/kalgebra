@@ -300,7 +300,6 @@ void AnalitzaTest::testCorrection()
 // 		qDebug() << e.error();
 		QVERIFY(e.isCorrect());
 		
-		qDebug() << "...........";
 		b.setExpression(e);
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
