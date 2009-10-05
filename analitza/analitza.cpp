@@ -128,42 +128,34 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						//FIXME: Must support multiple bvars
 						QStringList bvars = c->bvarList();
 						ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
-						break;
-					} case Operator::none:
-						ret = eval(c->m_params[0], resolve, unscoped);
-						break;
+					}	break;
 					case Operator::function: {
 						//it is a function. I'll take only this case for the moment
 						//it is only meant for operations with scoped variables that _change_ its value => have a value
-						const Container *cbody=0;
 						
 						Object* body=simp(eval(c->m_params[0], true, unscoped));
 						
-						if(body && body->isContainer())
-							cbody = (Container*) body;
-						else {
+						if(body && body->isContainer()) {
+							const Container *cbody = (Container*) body;
+							QStringList bvars=cbody->bvarList();
+							
+							int i=0;
+							foreach(const QString& bvar, bvars) {
+								Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
+								
+								m_vars->stack(bvar, val);
+								delete val;
+							}
+							
+							ret=eval(cbody->m_params.last(), resolve, unscoped);
+							
+							foreach(const QString & bvar, bvars)
+								m_vars->destroy(bvar);
+						} else {
 							if(body)
 								m_err << i18n("We can only call lambda values");
 							ret=c->copy();
-							delete body;
-							break;
 						}
-						Q_ASSERT(cbody);
-						
-						QStringList bvars=cbody->bvarList();
-						
-						int i=0;
-						foreach(const QString& bvar, bvars) {
-							Object *val = simp(eval(c->m_params[++i], resolve, unscoped));
-							
-							m_vars->stack(bvar, val);
-							delete val;
-						}
-						
-						ret=eval(cbody->m_params.last(), resolve, unscoped);
-						
-						foreach(const QString & bvar, bvars)
-							m_vars->destroy(bvar);
 						
 						delete body;
 					}	break;
@@ -1543,27 +1535,12 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
-			bool firstFound=false;
-			Container::iterator it = c->m_params.begin(), first = c->firstValue();
+			Container::iterator it = c->firstValue(), first = c->firstValue();
 			
-			QStringList scope=bvars;
+			QStringList scope=bvars+c->bvarList();
 			
 			for(; !r && it!=c->m_params.end(); ++it) {
-				if(it==first)
-					firstFound=true;
-				
-				if(!firstFound && (*it)->isContainer()) { //We are looking for bvar's
-					Container *cont= (Container*) *it;
-					if(cont->containerType()==Container::bvar
-							&& c->containerType()!=Container::lambda
-							&& !cont->m_params.isEmpty()
-							&& cont->m_params[0]->type()==Object::variable) {
-						Ci* bvar=(Ci*) cont->m_params[0];
-						if(bvar->isCorrect())
-							scope += bvar->name();
-					}
-				} else if(firstFound)
-					r |= hasVars(*it, var, scope, vars);
+				r |= hasVars(*it, var, scope, vars);
 			}
 			
 		} break;
@@ -1583,11 +1560,10 @@ Expression Analitza::derivative()
 	Expression exp;
 	if(m_exp.isCorrect()) {
 		QStringList vars = bvarList();
-		Object *o;
 		if(vars.empty())
-			o = derivative("x", m_exp.tree());
-		else
-			o = derivative(vars.first(), m_exp.tree());
+			vars+="x";
+		
+		Object* o = derivative(vars.first(), m_exp.tree());
 		exp.setTree(simp(o));
 	}
 	return exp;
