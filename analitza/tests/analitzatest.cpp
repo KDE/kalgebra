@@ -24,6 +24,7 @@
 #include "container.h"
 #include "variables.h"
 #include "vector.h"
+#include "value.h"
 
 using namespace std;
 
