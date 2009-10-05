@@ -21,10 +21,10 @@
 
 #include <QHash>
 
-#include "value.h"
 #include "analitzaexport.h"
 
 class Expression;
+class Object;
 
 /**
 *	Stores the variables in a hash map and make them available 

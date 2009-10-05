@@ -269,9 +269,10 @@ void AnalitzaTest::testCorrection_data()
 	script <<	"findroot:=(der, dee)->piecewise { dee>1 ?"
 				"piecewise { rem(der, dee)=0 ? true, ? findroot(der, dee-1)  }, ? false }";
 	script << "isprime:=n->not(findroot(n, floor(root(n, 2))))";
-// 	script << "list {findroot(2), isprime(33), isprime(17) }";
-	script << "list { isprime(33) }";
-	QTest::newRow("primes") << script << "list { false }";
+	script << "primes:=(from, to)->piecewise { or(from<0, to<0, from>=to)? list{},"
+				" isprime(from)? union(list{from}, primes(from+1, to)), ? primes(from+1, to)}";
+	script << "primes(1, 25)";
+	QTest::newRow("primes") << script << "list { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23 }";
 }
 
 //testCalculate

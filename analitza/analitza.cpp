@@ -517,11 +517,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 Object* Analitza::calcDeclare(const Container* c)
 {
 	Object *ret=0;
-	if(c->m_params.count()!=2 || c->m_params[0]->type()!=Object::variable) {
-		m_err << i18n("Need a var name and a value");
-		return new Cn(0.);
-	}
-			
+	
 	const Ci *var = (const Ci*) c->m_params[0];
 	//NOTE: Should not procrastinate the variable resolution... I think :)
 	//m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
@@ -718,7 +714,7 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 		
 		if(dl>ul) {
 			corr=false;
-			m_err.append(i18n("The uplimit is greater than the downlimit"));
+			m_err.append(i18n("The downlimit is greater than the uplimit"));
 		}
 	} else {
 		m_err.append(i18n("Uncorrect uplimit or downlimit."));

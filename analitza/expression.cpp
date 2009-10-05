@@ -177,6 +177,12 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 			}
 			
 		}	break;
+		case Container::declare:
+			if(c->m_params.size()!=2) {
+				m_err << i18n("Wrong declare");
+				ret=false;
+			}
+			break;
 		default:
 			//should never do anything here,
 			break;
