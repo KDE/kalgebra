@@ -16,12 +16,46 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "object.h"
+#include "variable.h"
+#include "expressionwriter.h"
 #include "container.h"
-#include "stringexpressionwriter.h"
 
-QString Object::toString() const
+Object* Ci::copy() const
 {
-	StringExpressionWriter e(this);
-	return e.result();
+	Ci *c = new Ci(m_name);
+	c->m_function = m_function;
+	return c;
+}
+
+QString Ci::visit(ExpressionWriter* e) const
+{
+	return e->accept(this);
+}
+
+QString Ci::toMathML() const
+{
+	if(m_function)
+		return QString("<ci type='function'>%1</ci>").arg(m_name);
+	else
+		return QString("<ci>%1</ci>").arg(m_name);
+}
+
+bool Ci::matches(const Object* exp, QMap<QString, const Object*>* found) const
+{
+	bool ret=false;
+	if(found->contains(m_name)) {
+		const Object* v=found->value(m_name);
+		if(v) { //If already been found
+			ret=Container::equalTree(exp, v);
+		} else {
+			found->insert(m_name, exp);
+			ret=true;
+		}
+	} else {
+		ret = (Object::variable==exp->type());
+		if(ret) {
+			ret = static_cast<const Ci*>(exp)->name()==m_name;
+		}
+	}
+	return ret;
 }

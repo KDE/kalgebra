@@ -25,6 +25,7 @@
 
 #include <KDebug>
 #include <KLocale>
+#include "variable.h"
 
 char Container::m_typeStr[][10] = {
 		"none",

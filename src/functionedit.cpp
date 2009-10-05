@@ -25,6 +25,7 @@
 
 #include <KLocale>
 #include <KIcon>
+#include <KTabWidget>
 
 #include "analitza.h"
 #include "expression.h"
@@ -33,7 +34,7 @@
 #include "variables.h"
 #include "functionsmodel.h"
 #include "functionfactory.h"
-#include <KTabWidget>
+#include "value.h"
 
 namespace {
 	static const int resolution = 200;

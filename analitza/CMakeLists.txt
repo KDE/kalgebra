@@ -16,6 +16,7 @@ set(analitza_SRCS
 	variables.cpp
 	object.cpp
 	value.cpp
+	variable.cpp
 	vector.cpp
 	list.cpp
 	

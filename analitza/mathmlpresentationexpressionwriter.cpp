@@ -23,6 +23,7 @@
 #include <QStringList>
 #include "vector.h"
 #include "list.h"
+#include "variable.h"
 
 namespace
 {

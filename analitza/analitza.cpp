@@ -27,6 +27,7 @@
 #include "container.h"
 #include "object.h"
 #include "list.h"
+#include "variable.h"
 
 Analitza::Analitza() : m_vars(new Variables), m_varsOwned(true) { }
 

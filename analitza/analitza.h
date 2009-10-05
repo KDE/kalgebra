@@ -29,6 +29,7 @@ class Object;
 class Variables;
 class Container;
 class Operator;
+class Ci;
 
 //FIXME: Explain that better and with examples.
 /**

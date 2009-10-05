@@ -128,17 +128,22 @@ bool ExpressionEdit::isMathML() const
 
 void ExpressionEdit::setMode(AlgebraHighlighter::Mode en)
 {
+	bool correct=true;
 	if(!text().isEmpty()) {
 		if(isMathML() && en==AlgebraHighlighter::Expression) { //We convert it into MathML
 			Expression e(toPlainText(), true);
-			this->setPlainText(e.toString());
+			correct=e.isCorrect();
+			if(correct) setPlainText(e.toString());
 		} else if(!isMathML() && en==AlgebraHighlighter::MathML) {
 			Expression e(toPlainText(), false);
-			this->setPlainText(e.toMathML());
+			correct=e.isCorrect();
+			if(correct) setPlainText(e.toMathML());
 		}
 	}
-	m_highlight->setMode(en);
-	setCorrect(true);
+	if(correct)
+		m_highlight->setMode(en);
+	
+	setCorrect(correct);
 }
 
 void ExpressionEdit::returnP()
@@ -255,11 +260,28 @@ void ExpressionEdit::cursorMov()
 		setCorrect(true);
 	m_highlight->rehighlight();
 	
-	helpShow(m_highlight->editingName(), m_highlight->editingParameter(), m_highlight->editingBounds());
+	QString help = helpShow(m_highlight->editingName(),
+							m_highlight->editingParameter(),
+							m_highlight->editingBounds(),
+							a ? a->variables() : 0);
+	
+	if(help.isEmpty() && isCorrect()) {
+		Expression e=expression();
+		if(e.isCorrect())
+		{
+			Analitza a;
+			a.setExpression(e);
+			a.simplify();
+			help=i18n("Result: %1", a.expression().toString());
+		}
+	}
+	
+	helper(help);
 }
 
-void ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds)
+QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds, const Variables* v)
 {
+	QString ret;
 	Operator::OperatorType o=Operator::toOperatorType(funcname);
 	
 	static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
@@ -267,8 +289,8 @@ void ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds)
 		Operator oper(o);
 		const int op=oper.nparams();
 		if(op == -1) {
-			helper(i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
-							 funcname, param+1));
+			ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
+							 funcname, param+1);
 		} else {
 			QString sample = (param < op && (inbounds || oper.isBounded())) ?
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
@@ -291,28 +313,32 @@ void ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds)
 				sample += p;
 			}
 			
-			helper(sample+')');
+			ret=sample+')';
 		}
-	} else if(a && a->variables()->contains(funcname) && a->variables()->value(funcname)->isContainer()) { //if it is a function defined by the user
-		Container *c = (Container*) a->variables()->value(funcname);
-		QStringList params = c->bvarList();
-		
-		QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
-				i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
-                i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(", funcname);
-		
-		for(int i=0; i<params.count(); ++i) {
-			if(i==param)
-				sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
-			else
-				sample += params[i];
+	} else if(v && v->contains(funcname)) { //if it is a function defined by the user
+		Object* val=v->value(funcname);
+		if(val->isContainer()) {
+			Container *c = (Container*) val;
+			QStringList params = c->bvarList();
 			
-			if(i<params.count()-1)
-				sample+= i18nc("Function parameter separator", ", ");
+			QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
+					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
+					i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(",
+						  funcname);
+			
+			for(int i=0; i<params.count(); ++i) {
+				if(i==param)
+					sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
+				else
+					sample += params[i];
+				
+				if(i<params.count()-1)
+					sample+= i18nc("Function parameter separator", ", ");
+			}
+			ret=sample+')';
 		}
-		helper(sample+')');
-	} else
-		helper(QString());
+	}
+	return ret;
 }
 
 void ExpressionEdit::setAutocomplete(bool a)
@@ -344,7 +370,7 @@ void ExpressionEdit::helper(const QString& msg)
 
 void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 {
-	if(!msg.isEmpty()){
+	if(isVisible() && !msg.isEmpty()){
 		QFontMetrics fm(m_helptip->font());
 		m_helptip->setText(msg);
 		m_helptip->setGeometry(QRect(p, p+QPoint(fm.width(msg)+20, fm.height())));

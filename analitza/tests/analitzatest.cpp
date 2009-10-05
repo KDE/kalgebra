@@ -25,6 +25,7 @@
 #include "variables.h"
 #include "vector.h"
 #include "value.h"
+#include <variable.h>
 
 using namespace std;
 

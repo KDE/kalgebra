@@ -26,6 +26,7 @@
 #include "algebrahighlighter.h"
 #include "expression.h"
 
+class Variables;
 class Analitza;
 class OperatorsModel;
 class QKeyEvent;
@@ -134,7 +135,7 @@ class ExpressionEdit : public QPlainTextEdit
 		AlgebraHighlighter *m_highlight;
 		
 		bool returnPress();
-		void helpShow(const QString& funcname, int param, bool bounds);
+		static QString helpShow(const QString& funcname, int param, bool bounds, const Variables* v);
 		void helper(const QString&, const QPoint& p);
 		QString lastWord(int);
 		void focusInEvent (QFocusEvent * event);

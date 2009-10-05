@@ -24,6 +24,7 @@
 #include <QStringList>
 #include <KLocale>
 #include "list.h"
+#include "variable.h"
 
 QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }

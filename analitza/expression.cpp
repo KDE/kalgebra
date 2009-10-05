@@ -25,6 +25,7 @@
 #include "container.h"
 #include "value.h"
 #include "vector.h"
+#include "variable.h"
 #include "expressionwriter.h"
 #include "stringexpressionwriter.h"
 #include "htmlexpressionwriter.h"

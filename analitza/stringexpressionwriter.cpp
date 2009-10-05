@@ -23,6 +23,7 @@
 #include "container.h"
 #include <QStringList>
 #include "list.h"
+#include "variable.h"
 
 StringExpressionWriter::StringExpressionWriter(const Object* o)
 {

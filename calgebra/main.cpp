@@ -29,30 +29,17 @@ using namespace std;
 
 Analitza a;
 
-void evaluate(const Expression& e)
-{
-	Expression ans;
-	a.setExpression(e);
-	if(e.isCorrect())
-		ans=a.evaluate();
-			
-	if(a.isCorrect()) {
-		qDebug() << qPrintable(ans.toString());
-		a.insertVariable("ans", ans);
-	} else {
-		QStringList errors = a.errors();
-		qDebug() << "Error:";
-		foreach(const QString &err, errors)
-			qDebug() << " -" << qPrintable(err);
-	}
-}
+enum CalcType { Evaluate, Calculate };
 
-void calculate(const Expression& e)
+void calculate(const Expression& e, CalcType t)
 {
 	Expression ans;
 	a.setExpression(e);
 	if(e.isCorrect())
-		ans=a.calculate();
+		if(t==Calculate)
+			ans=a.calculate();
+		else
+			ans=a.evaluate();
 			
 	if(a.isCorrect()) {
 		qDebug() << qPrintable(ans.toString());
@@ -99,7 +86,7 @@ int main(int argc, char *argv[])
 			if(lex.isCompletelyRead()) {
 				Expression e(ex.mathML(), true);
 // 				qDebug() << entry << e.toString();
-				evaluate(e);
+				calculate(e, Evaluate);
 				inside =false;
 				entry.clear();
 			} else {
