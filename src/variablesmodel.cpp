@@ -19,6 +19,7 @@
 #include "variablesmodel.h"
 #include "variables.h"
 #include "expression.h"
+#include "value.h"
 #include <KLocale>
 #include <KApplication>
 #include <KDebug>

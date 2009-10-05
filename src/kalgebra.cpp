@@ -29,6 +29,7 @@
 #include "functionsview.h"
 #include "operatorsmodel.h"
 #include "askname.h"
+#include "value.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif

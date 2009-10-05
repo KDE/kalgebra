@@ -34,6 +34,7 @@
 
 #include "analitza.h"
 #include "variables.h"
+#include "value.h"
 
 using std::fabs;
 using std::log10;
