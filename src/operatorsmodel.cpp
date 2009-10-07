@@ -332,7 +332,12 @@ QString OperatorsModel::description(Operator o)
 		case Operator::selector:
 			s = i18n("Select an element from a container");
 			break;
-		default:
+		case Operator::_union:
+			s = i18n("Joins several items of the same time");
+			break;
+		case Operator::function:
+		case Operator::nOfOps:
+		case Operator::none:
 			break;
 	}
 	return s;
