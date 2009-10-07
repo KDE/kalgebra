@@ -249,7 +249,7 @@ void FunctionEdit::edit()
 	}
 	
 	if(m_calcDownlimit>m_calcUplimit) {
-		setState(i18n("Downlimit can't be smaller than uplimit"), Qt::red);
+		setState(i18n("Downlimit cannot be greater than uplimit"), Qt::red);
 		return;
 	}
 	
