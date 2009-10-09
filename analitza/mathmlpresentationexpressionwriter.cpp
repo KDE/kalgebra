@@ -116,7 +116,7 @@ QString root(const Container* c, MathMLPresentationExpressionWriter* w)
 
 QString diff(const Container* c, MathMLPresentationExpressionWriter* w)
 {
-	QStringList bv=c->bvarList();
+	QStringList bv=c->bvarStrings();
 	return "<msubsup><mfenced>"+convertElements(c, w).join(QString())+"</mfenced>"
 			"<mrow>"+bv.join("<mo>,</mo>")+"</mrow><mo>'</mo></msubsup>";
 }
@@ -138,9 +138,9 @@ QString log10(const Container* c, MathMLPresentationExpressionWriter* w)
 
 QString iterative(Operator::OperatorType t, const Container* c, MathMLPresentationExpressionWriter* w)
 {
-	QString op = t==Operator::sum ? "&Sum;" : "&Prod;";
+	QString op= t==Operator::sum ? "&Sum;" : "&Prod;";
 	QString ul="<mrow>"+c->ulimit()->toString()+"</mrow>";
-	QString dl="<mrow>"+c->bvarList().join(", ")+"<mo>=</mo>"+c->dlimit()->toString()+"</mrow>";
+	QString dl="<mrow>"+c->bvarStrings().join(", ")+"<mo>=</mo>"+c->dlimit()->toString()+"</mrow>";
 	
 	return "<mrow><msubsup><mo>"+op+"</mo>"+dl+ul+"</msubsup>"+convertElements(c, w).join(QString())+"</mrow>";
 }
@@ -256,6 +256,17 @@ QString piecewise(const Container* c, MathMLPresentationExpressionWriter* w)
 	return ret;
 }
 
+QString lambda(const Container* c, MathMLPresentationExpressionWriter* w)
+{
+	QString ret="<mrow>";
+	foreach(const Ci* bvar, c->bvarCi())
+		ret+=bvar->visit(w);
+	ret+="<mo>-></mo>";
+	ret+=c->m_params.last()->visit(w);
+	ret+="</mrow>";
+	return ret;
+}
+
 QString MathMLPresentationExpressionWriter::accept(const Container* c)
 {
 	QString ret;
@@ -274,9 +285,9 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 				ret = call(c, this);
 			} else if(op.operatorType()!=0) {
 				QString bvars;
-				if(!c->bvarList().isEmpty()) {
-					bvars=c->bvarList().join(QString());
-					if(c->bvarList().size()>1)
+				if(!c->bvarStrings().isEmpty()) {
+					bvars=c->bvarStrings().join(QString());
+					if(c->bvarStrings().size()>1)
 						bvars="<mfenced>"+bvars+"</mfenced>";
 					const Object *ul=c->ulimit(), *dl=c->dlimit();
 					if(ul || dl) {
@@ -299,14 +310,17 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 		case Container::piecewise:
 			ret=piecewise(c, this);
 			break;
+		case Container::lambda:
+			ret=lambda(c, this);
+			break;
 		case Container::otherwise:
 		case Container::piece:
 		case Container::bvar:
 		case Container::uplimit:
 		case Container::downlimit:
-		case Container::lambda:
 		case Container::declare:
 		case Container::none:
+			qDebug() << "error" << c->tagName();
 			Q_ASSERT(false);
 			break;
 	}
