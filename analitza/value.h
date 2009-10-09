@@ -152,6 +152,7 @@ class ANALITZA_EXPORT Cn : public Object
 		bool isCorrect() const { return m_type==Object::value; }
 		
 		virtual Object* copy() const;
+		virtual bool decorate(const QMap< QString, Object** >& scope);
 		
 		static Cn pi();
 		static Cn e();

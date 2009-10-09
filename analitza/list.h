@@ -54,6 +54,7 @@ class ANALITZA_EXPORT List : public Object
 		virtual Object* copy() const;
 		bool operator==(const List& v) const;
 		
+		virtual bool decorate(const QMap< QString, Object** >& scope);
 	private:
 		QList<Object*> m_elements;
 };

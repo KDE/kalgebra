@@ -42,15 +42,15 @@ public:
 	
 	bool canAdd(const Object* where, const Object* branch);
 	bool check(const Container* c);
-	Object* branch(const QDomElement& elem);
+	Object* branch(const QDomElement& elem, const QMap<QString, Object**>& scope);
 	
 	template <class T>
-	T* addElements(T* v, const QDomElement* elem)
+	T* addElements(T* v, const QDomElement* elem, QMap<QString, Object**>& scope)
 	{
 		QDomNode n = elem->firstChild();
 		while(!n.isNull()) {
 			if(n.isElement()) {
-				Object* ob= branch(n.toElement());
+				Object* ob= branch(n.toElement(), scope);
 				
 				if(ob && canAdd(v, ob)) {
 					v->appendBranch(ob);
@@ -156,9 +156,13 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 				ret=false;
 			}
 			
+			if(op.isBounded() && !c->extractType(Container::bvar)) {
+				m_err << i18n("Missing boundary for '%1'", op.toString());
+			}
+			
 			if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
 				if(!c->ulimit() || !c->dlimit()) {
-					m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarList().join(" "), op.toString());
+					m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarStrings().join(" "), op.toString());
 				}
 			}
 			
@@ -169,7 +173,7 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 				
 				if(isLambda) {
 					const Container* lambda=static_cast<const Container*>(o);
-					QStringList bvars=lambda->bvarList();
+					QStringList bvars=lambda->bvarStrings();
 					if(bvars.count()!=cnt-1) {
 						m_err << i18n("Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
 						ret=false;
@@ -267,21 +271,22 @@ bool Expression::setMathML(const QString & s)
 		return false;
 	}
 	
-	d->m_tree = d->branch(doc.documentElement());
+	d->m_tree = d->branch(doc.documentElement(), QMap<QString, Object**>());
 	return d->m_tree;
 }
 
-Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
+Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMap<QString, Object**>& scope)
 {
 	Cn *num; Operator *op;
 	Object* ret=0;
+	QMap<QString, Object**> newScope(scope);
 	
 	switch(whatType(elem.tagName())) {
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			
 			if(t!=Container::none) {
-				Container* c=addElements<Container>(new Container(t), &elem);
+				Container* c=addElements<Container>(new Container(t), &elem, newScope);
 				
 				if(c && !check(c)) {
 					delete c;
@@ -310,24 +315,24 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 					ret = op = new Operator(type);
 			}
 			break;
-		case Object::variable:
-			{
-				Ci* var = new Ci(elem.text());
-				var->setFunction(elem.attribute("type")=="function");
-				ret=var;
-			}
-			break;
+		case Object::variable: {
+			Ci* var = new Ci(elem.text());
+			var->setFunction(elem.attribute("type")=="function");
+			var->setValue(newScope.value(var->name()), false);
+			ret=var;
+		}	break;
 		case Object::vector:
-			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem);
+			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem, newScope);
 			break;
 		case Object::list:
-			ret=addElements<List>(new List, &elem);
+			ret=addElements<List>(new List, &elem, newScope);
 			break;
 		case Object::none:
 			m_err << i18nc("Error message due to an unrecognized input",
 							  "Not supported/unknown: %1", elem.tagName());
 			break;
 	}
+	
 	Q_ASSERT(ret || !m_err.isEmpty());
 	return ret;
 }
@@ -400,7 +405,7 @@ QStringList Expression::bvarList() const
 		c = (Container*) c->m_params[0];
 		
 		if(c->isContainer())
-			return c->bvarList();
+			return c->bvarStrings();
 	}
 	return QStringList();
 }
@@ -417,12 +422,15 @@ Cn Expression::toReal() const
 
 bool Expression::isLambda() const
 {
-	Container* c = (Container*) d->m_tree;
-	if(d->m_tree && d->m_tree->isContainer() && c->containerType()==Container::math && !c->m_params.isEmpty()) {
-		Container *c1 = (Container*) c->m_params.first();
-		return c1->isContainer() && c1->containerType()==Container::lambda;
-	} else
-		return false;
+	if(d->m_tree && d->m_tree->isContainer()) {
+		Container* c = (Container*) d->m_tree;
+		if(c->containerType()==Container::math) {
+			Container *c1 = (Container*) c->m_params.first();
+			return c1->isContainer() && c1->containerType()==Container::lambda;
+		}
+		return c->containerType()==Container::lambda;
+	}
+	return false;
 }
 
 QStringList Expression::error() const

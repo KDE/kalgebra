@@ -114,6 +114,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	
 	func.variables()->modify("q", th);
 	Expression res=func.calculate();
+	func.variables()->destroy("q");
 	
 	if(!res.isReal())
 		m_err += i18n("We can only draw Real results.");

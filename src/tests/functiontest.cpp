@@ -63,8 +63,8 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->sum") << "sum(t : t=0..3)";
 	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
 									"? selector(2, vector{x, 1/x} ) }";
-	QTest::newRow("x->diff") << "diff(x)";
-	QTest::newRow("x->diffx") << "diff(x^2)";
+	QTest::newRow("x->diff1") << "diff(x:x)";
+	QTest::newRow("x->diffx") << "diff(x^2:x)";
 	QTest::newRow("y->flat") << "y->1";
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";
@@ -74,8 +74,6 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("parametric") << "t->vector{t,t**2}";
 }
-
-#include "container.h"
 
 void FunctionTest::testCopy()
 {
@@ -91,6 +89,9 @@ void FunctionTest::testCopy()
 	QVERIFY(f2.isCorrect());
 	function f3;
 	f3=f2;
+	QVERIFY(f3.isCorrect());
+	f3.calc(QPointF(1,1));
+	if(!f3.isCorrect()) qDebug() << "error" << f3.errors();
 	QVERIFY(f3.isCorrect());
 	QRectF viewp(QPoint(-12, 10), QPoint(12, -10));
 	f3.update_points(viewp.toRect());
@@ -128,7 +129,6 @@ void FunctionTest::testCorrect_data()
 	QTest::addColumn<bool>("correct");
 	
 	QTest::newRow("empty function") << "" << false;
-// 	QTest::newRow("q->empty range") << "q=0..0->(q)" << false;
 	QTest::newRow("undefined var") << "x:=y" << false;
 	QTest::newRow("parametric-novector") << "t->3" << false;
 	QTest::newRow("parametric-wrongvector") << "t->vector{}" << false;
@@ -150,7 +150,7 @@ void FunctionTest::testCorrect()
 			f3.update_points(QRect(-10, 10, 10, -10));
 	}
 	
-	qDebug() << f3.errors();
+	if(correct) qDebug() << f3.errors();
 	QCOMPARE(correct, f3.isCorrect());
 	
 	if(correct)

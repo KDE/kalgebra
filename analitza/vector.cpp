@@ -111,3 +111,12 @@ bool Vector::operator==(const Vector& v) const
 	}
 	return eq;
 }
+
+bool Vector::decorate(const QMap< QString, Object** >& scope)
+{
+	bool ret=false;
+	foreach(Object* o, m_elements) {
+		ret |= o->decorate(scope);
+	}
+	return ret;
+}

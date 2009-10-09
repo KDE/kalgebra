@@ -69,12 +69,20 @@ Expression Analitza::evaluate()
 
 Expression Analitza::calculate()
 {
+	Expression e;
 	if(m_exp.isCorrect()) {
-		return Expression(calc(m_exp.tree()));
+		bool hasdeps=m_exp.tree()->decorate(varsScope());
+		
+		if(!hasdeps)
+			e.setTree(calc(m_exp.tree()));
+		else
+			m_err << i18n("Unfulfilled dependencies for: '%1'",
+							dependencies(m_exp.tree(), varsScope().keys()).join(
+								i18nc("identifier separator in error message", "', '")));
 	} else {
 		m_err << i18n("Must specify a correct operation");
-		return Expression();
 	}
+	return e;
 }
 
 Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
@@ -127,8 +135,20 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				switch(op.operatorType()) {
 					case Operator::diff: {
 						//FIXME: Must support multiple bvars
-						QStringList bvars = c->bvarList();
-						ret = derivative(bvars.empty() ? "x" : bvars[0], *c->firstValue());
+						QStringList bvars = c->bvarStrings();
+						
+						Q_ASSERT(!c->isEmpty());
+						Object* o=derivative(bvars[0], *c->firstValue());
+						
+						Container* cc=new Container(Container::lambda);
+						foreach(const QString& v, bvars) {
+							Container* bvar=new Container(Container::bvar);
+							bvar->appendBranch(new Ci(v));
+							cc->appendBranch(bvar);
+						}
+						cc->appendBranch(simp(o));
+						ret=cc;
+						
 					}	break;
 					case Operator::function: {
 						//it is a function. I'll take only this case for the moment
@@ -137,7 +157,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						
 						if(resolve && body && body->isContainer()) {
 							const Container *cbody = (Container*) body;
-							QStringList bvars=cbody->bvarList();
+							QStringList bvars=cbody->bvarStrings();
 							
 							int i=1;
 							foreach(const QString& bvar, bvars) {
@@ -161,7 +181,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					default: {
 						QSet<QString> newUnscoped(unscoped);
 						if(op.isBounded()) {
-							newUnscoped+=c->bvarList().toSet();
+							newUnscoped+=c->bvarStrings().toSet();
 						}
 						Container *r = c->copy();
 						Container::iterator it(r->firstValue());
@@ -177,7 +197,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			}	break;
 			case Container::lambda: {
 				QSet<QString> newUnscoped(unscoped);
-				newUnscoped+=c->bvarList().toSet();
+				newUnscoped+=c->bvarStrings().toSet();
 				
 				Container *r = c->copy();
 				Object* old=r->m_params.last();
@@ -461,11 +481,16 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 		foreach(Object* o, newPw->m_params) {
 			Q_ASSERT(o->isContainer());
 			Container *p = (Container *) o;
-			Object *aux=p->m_params[0];
+// 			Object *aux=p->m_params[0];
 			p->m_params[0]=derivative(var, p->m_params[0]);
-			delete aux;
+// 			delete aux;
 		}
 		return newPw;
+	} else if(c->containerType()==Container::declare) {
+		Container* obj = new Container(Container::declare);
+		obj->appendBranch(c->m_params.first()->copy());
+		obj->appendBranch(derivative(var, c->m_params.last()));
+		return obj;
 	} else {
 		Container *cret = new Container(c->containerType());
 		foreach(Object* o, c->m_params)
@@ -520,22 +545,16 @@ Object* Analitza::calcDeclare(const Container* c)
 	Object *ret=0;
 	
 	const Ci *var = (const Ci*) c->m_params[0];
-	//NOTE: Should not procrastinate the variable resolution... I think :)
-	//m_vars->modify(var->name(), Expression::objectCopy(c->m_params[1]));
+	ret=simp(c->m_params[1]->copy());
+		
+	insertVariable(var->name(), ret);
 	
-	Object* o=0;
-	if(c->m_params[1]->isContainer() && static_cast<Container*>(c->m_params[1])->containerType()==Container::lambda)
-		o = c->m_params[1]->copy();
-	else
-		o = calc(c->m_params[1]);
-	
-	insertVariable(var->name(), o);
-	if(o->type()==Object::vector || o->type()==Object::list || o->type()==Object::value)
-		ret=o;
-	else {
-		//should return NaN
+	if(!ret || (ret->type()!=Object::vector && ret->type()!=Object::list && ret->type()!=Object::value))
+	{
+		delete ret;
+		
+		//Would be nice to return NaN
 		ret=new Cn(0.);
-		delete o;
 	}
 	Q_ASSERT(ret);
 	return ret;
@@ -545,11 +564,9 @@ Object* Analitza::calc(const Object* root)
 {
 	Q_ASSERT(root);
 	Object* ret=0;
-	Ci *a;
 	
 	switch(root->type()) {
 		case Object::container:
-// 			objectWalker(root);
 			ret = operate((Container*) root);
 			break;
 		case Object::vector: {
@@ -576,38 +593,29 @@ Object* Analitza::calc(const Object* root)
 			ret=root->copy();
 			break;
 		case Object::variable: {
-			a=(Ci*) root;
-			Object* o=m_vars->value(a->name());
-			if(KDE_ISLIKELY(o))
-				ret = calc(o);
-			else {
-				if(a->isFunction())
-					m_err << i18n("The function <em>%1</em> does not exist", a->name());
-				else
-					m_err << i18n("The variable <em>%1</em> does not exist", a->name());
-				ret = new Cn(0.);
-			}
+			Ci* a=(Ci*) root;
+			ret = calc(a->value());
 		}	break;
 		case Object::oper:
 		case Object::none:
 			break;
 	}
+	
 	return ret;
 }
 
 Object* Analitza::operate(const Container* c)
 {
 	Q_ASSERT(c);
-	Object* ret=0;
-	
 	Q_ASSERT(!c->isEmpty());
+	Object* ret=0;
 	
 	switch(c->containerType()) { //TODO: Diffs should be implemented here.
 		case Container::math:
 			ret=calc(*c->firstValue());
 			break;
 		case Container::lambda:
-			return c->copy();
+			ret=c->copy();
 			break;
 		case Container::apply:
 		{
@@ -620,12 +628,20 @@ Object* Analitza::operate(const Container* c)
 				ret = product(*c);
 			else if(opt==Operator::diff) {
 				//TODO: Make multibvar
-				QStringList bvar=c->bvarList();
-				Object *deriv=simp(derivative(bvar.isEmpty() ? "x" : bvar.first(), c->m_params.last()));
-				if(!m_err.isEmpty())
-					return new Cn(0.);
-				ret=calc(deriv);
-				delete deriv;
+				QStringList bvars=c->bvarStrings();
+				//We construct the lambda
+				Object* o=derivative(bvars[0], *c->firstValue());
+				Container* cc=new Container(Container::lambda);
+				foreach(const QString& v, bvars) {
+					Container* bvar=new Container(Container::bvar);
+					bvar->appendBranch(new Ci(v));
+					cc->appendBranch(bvar);
+				}
+				cc->appendBranch(simp(o));
+				ret=cc;
+				
+				ret->decorate(Object::ScopeInformation());
+				
 			} else if(opt==Operator::function) {
 				ret = func(*c);
 			} else {
@@ -691,19 +707,10 @@ Object* Analitza::operate(const Container* c)
 
 Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
 {
-	QStringList bvars=n.bvarList();
-	Q_ASSERT(!bvars.isEmpty());
-	
 	Object* ret=initial;
-	QString var= bvars.first();
 	
-	Object* objectUl=n.ulimit();
-	Object* objectDl=n.dlimit();
-	
-	Q_ASSERT(objectDl && objectUl);
-	
-	Object *objul=calc(objectUl);
-	Object *objdl=calc(objectDl);
+	Object *objul=calc(n.ulimit());
+	Object *objdl=calc(n.dlimit());
 	double ul, dl;
 	
 	bool corr=isCorrect();
@@ -730,8 +737,12 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 		return new Cn(0.);
 	}
 	
-	m_vars->stack(var, 0.);
-	Cn* c = (Cn*) m_vars->value(var);
+	QList<Ci*> bvars=n.bvarCi();
+	Q_ASSERT(!bvars.isEmpty());
+	Ci* var= bvars.first();
+	
+	Cn* c = new Cn(0.);
+	var->value()=c;
 	
 	QString correct;
 	Operator::OperatorType type=t.operatorType();
@@ -742,8 +753,9 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 		Object *val=calc(n.m_params.last());
 		ret=Operations::reduce(type, ret, val, correct);
 	}
+	var->value()=0;
+	delete c;
 	
-	m_vars->destroy(var);
 	return ret;
 }
 
@@ -769,6 +781,7 @@ bool Analitza::isFunction(const Ci& func) const
 Object* Analitza::func(const Container& n)
 {
 	Object* obj=calc(n.m_params[0]);
+	obj->decorate(Object::ScopeInformation());
 	
 	if(!obj->isContainer() || static_cast<Container*>(obj)->containerType()!=Container::lambda) {
 		m_err << i18n("Trying to call an invalid function");
@@ -777,20 +790,20 @@ Object* Analitza::func(const Container& n)
 	
 	Object* ret=0;
 	Container *function = (Container*) obj;
-	QStringList vars = function->bvarList();
+	QList<Ci*> vars = function->bvarCi();
 	
 	int i=0;
 	
-	foreach(const QString& param, vars) {
+	foreach(Ci* param, vars) {
 		Object* val=calc(n.m_params[++i]);
-		m_vars->stack(param, val);
-		delete val;
+		param->value()=val;
 	}
 	
 	ret=calc(function->m_params.last());
 	
-	foreach(const QString& param, vars)
-		m_vars->destroy(param);
+	foreach(Ci* param, vars) {
+		delete param->value();
+	}
 	
 	return ret;
 }
@@ -823,16 +836,27 @@ void Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
 	}
 }
 
+bool Analitza::isLambda(const Object* o)
+{
+	return o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::lambda;
+}
+
 Object* Analitza::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
 	
-	Object* aux=0;
-	if(!hasVars(root)) {
+	if(!isLambda(root) && !hasVars(root))
+	{
 		if(root->type()!=Object::value && root->type() !=Object::oper) {
-			aux = root;
+			bool deps=root->decorate(Object::ScopeInformation());
+			Q_ASSERT(!deps);
+			
+			Object* aux=root;
 			root = calc(root);
 			delete aux;
+			
+			if(isLambda(root))
+				root = simp(root);
 		}
 	} else if(root->type()==Object::vector) {
 		Vector* v=static_cast<Vector*>(root);
@@ -925,19 +949,10 @@ Object* Analitza::simp(Object* root)
 						if((*it)->isContainer()) {
 							Container *intr = (Container*) *it;
 							if(intr->containerType()==Container::apply && intr->firstOperator()==o) {
-								
-// 								qDebug() << "-------- before1" << (*it)->toString();
-// 								objectWalker(c);
-								
-// 								qDebug() << "-------- middle1" << (*it)->toString();
-// 								objectWalker(c);
 								if(!intr->isUnary() || intr->firstOperator()!=Operator::minus) {
 									levelOut(c, intr, it);
 									d=true;
 								}
-// 								qDebug() << "-------- after1";
-// 								objectWalker(c);
-// 								qDebug() << "-------- done1";
 							}
 						}
 #ifndef Q_CC_MSVC
@@ -1069,7 +1084,9 @@ Object* Analitza::simp(Object* root)
 					}
 					break;
 				case Operator::sum: {
-					for(it = c->m_params.begin(); it!=c->m_params.end(); ++it) {
+					
+					const int offset=1+c->bvarCi().size(); //op+bvars
+					for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
 						if((*it)->isContainer()) {
 							Container *limit=static_cast<Container*>(*it);
 							if(limit->containerType()==Container::uplimit || limit->containerType()==Container::downlimit)
@@ -1082,7 +1099,7 @@ Object* Analitza::simp(Object* root)
 					}
 					
 					//if bvars is empty, we are dealing with an invalid sum()
-					QStringList bvars=c->bvarList();
+					QStringList bvars=c->bvarStrings();
 					it = c->firstValue();
 					if(!bvars.isEmpty() && !hasTheVar(bvars.toSet(), *it)) {
 						Container *cDiff=new Container(Container::apply);
@@ -1402,7 +1419,7 @@ Object* Analitza::simpPolynomials(Container* c)
 Object* Analitza::simpSum(Container * c)
 {
 	Object* ret=c;
-	QStringList bvars=c->bvarList();
+	QStringList bvars=c->bvarStrings();
 	Container* cval=static_cast<Container*>(*c->firstValue());
 	Operator o=cval->firstOperator();
 	if(o==Operator::times) {
@@ -1532,12 +1549,16 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 			Container *c = (Container*) o;
 			Container::iterator it = c->firstValue(), first = c->firstValue();
 			
-			QStringList scope=bvars+c->bvarList();
+			QStringList scope=bvars+c->bvarStrings();
+			Object* ul=c->ulimit(), *dl=c->dlimit();
+			
+			//uplimit and downlimit are in the parent scope
+			if(ul) r |= hasVars(ul, var, bvars, vars);
+			if(dl) r |= hasVars(dl, var, bvars, vars);
 			
 			for(; !r && it!=c->m_params.end(); ++it) {
 				r |= hasVars(*it, var, scope, vars);
 			}
-			
 		} break;
 		case Object::none:
 		case Object::value:
@@ -1547,6 +1568,22 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 	
 	return r;
 }
+
+Object::ScopeInformation Analitza::varsScope() const
+{
+	Object::ScopeInformation varsScope;
+	Variables::iterator it, itEnd=m_vars->end();
+	for(it=m_vars->begin(); it!=itEnd; ++it) {
+		varsScope.insert(it.key(), &it.value());
+	}
+	
+	for(it=m_vars->begin(); it!=itEnd; ++it) {
+		(*it)->decorate(varsScope);
+	}
+	
+	return varsScope;
+}
+
 
 Expression Analitza::derivative()
 {
@@ -1558,8 +1595,8 @@ Expression Analitza::derivative()
 		if(vars.empty())
 			vars+="x";
 		
-		Object* o = derivative(vars.first(), m_exp.tree());
-		exp.setTree(simp(o));
+		Object* o = simp(derivative(vars.first(), m_exp.tree()));
+		exp.setTree(o);
 	}
 	return exp;
 }
@@ -1609,7 +1646,7 @@ bool Analitza::hasTheVar(const QSet<QString> & vars, const Object * o)
 		}	break;
 		case Object::container: {
 			const Container *c=static_cast<const Container*>(o);
-			QSet<QString> bvars=c->bvarList().toSet(), varsCopy=vars;
+			QSet<QString> bvars=c->bvarStrings().toSet(), varsCopy=vars;
 			foreach(const QString &var, bvars) {
 				if(varsCopy.contains(var))
 					varsCopy.remove(var);
@@ -1642,69 +1679,92 @@ bool Analitza::hasTheVar(const QSet<QString> & vars, const Container * c)
 	return found;
 }
 
-double Analitza::derivative(const QList< QPair<QString, double > >& values )
+typedef QPair<QString, double> StringDoublePair;
+double Analitza::derivative(const QList<StringDoublePair>& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
-	typedef QPair<QString, double> StringDoublePair;
 	//Image
+	//TODO: Should not call ::calculate()
 	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
-		m_vars->stack(valp.first, valp.second);
+		m_vars->modify(valp.first, valp.second);
 	}
+	
+	Expression e1=calculate();
+	if(!isCorrect())
+		return 0.;
 		
-	Object* v1=calc(m_exp.tree());
-		
-	foreach(const StringDoublePair& valp, values)
+	foreach(const StringDoublePair& valp, values) {
 		m_vars->destroy(valp.first);
+		Q_ASSERT(!m_vars->contains(valp.first));
+	}
 	
 	//Image+h
-	double h=0.00000001;
+	double h=0.0000000001;
 	foreach(const StringDoublePair& valp, values) {
 // 		volatile double temp=valp.second+h;
 // 		double hh=temp-valp.second;
 		m_vars->stack(valp.first, valp.second+h);
 	}
 	
-	Object* v2=calc(m_exp.tree());
-		
+	Expression e2=calculate();
+	if(!isCorrect())
+		return 0.;
+	
 	foreach(const StringDoublePair& valp, values)
 		m_vars->destroy(valp.first);
-	Q_ASSERT(v1->type()==Object::value && v2->type()==Object::value);
-	Cn *cn1=(Cn*)v1, *cn2=(Cn*)v2;
-	double ret=(cn2->value()-cn1->value())/h;
 	
-	delete v1;
-	delete v2;
+	if(!e1.isReal() || !e2.isReal()) {
+		m_err << i18n("The result is not a number");
+		return 0;
+	}
+	double ret=(e2.toReal().value()-e1.toReal().value())/h;
+	
 	return ret;
 }
 
-// QList<double> Analitza::discontinuities(const QString& var, const Bounds& b)
-// {
-// 	QList<double> ret;
-// 	if(m_exp.isCorrect()) {
-// // 		ret=discon(m_exp.tree(), var, b, QSet<QString>());
-// 	} else {
-// 		m_err << i18n("Must specify a correct operation");
-// 	}
-// 	return ret;
-// }
-// 
-// QList<double> Analitza::discon(const Object* branch, const QString& var, const Bounds& b, const QSet<QString>& unscoped)
-// {
-// 	QList<double> ret;
-// 	if(branch->isContainer()) {
-// 		const Container* c = (Container*) branch;
-// 		
-// 		if(c->containerType()==Container::declare) {
-// 			
-// 		} else if(c->containerType()==Container::apply) {
-// 			Operator op = c->firstOperator();
-// 			
-// 		} else if((c->containerType()==Container::math || c->containerType()==Container::declare)
-// 				&& !c->m_params.isEmpty() ) {
-// 			//TODO: Multiline. Add a loop here!
-// 			ret=discon(c->m_params[0], var, b, unscoped);
-// 		}
-// 	}
-// 	return ret;
-// }
-
+QStringList Analitza::dependencies(const Object* o, const QStringList& scope)
+{
+	Q_ASSERT(o);
+	
+	QStringList ret;
+	switch(o->type()) {
+		case Object::variable: {
+			Ci *i = (Ci*) o;
+			if(!scope.contains(i->name()))
+				ret += i->name();
+		}	break;
+		case Object::vector: {
+			Vector *v=(Vector*) o;
+			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				ret += dependencies(*it, scope);
+			}
+		}	break;
+		case Object::list: {
+			List *v=(List*) o;
+			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
+				ret += dependencies(*it, scope);
+			}
+		}	break;
+		case Object::container: {
+			Container *c = (Container*) o;
+			Container::iterator it = c->firstValue(), first = c->firstValue();
+			
+			QStringList newScope=scope+c->bvarStrings();
+			Object* ul=c->ulimit(), *dl=c->dlimit();
+			
+			//uplimit and downlimit are in the parent scope
+			if(ul) ret += dependencies(ul, scope);
+			if(dl) ret += dependencies(dl, scope);
+			
+			for(; it!=c->m_params.end(); ++it) {
+				ret += dependencies(*it, newScope);
+			}
+		} break;
+		case Object::none:
+		case Object::value:
+		case Object::oper:
+			break;
+	}
+	
+	return ret;
+}

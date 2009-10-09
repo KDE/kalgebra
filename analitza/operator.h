@@ -57,13 +57,13 @@ class ANALITZA_EXPORT Operator : public Object
 		virtual ~Operator() {}
 		
 		/** Sets an operator type to the object */
-		void setOperator(enum OperatorType t) { m_optype=t; }
+		void setOperator(OperatorType t) { m_optype=t; }
 		
 		/** Returns the number of params expected for the operator type. */
 		int nparams() const { return nparams(m_optype); }
 		
 		/** Returns the operator type. */
-		enum OperatorType operatorType() const { return m_optype; }
+		OperatorType operatorType() const { return m_optype; }
 		
 		/** Returns this operator precedence. */
 		unsigned int weight() const { return operatorWeight(m_optype); }
@@ -102,22 +102,23 @@ class ANALITZA_EXPORT Operator : public Object
 		static unsigned int operatorWeight(OperatorType o);
 		
 		/** Converts a @p s operator tag to the operator. */
-		static enum OperatorType toOperatorType(const QString &s);
+		static OperatorType toOperatorType(const QString &s);
 		
 		/** Returns the expected number of parameters of a type. If there can be multiple parameters, -1 is returned */
-		static int nparams(enum OperatorType);
+		static int nparams(OperatorType o);
 		
 		/** Returns if it is a trigonometric operator. */
-		static bool isTrigonometric(enum OperatorType o);
+		static bool isTrigonometric(OperatorType o);
 		
 		virtual bool matches(const Object*, QMap<QString, const Object*>*) const;
+		virtual bool decorate(const QMap< QString, Object** >& ) { return false; }
 		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual Object* copy() const;
 		
 		static const char words[nOfOps][14];
 	private:
-		enum OperatorType m_optype;
+		OperatorType m_optype;
 };
 
 #endif

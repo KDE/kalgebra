@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include "operatorsmodeltest.h"
-#include "operatorsmodel.h"
 #include "expression.h"
 #include "analitza.h"
 #include <qtest_kde.h>
@@ -36,49 +35,56 @@ OperatorsModelTest::~OperatorsModelTest() {}
 void OperatorsModelTest::initTestCase() {}
 void OperatorsModelTest::cleanupTestCase() {}
 
-void OperatorsModelTest::testExamples()
+void OperatorsModelTest::testExamples_data()
 {
-	OperatorsModel m;
-	
+	QTest::addColumn<int>("i");
 	for(int i=0; i<m.rowCount(); i++) {
 		QModelIndex idx(m.index(i, 0));
-		
-		QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
-		nameIdx = idx.sibling(idx.row(), 0);
-		descriptionIdx = idx.sibling(idx.row(), 1);
-		sampleIdx = idx.sibling(idx.row(), 2);
-		exampleIdx = idx.sibling(idx.row(), 3);
-		
-		QString name=m.data(nameIdx).toString();
-		QString description=m.data(descriptionIdx).toString();
-		QString sample=m.data(sampleIdx).toString();
-		QString example=m.data(exampleIdx).toString();
-		
-// 		qDebug() << "testing: " << name << example;
-		
-		QVERIFY(!name.isEmpty());
-		QVERIFY(!description.isEmpty());
-		QVERIFY(!sample.isEmpty());
-		QVERIFY(!example.isEmpty());
-		Expression ex(example, false);
-		QCOMPARE(ex.toString(), example);
-		
-		Analitza a;
-		a.setExpression(ex);
-		if(!a.isCorrect()) qDebug() << example << "1. error" << a.errors();// QVERIFY(a.isCorrect());
-		a.simplify();
-		if(!a.isCorrect()) qDebug() << example << "2. error" << a.errors();// QVERIFY(a.isCorrect());
-		a.variables()->modify("x", 0.1);
-		Expression e = a.calculate();
-		if(!a.isCorrect()) qDebug() << example << "3. error" << a.errors();// QVERIFY(a.isCorrect());
-		if(!e.isCorrect()) qDebug() << example << "4. error" << e.error(); // QVERIFY(e.isCorrect());
-		QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
-		
-		e = a.evaluate();
-		if(!a.isCorrect()) qDebug() << example << "5. error" << a.errors();// QVERIFY(a.isCorrect());
-		if(!e.isCorrect()) qDebug() << example << "6. error" << e.error(); // QVERIFY(e.isCorrect());
-		QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
+		QTest::newRow(qPrintable(idx.data().toString())) << i;
 	}
+}
+
+void OperatorsModelTest::testExamples()
+{
+	QFETCH(int, i);
+	QModelIndex idx(m.index(i, 0));
+	
+	QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
+	nameIdx = idx.sibling(idx.row(), 0);
+	descriptionIdx = idx.sibling(idx.row(), 1);
+	sampleIdx = idx.sibling(idx.row(), 2);
+	exampleIdx = idx.sibling(idx.row(), 3);
+	
+	QString name=m.data(nameIdx).toString();
+	QString description=m.data(descriptionIdx).toString();
+	QString sample=m.data(sampleIdx).toString();
+	QString example=m.data(exampleIdx).toString();
+	
+// 		qDebug() << "testing: " << name << example;
+	
+	QVERIFY(!name.isEmpty());
+	QVERIFY(!description.isEmpty());
+	QVERIFY(!sample.isEmpty());
+	QVERIFY(!example.isEmpty());
+	Expression ex(example, false);
+	QCOMPARE(ex.toString(), example);
+	
+	Analitza a;
+	a.setExpression(ex);
+	if(!a.isCorrect()) qDebug() << example << "1. error" << a.errors();// QVERIFY(a.isCorrect());
+	
+	a.simplify();
+	if(!a.isCorrect()) qDebug() << example << "2. error" << a.errors();// QVERIFY(a.isCorrect());
+	a.variables()->modify("x", 0.1);
+	Expression e = a.calculate();
+	if(!a.isCorrect()) qDebug() << example << "3. error" << a.errors();// QVERIFY(a.isCorrect());
+	if(!e.isCorrect()) qDebug() << example << "4. error" << e.error(); // QVERIFY(e.isCorrect());
+	QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
+	
+	e = a.evaluate();
+	if(!a.isCorrect()) qDebug() << example << "5. error" << a.errors();// QVERIFY(a.isCorrect());
+	if(!e.isCorrect()) qDebug() << example << "6. error" << e.error(); // QVERIFY(e.isCorrect());
+	QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
 }
 
 #include "operatorsmodeltest.moc"

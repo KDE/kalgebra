@@ -36,15 +36,17 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl
 	: points(), func(v), m_deriv(0), m_res(0), mUplimit(defUl), mDownlimit(defDl)
 {
 	Expression e;
-	if(newFunc.bvarList().isEmpty())
-		e=newFunc;
-	else { //It's a lambda, we need to take it off
+	func.setExpression(newFunc);
+	func.simplify();
+	
+	e=func.expression();
+	if(e.isLambda()) { //It's a lambda, we need to take it off
 		const Container* c=dynamic_cast<const Container*>(newFunc.tree());
 		const Container* d=dynamic_cast<const Container*>(c->m_params.last());
 		e=Expression(d->m_params.last()->copy());
+		func.setExpression(e);
 	}
 	
-	func.setExpression(e);
 	if(func.isCorrect()) {
 		Expression deriv = func.derivative();
 		if(func.isCorrect())

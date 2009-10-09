@@ -26,7 +26,8 @@
 #include "analitzaexport.h"
 
 /** Prints an expression tree from a node @p o indenting it by @p ind */
-void ANALITZA_EXPORT objectWalker(const Object* o);
+void ANALITZA_EXPORT objectWalker(const Object* o, const QByteArray& prefix=QByteArray());
+class Ci;
 
 /**
  *	This class is the one that will correspond to MathML container.
@@ -83,13 +84,16 @@ public:
 	static bool equalTree(const Object * o1, const Object * o2);
 	
 	/** Adds a @p o branch at the end of the Container. */
-	void appendBranch(Object* o) { m_params.append(o); }
+	void appendBranch(Object* o);
 	
 	/** Adds a @p o branch right after @p before of the Container. */
 	void insertBranch(Container::iterator before, Object* o) { m_params.insert(before, o); }
 	
 	/** Returns a QStringList where we have all of the bvar in the container */
-	QStringList bvarList() const;
+	QStringList bvarStrings() const;
+	
+	/** Returns a QStringList where we have all of the bvar in the container */
+	QList<Ci*> bvarCi() const;
 	
 	/** Returns whether there is any variable inside the tree */
 	bool hasVars() const;
@@ -134,28 +138,12 @@ public:
 	
 	virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
 	
-	Object* extractType(Container::ContainerType t) const;
-	
-#if 0 //not used
-	//Monomials
-	/** Creates a monomial, just to ease the construction. */
-	Container(Cn* base, Object* var, Ci* degree);
-	
-	/** Returns the degree of a monomial. */
-	static Cn* monomialDegree(const Container&);
-	
-	/** Returns the base of a monomial. */
-	static Cn* monomialBase(const Container&);
-	
-	/** Returns the base of a monomial. */
-	static Object* monomialVar(const Container&);
-#endif
+	Container* extractType(Container::ContainerType t) const;
+	virtual bool decorate(const ScopeInformation& scope);
+
 // protected:
 	QList<Object*> m_params;
 private:
-	/** Copies all the params to a new list. */
-	QList<Object*> copyParams() const;
-	
 	ContainerType m_cont_type;
 	static char m_typeStr[][10];
 	static QMap<QString, ContainerType> m_nameToType;

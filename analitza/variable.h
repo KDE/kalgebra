@@ -26,7 +26,9 @@ class ANALITZA_EXPORT Ci : public Object
 {
 	public:
 		/** Constructor. Creates a variable with a @p b name */
-		explicit Ci(const QString& b) : Object(variable), m_name(b), m_function(false) {}
+		explicit Ci(const QString& b);
+		
+		~Ci();
 		
 		/** Sets a @p n name to a variable */
 		void setName(const QString& n) { m_name=n; }
@@ -52,12 +54,25 @@ class ANALITZA_EXPORT Ci : public Object
 		/** Returns whether it is a correct object. */
 		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
 		
+		///Value for the variable, only valid after colorizing the tree
+		Object*& value() const { Q_ASSERT(m_value); return *m_value; }
+		
+		///@p param value sets the new value for the item
+		void setValue(Object** value, bool owner);
+		
+		bool isDefined() const { return m_value!=0; }
+		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool matches(const Object* pattern, QMap<QString, const Object*>* found) const;
 		virtual Object* copy() const;
+		
+		virtual bool decorate(const ScopeInformation& scope);
+		
 	private:
 		QString m_name;
 		bool m_function;
+		bool m_owner;
+		Object** m_value;
 };
 
 #endif

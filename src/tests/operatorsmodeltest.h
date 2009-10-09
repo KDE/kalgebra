@@ -20,6 +20,7 @@
 #define OPERATORSMODELTEST_H
 
 #include <QObject>
+#include "operatorsmodel.h"
 
 /**
 	@author Aleix Pol
@@ -35,9 +36,13 @@ class OperatorsModelTest : public QObject
 	private slots:
 		void initTestCase();
 		
+		void testExamples_data();
 		void testExamples();
 		
 		void cleanupTestCase();
+		
+	private:
+		OperatorsModel m;
 };
 
 #endif

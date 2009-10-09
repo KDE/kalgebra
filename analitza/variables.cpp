@@ -69,7 +69,7 @@ void Variables::modify(const QString& name, const Object* o)
 bool Variables::rename(const QString& orig, const QString& dest)
 {
 	bool existed = contains(orig);
-	Object *aux = NULL;
+	Object *aux = 0;
 	
 	if(existed) {
 		aux = take(orig);

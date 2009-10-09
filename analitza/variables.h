@@ -48,12 +48,14 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		~Variables();
 		
 		/**
-		*	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p o value.
+		*	Modifies the value of the variable called @p name,
+		*	and if didn't exist, a @p name variable is created with an @p o value.
 		*/
 		void modify(const QString& name, const Object* o);
 		
 		/**
-		*	Modifies the value of the variable called @p name, and if didn't exist, a @p name variable is created with an @p e expression.
+		*	Modifies the value of the variable called @p name,
+		*	and if didn't exist, a @p name variable is created with an @p e expression.
 		*/
 		void modify(const QString& name, const Expression& o);
 		
@@ -63,8 +65,9 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		void modify(const QString& name, const double& d);
 		
 		/**
-		*	If the variable @p name didn't exist it takes @p o value, if not @p name variable takes
-		*	@p o value until it is destroyed, when it is going to recover the previous value.
+		*	If the variable @p name didn't exist it takes @p o value,
+		*	if not @p name variable takes @p o value until it is destroyed,
+		*	when it is going to recover the previous value.
 		*/
 		void stack(const QString& name, const Object* o);
 		

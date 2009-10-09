@@ -449,6 +449,8 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 			delete v1;
 			return ret;
 		}	break;
+		default:
+			break;
 	}
 	return 0;
 }

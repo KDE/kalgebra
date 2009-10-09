@@ -319,7 +319,7 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inboun
 		Object* val=v->value(funcname);
 		if(val->isContainer()) {
 			Container *c = (Container*) val;
-			QStringList params = c->bvarList();
+			QStringList params = c->bvarStrings();
 			
 			QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
 					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :

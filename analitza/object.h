@@ -45,6 +45,7 @@ public:
 		oper,		/**< Describes an object as an operator. */
 		container	/**< Describes an object as a container. */
 	};
+	typedef QMap<QString, Object**> ScopeInformation;
 	
 	/** Object destructor. Does nothing. */
 	virtual ~Object() { /*qDebug() << "Destroying " << this;*/}
@@ -82,12 +83,18 @@ public:
 	/** @returns a new and equal instance of the tree. */
 	virtual Object* copy() const =0;
 	
+	/**
+	*	Decorates the tree with scope information
+	*	@returns whether unresolved variables were found
+	*/
+	virtual bool decorate(const ScopeInformation& scope)=0;
+	
 protected:
 	/** Creates an object with a @p t type */
 	Object(enum ObjectType t) : m_type(t) {}
 	
 	/** Specifies the Object type. */
-	enum ObjectType m_type;
+	const ObjectType m_type;
 };
 
 #endif

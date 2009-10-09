@@ -63,7 +63,10 @@ Container::Container(const Container& c) : Object(Object::container), m_cont_typ
 {
 	Q_ASSERT(c.type()==Object::container);
 	
-	m_params = c.copyParams();
+	Container::const_iterator it=c.m_params.constBegin();
+	for(; it!=c.m_params.constEnd(); ++it) {
+		appendBranch((*it)->copy());
+	}
 }
 
 Container* Container::copy() const
@@ -102,33 +105,33 @@ bool Container::isZero() const
 	return a;
 }
 
-QList<Object*> Container::copyParams() const
-{
-	QList<Object*> ret;
-	
-	for(Container::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
-		ret.append((*it)->copy());
-	}
-	
-	return ret;
-}
-
 Container::ContainerType Container::toContainerType(const QString& tag)
 {
 	return m_nameToType[tag];
 }
 
-QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of Strings?
+QList<Ci*> Container::bvarCi() const
 {
-	QStringList bvars;
+	QList<Ci*> ret;
 	QList<Object*>::const_iterator it;
 	
 	for(it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
 		if((*it)->isContainer()) {
 			Container* c = (Container*) (*it);
 			if(c->containerType() == Container::bvar && !c->m_params.isEmpty() && c->m_params[0]->type()==Object::variable)
-				bvars.append(((Ci*)c->m_params[0])->name());
+				ret.append((Ci*) c->m_params[0]);
 		}
+	}
+	
+	return ret;
+}
+
+QStringList Container::bvarStrings() const
+{
+	QStringList bvars;
+	QList< Ci* > vars=bvarCi();
+	foreach(Ci* var, vars) {
+		bvars.append(var->name());
 	}
 	
 	return bvars;
@@ -136,14 +139,23 @@ QStringList Container::bvarList() const //NOTE: Should we return Ci's instead of
 
 Object* Container::ulimit() const
 {
-	return extractType(uplimit);
+	Container* c=extractType(uplimit);
+	if(c)
+		return c->m_params.first();
+	else
+		return 0;
 }
 
 Object* Container::dlimit() const
 {
-	return extractType(downlimit);
+	Container* c=extractType(downlimit);
+	if(c)
+		return c->m_params.first();
+	else
+		return 0;
 }
 
+//TODO: delete?
 bool Container::hasVars() const
 {
 	bool ret=false;
@@ -316,13 +328,15 @@ Object* Container::monomialVar(const Container& c) //FIXME: Must improve these v
 
 struct ObjectWalker : public ExpressionWriter
 {
-	ObjectWalker() : ind(0) {}
+	ObjectWalker(const QByteArray& pref) : ind(0), m_prefix(pref) {}
 	
 	virtual QString accept(const Operator* root)
 	{ qDebug() << prefix().constData() << "| operator: " << root->toString(); return QString(); }
 	
 	virtual QString accept(const Ci* var)
-	{ qDebug() << prefix().constData() << "| variable: " << var->name() << "Func:" << var->isFunction(); return QString(); }
+ 	{
+// 		QString value=(var->isDefined() ? (var->value() ? /*var->value()->toString()*/"def" : "*0" ) : "null");
+		qDebug() << prefix().constData() << "| variable: " << var->name() << "Val:" << QString(); return QString(); }
 	
 	virtual QString accept(const Cn* num)
 	{ qDebug() << prefix().constData() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
@@ -359,30 +373,26 @@ struct ObjectWalker : public ExpressionWriter
 	
 	QByteArray prefix()
 	{
-		QByteArray ret;
+		QByteArray ret(m_prefix);
 		for(int i=0; i<ind; i++)
 			ret += " |_____";
 		return ret;
 	}
 	
-	void visitNow(Object* o) { if(o) o->visit(this); else qDebug() << prefix() << "Null" ;}
+	void visitNow(const Object* o) { if(o) o->visit(this); else qDebug() << prefix() << "Null" ;}
 	
 	QString result() const { return QString(); }
 	
 	int ind;
+	QByteArray m_prefix;
 };
 
-void objectWalker(const Object* root)
+void objectWalker(const Object* root, const QByteArray& prefix)
 {
-	if(!root) {
-		qDebug() << "Walker: This is an null object";
-		return;
-	}
+	ObjectWalker o(prefix);
+	o.visitNow(root);
 	
-	ObjectWalker o;
-	root->visit(&o);
-	
-	qDebug(";");
+	qDebug() << prefix.constData() << ';';
 }
 
 bool Container::isNumber() const
@@ -483,12 +493,60 @@ int Container::countValues() const
 	return count;
 }
 
-Object* Container::extractType(Container::ContainerType t) const
+Container* Container::extractType(Container::ContainerType t) const
 {
 	for(Container::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
 		Container *c = (Container*) (*it);
 		if(c->isContainer() && c->containerType()==t)
-			return c->m_params.first();
+			return c;
 	}
 	return 0;
+}
+
+void Container::appendBranch(Object* o)
+{
+	m_params.append(o);
+}
+
+///Rename to decorate
+bool Container::decorate(const ScopeInformation& scope)
+{
+	if(m_cont_type==bvar)
+		return false;
+	
+	Container::const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
+	if((*it)->type()==Object::oper)
+		++it;
+	
+	ScopeInformation newScope(scope);
+	QList<Ci*> bvars=bvarCi();
+	if(m_cont_type==declare) {
+		Q_ASSERT((*it)->type()==variable);
+		bvars.append((Ci*) *it);
+	}
+	
+	foreach(Ci* var, bvars) {
+		Object** o=new Object*(0);
+		var->setValue(o, true);
+		newScope.insert(var->name(), o);
+		++it;
+	}
+	
+	bool ret=false;
+	//We need to use the parent scope for (up/down)limit
+	for(; it!=itEnd;) {
+		Container *c = (Container*) (*it);
+		
+		if(c->isContainer() && (c->containerType()==uplimit ||  c->containerType()==downlimit)) {
+			ret |= (*it)->decorate(scope);
+			++it;
+		} else
+			break;
+	}
+	
+	for(; it!=itEnd; ++it) {
+		ret |= (*it)->decorate(newScope);
+	}
+	
+	return ret;
 }

@@ -113,15 +113,17 @@ class ANALITZA_EXPORT Analitza
 			@p bvars tells the already defined variables (which won't return true). */
 		static bool hasVars(const Object* o, const QString &var=QString(),
 							const QStringList& bvars=QStringList(), const Variables* vars=0);
-							
+		
 // 		QList<double> discontinuities(const QString& var, const Bounds& b);
 		
-	protected:
+	private:
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;
-	private:
+		
 		const bool m_varsOwned;
+		Object::ScopeInformation varsScope() const;
+		
 		Object* calc(const Object* e);
 		Object* operate(const Container*);
 		Object* eval(const Object* e, bool vars, const QSet<QString>& unscoped);
@@ -144,8 +146,11 @@ class ANALITZA_EXPORT Analitza
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
 		
-		static bool hasTheVar(const QSet<QString> &vars, const Object *o);
+		static bool hasTheVar(const QSet<QString>& vars, const Object *o);
 		static bool hasTheVar(const QSet<QString>& vars, const Container* c);
+		static bool isLambda(const Object* o);
+		
+		static QStringList dependencies(const Object* o, const QStringList& scope);
 };
 
 #endif

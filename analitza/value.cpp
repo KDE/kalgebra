@@ -114,3 +114,7 @@ bool Cn::matches(const Object* exp, QMap< QString, const Object* >* found) const
 	return exp->type()==type() && Cn(exp)==*this;
 }
 
+bool Cn::decorate(const QMap< QString, Object** >& scope)
+{
+	return false;
+}

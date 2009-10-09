@@ -205,7 +205,7 @@ bool Operator::isBounded() const
 	switch(m_optype) {
 		case sum:
 		case product:
-		case function:
+// 		case function:
 		case diff:
 			return true;
 		default:
@@ -213,7 +213,7 @@ bool Operator::isBounded() const
 	}
 }
 
-bool Operator::isTrigonometric(enum OperatorType t)
+bool Operator::isTrigonometric(OperatorType t)
 {
 	switch(t) {
 		case sin:
