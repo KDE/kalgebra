@@ -472,15 +472,15 @@ void Graph3D::mem()
 		delete [] points;
 	}
 	
-	int graphsize=0;
+	
 	points = new double* [j];
 	Q_CHECK_PTR(points);
 	for(int i=0; i<j; i++){
 		points[i] = new double[j];
 		Q_CHECK_PTR(points[i]);
 	}
-	graphsize=sizeof(double)*j*j;
-	qDebug() << "Size: " << graphsize;
+	
+	qDebug() << "Size: " << sizeof(double)*j*j;
 }
 
 void Graph3D::setSize(double newSize)
@@ -488,6 +488,7 @@ void Graph3D::setSize(double newSize)
 	default_size = newSize;
 	this->repaint();
 }
+
 void Graph3D::setStep(double newRes)
 {
 	default_step = newRes;
@@ -510,7 +511,6 @@ QPixmap Graph3D::toPixmap()
 {
 	return this->renderPixmap();
 }
-
 
 void Graph3D::resetView()
 {
