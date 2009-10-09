@@ -97,6 +97,7 @@ class ExpressionEdit : public QPlainTextEdit
 		void insertText(const QString& text);
 		
 	private slots:
+		void showSimplified();
 		void cursorMov();
 		void updateCompleter();
 		

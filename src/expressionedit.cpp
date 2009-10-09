@@ -25,6 +25,7 @@
 #include <QHeaderView>
 #include <QApplication>
 #include <QKeyEvent>
+#include <QTimer>
 
 #include <KLocale>
 
@@ -265,19 +266,28 @@ void ExpressionEdit::cursorMov()
 							m_highlight->editingBounds(),
 							a ? a->variables() : 0);
 	
-	if(help.isEmpty() && isCorrect()) {
-		Expression e=expression();
-		if(e.isCorrect())
-		{
-			Analitza a;
-			a.setExpression(e);
-			a.simplify();
-			help=i18n("Result: %1", a.expression().toString());
+	if(help.isEmpty()) {
+		if(isCorrect()) {
+			QTimer::singleShot(500, this, SLOT(showSimplified()));
 		}
-	}
-	
-	helper(help);
+	} else
+		helper(help);
 }
+
+
+void ExpressionEdit::showSimplified()
+{
+	Expression e=expression();
+	if(e.isCorrect())
+	{
+		Analitza a;
+		a.setExpression(e);
+		a.simplify();
+		QString help=i18n("Result: %1", a.expression().toString());
+		helper(help);
+	}
+}
+
 
 QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds, const Variables* v)
 {
@@ -469,6 +479,7 @@ bool ExpressionEdit::returnPress()
 			haveToPress=true;
 		}
 	}
+	m_helptip->hide();
 	return haveToPress;
 }
 
