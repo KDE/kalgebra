@@ -79,7 +79,7 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 		Vector* v=static_cast<Vector*>(vo);
 		if(v->size()!=2)
 			m_err += i18nc("If it is a vector but the wrong size. We work in R2 here",
-						   "We want a 2 dimension vector");
+						   "A two-dimensional vector is needed");
 		else if(v->at(0)->type()!=Object::value || v->at(1)->type()!=Object::value)
 			m_err += i18nc("The vector has to be composed by integer members",
 						   "The parametric function items should be scalars");

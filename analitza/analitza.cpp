@@ -725,7 +725,7 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 			m_err.append(i18n("The downlimit is greater than the uplimit"));
 		}
 	} else {
-		m_err.append(i18n("Uncorrect uplimit or downlimit."));
+		m_err.append(i18n("Incorrect uplimit or downlimit."));
 		
 		corr=false;
 	}

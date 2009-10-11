@@ -175,7 +175,8 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 					const Container* lambda=static_cast<const Container*>(o);
 					QStringList bvars=lambda->bvarStrings();
 					if(bvars.count()!=cnt-1) {
-						m_err << i18n("Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
+						m_err << i18np("Wrong parameter count, had 1 parameter for '%2'",
+                                                               "Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
 						ret=false;
 					}
 				}
