@@ -35,11 +35,11 @@ using std::sqrt;
 FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl, double defUl)
 	: points(), func(v), m_deriv(0), m_res(0), mUplimit(defUl), mDownlimit(defDl)
 {
-	Expression e;
 	func.setExpression(newFunc);
 	func.simplify();
 	
-	e=func.expression();
+	Expression e=func.expression();
+	
 	if(e.isLambda()) { //It's a lambda, we need to take it off
 		const Container* c=dynamic_cast<const Container*>(newFunc.tree());
 		const Container* d=dynamic_cast<const Container*>(c->m_params.last());
