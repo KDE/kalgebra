@@ -76,7 +76,7 @@ Expression Analitza::calculate()
 		if(!hasdeps)
 			e.setTree(calc(m_exp.tree()));
 		else
-			m_err << i18n("Unfulfilled dependencies for: '%1'",
+			m_err << i18n("Unknown identifier: '%1'",
 							dependencies(m_exp.tree(), varsScope().keys()).join(
 								i18nc("identifier separator in error message", "', '")));
 	} else {
