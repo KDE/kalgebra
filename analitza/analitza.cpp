@@ -157,24 +157,28 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						
 						if(resolve && body && body->isContainer()) {
 							const Container *cbody = (Container*) body;
-							QStringList bvars=cbody->bvarStrings();
 							
-							int i=1;
-							foreach(const QString& bvar, bvars) {
-								Object *val = simp(eval(c->m_params[i], resolve, unscoped));
+							if(cbody->m_params.size()==c->m_params.size()) {
+								QStringList bvars=cbody->bvarStrings();
 								
-								m_vars->stack(bvar, val);
-								delete val;
-								++i;
+								int i=1;
+								foreach(const QString& bvar, bvars) {
+									Object *val = simp(eval(c->m_params[i], resolve, unscoped));
+									
+									m_vars->stack(bvar, val);
+									delete val;
+									++i;
+								}
+								
+								ret=eval(cbody->m_params.last(), resolve, unscoped);
+								
+								foreach(const QString & bvar, bvars)
+									m_vars->destroy(bvar);
 							}
-							
-							ret=eval(cbody->m_params.last(), resolve, unscoped);
-							
-							foreach(const QString & bvar, bvars)
-								m_vars->destroy(bvar);
-						} else {
-							ret=c->copy();
 						}
+						
+						if(!ret)
+							ret=c->copy();
 						
 						delete body;
 					}	break;
@@ -781,15 +785,22 @@ bool Analitza::isFunction(const Ci& func) const
 Object* Analitza::func(const Container& n)
 {
 	Object* obj=calc(n.m_params[0]);
-	obj->decorate(Object::ScopeInformation());
+	Container *function = (Container*) obj;
 	
-	if(!obj->isContainer() || static_cast<Container*>(obj)->containerType()!=Container::lambda) {
-		m_err << i18n("Trying to call an invalid function");
+	if(KDE_ISUNLIKELY(!obj->isContainer()
+				|| function->containerType()!=Container::lambda
+				|| function->m_params.size()!=n.m_params.size()))
+	{
+		if(!obj->isContainer() || function->containerType()!=Container::lambda)
+			m_err << i18n("We can only call functions");
+		else
+			m_err << i18n("Wrong parameter count");
+		
 		return new Cn(0.);
 	}
 	
+	obj->decorate(Object::ScopeInformation());
 	Object* ret=0;
-	Container *function = (Container*) obj;
 	QList<Ci*> vars = function->bvarCi();
 	
 	int i=0;

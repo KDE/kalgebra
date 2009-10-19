@@ -355,6 +355,11 @@ void AnalitzaTest::testUncorrection_data()
 	script << "x:=3";
 	script << "x(3)";
 	QTest::newRow("value call") << script;
+	
+	script.clear();
+	script << "f:=(x,y)->x*y";
+	script << "f(3)";
+	QTest::newRow("call missing parameter") << script;
 }
 
 void AnalitzaTest::testUncorrection()
@@ -492,15 +497,10 @@ void AnalitzaTest::testCrash_data()
 	QTest::addColumn<QString>("expression");
 	
 	QTest::newRow("undefined variable") << "x";
-// 	QTest::newRow("too few operators") << "divide(2)";
-// 	QTest::newRow("too much operators") << "divide(2,2,2,2)";
-// 	QTest::newRow("empty math") << "<math />";
 	QTest::newRow("selector overflow") << "selector(9, vector{1,2})";
 	QTest::newRow("selector underflow") << "selector(0, vector{1,2})";
 	QTest::newRow("simple piecewise") << "piecewise { pi=0? 3, eq(pi, pi)?33 }";
 	QTest::newRow("oscarmartinez piecewise") << "piecewise { gt(x,23)?a }";
-// 	QTest::newRow("oscarmartinez derivative") << "diff(gt(x))";
-// 	QTest::newRow("product_max") << "product(max(x) : x=1..5)";
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
 	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
