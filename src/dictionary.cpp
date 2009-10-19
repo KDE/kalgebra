@@ -94,31 +94,41 @@ Dictionary::~Dictionary()
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
 	Q_UNUSED(prev);
-	QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
-	nameIdx = idx.sibling(idx.row(), 0);
-	descriptionIdx = idx.sibling(idx.row(), 1);
-	sampleIdx = idx.sibling(idx.row(), 2);
-	exampleIdx = idx.sibling(idx.row(), 3);
-	
-	QString name=m_sortProxy->data(nameIdx).toString();
-	QString description=m_sortProxy->data(descriptionIdx).toString();
-	QString sample=m_sortProxy->data(sampleIdx).toString();
-	QString example=m_sortProxy->data(exampleIdx).toString();
-	
-	Expression e(example, false);
-	
-	m_name->setText(name);
-	m_descr->setText(description);
-	m_sample->setText(sample);
-	m_example->setText(example);
-	
-	QString error;
-	m_formula->setContent(e.toMathMLPresentation(), &error);
-	if(!error.isEmpty())
-		qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 	
 	m_funcs->clear();
-	m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0), 0, 0));
+	if(idx.isValid()) {
+		QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
+		nameIdx = idx.sibling(idx.row(), 0);
+		descriptionIdx = idx.sibling(idx.row(), 1);
+		sampleIdx = idx.sibling(idx.row(), 2);
+		exampleIdx = idx.sibling(idx.row(), 3);
+		
+		QString name=m_sortProxy->data(nameIdx).toString();
+		QString description=m_sortProxy->data(descriptionIdx).toString();
+		QString sample=m_sortProxy->data(sampleIdx).toString();
+		QString example=m_sortProxy->data(exampleIdx).toString();
+		
+		Expression e(example, false);
+		
+		m_name->setText(name);
+		m_descr->setText(description);
+		m_sample->setText(sample);
+		m_example->setText(example);
+		
+		QString error;
+		m_formula->setContent(e.toMathMLPresentation(), &error);
+		if(!error.isEmpty())
+			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
+		
+		m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0), 0, 0));
+	} else {
+		QString error;
+		m_name->setText(QString());
+		m_descr->setText(QString());
+		m_sample->setText(QString());
+		m_example->setText(QString());
+		m_formula->setContent("<math />", &error);
+	}
 }
 
 void Dictionary::setFilter(const QString &filter)
