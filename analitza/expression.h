@@ -62,7 +62,7 @@ class ANALITZA_EXPORT Expression
 		 *	@param exp expression to be assigned
 		 *	@param mathml format of the expression
 		 */
-		Expression(const QString& exp, bool mathml=false);
+		explicit Expression(const QString& exp, bool mathml=false);
 		
 		/** Destructor */
 		~Expression();

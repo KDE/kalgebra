@@ -24,7 +24,6 @@
 #include <QTreeView>
 #include <QHeaderView>
 #include <QApplication>
-#include <QKeyEvent>
 #include <QTimer>
 
 #include <KLocale>

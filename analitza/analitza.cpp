@@ -1592,7 +1592,7 @@ Expression Analitza::derivative()
 	Expression exp;
 	if(m_exp.isCorrect()) {
 		QStringList vars = bvarList();
-		if(vars.empty())
+		if(vars.isEmpty())
 			vars+="x";
 		
 		Object* o = simp(derivative(vars.first(), m_exp.tree()));

@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef VIEWPORTDIALOG_H
-#define VIEWPORTDIALOG_H
+#ifndef VIEWPORTWIDGET_H
+#define VIEWPORTWIDGET_H
 
 #include <QWidget>
 class QDoubleSpinBox;
@@ -26,7 +26,7 @@ class ViewportWidget : public QWidget
 {
 	Q_OBJECT
 	public:
-		ViewportWidget(QWidget * parent = 0, Qt::WFlags flags = 0);
+		explicit ViewportWidget(QWidget * parent = 0, Qt::WFlags flags = 0);
 		
 		QRectF viewport() const;
 		

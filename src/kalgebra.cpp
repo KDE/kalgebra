@@ -310,7 +310,7 @@ void KAlgebra::functools(int i)
 	if(i==0)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
-		b_funced->setName(QString("f").append(QString::number(b_funcsModel->rowCount()+1)));
+		b_funced->setName(QString('f').append(QString::number(b_funcsModel->rowCount()+1)));
 		b_funced->setEditing(false);
 		b_funced->setFocus();
 	}
