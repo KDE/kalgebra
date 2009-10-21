@@ -711,8 +711,6 @@ Object* Analitza::operate(const Container* c)
 
 Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
 {
-	Object* ret=initial;
-	
 	Object *objul=calc(n.ulimit());
 	Object *objdl=calc(n.dlimit());
 	double ul, dl;
@@ -734,32 +732,30 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 		corr=false;
 	}
 	
-	if(!corr)
+	Object* ret=initial;
+	if(corr)
 	{
-		delete objul;
-		delete objdl;
-		return new Cn(0.);
+		QList<Ci*> bvars=n.bvarCi();
+		Q_ASSERT(bvars.size()==1);
+		Ci* var= bvars.first();
+		
+		Cn* c = new Cn(0.);
+		var->value()=c;
+		
+		QString correct;
+		Operator::OperatorType type=t.operatorType();
+		for(double a = dl; a<=ul; a++) {
+	// 		Q_ASSERT(isCorrect());
+	// 		qDebug() << "<>" << dl << ul << m_err;
+			c->setValue(a);
+			Object *val=calc(n.m_params.last());
+			ret=Operations::reduce(type, ret, val, correct);
+		}
+		var->value()=0;
+		delete c;
 	}
-	
-	QList<Ci*> bvars=n.bvarCi();
-	Q_ASSERT(!bvars.isEmpty());
-	Ci* var= bvars.first();
-	
-	Cn* c = new Cn(0.);
-	var->value()=c;
-	
-	QString correct;
-	Operator::OperatorType type=t.operatorType();
-	for(double a = dl; a<=ul; a++) {
-// 		Q_ASSERT(isCorrect());
-// 		qDebug() << "<>" << dl << ul << m_err;
-		c->setValue(a);
-		Object *val=calc(n.m_params.last());
-		ret=Operations::reduce(type, ret, val, correct);
-	}
-	var->value()=0;
-	delete c;
-	
+	delete objul;
+	delete objdl;
 	return ret;
 }
 
@@ -1696,41 +1692,50 @@ double Analitza::derivative(const QList<StringDoublePair>& values )
 	//c++ numerical recipes p. 192. Only for f'
 	//Image
 	//TODO: Should not call ::calculate()
-	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
-		m_vars->modify(valp.first, valp.second);
-	}
 	
-	Expression e1=calculate();
+	Q_ASSERT(m_exp.isCorrect());
+	
+	Object::ScopeInformation scope=varsScope();
+	QVector<Object*> deps(values.size());
+	
+	int i=0;
+	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
+		deps[i]=new Cn(valp.second);
+		scope.insert(valp.first, &deps[i]);
+		
+		i++;
+	}
+	bool hasdeps=m_exp.tree()->decorate(scope);
+	if(hasdeps)
+		return 0.;
+	
+	Expression e1(calc(m_exp.tree()));
 	if(!isCorrect())
 		return 0.;
-		
-	foreach(const StringDoublePair& valp, values) {
-		m_vars->destroy(valp.first);
-		Q_ASSERT(!m_vars->contains(valp.first));
-	}
 	
 	//Image+h
 	double h=0.0000000001;
+	i=0;
 	foreach(const StringDoublePair& valp, values) {
 // 		volatile double temp=valp.second+h;
 // 		double hh=temp-valp.second;
-		m_vars->stack(valp.first, valp.second+h);
+		((Cn*) deps[i])->setValue(valp.second+h);
+		
+		i++;
 	}
 	
-	Expression e2=calculate();
+	Expression e2(calc(m_exp.tree()));
 	if(!isCorrect())
 		return 0.;
 	
-	foreach(const StringDoublePair& valp, values)
-		m_vars->destroy(valp.first);
+	qDeleteAll(deps);
 	
 	if(!e1.isReal() || !e2.isReal()) {
 		m_err << i18n("The result is not a number");
 		return 0;
 	}
-	double ret=(e2.toReal().value()-e1.toReal().value())/h;
 	
-	return ret;
+	return (e2.toReal().value()-e1.toReal().value())/h;
 }
 
 QStringList Analitza::dependencies(const Object* o, const QStringList& scope)
