@@ -792,6 +792,7 @@ Object* Analitza::func(const Container& n)
 		else
 			m_err << i18n("Wrong parameter count");
 		
+		delete obj;
 		return new Cn(0.);
 	}
 	
@@ -811,6 +812,7 @@ Object* Analitza::func(const Container& n)
 	foreach(Ci* param, vars) {
 		delete param->value();
 	}
+	delete function;
 	
 	return ret;
 }
