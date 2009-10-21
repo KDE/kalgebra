@@ -77,9 +77,6 @@ class ANALITZA_EXPORT Analitza
 		/** Returns whether there has been a problem in the last calculation. */
 		bool isCorrect() const { return m_err.isEmpty() && m_exp.isCorrect(); }
 		
-		/** Returns whether @p var is a function. */
-		bool isFunction(const Ci& var) const;
-		
 		/** Empties the error list. */
 		void flushErrors() { m_err.clear(); }
 		

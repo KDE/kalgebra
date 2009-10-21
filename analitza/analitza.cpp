@@ -225,13 +225,10 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		//FIXME: Should check if it is that crappy 
 		Ci* var=(Ci*) branch;
 		
-		if(m_vars->contains(var->name())) {
-			Object* val=m_vars->value(var->name());
-			if(val && !unscoped.contains(var->name()) && !Container::equalTree(var, val))
-				ret = eval(val, resolve, unscoped);
-// 			else
-// 				ret=Expression::objectCopy(val);
-		}
+		Object* val=m_vars->value(var->name());
+		if(val && !unscoped.contains(var->name()) && !Container::equalTree(var, val))
+			ret = eval(val, resolve, unscoped);
+		
 	} else if(branch->type()==Object::vector) {
 		const Vector* v=static_cast<const Vector*>(branch);
 		Vector* nv=new Vector(v->size());
@@ -767,15 +764,6 @@ Object* Analitza::product(const Container& n)
 Object* Analitza::sum(const Container& n)
 {
 	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
-}
-
-bool Analitza::isFunction(const Ci& func) const
-{
-	if(!m_vars->contains(func.name()))
-		return false;
-	
-	Container *c = (Container*) m_vars->value(func.name());
-	return (c && c->type()==Container::container && c->containerType() == Container::lambda);
 }
 
 Object* Analitza::func(const Container& n)
@@ -1526,16 +1514,11 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 	switch(o->type()) {
 		case Object::variable: {
 			Ci *i = (Ci*) o;
-			if(!var.isEmpty()) {
-				r=i->name()==var;
-			} else
-				r=true;
 			
-			if(r && bvars.contains(i->name()))
-				r=false;
-			else if(r && vars && !var.isEmpty() && vars->contains(i->name())) {
+			r=((i->name()==var) || var.isEmpty()) && !bvars.contains(i->name());
+			
+			if(r && vars && !var.isEmpty() && vars->contains(i->name()))
 				r=hasVars(vars->value(i->name()), var, bvars, vars);
-			}
 		}	break;
 		case Object::vector: {
 			Vector *v=(Vector*) o;
@@ -1551,7 +1534,6 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
-			Container::iterator it = c->firstValue(), first = c->firstValue();
 			
 			QStringList scope=bvars+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();
@@ -1560,7 +1542,8 @@ bool Analitza::hasVars(const Object *o, const QString &var, const QStringList& b
 			if(ul) r |= hasVars(ul, var, bvars, vars);
 			if(dl) r |= hasVars(dl, var, bvars, vars);
 			
-			for(; !r && it!=c->m_params.end(); ++it) {
+			Container::const_iterator it = c->firstValue();
+			for(; !r && it!=c->m_params.constEnd(); ++it) {
 				r |= hasVars(*it, var, scope, vars);
 			}
 		} break;
@@ -1618,15 +1601,13 @@ bool Analitza::insertVariable(const QString & name, const Object * value)
 		islambda= c->containerType()==Container::lambda;
 	}
 	
-	bool correct;
-	if(!islambda && hasVars(value, name, QStringList(), m_vars)) {
+	bool wrong=!islambda && hasVars(value, name, QStringList(), m_vars);
+	if(wrong)
 		m_err << i18nc("By a cycle i mean a variable that depends on itself", "Defined a variable cycle");
-		correct=false;
-	} else {
+	else
 		m_vars->modify(name, value);
-		correct=true;
-	}
-	return correct;
+	
+	return !wrong;
 }
 
 bool Analitza::hasTheVar(const QSet<QString> & vars, const Object * o)
@@ -1652,8 +1633,7 @@ bool Analitza::hasTheVar(const QSet<QString> & vars, const Object * o)
 			const Container *c=static_cast<const Container*>(o);
 			QSet<QString> bvars=c->bvarStrings().toSet(), varsCopy=vars;
 			foreach(const QString &var, bvars) {
-				if(varsCopy.contains(var))
-					varsCopy.remove(var);
+				varsCopy.remove(var);
 			}
 			found=hasTheVar(varsCopy, c);
 		}	break;
