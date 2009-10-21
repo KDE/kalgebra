@@ -80,9 +80,6 @@ class ANALITZA_EXPORT Analitza
 		/** Returns whether @p var is a function. */
 		bool isFunction(const Ci& var) const;
 		
-		/** Returns a list of expression's bounded variable names. */
-		QStringList bvarList() const;
-		
 		/** Empties the error list. */
 		void flushErrors() { m_err.clear(); }
 		

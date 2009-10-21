@@ -817,11 +817,6 @@ Object* Analitza::func(const Container& n)
 	return ret;
 }
 
-QStringList Analitza::bvarList() const //FIXME: if
-{
-	return m_exp.bvarList();
-}
-
 /////////////////////////////////////////////
 /////////////////////////////////////////////
 /////////////////////////////////////////////
@@ -1600,7 +1595,7 @@ Expression Analitza::derivative()
 	/* TODO: Must support multiple bvars */
 	Expression exp;
 	if(m_exp.isCorrect()) {
-		QStringList vars = bvarList();
+		QStringList vars = m_exp.bvarList();
 		if(vars.isEmpty())
 			vars+="x";
 		
