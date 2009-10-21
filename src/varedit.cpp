@@ -110,7 +110,7 @@ void VarEdit::edit()
 	a.setExpression(e);
 	
 	if(a.isCorrect()) {
-		if(e.bvarList().count()>0)
+		if(!e.bvarList().isEmpty())
 			m_valid->setText(i18n("%1:=%2", m_var, m_exp->text()));
 		else {
 			Expression val = a.calculate();

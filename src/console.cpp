@@ -37,11 +37,11 @@ bool Console::addOperation(const QString& op, bool mathml)
 		if(m_mode==Evaluation) {
 			Expression res=a.evaluate();
 			result = res.toString();
-			a.m_vars->modify("ans", res.tree());
+			a.insertVariable("ans", res);
 		} else {
 			Cn val=a.calculate();
 			result = val.toString();
-			a.m_vars->modify("ans", &val);
+			a.insertVariable("ans", &val);
 		}
 	}
 	
