@@ -315,7 +315,6 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 				Container::const_iterator it(c->firstValue());
 				for(; it!=c->m_params.end(); ++it)
 					r->appendBranch(derivative(var, *it));
-				
 				return r;
 			} break;
 			case Operator::times: {
@@ -339,7 +338,6 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 					}
 					nx->appendBranch(neach);
 				}
-				qDebug() << "deriv..." << c->toString() << nx->toString();
 				return nx;
 			} break;
 			case Operator::power: {
@@ -1533,8 +1531,8 @@ Expression Analitza::derivative()
 		if(vars.isEmpty())
 			vars+="x";
 		
-		Object* o = derivative(vars.first(), m_exp.tree());
-		exp.setTree(simp(o));
+		Object* o = simp(derivative(vars.first(), m_exp.tree()));
+		exp.setTree(o);
 	}
 	return exp;
 }
