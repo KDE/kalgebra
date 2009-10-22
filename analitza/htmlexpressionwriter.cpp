@@ -25,6 +25,7 @@
 #include <KLocale>
 #include "list.h"
 #include "variable.h"
+#include "stringexpressionwriter.h"
 
 QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
@@ -95,8 +96,16 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			QString s = c->visit(this);
 			Operator child_op = c->firstOperator();
 			
-			if(op!=0 && child_op.operatorType() && op->weight()>=child_op.weight() && op->nparams()!=1) { //apply
-				s=oper('(')+s+oper(')');
+			if(op && c->containerType()==Container::apply) {
+				Operator child_op = c->firstOperator();
+				
+				if(var->isUnary() && !c->isUnary() && StringExpressionWriter::s_operators.contains(op->operatorType()))
+					s=oper('(')+s+oper(')');
+				else if(op!=0 && child_op.operatorType() && child_op.weight() && op->weight()>=child_op.weight()
+						&& StringExpressionWriter::s_operators.contains(op->operatorType())
+						&& StringExpressionWriter::s_operators.contains(child_op.operatorType()))
+					s=oper('(')+s+oper(')');
+				
 			}
 			
 			if(c->containerType() == Container::bvar) { //bvar
@@ -142,39 +151,23 @@ QString HtmlExpressionWriter::accept(const Container* var)
 				toret += n+oper('(')+ret.join(oper(", "))+oper(')');
 			} else if(op==0)
 				toret += ret.join(" ");
-			else switch(op->operatorType()) {
-				case Operator::plus:	toret += ret.join(oper('+')); break;
-				case Operator::times:	toret += ret.join(oper('*')); break;
-				case Operator::divide:	toret += ret.join(oper('/')); break;
-				case Operator::eq:		toret += ret.join(oper('=')); break;
-				case Operator::neq:		toret += ret.join(oper("!=")); break;
-				case Operator::lt:		toret += ret.join(oper("&lt;"));  break;
-				case Operator::leq:		toret += ret.join(oper("&lt;=")); break;
-				case Operator::gt:		toret += ret.join(oper("&gt;"));  break;
-				case Operator::geq:		toret += ret.join(oper("&gt;=")); break;
-				case Operator::minus:
-					if(ret.count()==1)
-						toret += oper('-')+ret[0];
-					else
-						toret += ret.join(oper('-'));
-					break;
-				case Operator::power:
-					toret += ret.join(oper('^'));
-					break;
-				default: {
-					QString bounding;
-					if(!bounds.isEmpty() || !bvars.isEmpty()) {
-						if(bvars.count()!=1) bounding +=oper('(');
-						bounding += bvars.join(oper(", "));
-						if(bvars.count()!=1) bounding +=oper(')');
-						
-						bounding = oper(':')+bounding;
-						if(!bounds.isEmpty())
-							bounding+=oper('=')+bounds;
-					}
-						
-					toret += QString("%1(%2%3)").arg(op->visit(this)).arg(ret.join(oper(", "))).arg(bounding);
-				}	break;
+			else if(ret.count()>1 && StringExpressionWriter::s_operators.contains(op->operatorType())) {
+				toret += ret.join(oper(StringExpressionWriter::s_operators.value(op->operatorType())));
+			} else if(ret.count()==1 && op->operatorType()==Operator::minus) {
+				toret += oper('-')+ret[0];
+			} else {
+				QString bounding;
+				if(!bounds.isEmpty() || !bvars.isEmpty()) {
+					if(bvars.count()!=1) bounding +=oper('(');
+					bounding += bvars.join(", ");
+					if(bvars.count()!=1) bounding +=oper(')');
+					
+					bounding = oper(':')+bounding;
+					if(!bounds.isEmpty())
+						bounding+=oper('=') +bounds;
+				}
+				
+				toret += op->visit(this)+oper('(')+ret.join(oper(", "))+bounding+oper(')');
 			}
 			break;
 		case Container::uplimit: //x->(n1..n2) is put at the same time

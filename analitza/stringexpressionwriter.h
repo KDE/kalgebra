@@ -20,6 +20,7 @@
 #define STRINGEXPRESSIONWRITER_H
 
 #include "expressionwriter.h"
+#include "operator.h"
 
 /**
  *	This class represents the string expression writer.
@@ -41,6 +42,7 @@ class StringExpressionWriter : public ExpressionWriter
 		
 		QString result() const { return m_result; }
 		
+		static const QMap<Operator::OperatorType, QString> s_operators;
 	private:
 		QString m_result;
 };
