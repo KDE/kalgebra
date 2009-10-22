@@ -25,6 +25,7 @@ set(analitza_SRCS
 	explexer.cpp
 	abstractlexer.cpp
 	mathmlpresentationlexer.cpp
+	analitzautils.cpp
 )
 
 kde4_add_library(analitza SHARED ${analitza_SRCS})

@@ -186,6 +186,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
 	QTest::newRow("piecewise") << "piecewise { x<0 ? x**2, ? x } " << "piecewise { x<0 ? 2*x, ? 1 }";
 	QTest::newRow("lambda") << "x->3" << "0";
+	QTest::newRow("new") << "1-x*sin(x)" << "-sin(x)-x*cos(x)";
 }
 
 void AnalitzaTest::testDerivativeSimple()

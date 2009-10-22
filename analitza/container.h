@@ -25,8 +25,6 @@
 #include "operator.h"
 #include "analitzaexport.h"
 
-/** Prints an expression tree from a node @p o indenting it by @p ind */
-void ANALITZA_EXPORT objectWalker(const Object* o, const QByteArray& prefix=QByteArray());
 class Ci;
 
 /**

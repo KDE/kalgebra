@@ -40,8 +40,6 @@ class Ci;
 class ANALITZA_EXPORT Analitza
 {
 	public:
-		typedef QPair<double, double> Bounds;
-		
 		/** Constructor. Creates an empty Analitza module with a Variables module. */
 		Analitza();
 		
@@ -103,13 +101,6 @@ class ANALITZA_EXPORT Analitza
 		*/
 		bool insertVariable(const QString& name, const Object* value);
 		
-		/** Returns whether there is any @p var variable in the @p o tree.
-			@p bvars tells the already defined variables (which won't return true). */
-		static bool hasVars(const Object* o, const QString &var=QString(),
-							const QStringList& bvars=QStringList(), const Variables* vars=0);
-		
-// 		QList<double> discontinuities(const QString& var, const Bounds& b);
-		
 	private:
 		Expression m_exp;
 		Variables *m_vars;
@@ -139,12 +130,6 @@ class ANALITZA_EXPORT Analitza
 		Object* derivative(const QString &var, const Container*);
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
-		
-		static bool hasTheVar(const QSet<QString>& vars, const Object *o);
-		static bool hasTheVar(const QSet<QString>& vars, const Container* c);
-		static bool isLambda(const Object* o);
-		
-		static QStringList dependencies(const Object* o, const QStringList& scope);
 };
 
 #endif

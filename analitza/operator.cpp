@@ -195,7 +195,7 @@ unsigned int Operator::operatorWeight(OperatorType op)
 		case power:
 			return 7;
 		default:
-			return 1000;
+			return 0;
 	}
 	return 666;
 }
