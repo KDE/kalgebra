@@ -35,11 +35,12 @@ void calculate(const Expression& e, CalcType t)
 {
 	Expression ans;
 	a.setExpression(e);
-	if(e.isCorrect())
+	if(e.isCorrect()) {
 		if(t==Calculate)
 			ans=a.calculate();
 		else
 			ans=a.evaluate();
+	}
 			
 	if(a.isCorrect()) {
 		qDebug() << qPrintable(ans.toString());
