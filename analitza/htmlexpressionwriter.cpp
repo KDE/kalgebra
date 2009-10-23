@@ -96,21 +96,11 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			QString s = c->visit(this);
 			Operator child_op = c->firstOperator();
 			
-			if(op && c->containerType()==Container::apply) {
+			if(op && c->containerType()==Container::apply && StringExpressionWriter::s_operators.contains(op->operatorType())) {
 				Operator child_op = c->firstOperator();
 				
-// 				if(var->isUnary() && !c->isUnary() && StringExpressionWriter::s_operators.contains(op->operatorType()))
-// 					s=oper('(')+s+oper(')');
-// 				else if(op!=0 && child_op.operatorType() && child_op.weight() && op->weight()>=child_op.weight()
-// 						&& StringExpressionWriter::s_operators.contains(op->operatorType())
-// 						&& StringExpressionWriter::s_operators.contains(child_op.operatorType()))
-// 					s=oper('(')+s+oper(')');
-				if(var->isUnary() && !c->isUnary() && StringExpressionWriter::s_operators.contains(op->operatorType()))
-					s=oper('(')+s+oper(')');
-				else if(op!=0 && child_op.operatorType() && StringExpressionWriter::weight(&child_op, c->countValues())
-					&& StringExpressionWriter::weight(op, var->countValues())>=StringExpressionWriter::weight(&child_op, c->countValues())
-					&& StringExpressionWriter::s_operators.contains(op->operatorType())
-					&& StringExpressionWriter::s_operators.contains(child_op.operatorType()))
+				if(child_op.operatorType()
+					&& StringExpressionWriter::weight(op, var->countValues())>=StringExpressionWriter::weight(&child_op, c->countValues()))
 					s=oper('(')+s+oper(')');
 				
 			}

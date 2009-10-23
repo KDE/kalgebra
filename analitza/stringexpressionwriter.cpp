@@ -115,7 +115,7 @@ int StringExpressionWriter::weight(const Operator* op, int size)
 		case Operator::power:
 			return 7;
 		default:
-			return 0;
+			return 1000;
 	}
 }
 
@@ -140,13 +140,10 @@ QString StringExpressionWriter::accept(const Container* var)
 			Container *c = (Container*) var->m_params[i];
 			QString s = c->visit(this);
 			
-			if(op && c->containerType()==Container::apply) {
+			if(op && c->containerType()==Container::apply && s_operators.contains(op->operatorType())) {
 				Operator child_op = c->firstOperator();
 				
-				if(var->isUnary() && !c->isUnary() && s_operators.contains(op->operatorType()))
-					s=QString("(%1)").arg(s);
-				else if(op!=0 && child_op.operatorType() && weight(&child_op, c->countValues()) && weight(op, var->countValues())>=weight(&child_op, c->countValues())
-					&& s_operators.contains(op->operatorType()) && s_operators.contains(child_op.operatorType()))
+				if(child_op.operatorType() && weight(op, var->countValues())>=weight(&child_op, c->countValues()))
 					s=QString("(%1)").arg(s);
 				
 			}
