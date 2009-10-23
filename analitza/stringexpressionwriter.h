@@ -42,6 +42,7 @@ class StringExpressionWriter : public ExpressionWriter
 		
 		QString result() const { return m_result; }
 		
+		static int weight(const Operator* op, int size);
 		static const QMap<Operator::OperatorType, QString> s_operators;
 	private:
 		QString m_result;

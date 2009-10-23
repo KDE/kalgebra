@@ -170,36 +170,6 @@ Object* Operator::copy() const
 	return new Operator(m_optype);
 }
 
-unsigned int Operator::operatorWeight(OperatorType op)
-{
-	switch(op) {
-		case lt:
-		case gt:
-		case eq:
-		case neq:
-		case leq:
-		case geq:
-			return 1;
-		case minus:
-			return 2;
-		case plus:
-			return 3;
-		case times:
-			return 4;
-		case divide:
-			return 5;
-		case _and:
-		case _or:
-		case _xor:
-			return 6;
-		case power:
-			return 7;
-		default:
-			return 0;
-	}
-	return 666;
-}
-
 bool Operator::isBounded() const
 {
 	switch(m_optype) {

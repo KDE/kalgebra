@@ -110,7 +110,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("minus3.2") << "minus(x,x,x,x,x,x)" << "-4*x";
 	QTest::newRow("addition") << "x+x" << "2*x";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
-	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";
+	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-(x^2)";
 	QTest::newRow("strange") << "0*x-1*1" << "-1";
 	QTest::newRow("strange2") << "x-x" << "0";
 	QTest::newRow("old leak") << "x^1" << "x";
@@ -186,7 +186,8 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
 	QTest::newRow("piecewise") << "piecewise { x<0 ? x**2, ? x } " << "piecewise { x<0 ? 2*x, ? 1 }";
 	QTest::newRow("lambda") << "x->3" << "0";
-	QTest::newRow("new") << "1-x*sin(x)" << "-sin(x)-x*cos(x)";
+	QTest::newRow("timesminus") << "1-x*sin(x)" << "-(sin(x)+x*cos(x))";
+	QTest::newRow("timesminus2") << "cos(x)-x*sin(x)" << "-sin(x)-(sin(x)+x*cos(x))";
 }
 
 void AnalitzaTest::testDerivativeSimple()

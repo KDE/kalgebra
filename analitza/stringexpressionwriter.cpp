@@ -87,7 +87,36 @@ QString StringExpressionWriter::accept(const Cn* var)
 		else
 			return "false";
 	} else
-		return QString("%1").arg(var->value(), 0, 'g', 12);
+		return QString::number(var->value(), 'g', 12);
+}
+
+int StringExpressionWriter::weight(const Operator* op, int size)
+{
+	switch(op->operatorType()) {
+		case Operator::lt:
+		case Operator::gt:
+		case Operator::eq:
+		case Operator::neq:
+		case Operator::leq:
+		case Operator::geq:
+			return 1;
+		case Operator::plus:
+			return 2;
+		case Operator::minus:
+			return size==1 ? 8 : 3;
+		case Operator::times:
+			return 4;
+		case Operator::divide:
+			return 5;
+		case Operator::_and:
+		case Operator::_or:
+		case Operator::_xor:
+			return 6;
+		case Operator::power:
+			return 7;
+		default:
+			return 0;
+	}
 }
 
 QString StringExpressionWriter::accept(const Container* var)
@@ -116,7 +145,7 @@ QString StringExpressionWriter::accept(const Container* var)
 				
 				if(var->isUnary() && !c->isUnary() && s_operators.contains(op->operatorType()))
 					s=QString("(%1)").arg(s);
-				else if(op!=0 && child_op.operatorType() && child_op.weight() && op->weight()>=child_op.weight()
+				else if(op!=0 && child_op.operatorType() && weight(&child_op, c->countValues()) && weight(op, var->countValues())>=weight(&child_op, c->countValues())
 					&& s_operators.contains(op->operatorType()) && s_operators.contains(child_op.operatorType()))
 					s=QString("(%1)").arg(s);
 				

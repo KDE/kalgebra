@@ -65,9 +65,6 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns the operator type. */
 		OperatorType operatorType() const { return m_optype; }
 		
-		/** Returns this operator precedence. */
-		unsigned int weight() const { return operatorWeight(m_optype); }
-		
 		/** Returns the string expression representation of the operator. */
 		QString name() const;
 		
@@ -98,17 +95,8 @@ class ANALITZA_EXPORT Operator : public Object
 		/** Returns the multiplicity operator of an operator @p t. e.g. 5+5+5+5=5*4 -> times is the multiplicityOperator of plus. */
 		static OperatorType multiplicityOperator(const OperatorType& t);
 		
-		/** Returns this operator @p o precedence. */
-		static unsigned int operatorWeight(OperatorType o);
-		
 		/** Converts a @p s operator tag to the operator. */
 		static OperatorType toOperatorType(const QString &s);
-		
-		/** Returns the expected number of parameters of a type. If there can be multiple parameters, -1 is returned */
-		static int nparams(OperatorType o);
-		
-		/** Returns if it is a trigonometric operator. */
-		static bool isTrigonometric(OperatorType o);
 		
 		virtual bool matches(const Object*, QMap<QString, const Object*>*) const;
 		virtual bool decorate(const QMap< QString, Object** >& ) { return false; }
@@ -118,6 +106,12 @@ class ANALITZA_EXPORT Operator : public Object
 		
 		static const char words[nOfOps][14];
 	private:
+		/** Returns if it is a trigonometric operator. */
+		static bool isTrigonometric(OperatorType o);
+		
+		/** Returns the expected number of parameters of a type. If there can be multiple parameters, -1 is returned */
+		static int nparams(OperatorType o);
+		
 		OperatorType m_optype;
 };
 

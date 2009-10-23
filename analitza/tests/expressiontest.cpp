@@ -72,9 +72,10 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("addition") << "2+4";
 	QTest::newRow("addition with var") << "2+x";
 	QTest::newRow("function definition") << "f:=x->x+1";
-	QTest::newRow("simple addition and subtraction") << "2+x-3";
-	QTest::newRow("simple addition and unary minus") << "(-x)+y";
-	QTest::newRow("list") << "-(x+y)";
+	QTest::newRow("simple addition and subtraction") << "(2+x)-3";
+	QTest::newRow("simple addition and unary minus") << "-x+y";
+	QTest::newRow("minusplus") << "-(x+y)";
+	QTest::newRow("minuspower") << "-x^2";
 	QTest::newRow("sum") << "sum(x^2:x=1..10)";
 	QTest::newRow("piecewise") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("function call") << "f(2)";
