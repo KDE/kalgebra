@@ -100,7 +100,6 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("simple addition") << "2+2" << "4";
 	QTest::newRow("simple addition with var") << "2+x" << "x+2";
 	QTest::newRow("minus irreductibility") << "-x" << "-x";
-	QTest::newRow("minus") << "x-x-x" << "-x";
 	QTest::newRow("minus0") << "x-y" << "x-y";
 	QTest::newRow("minus1") << "minus(x, y, x)" << "-y";
 	QTest::newRow("minus2") << "x-y-y-y-x" << "-3*y";
@@ -186,8 +185,8 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("tangent") << "tan(x**2)" << "(2*x)/cos(x^2)^2";
 	QTest::newRow("piecewise") << "piecewise { x<0 ? x**2, ? x } " << "piecewise { x<0 ? 2*x, ? 1 }";
 	QTest::newRow("lambda") << "x->3" << "0";
-	QTest::newRow("timesminus") << "1-x*sin(x)" << "-(sin(x)+x*cos(x))";
-	QTest::newRow("timesminus2") << "cos(x)-x*sin(x)" << "-sin(x)-(sin(x)+x*cos(x))";
+	QTest::newRow("timesminus") << "1-x*sin(x)" << "-sin(x)-x*cos(x)";
+	QTest::newRow("timesminus2") << "cos(x)-x*sin(x)" << "-2*sin(x)-x*cos(x)";
 }
 
 void AnalitzaTest::testDerivativeSimple()
@@ -404,12 +403,14 @@ void AnalitzaTest::testSimplify_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 	
+	QTest::newRow("minus") << "x-x-x" << "-x";
 	QTest::newRow("no var") << "2+2" << "4";
 	QTest::newRow("simple") << "x+x" << "2*x";
 	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
 // 	QTest::newRow("lambda2") << "(x->x+x)(x)" << "x->2*x";
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
+	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
 }
 
 void AnalitzaTest::testSimplify()

@@ -929,8 +929,8 @@ Object* Analitza::simp(Object* root)
 				case Operator::minus:
 				case Operator::plus: {
 					bool somed=false, lastdel;
-					it=c->m_params.end();
-					--it;
+					it=c->m_params.end()-1;
+					Object* first=*c->firstValue();
 					
 					for(; it!=c->m_params.begin(); --it) {
 						lastdel=false;
@@ -939,8 +939,12 @@ Object* Analitza::simp(Object* root)
 						d=false;
 						if((*it)->isContainer()) {
 							Container *intr = (Container*) *it;
-							if(intr->containerType()==Container::apply && intr->firstOperator()==o) {
-								if(!intr->isUnary() || intr->firstOperator()!=Operator::minus) {
+							Operator op=intr->firstOperator();
+							if(intr->containerType()==Container::apply
+								&& (op==o || (*it!=first && op==Operator::plus && o==Operator::minus)))
+							{
+								if(!(intr->isUnary() && op==Operator::minus))
+								{
 									levelOut(c, intr, it);
 									d=true;
 								}
@@ -949,7 +953,7 @@ Object* Analitza::simp(Object* root)
 #ifndef Q_CC_MSVC
 						#warning review condition
 #endif
-						if(((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
+						if(!d && ((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
 							d=true;
 						}
 						
@@ -957,8 +961,17 @@ Object* Analitza::simp(Object* root)
 							lastdel=true;
 							somed=true;
 							delete *it;
+							if(first==*it) first=0;
 							it = c->m_params.erase(it);
 						}
+					}
+					
+					if(lastdel && o==Operator::minus && !c->isUnary()) {
+						Container::iterator it=c->firstValue();
+						Container* cc=new Container(Container::apply);
+						cc->appendBranch(new Operator(Operator::minus));
+						cc->appendBranch(*it);
+						*it=cc;
 					}
 					
 					root=c;
