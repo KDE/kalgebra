@@ -400,16 +400,16 @@ QString OperatorsModel::example(Operator o)
 			s="x<=4";
 			break;
 		case Operator::_and:
-			s="and((x>-2), (x<2))";
+			s="and(x>-2, x<2)";
 			break;
 		case Operator::_or:
-			s="or((x>2), (x>-2))";
+			s="or(x>2, x>-2)";
 			break;
 		case Operator::_xor:
-			s="xor((x>0), (x<3))";
+			s="xor(x>0, x<3)";
 			break;
 		case Operator::implies:
-			s="implies((x<0), (x<3))";
+			s="implies(x<0, x<3)";
 			break;
 		case Operator::gcd:
 			s="gcd(x, 3)";
