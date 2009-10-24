@@ -175,15 +175,13 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
-			//FIXME: have to find a way that if the focus is not in the textedit completes, otherwise don't complete.
-// 			if(m_completer->popup()->isVisible()) 
-// 				completed(m_completer->currentCompletion());
-			{
-				if(returnPress()) {
+			if(m_completer->popup()->isVisible()) 
+				completed(m_completer->currentCompletion());
+			else {
+				if(returnPress())
 					QPlainTextEdit::keyPressEvent(e);
-				}
-				m_completer->popup()->hide();
 			}
+			m_completer->popup()->hide();
 			break;
 		case Qt::Key_Up:
 			if(!m_completer->popup()->isVisible()) {
