@@ -299,7 +299,7 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inboun
 			ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
 							 funcname, param+1);
 		} else {
-			QString sample = (param < op && (inbounds || oper.isBounded())) ?
+			QString sample = (param < op || (inbounds && oper.isBounded())) ?
 						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
 						i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
 			
