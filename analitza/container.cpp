@@ -113,9 +113,9 @@ Container::ContainerType Container::toContainerType(const QString& tag)
 QList<Ci*> Container::bvarCi() const
 {
 	QList<Ci*> ret;
-	QList<Object*>::const_iterator it;
+	QList<Object*>::const_iterator it, itEnd=firstValue();
 	
-	for(it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
+	for(it=m_params.constBegin(); it!=itEnd; ++it) {
 		if((*it)->isContainer()) {
 			Container* c = (Container*) (*it);
 			if(c->containerType() == Container::bvar && !c->m_params.isEmpty() && c->m_params[0]->type()==Object::variable)
@@ -153,33 +153,6 @@ Object* Container::dlimit() const
 		return c->m_params.first();
 	else
 		return 0;
-}
-
-//TODO: delete?
-bool Container::hasVars() const
-{
-	bool ret=false;
-	
-	if(m_params.isEmpty())
-		ret = false;
-	else {
-		for(QList<Object*>::const_iterator i=m_params.begin(); !ret && i!=m_params.end(); ++i) {
-			switch((*i)->type()) {
-				case Object::variable:
-					ret=true;
-					break;
-				case Object::container:
-				{
-					Container *c = (Container*) *i;
-					ret |= c->hasVars();
-					break;
-				}
-				default:
-					ret=false;
-			}
-		}
-	}
-	return ret;
 }
 
 bool Container::operator==(const Container& c) const

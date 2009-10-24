@@ -93,9 +93,6 @@ public:
 	/** Returns a QStringList where we have all of the bvar in the container */
 	QList<Ci*> bvarCi() const;
 	
-	/** Returns whether there is any variable inside the tree */
-	bool hasVars() const;
-	
 	/** Returns the first operator found in the container */
 	Operator firstOperator() const;
 	

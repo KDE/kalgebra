@@ -976,13 +976,8 @@ Object* Analitza::simp(Object* root)
 					
 					root=c;
 					
-					if(c->isUnary() && o==Operator::plus) {
-						root=*c->firstValue();
-						*c->firstValue()=0;
-						delete c;
-						c=0;
-					} else if(c->isUnary() && o==Operator::minus) {
-						if(somed && !lastdel) {
+					if(c->isUnary()) {
+						if(o==Operator::plus || (somed && !lastdel)) {
 							root=*c->firstValue();
 							*c->firstValue()=0;
 							delete c;
@@ -1039,13 +1034,16 @@ Object* Analitza::simp(Object* root)
 					if(c->m_params[1]->isContainer()) {
 						Container *cp = (Container*) c->m_params[1];
 						if(cp->firstOperator()==Operator::power) {
-							c->m_params[1] = cp->m_params[1]->copy();
+							c->m_params[1] = cp->m_params[1];
 							
 							Container *cm = new Container(Container::apply);
 							cm->appendBranch(new Operator(Operator::times));
-							cm->appendBranch(c->m_params[2]->copy());
-							cm->appendBranch(cp->m_params[2]->copy());
+							cm->appendBranch(c->m_params[2]);
+							cm->appendBranch(cp->m_params[2]);
 							c->m_params[2] = cm;
+							
+							cp->m_params[1]=0;
+							cp->m_params[2]=0;
 							delete cp;
 							c->m_params[2]=simp(c->m_params[2]);
 						}
@@ -1089,7 +1087,8 @@ Object* Analitza::simp(Object* root)
 					break;
 				case Operator::sum: {
 					
-					const int offset=1+c->bvarCi().size(); //op+bvars
+					QStringList bvars=c->bvarStrings();
+					const int offset=1+bvars.size(); //op+bvars
 					for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
 						if((*it)->isContainer()) {
 							Container *limit=static_cast<Container*>(*it);
@@ -1103,7 +1102,6 @@ Object* Analitza::simp(Object* root)
 					}
 					
 					//if bvars is empty, we are dealing with an invalid sum()
-					QStringList bvars=c->bvarStrings();
 					it = c->firstValue();
 					if(!bvars.isEmpty() && !hasTheVar(bvars.toSet(), *it)) {
 						Container *cDiff=new Container(Container::apply);
