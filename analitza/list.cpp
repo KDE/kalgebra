@@ -19,7 +19,7 @@
 #include "list.h"
 #include "expression.h"
 #include "expressionwriter.h"
-#include "container.h"
+#include "analitzautils.h"
 
 List::List(const List& v)
 	: Object(Object::list)
@@ -101,7 +101,7 @@ bool List::operator==(const List& v) const
 	bool eq=v.size()==size();
 	
 	for(int i=0; eq && i<m_elements.count(); ++i) {
-		eq = eq && Container::equalTree(m_elements[i], v.m_elements[i]);
+		eq = eq && AnalitzaUtils::equalTree(m_elements[i], v.m_elements[i]);
 	}
 	return eq;
 }

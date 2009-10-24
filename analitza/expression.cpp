@@ -32,6 +32,7 @@
 #include "mathmlexpressionwriter.h"
 #include "mathmlpresentationexpressionwriter.h"
 #include "list.h"
+#include "analitzautils.h"
 
 static void print_dom(const QDomNode& in, int ind);
 
@@ -384,7 +385,7 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 
 bool Expression::operator==(const Expression & e) const
 {
-	return e.d->m_tree && d->m_tree && Container::equalTree(e.d->m_tree, d->m_tree);
+	return e.d->m_tree && d->m_tree && AnalitzaUtils::equalTree(e.d->m_tree, d->m_tree);
 }
 
 void Expression::clear()

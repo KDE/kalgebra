@@ -19,7 +19,7 @@
 #include "vector.h"
 #include "expression.h"
 #include "expressionwriter.h"
-#include "container.h"
+#include "analitzautils.h"
 
 Vector::Vector(const Vector& v)
 	: Object(Object::vector)//, m_elements(v.m_elements.size())
@@ -107,7 +107,7 @@ bool Vector::operator==(const Vector& v) const
 	bool eq=v.size()==size();
 	
 	for(int i=0; eq && i<m_elements.count(); ++i) {
-		eq = eq && Container::equalTree(m_elements[i], v.m_elements[i]);
+		eq = eq && AnalitzaUtils::equalTree(m_elements[i], v.m_elements[i]);
 	}
 	return eq;
 }

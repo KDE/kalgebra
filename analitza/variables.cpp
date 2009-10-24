@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include "variables.h"
-#include "container.h"
 #include "expression.h"
 #include "value.h"
 

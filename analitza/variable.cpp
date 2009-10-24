@@ -18,7 +18,7 @@
 
 #include "variable.h"
 #include "expressionwriter.h"
-#include "container.h"
+#include "analitzautils.h"
 
 Ci::Ci(const QString& b)
 	: Object(variable), m_name(b), m_function(false), m_owner(false), m_value(0)
@@ -60,7 +60,7 @@ bool Ci::matches(const Object* exp, QMap<QString, const Object*>* found) const
 	if(found->contains(m_name)) {
 		const Object* v=found->value(m_name);
 		if(v) { //If already been found
-			ret=Container::equalTree(exp, v);
+			ret=AnalitzaUtils::equalTree(exp, v);
 		} else {
 			found->insert(m_name, exp);
 			ret=true;

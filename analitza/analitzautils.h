@@ -35,8 +35,10 @@ namespace AnalitzaUtils
 			@p bvars tells the already defined variables (which won't return true). */
 	bool hasVars(const Object* o, const QString &var=QString(),
 					const QStringList& bvars=QStringList(), const Variables* vars=0);
-					
-					
+	
+	/** Returns whether @p o1 is equal to @p o2. */
+	bool equalTree(const Object * o1, const Object * o2);
+	
 	/** Prints an expression tree from a node @p o. @p prefix will be the start of every item line */
 	void objectWalker(const Object* o, const QByteArray& prefix=QByteArray());
 };

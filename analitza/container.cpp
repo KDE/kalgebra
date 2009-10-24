@@ -26,6 +26,7 @@
 #include <KDebug>
 #include <KLocale>
 #include "variable.h"
+#include "analitzautils.h"
 
 char Container::m_typeStr[][10] = {
 		"none",
@@ -161,44 +162,7 @@ bool Container::operator==(const Container& c) const
 	
 	for(int i=0; eq && i<m_params.count(); ++i) {
 		Object *o=m_params[i], *o1=c.m_params[i];
-		eq = eq && equalTree(o, o1);
-	}
-	return eq;
-}
-
-//TODO: Deprecate that
-bool Container::equalTree(const Object * o1, const Object * o2)
-{
-	Q_ASSERT(o1 && o2);
-	if(o1==o2)
-		return true;
-	else if(o1->type()!=o2->type())
-		return false;
-	
-	bool eq;
-	switch(o2->type()) {
-		case Object::variable:
-			eq = *static_cast<const Ci*>(o1)==*static_cast<const Ci*>(o2);
-			break;
-		case Object::value:
-			eq = *static_cast<const Cn*>(o1)==*static_cast<const Cn*>(o2);
-			break;
-		case Object::container:
-			eq = *static_cast<const Container*>(o1)==*static_cast<const Container*>(o2);
-			break;
-		case Object::oper:
-			eq = *static_cast<const Operator*>(o1)==*static_cast<const Operator*>(o2);
-			break;
-		case Object::vector:
-			eq = *static_cast<const Vector*>(o1)==*static_cast<const Vector*>(o2);
-			break;
-		case Object::list:
-			eq = *static_cast<const List*>(o1)==*static_cast<const List*>(o2);
-			break;
-		case Object::none:
-			eq=false;
-			Q_ASSERT(false && "Should not get here");
-			break;
+		eq = eq && AnalitzaUtils::equalTree(o, o1);
 	}
 	return eq;
 }

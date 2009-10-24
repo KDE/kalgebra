@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include "object.h"
-#include "container.h"
 #include "stringexpressionwriter.h"
 
 QString Object::toString() const

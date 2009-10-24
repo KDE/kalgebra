@@ -78,9 +78,6 @@ public:
 	/** Converts a @p tag to a containerType. */
 	static ContainerType toContainerType(const QString& tag);
 	
-	/** Returns whether @p o1 is equal to @p o2. */
-	static bool equalTree(const Object * o1, const Object * o2);
-	
 	/** Adds a @p o branch at the end of the Container. */
 	void appendBranch(Object* o);
 	

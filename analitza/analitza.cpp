@@ -231,7 +231,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		Ci* var=(Ci*) branch;
 		
 		Object* val=var->isDefined() ? var->value() : 0;
-		if(val && !unscoped.contains(var->name()) && !Container::equalTree(var, val))
+		if(val && !unscoped.contains(var->name()) && !equalTree(var, val))
 			ret = eval(val, resolve, unscoped);
 		
 	} else if(branch->type()==Object::vector) {
@@ -1057,7 +1057,7 @@ Object* Analitza::simp(Object* root)
 					f=*c->firstValue();
 					g=*(c->firstValue()+1);
 					
-					if(Container::equalTree(f, g)) {
+					if(equalTree(f, g)) {
 						delete root;
 						root = new Cn(1.);
 						break;
@@ -1340,7 +1340,7 @@ Object* Analitza::simpPolynomials(Container* c)
 		QList<QPair<double, Object*> >::iterator it1(monos.begin());
 		for(; it1!=monos.end(); ++it1) {
 			Object *o1=it1->second, *o2=imono.second;
-			if(o2->type()!=Object::oper && Container::equalTree(o1, o2)) {
+			if(o2->type()!=Object::oper && equalTree(o1, o2)) {
 				found = true;
 				break;
 			}
