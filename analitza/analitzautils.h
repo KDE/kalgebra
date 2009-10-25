@@ -41,6 +41,6 @@ namespace AnalitzaUtils
 	
 	/** Prints an expression tree from a node @p o. @p prefix will be the start of every item line */
 	void objectWalker(const Object* o, const QByteArray& prefix=QByteArray());
-};
+}
 
 #endif // ANALITZAUTILS_H
