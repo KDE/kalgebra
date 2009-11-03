@@ -312,8 +312,7 @@ void Calculate3D::run()
 	if(!a.isCorrect())
 		return;
 	
-	Variables* v=a.variables();
-	Q_ASSERT(points && v);
+	Q_ASSERT(points);
 	
 	const int k= static_cast<int>(size/step)*2;
 	

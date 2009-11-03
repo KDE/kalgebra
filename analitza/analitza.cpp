@@ -937,7 +937,7 @@ Object* Analitza::simp(Object* root)
 					break;
 				case Operator::minus:
 				case Operator::plus: {
-					bool somed=false, lastdel;
+					bool somed=false, lastdel=false;
 					it=c->m_params.end()-1;
 					Object* first=*c->firstValue();
 					
