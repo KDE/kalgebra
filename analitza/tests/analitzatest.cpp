@@ -243,6 +243,11 @@ void AnalitzaTest::testCorrection_data()
 	QTest::newRow("simple func") << script << "3";
 	
 	script.clear();
+	script << "t:=(c, c1, c2, t1, t2)->(t2-t1)/(c2-c1)*(c-c1)+t1";
+	script << "t(1,2,3,4,5)";
+	QTest::newRow("long func") << script << "3";
+	
+	script.clear();
 	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
 	script << "fact(5)";
 	QTest::newRow("piecewise factorial") << script << "120";

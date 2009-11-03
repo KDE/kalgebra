@@ -165,13 +165,13 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 							if(cbody->m_params.size()==c->m_params.size()) {
 								QStringList bvars=cbody->bvarStrings();
 								
-								int i=1;
+								int i=0;
 								Object::ScopeInformation scope;
-								QList<Object*> values;
+								QVector<Object*> values(bvars.size());
 								
 								foreach(const QString& bvar, bvars) {
-									values.append(simp(eval(c->m_params[i], resolve, unscoped)));
-									scope.insert(bvar, &values.last());
+									values[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
+									scope.insert(bvar, &values[i]);
 									++i;
 								}
 								
@@ -229,7 +229,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 	} else if(resolve && branch->type()==Object::variable) {
 		//FIXME: Should check if it is that crappy 
 		Ci* var=(Ci*) branch;
-		
+		 
 		Object* val=var->isDefined() ? var->value() : 0;
 		if(val && !unscoped.contains(var->name()) && !equalTree(var, val))
 			ret = eval(val, resolve, unscoped);
