@@ -33,7 +33,6 @@
 #include <QTime>
 
 #include "analitza.h"
-#include "variables.h"
 #include "value.h"
 
 using std::fabs;
@@ -285,7 +284,7 @@ bool Graph3D::create()
 	t.restart();
 	
 	for(int i=0; i<m_n; ++i) {
-		Calculate3D *r = new Calculate3D(this, Analitza(a), points, part*i, part*(i+1), mida, step);
+		Calculate3D *r = new Calculate3D(this, a, points, part*i, part*(i+1), mida, step);
 		if(i+1==m_n)
 			r->setTo(2*static_cast<int>(default_size/default_step));
 		
@@ -317,10 +316,9 @@ void Calculate3D::run()
 	Q_ASSERT(points && v);
 	
 	const int k= static_cast<int>(size/step)*2;
-	v->modify("x", 0.);
-	v->modify("y", 0.);
 	
-	Cn *x=(Cn*) v->value("x"), *y=(Cn*) v->value("y");
+	Cn *x=a.insertValueVariable("x", 0.);
+	Cn *y=a.insertValueVariable("y", 0.);
 	
 	for(int i=from; i<to; i++) {
 		x->setValue(i*step-size);
@@ -438,8 +436,8 @@ int Graph3D::load()
 {
 	Analitza f3d;
 	f3d.setExpression(func3d);
-	f3d.variables()->modify("x", 0.);
-	f3d.variables()->modify("y", 0.);
+	f3d.insertValueVariable("x", 0.);
+	f3d.insertValueVariable("y", 0.);
 	Expression e=f3d.calculate();
 	
 	if(f3d.isCorrect() && e.isReal()) {

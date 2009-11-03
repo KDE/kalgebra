@@ -19,7 +19,6 @@
 #include "functionimpl.h"
 #include "functionfactory.h"
 #include "value.h"
-#include "variables.h"
 
 #include <KLocale>
 
@@ -65,8 +64,7 @@ void FunctionPolar::updatePoints(const QRect& viewport)
 	points.clear();
 	points.reserve(resolution());
 	
-	func.variables()->modify("q", 0.);
-	Cn *varth = (Cn*) func.variables()->value("q");
+	Cn *varth=func.insertValueVariable("q", 0.);
 	
 	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
@@ -94,15 +92,16 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(th<dlimit) th=dlimit;
 	if(th>ulimit) th=ulimit;
 	
+	Cn* tth=func.insertValueVariable("q", th);
 	QPointF dist;
 	do {
-		func.variables()->modify("q", th);
+		tth->setValue(th);
 		r = func.calculate().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
 		
-		func.variables()->modify("q", th+2.*pi);
+		tth->setValue(th+2.*pi);
 		r = func.calculate().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
@@ -112,9 +111,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	} while(d>d2);
 	th -= 2.*pi;
 	
-	func.variables()->modify("q", th);
+	tth->setValue(th);
 	Expression res=func.calculate();
-	func.variables()->destroy("q");
 	
 	if(!res.isReal())
 		m_err += i18n("We can only draw Real results.");

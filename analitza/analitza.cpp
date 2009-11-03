@@ -32,13 +32,20 @@
 
 using namespace AnalitzaUtils;
 
-Analitza::Analitza() : m_vars(new Variables), m_varsOwned(true) { }
+Analitza::Analitza()
+	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
+{}
 
-Analitza::Analitza(Variables* v) : m_vars(v), m_varsOwned(false) { Q_ASSERT(v); }
+Analitza::Analitza(Variables* v)
+	: m_vars(v), m_varsOwned(false), m_hasdeps(true)
+{ Q_ASSERT(v); }
 
-Analitza::Analitza(const Analitza& a) : m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true)
+Analitza::Analitza(const Analitza& a)
+	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(true)
 {
 	m_vars = new Variables(*a.m_vars);
+	if(m_exp.isCorrect())
+		m_hasdeps=m_exp.tree()->decorate(varsScope());
 }
 
 Analitza::~Analitza()
@@ -51,6 +58,10 @@ Analitza::~Analitza()
 void Analitza::setExpression(const Expression & e)
 {
 	m_exp=e;
+	
+	if(m_exp.isCorrect())
+		m_hasdeps=m_exp.tree()->decorate(varsScope());
+	
 	flushErrors();
 }
 
@@ -74,17 +85,15 @@ Expression Analitza::evaluate()
 Expression Analitza::calculate()
 {
 	Expression e;
-	if(m_exp.isCorrect()) {
-		bool hasdeps=m_exp.tree()->decorate(varsScope());
+	if(!m_hasdeps && m_exp.isCorrect()) {
+		e.setTree(calc(m_exp.tree()));
+	} else {
+		m_err << i18n("Must specify a correct operation");
 		
-		if(!hasdeps)
-			e.setTree(calc(m_exp.tree()));
-		else
+		if(m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
 							dependencies(m_exp.tree(), varsScope().keys()).join(
 								i18nc("identifier separator in error message", "', '")));
-	} else {
-		m_err << i18n("Must specify a correct operation");
 	}
 	return e;
 }
@@ -1421,10 +1430,10 @@ Object* Analitza::simpPolynomials(Container* c)
 Object* Analitza::simpSum(Container * c)
 {
 	Object* ret=c;
-	QStringList bvars=c->bvarStrings();
 	Container* cval=static_cast<Container*>(*c->firstValue());
 	Operator o=cval->firstOperator();
 	if(o==Operator::times) {
+		QSet<QString> bvars=c->bvarStrings().toSet();
 		QList<Object*> sum, out;
 		Container::iterator it=cval->m_params.begin(), itEnd=cval->m_params.end(), firstV=cval->firstValue();
 		bool firstFound=false;
@@ -1433,7 +1442,7 @@ Object* Analitza::simpSum(Container * c)
 			if(it==firstV)
 				firstFound=true;
 			
-			if(!firstFound || hasTheVar(bvars.toSet(), *it)) {
+			if(!firstFound || hasTheVar(bvars, *it)) {
 				if(firstFound)
 					multCount++;
 				sum.append(*it);
@@ -1524,6 +1533,7 @@ Object::ScopeInformation Analitza::varsScope() const
 		varsScope.insert(it.key(), &it.value());
 	}
 	
+	
 	for(it=m_vars->begin(); it!=itEnd; ++it) {
 		(*it)->decorate(varsScope);
 	}
@@ -1570,12 +1580,19 @@ bool Analitza::insertVariable(const QString & name, const Object * value)
 	return !wrong;
 }
 
+Cn* Analitza::insertValueVariable(const QString& name, double value)
+{
+	Cn* val=m_vars->modify(name, value);
+	m_hasdeps=m_exp.tree()->decorate(varsScope());
+	return val;
+}
+
 typedef QPair<QString, double> StringDoublePair;
 double Analitza::derivative(const QList<StringDoublePair>& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
 	//Image
-	//TODO: Should not call ::calculate()
+	//TODO: Should adapt to insertValueVariable
 	
 	Q_ASSERT(m_exp.isCorrect());
 	

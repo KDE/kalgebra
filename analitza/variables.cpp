@@ -48,12 +48,14 @@ void Variables::modify(const QString & name, const Expression & o)
 	modify(name, o.tree());
 }
 
-void Variables::modify(const QString & name, const double & d)
+Cn* Variables::modify(const QString & name, const double & d)
 {
 	if(contains(name))
 		delete value(name);
 	
-	insert(name, new Cn(d));
+	Cn* val=new Cn(d);
+	insert(name, val);
+	return val;
 }
 
 void Variables::modify(const QString& name, const Object* o)

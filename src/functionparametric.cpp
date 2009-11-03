@@ -20,7 +20,6 @@
 #include "functionfactory.h"
 #include "value.h"
 #include "vector.h"
-#include "variables.h"
 
 #include <KDebug>
 #include <KLocale>
@@ -59,8 +58,7 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	points.clear();
 	points.reserve(resolution());
 	
-	func.variables()->modify("t", 0.);
-	Cn *theT = (Cn*) func.variables()->value("t");
+	Cn *theT = func.insertValueVariable("t", 0.);
 	
 	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
@@ -87,7 +85,7 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 
 QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 {
-	func.variables()->modify("t", 0.);
+	func.insertValueVariable("t", 0.);
 	Expression res=func.calculate();
 	Object* vo=res.tree();
 	

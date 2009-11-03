@@ -19,7 +19,6 @@
 #include "functionimpl.h"
 #include "functionfactory.h"
 #include "value.h"
-#include "variables.h"
 
 #include <KDebug>
 #include <KLocale>
@@ -111,10 +110,8 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 	
 	double step= double((-l_lim+r_lim)/resolution());
 	
-	func.variables()->modify(boundings().first(), 0.);
-	Cn *vx = (Cn*) func.variables()->value(boundings().first());
-		
-	//TODO Finish that
+	Cn *vx = func.insertValueVariable(boundings().first(), 0.);
+	
 	bool jumping=true;
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
@@ -156,7 +153,7 @@ void FunctionY::updatePoints(const QRect& viewport)
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	func.variables()->modify(boundings().first(), dp.y());
+	func.insertValueVariable(boundings().first(), dp.y());
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
 	
@@ -169,7 +166,8 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 {
 	QPointF dp=p;
 	QString pos;
-	func.variables()->modify(boundings().first(), dp.x());
+	func.insertValueVariable(boundings().first(), dp.x());
+	
 	if(!func.calculate().isReal())
 		m_err += i18n("We can only draw Real results.");
 	
@@ -185,7 +183,7 @@ QLineF FunctionY::derivative(const QPointF& p) const
 	
 	if(m_deriv) {
 		a.setExpression(*m_deriv);
-		a.variables()->modify(boundings().first(), p.x());
+		a.insertValueVariable(boundings().first(), p.x());
 		
 		if(a.isCorrect())
 			ret = a.calculate().toReal().value();

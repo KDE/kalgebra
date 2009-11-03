@@ -101,12 +101,20 @@ class ANALITZA_EXPORT Analitza
 		*/
 		bool insertVariable(const QString& name, const Object* value);
 		
+		/**
+			Adds a variable entry named @p name with @p value value.
+			@returns Returns the added object
+		*/
+		Cn* insertValueVariable(const QString& name, double value);
+		
 	private:
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;
 		
 		const bool m_varsOwned;
+		bool m_hasdeps;
+		
 		Object::ScopeInformation varsScope() const;
 		
 		Object* calc(const Object* e);
