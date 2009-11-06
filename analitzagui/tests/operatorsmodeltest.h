@@ -20,7 +20,7 @@
 #define OPERATORSMODELTEST_H
 
 #include <QObject>
-#include "operatorsmodel.h"
+#include "../operatorsmodel.h"
 
 /**
 	@author Aleix Pol

@@ -25,6 +25,7 @@
 #include <cmath>
 
 using namespace std;
+using Analitza::Expression;
 
 QTEST_KDEMAIN_CORE( FunctionTest )
 
@@ -33,7 +34,7 @@ static const int resolution=3000;
 FunctionTest::FunctionTest(QObject *parent)
 	: QObject(parent)
 {
-	m_vars=new Variables;
+	m_vars=new Analitza::Variables;
 }
 
 FunctionTest::~FunctionTest()

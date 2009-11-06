@@ -25,6 +25,7 @@
 #include <cmath>
 
 using namespace std;
+using Analitza::Expression;
 
 QTEST_KDEMAIN_CORE( ExpressionTest )
 

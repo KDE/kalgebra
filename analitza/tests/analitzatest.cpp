@@ -28,6 +28,13 @@
 #include <variable.h>
 
 using namespace std;
+using Analitza::Cn;
+using Analitza::Ci;
+using Analitza::Vector;
+using Analitza::Object;
+using Analitza::Operator;
+using Analitza::Container;
+using Analitza::Expression;
 
 QTEST_KDEMAIN_CORE( AnalitzaTest )
 
@@ -40,7 +47,7 @@ AnalitzaTest::~AnalitzaTest()
 
 void AnalitzaTest::initTestCase()
 {
-	a=new Analitza;
+	a=new Analitza::Analitza;
 }
 
 void AnalitzaTest::cleanupTestCase()
@@ -309,7 +316,7 @@ void AnalitzaTest::testCorrection()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
-	Analitza b;
+	Analitza::Analitza b;
 	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -373,7 +380,7 @@ void AnalitzaTest::testUncorrection()
 	QFETCH(QStringList, expression);
 	
 	bool correct=false;
-	Analitza b;
+	Analitza::Analitza b;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
@@ -445,7 +452,7 @@ void AnalitzaTest::testEvaluate()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
-	Analitza b;
+	Analitza::Analitza b;
 	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);

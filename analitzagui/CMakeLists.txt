@@ -1,0 +1,16 @@
+project(analitzagui)
+
+include_directories(..)
+
+add_subdirectory(tests)
+
+set(analitzagui_SRCS
+	operatorsmodel.cpp
+)
+
+kde4_add_library(analitzagui SHARED ${analitzagui_SRCS})
+target_link_libraries(analitzagui ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDECORE_LIBS} analitza)
+
+set_target_properties(analitzagui PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
+
+install(TARGETS analitzagui ${INSTALL_TARGETS_DEFAULT_ARGS})

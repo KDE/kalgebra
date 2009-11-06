@@ -17,13 +17,14 @@
  *************************************************************************************/
 
 #include "operatorsmodeltest.h"
-#include "expression.h"
-#include "analitza.h"
+#include <analitza/expression.h>
+#include <analitza/analitza.h>
+#include <analitza/variables.h>
 #include <qtest_kde.h>
-#include <variables.h>
 #include <cmath>
 
 using namespace std;
+using Analitza::Expression;
 
 QTEST_KDEMAIN_CORE( OperatorsModelTest )
 
@@ -69,7 +70,7 @@ void OperatorsModelTest::testExamples()
 	Expression ex(example, false);
 	QCOMPARE(ex.toString(), example);
 	
-	Analitza a;
+	Analitza::Analitza a;
 	a.setExpression(ex);
 	if(!a.isCorrect()) qDebug() << example << "1. error" << a.errors();// QVERIFY(a.isCorrect());
 	

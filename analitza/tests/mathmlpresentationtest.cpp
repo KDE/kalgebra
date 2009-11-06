@@ -22,6 +22,8 @@
 #include "expression.h"
 #include <qtest_kde.h>
 
+using Analitza::Expression;
+
 QTEST_KDEMAIN_CORE(MathMLPresentationTest)
 Q_DECLARE_METATYPE(AbstractLexer::TOKEN*)
 

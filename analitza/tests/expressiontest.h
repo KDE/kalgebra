@@ -24,7 +24,7 @@
 /**
 	@author Aleix Pol
 */
-class Expression;
+namespace Analitza { class Expression; }
 
 class ExpressionTest : public QObject
 {
@@ -54,7 +54,7 @@ Q_OBJECT
 		void cleanupTestCase();
 		
 	private:
-		Expression *e;
+		Analitza::Expression *e;
 };
 
 #endif

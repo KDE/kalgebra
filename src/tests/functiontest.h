@@ -25,7 +25,7 @@
 	@author Aleix Pol
 */
 class function;
-class Variables;
+namespace Analitza { class Variables; }
 
 class FunctionTest : public QObject
 {
@@ -48,7 +48,7 @@ Q_OBJECT
 		
 		void cleanupTestCase();
 	private:
-		Variables* m_vars;
+		Analitza::Variables* m_vars;
 };
 
 #endif
