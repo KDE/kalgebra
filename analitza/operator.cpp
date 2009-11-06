@@ -19,6 +19,8 @@
 #include "operator.h"
 #include "expressionwriter.h"
 
+using namespace Analitza;
+
 const char Operator::words[nOfOps][14] = {
 	"onone",
 	"plus", "times", "minus", "divide", "quotient",

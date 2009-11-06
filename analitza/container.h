@@ -25,6 +25,9 @@
 #include "operator.h"
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 class Ci;
 
 /**
@@ -140,5 +143,7 @@ private:
 	static char m_typeStr[][10];
 	static QMap<QString, ContainerType> m_nameToType;
 };
+
+}
 
 #endif

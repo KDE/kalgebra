@@ -28,7 +28,7 @@
 #include "container.h"
 #include <QStack>
 
-AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza *na)
+AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza::Analitza *na)
 	: QSyntaxHighlighter(doc), m_correct(true), m_mode(Autodetect), m_pos(0), a(na)
 {
 	bold.setFontWeight(QFont::Bold);
@@ -80,7 +80,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	m_editingParameter=0;
 	m_editingName.clear();
 	
-	if(Expression::isMathML(text)) {
+	if(Analitza::Expression::isMathML(text)) {
 		QString lasttag;
 		int inside=0;
 		for(int i=0; i<text.length(); i++) {

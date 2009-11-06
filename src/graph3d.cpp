@@ -38,6 +38,9 @@
 using std::fabs;
 using std::log10;
 
+using Analitza::Cn;
+using Analitza::Expression;
+
 enum ActionsEnum {
     KEYRIGHT=1<<0, KEYLEFT=1<<1, KEYUP=1<<2, KEYDOWN=1<<3, KEYAVPAG=1<<4, KEYREPAG=1<<5, KEYS=1<<6, KEYW=1<<7,
     KEYQ=1<<8, KEYE=1<<9, LCLICK=1<<10, RCLICK=1<<11, MCLICK=1<<12 };
@@ -277,7 +280,7 @@ bool Graph3D::create()
 	int part = k/m_n;
 	QList<Calculate3D*> threads;
 	
-	Analitza a;
+	Analitza::Analitza a;
 	a.setExpression(func3d);
 	
 	QTime t;
@@ -433,7 +436,7 @@ void Graph3D::setFunc(const Expression& exp)
 
 int Graph3D::load() 
 {
-	Analitza f3d;
+	Analitza::Analitza f3d;
 	f3d.setExpression(func3d);
 	f3d.insertValueVariable("x", 0.);
 	f3d.insertValueVariable("y", 0.);

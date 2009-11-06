@@ -26,6 +26,10 @@ using std::acos;
 using std::atan;
 using std::sqrt;
 
+using Analitza::Expression;
+using Analitza::Variables;
+using Analitza::Cn;
+
 struct FunctionPolar : public FunctionImpl
 {
 	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v, 0, 2*M_PI) {}

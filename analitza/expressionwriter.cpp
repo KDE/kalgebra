@@ -18,5 +18,7 @@
 
 #include "expressionwriter.h"
 
+using namespace Analitza;
+
 ExpressionWriter::~ExpressionWriter()
 {}

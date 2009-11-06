@@ -28,6 +28,8 @@
 #include "variable.h"
 #include "analitzautils.h"
 
+using namespace Analitza;
+
 char Container::m_typeStr[][10] = {
 		"none",
 		"math",

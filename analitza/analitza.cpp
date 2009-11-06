@@ -32,15 +32,15 @@
 
 using namespace AnalitzaUtils;
 
-Analitza::Analitza()
+Analitza::Analitza::Analitza()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
 {}
 
-Analitza::Analitza(Variables* v)
+Analitza::Analitza::Analitza(Variables* v)
 	: m_vars(v), m_varsOwned(false), m_hasdeps(true)
 { Q_ASSERT(v); }
 
-Analitza::Analitza(const Analitza& a)
+Analitza::Analitza::Analitza(const Analitza& a)
 	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(true)
 {
 	m_vars = new Variables(*a.m_vars);
@@ -48,14 +48,14 @@ Analitza::Analitza(const Analitza& a)
 		m_hasdeps=m_exp.tree()->decorate(varsScope());
 }
 
-Analitza::~Analitza()
+Analitza::Analitza::~Analitza()
 {
 	if(m_varsOwned)
 		delete m_vars;
 }
 
 
-void Analitza::setExpression(const Expression & e)
+void Analitza::Analitza::setExpression(const Expression & e)
 {
 	m_exp=e;
 	
@@ -65,7 +65,7 @@ void Analitza::setExpression(const Expression & e)
 	flushErrors();
 }
 
-Expression Analitza::evaluate()
+Analitza::Expression Analitza::Analitza::evaluate()
 {
 	m_err.clear();
 	Expression e;
@@ -82,7 +82,7 @@ Expression Analitza::evaluate()
 	return e;
 }
 
-Expression Analitza::calculate()
+Analitza::Expression Analitza::Analitza::calculate()
 {
 	Expression e;
 	if(!m_hasdeps && m_exp.isCorrect()) {
@@ -98,7 +98,7 @@ Expression Analitza::calculate()
 	return e;
 }
 
-Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
+Analitza::Object* Analitza::Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
@@ -269,7 +269,7 @@ Object* Analitza::eval(const Object* branch, bool resolve, const QSet<QString>& 
 	return ret;
 }
 
-Object* Analitza::derivative(const QString &var, const Object* o)
+Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Object* o)
 {
 	Q_ASSERT(o);
 	Object *ret=0;
@@ -311,7 +311,7 @@ Object* Analitza::derivative(const QString &var, const Object* o)
 	return ret;
 }
 
-Object* Analitza::derivative(const QString &var, const Container *c)
+Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Container *c)
 {
 	if(c->containerType()==Container::apply) {
 		Operator op = c->firstOperator();
@@ -515,7 +515,7 @@ Object* Analitza::derivative(const QString &var, const Container *c)
 	return 0;
 }
 
-Object* Analitza::calcPiecewise(const Container* c)
+Analitza::Object* Analitza::Analitza::calcPiecewise(const Container* c)
 {
 	Object* ret=0;
 	//Here we have a list of options and finally the otherwise option
@@ -554,7 +554,7 @@ Object* Analitza::calcPiecewise(const Container* c)
 	return ret;
 }
 
-Object* Analitza::calcDeclare(const Container* c)
+Analitza::Object* Analitza::Analitza::calcDeclare(const Container* c)
 {
 	Object *ret=0;
 	
@@ -574,7 +574,7 @@ Object* Analitza::calcDeclare(const Container* c)
 	return ret;
 }
 
-Object* Analitza::calc(const Object* root)
+Analitza::Object* Analitza::Analitza::calc(const Object* root)
 {
 	Q_ASSERT(root);
 	Object* ret=0;
@@ -618,7 +618,7 @@ Object* Analitza::calc(const Object* root)
 	return ret;
 }
 
-Object* Analitza::operate(const Container* c)
+Analitza::Object* Analitza::Analitza::operate(const Container* c)
 {
 	Q_ASSERT(c);
 	Q_ASSERT(!c->isEmpty());
@@ -719,7 +719,7 @@ Object* Analitza::operate(const Container* c)
 	return ret;
 }
 
-Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
+Analitza::Object* Analitza::Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
 {
 	Object *objul=calc(n.ulimit());
 	Object *objdl=calc(n.dlimit());
@@ -769,17 +769,17 @@ Object* Analitza::boundedOperation(const Container& n, const Operator& t, Object
 	return ret;
 }
 
-Object* Analitza::product(const Container& n)
+Analitza::Object* Analitza::Analitza::product(const Container& n)
 {
 	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
 }
 
-Object* Analitza::sum(const Container& n)
+Analitza::Object* Analitza::Analitza::sum(const Container& n)
 {
 	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
 }
 
-Object* Analitza::func(const Container& n)
+Analitza::Object* Analitza::Analitza::func(const Container& n)
 {
 	Object* obj=calc(n.m_params[0]);
 	Container *function = (Container*) obj;
@@ -822,7 +822,7 @@ Object* Analitza::func(const Container& n)
 /////////////////////////////////////////////
 /////////////////////////////////////////////
 
-void Analitza::simplify()
+void Analitza::Analitza::simplify()
 {
 	if(m_exp.isCorrect()) {
 		Object* o=simp(m_exp.tree());
@@ -830,7 +830,7 @@ void Analitza::simplify()
 	}
 }
 
-void Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
+void Analitza::Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
 {
 	Container::iterator it = ob->firstValue();
 	for(; it!=ob->m_params.end();) {
@@ -841,7 +841,7 @@ void Analitza::levelOut(Container *c, Container *ob, Container::iterator &pos)
 	}
 }
 
-Object* Analitza::simp(Object* root)
+Analitza::Object* Analitza::Analitza::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
 	
@@ -1215,7 +1215,7 @@ Object* Analitza::simp(Object* root)
 	return root;
 }
 
-Object* Analitza::simpScalar(Container * c)
+Analitza::Object* Analitza::Analitza::simpScalar(Container * c)
 {
 	Object *value=0;
 	Container::iterator i = c->firstValue();
@@ -1252,6 +1252,8 @@ Object* Analitza::simpScalar(Container * c)
 	return c;
 }
 
+namespace Analitza
+{
 Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 {
 	Object* toAdd=0;
@@ -1275,8 +1277,9 @@ Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 	}
 	return toAdd;
 }
+}
 
-Object* Analitza::simpPolynomials(Container* c)
+Analitza::Object* Analitza::Analitza::simpPolynomials(Container* c)
 {
 	Q_ASSERT(c!=0 && dynamic_cast<Container*>(c));
 	
@@ -1427,7 +1430,7 @@ Object* Analitza::simpPolynomials(Container* c)
 	return root;
 }
 
-Object* Analitza::simpSum(Container * c)
+Analitza::Object* Analitza::Analitza::simpSum(Container * c)
 {
 	Object* ret=c;
 	Container* cval=static_cast<Container*>(*c->firstValue());
@@ -1470,7 +1473,7 @@ Object* Analitza::simpSum(Container * c)
 	return ret;
 }
 
-Object* Analitza::simpPiecewise(Container *c)
+Analitza::Object* Analitza::Analitza::simpPiecewise(Container *c)
 {
 	Object *root=c;
 	//Here we have a list of options and finally the otherwise option
@@ -1525,7 +1528,7 @@ Object* Analitza::simpPiecewise(Container *c)
 	return root;
 }
 
-Object::ScopeInformation Analitza::varsScope() const
+Analitza::Object::ScopeInformation Analitza::Analitza::varsScope() const
 {
 	Object::ScopeInformation varsScope;
 	Variables::iterator it, itEnd=m_vars->end();
@@ -1542,7 +1545,7 @@ Object::ScopeInformation Analitza::varsScope() const
 }
 
 
-Expression Analitza::derivative()
+Analitza::Expression Analitza::Analitza::derivative()
 {
 	m_err.clear();
 	/* TODO: Must support multiple bvars */
@@ -1558,12 +1561,12 @@ Expression Analitza::derivative()
 	return exp;
 }
 
-bool Analitza::insertVariable(const QString & name, const Expression & value)
+bool Analitza::Analitza::insertVariable(const QString & name, const Expression & value)
 {
 	return insertVariable(name, value.tree());
 }
 
-bool Analitza::insertVariable(const QString & name, const Object * value)
+bool Analitza::Analitza::insertVariable(const QString & name, const Object * value)
 {
 	bool islambda=false;
 	if(value->isContainer()) {
@@ -1580,7 +1583,7 @@ bool Analitza::insertVariable(const QString & name, const Object * value)
 	return !wrong;
 }
 
-Cn* Analitza::insertValueVariable(const QString& name, double value)
+Analitza::Cn* Analitza::Analitza::insertValueVariable(const QString& name, double value)
 {
 	Cn* val=m_vars->modify(name, value);
 	m_hasdeps=m_exp.tree()->decorate(varsScope());
@@ -1588,7 +1591,7 @@ Cn* Analitza::insertValueVariable(const QString& name, double value)
 }
 
 typedef QPair<QString, double> StringDoublePair;
-double Analitza::derivative(const QList<StringDoublePair>& values )
+double Analitza::Analitza::derivative(const QList<StringDoublePair>& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
 	//Image

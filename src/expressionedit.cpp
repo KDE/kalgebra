@@ -88,7 +88,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 
 ExpressionEdit::~ExpressionEdit() {}
 
-void ExpressionEdit::setExpression(const Expression& e)
+void ExpressionEdit::setExpression(const Analitza::Expression& e)
 {
 	if(!e.isCorrect())
 		setText(QString());
@@ -109,7 +109,7 @@ void ExpressionEdit::completed(const QString& newText)
 {
 	int c = newText.length() - lastWord(textCursor().selectionStart()).length();
 	QString toInsert=newText.right(c);
-	if(Expression::whatType(newText) == Object::oper && !isMathML())
+	if(Analitza::Expression::whatType(newText) == Analitza::Object::oper && !isMathML())
 		toInsert += '(';
 	insertPlainText(toInsert);
 }
@@ -122,7 +122,7 @@ bool ExpressionEdit::isMathML() const
 		case AlgebraHighlighter::Expression:
 			return false;
 		default:
-			return Expression::isMathML(this->toPlainText());
+			return Analitza::Expression::isMathML(this->toPlainText());
 	}
 }
 
@@ -131,11 +131,11 @@ void ExpressionEdit::setMode(AlgebraHighlighter::Mode en)
 	bool correct=true;
 	if(!text().isEmpty()) {
 		if(isMathML() && en==AlgebraHighlighter::Expression) { //We convert it into MathML
-			Expression e(toPlainText(), true);
+			Analitza::Expression e(toPlainText(), true);
 			correct=e.isCorrect();
 			if(correct) setPlainText(e.toString());
 		} else if(!isMathML() && en==AlgebraHighlighter::MathML) {
-			Expression e(toPlainText(), false);
+			Analitza::Expression e(toPlainText(), false);
 			correct=e.isCorrect();
 			if(correct) setPlainText(e.toMathML());
 		}
@@ -274,10 +274,10 @@ void ExpressionEdit::cursorMov()
 
 void ExpressionEdit::showSimplified()
 {
-	Expression e=expression();
+	Analitza::Expression e=expression();
 	if(e.isCorrect())
 	{
-		Analitza a;
+		Analitza::Analitza a;
 		a.setExpression(e);
 		a.simplify();
 		QString help=i18n("Result: %1", a.expression().toString());
@@ -286,14 +286,14 @@ void ExpressionEdit::showSimplified()
 }
 
 
-QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds, const Variables* v)
+QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds, const Analitza::Variables* v)
 {
 	QString ret;
-	Operator::OperatorType o=Operator::toOperatorType(funcname);
+	Analitza::Operator::OperatorType o=Analitza::Operator::toOperatorType(funcname);
 	
 	static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
-	if(o!=Operator::none) {
-		Operator oper(o);
+	if(o!=Analitza::Operator::none) {
+		Analitza::Operator oper(o);
 		const int op=oper.nparams();
 		if(op == -1) {
 			ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
@@ -323,9 +323,9 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inboun
 			ret=sample+')';
 		}
 	} else if(v && v->contains(funcname)) { //if it is a function defined by the user
-		Object* val=v->value(funcname);
+		Analitza::Object* val=v->value(funcname);
 		if(val->isContainer()) {
-			Container *c = (Container*) val;
+			Analitza::Container *c = (Analitza::Container*) val;
 			QStringList params = c->bvarStrings();
 			
 			QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
@@ -425,9 +425,9 @@ void ExpressionEdit::focusOutEvent ( QFocusEvent * )
 
 void ExpressionEdit::simplify()
 {
-	Expression e=expression();
+	Analitza::Expression e=expression();
 	if(e.isCorrect()) {
-		Analitza a;
+		Analitza::Analitza a;
 		a.setExpression(e);
 		a.simplify();
 		
@@ -451,7 +451,7 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	delete popup;
 }
 
-void ExpressionEdit::setAnalitza(Analitza * in)
+void ExpressionEdit::setAnalitza(Analitza::Analitza * in)
 {
 	m_highlight->setAnalitza(in);
 	a=in;

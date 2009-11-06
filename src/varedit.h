@@ -26,8 +26,11 @@
 
 #include "expression.h"
 
+namespace Analitza
+{
 class Analitza;
 class Variables;
+}
 class ExpressionEdit;
 
 /**
@@ -49,10 +52,10 @@ class VarEdit : public KDialog
 		void setName(const QString& newVar);	//This should edit the variable name
 		
 		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
-		void setAnalitza(Analitza *na);
+		void setAnalitza(Analitza::Analitza *na);
 		
 		/** Returns the resulting variable expression */
-		Expression val();
+		Analitza::Expression val();
 		
 	private:
 		ExpressionEdit *m_exp;
@@ -61,7 +64,7 @@ class VarEdit : public KDialog
 		QRadioButton *m_opt_exp;
 		
 		QLabel *m_valid;
-		Variables *vars;
+		Analitza::Variables *vars;
 		bool m_correct;
 		QString m_var;
 		

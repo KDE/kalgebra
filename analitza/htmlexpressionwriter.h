@@ -21,6 +21,9 @@
 
 #include "expressionwriter.h"
 
+namespace Analitza
+{
+
 /**
  *	This class represents the string expression writer.
  *
@@ -44,5 +47,7 @@ class HtmlExpressionWriter : public ExpressionWriter
 	private:
 		QString m_result;
 };
+
+}
 
 #endif

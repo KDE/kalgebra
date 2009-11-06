@@ -96,7 +96,7 @@ class FunctionsModel : public QAbstractTableModel
 		/** Emits a status message when something changes. */
 		void status(const QString &msg);
 		
-		void functionModified(const QString& name, const Expression& e);
+		void functionModified(const QString& name, const Analitza::Expression& e);
 		void functionRemoved(const QString& name);
 		
 	private:

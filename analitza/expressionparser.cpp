@@ -36,7 +36,7 @@ ExpressionParser::~ExpressionParser()
 
 QString funcToTag(const QString& name)
 {
-	if(Operator::toOperatorType(name)!=Operator::none)
+	if(Analitza::Operator::toOperatorType(name)!=Analitza::Operator::none)
 		return QString("<%1 />").arg(name);
 	else
 		return "<ci type='function'>"+name+"</ci>";

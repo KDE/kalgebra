@@ -20,6 +20,8 @@
 #include "expressionwriter.h"
 #include "analitzautils.h"
 
+using namespace Analitza;
+
 Ci::Ci(const QString& b)
 	: Object(variable), m_name(b), m_function(false), m_owner(false), m_value(0)
 {}

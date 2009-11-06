@@ -30,6 +30,7 @@
 #include "list.h"
 
 using namespace std;
+using namespace Analitza;
 
 Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
 {

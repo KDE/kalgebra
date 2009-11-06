@@ -23,6 +23,9 @@
 #include <QMap>
 #include "operator.h"
 
+namespace Analitza
+{
+
 /**
  *	This class represents the mathml expression writer.
  *
@@ -49,4 +52,5 @@ class MathMLPresentationExpressionWriter : public ExpressionWriter
 		static operatorToString m_operatorToPresentation[Operator::nOfOps];
 };
 
+}
 #endif

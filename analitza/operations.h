@@ -20,6 +20,10 @@
 #define OPERATIONS_H
 
 #include "operator.h"
+
+namespace Analitza
+{
+
 class List;
 class Cn;
 class Vector;
@@ -44,4 +48,5 @@ class Operations
 		static Object* reduceUnaryList(Operator::OperatorType op, List* l, QString &correct);
 };
 
+}
 #endif

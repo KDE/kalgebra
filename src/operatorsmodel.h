@@ -22,7 +22,10 @@
 #include <QAbstractTableModel>
 #include "operator.h"
 
+namespace Analitza
+{
 class Variables;
+}
 
 /** Operators model is a model class that has a relation of all operators string with their OperatorType. */
 class OperatorsModel : public QAbstractTableModel
@@ -35,12 +38,12 @@ class OperatorsModel : public QAbstractTableModel
 	// 	int count() const { return m_count; }
 		
 		/** Returns the description of the @p o operator. */
-		static QString description(Operator o);
+		static QString description(Analitza::Operator o);
 		
 		/** Returns the description of the @p o operator. */
-		static QString sample(Operator o);
+		static QString sample(Analitza::Operator o);
 		
-		static QString example(Operator o);
+		static QString example(Analitza::Operator o);
 		
 		/** Adds an entry to the model. */
 	// 	void addEntry(int i, const QString&, const QString&, const QString& ex=QString());
@@ -53,10 +56,10 @@ class OperatorsModel : public QAbstractTableModel
 		int rowCount(const QModelIndex &parent=QModelIndex()) const;
 		int columnCount(const QModelIndex &parent=QModelIndex()) const;
 		
-		void setVariables(const Variables* v) { m_vars=v; }
+		void setVariables(const Analitza::Variables* v) { m_vars=v; }
 	
 	private:
-		const Variables *m_vars;
+		const Analitza::Variables *m_vars;
 };
 
 #endif

@@ -23,6 +23,9 @@
 
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 class Cn;
 class Expression;
 class Object;
@@ -85,4 +88,5 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		bool destroy(const QString& name);
 };
 
+}
 #endif

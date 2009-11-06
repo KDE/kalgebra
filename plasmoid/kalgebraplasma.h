@@ -58,7 +58,7 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		QGraphicsLinearLayout* m_layout;
 		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;
-		Analitza a;
+		Analitza::Analitza a;
 };
 
 // This is the command that links your applet to the .desktop file

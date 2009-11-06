@@ -22,6 +22,9 @@
 #include "object.h"
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 class ANALITZA_EXPORT Vector : public Object
 {
 	public:
@@ -57,5 +60,7 @@ class ANALITZA_EXPORT Vector : public Object
 	private:
 		QVector<Object*> m_elements;
 };
+
+}
 
 #endif // VECTOR_H

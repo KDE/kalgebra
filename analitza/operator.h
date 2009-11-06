@@ -22,6 +22,9 @@
 #include "object.h"
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 /** The Operator class is the operator representation in the trees. */
 class ANALITZA_EXPORT Operator : public Object
 {
@@ -114,5 +117,7 @@ class ANALITZA_EXPORT Operator : public Object
 		
 		OperatorType m_optype;
 };
+
+}
 
 #endif

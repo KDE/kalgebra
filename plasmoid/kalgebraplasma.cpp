@@ -31,6 +31,7 @@
 #include "expression.h"
 
 using namespace Plasma;
+using Analitza::Expression;
 
 QColor KAlgebraPlasmoid::correctColor() { return Theme::defaultTheme()->color(Theme::TextColor);}
 QColor KAlgebraPlasmoid::errorColor() { return Qt::red; }

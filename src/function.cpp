@@ -33,7 +33,7 @@ function::function()
 
 // #include "container.h"
 
-function::function(const QString &name, const Expression& newFunc, Variables* v,
+function::function(const QString &name, const Analitza::Expression& newFunc, Analitza::Variables* v,
 				   const QColor& color, double uplimit, double downlimit)
 	: m_function(0), m_expression(newFunc), m_show(true), m_color(color), m_name(name)
 {
@@ -153,7 +153,7 @@ QStringList function::errors() const
 	return err;
 }
 
-const Expression& function::expression() const
+const Analitza::Expression& function::expression() const
 {
 	return m_expression;
 }

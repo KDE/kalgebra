@@ -25,6 +25,8 @@
 #include "list.h"
 #include "variable.h"
 
+using namespace Analitza;
+
 MathMLExpressionWriter::MathMLExpressionWriter(const Object* o)
 {
 	m_result=o->visit(this);

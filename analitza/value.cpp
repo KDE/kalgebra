@@ -24,6 +24,8 @@
 
 #include <KLocale>
 
+using namespace Analitza;
+
 Object* Cn::copy() const
 {
 	Cn *v = new Cn;

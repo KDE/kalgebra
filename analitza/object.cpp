@@ -19,7 +19,7 @@
 #include "object.h"
 #include "stringexpressionwriter.h"
 
-QString Object::toString() const
+QString Analitza::Object::toString() const
 {
 	StringExpressionWriter e(this);
 	return e.result();

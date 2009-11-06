@@ -31,8 +31,11 @@
 
 class function;
 class Graph2D;
-class Variables;
 class FunctionsModel;
+namespace Analitza
+{
+class Variables;
+}
 
 /**
  *	The FunctionEdit dialog provides a way to specify functions.
@@ -50,7 +53,7 @@ public:
 	~FunctionEdit();
 	
 	/** Retrieves the resulting expression text. */
-	Expression expression() const { return m_func->expression(); }
+	Analitza::Expression expression() const { return m_func->expression(); }
 	
 	function createFunction() const;
 	
@@ -79,9 +82,9 @@ public:
 	QString name() const { return m_name->text(); }
 	
 	/** Sets the variables class to be used with the graph functions*/
-	void setVariables(Variables* v) { m_vars=v; }
+	void setVariables(Analitza::Variables* v) { m_vars=v; }
 	
-	Variables* variables() const { return m_vars; }
+	Analitza::Variables* variables() const { return m_vars; }
 	
 public slots:
 	/** Clears the dialog. */
@@ -111,7 +114,7 @@ private:
 	Graph2D *m_graph;
 	KColorCombo *m_color;
 	FunctionsModel *m_funcsModel;
-	Variables* m_vars;
+	Analitza::Variables* m_vars;
 	
 	bool m_modmode;
 	

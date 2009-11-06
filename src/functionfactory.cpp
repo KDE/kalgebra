@@ -18,6 +18,9 @@
 
 #include "functionfactory.h"
 
+using Analitza::Expression;
+using Analitza::Variables;
+
 FunctionFactory* FunctionFactory::m_self=0;
 
 bool FunctionFactory::contains(const FunctionFactory::Id& bvars) const

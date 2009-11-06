@@ -24,6 +24,9 @@
 #include "analitzaexport.h"
 #include "object.h"
 
+namespace Analitza
+{
+
 class Ci;
 class Cn;
 class Container;
@@ -51,5 +54,7 @@ class ExpressionWriter
 		
 		virtual QString result() const=0;
 };
+
+}
 
 #endif

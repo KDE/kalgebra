@@ -26,9 +26,10 @@
 #include "container.h"
 #include "variables.h"
 
+using namespace Analitza;
 namespace AnalitzaUtils
 {
-
+	
 QStringList dependencies(const Object* o, const QStringList& scope)
 {
 	Q_ASSERT(o);
@@ -288,5 +289,4 @@ bool equalTree(const Object * o1, const Object * o2)
 	}
 	return eq;
 }
-
 }

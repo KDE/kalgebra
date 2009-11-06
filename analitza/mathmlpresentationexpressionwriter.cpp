@@ -25,6 +25,8 @@
 #include "list.h"
 #include "variable.h"
 
+using namespace Analitza;
+
 namespace
 {
 

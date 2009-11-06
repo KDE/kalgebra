@@ -36,6 +36,8 @@
 
 static void print_dom(const QDomNode& in, int ind);
 
+using namespace Analitza;
+
 class Expression::ExpressionPrivate : public QSharedData
 {
 public:

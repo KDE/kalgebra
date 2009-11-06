@@ -28,6 +28,10 @@ using std::cos;
 using std::atan;
 using std::fabs;
 
+using Analitza::Expression;
+using Analitza::Variables;
+using Analitza::Cn;
+
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
@@ -178,7 +182,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 
 QLineF FunctionY::derivative(const QPointF& p) const
 {
-	Analitza a(func.variables());
+	Analitza::Analitza a(func.variables());
 	double ret;
 	
 	if(m_deriv) {

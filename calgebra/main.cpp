@@ -27,7 +27,9 @@
 
 using namespace std;
 
-Analitza a;
+using Analitza::Expression;
+
+Analitza::Analitza a;
 
 enum CalcType { Evaluate, Calculate };
 

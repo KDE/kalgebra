@@ -27,6 +27,8 @@
 #include "variable.h"
 #include "stringexpressionwriter.h"
 
+using namespace Analitza;
+
 QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 

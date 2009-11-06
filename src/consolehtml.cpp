@@ -82,8 +82,8 @@ ConsoleHtml::~ConsoleHtml() {}
 bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 {
 	QString result, newEntry;
-	Expression res;
-	Expression e(op, mathml);
+	Analitza::Expression res;
+	Analitza::Expression e(op, mathml);
 	
 	a.setExpression(e);
 	if(a.isCorrect()) {
@@ -129,7 +129,7 @@ bool ConsoleHtml::loadScript(const QString& path)
 				parser.parse(&lex);
 				
 				if(!line.isEmpty() && lex.isCompletelyRead()) {
-					correct &= addOperation(line, Expression::isMathML(line));
+					correct &= addOperation(line, Analitza::Expression::isMathML(line));
 					line.clear();
 				}
 			}
@@ -234,7 +234,7 @@ void ConsoleHtml::clear()
 	updateView(QString());
 }
 
-void ConsoleHtml::modifyVariable(const QString& name, const Expression& exp)
+void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)
 {
 	a.variables()->modify(name, exp);
 }

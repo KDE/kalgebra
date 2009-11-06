@@ -20,6 +20,8 @@
 #define VARIABLE_H
 
 #include "object.h"
+namespace Analitza
+{
 
 /** A variable object, name refers to MathML standard. */
 class ANALITZA_EXPORT Ci : public Object
@@ -75,4 +77,5 @@ class ANALITZA_EXPORT Ci : public Object
 		Object** m_value;
 };
 
+}
 #endif

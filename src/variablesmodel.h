@@ -22,8 +22,11 @@
 #include <QAbstractTableModel>
 #include "operator.h"
 
+namespace Analitza
+{
 class Variables;
 class Expression;
+}
 
 /** Variables model is a model class that has a relation of all operators string with their VariableType. */
 class VariablesModel : public QAbstractTableModel
@@ -31,7 +34,7 @@ class VariablesModel : public QAbstractTableModel
 	Q_OBJECT
 	public:
 		/** Constructor. Creates a new Variable Model. */
-		explicit VariablesModel(Variables* v, QObject *parent=0);
+		explicit VariablesModel(Analitza::Variables* v, QObject *parent=0);
 		
 		virtual QFlags< Qt::ItemFlag > flags(const QModelIndex& index) const;
 		bool setData(const QModelIndex& index, const QVariant& value, int role=Qt::EditRole);
@@ -40,14 +43,14 @@ class VariablesModel : public QAbstractTableModel
 		int rowCount(const QModelIndex &parent=QModelIndex()) const;
 		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
 		
-		void insertVariable(const QString& name, const Expression& value);
+		void insertVariable(const QString& name, const Analitza::Expression& value);
 		void setEditable(bool ed) { m_editable=ed; }
 	public slots:
 		/** Updates the variables information */
 		void updateInformation();
 		
 	private:
-		Variables *m_vars;
+		Analitza::Variables *m_vars;
 		bool m_editable;
 };
 

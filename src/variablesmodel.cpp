@@ -24,6 +24,11 @@
 #include <KApplication>
 #include <KDebug>
 
+using Analitza::Variables;
+using Analitza::Expression;
+using Analitza::Object;
+using Analitza::Cn;
+
 VariablesModel::VariablesModel(Variables* v, QObject *parent)
 	: QAbstractTableModel(parent), m_vars(v), m_editable(true)
 {}

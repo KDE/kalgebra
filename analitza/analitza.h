@@ -25,6 +25,9 @@
 #include "expression.h"
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 class Object;
 class Variables;
 class Container;
@@ -140,4 +143,5 @@ class ANALITZA_EXPORT Analitza
 		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
 };
 
+}
 #endif

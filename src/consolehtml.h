@@ -49,7 +49,7 @@ class ConsoleHtml : public KHTMLPart
 		virtual ~ConsoleHtml();
 		
 		/** Retrieves a pointer to the Analitza calculator associated. */
-		Analitza* analitza() { return &a; }
+		Analitza::Analitza* analitza() { return &a; }
 		
 		/** Sets a @p newMode console mode. */
 		void setMode(ConsoleMode newMode) { m_mode = newMode; }
@@ -89,13 +89,13 @@ class ConsoleHtml : public KHTMLPart
 	private slots:
 		void context(const QString&, const QPoint& p);
 		
-		void modifyVariable(const QString& name, const Expression& exp);
+		void modifyVariable(const QString& name, const Analitza::Expression& exp);
 		void removeVariable(const QString& name);
 		void paste();
 		void scrollDown();
 		
 	private:
-		Analitza a;
+		Analitza::Analitza a;
 		void sendStatus(const QString& msg) { emit status(msg); }
 		ConsoleMode m_mode;
 		QStringList m_script;

@@ -26,8 +26,12 @@
 #include "algebrahighlighter.h"
 #include "expression.h"
 
+namespace Analitza
+{
 class Variables;
 class Analitza;
+}
+
 class OperatorsModel;
 class QKeyEvent;
 
@@ -66,7 +70,7 @@ class ExpressionEdit : public QPlainTextEdit
 		bool isMathML() const;
 		
 		/** Sets an Analitza @p in module associated to the ExpressionEdit. It is used to autocomplete variables. */
-		void setAnalitza(Analitza* in);
+		void setAnalitza(Analitza::Analitza* in);
 		
 		/** Returns the expression string that we have. */
 		QString text() const { return this->toPlainText();}
@@ -87,10 +91,10 @@ class ExpressionEdit : public QPlainTextEdit
 		QString ans() const { return m_ans; }
 		
 		/** Sets an expression to the input box. */
-		void setExpression(const Expression& e);
+		void setExpression(const Analitza::Expression& e);
 		
 		/** Returns the expression we have in the text. */
-		Expression expression() const { return Expression(text(), isMathML()); }
+		Analitza::Expression expression() const { return Analitza::Expression(text(), isMathML()); }
 	public slots:
 		
 		/** Inserts @p text text where the cursor is and selects it */
@@ -136,7 +140,7 @@ class ExpressionEdit : public QPlainTextEdit
 		AlgebraHighlighter *m_highlight;
 		
 		bool returnPress();
-		static QString helpShow(const QString& funcname, int param, bool bounds, const Variables* v);
+		static QString helpShow(const QString& funcname, int param, bool bounds, const Analitza::Variables* v);
 		void helper(const QString&, const QPoint& p);
 		QString lastWord(int);
 		void focusInEvent (QFocusEvent * event);
@@ -150,7 +154,7 @@ class ExpressionEdit : public QPlainTextEdit
 		bool help;
 		bool m_auto;
 		
-		Analitza *a;
+		Analitza::Analitza *a;
 		bool m_correct;
 		QString m_ans;
 		QCompleter *m_completer;

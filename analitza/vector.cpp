@@ -21,6 +21,8 @@
 #include "expressionwriter.h"
 #include "analitzautils.h"
 
+using namespace Analitza;
+
 Vector::Vector(const Vector& v)
 	: Object(Object::vector)//, m_elements(v.m_elements.size())
 {

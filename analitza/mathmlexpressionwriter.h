@@ -21,6 +21,9 @@
 
 #include "expressionwriter.h"
 
+namespace Analitza
+{
+
 /**
  *	This class represents the mathml expression writer.
  *
@@ -44,5 +47,7 @@ class MathMLExpressionWriter : public ExpressionWriter
 	private:
 		QString m_result;
 };
+
+}
 
 #endif

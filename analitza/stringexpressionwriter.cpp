@@ -25,6 +25,8 @@
 #include "list.h"
 #include "variable.h"
 
+using namespace Analitza;
+
 QMap<Operator::OperatorType, QString> initOperators()
 {
 	QMap<Operator::OperatorType, QString> ret;

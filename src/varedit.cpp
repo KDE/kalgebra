@@ -79,16 +79,16 @@ void VarEdit::setName(const QString& newVar)
 	if(!vars)
 		m_exp->setText(i18n("not available"));
 	else {
-		m_exp->setExpression(Expression(vars->value(newVar)->copy()));
+		m_exp->setExpression(Analitza::Expression(vars->value(newVar)->copy()));
 	}
 }
 
-Expression VarEdit::val()
+Analitza::Expression VarEdit::val()
 {
-	Expression e(m_exp->text(), m_exp->isMathML());
+	Analitza::Expression e(m_exp->text(), m_exp->isMathML());
 	
 	if(m_opt_calc->isChecked()) {
-		Analitza a;
+		Analitza::Analitza a;
 		a.setExpression(e);
 		return a.calculate();
 	} else
@@ -97,7 +97,7 @@ Expression VarEdit::val()
 
 void VarEdit::edit()
 {
-	Analitza a;
+	Analitza::Analitza a;
 	QString funct = m_exp->text();
 	
 	if(m_exp->text().isEmpty()) {
@@ -106,14 +106,14 @@ void VarEdit::edit()
 		return;
 	}
 	
-	Expression e(m_exp->text(), m_exp->isMathML());
+	Analitza::Expression e(m_exp->text(), m_exp->isMathML());
 	a.setExpression(e);
 	
 	if(a.isCorrect()) {
 		if(!e.bvarList().isEmpty())
 			m_valid->setText(i18n("%1:=%2", m_var, m_exp->text()));
 		else {
-			Expression val = a.calculate();
+			Analitza::Expression val = a.calculate();
 			
 			if(!a.isCorrect()) {
 				m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
@@ -142,7 +142,7 @@ QString VarEdit::text() const
 	return m_exp->text();
 }
 
-void VarEdit::setAnalitza(Analitza * na)
+void VarEdit::setAnalitza(Analitza::Analitza * na)
 {
 	vars= na->variables();
 	m_exp->setAnalitza(na);

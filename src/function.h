@@ -25,8 +25,11 @@
 #include <QPair>
 #include <expression.h>
 
+namespace Analitza
+{
 class Analitza;
 class Variables;
+}
 
 /**
  *	Calculates 2D functions.
@@ -52,7 +55,7 @@ class function
 			@param newExp the function expression tree.
 			@param color the function representation color.
 		*/
-		function(const QString& name, const Expression& newExp, Variables* v, const QColor& color,
+		function(const QString& name, const Analitza::Expression& newExp, Analitza::Variables* v, const QColor& color,
 				double uplimit, double downlimit);
 		
 		/** Destructor. */
@@ -108,18 +111,18 @@ class function
 		
 		QStringList errors() const;
 		
-		const Expression& expression() const;
+		const Analitza::Expression& expression() const;
 		
 		QList<int> jumps() const;
 		
-		void setUplimit(const Expression& e);
-		void setDownlimit(const Expression& e);
+		void setUplimit(const Analitza::Expression& e);
+		void setDownlimit(const Analitza::Expression& e);
 		
 	private:
 		void cleanupBoundings();
 		
 		FunctionImpl* m_function;
-		Expression m_expression;
+		Analitza::Expression m_expression;
 		bool m_show;
 		QColor m_color;
 		QString m_name;

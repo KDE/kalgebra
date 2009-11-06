@@ -26,6 +26,9 @@
 
 class QDomElement;
 
+namespace Analitza
+{
+
 /**
 *	The Cn class is the one that represents a value in the expression trees.
 *	@author Aleix Pol <aleixpol@kde.org>  
@@ -161,5 +164,7 @@ class ANALITZA_EXPORT Cn : public Object
 		double m_value;
 		enum ValueFormat m_format;
 };
+
+}
 
 #endif

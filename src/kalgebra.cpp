@@ -134,7 +134,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_tools->addTab(b_funcs, i18n("List"));
 	
 	b_funced = new FunctionEdit(b_tools);
-	b_funced->setVariables(new Variables);
+	b_funced->setVariables(new Analitza::Variables);
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
@@ -372,7 +372,7 @@ void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
 void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setFunc(Expression(t_exp->text(), t_exp->isMathML()));
+	m_graph3d->setFunc(Analitza::Expression(t_exp->text(), t_exp->isMathML()));
 	m_graph3d->setFocus();
 #endif
 }
@@ -493,7 +493,7 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 		AskName a(i18n("Enter a name for the new variable"), 0);
 		
 		if(a.exec()==QDialog::Accepted)
-			b_varsModel->insertVariable(a.name(), Expression(Cn(0)));
+			b_varsModel->insertVariable(a.name(), Analitza::Expression(Analitza::Cn(0)));
 	}
 }
 

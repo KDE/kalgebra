@@ -25,6 +25,12 @@
 #include <KLocale>
 #include <container.h>
 
+using Analitza::Expression;
+using Analitza::Variables;
+using Analitza::Vector;
+using Analitza::Object;
+using Analitza::Cn;
+
 struct FunctionParametric : public FunctionImpl
 {
 	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI) {}

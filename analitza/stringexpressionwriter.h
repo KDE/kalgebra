@@ -22,6 +22,9 @@
 #include "expressionwriter.h"
 #include "operator.h"
 
+namespace Analitza
+{
+
 /**
  *	This class represents the string expression writer.
  *
@@ -48,4 +51,5 @@ class StringExpressionWriter : public ExpressionWriter
 		QString m_result;
 };
 
+}
 #endif

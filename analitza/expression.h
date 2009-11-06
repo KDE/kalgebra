@@ -25,9 +25,12 @@
 #include "analitzaexport.h"
 #include "object.h"
 
+class QDomElement;
+
+namespace Analitza
+{
 class Container;
 class Cn;
-class QDomElement;
 
 /**
  *	This class represents an expression.
@@ -164,5 +167,7 @@ class ANALITZA_EXPORT Expression
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;
 };
+
+}
 
 #endif

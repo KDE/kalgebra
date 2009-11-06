@@ -20,6 +20,8 @@
 #include "expression.h"
 #include "value.h"
 
+using namespace Analitza;
+
 Variables::Variables() : QHash<QString, Object*>()
 {
 	insert("true", new Cn(true));

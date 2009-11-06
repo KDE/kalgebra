@@ -42,7 +42,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_sortProxy->sort(2, Qt::AscendingOrder);
 	m_sortProxy->setFilterKeyColumn(2);
 	
-	m_vars = new Variables;
+	m_vars = new Analitza::Variables;
 	
 	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
 	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -108,7 +108,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		QString sample=m_sortProxy->data(sampleIdx).toString();
 		QString example=m_sortProxy->data(exampleIdx).toString();
 		
-		Expression e(example, false);
+		Analitza::Expression e(example, false);
 		
 		m_name->setText(name);
 		m_descr->setText(description);

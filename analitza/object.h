@@ -23,6 +23,9 @@
 
 #include "analitzaexport.h"
 
+namespace Analitza
+{
+
 class ExpressionWriter;
 
 /**
@@ -97,4 +100,5 @@ protected:
 	const ObjectType m_type;
 };
 
+}
 #endif

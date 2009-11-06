@@ -41,7 +41,7 @@ public:
 		@param m	Distance of each dimension from the (0, 0) to be calculated.
 		@param s	Step between each 2 values.
 	*/
-	Calculate3D(QObject *p, const Analitza &na, double** poi, int fr, int to, double m, double s) : 
+	Calculate3D(QObject *p, const Analitza::Analitza &na, double** poi, int fr, int to, double m, double s) : 
 		QThread(p), a(na), points(poi), from(fr), to(to), size(m), step(s) {}
 	
 	/** Runs the thread. */
@@ -50,7 +50,7 @@ public:
 	/** Sets the end of the segment to calculate. */
 	void setTo(int nto) { to = nto; }
 private:
-	Analitza a;
+	Analitza::Analitza a;
 	double **points;
 	int from;
 	int to;
@@ -82,7 +82,7 @@ class Graph3D : public QGLWidget
 		~Graph3D();
 		
 		/** Sets @p exp as the function's expression. */
-		void setFunc(const Expression& exp);
+		void setFunc(const Analitza::Expression& exp);
 		
 		/** Toggles the transparency for Solid graphs. */
 		void setTransparency(bool tr) { trans = tr; glDraw(); }
@@ -133,7 +133,7 @@ class Graph3D : public QGLWidget
 		bool create();
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
-		Expression func3d;
+		Analitza::Expression func3d;
 		double default_step;
 		double default_size;
 		double zoom;

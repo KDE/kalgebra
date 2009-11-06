@@ -158,12 +158,12 @@ void FunctionEdit::colorChange(int)
 	setColor(m_color->color());
 }
 
-static double calcExp(const Expression& exp, Variables* v, bool* corr)
+static double calcExp(const Analitza::Expression& exp, Analitza::Variables* v, bool* corr)
 {
 	Q_ASSERT(exp.isCorrect());
-	Analitza d(v);
+	Analitza::Analitza d(v);
 	d.setExpression(exp);
-	Expression r=d.calculate();
+	Analitza::Expression r=d.calculate();
 	
 	*corr=r.isCorrect() && r.isReal();
 	
@@ -176,7 +176,7 @@ static double calcExp(const Expression& exp, Variables* v, bool* corr)
 void FunctionEdit::updateUplimit()
 {
 	bool corr;
-	Expression e=m_uplimit->expression();
+	Analitza::Expression e=m_uplimit->expression();
 	if(e.isCorrect()) {
 		m_calcUplimit=calcExp(e, m_vars, &corr);
 		m_uplimit->setCorrect(corr);
@@ -188,7 +188,7 @@ void FunctionEdit::updateUplimit()
 void FunctionEdit::updateDownlimit()
 {
 	bool corr;
-	Expression e=m_downlimit->expression();
+	Analitza::Expression e=m_downlimit->expression();
 	if(e.isCorrect()) {
 		m_calcDownlimit=calcExp(e, m_vars, &corr);
 		m_downlimit->setCorrect(corr);

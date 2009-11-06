@@ -28,15 +28,19 @@
 
 struct FunctionImpl;
 class QStringList;
+
+namespace Analitza
+{
 class Expression;
 class Variables;
+}
 
 class FunctionFactory
 {
 	public:
-		typedef FunctionImpl* (*registerFunc_fn)(const Expression&, Variables* );
+		typedef FunctionImpl* (*registerFunc_fn)(const Analitza::Expression&, Analitza::Variables* );
 		typedef QStringList Id;
-		FunctionImpl* item(const Id& bvars, const Expression& exp, Variables* v) const;
+		FunctionImpl* item(const Id& bvars, const Analitza::Expression& exp, Analitza::Variables* v) const;
 		static FunctionFactory* self();
 		bool registerFunction(const Id& bvars, registerFunc_fn);
 		bool contains(const Id& bvars) const;

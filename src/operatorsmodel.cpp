@@ -23,6 +23,8 @@
 #include <KApplication>
 #include <QFont>
 
+using Analitza::Operator;
+
 OperatorsModel::OperatorsModel(QObject *parent) : QAbstractTableModel(parent), m_vars(0)
 {
 }
@@ -31,8 +33,8 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 {
 	QVariant ret;
 	if(role==Qt::DisplayRole) {
-		if(index.row()<Operator::nOfOps-2) {
-			Operator oper((Operator::OperatorType) (index.row()+1));
+		if(index.row()<Analitza::Operator::nOfOps-2) {
+			Analitza::Operator oper((Analitza::Operator::OperatorType) (index.row()+1));
 			
 			switch(index.column()) {
 				case 0:
@@ -49,7 +51,7 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 					break;
 			}
 		} else if(m_vars) {
-			int var=index.row()-Operator::nOfOps+2;
+			int var=index.row()-Analitza::Operator::nOfOps+2;
 			QString key=m_vars->keys()[var];
 			switch(index.column()) {
 				case 0:
@@ -92,7 +94,7 @@ QVariant OperatorsModel::headerData(int section, Qt::Orientation orientation, in
 
 int OperatorsModel::rowCount(const QModelIndex &) const
 {
-	int count=Operator::nOfOps;
+	int count=Analitza::Operator::nOfOps;
 	if(m_vars)
 		count+=m_vars->count();
 	return count-2;

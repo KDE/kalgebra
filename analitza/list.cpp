@@ -21,6 +21,8 @@
 #include "expressionwriter.h"
 #include "analitzautils.h"
 
+using namespace Analitza;
+
 List::List(const List& v)
 	: Object(Object::list)
 {

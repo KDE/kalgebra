@@ -23,11 +23,11 @@
 #include "analitza.h"
 #include <cmath>
 
-class Expression;
+namespace Analitza { class Expression; }
 
 struct FunctionImpl
 {
-	explicit FunctionImpl(const Expression& e, Variables* v, double defDl, double defUl);
+	explicit FunctionImpl(const Analitza::Expression& e, Analitza::Variables* v, double defDl, double defUl);
 	FunctionImpl(const FunctionImpl& fi);
 	virtual ~FunctionImpl();
 	bool isCorrect() const { return m_err.isEmpty() && func.isCorrect(); }
@@ -54,8 +54,8 @@ struct FunctionImpl
 	
 	QVector<QPointF> points;
 	QList<int> m_jumps;
-	Analitza func;
-	Expression *m_deriv;
+	Analitza::Analitza func;
+	Analitza::Expression *m_deriv;
 	QStringList m_err;
 	uint m_res;
 	double mUplimit, mDownlimit;
