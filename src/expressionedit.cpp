@@ -25,12 +25,12 @@
 #include <QHeaderView>
 #include <QApplication>
 #include <QTimer>
+#include <analitzagui/operatorsmodel.h>
 
 #include <KLocale>
 
 #include "explexer.h"
 #include "expressionparser.h"
-#include "operatorsmodel.h"
 #include "operator.h"
 #include "analitza.h"
 #include "variables.h"

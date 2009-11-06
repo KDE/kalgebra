@@ -15,6 +15,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRE
 
 #adding subdirs
 add_subdirectory(analitza)
+add_subdirectory(analitzagui)
 add_subdirectory(src)
 add_subdirectory(icons)
 add_subdirectory(plasmoid)

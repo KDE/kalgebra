@@ -20,8 +20,8 @@
 #include "functionsmodel.h"
 #include "expression.h"
 #include "graph2d.h"
-#include "operatorsmodel.h"
 #include "variables.h"
+#include <analitzagui/operatorsmodel.h>
 
 #include <QLabel>
 #include <QListView>

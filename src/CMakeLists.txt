@@ -1,4 +1,4 @@
-include_directories(../analitza ${OPENGL_INCLUDE_DIR})
+include_directories(../analitza .. ${OPENGL_INCLUDE_DIR})
 
 add_subdirectory(tests)
 
@@ -14,7 +14,6 @@ set(kalgebra_SRCS
 	main.cpp
 	expressionedit.cpp
 	graph2d.cpp
-	operatorsmodel.cpp
 	variablesmodel.cpp
 	variablesdelegate.cpp
 	functionsview.cpp
@@ -41,7 +40,7 @@ endif(OPENGL_FOUND)
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza)
+target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza analitzagui)
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})

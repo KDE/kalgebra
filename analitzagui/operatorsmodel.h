@@ -20,7 +20,8 @@
 #define OPERATORSMODEL_H
 
 #include <QAbstractTableModel>
-#include "operator.h"
+#include <analitza/operator.h>
+#include "analitzaguiexport.h"
 
 namespace Analitza
 {
@@ -28,7 +29,7 @@ class Variables;
 }
 
 /** Operators model is a model class that has a relation of all operators string with their OperatorType. */
-class OperatorsModel : public QAbstractTableModel
+class ANALITZAGUI_EXPORT OperatorsModel : public QAbstractTableModel
 {
 	public:
 		/** Constructor. Creates a new Operator Model. */

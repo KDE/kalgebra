@@ -17,8 +17,8 @@
  *************************************************************************************/
 
 #include "operatorsmodel.h"
-#include "operator.h"
-#include "variables.h"
+#include <analitza/operator.h>
+#include <analitza/variables.h>
 #include <KLocale>
 #include <KApplication>
 #include <QFont>
