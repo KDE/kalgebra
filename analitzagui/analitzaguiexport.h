@@ -22,7 +22,7 @@
 /* needed for KDE_EXPORT macros */
 #include <kdemacros.h>
 #ifndef ANALITZAGUI_EXPORT
-# ifdef MAKE_ANALITZA_LIB
+# ifdef MAKE_ANALITZAGUI_LIB
 #  define ANALITZAGUI_EXPORT KDE_EXPORT
 # else
 #  define ANALITZAGUI_EXPORT KDE_IMPORT
