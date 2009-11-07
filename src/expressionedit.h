@@ -23,7 +23,7 @@
 #include <QCompleter>
 #include <QLabel>
 #include <QTreeView>
-#include "algebrahighlighter.h"
+#include <analitzagui/algebrahighlighter.h>
 #include "expression.h"
 
 namespace Analitza

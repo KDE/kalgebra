@@ -30,11 +30,11 @@
 #include "analitza.h"
 #include "expression.h"
 #include "graph2d.h"
-#include "algebrahighlighter.h"
 #include "variables.h"
 #include "functionsmodel.h"
 #include "functionfactory.h"
 #include "value.h"
+#include <analitzagui/algebrahighlighter.h>
 
 namespace {
 	static const int resolution = 200;
