@@ -18,15 +18,16 @@
  *************************************************************************************/
 
 #include "algebrahighlighter.h"
-#include "expressionparser.h"
+#include <analitza/expressionparser.h>
 #include <QApplication>
-
-#include "expression.h"
-#include "expressionedit.h"
-#include "analitza.h"
-#include "variables.h"
-#include "container.h"
 #include <QStack>
+#include <QPalette>
+
+#include <analitza/expression.h>
+#include <analitza/analitza.h>
+#include <analitza/variables.h>
+#include <analitza/container.h>
+#include <analitza/explexer.h>
 
 AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza::Analitza *na)
 	: QSyntaxHighlighter(doc), m_correct(true), m_mode(Autodetect), m_pos(0), a(na)

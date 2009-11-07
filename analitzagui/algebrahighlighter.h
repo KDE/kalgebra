@@ -20,7 +20,7 @@
 #define ALGEBRAHIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
-#include "explexer.h"
+#include "analitzaguiexport.h"
 
 /**
  *	The AlgebraHighlighter class is used to highlight the ExpressionEdit text.
@@ -29,7 +29,7 @@
 
 namespace Analitza { class Analitza; }
 
-class AlgebraHighlighter : public QSyntaxHighlighter
+class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 {
 	public:
 		/** Defines the format status that could be used. */
