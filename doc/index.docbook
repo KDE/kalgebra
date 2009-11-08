@@ -30,8 +30,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2009-01-28</date>
-<releaseinfo>0.8 (&kde; 4.2.0</releaseinfo>
+<date>2009-11-8</date>
+<releaseinfo>0.9 (&kde; 4.4.0)</releaseinfo>
 
 <abstract>
 <para>
@@ -111,11 +111,12 @@ do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
 conditional operations in &kalgebra;. If we introduce the condition before the '?' it will
 use this condition only if it is true, if it finds a '?' without any condition, it will
 enter in the last instance.
-Example: piecewise { eq(x,0) ? 0, eq(x,1) ? x+1, ? x**2 }
+Example: piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }
 </para></listitem>
 <listitem><para>{ } : MathML container. It can be used to define a container. Mainly
 useful for working with piecewise.
 </para></listitem>
+<listitem><para>= &gt; &gt;= &lt; &lt;= : Value comparators for equal, greater, greater or equal, less and less or equal respectively</para></listitem>
 </itemizedlist>
 <para>Now you could ask me, why should the user mind about MathML? That’s easy.
 With this, we can operate with functions like cos(), sin(), any other
@@ -162,7 +163,7 @@ Every time you enter an expression, the "ans" variable value will be changed to 
 <guimenuitem>Load Script</guimenuitem>
 </menuchoice></term>
 <listitem><para>Executes the instructions in a file sequentially.
-Nice if you want to define some libraries or something like this.</para></listitem>
+Nice if you want to define some libraries or resume some previous work.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -171,7 +172,8 @@ Nice if you want to define some libraries or something like this.</para></listit
 <keycap>G</keycap></keycombo></shortcut>
 <guimenuitem>Save Script</guimenuitem>
 </menuchoice></term>
-<listitem><para>Saves the instructions you have typed since the session began.</para></listitem>
+<listitem><para>Saves the instructions you have typed since the session began to be able to reuse. Generates text files so it should be easy to fix 
+using any text editor, like Kate.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -180,7 +182,7 @@ Nice if you want to define some libraries or something like this.</para></listit
 <keycap>S</keycap></keycombo></shortcut>
 <guimenuitem>Save Log</guimenuitem>
 </menuchoice></term>
-<listitem><para>Saves the log with all results into a file.</para></listitem>
+<listitem><para>Saves the log with all results into an HTML file to be able to print or publish.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -214,7 +216,7 @@ as the bounded variables.</para>
 <listitem><para>x²</para></listitem>
 <listitem><para>y->sin(y)</para></listitem>
 <listitem><para>q->3*sin(7*q)</para></listitem>
-<listitem><para>q=0..100->q</para></listitem>
+<listitem><para>t->vector{sin t, t**2}</para></listitem>
 </itemizedlist>
 <para>If you have entered the function click on the <guibutton>OK</guibutton> button to display the graph in the main window.</para>
 
@@ -291,7 +293,7 @@ a function stand for.</para>
 <title>Credits and License</title>
 
 <itemizedlist>
-<listitem><para>Program copyright 2005-2007 &Aleix.Pol;</para>
+<listitem><para>Program copyright 2005-2009 &Aleix.Pol;</para>
 </listitem>
 </itemizedlist>
 
