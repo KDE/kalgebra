@@ -162,9 +162,9 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			}
 		}	break;
 		case Object::container: {
-			Container *c = (Container*) o;
+			const Container *c = (const Container*) o;
 			
-			QStringList scope=bvars+c->bvarStrings();
+			const QStringList scope=bvars+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();
 			
 			//uplimit and downlimit are in the parent scope
