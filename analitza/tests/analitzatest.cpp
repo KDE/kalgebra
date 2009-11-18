@@ -673,7 +673,9 @@ void AnalitzaTest::testOperators()
 	else
 		params << o.nparams();
 	
+#ifdef Q_CC_GNU
 	#warning improve the test for bounded operations
+#endif    
 	if(o.operatorType()==Operator::sum || o.operatorType()==Operator::product) 
 		return;
 	
