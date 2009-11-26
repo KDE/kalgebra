@@ -27,12 +27,19 @@
 
 namespace Analitza
 {
-
+class BoundingIterator;
 class Object;
 class Variables;
 class Container;
 class Operator;
 class Ci;
+
+class BoundingIterator
+{
+	public:
+		virtual ~BoundingIterator() {}
+		virtual bool hasNext()=0;
+};
 
 //FIXME: Explain that better and with examples.
 /**
@@ -141,6 +148,8 @@ class ANALITZA_EXPORT Analitza
 		Object* derivative(const QString &var, const Container*);
 		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
+		
+		BoundingIterator* initializeBVars(const Container* n);
 };
 
 }

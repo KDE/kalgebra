@@ -87,6 +87,7 @@ void ExpressionTest::testConversion_data()
 	QTest::newRow("eq") << "2=2";
 	QTest::newRow("vector") << "vector { 1, 2, 3 }";
 	QTest::newRow("list") << "list {  }";
+	QTest::newRow("listbvar") << "sum(p:x@mylist)";
 }
 
 void ExpressionTest::testConversion()
@@ -101,6 +102,7 @@ void ExpressionTest::testConversion()
 		qDebug() << ">>> " << parser.mathML() << "errors:" << parser.error();
 	QVERIFY(corr);
 	QVERIFY(parser.error().isEmpty());
+	qDebug() << "result:" << parser.mathML();
 	
 	e->setMathML(parser.mathML());
 	if(!e->isCorrect())

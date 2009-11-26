@@ -79,6 +79,10 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("boolean or") << "or(0,1)" << 1.;
 	QTest::newRow("boolean not") << "not(0)" << 1.;
 	QTest::newRow("lambda") << "(x->x+2)(2)" << 4.;
+	
+	//comprehension
+	QTest::newRow("sum.2bvars") << "sum(x*y : (x, y)=1..3)" << 36.;
+	QTest::newRow("sum.list") << "sum(x : x@list{1,5,44})" << 50.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
@@ -162,6 +166,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("in lists") << "list{w+w}" << "list { 2*w }";
 	QTest::newRow("lists") << "union(list{w}, list{x}, list{y,z})" << "list { w, x, y, z }";
 	QTest::newRow("lists2") << "union(list{w}, x, list{y}, list{z})" << "union(list { w }, x, list { y, z })";
+	
+	QTest::newRow("sum.2bvars") << "sum(x*w : (x, y)=1..3)" << "18*w";
+// 	QTest::newRow("sum.list") << "sum(x+y : x@list{x,y,z})" << "x+4*y+z";
 }
 
 void AnalitzaTest::testTrivialEvaluate()

@@ -28,6 +28,7 @@
 %token tGeq		"<="
 %token tNeq		"!="
 %token tColon	":"
+%token tAt		"@"
 
 
 %left tComa
@@ -247,6 +248,13 @@ FBody ::= Parameters tColon BVars tEq Limits;
 /.
 case $rule_number:
 	sym(1)=sym(3)+sym(5)+sym(1);
+	break;
+./
+
+FBody ::= Parameters tColon BVars tAt Expression;
+/.
+case $rule_number:
+	sym(1)=sym(3)+"<domainofapplication>"+sym(5)+"</domainofapplication>"+sym(1);
 	break;
 ./
 

@@ -30,7 +30,7 @@
 
 using namespace Analitza;
 
-char Container::m_typeStr[][10] = {
+char Container::m_typeStr[][20] = {
 		"none",
 		"math",
 		"apply",
@@ -41,7 +41,9 @@ char Container::m_typeStr[][10] = {
 		"downlimit",
 		"piece",
 		"piecewise",
-		"otherwise" };
+		"otherwise",
+		"domainofapplication"
+};
 
 QMap<QString, Container::ContainerType> createNameToType()
 {
@@ -56,6 +58,7 @@ QMap<QString, Container::ContainerType> createNameToType()
 	ret["piecewise"]=Container::piecewise;
 	ret["piece"]=Container::piece;
 	ret["otherwise"]=Container::otherwise;
+	ret["domainofapplication"]=Container::domainofapplication;
 	
 	return ret;
 }
@@ -152,6 +155,15 @@ Object* Container::ulimit() const
 Object* Container::dlimit() const
 {
 	Container* c=extractType(downlimit);
+	if(c)
+		return c->m_params.first();
+	else
+		return 0;
+}
+
+Object* Container::domain() const
+{
+	Container* c=extractType(domainofapplication);
 	if(c)
 		return c->m_params.first();
 	else

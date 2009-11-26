@@ -321,6 +321,7 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 		case Container::uplimit:
 		case Container::downlimit:
 		case Container::declare:
+		case Container::domainofapplication:
 		case Container::none:
 			qDebug() << "error" << c->tagName();
 			Q_ASSERT(false);

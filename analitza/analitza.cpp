@@ -711,6 +711,7 @@ Analitza::Object* Analitza::Analitza::operate(const Container* c)
 		case Container::bvar:
 		case Container::uplimit:
 		case Container::downlimit:
+		case Container::domainofapplication:
 		case Container::none:
 			Q_ASSERT(false && "tried to calculate a wrong item");
 			break;
@@ -719,53 +720,152 @@ Analitza::Object* Analitza::Analitza::operate(const Container* c)
 	return ret;
 }
 
+namespace Analitza
+{
+	template <typename T, typename Iterator>
+	class TypeBoundingIterator : public BoundingIterator
+	{
+		public:
+			TypeBoundingIterator(const QVector<Ci*>& vars, T* l)
+				: m_vars(vars), iterators(vars.size()), list(l)
+				, itBegin(l->constBegin()), itEnd(l->constEnd())
+			{
+				int i=0;
+				foreach(Ci* v, vars) {
+					v->value()=*itBegin;
+					iterators[i++]=itBegin;
+				}
+			}
+			
+			~TypeBoundingIterator() { delete list; }
+			
+			virtual bool hasNext()
+			{
+				bool cont=true;
+				for(int i=iterators.size()-1; cont && i>=0; i--) {
+					++iterators[i];
+					cont=(iterators[i]==itEnd);
+					
+					if(cont)
+						iterators[i]=itBegin;
+					m_vars[i]->value()=*iterators[i];
+				}
+				
+				return !cont;
+			}
+		private:
+			QVector<Ci*> m_vars;
+			QVector<Iterator> iterators;
+			T* list;
+			const Iterator itBegin, itEnd;
+	};
+	
+	class RangeBoundingIterator : public BoundingIterator
+	{
+		public:
+			RangeBoundingIterator(const QVector<Cn*>& values, double dl, double ul, double step)
+				: values(values), dl(dl), ul(ul), step(step)
+			{}
+			
+			~RangeBoundingIterator()
+			{
+				qDeleteAll(values);
+			}
+			
+			bool hasNext()
+			{
+				bool cont=true;
+				for(int i=values.size()-1; cont && i>=0; i--) {
+					Cn* v=values[i];
+					double curr=v->value()+step;
+					cont=curr>ul;
+					
+					v->setValue(cont ? dl : curr);
+				}
+				
+				return !cont;
+			}
+			
+		private:
+			const QVector<Cn*> values;
+			const double dl, ul, step;
+	};
+}
+
+Analitza::BoundingIterator* Analitza::Analitza::initializeBVars(const Container* n)
+{
+	BoundingIterator* ret=0;
+	QList<Ci*> bvars=n->bvarCi();
+	
+	Object* domain=n->domain();
+	
+	if(domain)
+	{
+		domain=calc(domain);
+		
+		if(isCorrect()) {
+			switch(domain->type()) {
+				case Object::list:
+					ret=new TypeBoundingIterator<List, List::const_iterator>(bvars.toVector(), static_cast<const List*>(domain));
+					break;
+				default:
+					m_err.append(i18n("Type not supported for bounding."));
+			}
+		} else
+			m_err.append(i18n("Incorrect domain."));
+	}
+	else
+	{
+		Object *objul=calc(n->ulimit());
+		Object *objdl=calc(n->dlimit());
+		
+		if(isCorrect() && objul->type()==Object::value && objdl->type()==Object::value) {
+			Cn *u=static_cast<Cn*>(objul);
+			Cn *d=static_cast<Cn*>(objdl);
+			double ul=u->value();
+			double dl=d->value();
+			
+			if(dl<ul) {
+				QVector<Cn*> rr(bvars.size());
+				int i=0;
+				
+				foreach(Ci* bvar, bvars) {
+					rr[i]=new Cn(dl);
+					bvar->value()=rr[i];
+					i++;
+				}
+				
+				ret=new RangeBoundingIterator(rr, dl, ul, 1);
+			} else
+				m_err.append(i18n("The downlimit is greater than the uplimit"));
+		} else
+			m_err.append(i18n("Incorrect uplimit or downlimit."));
+		
+		delete objul;
+		delete objdl;
+		
+	}
+	return ret;
+}
+
 Analitza::Object* Analitza::Analitza::boundedOperation(const Container& n, const Operator& t, Object* initial)
 {
-	Object *objul=calc(n.ulimit());
-	Object *objdl=calc(n.dlimit());
-	double ul, dl;
-	
-	bool corr=isCorrect();
-	if(corr && objul->type()==Object::value && objdl->type()==Object::value) {
-		Cn *u=static_cast<Cn*>(objul);
-		Cn *d=static_cast<Cn*>(objdl);
-		ul=u->value();
-		dl=d->value();
-		
-		if(dl>ul) {
-			corr=false;
-			m_err.append(i18n("The downlimit is greater than the uplimit"));
-		}
-	} else {
-		m_err.append(i18n("Incorrect uplimit or downlimit."));
-		
-		corr=false;
-	}
-	
 	Object* ret=initial;
-	if(corr)
+	BoundingIterator* it=initializeBVars(&n);
+	if(it)
 	{
-		QList<Ci*> bvars=n.bvarCi();
-		Q_ASSERT(bvars.size()==1);
-		Ci* var= bvars.first();
-		
-		Cn* c = new Cn(0.);
-		var->value()=c;
-		
 		QString correct;
 		Operator::OperatorType type=t.operatorType();
-		for(double a = dl; a<=ul; a++) {
-	// 		Q_ASSERT(isCorrect());
-	// 		qDebug() << "<>" << dl << ul << m_err;
-			c->setValue(a);
+		do {
 			Object *val=calc(n.m_params.last());
+			
 			ret=Operations::reduce(type, ret, val, correct);
-		}
-		var->value()=0;
-		delete c;
+		} while(it->hasNext());
+		
+		foreach(Ci* var, n.bvarCi())
+			var->value()=0;
 	}
-	delete objul;
-	delete objdl;
+	delete it;
 	return ret;
 }
 
@@ -1094,16 +1194,27 @@ Analitza::Object* Analitza::Analitza::simp(Object* root)
 						*it = simp(*it);
 					}
 					break;
+				//TODO: extend to ::product
 				case Operator::sum: {
 					
 					QStringList bvars=c->bvarStrings();
 					const int offset=1+bvars.size(); //op+bvars
+					Object *uplimit=0, *downlimit=0, *domain=0;
+					
+					//TODO: simplify this code
 					for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
 						if((*it)->isContainer()) {
 							Container *limit=static_cast<Container*>(*it);
-							if(limit->containerType()==Container::uplimit || limit->containerType()==Container::downlimit)
+							if(limit->containerType()==Container::uplimit
+								|| limit->containerType()==Container::downlimit
+								|| limit->containerType()==Container::domainofapplication)
+							{
+								if(limit->containerType()==Container::uplimit) uplimit=limit->m_params.first();
+								if(limit->containerType()==Container::downlimit) downlimit=limit->m_params.first();
+								if(limit->containerType()==Container::domainofapplication) domain=limit->m_params.first();
+								
 								limit->m_params.first()=simp(limit->m_params.first());
-							else
+							} else
 								*it = simp(*it);
 							
 						}else
@@ -1111,8 +1222,8 @@ Analitza::Object* Analitza::Analitza::simp(Object* root)
 					}
 					
 					//if bvars is empty, we are dealing with an invalid sum()
-					it = c->firstValue();
-					if(!bvars.isEmpty() && !hasTheVar(bvars.toSet(), *it)) {
+					Object* function = *c->firstValue();
+					if(!bvars.isEmpty() && !domain && !hasTheVar(bvars.toSet(), function)) {
 						Container *cDiff=new Container(Container::apply);
 						cDiff->appendBranch(new Operator(Operator::minus));
 						cDiff->appendBranch(c->ulimit()->copy());
@@ -1121,12 +1232,12 @@ Analitza::Object* Analitza::Analitza::simp(Object* root)
 						Container *nc=new Container(Container::apply);
 						nc->appendBranch(new Operator(Operator::times));
 						nc->appendBranch(cDiff);
-						nc->appendBranch(*it);
+						nc->appendBranch(function);
 						
 						c->m_params.last()=0;
 						delete c;
 						root=simp(nc);
-					} else if((*it)->isContainer())
+					} else if(function->isContainer())
 					   root=simpSum(c);
 					
 				}	break;

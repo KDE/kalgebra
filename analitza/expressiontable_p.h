@@ -7,9 +7,10 @@ class ExpressionTable
 public:
   enum {
     EOF_SYMBOL = 0,
-    otherwise_prec = 24,
+    otherwise_prec = 25,
     tAdd = 1,
     tAssig = 4,
+    tAt = 24,
     tColon = 23,
     tComa = 11,
     tDiv = 6,
@@ -31,17 +32,17 @@ public:
     tRpr = 13,
     tSub = 2,
     tVal = 16,
-    uminus_prec = 25,
+    uminus_prec = 26,
 
-    ACCEPT_STATE = 79,
-    RULE_COUNT = 45,
-    STATE_COUNT = 86,
-    TERMINAL_COUNT = 26,
+    ACCEPT_STATE = 81,
+    RULE_COUNT = 46,
+    STATE_COUNT = 88,
+    TERMINAL_COUNT = 27,
     NON_TERMINAL_COUNT = 15,
 
-    GOTO_INDEX_OFFSET = 86,
-    GOTO_INFO_OFFSET = 297,
-    GOTO_CHECK_OFFSET = 297
+    GOTO_INDEX_OFFSET = 88,
+    GOTO_INFO_OFFSET = 271,
+    GOTO_CHECK_OFFSET = 271
   };
 
   static const char  *const spell [];

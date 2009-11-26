@@ -164,7 +164,7 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 			}
 			
 			if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
-				if(!c->ulimit() || !c->dlimit()) {
+				if(!(c->ulimit() && c->dlimit()) && !c->domain()) {
 					m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarStrings().join(" "), op.toString());
 				}
 			}
@@ -178,8 +178,8 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 					const Container* lambda=static_cast<const Container*>(o);
 					QStringList bvars=lambda->bvarStrings();
 					if(bvars.count()!=cnt-1) {
-						m_err << i18np("Wrong parameter count, had 1 parameter for '%2'",
-                                                               "Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
+						m_err << i18np( "Wrong parameter count, had 1 parameter for '%2'",
+										"Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
 						ret=false;
 					}
 				}

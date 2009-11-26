@@ -108,17 +108,21 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			}
 			
 			if(c->containerType() == Container::bvar) { //bvar
-				Object *ul = var->ulimit(), *dl = var->dlimit();
-				if(dl)
-					bounds += dl->visit(this);
-				if(dl || ul)
+				Object *ul = var->ulimit(), *dl = var->dlimit(), *domain=var->domain();
+				if(dl || ul) {
+					bounds += oper('=');
+					if(dl)
+						bounds += dl->visit(this);
 					bounds += oper("..");
-				if(ul)
-					bounds += ul->visit(this);
+					if(ul)
+						bounds += ul->visit(this);
+				}
+				else if(domain)
+					bounds += oper("@")+domain->visit(this);
 				
 				bvars += s;
 			}
-			else if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit)
+			else if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit && c->containerType()!=Container::domainofapplication)
 				ret << s;
 		} else 
 			ret << var->m_params[i]->visit(this);
@@ -161,9 +165,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 					bounding += bvars.join(", ");
 					if(bvars.count()!=1) bounding +=oper(')');
 					
-					bounding = oper(':')+bounding;
-					if(!bounds.isEmpty())
-						bounding+=oper('=') +bounds;
+					bounding = oper(':')+bounding+bounds;
 				}
 				
 				toret += op->visit(this)+oper('(')+ret.join(oper(", "))+bounding+oper(')');

@@ -52,7 +52,8 @@ public:
 		downlimit,	/**< Describes a container as a %lt;downlimit&gt; tag */
 		piece,		/**< Describes a container as a %lt;piece&gt; tag */
 		piecewise,	/**< Describes a container as a %lt;piecewise&gt; tag */
-		otherwise 	/**< Describes a container as a %lt;otherwise&gt; tag */
+		otherwise,	/**< Describes a container as a %lt;otherwise&gt; tag */
+		domainofapplication		/**< Describes a container as a %lt;domainofapplication&gt; tag */ 
 	};
 	
 	typedef QList<Object*>::const_iterator const_iterator;
@@ -108,6 +109,9 @@ public:
 	/** Returns the container's downlimit. */
 	Object* dlimit() const;
 	
+	/** Returns the domain of application definition. */
+	Object* domain() const;
+	
 	/** Returns whether it is an unary container. This means that there is only one value inside. */
 	bool isUnary() const;
 	
@@ -140,7 +144,7 @@ public:
 	QList<Object*> m_params;
 private:
 	ContainerType m_cont_type;
-	static char m_typeStr[][10];
+	static char m_typeStr[][20];
 	static QMap<QString, ContainerType> m_nameToType;
 };
 
