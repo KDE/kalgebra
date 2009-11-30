@@ -806,7 +806,7 @@ Analitza::BoundingIterator* Analitza::Analitza::initializeBVars(const Container*
 		if(isCorrect()) {
 			switch(domain->type()) {
 				case Object::list:
-					ret=new TypeBoundingIterator<List, List::const_iterator>(bvars.toVector(), static_cast<const List*>(domain));
+					ret=new TypeBoundingIterator<List, List::const_iterator>(bvars.toVector(), static_cast<List*>(domain));
 					break;
 				default:
 					m_err.append(i18n("Type not supported for bounding."));
