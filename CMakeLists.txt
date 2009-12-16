@@ -10,8 +10,8 @@ macro_optional_find_package(OpenGL)
 macro_bool_to_01(OPENGL_FOUND HAVE_OPENGL)
 macro_log_feature(OPENGL_FOUND "OpenGL" "API for developing portable, interactive 2D and 3D graphics applications" "http://mesa3d.sourceforge.net" FALSE "" "Provides 3D graphs in KAlgebra.")
 
-
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
+option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI compatibility is going to happen for now" OFF)
 
 #adding subdirs
 add_subdirectory(analitza)

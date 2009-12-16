@@ -35,7 +35,6 @@ set_target_properties(analitza PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSI
 
 install(TARGETS analitza ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI compatibility is going to happen for now" OFF)
 if(INSTALL_ANALITZA_HEADERS)
 	install(FILES 
 		abstractlexer.h
