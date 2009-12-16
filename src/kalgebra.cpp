@@ -263,17 +263,17 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	leftLayo->addWidget(d_list);
 	d_dock->setWidget(w);
 	
-	connect(d_list->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex & )),
-		dic, SLOT(activated(const QModelIndex& , const QModelIndex& )));
+	connect(d_list->selectionModel(), SIGNAL(currentChanged (QModelIndex, QModelIndex)),
+		dic, SLOT(activated(QModelIndex , QModelIndex)));
 	
 	//EODictionary
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
-	connect(b_funcsModel, SIGNAL(functionModified(const QString &, const Expression & )),
-			c_results, SLOT(modifyVariable(const QString & , const Expression & )));
-	connect(b_funcsModel, SIGNAL(functionRemoved(const QString &)),
-			c_results, SLOT(removeVariable(const QString &)));
+	connect(b_funcsModel, SIGNAL(functionModified(QString, Expression)),
+			c_results, SLOT(modifyVariable(QString, Expression)));
+	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
+			c_results, SLOT(removeVariable(QString)));
 	
 	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
