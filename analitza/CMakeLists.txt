@@ -34,3 +34,34 @@ target_link_libraries(analitza ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${KDE4_K
 set_target_properties(analitza PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
 
 install(TARGETS analitza ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI compatibility is going to happen for now" OFF)
+if(INSTALL_ANALITZA_HEADERS)
+	install(FILES 
+		abstractlexer.h
+		analitzaexport.h
+		analitza.h
+		analitzautils.h
+		container.h
+		explexer.h
+		expression.h
+		expressionparser.h
+		expressiontable_p.h
+		expressionwriter.h
+		htmlexpressionwriter.h
+		list.h
+		mathmlexpressionwriter.h
+		mathmlpresentationexpressionwriter.h
+		mathmlpresentationlexer.h
+		object.h
+		operations.h
+		operator.h
+		stringexpressionwriter.h
+		value.h
+		variable.h
+		variables.h
+		vector.h
+
+		DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)	
+endif(INSTALL_ANALITZA_HEADERS)
+
