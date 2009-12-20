@@ -52,6 +52,7 @@ KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 void KAlgebraPlasmoid::init()
 {
 	m_input = new Plasma::LineEdit(this);
+	m_input->setClearButtonShown(true);
 	m_input->setFocus();
 	
 	m_output = new Plasma::Label(this);
