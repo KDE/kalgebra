@@ -37,29 +37,29 @@ install(TARGETS analitza ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 if(INSTALL_ANALITZA_HEADERS)
 	install(FILES 
-		abstractlexer.h
-		analitzaexport.h
-		analitza.h
-		analitzautils.h
-		container.h
-		explexer.h
-		expression.h
-		expressionparser.h
-		expressiontable_p.h
-		expressionwriter.h
-		htmlexpressionwriter.h
-		list.h
-		mathmlexpressionwriter.h
-		mathmlpresentationexpressionwriter.h
-		mathmlpresentationlexer.h
-		object.h
-		operations.h
-		operator.h
-		stringexpressionwriter.h
-		value.h
-		variable.h
-		variables.h
-		vector.h
+		analitza/abstractlexer.h
+		analitza/analitzaexport.h
+		analitza/analitza.h
+		analitza/analitzautils.h
+		analitza/container.h
+		analitza/explexer.h
+		analitza/expression.h
+		analitza/expressionparser.h
+		analitza/expressiontable_p.h
+		analitza/expressionwriter.h
+		analitza/htmlexpressionwriter.h
+		analitza/list.h
+		analitza/mathmlexpressionwriter.h
+		analitza/mathmlpresentationexpressionwriter.h
+		analitza/mathmlpresentationlexer.h
+		analitza/object.h
+		analitza/operations.h
+		analitza/operator.h
+		analitza/stringexpressionwriter.h
+		analitza/value.h
+		analitza/variable.h
+		analitza/variables.h
+		analitza/vector.h
 
 		DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)	
 endif(INSTALL_ANALITZA_HEADERS)
