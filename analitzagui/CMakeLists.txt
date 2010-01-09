@@ -18,10 +18,10 @@ install(TARGETS analitzagui ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 if(INSTALL_ANALITZA_HEADERS)
         install(FILES
-		analitzagui/algebrahighlighter.h
-		analitzagui/analitzaguiexport.h
-		analitzagui/operatorsmodel.h
+		algebrahighlighter.h
+		analitzaguiexport.h
+		operatorsmodel.h
 
-                DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+                DESTINATION ${INCLUDE_INSTALL_DIR}/analitzagui/ COMPONENT Devel)
 endif(INSTALL_ANALITZA_HEADERS)
 
