@@ -56,11 +56,6 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	double ulimit=uplimit();
 	double dlimit=downlimit();
 	
-	if(ulimit<=dlimit) {
-		kDebug() << "Cannot have downlimit ≥ uplimit";
-		return;
-	}
-	
 	points.clear();
 	points.reserve(resolution());
 	

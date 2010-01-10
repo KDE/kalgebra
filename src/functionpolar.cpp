@@ -60,11 +60,6 @@ void FunctionPolar::updatePoints(const QRect& viewport)
 	double ulimit=uplimit();
 	double dlimit=downlimit();
 	
-	if(ulimit<=dlimit) {
-		m_err += i18n("Cannot have downlimit ≥ uplimit");
-		return;
-	}
-	
 	points.clear();
 	points.reserve(resolution());
 	
@@ -90,11 +85,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	if(p.x()<0.)	th += pi;
 	else if(th<0.)	th += 2.*pi;
 	
-	double ulimit=uplimit();
-	double dlimit=downlimit();
-	
-	if(th<dlimit) th=dlimit;
-	if(th>ulimit) th=ulimit;
+	th=qMax(th, downlimit());
+	th=qMin(th, uplimit());
 	
 	Cn* tth=func.insertValueVariable("q", th);
 	QPointF dist;
