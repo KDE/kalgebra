@@ -20,6 +20,7 @@
 #define ANALITZAUTILS_H
 
 #include <QStringList>
+#include "object.h"
 
 namespace Analitza
 {
@@ -45,6 +46,9 @@ namespace AnalitzaUtils
 	
 	/** Prints an expression tree from a node @p o. @p prefix will be the start of every item line */
 	void objectWalker(const Analitza::Object* o, const QByteArray& prefix=QByteArray());
+	
+	/** Creates a scope out of a variables instance */
+	Analitza::Object::ScopeInformation variablesScope(Analitza::Variables* v);
 }
 
 #endif // ANALITZAUTILS_H

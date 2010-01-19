@@ -83,7 +83,7 @@ QString MathMLExpressionWriter::accept(const Container* c)
 {
 	QString ret;
 	QList<Object*>::const_iterator i;
-	for(i=c->m_params.constBegin(); i!=c->m_params.constEnd(); ++i) {
+	for(i=c->m_params.constBegin(); i!=c->constEnd(); ++i) {
 		Q_ASSERT(*i);
 		ret += (*i)->visit(this);
 	}

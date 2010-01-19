@@ -103,6 +103,9 @@ public:
 	/** Returns a constant iterator pointing to the first value of the container */
 	Container::const_iterator firstValue() const;
 	
+	/** Returns the end iterator on the contained object list */
+	Container::const_iterator constEnd() const { return m_params.constEnd(); }
+	
 	/** Returns the container's uplimit. */
 	Object* ulimit() const;
 	

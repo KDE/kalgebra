@@ -85,12 +85,13 @@ Analitza::Expression Analitza::Analitza::evaluate()
 Analitza::Expression Analitza::Analitza::calculate()
 {
 	Expression e;
+	
 	if(!m_hasdeps && m_exp.isCorrect()) {
 		e.setTree(calc(m_exp.tree()));
 	} else {
 		m_err << i18n("Must specify a correct operation");
 		
-		if(m_hasdeps)
+		if(m_exp.isCorrect() && m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
 							dependencies(m_exp.tree(), varsScope().keys()).join(
 								i18nc("identifier separator in error message", "', '")));
@@ -116,7 +117,7 @@ Analitza::Object* Analitza::Analitza::eval(const Object* branch, bool resolve, c
 				insertVariable(var->name(), ret);
 			}	break;
 			case Container::piecewise: {
-				Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+				Container::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd();
 				
 				bool boundeddep=false;
 				for(; !ret && it!=itEnd; ++it) {
@@ -660,7 +661,7 @@ Analitza::Object* Analitza::Analitza::operate(const Container* c)
 				ret = func(*c);
 			} else {
 				QList<Object*> numbers;
-				Container::const_iterator it = c->firstValue(), itEnd=c->m_params.constEnd();
+				Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
 				for(; it!=itEnd; ++it) {
 					numbers.append(calc(*it));
 				}
@@ -1399,7 +1400,7 @@ Analitza::Object* Analitza::Analitza::simpPolynomials(Container* c)
 	bool sign=true, first=true;
 	Container::const_iterator it(c->firstValue());
 	
-	for(; it!=c->m_params.constEnd(); ++it) {
+	for(; it!=c->constEnd(); ++it) {
 		Object *o2=*it;
 		QPair<double, Object*> imono;
 		bool ismono=false;
@@ -1589,7 +1590,7 @@ Analitza::Object* Analitza::Analitza::simpPiecewise(Container *c)
 	Object *root=c;
 	//Here we have a list of options and finally the otherwise option
 	const Container *otherwise=0;
-	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd();
 	QList<Object*> newList;
 	
 	for(; /*!stop &&*/ it!=itEnd; ++it) {
@@ -1641,20 +1642,8 @@ Analitza::Object* Analitza::Analitza::simpPiecewise(Container *c)
 
 Analitza::Object::ScopeInformation Analitza::Analitza::varsScope() const
 {
-	Object::ScopeInformation varsScope;
-	Variables::iterator it, itEnd=m_vars->end();
-	for(it=m_vars->begin(); it!=itEnd; ++it) {
-		varsScope.insert(it.key(), &it.value());
-	}
-	
-	
-	for(it=m_vars->begin(); it!=itEnd; ++it) {
-		(*it)->decorate(varsScope);
-	}
-	
-	return varsScope;
+	return AnalitzaUtils::variablesScope(m_vars);
 }
-
 
 Analitza::Expression Analitza::Analitza::derivative()
 {

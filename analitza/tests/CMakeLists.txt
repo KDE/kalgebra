@@ -19,3 +19,6 @@ target_link_libraries(exptest ${testLibs})
 set( mathmlpresentationtest_SRCS mathmlpresentationtest.cpp)
 kde4_add_unit_test(mathmlpresentationtest ${mathmlpresentationtest_SRCS})
 target_link_libraries(mathmlpresentationtest ${testLibs})
+
+kde4_add_unit_test(typechecktest typechecktest.cpp )
+target_link_libraries(typechecktest ${testLibs})

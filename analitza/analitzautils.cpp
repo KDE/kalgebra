@@ -121,7 +121,7 @@ bool hasTheVar(const QSet<QString> & vars, const Container * c)
 {
 	bool found=false;
 	if(c->containerType()!=Container::bvar) {
-		Container::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
+		Container::const_iterator it=c->firstValue(), itEnd=c->constEnd();
 		for(; !found && it!=itEnd; ++it) {
 			if(hasTheVar(vars, *it))
 				found=true;
@@ -172,7 +172,7 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			if(dl) r |= hasVars(dl, var, bvars, vars);
 			
 			Container::const_iterator it = c->firstValue();
-			for(; !r && it!=c->m_params.constEnd(); ++it) {
+			for(; !r && it!=c->constEnd(); ++it) {
 				r |= hasVars(*it, var, scope, vars);
 			}
 		} break;
@@ -194,8 +194,22 @@ struct ObjectWalker : public ExpressionWriter
 	
 	virtual QString accept(const Ci* var)
  	{
-// 		QString value=(var->isDefined() ? (var->value() ? /*var->value()->toString()*/"def" : "*0" ) : "null");
-		qDebug() << prefix().constData() << "| variable: " << var->name() << "Val:" << QString(); return QString(); }
+		QString value="undef";
+		if(var->isDefined()) {
+			if(var->value())
+				value=var->value()->toString();
+			else
+				value="zero";
+		}
+		
+		qDebug() << prefix().constData() << "| variable: " << var->name() << var->isDefined() << "Val:" << value;
+		if(var->isDefined()) {
+			ind++;
+			visitNow(var->value());
+			ind--;
+		}
+		return QString();
+	}
 	
 	virtual QString accept(const Cn* num)
 	{ qDebug() << prefix().constData() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
@@ -204,7 +218,7 @@ struct ObjectWalker : public ExpressionWriter
 	{
 		qDebug() << prefix().constData() << "| cont: " << c->tagName();// << "=" << c->toString();
 		ind++;
-		for(Container::const_iterator it=c->m_params.constBegin(); it<c->m_params.constEnd(); ++it)
+		for(Container::const_iterator it=c->m_params.constBegin(); it<c->constEnd(); ++it)
 			visitNow(*it);
 		ind--;
 		return QString();
@@ -289,4 +303,23 @@ bool equalTree(const Object * o1, const Object * o2)
 	}
 	return eq;
 }
+
+Analitza::Object::ScopeInformation variablesScope(Analitza::Variables* v)
+{
+	Analitza::Object::ScopeInformation varsScope;
+	Analitza::Variables::iterator it, itEnd=v->end();
+	for(it=v->begin(); it!=itEnd; ++it) {
+		Object** o=&it.value();
+		varsScope.insert(it.key(), o);
+	}
+	
+	
+	for(it=v->begin(); it!=itEnd; ++it) {
+		(*it)->decorate(varsScope);
+	}
+	
+	return varsScope;
+}
+
+
 }

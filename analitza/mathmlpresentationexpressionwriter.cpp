@@ -53,7 +53,7 @@ QStringList convertElements(const List* c, MathMLPresentationExpressionWriter* w
 QStringList convertElements(const Container* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList elems;
-	Container::const_iterator it=c->firstValue(), itEnd=c->m_params.constEnd();
+	Container::const_iterator it=c->firstValue(), itEnd=c->constEnd();
 	for(; it!=itEnd; ++it) {
 		elems += (*it)->visit(w);
 	}
@@ -229,7 +229,7 @@ QString piecewise(const Container* c, MathMLPresentationExpressionWriter* w)
 	QString ret="<mrow>"
 	"<mo stretchy='true'> { </mo>"
 	"<mtable columnalign='left left'>";
-	for(QList<Object*>::const_iterator it=c->firstValue(); it!=c->m_params.constEnd(); ++it) {
+	for(QList<Object*>::const_iterator it=c->firstValue(); it!=c->constEnd(); ++it) {
 		Q_ASSERT((*it)->isContainer());
 		Container *piece=static_cast<Container*>(*it);
 		if(piece->containerType()==Container::piece) {

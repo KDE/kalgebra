@@ -20,6 +20,8 @@ set(analitza_SRCS
 	vector.cpp
 	list.cpp
 	
+	expressiontypechecker.cpp
+	
 	expressiontable.cpp	#generated
 	expressionparser.cpp	#   ''
 	explexer.cpp

@@ -117,6 +117,8 @@ class ANALITZA_EXPORT Analitza
 		*/
 		Cn* insertValueVariable(const QString& name, double value);
 		
+		/** Returns whether the current expression has all data it needs to be calculated.*/
+		bool hasDependencies() const { return m_hasdeps; }
 	private:
 		Expression m_exp;
 		Variables *m_vars;

@@ -19,6 +19,7 @@
 #include "variables.h"
 #include "expression.h"
 #include "value.h"
+#include "container.h"
 
 using namespace Analitza;
 
@@ -45,9 +46,13 @@ Variables::~Variables()
 		delete *i;
 }
 
-void Variables::modify(const QString & name, const Expression & o)
+void Variables::modify(const QString & name, const Expression & e)
 {
-	modify(name, o.tree());
+	const Analitza::Object* o=e.tree();
+	if(e.tree()->type()==Object::container && static_cast<const Container*>(e.tree())->containerType()==Container::math) {
+		o=*static_cast<const Container*>(e.tree())->firstValue();
+	}
+	modify(name, o);
 }
 
 Cn* Variables::modify(const QString & name, const double & d)
