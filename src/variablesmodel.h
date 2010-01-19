@@ -40,8 +40,8 @@ class VariablesModel : public QAbstractTableModel
 		bool setData(const QModelIndex& index, const QVariant& value, int role=Qt::EditRole);
 		QVariant data( const QModelIndex &index, int role=Qt::DisplayRole) const;
 		QVariant headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
-		int rowCount(const QModelIndex &parent=QModelIndex()) const;
-		int columnCount(const QModelIndex &p=QModelIndex()) const { Q_UNUSED(p); return 2; }
+		int rowCount(const QModelIndex &parent) const;
+		int columnCount(const QModelIndex &) const { return 2; }
 		
 		void insertVariable(const QString& name, const Analitza::Expression& value);
 		void setEditable(bool ed) { m_editable=ed; }
