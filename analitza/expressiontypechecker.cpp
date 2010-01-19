@@ -24,13 +24,14 @@
 #include "container.h"
 #include "expression.h"
 #include "analitzautils.h"
+#include "operations.h"
 
 namespace Analitza
 {
 
 QDebug operator<<(QDebug dbg, const ExpressionType &c)
 {
-	dbg.nospace() << "( "<< c.toString() <<" )";
+	dbg.nospace() << "("<< qPrintable(c.toString()) <<")";
 	
 	return dbg.space();
 }
@@ -72,9 +73,16 @@ ExpressionType ExpressionTypeChecker::check()
 
 QString ExpressionTypeChecker::accept(const Operator* o)
 {
-	current=parameters.first();
+	if(parameters.size()==1) {
+		current=Analitza::Operations::typeUnary(o->operatorType(), parameters.first());
+	} else {
+		QList<ExpressionType>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
+		current=parameters.first();
+		
+		for(; it!=itEnd; ++it)
+			current = Analitza::Operations::type(o->operatorType(), current, *it);
+	}
 	
-	//TODO: Check parameters
 	return QString();
 }
 
@@ -134,24 +142,29 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				parameters += current;
 			}
 			
-			if(o.operatorType()==Operator::none)
-				(*c->firstValue())->visit(this);
-			else if(o.operatorType()==Operator::function) {
-				int i=0;
-				Container* operation=lambdaFor(c->m_params.first());
-// 				qDebug() << "calling " << c->toString() << operation->toString();
-				
-				QStringList names=operation->bvarStrings();
-				Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
-				
-				for(int i=0; it!=itEnd; ++it, ++i) {
-					m_typeForBVar[names[i]]=parameters[i];
-				}
-				
-// 				qDebug() << "vars" << m_typeForBVar;
-				operation->visit(this);
-			} else {
-				o.visit(this);
+			switch(o.operatorType()) {
+				case Operator::none:
+				case Operator::sum:
+				case Operator::product:
+					(*c->firstValue())->visit(this);
+					break;
+				case Operator::function: {
+					Container* operation=lambdaFor(c->m_params.first());
+	// 				qDebug() << "calling " << c->toString() << operation->toString();
+					
+					QStringList names=operation->bvarStrings();
+					Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
+					
+					for(int i=0; it!=itEnd; ++it, ++i) {
+						m_typeForBVar[names[i]]=parameters[i];
+					}
+					
+	// 				qDebug() << "vars" << m_typeForBVar;
+					operation->visit(this);
+				} break;
+				default:
+					o.visit(this);
+					break;
 			}
 		}	break;
 		case Container::lambda: {

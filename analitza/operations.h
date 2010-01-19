@@ -27,12 +27,16 @@ namespace Analitza
 class List;
 class Cn;
 class Vector;
+class ExpressionType;
 
 class Operations
 {
 	public:
 		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, QString &correct);
 		static Object* reduceUnary(Operator::OperatorType op, Object* oper, QString &correct);
+		
+		static ExpressionType type(Operator::OperatorType op, const ExpressionType& paramType1, const ExpressionType& paramType2);
+		static ExpressionType typeUnary(Operator::OperatorType op, const ExpressionType& paramType);
 		
 	private:
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, QString &correct);
@@ -41,11 +45,11 @@ class Operations
 		static Object* reduceRealVector(Operator::OperatorType op, Cn *oper, Vector* vector, QString &correct);
 		static Object* reduceVectorReal(Operator::OperatorType op, Vector* vector, Cn *oper, QString &correct);
 		static Object* reduceVectorVector(Operator::OperatorType op, Vector* v1, Vector* v2, QString &correct);
-		static Object* reduceUnaryVector(Operator::OperatorType op, Vector* c, QString &correct);
+		static Cn* reduceUnaryVector(Operator::OperatorType op, Vector* c, QString &correct);
 		
 		static Object* reduceRealList(Operator::OperatorType op, Cn *oper, List* vector, QString &correct);
 		static Object* reduceListList(Operator::OperatorType op, List* l1, List* l2, QString &correct);
-		static Object* reduceUnaryList(Operator::OperatorType op, List* l, QString &correct);
+		static Cn* reduceUnaryList(Operator::OperatorType op, List* l, QString &correct);
 };
 
 }

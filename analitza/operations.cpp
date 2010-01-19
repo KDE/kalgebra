@@ -28,6 +28,7 @@
 #include "vector.h"
 #include "expression.h"
 #include "list.h"
+#include "expressiontypechecker.h"
 
 using namespace std;
 using namespace Analitza;
@@ -380,9 +381,9 @@ Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, 
 	return v1;
 }
 
-Object * Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString &correct)
+Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString &correct)
 {
-	Object *ret=0;
+	Cn *ret=0;
 	switch(op) {
 		case Operator::card:
 			ret=new Cn(c->size());
@@ -418,9 +419,9 @@ Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2
 	return ret;
 }
 
-Object* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &correct)
+Cn* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &correct)
 {
-	Object *ret=0;
+	Cn *ret=0;
 	switch(op) {
 		case Operator::card:
 			ret=new Cn(l->size());
@@ -454,4 +455,32 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 			break;
 	}
 	return 0;
+}
+
+//De facto truth. Should be fixed once there's more variety
+ExpressionType Operations::typeUnary(Operator::OperatorType, const ExpressionType&)
+{
+	return ExpressionType(ExpressionType::Value);
+}
+
+ExpressionType typeRealVector(Operator::OperatorType op, const ExpressionType& vec)
+{
+	if(op==Operator::selector)
+		return *vec.contained;
+	else
+		return ExpressionType(ExpressionType::Vector, *vec.contained);
+}
+
+ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType& pt1,
+															const ExpressionType& pt2)
+{
+	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Value)  return ExpressionType(ExpressionType::Value);
+	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Value)  return ExpressionType(ExpressionType::Vector, *pt1.contained);
+	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Vector) return typeRealVector(op, pt2);
+	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Vector) return ExpressionType(ExpressionType::Vector, *pt1.contained);
+	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::List)   return *pt2.contained;
+	if(pt1.type==ExpressionType::List   && pt2.type==ExpressionType::List)   return ExpressionType(ExpressionType::List, *pt1.contained);
+	
+	Q_ASSERT(false && "wtf");
+	return ExpressionType(ExpressionType::Error);
 }

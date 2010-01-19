@@ -36,6 +36,8 @@ class ANALITZA_EXPORT ExpressionType
 		QString toString() const;
 		
 		ExpressionType(Type t=Error) : type(t), contained(0) {}
+		ExpressionType(Type t, const ExpressionType& contained) : type(t), contained(new ExpressionType(contained)) {}
+		
 		ExpressionType(const ExpressionType& t) : type(t.type), contained(0)
 			{ if(t.contained) contained=new ExpressionType(*t.contained); }
 		~ExpressionType() {/* delete contained; */}
@@ -71,6 +73,8 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QList<ExpressionType> parameters;
 		QHash<QString, ExpressionType> m_typeForBVar;
 };
+
+QDebug operator<<(QDebug dbg, const ExpressionType &c);
 
 }
 

@@ -683,11 +683,9 @@ Analitza::Object* Analitza::Analitza::operate(const Container* c)
 						for(; it!=itEnd; ++it) {
 							ret=Operations::reduce(opt, ret, *it, correct);
 							
-							if(KDE_ISUNLIKELY(!ret || !correct.isEmpty())) {
+							if(KDE_ISUNLIKELY(!correct.isEmpty())) {
 								m_err.append(correct);
 								correct.clear();
-								if(!ret)
-									ret=new Cn(0.);
 								break;
 							}
 						}
