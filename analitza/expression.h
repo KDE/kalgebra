@@ -29,6 +29,7 @@ class QDomElement;
 
 namespace Analitza
 {
+class Ci;
 class Container;
 class Cn;
 
@@ -152,6 +153,10 @@ class ANALITZA_EXPORT Expression
 		/** @returns true if the expression is a value, false otherwise. */
 		bool isReal() const;
 		
+		/** @returns a list of the parameters in case this expression represents
+			a lambda construction. */
+		QList<Ci*> parameters() const;
+		
 		/**
 		 *	Converts a @p tag to an object type.
 		 */
@@ -163,7 +168,6 @@ class ANALITZA_EXPORT Expression
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
 	private:
-		
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;
 };

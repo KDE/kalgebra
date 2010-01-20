@@ -25,6 +25,7 @@
 #include "variable.h"
 #include "container.h"
 #include "variables.h"
+#include "expression.h"
 
 using namespace Analitza;
 namespace AnalitzaUtils
@@ -197,7 +198,7 @@ struct ObjectWalker : public ExpressionWriter
 		QString value="undef";
 		if(var->isDefined()) {
 			if(var->value())
-				value=var->value()->toString();
+				value="def";
 			else
 				value="zero";
 		}
@@ -205,7 +206,7 @@ struct ObjectWalker : public ExpressionWriter
 		qDebug() << prefix().constData() << "| variable: " << var->name() << var->isDefined() << "Val:" << value;
 		if(var->isDefined()) {
 			ind++;
-			visitNow(var->value());
+			//visitNow(var->value());
 			ind--;
 		}
 		return QString();
@@ -259,6 +260,11 @@ struct ObjectWalker : public ExpressionWriter
 	int ind;
 	QByteArray m_prefix;
 };
+
+void objectWalker(const Analitza::Expression& o, const QByteArray& prefix)
+{
+	objectWalker(o.tree(), prefix);
+}
 
 void objectWalker(const Object* root, const QByteArray& prefix)
 {

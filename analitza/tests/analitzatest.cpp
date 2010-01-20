@@ -26,6 +26,7 @@
 #include "vector.h"
 #include "value.h"
 #include <variable.h>
+#include <analitzautils.h>
 
 using namespace std;
 using Analitza::Cn;
@@ -188,6 +189,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 	
+	QTest::newRow("dumb") << "x" << "1";
 	QTest::newRow("simple polynomial") << "x^3+1" << "3*x^2";
 	QTest::newRow("power and sinus") << "x^2+sin(x)" << "2*x+cos(x)";
 	QTest::newRow("power") << "x^2" << "2*x";
@@ -214,7 +216,7 @@ void AnalitzaTest::testDerivativeSimple()
 	a->setExpression(a->derivative());
 	a->simplify();
 	Expression deriv=a->expression();
-	QCOMPARE(deriv.toString(), result);
+	QCOMPARE(deriv.toString(), "x->"+result);
 	QVERIFY(a->isCorrect());
 	
 	double val=1.;
@@ -226,9 +228,12 @@ void AnalitzaTest::testDerivativeSimple()
 	if(a->isCorrect()) {
 		Expression ee(QString("(x->%1)(%2)").arg(result).arg(val));
 		a->setExpression(ee);
-		Cn valExp(a->calculate().toReal());
+		QVERIFY(a->isCorrect());
 		
-		QCOMPARE(QString::number(valCalc), QString::number(valExp.value()));
+		Expression r=a->calculate();
+		
+		if(a->isCorrect())
+			QCOMPARE(QString::number(valCalc), QString::number(r.toReal().value()));
 	}
 	a->setExpression(Expression("diff("+expression+":x)", false));
 	a->simplify();
@@ -714,6 +719,7 @@ void AnalitzaTest::testOperators()
 				qDeleteAll(bvarValues);
 			} else {
 				Expression e(apply);
+				qDebug() << "kkkkkkk" << e.toString();
 				a->setExpression(e);
 				a->calculate();
 				a->evaluate();

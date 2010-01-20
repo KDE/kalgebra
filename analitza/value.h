@@ -39,7 +39,7 @@ class ANALITZA_EXPORT Cn : public Object
 	public:
 		enum ValueFormat { Real=7, Integer=3, Boolean=1 };
 		/** Copy constructor. Creates a Cn from another one. */
-		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) {}
+		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) { Q_ASSERT(m_type==Object::value); }
 		
 		/** Constructor. Creates a boolean value with @p b. */
 		explicit Cn(const double &b=0.) : Object(Object::value), m_value(b), m_format(Real) {}
@@ -152,7 +152,7 @@ class ANALITZA_EXPORT Cn : public Object
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		/** Returns whether it is a correct Cn. */
-		bool isCorrect() const { return m_type==Object::value; }
+		bool isCorrect() const { return true; }
 		
 		virtual Object* copy() const;
 		virtual bool decorate(const QMap< QString, Object** >& scope);

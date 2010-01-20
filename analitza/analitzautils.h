@@ -21,12 +21,14 @@
 
 #include <QStringList>
 #include "object.h"
+#include "analitzaexport.h"
 
 namespace Analitza
 {
 class Object;
 class Container;
 class Variables;
+class Expression;
 }
 
 namespace AnalitzaUtils
@@ -46,6 +48,9 @@ namespace AnalitzaUtils
 	
 	/** Prints an expression tree from a node @p o. @p prefix will be the start of every item line */
 	void objectWalker(const Analitza::Object* o, const QByteArray& prefix=QByteArray());
+	
+	/** Convenience function */
+	void ANALITZA_EXPORT objectWalker(const Analitza::Expression& o, const QByteArray& prefix=QByteArray());
 	
 	/** Creates a scope out of a variables instance */
 	Analitza::Object::ScopeInformation variablesScope(Analitza::Variables* v);

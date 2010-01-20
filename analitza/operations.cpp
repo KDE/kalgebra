@@ -332,6 +332,7 @@ Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vect
 			Object* ret=0;
 			if(select<1 || (select-1) >= v1->size()) {
 				correct=i18n("Invalid index for a container");
+				ret=new Cn(0.);
 			} else {
 				ret=v1->at(select-1);
 				v1->setAt(select-1, 0);
@@ -443,6 +444,7 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 			Object* ret=0;
 			if(select<1 || (select-1) >= v1->size()) {
 				correct=i18n("Invalid index for a container");
+				ret=new Cn(0.);
 			} else {
 				ret=v1->at(select-1);
 				v1->setAt(select-1, 0);

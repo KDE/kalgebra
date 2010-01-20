@@ -71,7 +71,6 @@ Analitza::Expression Analitza::Analitza::evaluate()
 	Expression e;
 	
 	if(m_exp.isCorrect()) {
-		m_exp.tree()->decorate(varsScope());
 		Object *o=eval(m_exp.tree(), true, QSet<QString>());
 		
 		o=simp(o);
@@ -88,6 +87,34 @@ Analitza::Expression Analitza::Analitza::calculate()
 	
 	if(!m_hasdeps && m_exp.isCorrect()) {
 		e.setTree(calc(m_exp.tree()));
+	} else {
+		m_err << i18n("Must specify a correct operation");
+		
+		if(m_exp.isCorrect() && m_hasdeps)
+			m_err << i18n("Unknown identifier: '%1'",
+							dependencies(m_exp.tree(), varsScope().keys()).join(
+								i18nc("identifier separator in error message", "', '")));
+	}
+	return e;
+}
+
+Analitza::Expression Analitza::Analitza::calculateLambda()
+{
+	Expression e;
+	
+	if(!m_hasdeps && m_exp.isCorrect()) {
+		Q_ASSERT(m_exp.tree()->isContainer());
+		Container* math=(Container*) m_exp.tree();
+		Q_ASSERT(math->m_params.first()->isContainer());
+		if(math->containerType()==Container::math) {
+			math=(Container*) math->m_params.first();
+			Q_ASSERT(math->m_params.first()->isContainer());
+		}
+		
+		Container* lambda=(Container*) math;
+		Q_ASSERT(lambda->containerType()==Container::lambda);
+		
+		e.setTree(calc(lambda->m_params.last()));
 	} else {
 		m_err << i18n("Must specify a correct operation");
 		
@@ -276,6 +303,7 @@ Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Objec
 	Object *ret=0;
 	const Container *c;
 	const Ci* v;
+	
 	if(o->type()!=Object::oper && !hasVars(o, var))
 		ret = new Cn(0.);
 	else switch(o->type()) {
@@ -292,7 +320,7 @@ Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Objec
 			Vector *v=(Vector*) o;
 			Vector *c1=new Vector(v->size());
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				c1->appendBranch(calc(*it));
+				c1->appendBranch(derivative(var, *it));
 			}
 			ret=c1;
 		}	break;
@@ -300,7 +328,7 @@ Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Objec
 			List *v=(List*) o;
 			List *c1=new List;
 			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				c1->appendBranch(calc(*it));
+				c1->appendBranch(derivative(var, *it));
 			}
 			ret=c1;
 		}	break;
@@ -490,6 +518,9 @@ Analitza::Object* Analitza::Analitza::derivative(const QString &var, const Conta
 				return obj;
 			}
 		}
+	} else if(c->containerType()==Container::lambda) {
+		//TODO REVIEW
+		return derivative(var, c->m_params.last());
 	} else if(c->containerType()==Container::piecewise) {
 		Container *newPw = c->copy();
 		
@@ -644,8 +675,10 @@ Analitza::Object* Analitza::Analitza::operate(const Container* c)
 			else if(opt==Operator::diff) {
 				//TODO: Make multibvar
 				QStringList bvars=c->bvarStrings();
+				
 				//We construct the lambda
 				Object* o=derivative(bvars[0], *c->firstValue());
+				
 				Container* cc=new Container(Container::lambda);
 				foreach(const QString& v, bvars) {
 					Container* bvar=new Container(Container::bvar);
@@ -926,6 +959,7 @@ void Analitza::Analitza::simplify()
 	if(m_exp.isCorrect()) {
 		Object* o=simp(m_exp.tree());
 		m_exp.setTree(o);
+		setExpression(m_exp);
 	}
 }
 
@@ -1308,6 +1342,33 @@ Analitza::Object* Analitza::Analitza::simp(Object* root)
 					}
 					
 				}	break;
+				case Operator::function: {
+					it=c->m_params.begin();
+					Object* function=*it; ++it;
+					
+					bool allequal=false;
+					Container* cfunc=0;
+					QList<Ci*> bvars;
+					if(function->isContainer()) {
+						cfunc=(Container*) function;
+						allequal=true;
+						Q_ASSERT(cfunc->containerType()==Container::lambda);
+						
+						cfunc=(Container*) function;
+						bvars=cfunc->bvarCi();
+					}
+					
+					for(int i=0; it!=c->m_params.end(); ++it, ++i) {
+						*it = simp(*it);
+						allequal = allequal && equalTree(*it, bvars[i]);
+					}
+					
+					if(allequal) { //x->x = x
+						root=cfunc->m_params.last();
+						cfunc->m_params.last()=0;
+						delete c;
+					}
+				}	break;
 				default:
 					it = c->firstValue();
 					
@@ -1646,17 +1707,69 @@ Analitza::Object::ScopeInformation Analitza::Analitza::varsScope() const
 Analitza::Expression Analitza::Analitza::derivative()
 {
 	m_err.clear();
-	/* TODO: Must support multiple bvars */
+	//TODO: Must support multiple bvars
+	//TODO: return new expression
 	Expression exp;
 	if(m_exp.isCorrect()) {
-		QStringList vars = m_exp.bvarList();
-		if(vars.isEmpty())
+		QStringList vars;
+		Object* deriv=m_exp.tree();
+		if(m_exp.isLambda()){
+			Q_ASSERT(deriv->isContainer());
+			Container* lambda=(Container*) deriv;
+			if(lambda->containerType()==Container::math) {
+				Q_ASSERT(lambda->m_params.first()->isContainer());
+				lambda = (Container*) lambda->m_params.first();
+			}
+			vars=lambda->bvarStrings();
+			Q_ASSERT(lambda->containerType()==Container::lambda);
+			deriv=lambda->m_params.last();
+		} else
 			vars+="x";
 		
-		Object* o = simp(derivative(vars.first(), m_exp.tree()));
-		exp.setTree(o);
+		Object* o = derivative(vars.first(), deriv);
+		o=simp(o);
+		Container* lambda=new Container(Container::lambda);
+		foreach(const QString& dep, vars) {
+			Container* bvar=new Container(Container::bvar);
+			bvar->appendBranch(new Ci(dep));
+			lambda->appendBranch(bvar);
+		}
+		lambda->appendBranch(o);
+		
+		exp.setTree(lambda);
 	}
 	return exp;
+}
+
+Analitza::Expression Analitza::Analitza::dependenciesToLambda() const
+{
+	if(m_hasdeps) {
+		QStringList deps=dependencies(m_exp.tree(), varsScope().keys());
+		Container* cc=new Container(Container::lambda);
+		foreach(const QString& dep, deps) {
+			Container* bvar=new Container(Container::bvar);
+			bvar->appendBranch(new Ci(dep));
+			cc->appendBranch(bvar);
+		}
+		
+		Object* root=m_exp.tree()->copy();
+		if(root->isContainer()) {
+			Container* c=static_cast<Container*>(root);
+			if(c->containerType()==Container::math) {
+				root=c->m_params.first();
+				c->m_params.first()=0;
+				delete c;
+			}
+		}
+		cc->appendBranch(root);
+		
+		Container* math=new Container(Container::math);
+		math->appendBranch(cc);
+		
+		return Expression(math);
+	} else {
+		return m_exp;
+	}
 }
 
 bool Analitza::Analitza::insertVariable(const QString & name, const Expression & value)

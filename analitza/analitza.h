@@ -70,8 +70,14 @@ class ANALITZA_EXPORT Analitza
 		/** Returns the expression in display. */
 		const Expression& expression() const { return m_exp; }
 		
+		/** Returns the expression in display. Use carefully */
+		Expression* refExpression() { return &m_exp; }
+		
 		/** Calculates the expression and returns a value alone. */
 		Expression calculate();
+		
+		/** Calculates the expression and returns a value alone. The parameters need to be set using ::refExpression()->parameters()*/
+		Expression calculateLambda();
 		
 		/** Evaluates an expression, like calculate() but returns a tree. */
 		Expression evaluate();
@@ -119,6 +125,13 @@ class ANALITZA_EXPORT Analitza
 		
 		/** Returns whether the current expression has all data it needs to be calculated.*/
 		bool hasDependencies() const { return m_hasdeps; }
+		
+		/** This function is useful if you want to work programatically on functions with undefined variables.
+			@returns the same expression set but with explicit dependencies.
+			
+			e.g. x+2 would return x->x+2
+		*/
+		Expression dependenciesToLambda() const;
 	private:
 		Expression m_exp;
 		Variables *m_vars;

@@ -83,8 +83,7 @@ Expression::Expression(Object * o)
 Expression::Expression(const Cn & e)
 	: d(new ExpressionPrivate(0))
 {
-	if(e.isCorrect())
-		d->m_tree = new Cn(e);
+	d->m_tree = new Cn(e);
 }
 
 Expression::Expression(const Expression & e)
@@ -435,6 +434,21 @@ bool Expression::isLambda() const
 		return c->containerType()==Container::lambda;
 	}
 	return false;
+}
+
+QList<Ci*> Expression::parameters() const
+{
+	QList<Ci*> ret;
+	if(d->m_tree && d->m_tree->isContainer()) {
+		Container* c = (Container*) d->m_tree;
+		if(c->containerType()==Container::math) {
+			Container *c1 = (Container*) c->m_params.first();
+			if(c1->isContainer() && c1->containerType()==Container::lambda)
+				return c1->bvarCi();
+		}
+		return c->bvarCi();
+	}
+	return ret;
 }
 
 QStringList Expression::error() const
