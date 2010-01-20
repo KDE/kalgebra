@@ -52,17 +52,17 @@ void FunctionTest::testCopy_data()
 {
 	QTest::addColumn<QString>("input");
 	
-	QTest::newRow("x->flat") << "1";
-	QTest::newRow("x->x") << "x";
-	QTest::newRow("x->and") << "and(gt(x,-1), lt(x,1))";
-	QTest::newRow("x->abs") << "abs(x)";
-	QTest::newRow("x->addition") << "2+x";
-	QTest::newRow("x->minus") << "x-2";
-	QTest::newRow("x->log") << "log x";
-	QTest::newRow("x->tan") << "tan x";
-	QTest::newRow("x->factorof") << "factorof(x,x)";
-	QTest::newRow("x->sum") << "sum(t : t=0..3)";
-	QTest::newRow("x->piece") << "piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
+	QTest::newRow("x->flat") << "x->1";
+	QTest::newRow("x->x") << "x->x";
+	QTest::newRow("x->and") << "x->and(gt(x,-1), lt(x,1))";
+	QTest::newRow("x->abs") << "x->abs(x)";
+	QTest::newRow("x->addition") << "x->2+x";
+	QTest::newRow("x->minus") << "x->x-2";
+	QTest::newRow("x->log") << "x->log x";
+	QTest::newRow("x->tan") << "x->tan x";
+	QTest::newRow("x->factorof") << "x->factorof(x,x)";
+	QTest::newRow("x->sum") << "x->sum(t : t=0..3)";
+	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
 									"? selector(2, vector{x, 1/x} ) }";
 	QTest::newRow("x->diff1") << "diff(x:x)";
 	QTest::newRow("x->diffx") << "diff(x^2:x)";
@@ -82,6 +82,7 @@ void FunctionTest::testCopy()
 	Expression exp(input, false);
 	
 	function f("hola", exp, m_vars, Qt::red, 0,0);
+	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
 	QVERIFY(f.isCorrect());
 	f.setResolution(resolution);
 	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
@@ -110,7 +111,7 @@ void FunctionTest::testCopy()
 // 	}
 // 	QVERIFY(found);
 	
-	QCOMPARE(f3.expression(), exp);
+	QCOMPARE(f3.expression().toString(), exp.toString());
 	
 	int ant=-1;
 	foreach(int pos, f3.jumps()) {

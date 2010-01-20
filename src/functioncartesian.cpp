@@ -22,6 +22,8 @@
 
 #include <KDebug>
 #include <KLocale>
+#include <variable.h>
+#include <analitzautils.h>
 
 using std::sin;
 using std::cos;
@@ -35,8 +37,18 @@ using Analitza::Cn;
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
-	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v ,0,0) {}
-	FunctionY(const FunctionY &fy) : FunctionImpl(fy) {}
+	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v ,0,0), vx(new Cn)
+	{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=vx;
+	}
+	
+	FunctionY(const FunctionY &fy) : FunctionImpl(fy), vx(new Cn)
+	{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=vx;
+	}
+	virtual ~FunctionY() { delete vx; }
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
@@ -45,8 +57,9 @@ struct FunctionY : public FunctionImpl
 	static QStringList supportedBVars() { return QStringList("x"); }
 	
 	QStringList boundings() const { return supportedBVars(); }
-	
 	void calculateValues(double, double);
+	
+	Analitza::Cn* vx;
 };
 
 ///Functions where the y is bounding. like y->sin(y). FunctionY mirrored
@@ -114,12 +127,10 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 	
 	double step= double((-l_lim+r_lim)/resolution());
 	
-	Cn *vx = func.insertValueVariable(boundings().first(), 0.);
-	
 	bool jumping=true;
 	for(double x=l_lim; x<r_lim-step; x+=step) {
 		vx->setValue(x);
-		Cn y = func.calculate().toReal();
+		Cn y = func.calculateLambda().toReal();
 		QPointF p(x, y.value());
 		bool ch=addValue(p);
 		
@@ -157,11 +168,13 @@ void FunctionY::updatePoints(const QRect& viewport)
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	func.insertValueVariable(boundings().first(), dp.y());
-	if(!func.calculate().isReal())
+	vx->setValue(dp.x());
+	Expression r=func.calculateLambda();
+	
+	if(!r.isReal())
 		m_err += i18n("We can only draw Real results.");
 	
-	dp.setX(func.calculate().toReal().value());
+	dp.setX(r.toReal().value());
 	QString pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
@@ -169,14 +182,14 @@ QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	QString pos;
-	func.insertValueVariable(boundings().first(), dp.x());
+	vx->setValue(dp.x());
+	Expression r=func.calculateLambda();
 	
-	if(!func.calculate().isReal())
+	if(!r.isReal())
 		m_err += i18n("We can only draw Real results.");
 	
-	dp.setY(func.calculate().toReal().value());
-	pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
+	dp.setY(r.toReal().value());
+	QString pos = QString("x=%1 y=%2").arg(dp.x(),3,'f',2).arg(dp.y(),3,'f',2);
 	return QPair<QPointF, QString>(dp, pos);
 }
 
@@ -186,11 +199,13 @@ QLineF FunctionY::derivative(const QPointF& p) const
 	double ret;
 	
 	if(m_deriv) {
+		Cn* v=new Cn(p.x());
 		a.setExpression(*m_deriv);
-		a.insertValueVariable(boundings().first(), p.x());
+		
+		a.expression().parameters().first()->value()=v;
 		
 		if(a.isCorrect())
-			ret = a.calculate().toReal().value();
+			ret = a.calculateLambda().toReal().value();
 		
 		if(!a.isCorrect()) {
 			kDebug() << "Derivative error: " <<  a.errors();

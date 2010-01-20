@@ -31,24 +31,28 @@ function::function()
 	: m_function(0), m_show(true), m_color(Qt::black)
 {}
 
-// #include "container.h"
-
 function::function(const QString &name, const Analitza::Expression& newFunc, Analitza::Variables* v,
 				   const QColor& color, double uplimit, double downlimit)
 	: m_function(0), m_expression(newFunc), m_show(true), m_color(color), m_name(name)
 {
 	if(newFunc.isCorrect()) {
-//		objectWalker(newFunc.tree());
-		QStringList bvars=newFunc.isLambda() ? newFunc.bvarList() : QStringList("x");
-		if(!FunctionFactory::self()->contains(bvars))
-			m_err << "Function type not recognized";
-		else {
-			m_function=FunctionFactory::self()->item(bvars, newFunc, v);
-			if(downlimit!=uplimit)
-				m_function->setLimits(downlimit, uplimit);
+		Analitza::Analitza a(v);
+		a.setExpression(newFunc);
+		
+		m_expression=a.dependenciesToLambda();
+		
+		QStringList bvars=m_expression.bvarList();
+		
+		//TODO: turn into assertion
+		if(!FunctionFactory::self()->contains(bvars))                                        
+			m_err << "Function type not recognized";                                     
+		else {                                                                               
+			m_function=FunctionFactory::self()->item(bvars, m_expression, v);                 
+			if(downlimit!=uplimit)                                                       
+				m_function->setLimits(downlimit, uplimit);                           
 		}
 	} else {
-		m_err << "The expression is not correct";
+		m_err << i18n("The expression is not correct");
 	}
 }
 
@@ -91,7 +95,6 @@ void function::update_points(const QRect& viewport)
 	Q_ASSERT(resolution()>2);
 	
 	m_function->updatePoints(viewport);
-	cleanupBoundings();
 	Q_ASSERT(m_function->points.size()>=2);
 }
 
@@ -119,8 +122,7 @@ bool function::isShown() const
 QLineF function::derivative(const QPointF & p) const
 {
 	Q_ASSERT(m_function);
-	QLineF ret=m_function->derivative(p);
-	return ret;
+	return m_function->derivative(p);
 }
 
 const QVector<QPointF>& function::points() const
@@ -133,9 +135,7 @@ const QVector<QPointF>& function::points() const
 QPair< QPointF, QString > function::calc(const QPointF & dp)
 {
 	Q_ASSERT(m_function);
-	QPair< QPointF, QString > ret=m_function->calc(dp);
-	cleanupBoundings();
-	return ret;
+	return m_function->calc(dp);
 }
 
 bool function::isCorrect() const
@@ -161,11 +161,5 @@ const Analitza::Expression& function::expression() const
 QList<int> function::jumps() const
 {
 	return m_function->m_jumps;
-}
-
-void function::cleanupBoundings()
-{
-	foreach(const QString& var, m_function->boundings())
-		m_function->func.variables()->destroy(var);
 }
 

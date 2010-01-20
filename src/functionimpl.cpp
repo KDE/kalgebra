@@ -24,6 +24,7 @@
 #include <KLocale>
 #include <KDebug>
 #include <container.h>
+#include <analitzautils.h>
 
 using std::acos;
 using std::atan;
@@ -41,15 +42,6 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl
 {
 	func.setExpression(newFunc);
 	func.simplify();
-	
-	Expression e=func.expression();
-	
-	if(e.isLambda()) { //It's a lambda, we need to take it off
-		const Container* c=dynamic_cast<const Container*>(newFunc.tree());
-		const Container* d=dynamic_cast<const Container*>(c->m_params.last());
-		e=Expression(d->m_params.last()->copy());
-		func.setExpression(e);
-	}
 	
 	if(func.isCorrect()) {
 		Expression deriv = func.derivative();
@@ -72,8 +64,6 @@ FunctionImpl::FunctionImpl(const FunctionImpl& fi)
 
 FunctionImpl::~FunctionImpl()
 {
-	points.clear();
-	
 	delete m_deriv;
 }
 

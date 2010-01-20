@@ -21,6 +21,7 @@
 #include "value.h"
 
 #include <KLocale>
+#include <variable.h>
 
 using std::acos;
 using std::atan;
@@ -32,8 +33,8 @@ using Analitza::Cn;
 
 struct FunctionPolar : public FunctionImpl
 {
-	FunctionPolar(const Expression &e, Variables* v) : FunctionImpl(e, v, 0, 2*M_PI) {}
-	FunctionPolar(const FunctionPolar &fp) : FunctionImpl(fp) {}
+	FunctionPolar(const Expression &e, Variables* v);
+	FunctionPolar(const FunctionPolar &fp);
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
@@ -45,10 +46,28 @@ struct FunctionPolar : public FunctionImpl
 	QRect m_last_viewport;
 	QStringList boundings() const { return supportedBVars(); }
 	static QStringList supportedBVars() { return QStringList("q"); }
+	
+	Cn* m_th;
 };
 
 REGISTER_FUNCTION(FunctionPolar)
 static const double pi=acos(-1.);
+
+FunctionPolar::FunctionPolar(const Expression &e, Variables* v)
+	: FunctionImpl(e, v, 0, 2*M_PI)
+	, m_th(new Cn)
+{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=m_th;
+}
+
+FunctionPolar::FunctionPolar(const FunctionPolar &fp)
+	: FunctionImpl(fp)
+	, m_th(new Cn)
+{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=m_th;
+}
 
 void FunctionPolar::updatePoints(const QRect& viewport)
 {
@@ -63,13 +82,11 @@ void FunctionPolar::updatePoints(const QRect& viewport)
 	points.clear();
 	points.reserve(resolution());
 	
-	Cn *varth=func.insertValueVariable("q", 0.);
-	
 	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
-		varth->setValue(th);
-		double r = func.calculate().toReal().value();
+		m_th->setValue(th);
+		double r = func.calculateLambda().toReal().value();
 		
 		addValue(fromPolar(r, th));
 	}
@@ -88,17 +105,17 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	th=qMax(th, downlimit());
 	th=qMin(th, uplimit());
 	
-	Cn* tth=func.insertValueVariable("q", th);
 	QPointF dist;
+	m_th->setValue(th);
 	do {
-		tth->setValue(th);
-		r = func.calculate().toReal().value();
+		m_th->setValue(th);
+		r = func.calculateLambda().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
 		
-		tth->setValue(th+2.*pi);
-		r = func.calculate().toReal().value();
+		m_th->setValue(th+2.*pi);
+		r = func.calculateLambda().toReal().value();
 		dp = fromPolar(r, th);
 		dist = (dp-p);
 		d2 = sqrt(dist.x()*dist.x() + dist.y()*dist.y());
@@ -107,8 +124,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	} while(d>d2);
 	th -= 2.*pi;
 	
-	tth->setValue(th);
-	Expression res=func.calculate();
+	m_th->setValue(th);
+	Expression res=func.calculateLambda();
 	
 	if(!res.isReal())
 		m_err += i18n("We can only draw Real results.");

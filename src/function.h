@@ -119,8 +119,6 @@ class function
 		void setDownlimit(const Analitza::Expression& e);
 		
 	private:
-		void cleanupBoundings();
-		
 		FunctionImpl* m_function;
 		Analitza::Expression m_expression;
 		bool m_show;

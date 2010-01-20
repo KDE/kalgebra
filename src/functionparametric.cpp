@@ -24,6 +24,7 @@
 #include <KDebug>
 #include <KLocale>
 #include <container.h>
+#include <variable.h>
 
 using Analitza::Expression;
 using Analitza::Variables;
@@ -33,8 +34,17 @@ using Analitza::Cn;
 
 struct FunctionParametric : public FunctionImpl
 {
-	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI) {}
-	FunctionParametric(const FunctionParametric &fx) : FunctionImpl(fx) {}
+	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI), vx(new Cn)
+	{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=vx;
+	}
+	
+	FunctionParametric(const FunctionParametric &fx) : FunctionImpl(fx), vx(new Cn)
+	{
+		Analitza::Ci* vi=func.refExpression()->parameters().first();
+		vi->value()=vx;
+	}
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
@@ -43,6 +53,7 @@ struct FunctionParametric : public FunctionImpl
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
 	QStringList boundings() const { return supportedBVars(); }
+	Cn* vx;
 };
 REGISTER_FUNCTION(FunctionParametric)
 
@@ -59,13 +70,13 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	points.clear();
 	points.reserve(resolution());
 	
-	Cn *theT = func.insertValueVariable("t", 0.);
+	vx->setValue(0.);
 	
 	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
 	for(double t=dlimit; t<final; t+=inv_res) {
-		theT->setValue(t);
-		Expression res=func.calculate();
+		vx->setValue(t);
+		Expression res=func.calculateLambda();
 		
 		Object* vo=res.tree();
 // 		objectWalker(vo);
@@ -86,8 +97,8 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 
 QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 {
-	func.insertValueVariable("t", 0.);
-	Expression res=func.calculate();
+	vx->setValue(0.);
+	Expression res=func.calculateLambda();
 	Object* vo=res.tree();
 	
 	if(func.isCorrect())
