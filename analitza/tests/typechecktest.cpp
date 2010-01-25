@@ -47,6 +47,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::addColumn<QString>("output");
 	
 	QTest::newRow("addition") << "2+4" << "num";
+	QTest::newRow("addition") << "list{tovector(3)}" << "[<num>]";
 	QTest::newRow("additionvec") << "vector{2,2}+vector{2,2}" << "<num>";
 	QTest::newRow("sum") << "sum(x : x=1..3)" << "num";
 	QTest::newRow("sumvec") << "sum(vector{x,x} : x=1..3)" << "<num>";
@@ -73,5 +74,36 @@ void TypeCheckTest::testConstruction()
 	QVERIFY(e.isCorrect());
 	Analitza::ExpressionTypeChecker t(e, v);
 	
+	QVERIFY(t.isCorrect());
 	QCOMPARE(t.check().toString(), output);
+}
+
+void TypeCheckTest::testUncorrection()
+{
+	QFETCH(QString, input);
+	
+	Analitza::Expression e(input);
+	QVERIFY(e.isCorrect());
+	Analitza::ExpressionTypeChecker t(e, v);
+	
+	t.check(); //ignore result
+	
+	QVERIFY(!t.isCorrect());
+}
+
+void TypeCheckTest::testUncorrection_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<QString>("output");
+	
+	QTest::newRow("consistency vector") << "vector{2, list{2}}";
+	QTest::newRow("consistency list")   << "list{2, list{2}}";
+	
+	QTest::newRow("piecewise result") << "piecewise { x=3? 3, ?vector{2} }";
+	QTest::newRow("piecewise condit") << "piecewise { vector{3}? 3, ?2 }";
+	
+	QTest::newRow("diff vectors") << "vector { 2,2 }+vector { 2 }";
+	QTest::newRow("diff types") << "list { 2,2 }+vector { 2 }";
+	QTest::newRow("wrong call") << "fplus(list{3})";
+	QTest::newRow("wrong bounds") << "sum(x : x=1..vector{3,3})";
 }

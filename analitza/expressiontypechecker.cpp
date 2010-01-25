@@ -25,6 +25,7 @@
 #include "expression.h"
 #include "analitzautils.h"
 #include "operations.h"
+#include <klocalizedstring.h>
 
 namespace Analitza
 {
@@ -57,6 +58,10 @@ QString ExpressionType::toString() const
 	return ret;
 }
 
+bool ExpressionType::operator==(const Analitza::ExpressionType& t) const
+{
+	return t.type==type && ((!t.contained && !contained) || (t.contained && contained && *t.contained==*contained));
+}
 
 ExpressionTypeChecker::ExpressionTypeChecker(const Expression& exp, Variables* v)
 	: m_v(v), m_exp(exp)
@@ -194,6 +199,15 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 	ExpressionType t(ExpressionType::Vector);
 	t.contained=new ExpressionType(current);
 	
+	//check
+	Vector::const_iterator it=v->constBegin(), itEnd=v->constEnd();
+	for(; it!=itEnd; ++it) {
+		(*it)->visit(this);
+		if(current!=*t.contained)
+			m_err += i18n("Cannot convert %1 to %2", t.contained->toString(), current.toString());
+	}
+	//
+	
 	current=t;
 	
 	return QString();
@@ -205,6 +219,15 @@ QString ExpressionTypeChecker::accept(const List* l)
 	
 	ExpressionType t(ExpressionType::List);
 	t.contained=new ExpressionType(current);
+	
+	//check
+	List::const_iterator it=l->constBegin(), itEnd=l->constEnd();
+	for(; it!=itEnd; ++it) {
+		(*it)->visit(this);
+		if(current!=*t.contained)
+			m_err += i18n("Cannot convert %1 to %2", t.contained->toString(), current.toString());
+	}
+	//
 	
 	current=t;
 	

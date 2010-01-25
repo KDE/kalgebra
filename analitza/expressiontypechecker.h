@@ -42,11 +42,12 @@ class ANALITZA_EXPORT ExpressionType
 			{ if(t.contained) contained=new ExpressionType(*t.contained); }
 		~ExpressionType() {/* delete contained; */}
 		
+		bool operator==(const ExpressionType& t) const;
+		bool operator!=(const ExpressionType& t) const { return !operator==(t); }
+		
 		Type type;
 		///In case of list and vector the inside type
 		ExpressionType* contained;
-		
-		QString error;
 };
 
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
@@ -64,9 +65,13 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		virtual QString accept(const Analitza::List* l);
 		
 		virtual QString result() const { return QString(); }
+		
+		bool isCorrect() const { return m_err.isEmpty(); }
+		QStringList errors() const { return m_err; }
 	private:
 		static Container* lambdaFor(Object*);
 		
+		QStringList m_err;
 		ExpressionType current;
 		Variables* m_v;
 		Expression m_exp;
