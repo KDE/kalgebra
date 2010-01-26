@@ -47,22 +47,22 @@ void TypeCheckTest::testConstruction_data()
 	QTest::addColumn<QString>("output");
 	
 	QTest::newRow("addition") << "2+4" << "num";
-	QTest::newRow("addition") << "list{tovector(3)}" << "[<num>]";
-	QTest::newRow("additionvec") << "vector{2,2}+vector{2,2}" << "<num>";
+	QTest::newRow("addition_") << "list{tovector(3)}" << "[<num,2>]";
+	QTest::newRow("additionvec") << "vector{2,2}+vector{2,2}" << "<num,2>";
 	QTest::newRow("sum") << "sum(x : x=1..3)" << "num";
-	QTest::newRow("sumvec") << "sum(vector{x,x} : x=1..3)" << "<num>";
-	QTest::newRow("sumvec2") << "sum(x : x=vector{1,1}..vector{3,3})" << "<num>";
-	QTest::newRow("vector") << "vector {2,2}" << "<num>";
+	QTest::newRow("sumvec") << "sum(vector{x,x} : x=1..3)" << "<num,2>";
+	QTest::newRow("sumvec2") << "sum(x : x=vector{1,1}..vector{3,3})" << "<num,2>";
+	QTest::newRow("vector") << "vector {2,2}" << "<num,2>";
 	QTest::newRow("list") << "list {2,2}" << "[num]";
 	QTest::newRow("direct") << "(x->x)(3)" << "num";
 	QTest::newRow("call") << "fnum(3)" << "num";
 	QTest::newRow("call plus") << "fplus(3)" << "num";
-	QTest::newRow("call plus vect") << "fplus(vector{3})" << "<num>";
-	QTest::newRow("num to vec") << "tovector(3)" << "<num>";
-	QTest::newRow("vec to vec") << "tovector(vector{3})" << "<<num>>";
+	QTest::newRow("call plus vect") << "fplus(vector{3})" << "<num,1>";
+	QTest::newRow("num to vec") << "tovector(3)" << "<num,2>";
+	QTest::newRow("vec to vec") << "tovector(vector{3})" << "<<num,1>,2>";
 	QTest::newRow("piecewise") << "piecewise { x=3? 3, ?2 }" << "num";
 	QTest::newRow("selector") << "selector(2, vector{3, 3})" << "num";
-	QTest::newRow("selector") << "selector(2, vector{vector{3}, vector{3}})" << "<num>";
+	QTest::newRow("selector") << "selector(2, vector{vector{3}, vector{3}})" << "<num,1>";
 }
 
 void TypeCheckTest::testConstruction()

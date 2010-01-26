@@ -470,7 +470,7 @@ ExpressionType typeRealVector(Operator::OperatorType op, const ExpressionType& v
 	if(op==Operator::selector)
 		return *vec.contained;
 	else
-		return ExpressionType(ExpressionType::Vector, *vec.contained);
+		return ExpressionType(ExpressionType::Vector, *vec.contained, vec.size);
 }
 
 ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType& pt1,
@@ -479,7 +479,7 @@ ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType&
 	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Value)  return ExpressionType(ExpressionType::Value);
 	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Value)  return ExpressionType(ExpressionType::Vector, *pt1.contained);
 	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Vector) return typeRealVector(op, pt2);
-	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Vector) return ExpressionType(ExpressionType::Vector, *pt1.contained);
+	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Vector && pt1.size==pt2.size) return ExpressionType(ExpressionType::Vector, *pt1.contained, pt1.size);
 	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::List)   return *pt2.contained;
 	if(pt1.type==ExpressionType::List   && pt2.type==ExpressionType::List && op==Operator::_union)
 																			 return ExpressionType(ExpressionType::List, *pt1.contained);

@@ -48,7 +48,7 @@ QString ExpressionType::toString() const
 			ret='['+contained->toString()+']';
 			break;
 		case ExpressionType::Vector:
-			ret='<'+contained->toString()+'>';
+			ret='<'+contained->toString()+','+QString::number(size)+'>';
 			break;
 		case ExpressionType::Error:
 			ret="err";
@@ -60,7 +60,7 @@ QString ExpressionType::toString() const
 
 bool ExpressionType::operator==(const Analitza::ExpressionType& t) const
 {
-	return t.type==type && ((!t.contained && !contained) || (t.contained && contained && *t.contained==*contained));
+	return t.type==type && t.size==size && ((!t.contained && !contained) || (t.contained && contained && *t.contained==*contained));
 }
 
 ExpressionTypeChecker::ExpressionTypeChecker(const Expression& exp, Variables* v)
@@ -214,6 +214,7 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 	
 	ExpressionType t(ExpressionType::Vector);
 	t.contained=new ExpressionType(current);
+	t.size=v->size();
 	
 	typeIs(v->constBegin(), v->constEnd(), *t.contained);
 	current=t;

@@ -35,10 +35,10 @@ class ANALITZA_EXPORT ExpressionType
 		enum Type { Error=0, Value, Vector, List };
 		QString toString() const;
 		
-		ExpressionType(Type t=Error) : type(t), contained(0) {}
-		ExpressionType(Type t, const ExpressionType& contained) : type(t), contained(new ExpressionType(contained)) {}
+		ExpressionType(Type t=Error) : type(t), contained(0), size(-1) {}
+		ExpressionType(Type t, const ExpressionType& contained, int s=-1) : type(t), contained(new ExpressionType(contained)), size(s) {}
 		
-		ExpressionType(const ExpressionType& t) : type(t.type), contained(0)
+		ExpressionType(const ExpressionType& t) : type(t.type), contained(0), size(t.size)
 			{ if(t.contained) contained=new ExpressionType(*t.contained); }
 		~ExpressionType() {/* delete contained; */}
 		
@@ -48,6 +48,8 @@ class ANALITZA_EXPORT ExpressionType
 		Type type;
 		///In case of list and vector the inside type
 		ExpressionType* contained;
+		
+		int size;
 };
 
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
