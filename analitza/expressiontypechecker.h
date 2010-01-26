@@ -69,7 +69,12 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		bool isCorrect() const { return m_err.isEmpty(); }
 		QStringList errors() const { return m_err; }
 	private:
-		static Container* lambdaFor(Object*);
+		static const Container* lambdaFor(const Object* o);
+		void typeIs(const Object* o, const ExpressionType& type);
+		void typeIs(QVector<Object*>::const_iterator it,
+			const QVector<Object*>::const_iterator& itEnd, const ExpressionType& type );
+		void typeIs(QList<Object*>::const_iterator it,
+			const QList<Object*>::const_iterator& itEnd, const ExpressionType& type );
 		
 		QStringList m_err;
 		ExpressionType current;

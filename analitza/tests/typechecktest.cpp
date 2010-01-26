@@ -102,8 +102,10 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("piecewise result") << "piecewise { x=3? 3, ?vector{2} }";
 	QTest::newRow("piecewise condit") << "piecewise { vector{3}? 3, ?2 }";
 	
+	QTest::newRow("no operator") << "list { 2,2 }+list {2 }";
 	QTest::newRow("diff vectors") << "vector { 2,2 }+vector { 2 }";
 	QTest::newRow("diff types") << "list { 2,2 }+vector { 2 }";
-	QTest::newRow("wrong call") << "fplus(list{3})";
+	QTest::newRow("wrong call") << "(x->x+x)(list{3})";
+	QTest::newRow("wrong call2") << "fplus(list{3})";
 	QTest::newRow("wrong bounds") << "sum(x : x=1..vector{3,3})";
 }

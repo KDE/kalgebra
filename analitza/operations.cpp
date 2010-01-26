@@ -481,8 +481,8 @@ ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType&
 	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Vector) return typeRealVector(op, pt2);
 	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Vector) return ExpressionType(ExpressionType::Vector, *pt1.contained);
 	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::List)   return *pt2.contained;
-	if(pt1.type==ExpressionType::List   && pt2.type==ExpressionType::List)   return ExpressionType(ExpressionType::List, *pt1.contained);
+	if(pt1.type==ExpressionType::List   && pt2.type==ExpressionType::List && op==Operator::_union)
+																			 return ExpressionType(ExpressionType::List, *pt1.contained);
 	
-	Q_ASSERT(false && "wtf");
 	return ExpressionType(ExpressionType::Error);
 }

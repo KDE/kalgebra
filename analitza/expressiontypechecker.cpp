@@ -84,8 +84,12 @@ QString ExpressionTypeChecker::accept(const Operator* o)
 		QList<ExpressionType>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
 		current=parameters.first();
 		
-		for(; it!=itEnd; ++it)
+		for(; it!=itEnd; ++it) {
 			current = Analitza::Operations::type(o->operatorType(), current, *it);
+			if(current.type==ExpressionType::Error)
+				m_err += i18n("Cannot operate"); //TODO: Improve error message
+		}
+		
 	}
 	
 	return QString();
@@ -101,19 +105,19 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 	return QString();
 }
 
-QString ExpressionTypeChecker::accept(const Cn* val)
+QString ExpressionTypeChecker::accept(const Cn*)
 {
 	current=ExpressionType(Analitza::ExpressionType::Value);
 	return QString();
 }
 
-Container* ExpressionTypeChecker::lambdaFor(Object* o)
+const Container* ExpressionTypeChecker::lambdaFor(const Object* o)
 {
 	if(o->type()==Object::variable) {
-		return lambdaFor(static_cast<Ci*>(o)->value());
+		return lambdaFor(static_cast<const Ci*>(o)->value());
 	} else if(o->type()==Object::container) {
-		Q_ASSERT(((Container*) o)->containerType()==Container::lambda);
-		return (Container*) o;
+		Q_ASSERT(((const Container*) o)->containerType()==Container::lambda);
+		return (const Container*) o;
 	}
 	
 	Q_ASSERT(false);
@@ -137,7 +141,13 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				Object* ul=c->ulimit();
 				if(ul) {
 					ul->visit(this);
+					
 					m_typeForBVar[c->bvarStrings().first()]=current;
+// 					qDebug() << "peee" << current << c->dlimit()->toString() << c->ulimit()->toString();
+					
+					typeIs(c->dlimit(), ExpressionType(current));
+					
+// 					qDebug() << "taaa" << current;
 				}
 			}
 			
@@ -154,7 +164,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					(*c->firstValue())->visit(this);
 					break;
 				case Operator::function: {
-					Container* operation=lambdaFor(c->m_params.first());
+					const Container* operation=lambdaFor(c->m_params.first());
 	// 				qDebug() << "calling " << c->toString() << operation->toString();
 					
 					QStringList names=operation->bvarStrings();
@@ -166,22 +176,28 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					
 	// 				qDebug() << "vars" << m_typeForBVar;
 					operation->visit(this);
+// 					qDebug() << "peeeeee" << current << m_err;
 				} break;
 				default:
 					o.visit(this);
 					break;
 			}
 		}	break;
-		case Container::lambda: {
-			c->m_params.last()->visit(this);
-		}	break;
+		case Container::piecewise:
+			c->m_params.first()->visit(this);
+			typeIs(c->m_params.constBegin(), c->m_params.constEnd(), current); //condition check
+			
+			break;
+		case Container::piece:
+			typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
+			c->m_params.first()->visit(this); //we return the body
+			break;
+		case Container::lambda:
+		case Container::otherwise:
 		case Container::math:
 		case Container::none:
 		case Container::downlimit:
 		case Container::uplimit:
-		case Container::piecewise:
-		case Container::otherwise:
-		case Container::piece:
 		case Container::declare:
 		case Container::bvar:
 		case Container::domainofapplication:
@@ -199,15 +215,7 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 	ExpressionType t(ExpressionType::Vector);
 	t.contained=new ExpressionType(current);
 	
-	//check
-	Vector::const_iterator it=v->constBegin(), itEnd=v->constEnd();
-	for(; it!=itEnd; ++it) {
-		(*it)->visit(this);
-		if(current!=*t.contained)
-			m_err += i18n("Cannot convert %1 to %2", t.contained->toString(), current.toString());
-	}
-	//
-	
+	typeIs(v->constBegin(), v->constEnd(), *t.contained);
 	current=t;
 	
 	return QString();
@@ -220,18 +228,33 @@ QString ExpressionTypeChecker::accept(const List* l)
 	ExpressionType t(ExpressionType::List);
 	t.contained=new ExpressionType(current);
 	
-	//check
-	List::const_iterator it=l->constBegin(), itEnd=l->constEnd();
-	for(; it!=itEnd; ++it) {
-		(*it)->visit(this);
-		if(current!=*t.contained)
-			m_err += i18n("Cannot convert %1 to %2", t.contained->toString(), current.toString());
-	}
-	//
+	typeIs(l->constBegin(), l->constEnd(), *t.contained);
 	
 	current=t;
 	
 	return QString();
+}
+
+void ExpressionTypeChecker::typeIs(Vector::const_iterator it,
+			const Vector::const_iterator& itEnd, const ExpressionType& type )
+{
+	for(; it!=itEnd; ++it)
+		typeIs(*it, type);
+}
+
+void ExpressionTypeChecker::typeIs(List::const_iterator it,
+			const List::const_iterator& itEnd, const ExpressionType& type )
+{
+	for(; it!=itEnd; ++it)
+		typeIs(*it, type);
+}
+
+void ExpressionTypeChecker::typeIs(const Object* o, const ExpressionType& type)
+{
+	o->visit(this);
+	
+	if(current!=type)
+		m_err += i18n("Cannot convert %1 to %2", type.toString(), current.toString());
 }
 
 }
