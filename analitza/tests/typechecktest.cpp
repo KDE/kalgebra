@@ -34,6 +34,7 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("fnum", Analitza::Expression("x->3"));
 	v->modify("fplus", Analitza::Expression("x->x+x"));
 	v->modify("tovector", Analitza::Expression("x->vector{x,x}"));
+	v->modify("number", Analitza::Expression("3"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -60,7 +61,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("call plus vect") << "fplus(vector{3})" << "<num,1>";
 	QTest::newRow("num to vec") << "tovector(3)" << "<num,2>";
 	QTest::newRow("vec to vec") << "tovector(vector{3})" << "<<num,1>,2>";
-	QTest::newRow("piecewise") << "piecewise { x=3? 3, ?2 }" << "num";
+	QTest::newRow("piecewise") << "piecewise { number=3? 3, ?2 }" << "num";
 	QTest::newRow("selector") << "selector(2, vector{3, 3})" << "num";
 	QTest::newRow("selector") << "selector(2, vector{vector{3}, vector{3}})" << "<num,1>";
 }
@@ -72,10 +73,11 @@ void TypeCheckTest::testConstruction()
 	
 	Analitza::Expression e(input);
 	QVERIFY(e.isCorrect());
-	Analitza::ExpressionTypeChecker t(e, v);
+	Analitza::ExpressionTypeChecker t(v);
 	
+	QCOMPARE(t.check(e).toString(), output);
+	if(!t.isCorrect()) qDebug() << "errors: " << t.errors();
 	QVERIFY(t.isCorrect());
-	QCOMPARE(t.check().toString(), output);
 }
 
 void TypeCheckTest::testUncorrection()
@@ -84,9 +86,9 @@ void TypeCheckTest::testUncorrection()
 	
 	Analitza::Expression e(input);
 	QVERIFY(e.isCorrect());
-	Analitza::ExpressionTypeChecker t(e, v);
+	Analitza::ExpressionTypeChecker t(v);
 	
-	t.check(); //ignore result
+	t.check(e); //ignore result
 	
 	QVERIFY(!t.isCorrect());
 }

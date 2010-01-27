@@ -63,16 +63,17 @@ bool ExpressionType::operator==(const Analitza::ExpressionType& t) const
 	return t.type==type && t.size==size && ((!t.contained && !contained) || (t.contained && contained && *t.contained==*contained));
 }
 
-ExpressionTypeChecker::ExpressionTypeChecker(const Expression& exp, Variables* v)
-	: m_v(v), m_exp(exp)
+ExpressionTypeChecker::ExpressionTypeChecker(Variables* v)
+	: m_v(v)
 {}
 
-ExpressionType ExpressionTypeChecker::check()
+ExpressionType ExpressionTypeChecker::check(const Expression& _exp)
 {
+	Expression exp(_exp);
 	current=ExpressionType(ExpressionType::Error);
 	
-	m_exp.tree()->decorate(AnalitzaUtils::variablesScope(m_v));
-	m_exp.tree()->visit(this);
+	exp.tree()->decorate(AnalitzaUtils::variablesScope(m_v));
+	exp.tree()->visit(this);
 	return current;
 }
 
@@ -87,7 +88,7 @@ QString ExpressionTypeChecker::accept(const Operator* o)
 		for(; it!=itEnd; ++it) {
 			current = Analitza::Operations::type(o->operatorType(), current, *it);
 			if(current.type==ExpressionType::Error)
-				m_err += i18n("Cannot operate"); //TODO: Improve error message
+				m_err += i18n("Cannot operate '%1'", o->toString() ); //TODO: Improve error message
 		}
 		
 	}
@@ -102,6 +103,9 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 	} else {
 		current=m_typeForBVar[var->name()];
 	}
+	
+	if(current.type==ExpressionType::Error)
+		m_err += i18n("Cannot check '%1' type", var->name());
 	return QString();
 }
 

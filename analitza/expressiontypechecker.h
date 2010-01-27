@@ -55,9 +55,9 @@ class ANALITZA_EXPORT ExpressionType
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 {
 	public:
-		ExpressionTypeChecker(const Analitza::Expression& exp, Analitza::Variables* v);
+		ExpressionTypeChecker(Analitza::Variables* v);
 		
-		ExpressionType check();
+		ExpressionType check(const Analitza::Expression& exp);
 		
 		virtual QString accept(const Analitza::Operator* var);
 		virtual QString accept(const Analitza::Ci* var);
@@ -81,7 +81,6 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QStringList m_err;
 		ExpressionType current;
 		Variables* m_v;
-		Expression m_exp;
 		QList<ExpressionType> parameters;
 		QHash<QString, ExpressionType> m_typeForBVar;
 };
