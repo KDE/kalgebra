@@ -22,7 +22,6 @@
 #include "analitzaexport.h"
 #include "expressionwriter.h"
 #include "analitzaexport.h"
-#include <QSharedPointer>
 #include "expression.h"
 #include <QStack>
 
