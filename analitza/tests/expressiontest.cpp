@@ -178,6 +178,8 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("wrong piece") << "plus(piece{2+2}, 1,2,3)" << false;
 	QTest::newRow("wrong sum") << "sum(x : x)" << false;
 	QTest::newRow("nopiece") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }" << false;
+	QTest::newRow("wrong count") << "plus(1)" << false;
+	QTest::newRow("wrong parameters") << "selector(vector{1,1/3})" << false;
 }
 
 void ExpressionTest::testCorrection()

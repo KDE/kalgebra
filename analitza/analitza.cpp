@@ -65,13 +65,12 @@ void Analitza::Analitza::setExpression(const Expression & e)
 		m_hasdeps=m_exp.tree()->decorate(varsScope());
 		
 		//We will just be able to tell the type for independent expressions
-// 		if(!m_hasdeps) {
-// 			ExpressionTypeChecker check(m_vars);
-// 			check.check(m_exp);
-// 			
-// 			if(check.isCorrect())
-// 				m_err += check.errors();
-// 		}
+		if(!m_hasdeps) {
+			ExpressionTypeChecker check(m_vars);
+			ExpressionType s=check.check(m_exp);
+			
+			m_err += check.errors();
+		}
 	}
 }
 

@@ -368,8 +368,6 @@ void AnalitzaTest::testTypeUncorrection()
 		b.setExpression(e);
 		correct=b.isCorrect();
 		
-		qDebug() << "xeeeeeee" << e.toString() << correct;
-		
 		if(correct)
 			b.calculate().toReal().value();
 		
@@ -384,8 +382,6 @@ void AnalitzaTest::testTypeUncorrection_data()
 	QTest::addColumn<QStringList>("expression");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
-	QTest::newRow("wrong count") << QStringList("plus(1)");
-	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
 	
 	QStringList script;

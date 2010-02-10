@@ -51,7 +51,7 @@ QString ExpressionType::toString() const
 			ret='<'+m_contained->toString()+','+QString::number(m_size)+'>';
 			break;
 		case ExpressionType::Undefined:
-			ret="err";
+			ret="undef";
 			break;
 	}
 	
@@ -95,14 +95,18 @@ QString ExpressionTypeChecker::accept(const Operator* o)
 {
 	if(parameters.size()==1) {
 		current=Analitza::Operations::typeUnary(o->operatorType(), parameters.first());
+		if(current.type()==ExpressionType::Undefined)
+			m_err += i18n("Cannot apply '%1' to '%2'", o->toString(), parameters.first().toString()); //TODO: Improve error message
 	} else {
 		QList<ExpressionType>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
 		current=parameters.first();
 		
 		for(; it!=itEnd; ++it) {
-			current = Analitza::Operations::type(o->operatorType(), current, *it);
-			if(current.type()==ExpressionType::Undefined)
-				m_err += i18n("Cannot operate '%1'", o->toString() ); //TODO: Improve error message
+			if(current.type()!=ExpressionType::Undefined && it->type()!=ExpressionType::Undefined) {
+				current = Analitza::Operations::type(o->operatorType(), current, *it);
+				if(current.type()==ExpressionType::Undefined)
+					m_err += i18n("Cannot operate '%1'", o->toString() ); //TODO: Improve error message
+			}
 		}
 		
 	}
@@ -132,8 +136,8 @@ QString ExpressionTypeChecker::accept(const Cn*)
 //TODO: make it possible to return lambda's in an expression
 const Container* ExpressionTypeChecker::lambdaFor(const Object* o)
 {
-// 	qDebug() << "xxxxx" << o->toString();
-	
+	if(o==0)
+		return 0;
 	if(o->type()==Object::variable) {
 		return lambdaFor(static_cast<const Ci*>(o)->value());
 	} else if(o->type()==Object::container) {
@@ -142,7 +146,6 @@ const Container* ExpressionTypeChecker::lambdaFor(const Object* o)
 		return (const Container*) o;
 	}
 	
-	Q_ASSERT(false);
 	return 0;
 }
 
@@ -190,21 +193,28 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					const Container* operation=lambdaFor(c->m_params.first());
 	// 				qDebug() << "calling " << c->toString() << operation->toString();
 					
-					QStringList names=operation->bvarStrings();
-					Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
-					
-					for(int i=0; it!=itEnd; ++it, ++i) {
-						m_typeForBVar[names[i]]=parameters[i];
-					}
-					
-// 					qDebug() << "vars" << m_typeForBVar;
-					if(!m_calls.contains(operation)) {
-						m_calls.push(operation);
-						operation->visit(this);
-						const Object* top=m_calls.pop();
-						Q_ASSERT(top==operation);
-					} else {
+					if(!operation) {
+						m_err += i18n("Cannot call '%1'", c->m_params.first()->toString());
 						current=ExpressionType(ExpressionType::Undefined);
+					} else {
+						QStringList names=operation->bvarStrings();
+						Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
+						int i;
+						for(i=0; it!=itEnd && i<names.size(); ++it, ++i) {
+							m_typeForBVar[names[i]]=parameters[i];
+						}
+						
+						if(names.size()!=i)
+							m_err += i18n("Wrong number of parameters when calling '%1'", c->m_params.first()->toString());
+						else if(!m_calls.contains(operation)) {
+							m_calls.push(operation);
+							
+							operation->visit(this);
+							
+							m_calls.pop();
+						} else {
+							current=ExpressionType(ExpressionType::Undefined);
+						}
 					}
 // 					qDebug() << "peeeeee" << current << m_err;
 				} break;
@@ -261,10 +271,14 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 
 QString ExpressionTypeChecker::accept(const List* l)
 {
-	l->at(0)->visit(this);
+	ExpressionType tc(ExpressionType::Undefined);
+	if(l->size()>0) {
+		l->at(0)->visit(this);
+		tc=current;
+	}
 	
-	ExpressionType t(ExpressionType::List, ExpressionType(current));
-	typeIs(l->constBegin(), l->constEnd(), t.contained());
+	ExpressionType t(ExpressionType::List, tc);
+	typeIs(l->constBegin(), l->constEnd(), tc);
 	current=t;
 	
 	return QString();

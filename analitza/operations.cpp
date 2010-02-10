@@ -460,8 +460,11 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 }
 
 //De facto truth. Should be fixed once there's more variety
-ExpressionType Operations::typeUnary(Operator::OperatorType, const ExpressionType&)
+ExpressionType Operations::typeUnary(Operator::OperatorType op, const ExpressionType& type)
 {
+	if(op==Operator::card && type.type()==ExpressionType::Value)
+		return ExpressionType(ExpressionType::Undefined);
+	
 	return ExpressionType(ExpressionType::Value);
 }
 
