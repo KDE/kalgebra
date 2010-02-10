@@ -40,17 +40,17 @@ QDebug operator<<(QDebug dbg, const ExpressionType &c)
 QString ExpressionType::toString() const
 {
 	QString ret;
-	switch(type) {
+	switch(m_type) {
 		case ExpressionType::Value:
 			ret="num";
 			break;
 		case ExpressionType::List:
-			ret='['+contained->toString()+']';
+			ret='['+m_contained->toString()+']';
 			break;
 		case ExpressionType::Vector:
-			ret='<'+contained->toString()+','+QString::number(size)+'>';
+			ret='<'+m_contained->toString()+','+QString::number(m_size)+'>';
 			break;
-		case ExpressionType::Error:
+		case ExpressionType::Undefined:
 			ret="err";
 			break;
 	}
@@ -58,9 +58,20 @@ QString ExpressionType::toString() const
 	return ret;
 }
 
+ExpressionType ExpressionType::operator=(const Analitza::ExpressionType& et)
+{
+	if(&et!=this) {
+		m_type=et.type();
+		m_contained=et.m_contained? new ExpressionType(*et.m_contained) : 0;
+		m_size=et.m_size;
+	}
+	
+	return *this;
+}
+
 bool ExpressionType::operator==(const Analitza::ExpressionType& t) const
 {
-	return t.type==type && t.size==size && ((!t.contained && !contained) || (t.contained && contained && *t.contained==*contained));
+	return t.type()==m_type && t.m_size==m_size && ((!t.m_contained && !m_contained) || (t.m_contained && m_contained && *t.m_contained==*m_contained));
 }
 
 ExpressionTypeChecker::ExpressionTypeChecker(Variables* v)
@@ -70,9 +81,12 @@ ExpressionTypeChecker::ExpressionTypeChecker(Variables* v)
 ExpressionType ExpressionTypeChecker::check(const Expression& _exp)
 {
 	Expression exp(_exp);
-	current=ExpressionType(ExpressionType::Error);
+	current=ExpressionType(ExpressionType::Undefined);
 	
-	exp.tree()->decorate(AnalitzaUtils::variablesScope(m_v));
+	Object::ScopeInformation scope=AnalitzaUtils::variablesScope(m_v);
+	bool deps=exp.tree()->decorate(scope);
+	Q_ASSERT(!deps);
+	
 	exp.tree()->visit(this);
 	return current;
 }
@@ -87,7 +101,7 @@ QString ExpressionTypeChecker::accept(const Operator* o)
 		
 		for(; it!=itEnd; ++it) {
 			current = Analitza::Operations::type(o->operatorType(), current, *it);
-			if(current.type==ExpressionType::Error)
+			if(current.type()==ExpressionType::Undefined)
 				m_err += i18n("Cannot operate '%1'", o->toString() ); //TODO: Improve error message
 		}
 		
@@ -104,7 +118,7 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 		current=m_typeForBVar[var->name()];
 	}
 	
-	if(current.type==ExpressionType::Error)
+	if(current.type()==ExpressionType::Undefined)
 		m_err += i18n("Cannot check '%1' type", var->name());
 	return QString();
 }
@@ -115,12 +129,16 @@ QString ExpressionTypeChecker::accept(const Cn*)
 	return QString();
 }
 
+//TODO: make it possible to return lambda's in an expression
 const Container* ExpressionTypeChecker::lambdaFor(const Object* o)
 {
+// 	qDebug() << "xxxxx" << o->toString();
+	
 	if(o->type()==Object::variable) {
 		return lambdaFor(static_cast<const Ci*>(o)->value());
 	} else if(o->type()==Object::container) {
-		Q_ASSERT(((const Container*) o)->containerType()==Container::lambda);
+// 		Q_ASSERT(((const Container*) o)->containerType()==Container::lambda);
+		//it's a lambda or a diff(), weird huh?
 		return (const Container*) o;
 	}
 	
@@ -168,6 +186,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					(*c->firstValue())->visit(this);
 					break;
 				case Operator::function: {
+// 					qDebug() << "calling " << c->toString();
 					const Container* operation=lambdaFor(c->m_params.first());
 	// 				qDebug() << "calling " << c->toString() << operation->toString();
 					
@@ -178,8 +197,15 @@ QString ExpressionTypeChecker::accept(const Container* c)
 						m_typeForBVar[names[i]]=parameters[i];
 					}
 					
-	// 				qDebug() << "vars" << m_typeForBVar;
-					operation->visit(this);
+// 					qDebug() << "vars" << m_typeForBVar;
+					if(!m_calls.contains(operation)) {
+						m_calls.push(operation);
+						operation->visit(this);
+						const Object* top=m_calls.pop();
+						Q_ASSERT(top==operation);
+					} else {
+						current=ExpressionType(ExpressionType::Undefined);
+					}
 // 					qDebug() << "peeeeee" << current << m_err;
 				} break;
 				default:
@@ -188,13 +214,24 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			}
 		}	break;
 		case Container::piecewise:
-			c->m_params.first()->visit(this);
-			typeIs(c->m_params.constBegin(), c->m_params.constEnd(), current); //condition check
+			foreach(const Object* o, c->m_params) {
+				o->visit(this);
+				if(current.type()!=ExpressionType::Undefined)
+					break;
+			}
+			
+			if(current.type()==ExpressionType::Undefined)
+				m_err += i18n("Could not determine the type for piecewise");
+			else
+				typeIs(c->m_params.constBegin(), c->m_params.constEnd(), current); //branches
 			
 			break;
 		case Container::piece:
 			typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
 			c->m_params.first()->visit(this); //we return the body
+			break;
+		case Container::declare:
+			c->m_params.last()->visit(this);
 			break;
 		case Container::lambda:
 		case Container::otherwise:
@@ -202,7 +239,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		case Container::none:
 		case Container::downlimit:
 		case Container::uplimit:
-		case Container::declare:
 		case Container::bvar:
 		case Container::domainofapplication:
 			(*c->firstValue())->visit(this);
@@ -216,11 +252,8 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 {
 	v->at(0)->visit(this);
 	
-	ExpressionType t(ExpressionType::Vector);
-	t.contained=new ExpressionType(current);
-	t.size=v->size();
-	
-	typeIs(v->constBegin(), v->constEnd(), *t.contained);
+	ExpressionType t(ExpressionType::Vector, ExpressionType(current), v->size());
+	typeIs(v->constBegin(), v->constEnd(), t.contained());
 	current=t;
 	
 	return QString();
@@ -230,35 +263,25 @@ QString ExpressionTypeChecker::accept(const List* l)
 {
 	l->at(0)->visit(this);
 	
-	ExpressionType t(ExpressionType::List);
-	t.contained=new ExpressionType(current);
-	
-	typeIs(l->constBegin(), l->constEnd(), *t.contained);
-	
+	ExpressionType t(ExpressionType::List, ExpressionType(current));
+	typeIs(l->constBegin(), l->constEnd(), t.contained());
 	current=t;
 	
 	return QString();
 }
 
-void ExpressionTypeChecker::typeIs(Vector::const_iterator it,
-			const Vector::const_iterator& itEnd, const ExpressionType& type )
+template <class T>
+void ExpressionTypeChecker::typeIs(T it, const T& itEnd, const ExpressionType& type)
 {
 	for(; it!=itEnd; ++it)
-		typeIs(*it, type);
-}
-
-void ExpressionTypeChecker::typeIs(List::const_iterator it,
-			const List::const_iterator& itEnd, const ExpressionType& type )
-{
-	for(; it!=itEnd; ++it)
-		typeIs(*it, type);
+		typeIs(*it, ExpressionType(type));
 }
 
 void ExpressionTypeChecker::typeIs(const Object* o, const ExpressionType& type)
 {
 	o->visit(this);
 	
-	if(current!=type)
+	if(current!=type && current.type()!=ExpressionType::Undefined && type.type()!=ExpressionType::Undefined)
 		m_err += i18n("Cannot convert %1 to %2", type.toString(), current.toString());
 }
 

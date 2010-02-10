@@ -102,7 +102,7 @@ void ExpressionTest::testConversion()
 		qDebug() << ">>> " << parser.mathML() << "errors:" << parser.error();
 	QVERIFY(corr);
 	QVERIFY(parser.error().isEmpty());
-	qDebug() << "result:" << parser.mathML();
+// 	qDebug() << "result:" << parser.mathML();
 	
 	e->setMathML(parser.mathML());
 	if(!e->isCorrect())
@@ -177,6 +177,7 @@ void ExpressionTest::testCorrection_data()
 	QTest::newRow("xxx") << "piecewise {scalarproduct(vector{x, 1/x})}" << false;
 	QTest::newRow("wrong piece") << "plus(piece{2+2}, 1,2,3)" << false;
 	QTest::newRow("wrong sum") << "sum(x : x)" << false;
+	QTest::newRow("nopiece") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }" << false;
 }
 
 void ExpressionTest::testCorrection()

@@ -29,6 +29,7 @@
 #include "list.h"
 #include "variable.h"
 #include "analitzautils.h"
+#include "expressiontypechecker.h"
 
 using namespace AnalitzaUtils;
 
@@ -58,11 +59,20 @@ Analitza::Analitza::~Analitza()
 void Analitza::Analitza::setExpression(const Expression & e)
 {
 	m_exp=e;
-	
-	if(m_exp.isCorrect())
-		m_hasdeps=m_exp.tree()->decorate(varsScope());
-	
 	flushErrors();
+	
+	if(m_exp.isCorrect()) {
+		m_hasdeps=m_exp.tree()->decorate(varsScope());
+		
+		//We will just be able to tell the type for independent expressions
+// 		if(!m_hasdeps) {
+// 			ExpressionTypeChecker check(m_vars);
+// 			check.check(m_exp);
+// 			
+// 			if(check.isCorrect())
+// 				m_err += check.errors();
+// 		}
+	}
 }
 
 Analitza::Expression Analitza::Analitza::evaluate()

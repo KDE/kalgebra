@@ -35,6 +35,8 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("fplus", Analitza::Expression("x->x+x"));
 	v->modify("tovector", Analitza::Expression("x->vector{x,x}"));
 	v->modify("number", Analitza::Expression("3"));
+	v->modify("fwrong", Analitza::Expression("x->piecewise { 1>2 ? fwrong(x), ?fwrong(x+1) }"));
+	v->modify("frec", Analitza::Expression("x->piecewise { 3>3? frec(x-1), ? 1}"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -64,6 +66,9 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("piecewise") << "piecewise { number=3? 3, ?2 }" << "num";
 	QTest::newRow("selector") << "selector(2, vector{3, 3})" << "num";
 	QTest::newRow("selector") << "selector(2, vector{vector{3}, vector{3}})" << "<num,1>";
+	
+	QTest::newRow("infinite") << "piecewise { 2=3? frec(3), ? 3}" << "num";
+	QTest::newRow("infinite_1") << "piecewise { 2=3? 3, ? frec(3)}" << "num";
 }
 
 void TypeCheckTest::testConstruction()
@@ -101,7 +106,7 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("consistency vector") << "vector{2, list{2}}";
 	QTest::newRow("consistency list")   << "list{2, list{2}}";
 	
-	QTest::newRow("piecewise result") << "piecewise { x=3? 3, ?vector{2} }";
+	QTest::newRow("piecewise result") << "piecewise { 2=3? 3, ?vector{2} }";
 	QTest::newRow("piecewise condit") << "piecewise { vector{3}? 3, ?2 }";
 	
 	QTest::newRow("no operator") << "list { 2,2 }+list {2 }";
@@ -110,4 +115,5 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("wrong call") << "(x->x+x)(list{3})";
 	QTest::newRow("wrong call2") << "fplus(list{3})";
 	QTest::newRow("wrong bounds") << "sum(x : x=1..vector{3,3})";
+	QTest::newRow("infinite_2") << "fwrong(vector{3})";
 }

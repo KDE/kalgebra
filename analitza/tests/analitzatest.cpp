@@ -356,27 +356,39 @@ void AnalitzaTest::testCorrection()
 	QCOMPARE(res.toString(), result);
 }
 
-void AnalitzaTest::testUncorrection_data()
+void AnalitzaTest::testTypeUncorrection()
+{
+	QFETCH(QStringList, expression);
+	
+	bool correct=false;
+	Analitza::Analitza b;
+	
+	foreach(const QString &exp, expression) {
+		Expression e(exp, false);
+		b.setExpression(e);
+		correct=b.isCorrect();
+		
+		qDebug() << "xeeeeeee" << e.toString() << correct;
+		
+		if(correct)
+			b.calculate().toReal().value();
+		
+		if(!correct || !b.isCorrect())
+			break;
+	}
+	QVERIFY(!correct);
+}
+
+void AnalitzaTest::testTypeUncorrection_data()
 {
 	QTest::addColumn<QStringList>("expression");
-	QTest::newRow("wrong count") << QStringList("plus(1)");
-	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
-	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
-	QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
 	QTest::newRow("vect+sin") << QStringList("3+sin(vector{3,4,2})");
 	QTest::newRow("scalar+card") << QStringList("card(3)");
+	QTest::newRow("wrong count") << QStringList("plus(1)");
 	QTest::newRow("wrong parameters") << QStringList("selector(vector{1,1/3})");
 	QTest::newRow("wrong operation") << QStringList("lcm(vector{0}, vector{0})");
-	QTest::newRow("wrong sum") << QStringList("sum(x : x=10..0)");
-	QTest::newRow("recursive var") << QStringList("ww:=ww+1");
-	QTest::newRow("nopiece") << QStringList("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }");
 	
 	QStringList script;
-	script << "a:=b";
-	script << "b:=a";
-	QTest::newRow("var dependency cycle") << script;
-	
-	script.clear();
 	script << "x:=3";
 	script << "x(3)";
 	QTest::newRow("value call") << script;
@@ -385,6 +397,20 @@ void AnalitzaTest::testUncorrection_data()
 	script << "f:=(x,y)->x*y";
 	script << "f(3)";
 	QTest::newRow("call missing parameter") << script;
+}
+
+void AnalitzaTest::testUncorrection_data()
+{
+	QTest::addColumn<QStringList>("expression");
+	QTest::newRow("summatory with unknown uplimit") << QStringList("sum(x : x=1..)");
+	QTest::newRow("summatory with unknown downlimit") << QStringList("sum(x : x=..3)");
+	QTest::newRow("summatory with uncorrect downlimit") << QStringList("sum(x : x=x..3)");
+	QTest::newRow("wrong sum") << QStringList("sum(x : x=10..0)");
+	
+	QStringList script;
+	script << "a:=b";
+	script << "b:=a";
+	QTest::newRow("var dependency cycle") << script;
 }
 
 void AnalitzaTest::testUncorrection()
@@ -431,7 +457,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("no var") << "2+2" << "4";
 	QTest::newRow("simple") << "x+x" << "2*x";
 	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
-// 	QTest::newRow("lambda2") << "(x->x+x)(x)" << "x->2*x";
+// 	QTest::newRow("lambda2")<< "(x->x+x)(x)" << "x->2*x";
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
@@ -719,7 +745,6 @@ void AnalitzaTest::testOperators()
 				qDeleteAll(bvarValues);
 			} else {
 				Expression e(apply);
-				qDebug() << "kkkkkkk" << e.toString();
 				a->setExpression(e);
 				a->calculate();
 				a->evaluate();

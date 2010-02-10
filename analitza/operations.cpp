@@ -468,23 +468,23 @@ ExpressionType Operations::typeUnary(Operator::OperatorType, const ExpressionTyp
 ExpressionType typeRealVector(Operator::OperatorType op, const ExpressionType& vec)
 {
 	if(op==Operator::selector)
-		return *vec.contained;
+		return vec.contained();
 	else
-		return ExpressionType(ExpressionType::Vector, *vec.contained, vec.size);
+		return ExpressionType(ExpressionType::Vector, vec.contained(), vec.size());
 }
 
 ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType& pt1,
 															const ExpressionType& pt2)
 {
-	if(pt1.type==ExpressionType::Error  || pt2.type==ExpressionType::Error) return ExpressionType(ExpressionType::Error);
-	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Value) return ExpressionType(ExpressionType::Value);
-	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Value) return ExpressionType(ExpressionType::Vector, *pt1.contained);
-	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::Vector)return typeRealVector(op, pt2);
-	if(pt1.type==ExpressionType::Vector && pt2.type==ExpressionType::Vector && pt1.size==pt2.size)
-																			return ExpressionType(ExpressionType::Vector, *pt1.contained, pt1.size);
-	if(pt1.type==ExpressionType::Value  && pt2.type==ExpressionType::List)	return *pt2.contained;
-	if(pt1.type==ExpressionType::List   && pt2.type==ExpressionType::List && op==Operator::_union)
-																			return ExpressionType(ExpressionType::List, *pt1.contained);
+	if(pt1.type()==ExpressionType::Undefined  || pt2.type()==ExpressionType::Undefined) return ExpressionType(ExpressionType::Undefined);
+	if(pt1.type()==ExpressionType::Value  && pt2.type()==ExpressionType::Value) return ExpressionType(ExpressionType::Value);
+	if(pt1.type()==ExpressionType::Vector && pt2.type()==ExpressionType::Value) return ExpressionType(ExpressionType::Vector, pt1.contained());
+	if(pt1.type()==ExpressionType::Value  && pt2.type()==ExpressionType::Vector)return typeRealVector(op, pt2);
+	if(pt1.type()==ExpressionType::Vector && pt2.type()==ExpressionType::Vector && pt1.size()==pt2.size())
+																			return ExpressionType(ExpressionType::Vector, pt1.contained(), pt1.size());
+	if(pt1.type()==ExpressionType::Value  && pt2.type()==ExpressionType::List)	return pt2.contained();
+	if(pt1.type()==ExpressionType::List   && pt2.type()==ExpressionType::List && op==Operator::_union)
+																			return ExpressionType(ExpressionType::List, pt1.contained());
 	
-	return ExpressionType(ExpressionType::Error);
+	return ExpressionType(ExpressionType::Undefined);
 }

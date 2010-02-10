@@ -61,6 +61,10 @@ Q_OBJECT
 		void testUncorrection_data();
 		void testUncorrection();
 		
+		///We check that it is not correct because of type
+		void testTypeUncorrection_data();
+		void testTypeUncorrection();
+		
 		void testCompareTrees_data();
 		void testCompareTrees();
 		

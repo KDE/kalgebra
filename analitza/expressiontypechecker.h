@@ -24,6 +24,7 @@
 #include "analitzaexport.h"
 #include <QSharedPointer>
 #include "expression.h"
+#include <QStack>
 
 namespace Analitza
 {
@@ -32,39 +33,45 @@ class Variables;
 class ANALITZA_EXPORT ExpressionType
 {
 	public:
-		enum Type { Error=0, Value, Vector, List };
+		enum Type { Undefined=0, Value, Vector, List };
 		QString toString() const;
 		
-		ExpressionType(Type t=Error) : type(t), contained(0), size(-1) {}
-		ExpressionType(Type t, const ExpressionType& contained, int s=-1) : type(t), contained(new ExpressionType(contained)), size(s) {}
+		ExpressionType(Type t=Undefined) : m_type(t), m_contained(0), m_size(-1) {}
+		ExpressionType(Type t, const ExpressionType& contained, int s=-1) : m_type(t), m_contained(new ExpressionType(contained)), m_size(s) {}
 		
-		ExpressionType(const ExpressionType& t) : type(t.type), contained(0), size(t.size)
-			{ if(t.contained) contained=new ExpressionType(*t.contained); }
+		ExpressionType(const ExpressionType& t) : m_type(t.m_type), m_contained(0), m_size(t.m_size)
+			{ if(t.m_contained) m_contained=new ExpressionType(*t.m_contained); }
 		~ExpressionType() {/* delete contained; */}
 		
 		bool operator==(const ExpressionType& t) const;
 		bool operator!=(const ExpressionType& t) const { return !operator==(t); }
+		ExpressionType operator=(const ExpressionType& et);
 		
-		Type type;
+		Type type() const { return m_type; }
+		ExpressionType contained() const { return *m_contained; }
+		int size() const { return m_size; }
+		
+	private:
+		Type m_type;
 		///In case of list and vector the inside type
-		ExpressionType* contained;
+		ExpressionType* m_contained;
 		
-		int size;
+		int m_size;
 };
 
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 {
 	public:
-		ExpressionTypeChecker(Analitza::Variables* v);
+		ExpressionTypeChecker(Variables* v);
 		
-		ExpressionType check(const Analitza::Expression& exp);
+		ExpressionType check(const Expression& exp);
 		
-		virtual QString accept(const Analitza::Operator* var);
-		virtual QString accept(const Analitza::Ci* var);
-		virtual QString accept(const Analitza::Cn* var);
-		virtual QString accept(const Analitza::Container* var);
-		virtual QString accept(const Analitza::Vector* var);
-		virtual QString accept(const Analitza::List* l);
+		virtual QString accept(const Operator* var);
+		virtual QString accept(const Ci* var);
+		virtual QString accept(const Cn* var);
+		virtual QString accept(const Container* var);
+		virtual QString accept(const Vector* var);
+		virtual QString accept(const List* l);
 		
 		virtual QString result() const { return QString(); }
 		
@@ -73,16 +80,17 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 	private:
 		static const Container* lambdaFor(const Object* o);
 		void typeIs(const Object* o, const ExpressionType& type);
-		void typeIs(QVector<Object*>::const_iterator it,
-			const QVector<Object*>::const_iterator& itEnd, const ExpressionType& type );
-		void typeIs(QList<Object*>::const_iterator it,
-			const QList<Object*>::const_iterator& itEnd, const ExpressionType& type );
+		
+		template <class T>
+		void typeIs(T it,
+			const T& itEnd, const ExpressionType& type );
 		
 		QStringList m_err;
 		ExpressionType current;
 		Variables* m_v;
 		QList<ExpressionType> parameters;
 		QHash<QString, ExpressionType> m_typeForBVar;
+		QStack<const Object*> m_calls;
 };
 
 QDebug operator<<(QDebug dbg, const ExpressionType &c);
