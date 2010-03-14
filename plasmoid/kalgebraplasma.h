@@ -20,7 +20,7 @@
 #ifndef KALGEBRAPLASMA_HEADER
 #define KALGEBRAPLASMA_HEADER
 
-#include <Plasma/Applet>
+#include <Plasma/PopupApplet>
 #include <Plasma/Label>
 #include <Plasma/LineEdit>
 #include <KLineEdit>
@@ -30,7 +30,7 @@
 class QSizeF;
 class QLabel;
 
-class KAlgebraPlasmoid : public Plasma::Applet
+class KAlgebraPlasmoid : public Plasma::PopupApplet
 {
 	Q_OBJECT
 	public:
@@ -38,9 +38,7 @@ class KAlgebraPlasmoid : public Plasma::Applet
 		~KAlgebraPlasmoid();
 		
 		void init();
-		
-	protected:
-		void constraintsEvent(Plasma::Constraints constraints);
+		virtual QGraphicsWidget* graphicsWidget();
 		
 	private slots:
 		void simplify();
@@ -49,12 +47,11 @@ class KAlgebraPlasmoid : public Plasma::Applet
 	private:
 		static QColor correctColor();
 		static QColor errorColor();
-		static int resultSize();
 		static int simplificationSize();
 		
-		void updateFactor();
 		void plasmoidFont(bool big, const QColor& c, bool bold);
 		
+		QGraphicsWidget* m_widget;
 		QGraphicsLinearLayout* m_layout;
 		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;

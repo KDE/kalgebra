@@ -24,9 +24,13 @@
 #include <QLabel>
 #include <QGraphicsProxyWidget>
 #include <QFont>
+#include <KIcon>
+#include <KIconLoader>
 
 #include <plasma/theme.h>
 #include <plasma/dataengine.h>
+#include <plasma/tooltipcontent.h>
+#include <plasma/tooltipmanager.h>
 
 #include "expression.h"
 
@@ -36,14 +40,11 @@ using Analitza::Expression;
 QColor KAlgebraPlasmoid::correctColor() { return Theme::defaultTheme()->color(Theme::TextColor);}
 QColor KAlgebraPlasmoid::errorColor() { return Qt::red; }
 int KAlgebraPlasmoid::simplificationSize() {  return Theme::defaultTheme()->font(Theme::DefaultFont).pointSize(); }
-int KAlgebraPlasmoid::resultSize() { return simplificationSize()*2; }
 
 KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
-	: Applet(parent, args), m_layout(0)
+	: PopupApplet(parent, args), m_widget(0), m_layout(0)
 {
 	KGlobal::locale()->insertCatalog("kalgebra");
-	setBackgroundHints(TranslucentBackground);
-	
 	setAspectRatioMode(IgnoreAspectRatio);
 }
 
@@ -51,45 +52,36 @@ KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
 
 void KAlgebraPlasmoid::init()
 {
-	m_input = new Plasma::LineEdit(this);
+// 	updateFactor();
+	
+	setPopupIcon("kalgebra");
+}
+
+QGraphicsWidget* KAlgebraPlasmoid::graphicsWidget()
+{
+	if(m_widget)
+		return m_widget;
+	
+	m_widget = new QGraphicsWidget(this);
+	m_input = new Plasma::LineEdit(m_widget);
+	m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	m_input->setClearButtonShown(true);
 	m_input->setFocus();
 	
-	m_output = new Plasma::Label(this);
+	m_output = new Plasma::Label(m_widget);
 	m_output->setMinimumSize(20, 20);
 	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
 	
-	m_layout = new QGraphicsLinearLayout(this);
+	m_layout = new QGraphicsLinearLayout(m_widget);
+	m_layout->setOrientation(Qt::Vertical);
 	m_layout->addItem(m_input);
 	m_layout->addItem(m_output);
+	m_widget->setPreferredSize(300,300);
 	
 	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
 	connect(m_input->nativeWidget(), SIGNAL(textChanged(QString)), this, SLOT(simplify()));
 	
-	updateFactor();
-	resize(300,300);
-}
-
-void KAlgebraPlasmoid::updateFactor()
-{
-	switch(formFactor()) {
-		case Horizontal:
-			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-			m_layout->setOrientation(Qt::Horizontal);
-			break;
-		default:
-			m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-			m_layout->setOrientation(Qt::Vertical);
-			break;
-	}
-}
-
-void KAlgebraPlasmoid::constraintsEvent(Constraints constraints)
-{
-	Q_ASSERT(m_layout);
-	if(constraints & FormFactorConstraint) {
-		updateFactor();
-	}
+	return m_widget;
 }
 
 void KAlgebraPlasmoid::addOperation()
@@ -105,7 +97,15 @@ void KAlgebraPlasmoid::addOperation()
 	
 	QColor c;
 	if(a.isCorrect()) {
-		m_output->setText(res.toString());
+		QString result=res.toString();
+		m_output->setText(result);
+		
+		Plasma::ToolTipContent data;
+		data.setMainText(i18n("KAlgebra"));
+		data.setSubText(result);
+		data.setImage(KIcon("kalgebra").pixmap(IconSize(KIconLoader::Desktop)));
+		Plasma::ToolTipManager::self()->setContent(this, data);
+		
 		c=correctColor();
 	} else {
 		m_output->setText(a.errors().join("\n"));
