@@ -59,27 +59,27 @@ void KAlgebraPlasmoid::init()
 
 QGraphicsWidget* KAlgebraPlasmoid::graphicsWidget()
 {
-	if(m_widget)
-		return m_widget;
-	
-	m_widget = new QGraphicsWidget(this);
-	m_input = new Plasma::LineEdit(m_widget);
-	m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	m_input->setClearButtonShown(true);
+	if(!m_widget) {
+		m_widget = new QGraphicsWidget(this);
+		m_input = new Plasma::LineEdit(m_widget);
+		m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+		m_input->setClearButtonShown(true);
+		
+		m_output = new Plasma::Label(m_widget);
+		m_output->setMinimumSize(20, 20);
+		m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
+		
+		m_layout = new QGraphicsLinearLayout(m_widget);
+		m_layout->setOrientation(Qt::Vertical);
+		m_layout->addItem(m_input);
+		m_layout->addItem(m_output);
+		m_widget->setPreferredSize(300,300);
+		
+		connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
+		connect(m_input->nativeWidget(), SIGNAL(textChanged(QString)), this, SLOT(simplify()));
+	}
+	m_input->nativeWidget()->selectAll();
 	m_input->setFocus();
-	
-	m_output = new Plasma::Label(m_widget);
-	m_output->setMinimumSize(20, 20);
-	m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
-	
-	m_layout = new QGraphicsLinearLayout(m_widget);
-	m_layout->setOrientation(Qt::Vertical);
-	m_layout->addItem(m_input);
-	m_layout->addItem(m_output);
-	m_widget->setPreferredSize(300,300);
-	
-	connect(m_input, SIGNAL(editingFinished()), this, SLOT(addOperation()));
-	connect(m_input->nativeWidget(), SIGNAL(textChanged(QString)), this, SLOT(simplify()));
 	
 	return m_widget;
 }
