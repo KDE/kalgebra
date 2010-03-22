@@ -102,7 +102,7 @@ void KAlgebraPlasmoid::addOperation()
 		
 		Plasma::ToolTipContent data;
 		data.setMainText(i18n("KAlgebra"));
-		data.setSubText(result);
+		data.setSubText(i18n("%1 = %2", m_input->text(), result));
 		data.setImage(KIcon("kalgebra").pixmap(IconSize(KIconLoader::Desktop)));
 		Plasma::ToolTipManager::self()->setContent(this, data);
 		
