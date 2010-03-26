@@ -68,6 +68,7 @@ QGraphicsWidget* KAlgebraPlasmoid::graphicsWidget()
 		m_output = new Plasma::Label(m_widget);
 		m_output->setMinimumSize(20, 20);
 		m_output->nativeWidget()->setAlignment(Qt::AlignCenter);
+		m_output->setText(i18n("Enter some expression."));
 		
 		m_layout = new QGraphicsLinearLayout(m_widget);
 		m_layout->setOrientation(Qt::Vertical);
