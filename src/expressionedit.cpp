@@ -177,10 +177,8 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 		case Qt::Key_Enter:
 			if(m_completer->popup()->isVisible() && !static_cast<QTreeView*>(m_completer->popup())->selectionModel()->selectedRows().isEmpty()) 
 				completed(m_completer->currentCompletion());
-			else {
-				if(returnPress())
+			else if(returnPress())
 					QPlainTextEdit::keyPressEvent(e);
-			}
 			m_completer->popup()->hide();
 			break;
 		case Qt::Key_Up:

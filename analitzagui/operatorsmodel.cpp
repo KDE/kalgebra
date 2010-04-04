@@ -432,7 +432,7 @@ QString OperatorsModel::example(Operator o)
 			s="product(t:t=1..3)";
 			break;
 		case Operator::card:
-			s="card(vector { x, y, z })";
+			s="card(vector { x, 1, 2 })";
 			break;
 		case Operator::scalarproduct:
 			s="scalarproduct(vector { 0, x }, vector { x, 0 })";
@@ -494,7 +494,7 @@ QString OperatorsModel::example(Operator o)
 // 		case Operator::imaginary:
 			break;
 	}
-	return s;
+	return "x->"+s;
 }
 
 /*QString OperatorsModel::operToString(const Operator& op) const
