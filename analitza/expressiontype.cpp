@@ -152,44 +152,36 @@ void ExpressionType::addAssumptions(const QMap<QString, ExpressionType>& a)
 	/*valid=*/merge(m_assumptions, a);
 }
 
-ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& info, const QList<const ExpressionType*>& done) const
+ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& info) const
 {
 	ExpressionType ret;
-	static int deep=0;
-	deep++;
-// 	qDebug() << "hohohoho"<< QString(deep, '*') << *this << m_assumptions << m_assumptions.size() << m_contained.size() << done.size();
+// 	static int deep=0;
+// 	deep++;
+// 	qDebug() << "hohohoho"<< QString(deep, '-') << *this << m_assumptions << m_assumptions.size() << m_contained.size();
 	
-	if(done.contains(this))
-		return *this;
-	
-	if(m_type==ExpressionType::Any) {
+	if(m_type==ExpressionType::Any || (m_type==ExpressionType::Vector && m_size<0)) {
 		if(info.contains(m_any)) {
 			ret=info.value(m_any);
 			Q_ASSERT(ret.assumptions().isEmpty());
+			
+			ret.m_assumptions=m_assumptions;
 		} else
 			ret=*this;
 	} else {
 		ret=*this;
-		
-		if(m_type==ExpressionType::Vector && m_size<0) {
-			if(info.contains(m_size))
-				ret=info.value(m_size);
-		}
 		ret.m_contained.clear();
 		
-		QList<const ExpressionType*> _done(done);
-		_done.append(this);
-		
 		for(int i=0; i<m_contained.size(); i++) {
-			ret.m_contained+=m_contained[i].starsToType(info, _done);
-		}
-		
-		QMap<QString, ExpressionType>::iterator it=ret.m_assumptions.begin(), itEnd=ret.m_assumptions.end();
-		for(; it!=itEnd; ++it) {
-			*it=it->starsToType(info, _done);
+			ret.m_contained+=m_contained[i].starsToType(info);
 		}
 	}
-	deep--;
+	
+	QMap<QString, ExpressionType>::iterator it=ret.m_assumptions.begin(), itEnd=ret.m_assumptions.end();
+	for(; it!=itEnd; ++it) {
+		*it=it->starsToType(info);
+	}
+// 	deep--;
+// 	qDebug() << "MMMMMMMM" << ret << ret.assumptions() << m_assumptions;
 	
 	return ret;
 }
@@ -223,10 +215,10 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 			}
 		}
 	} else if(m_type==Vector && type.m_type==Vector) {
-		ret  = m_size<0 || m_size==type.m_size;
-		ret &= contained().canReduceTo(type.contained());
+		ret  = m_size<0 || type.m_size<0 || m_size==type.m_size;
+		ret &= contained().canReduceTo(type.contained()) || type.contained().canReduceTo(contained());
 	} else if(m_type==List && type.m_type==List) {
-		ret = contained().canReduceTo(type.contained());
+		ret = contained().canReduceTo(type.contained()) || type.contained().canReduceTo(contained());
 	}
 	
 // 	qDebug() << "OOOOOOOOOOOOO" << *this << type << ret;

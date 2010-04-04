@@ -53,9 +53,8 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 	private:
 		ExpressionType solve(const Operator* o, const QList<Object*>& parameters);
 		bool inferType(const Object* exp, const ExpressionType& targetType, QMap<QString, ExpressionType>* assumptions);
-		QList<TypeTriplet> computeTriplets(const QList<TypeTriplet>& options, const ExpressionType& first, const ExpressionType& second,
-								   const Object* firstExpression, const Object* secondExpression);
-		QList<TypePair> computePairs(const QList<TypePair>& options, const ExpressionType& param, const Object* exp);
+		QList<TypeTriplet> computeTriplets(const QList<TypeTriplet>& options, const ExpressionType& first, const ExpressionType& second);
+		QList<TypePair> computePairs(const QList<TypePair>& options, const ExpressionType& param);
 		
 		QMap<int, ExpressionType> computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type);
 		
