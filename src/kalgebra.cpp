@@ -65,10 +65,10 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	m_status = new QLabel(this);
 	statusBar()->insertWidget(0, m_status);
 	
-	///////Consola
+	///////Console
 	QWidget *console = new QWidget(tabs);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
-	c_results = new ConsoleHtml(this);
+	c_results = new ConsoleHtml(console);
 	c_results->view()->setFocusPolicy(Qt::NoFocus);
 	c_dock_vars = new QDockWidget(i18n("Variables"), this);
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
