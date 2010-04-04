@@ -367,8 +367,8 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 						bool valid=merge(assumptions, second.assumptions());
 						
 // // 						qDebug() << "fifuuuuuuuuuuuuuuuuuuu" << first.assumptions() << second.assumptions();
-// 						valid &= inferType(*(it-1), opt.param1.starsToType(starToType), &assumptions); //TODO: not necessary, already filtered?
-// 						valid &= inferType(* it   , opt.param2.starsToType(starToType), &assumptions);
+						valid &= inferType(*(it-1), opt.param1.starsToType(starToType), &assumptions); //TODO: not necessary, already filtered?
+						valid &= inferType(* it   , opt.param2.starsToType(starToType), &assumptions);
 						
 // 						qDebug() << "POPOPO" << (*(it-1))->toString() << (*(it))->toString() << valid << opt << assumptions;
 						if(valid) {
