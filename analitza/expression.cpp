@@ -324,9 +324,13 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMa
 			var->setValue(newScope.value(var->name()), false);
 			ret=var;
 		}	break;
-		case Object::vector:
+		case Object::vector: {
 			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem, newScope);
-			break;
+			if(elem.childNodes().count()==0) {
+				m_err << i18n("We don't want empty vectors");
+			}
+// 			qDebug() << "PEEEEEEU" << v->size();
+		}	break;
 		case Object::list:
 			ret=addElements<List>(new List, &elem, newScope);
 			break;
