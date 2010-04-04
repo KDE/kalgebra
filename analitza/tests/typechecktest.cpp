@@ -82,6 +82,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("infinite") << "piecewise { 2=3? frec(3), ? 3}" << "num";
 	QTest::newRow("infinite_1") << "piecewise { 2=3? 3, ? frec(3)}" << "num";
 	QTest::newRow("fact") << "fact(4)" << "num";
+	QTest::newRow("factdef") << "fact" << "num -> num";
 	QTest::newRow("deriv") << "(diff(x:x))(2)" << "num";
 	QTest::newRow("derivdiff") << "diff(x:x)" << "num -> num";
 	
@@ -101,6 +102,12 @@ void TypeCheckTest::testConstruction_data()
 // 	QTest::newRow("long") << "(c, c1, c2, t1, t2)->(t2-t1)/(c2-c1)*(c-c1)+t1" << "num -> num -> num -> num -> num -> num";
 	QTest::newRow("selec_call") << "(selector(1, fv))(1)" << "num";
 	QTest::newRow("selec") << "selector(1, fv)" << "num -> num";
+	
+	QTest::newRow("piece") << "x->piecewise { gt(x,0) ? x, ? x+1 }" << "(num -> num) | (<num,-1> -> <num,-1>)";
+	QTest::newRow("parametric") << "t->vector{t,t**2}" << "num -> <num,2>";
+	QTest::newRow("somelist") << "t->list{t,t**2}" << "num -> [num]";
+	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
+									"? selector(2, vector{x, 1/x} ) }" << "(num -> num) | (<num,-1> -> <num,-1>)";
 }
 
 void TypeCheckTest::testConstruction()
@@ -158,5 +165,5 @@ void TypeCheckTest::testUncorrection_data()
 	
 	//TODO: Add invalid recursive call
 	//TODO: selector(cos(x), x)
-	//TODO: vector{}
+// 	QTest::newRow("wrong param count") << "vector{}";
 }

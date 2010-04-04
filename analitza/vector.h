@@ -47,6 +47,7 @@ class ANALITZA_EXPORT Vector : public Object
 		
 		Object* at(int i) const { return m_elements[i]; }
 		void setAt(int i, Object* o) { m_elements[i]=o; }
+		QList<Object*> values() const { return m_elements.toList(); }
 		
 		virtual QString visit (ExpressionWriter* e) const;
 		virtual bool isCorrect() const;

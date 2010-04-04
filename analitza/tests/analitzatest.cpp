@@ -27,6 +27,7 @@
 #include "value.h"
 #include <variable.h>
 #include <analitzautils.h>
+//#include <operations.h>
 
 using namespace std;
 using Analitza::Cn;
@@ -696,6 +697,8 @@ void AnalitzaTest::testOperators()
 	
 	if(o.operatorType()==Operator::function)
 		return;
+	
+// 	QVERIFY(!Analitza::Operations::infer(o.operatorType()).isEmpty() || !Analitza::Operations::inferUnary(o.operatorType()).isEmpty());
 	
 	Vector* v=new Vector(3);
 	v->appendBranch(new Cn(0.));

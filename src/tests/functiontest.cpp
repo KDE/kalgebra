@@ -89,6 +89,7 @@ void FunctionTest::testCopy()
 	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
 	QVERIFY(f.isCorrect());
 	function f2(f);
+	if(!f2.isCorrect()) qDebug()<< "error" << f2.errors();
 	QVERIFY(f2.isCorrect());
 	function f3;
 	f3=f2;

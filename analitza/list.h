@@ -47,6 +47,7 @@ class ANALITZA_EXPORT List : public Object
 		
 		Object* at(int i) const { return m_elements.at(i); }
 		void setAt(int i, Object* o) { m_elements[i]=o; }
+		QList<Object*> values() const { return m_elements; }
 		
 		virtual QString visit (ExpressionWriter* e) const;
 		virtual bool isCorrect() const;

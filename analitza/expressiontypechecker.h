@@ -67,6 +67,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		ExpressionType typeForVar(const QString& var);
 		
 		void addError(const QString& err);
+		ExpressionType commonType(const QList<Object*>& values);
 		
 		uint m_stars;
 		QList<QStringList> m_err;
