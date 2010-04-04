@@ -33,6 +33,9 @@
 using namespace std;
 using namespace Analitza;
 
+typedef void (*realrealfn)(double& a, double b, QString& correct, Cn::ValueFormat& format);
+// realrealfn 
+
 Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
 {
 	int residu;
@@ -463,7 +466,7 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 ExpressionType Operations::typeUnary(Operator::OperatorType op, const ExpressionType& type)
 {
 	if(op==Operator::card && type.type()==ExpressionType::Value)
-		return ExpressionType(ExpressionType::Undefined);
+		return ExpressionType(ExpressionType::Error);
 	
 	return ExpressionType(ExpressionType::Value);
 }
@@ -479,7 +482,7 @@ ExpressionType typeRealVector(Operator::OperatorType op, const ExpressionType& v
 ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType& pt1,
 															const ExpressionType& pt2)
 {
-	if(pt1.type()==ExpressionType::Undefined  || pt2.type()==ExpressionType::Undefined) return ExpressionType(ExpressionType::Undefined);
+	if(pt1.type()==ExpressionType::Error  || pt2.type()==ExpressionType::Error) return ExpressionType(ExpressionType::Error);
 	if(pt1.type()==ExpressionType::Value  && pt2.type()==ExpressionType::Value) return ExpressionType(ExpressionType::Value);
 	if(pt1.type()==ExpressionType::Vector && pt2.type()==ExpressionType::Value) return ExpressionType(ExpressionType::Vector, pt1.contained());
 	if(pt1.type()==ExpressionType::Value  && pt2.type()==ExpressionType::Vector)return typeRealVector(op, pt2);
@@ -489,5 +492,132 @@ ExpressionType Operations::type(Operator::OperatorType op,	const ExpressionType&
 	if(pt1.type()==ExpressionType::List   && pt2.type()==ExpressionType::List && op==Operator::_union)
 																			return ExpressionType(ExpressionType::List, pt1.contained());
 	
-	return ExpressionType(ExpressionType::Undefined);
+	return ExpressionType(ExpressionType::Error);
+}
+
+//TODO: test that there's one output per input
+QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
+{
+	QList<TypeTriplet> ret;
+	
+	switch(op) {
+		case Operator::plus:
+		case Operator::times:
+		case Operator::divide:
+		case Operator::minus:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Value),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1));
+			break;
+		case Operator::eq:
+		case Operator::neq:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(
+								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
+								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
+								ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(
+								ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1), -1),
+								ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1), -1),
+								ExpressionType(ExpressionType::Value));
+			break;
+		case Operator::power:
+		case Operator::rem:
+		case Operator::quotient:
+		case Operator::factorof:
+		case Operator::min:
+		case Operator::max:
+		case Operator::gt:
+		case Operator::lt:
+		case Operator::approx:
+		case Operator::geq:
+		case Operator::leq:
+		case Operator::_and:
+		case Operator::_or:
+		case Operator::_xor:
+		case Operator::implies:
+		case Operator::gcd:
+		case Operator::lcm:
+		case Operator::root:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			break;
+		case Operator::selector:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
+							   ExpressionType(ExpressionType::Any, 1));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
+							   ExpressionType(ExpressionType::Any, 1));
+			break;
+		case Operator::_union:
+			ret << TypeTriplet(ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)));
+			break;
+		default:
+			break;
+	}
+	return ret;
+}
+
+QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
+{
+	QList<TypePair> ret;
+	switch(op) {
+		case Operator::minus:
+			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypePair(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1), ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1));
+			break;
+		case Operator::card:
+			ret << TypePair(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1), ExpressionType(ExpressionType::Value));
+			ret << TypePair(ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)), ExpressionType(ExpressionType::Value));
+			break;
+		case Operator::factorial:
+		case Operator::sin:
+		case Operator::cos:
+		case Operator::tan:
+		case Operator::sec:
+		case Operator::csc:
+		case Operator::cot:
+		case Operator::sinh:
+		case Operator::cosh:
+		case Operator::tanh:
+		case Operator::sech:
+		case Operator::csch:
+		case Operator::coth:
+		case Operator::arcsin:
+		case Operator::arccos:
+		case Operator::arctan:
+		case Operator::arccot:
+		case Operator::arcsinh:
+		case Operator::arccosh:
+		case Operator::arccsc:
+		case Operator::arccsch:
+		case Operator::arcsec:
+		case Operator::arcsech:
+		case Operator::arctanh:
+		case Operator::exp:
+		case Operator::ln:
+		case Operator::log:
+		case Operator::abs:
+		//case Object::conjugate:
+		//case Object::arg:
+		//case Object::real:
+		//case Object::imaginary:
+		case Operator::floor:
+		case Operator::ceiling:
+		case Operator::_not:
+			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			break;
+		default:
+			break;
+	}
+	return ret;
 }

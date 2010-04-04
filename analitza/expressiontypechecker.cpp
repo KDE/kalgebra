@@ -27,159 +27,410 @@
 #include "operations.h"
 #include <klocalizedstring.h>
 
+bool merge(QMap<QString, Analitza::ExpressionType>& data, const QMap<QString, Analitza::ExpressionType>& newmap);
+
 namespace Analitza
 {
+ExpressionTypeChecker::ExpressionTypeChecker(Variables* v)
+	: m_v(v)
+{}
 
 QDebug operator<<(QDebug dbg, const ExpressionType &c)
 {
-	dbg.nospace() << "("<< qPrintable(c.toString()) <<")";
+	dbg.nospace() << "("<< qPrintable(c.toString());
+// 	if(!c.assumptions().isEmpty())
+// 		dbg.nospace() <<", " << c.assumptions();
+	dbg.nospace() << /*":"<< c.type() <<*/")";
 	
 	return dbg.space();
 }
 
-QString ExpressionType::toString() const
+QDebug operator<<(QDebug dbg, const TypePair &c)
 {
-	QString ret;
-	switch(m_type) {
-		case ExpressionType::Value:
-			ret="num";
-			break;
+	dbg.nospace() << "["<< c.param << ":" << c.returnValue <<"]";
+	
+	return dbg.nospace();
+}
+
+QDebug operator<<(QDebug dbg, const TypeTriplet &c)
+{
+	dbg.nospace() << "["<< c.param1 << ", " << c.param2 << ":" << c.returnValue <<"]";
+	
+	return dbg.nospace();
+}
+
+QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type)
+{
+	QMap<int, ExpressionType> ret(initial);
+	
+	switch(candidate.type()) {
+		case ExpressionType::Any: {
+			int stars=candidate.anyValue();
+			if(!ret.contains(stars)) {
+				ExpressionType cosa(type);
+				cosa.clearAssumptions();
+				if(cosa!=candidate)
+					ret[stars]=cosa;
+				
+				QMap<int, ExpressionType>::iterator it=ret.begin(), itEnd=ret.end();
+				for(; it!=itEnd; ++it)
+					*it=it->starsToType(ret);
+				
+			} else {
+				ret=computeStars(ret, ret[stars], type);
+			}
+			
+		}	break;
 		case ExpressionType::List:
-			ret='['+m_contained->toString()+']';
+			if(type.type()==ExpressionType::List) { // remove? assert?
+				ret=computeStars(initial, candidate.contained(), type.contained());
+			}
 			break;
 		case ExpressionType::Vector:
-			ret='<'+m_contained->toString()+','+QString::number(m_size)+'>';
+			if(type.type()==ExpressionType::Vector) { // remove?
+				ret=computeStars(initial, candidate.contained(), type.contained());
+				
+				if(candidate.size()<0) {
+					ExpressionType cosa(type);
+					cosa.clearAssumptions();
+					ret[candidate.size()] = cosa;
+				}
+			}
 			break;
+		case ExpressionType::Lambda:
+			if(type.type()!=ExpressionType::Lambda)
+				break;
+			Q_ASSERT(type.parameters().size()==candidate.parameters().size());
+			for(int i=0; i<type.parameters().size(); i++) {
+				ret=computeStars(ret, candidate.parameters()[i], type.parameters()[i]);
+			}
+			break;
+		case ExpressionType::Value:
+		case ExpressionType::Many:
+		case ExpressionType::Error:
 		case ExpressionType::Undefined:
-			ret="undef";
+// 			Q_ASSERT(false && "bffff");
 			break;
 	}
 	
 	return ret;
 }
 
-ExpressionType ExpressionType::operator=(const Analitza::ExpressionType& et)
-{
-	if(&et!=this) {
-		m_type=et.type();
-		m_contained=et.m_contained? new ExpressionType(*et.m_contained) : 0;
-		m_size=et.m_size;
-	}
-	
-	return *this;
-}
-
-bool ExpressionType::operator==(const Analitza::ExpressionType& t) const
-{
-	return t.type()==m_type && t.m_size==m_size && ((!t.m_contained && !m_contained) || (t.m_contained && m_contained && *t.m_contained==*m_contained));
-}
-
-ExpressionTypeChecker::ExpressionTypeChecker(Variables* v)
-	: m_v(v)
-{}
-
 ExpressionType ExpressionTypeChecker::check(const Expression& _exp)
 {
+	m_stars=1;
 	Expression exp(_exp);
-	current=ExpressionType(ExpressionType::Undefined);
+	current=ExpressionType(ExpressionType::Error);
 	
-	Object::ScopeInformation scope=AnalitzaUtils::variablesScope(m_v);
-	bool deps=exp.tree()->decorate(scope);
-	Q_ASSERT(!deps);
+// 	Object::ScopeInformation scope=AnalitzaUtils::variablesScope(m_v);
+// 	bool deps=exp.tree()->decorate(scope);
+	
+	AnalitzaUtils::objectWalker(exp.tree());
 	
 	exp.tree()->visit(this);
+	
+// 	if(current.isError())
+// 		addError(i18n("Could not figure out the expression type"));
+	
 	return current;
 }
 
-QString ExpressionTypeChecker::accept(const Operator* o)
+QString ExpressionTypeChecker::accept(const Operator*) { Q_ASSERT(false && "should not get here"); return QString(); }
+
+bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& targetType, QMap<QString, ExpressionType>* assumptions)
 {
-	if(parameters.size()==1) {
-		current=Analitza::Operations::typeUnary(o->operatorType(), parameters.first());
-		if(current.type()==ExpressionType::Undefined)
-			m_err += i18n("Cannot apply '%1' to '%2'", o->toString(), parameters.first().toString()); //TODO: Improve error message
-	} else {
-		QList<ExpressionType>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
-		current=parameters.first();
-		
-		for(; it!=itEnd; ++it) {
-			if(current.type()!=ExpressionType::Undefined && it->type()!=ExpressionType::Undefined) {
-				current = Analitza::Operations::type(o->operatorType(), current, *it);
-				if(current.type()==ExpressionType::Undefined)
-					m_err += i18n("Cannot operate '%1'", o->toString() ); //TODO: Improve error message
+	Q_ASSERT(!targetType.isError() && assumptions);
+	m_err.append(QStringList());
+	
+// 	qDebug() << "//////" << exp->toString() << targetType;
+	bool ret=false;
+	switch(exp->type()) {
+		case Object::variable: {
+			const Ci* var=static_cast<const Ci*>(exp);
+			
+			if(m_v->contains(var->name())) {
+				ExpressionType t=typeForVar(var->name());
+// 				qDebug() << "vvvvvvVVVvvvVVvvvVvvv" << var->name() << t << t.canReduceTo(targetType);
+				
+				ret=t==targetType;
+				if(!ret && t.canReduceTo(targetType)) {
+					assumptions->insert(var->name(), targetType);
+					ret=true;
+				}
+				
+			} else if(assumptions->contains(var->name())) {
+// 				qDebug() << "vvvvvvVVVvvvVVvvvVvvv" << var->name() << assumptions->contains(var->name());
+				ret=assumptions->value(var->name())==targetType;
+				if(!ret && assumptions->value(var->name()).canReduceTo(targetType)) {
+					assumptions->insert(var->name(), targetType);
+					ret=true;
+				}
+				
+			} else {
+				assumptions->insert(var->name(), targetType);
+				ret=true;
+			}
+// 			qDebug()<< "OAOAOAOA" << ret << exp->toString() << targetType;
+			
+		}	break;
+		case Object::value:
+		case Object::container:
+// 			qDebug() << "PEEEEEEEEEE" << exp->toString() << targetType;
+			exp->visit(this);
+			ret=current.canReduceTo(targetType) && merge(*assumptions, current.assumptions());
+			
+// 			qDebug() << "PEEEEEEEEEE" << exp->toString() << current << targetType << ret << *assumptions;
+			break;
+		case Object::vector:
+			ret=targetType.type()==ExpressionType::Vector;
+			if(ret) {
+				const Vector* vec=static_cast<const Vector*>(exp);
+				ret=targetType.size()<0 || targetType.size()==vec->size();
+				
+				Vector::const_iterator it=vec->constBegin(), itEnd=vec->constEnd();
+				for(; ret && it!=itEnd; ++it) {
+					ret=inferType(*it, targetType.contained(), assumptions);
+				}
+			}
+			break;
+		case Object::list:
+			ret=targetType.type()==ExpressionType::List;
+			if(ret) {
+				const List* vec=static_cast<const List*>(exp);
+				List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd();
+				
+				for(; ret && it!=itEnd; ++it) {
+					ret=inferType(*it, targetType.contained(), assumptions);
+				}
+			}
+			
+			break;
+		case Object::oper:
+		case Object::none:
+			Q_ASSERT(false && "wtf!");
+			break;
+	}
+	m_err.removeLast();
+	return ret;
+}
+
+QList<TypeTriplet> ExpressionTypeChecker::computeTriplets(const QList<TypeTriplet>& options,
+									const ExpressionType& first, const ExpressionType& second,
+									const Object* firstExpression, const Object* secondExpression)
+{
+	Q_ASSERT(firstExpression || !first.isError());
+	Q_ASSERT(secondExpression || !second.isError());
+	
+// 	qDebug() << "sssssss" << first << second << "////" << options;
+// 	qDebug() << "tetetet" << first.assumptions() << second.assumptions();
+	QList<TypeTriplet> results;
+	foreach(const TypeTriplet& opt, options) {
+		if(first==opt.param1 && second==opt.param2) {
+			results += opt;
+// 			qDebug() << "adding" << opt;
+		} else {
+			QMap<int, ExpressionType> stars;
+			stars=computeStars(stars, opt.param1, first);
+			stars=computeStars(stars, opt.param2, second);
+			
+			TypeTriplet toadd(	opt.param1.starsToType(stars), opt.param2.starsToType(stars),
+								opt.returnValue.starsToType(stars));
+			
+			QMap<QString, ExpressionType> assumptions(m_typeForBVar);
+			merge(assumptions, first.assumptions());
+			merge(assumptions, second.assumptions());
+			
+			bool performed1=toadd.param1==first  || inferType(firstExpression,  toadd.param1, &assumptions);
+			bool performed2=toadd.param2==second || inferType(secondExpression, toadd.param2, &assumptions);
+			
+// 			qDebug() << "tututu" << performed1 << performed2 << toadd << assumptions /*<< secondExpression->toString()*/;
+			if(performed1 && performed2) {
+				toadd.returnValue.addAssumptions(assumptions);
+				results += toadd;
 			}
 		}
-		
+// 		else qDebug("nooooo");
 	}
 	
-	return QString();
+// 	qDebug() << ";;;;;;;" << results;
+	return results;
+}
+
+QList<TypePair> ExpressionTypeChecker::computePairs(const QList<TypePair>& options, const ExpressionType& param, const Object* exp)
+{
+	QList<TypePair> ret;
+	
+	if(param.type()==ExpressionType::Any) {
+		foreach(const TypePair& opt, options) {
+			QMap<int, ExpressionType> stars;
+			
+			//We know the parameter is any, we don't have to infer
+			stars=computeStars(stars, param, opt.param);
+			
+			TypePair toadd=opt;
+			toadd.returnValue.addAssumptions(param.assumptions());
+			toadd.returnValue=toadd.returnValue.starsToType(stars);
+			ret += toadd;
+		}
+	} else 
+		foreach(const TypePair& opt, options) {
+// 			qDebug() << "TURURURU" << opt.param << param;
+			if(opt.param==param || opt.param.canReduceTo(param)) //Infer on param!=param but canReduce?
+				ret += opt;
+		}
+	
+// 	qDebug() << "_______" << param << exp->toString() << ret;
+	return ret;
+}
+
+bool ExpressionTypeChecker::matchAssumptions(QMap< int, ExpressionType >* stars,
+												const QMap< QString, ExpressionType >& assum1,
+												const QMap< QString, ExpressionType >& assum2)
+{
+	bool ret=true;
+	QMap<QString, ExpressionType>::const_iterator it=assum1.constBegin(), itEnd=assum1.constEnd();
+	QMap<QString, ExpressionType>::const_iterator itFind, itFindEnd=assum2.constEnd();
+	
+	for(; ret && it!=itEnd; ++it) {
+		itFind=assum2.find(it.key());
+		
+		if(itFind!=itFindEnd) {
+// 			qDebug() << it.key() << *it << *itFind << (itFind.value()!=it.value());
+			if(itFind.value()!=it.value()) {
+				if(itFind.value().canReduceTo(it.value()))
+					*stars=computeStars(*stars, itFind.value(), it.value());
+				else if(it.value().canReduceTo(itFind.value()))
+					*stars=computeStars(*stars, it.value(), itFind.value());
+				else
+					ret=false;
+// 				qDebug() << "seh" << *stars << ret;
+			}
+		}
+	}
+	
+	return ret;
+}
+
+ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Object* >& parameters)
+{
+	Q_ASSERT(o->operatorType()!=Operator::function);
+	
+	ExpressionType ret(ExpressionType::Many);
+	if(parameters.size()==1) {
+		parameters.first()->visit(this);
+		QList<ExpressionType> types=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+		
+		foreach(const ExpressionType& t, types) {
+			QList<TypePair> thing=computePairs(Operations::inferUnary(o->operatorType()), t, parameters.first());
+			foreach(const TypePair& opt, thing)
+				ret.addAlternative(opt.returnValue);
+		}
+// 		qDebug() << "bam" << ret ;
+	} else {
+		Q_ASSERT(parameters.size()>=2);
+		QMap<int, ExpressionType> starToType; //FIXME: Wrong, can't be global
+		
+		parameters.first()->visit(this);
+		ExpressionType firstType=current;
+		
+		QList<Object*>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
+		for(; it!=itEnd; ++it)
+		{
+			(*it)->visit(this);
+			ExpressionType secondType=current;
+			
+			QList<ExpressionType> firstTypes= firstType.type()==ExpressionType::Many ?  firstType.alternatives() : QList<ExpressionType>() << firstType;
+			QList<ExpressionType> secndTypes=secondType.type()==ExpressionType::Many ? secondType.alternatives() : QList<ExpressionType>() << secondType;
+			
+			static int ind=3;
+			qDebug() << "+" << qPrintable(QString(ind++, '-')) << o->toString() << firstType << secondType;
+			foreach(const ExpressionType& _first, firstTypes) {
+// 				qDebug() << "tralara" << _first;
+				foreach(const ExpressionType& _second, secndTypes) {
+					bool valid=matchAssumptions(&starToType, _first.assumptions(), _second.assumptions()); //match assumptions
+					if(!valid)
+						continue;
+					
+					ExpressionType first =_first .starsToType(starToType);
+					ExpressionType second=_second.starsToType(starToType);
+					
+					QList<TypeTriplet> res=computeTriplets(Operations::infer(o->operatorType()), first, second, *(it-1), *it);
+// 					qDebug() << "+++++++" << res.size();
+					
+					foreach(const TypeTriplet& opt, res) {
+						Q_ASSERT(!opt.returnValue.isError());
+						
+						starToType=computeStars(starToType, opt.param1, first);
+						starToType=computeStars(starToType, opt.param2, second);
+						
+						QMap<QString, ExpressionType> assumptions=first.assumptions();
+						bool valid=merge(assumptions, second.assumptions());
+						
+// // 						qDebug() << "fifuuuuuuuuuuuuuuuuuuu" << first.assumptions() << second.assumptions();
+// 						valid &= inferType(*(it-1), opt.param1.starsToType(starToType), &assumptions); //TODO: not necessary, already filtered?
+// 						valid &= inferType(* it   , opt.param2.starsToType(starToType), &assumptions);
+						
+// 						qDebug() << "POPOPO" << (*(it-1))->toString() << (*(it))->toString() << valid << opt << assumptions;
+						if(valid) {
+							ExpressionType toadd=opt.returnValue.starsToType(starToType);
+							toadd.addAssumptions(assumptions);
+							ret.addAlternative(toadd);
+						}
+					}
+				}
+			}
+			qDebug() << "\\" << qPrintable(QString(--ind, '-')) << o->toString() << ret;
+		}
+	}
+	
+	if(ret.alternatives().isEmpty())
+		return ExpressionType(ExpressionType::Error);
+	else if(ret.alternatives().count()==1)
+		return ret.alternatives().first();
+	
+	return ret;
 }
 
 QString ExpressionTypeChecker::accept(const Ci* var)
 {
-	if(var->isDefined() && var->value()) {
-		var->value()->visit(this);
+	if(m_v->contains(var->name())) {
+		current=typeForVar(var->name());
+	} else if(m_typeForBVar.contains(var->name())) {
+		current=m_typeForBVar.value(var->name());
 	} else {
-		current=m_typeForBVar[var->name()];
+		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
+		current.addAssumption(var->name(), current);
+// 		qDebug() << "created" << var->name() << current;
 	}
 	
-	if(current.type()==ExpressionType::Undefined)
-		m_err += i18n("Cannot check '%1' type", var->name());
 	return QString();
 }
 
 QString ExpressionTypeChecker::accept(const Cn*)
 {
-	current=ExpressionType(Analitza::ExpressionType::Value);
+	current=ExpressionType(ExpressionType::Value);
 	return QString();
-}
-
-//TODO: make it possible to return lambda's in an expression
-const Container* ExpressionTypeChecker::lambdaFor(const Object* o)
-{
-	if(o==0)
-		return 0;
-	if(o->type()==Object::variable) {
-		return lambdaFor(static_cast<const Ci*>(o)->value());
-	} else if(o->type()==Object::container) {
-// 		Q_ASSERT(((const Container*) o)->containerType()==Container::lambda);
-		//it's a lambda or a diff(), weird huh?
-		return (const Container*) o;
-	}
-	
-	return 0;
 }
 
 //1. Check if parameters are applied correctly
 //2. Return the operator result type
 QString ExpressionTypeChecker::accept(const Container* c)
 {
-	parameters.clear();
-	
+	qDebug() << "XIUXIU" << c->toString();
+	QMap<QString, ExpressionType> assumptions;
 	switch(c->containerType()) {
 		case Container::apply: {
+			QMap<QString, ExpressionType> ctx=m_typeForBVar;
 			Operator o=c->firstOperator();
-			Container::const_iterator it=c->firstValue(), itEnd=c->constEnd();
-			if(o.operatorType()==Operator::function)
-				++it;
 			
 			if(o.isBounded()) {
 				Object* ul=c->ulimit();
 				if(ul) {
 					ul->visit(this);
 					
-					m_typeForBVar[c->bvarStrings().first()]=current;
-// 					qDebug() << "peee" << current << c->dlimit()->toString() << c->ulimit()->toString();
-					
-					typeIs(c->dlimit(), ExpressionType(current));
-					
-// 					qDebug() << "taaa" << current;
+					m_typeForBVar[c->bvarStrings().first()]=current; //FIXME: should remove when done
+					assumptions=typeIs(c->dlimit(), ExpressionType(current));
 				}
-			}
-			
-			for(; it!=itEnd; ++it) {
-				(*it)->visit(this);
-				
-				parameters += current;
 			}
 			
 			switch(o.operatorType()) {
@@ -188,62 +439,168 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				case Operator::product:
 					(*c->firstValue())->visit(this);
 					break;
-				case Operator::function: {
-// 					qDebug() << "calling " << c->toString();
-					const Container* operation=lambdaFor(c->m_params.first());
-	// 				qDebug() << "calling " << c->toString() << operation->toString();
+				case Operator::diff:
+					//TODO Check inside
 					
-					if(!operation) {
-						m_err += i18n("Cannot call '%1'", c->m_params.first()->toString());
-						current=ExpressionType(ExpressionType::Undefined);
-					} else {
-						QStringList names=operation->bvarStrings();
-						Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
-						int i;
-						for(i=0; it!=itEnd && i<names.size(); ++it, ++i) {
-							m_typeForBVar[names[i]]=parameters[i];
+					current=ExpressionType(ExpressionType::Lambda);
+					current.addParameter(ExpressionType::Value);
+					current.addParameter(ExpressionType::Value);
+					break;
+				case Operator::function: {
+// 					qDebug() << "calling" << c->toString();
+					c->m_params.first()->visit(this);
+// 					qDebug() << "retrieved lambda" << c->m_params.first()->toString() << current << current.assumptions();
+					
+					if(current.isError()) { //FIXME:if its error it means that we are in a recursive case, undefined?
+						Container::const_iterator it=c->m_params.constBegin()+1, itEnd=c->m_params.constEnd();
+						
+						ExpressionType ret(ExpressionType::Undefined);
+						for(; it!=itEnd; ++it) {
+							(*it)->visit(this);
+							ret.addAssumptions(current.assumptions());
 						}
 						
-						if(names.size()!=i)
-							m_err += i18n("Wrong number of parameters when calling '%1'", c->m_params.first()->toString());
-						else if(!m_calls.contains(operation)) {
-							m_calls.push(operation);
-							
-							operation->visit(this);
-							
-							m_calls.pop();
-						} else {
-							current=ExpressionType(ExpressionType::Undefined);
+						current=ret;
+					} else if(current.type()==ExpressionType::Any) {
+						ExpressionType func(ExpressionType::Lambda);
+						ExpressionType ret=current;
+						
+						QMap<int, ExpressionType> starToType;
+						Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
+						for(; it!=itEnd; ++it) {
+							(*it)->visit(this);
+							func.addParameter(current);
+							ret.addAssumptions(current.assumptions());
 						}
+						func.addParameter(ret);
+						
+						Q_ASSERT(c->m_params.first()->type()==Object::variable);
+						QString name=static_cast<Ci*>(c->m_params.first())->name();
+						assumptions.insert(name, func);
+						
+						ret.addAssumptions(assumptions);
+						
+						current=ret;
+					} else {
+						ExpressionType ret(ExpressionType::Many), signature(current);
+						
+						QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
+// 						qDebug() << "SSSSSSSSSSSSSSSSSSSSS" << alts;
+						
+						foreach(const ExpressionType& opt, alts) {
+// 							qDebug() << "ooooopt" << opt;
+							if(opt.type()!=ExpressionType::Lambda) {
+// 								addError(i18n("We can only call functions."));
+								continue;
+							}
+							
+							if(opt.parameters().size()!=c->m_params.size()) {
+								addError(i18n("Invalid parameter count."));
+								continue;
+							}
+							
+							bool valid=true;
+							QMap<QString, ExpressionType> assumptions;
+							QMap<int, ExpressionType> starToType;
+							
+							for(int i=0; valid && i<opt.parameters().size()-1; i++) {
+								c->m_params[i+1]->visit(this);
+								
+								if(!opt.parameters()[i].canReduceTo(current)) {
+									continue;
+								}
+								
+								starToType=computeStars(starToType, opt.parameters()[i], current);
+								
+								valid&=merge(assumptions, opt.parameters()[i].assumptions());
+							}
+							
+							QMap<QString, ExpressionType>::iterator it=assumptions.begin(), itEnd=assumptions.end();
+							for(; valid && it!=itEnd; ++it) {
+								*it=it->starsToType(starToType);
+							}
+							
+							for(int i=0; valid && i<opt.parameters().size()-1; i++) {
+								valid=inferType(c->m_params[i+1], opt.parameters()[i].starsToType(starToType), &assumptions);
+// 								qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
+							}
+							
+							if(valid) {
+								ExpressionType t=opt.parameters().last().starsToType(starToType);
+								
+								t.addAssumptions(assumptions);
+								ret.addAlternative(t);
+							}
+						}
+							
+						if(ret.alternatives().isEmpty()) {
+							current=ExpressionType(ExpressionType::Error);
+							addError(i18n("Could not call '%1'", c->toString()));
+						} else
+							current=ret;
 					}
-// 					qDebug() << "peeeeee" << current << m_err;
 				} break;
 				default:
-					o.visit(this);
+					current=solve(&o, c->values());
+					if(current.type()==ExpressionType::Error)
+						addError(i18n("Could not solve '%1'", c->toString()));
 					break;
 			}
+			m_typeForBVar=ctx;
 		}	break;
-		case Container::piecewise:
+		case Container::piecewise: {
+			bool found=false;
+			ExpressionType type;
 			foreach(const Object* o, c->m_params) {
 				o->visit(this);
-				if(current.type()!=ExpressionType::Undefined)
+				if(!current.isError()) {
+					found=true;
+					type=current;
 					break;
+				}
 			}
 			
-			if(current.type()==ExpressionType::Undefined)
-				m_err += i18n("Could not determine the type for piecewise");
+			if(!found)
+				addError(i18n("Could not determine the type for piecewise"));
 			else
-				typeIs(c->m_params.constBegin(), c->m_params.constEnd(), current); //branches
+				type.addAssumptions(typeIs(c->m_params.constBegin(), c->m_params.constEnd(), type)); //branches
 			
-			break;
-		case Container::piece:
-			typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
+			current=type;
+		}	break;
+		case Container::piece: {
+			assumptions=typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
 			c->m_params.first()->visit(this); //we return the body
-			break;
+			current.addAssumptions(assumptions);
+		}	break;
 		case Container::declare:
 			c->m_params.last()->visit(this);
 			break;
-		case Container::lambda:
+		case Container::lambda: {
+			c->m_params.last()->visit(this);
+			
+			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+			
+			ExpressionType res=ExpressionType(ExpressionType::Many);
+			foreach(const ExpressionType& alt, alts) {
+				if(alt.isUndefined()) {
+					addError("Could not make up the return value of the lambda definition");
+				} else {
+					ExpressionType option(ExpressionType::Lambda);
+					foreach(const QString& bvar, c->bvarStrings()) {
+						if(alt.assumptions().contains(bvar))
+							option.addParameter(alt.assumptionFor(bvar));
+						else if(m_typeForBVar.contains(bvar))
+							option.addParameter(m_typeForBVar.value(bvar));
+						else
+							option.addParameter(ExpressionType(ExpressionType::Any, m_stars++));
+					}
+					option.addParameter(alt); //Return value
+					
+					res.addAlternative(option);
+				}
+			}
+			current=res;
+		}	break;
 		case Container::otherwise:
 		case Container::math:
 		case Container::none:
@@ -255,48 +612,107 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			break;
 	}
 	
+	if(current.type()==ExpressionType::Many) {
+		if(current.alternatives().isEmpty())
+			current=ExpressionType(ExpressionType::Error);
+		else if(current.alternatives().count()==1)
+			current=current.alternatives().first();
+	}
+	current.addAssumptions(assumptions);
+	
 	return QString();
 }
 
 QString ExpressionTypeChecker::accept(const Vector* v)
 {
 	v->at(0)->visit(this);
+// 	qDebug() << "ccccc" << current << current.assumptions();
 	
 	ExpressionType t(ExpressionType::Vector, ExpressionType(current), v->size());
-	typeIs(v->constBegin(), v->constEnd(), t.contained());
+	QMap< QString, ExpressionType > assumptions=typeIs(v->constBegin(), v->constEnd(), t.contained());
 	current=t;
+	current.addAssumptions(assumptions);
 	
+// 	qDebug() << "pepepepe" << t << v->toString();
 	return QString();
 }
 
 QString ExpressionTypeChecker::accept(const List* l)
 {
-	ExpressionType tc(ExpressionType::Undefined);
-	if(l->size()>0) {
+	ExpressionType tc(ExpressionType::Error);
+	if(l->size()>0) { //FIXME: loop until we find a proper one
 		l->at(0)->visit(this);
 		tc=current;
 	}
 	
 	ExpressionType t(ExpressionType::List, tc);
-	typeIs(l->constBegin(), l->constEnd(), tc);
+	QMap<QString, ExpressionType> assumptions=typeIs(l->constBegin(), l->constEnd(), tc);
 	current=t;
+	current.addAssumptions(assumptions);
 	
 	return QString();
 }
 
 template <class T>
-void ExpressionTypeChecker::typeIs(T it, const T& itEnd, const ExpressionType& type)
+QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(T it, const T& itEnd, const ExpressionType& type)
 {
-	for(; it!=itEnd; ++it)
-		typeIs(*it, ExpressionType(type));
+	ExpressionType cosa(type); //FIXME
+	
+	QMap<QString, ExpressionType> ret;
+	for(; it!=itEnd; ++it) {
+		/*valid=*/merge(ret, typeIs(*it, ExpressionType(cosa))); //FIXME: merge assumptions, if can't merge, fail
+	}
+	
+	return ret;
 }
 
-void ExpressionTypeChecker::typeIs(const Object* o, const ExpressionType& type)
+QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(const Object* o, const ExpressionType& type)
 {
-	o->visit(this);
+	QMap<QString, ExpressionType> assumptions(m_typeForBVar);
+	bool corr=inferType(o, type, &assumptions);
 	
-	if(current!=type && current.type()!=ExpressionType::Undefined && type.type()!=ExpressionType::Undefined)
-		m_err += i18n("Cannot convert %1 to %2", type.toString(), current.toString());
+	if(!corr)
+		addError(i18n("Cannot convert '%1' to '%2'", o->toString(), type.toString()));
+	
+	return assumptions;
+}
+
+ExpressionType ExpressionTypeChecker::typeForVar(const QString& var)
+{
+	if(m_calculating.contains(var))
+		return ExpressionType(ExpressionType::Error);
+	else if(!m_vars.contains(var)) {
+		qDebug() << "checking..." << var;
+		Q_ASSERT(m_v->contains(var));
+		m_calculating += var;
+		m_v->value(var)->visit(this);
+		m_calculating.removeOne(var);
+		m_vars[var]=current;
+		qDebug() << "checked type" << var << "=" << current;
+	}
+	
+	ExpressionType ret=m_vars.value(var);
+	
+// 	qDebug() << "P/P/P/P/P/" << ret;
+	m_stars=ret.increaseStars(m_stars);
+// 	qDebug() << "P/P/P/P/P/" << ret;
+	return ret;
+}
+
+QStringList ExpressionTypeChecker::errors() const
+{
+	QStringList ret;
+	foreach(const QStringList& errs, m_err)
+		ret << errs;
+	return ret;
+}
+
+void ExpressionTypeChecker::addError(const QString& err)
+{
+	if(m_err.isEmpty())
+		m_err += QStringList();
+	
+	m_err.last().append(err);
 }
 
 }

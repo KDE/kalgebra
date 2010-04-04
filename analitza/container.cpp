@@ -336,3 +336,17 @@ bool Container::decorate(const ScopeInformation& scope)
 	
 	return ret;
 }
+
+QList<Object*> Analitza::Container::values() const
+{
+	QList<Object*> ret;
+	const_iterator it=firstValue(), itEnd=m_params.constEnd();
+	
+	if(firstOperator().operatorType()==Operator::function)
+		++it;
+	
+	for(; it!=itEnd; ++it) {
+		ret += *it;
+	}
+	return ret;
+}

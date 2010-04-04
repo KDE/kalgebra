@@ -20,6 +20,7 @@ set(analitza_SRCS
 	vector.cpp
 	list.cpp
 	
+	expressiontype.cpp
 	expressiontypechecker.cpp
 	
 	expressiontable.cpp	#generated
@@ -62,7 +63,6 @@ if(INSTALL_ANALITZA_HEADERS)
 		variable.h
 		variables.h
 		vector.h
-
-		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)	
+		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)
 endif(INSTALL_ANALITZA_HEADERS)
 

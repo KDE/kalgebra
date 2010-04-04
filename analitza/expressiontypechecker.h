@@ -19,44 +19,17 @@
 #ifndef EXPRESSIONTYPECHECKER_H
 #define EXPRESSIONTYPECHECKER_H
 
-#include "analitzaexport.h"
 #include "expressionwriter.h"
 #include "analitzaexport.h"
 #include "expression.h"
+#include "expressiontype.h"
 #include <QStack>
 
 namespace Analitza
 {
+struct TypePair;
+struct TypeTriplet;
 class Variables;
-
-class ANALITZA_EXPORT ExpressionType
-{
-	public:
-		enum Type { Undefined=0, Value, Vector, List };
-		QString toString() const;
-		
-		ExpressionType(Type t=Undefined) : m_type(t), m_contained(0), m_size(-1) {}
-		ExpressionType(Type t, const ExpressionType& contained, int s=-1) : m_type(t), m_contained(new ExpressionType(contained)), m_size(s) {}
-		
-		ExpressionType(const ExpressionType& t) : m_type(t.m_type), m_contained(0), m_size(t.m_size)
-			{ if(t.m_contained) m_contained=new ExpressionType(*t.m_contained); }
-		~ExpressionType() {/* delete contained; */}
-		
-		bool operator==(const ExpressionType& t) const;
-		bool operator!=(const ExpressionType& t) const { return !operator==(t); }
-		ExpressionType operator=(const ExpressionType& et);
-		
-		Type type() const { return m_type; }
-		ExpressionType contained() const { return *m_contained; }
-		int size() const { return m_size; }
-		
-	private:
-		Type m_type;
-		///In case of list and vector the inside type
-		ExpressionType* m_contained;
-		
-		int m_size;
-};
 
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 {
@@ -75,20 +48,34 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		virtual QString result() const { return QString(); }
 		
 		bool isCorrect() const { return m_err.isEmpty(); }
-		QStringList errors() const { return m_err; }
+		QStringList errors() const;
+		
 	private:
-		static const Container* lambdaFor(const Object* o);
-		void typeIs(const Object* o, const ExpressionType& type);
+		ExpressionType solve(const Operator* o, const QList<Object*>& parameters);
+		bool inferType(const Object* exp, const ExpressionType& targetType, QMap<QString, ExpressionType>* assumptions);
+		QList<TypeTriplet> computeTriplets(const QList<TypeTriplet>& options, const ExpressionType& first, const ExpressionType& second,
+								   const Object* firstExpression, const Object* secondExpression);
+		QList<TypePair> computePairs(const QList<TypePair>& options, const ExpressionType& param, const Object* exp);
 		
+		QMap<int, ExpressionType> computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type);
+		
+		bool matchAssumptions(QMap<int, ExpressionType>* stars, const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
+		
+		QMap<QString, ExpressionType> typeIs(const Object* o, const ExpressionType& type);
 		template <class T>
-		void typeIs(T it,
-			const T& itEnd, const ExpressionType& type );
+			QMap<QString, ExpressionType> typeIs(T it, const T& itEnd, const ExpressionType& type);
 		
-		QStringList m_err;
+		ExpressionType typeForVar(const QString& var);
+		
+		void addError(const QString& err);
+		
+		uint m_stars;
+		QList<QStringList> m_err;
+		QStringList m_calculating;
 		ExpressionType current;
 		Variables* m_v;
-		QList<ExpressionType> parameters;
-		QHash<QString, ExpressionType> m_typeForBVar;
+		QMap<QString, ExpressionType> m_typeForBVar;
+		QMap<QString, ExpressionType> m_vars;
 		QStack<const Object*> m_calls;
 };
 

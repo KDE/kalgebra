@@ -142,6 +142,7 @@ public:
 	
 	Container* extractType(Container::ContainerType t) const;
 	virtual bool decorate(const ScopeInformation& scope);
+    QList<Object*> values() const;
 
 // protected:
 	QList<Object*> m_params;

@@ -20,6 +20,7 @@
 #define OPERATIONS_H
 
 #include "operator.h"
+#include <expressiontype.h>
 
 namespace Analitza
 {
@@ -28,6 +29,22 @@ class List;
 class Cn;
 class Vector;
 class ExpressionType;
+
+
+struct TypeTriplet
+{
+	ExpressionType param1, param2, returnValue;
+	TypeTriplet(const ExpressionType& param1, const ExpressionType& param2, const ExpressionType& returnValue)
+		: param1(param1), param2(param2), returnValue(returnValue) {}
+};
+
+struct TypePair
+{
+	ExpressionType param, returnValue;
+	
+	TypePair(const ExpressionType& param, const ExpressionType& returnValue)
+		: param(param), returnValue(returnValue) {}
+};
 
 class Operations
 {
@@ -38,6 +55,8 @@ class Operations
 		static ExpressionType type(Operator::OperatorType op, const ExpressionType& paramType1, const ExpressionType& paramType2);
 		static ExpressionType typeUnary(Operator::OperatorType op, const ExpressionType& paramType);
 		
+		static QList<TypeTriplet> infer(Operator::OperatorType op);
+		static QList<TypePair> inferUnary(Operator::OperatorType op);
 	private:
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, QString &correct);
 		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper, QString &correct);
