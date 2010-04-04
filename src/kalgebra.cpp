@@ -52,7 +52,7 @@
 #include "variablesdelegate.h"
 #include "viewportwidget.h"
 
-KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
+KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
 	resize(900, 500);
 	
@@ -66,7 +66,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	statusBar()->insertWidget(0, m_status);
 	
 	///////Consola
-	QWidget *console = new QWidget(p);
+	QWidget *console = new QWidget(tabs);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
 	c_results = new ConsoleHtml(this);
 	c_results->view()->setFocusPolicy(Qt::NoFocus);
@@ -118,7 +118,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	//////2D Graph
 	b_funcsModel=new FunctionsModel(this);
 	
-	m_graph2d = new Graph2D(b_funcsModel, this);
+	m_graph2d = new Graph2D(b_funcsModel, tabs);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
@@ -176,7 +176,9 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
 	b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
-	b_menu->addAction(KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this));
+	KAction* ac=KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this);
+	ac->setShortcut(Qt::ControlModifier + Qt::Key_0);
+	b_menu->addAction(ac);
 	b_menu->addSeparator()->setText(i18n("Resolution"));
 	b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
 	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
@@ -203,7 +205,7 @@ KAlgebra::KAlgebra(QWidget *p) : KMainWindow(p)
 	
 	/////3DGraph
 #ifdef HAVE_OPENGL
-	QWidget *tridim = new QWidget(p);
+	QWidget *tridim = new QWidget(tabs);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new ExpressionEdit(tridim);
 	m_graph3d = new Graph3D(tridim);
