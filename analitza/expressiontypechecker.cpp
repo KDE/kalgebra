@@ -153,7 +153,6 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 			
 			if(m_v->contains(var->name())) {
 				ExpressionType t=typeForVar(var->name());
-// 				qDebug() << "vvvvvvVVVvvvVVvvvVvvv" << var->name() << t << t.canReduceTo(targetType);
 				
 				ret=t==targetType;
 				if(!ret && t.canReduceTo(targetType)) {
@@ -162,7 +161,6 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 				}
 				
 			} else if(assumptions->contains(var->name())) {
-// 				qDebug() << "vvvvvvVVVvvvVVvvvVvvv" << var->name() << assumptions->contains(var->name());
 				ret=assumptions->value(var->name())==targetType;
 				if(!ret && assumptions->value(var->name()).canReduceTo(targetType)) {
 					assumptions->insert(var->name(), targetType);
@@ -173,40 +171,13 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 				assumptions->insert(var->name(), targetType);
 				ret=true;
 			}
-// 			qDebug()<< "OAOAOAOA" << ret << exp->toString() << targetType;
-			
 		}	break;
 		case Object::value:
 		case Object::container:
-// 			qDebug() << "PEEEEEEEEEE" << exp->toString() << targetType;
+		case Object::vector:
+		case Object::list:
 			exp->visit(this);
 			ret=current.canReduceTo(targetType) && merge(*assumptions, current.assumptions());
-			
-// 			qDebug() << "PEEEEEEEEEE" << exp->toString() << current << targetType << ret << *assumptions;
-			break;
-		case Object::vector:
-			ret=targetType.type()==ExpressionType::Vector;
-			if(ret) {
-				const Vector* vec=static_cast<const Vector*>(exp);
-				ret=targetType.size()<0 || targetType.size()==vec->size();
-				
-				Vector::const_iterator it=vec->constBegin(), itEnd=vec->constEnd();
-				for(; ret && it!=itEnd; ++it) {
-					ret=inferType(*it, targetType.contained(), assumptions);
-				}
-			}
-			break;
-		case Object::list:
-			ret=targetType.type()==ExpressionType::List;
-			if(ret) {
-				const List* vec=static_cast<const List*>(exp);
-				List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd();
-				
-				for(; ret && it!=itEnd; ++it) {
-					ret=inferType(*it, targetType.contained(), assumptions);
-				}
-			}
-			
 			break;
 		case Object::oper:
 		case Object::none:
@@ -215,20 +186,6 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 	}
 	m_err.removeLast();
 	return ret;
-}
-
-QList<TypeTriplet> ExpressionTypeChecker::computeTriplets(const QList<TypeTriplet>& options,
-									const ExpressionType& first, const ExpressionType& second)
-{
-	QList<TypeTriplet> results;
-	foreach(const TypeTriplet& opt, options) {
-		if(first.canReduceTo(opt.param1) && second.canReduceTo(opt.param2)) {
-			results += opt;
-		}
-	}
-	
-// 	qDebug() << ";;;;;;;" << results;
-	return results;
 }
 
 QList<TypePair> ExpressionTypeChecker::computePairs(const QList<TypePair>& options, const ExpressionType& param)
@@ -320,10 +277,8 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 // 			static int ind=3;
 // 			qDebug() << qPrintable("+" +QString(ind++, '-')) << o->toString() << firstType << secondType;
 			foreach(const ExpressionType& _first, firstTypes) {
-// 				qDebug() << "tralara" << _first;
 				foreach(const ExpressionType& _second, secndTypes) {
-					QList<TypeTriplet> res=Operations::infer(o->operatorType());//computeTriplets(Operations::infer(o->operatorType()), first, second);
-// 					qDebug() << "+++++++" << res.size();
+					QList<TypeTriplet> res=Operations::infer(o->operatorType());
 					
 					foreach(const TypeTriplet& opt, res) {
 						Q_ASSERT(!opt.returnValue.isError());
