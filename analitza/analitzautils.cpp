@@ -35,7 +35,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 {
 	Q_ASSERT(o);
 	
-	QStringList ret;
+	QSet<QString> ret;
 	switch(o->type()) {
 		case Object::variable: {
 			Ci *i = (Ci*) o;
@@ -45,13 +45,13 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 		case Object::vector: {
 			Vector *v=(Vector*) o;
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				ret += dependencies(*it, scope);
+				ret += dependencies(*it, scope).toSet();
 			}
 		}	break;
 		case Object::list: {
 			List *v=(List*) o;
 			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				ret += dependencies(*it, scope);
+				ret += dependencies(*it, scope).toSet();
 			}
 		}	break;
 		case Object::container: {
@@ -62,11 +62,11 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			Object* ul=c->ulimit(), *dl=c->dlimit();
 			
 			//uplimit and downlimit are in the parent scope
-			if(ul) ret += dependencies(ul, scope);
-			if(dl) ret += dependencies(dl, scope);
+			if(ul) ret += dependencies(ul, scope).toSet();
+			if(dl) ret += dependencies(dl, scope).toSet();
 			
 			for(; it!=c->m_params.end(); ++it) {
-				ret += dependencies(*it, newScope);
+				ret += dependencies(*it, newScope).toSet();
 			}
 		} break;
 		case Object::none:
@@ -75,7 +75,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			break;
 	}
 	
-	return ret;
+	return ret.toList();
 }
 
 bool hasTheVar(const QSet<QString> & vars, const Object * o)
