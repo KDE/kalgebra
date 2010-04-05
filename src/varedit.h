@@ -30,6 +30,7 @@ namespace Analitza
 {
 class Analitza;
 class Variables;
+class Expression;
 }
 class ExpressionEdit;
 
@@ -45,9 +46,6 @@ class VarEdit : public KDialog
 		/** Constructor. Creates a variable editing dialog. */
 		explicit VarEdit(QWidget *parent = 0, bool modal = false);
 		
-		/** Returns the variable expression */
-		QString text() const;
-		
 		/** Sets the editing variable name */
 		void setName(const QString& newVar);	//This should edit the variable name
 		
@@ -59,9 +57,6 @@ class VarEdit : public KDialog
 		
 	private:
 		ExpressionEdit *m_exp;
-		
-		QRadioButton *m_opt_calc; //We can save the result or the whole expression
-		QRadioButton *m_opt_exp;
 		
 		QLabel *m_valid;
 		Analitza::Variables *vars;

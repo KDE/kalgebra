@@ -58,8 +58,8 @@ class ConsoleHtml : public KHTMLPart
 		ConsoleMode mode() const { return m_mode; }
 		
 	public slots:
-		/** Adds an operation @p op with the format @p mathml to the log. */
-		bool addOperation(const QString& op, bool mathml);
+		/** Adds the operation defined by the expression @p e. */
+		bool addOperation(const Analitza::Expression& e);
 		
 		/** Loads a script from @p path. */
 		bool loadScript(const QString& path);
@@ -98,7 +98,7 @@ class ConsoleHtml : public KHTMLPart
 		Analitza::Analitza a;
 		void sendStatus(const QString& msg) { emit status(msg); }
 		ConsoleMode m_mode;
-		QStringList m_script;
+		QList<Analitza::Expression> m_script;
 		QStringList m_htmlLog;
 		
 		void updateView(const QString& e);

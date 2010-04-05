@@ -79,11 +79,10 @@ ConsoleHtml::~ConsoleHtml() {}
 	return s1;
 }*/
 
-bool ConsoleHtml::addOperation(const QString& op, bool mathml)
+bool ConsoleHtml::addOperation(const Analitza::Expression& e)
 {
 	QString result, newEntry;
 	Analitza::Expression res;
-	Analitza::Expression e(op, mathml);
 	
 	a.setExpression(e);
 	if(a.isCorrect()) {
@@ -98,10 +97,10 @@ bool ConsoleHtml::addOperation(const QString& op, bool mathml)
 		result = res.toHtml();
 		
 		a.insertVariable("ans", res);
-		m_script += op; //Script won't have the errors
+		m_script += e; //Script won't have the errors
 		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
-		QString operation=op;
+		QString operation=e.toString();
 		operation.replace('%', " % "); //To avoid %1 or %2 constructions
 		m_htmlLog += i18n("<ul class='error'>Error: %1<li>%2</li></ul>", operation, a.errors().join("</li>\n<li>"));
 	}
@@ -129,7 +128,7 @@ bool ConsoleHtml::loadScript(const QString& path)
 				parser.parse(&lex);
 				
 				if(!line.isEmpty() && lex.isCompletelyRead()) {
-					correct &= addOperation(line, Analitza::Expression::isMathML(line));
+					correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)));
 					line.clear();
 				}
 			}
@@ -148,9 +147,9 @@ bool ConsoleHtml::saveScript(const QString & path) const
 		
 		if(correct) {
 			QTextStream out(&file);
-			QStringList::const_iterator it = m_script.begin();
+			QList<Analitza::Expression>::const_iterator it = m_script.begin();
 			for(; it!=m_script.end(); ++it)
-				out << *it << endl;
+				out << it->toString() << endl;
 		}
 		file.close();
 	}

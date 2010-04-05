@@ -328,14 +328,16 @@ void KAlgebra::edit_var(const QModelIndex &idx)
 	e.setAnalitza(c_results->analitza());
 	e.setName(var);
 	
-	if(e.exec() == QDialog::Accepted)
-		c_results->analitza()->insertVariable(var, e.val());
+	if(e.exec() == QDialog::Accepted) {
+		QString str=var+" := "+e.val().toString();
+		c_results->addOperation(Analitza::Expression(str, false));
+	}
 }
 
 void KAlgebra::operate()
 {
 	if(!c_exp->text().isEmpty()){
-		c_exp->setCorrect(c_results->addOperation(c_exp->text(), c_exp->isMathML()));
+		c_exp->setCorrect(c_results->addOperation(c_exp->expression()));
 		c_exp->selectAll();
 	}
 }

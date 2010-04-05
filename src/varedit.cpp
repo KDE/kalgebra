@@ -28,14 +28,14 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGroupBox>
+#include <KPushButton>
 
 VarEdit::VarEdit(QWidget *parent, bool modal) :
-	KDialog(parent), vars(NULL), m_correct(false), m_var("x")
+	KDialog(parent), vars(0), m_correct(false)
 {
 	QWidget *widget = new QWidget( this );
 	this->setCaption(i18n("Add/Edit a variable"));
 	this->setModal(modal);
-	this->setMinimumSize(200, 200);
 	this->setButtons(KDialog::Ok | KDialog::Cancel);
 	this->enableButtonApply( false );
 	this->setMainWidget( widget );
@@ -46,28 +46,15 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	connect( this, SIGNAL( applyClicked() ), this, SLOT( accept() ) );
 	connect( this, SIGNAL( okClicked() ), this, SLOT( reject() ) );
 	
-	QVBoxLayout *topLayout = new QVBoxLayout(widget);
-	
 	m_exp = new ExpressionEdit(widget);
 	connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_exp, SIGNAL(returnPressed()), this, SLOT(ok()));
 	
 	m_valid = new QLabel(widget);
 	
-	QGroupBox *buttons = new QGroupBox(i18n("Mode"));
-	
-	m_opt_exp  = new QRadioButton(i18n("Save the expression"));
-	m_opt_calc = new QRadioButton(i18n("Calculate the expression"));
-	m_opt_calc->setChecked(true);
-	
-	QVBoxLayout *vbox = new QVBoxLayout(buttons);
-	vbox->addWidget(m_opt_calc);
-	vbox->addWidget(m_opt_exp);
-	buttons->setLayout(vbox);
-	
+	QVBoxLayout *topLayout = new QVBoxLayout(widget);
 	topLayout->addWidget(m_exp);
 	topLayout->addWidget(m_valid);
-	topLayout->addWidget(buttons);
 	
 	m_exp->setFocus();
 }
@@ -75,7 +62,7 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 void VarEdit::setName(const QString& newVar)
 {
 	m_var=newVar;
-	this->setWindowTitle(i18n("Edit '%1' value", newVar));
+	setWindowTitle(i18n("Edit '%1' value", newVar));
 	if(!vars)
 		m_exp->setText(i18n("not available"));
 	else {
@@ -85,61 +72,39 @@ void VarEdit::setName(const QString& newVar)
 
 Analitza::Expression VarEdit::val()
 {
-	Analitza::Expression e(m_exp->text(), m_exp->isMathML());
+	Analitza::Expression val;
+	Analitza::Analitza a(vars);
 	
-	if(m_opt_calc->isChecked()) {
-		Analitza::Analitza a;
-		a.setExpression(e);
-		return a.calculate();
-	} else
-		return e;
+	a.setExpression(m_exp->expression());
+	
+	if(a.isCorrect()) {
+		a.simplify();
+		val=a.expression();
+	}
+	
+	m_correct = a.isCorrect();
+	if(m_correct) {
+		m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val.toString()));
+		m_valid->setToolTip(QString());
+	} else {
+		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
+		m_valid->setToolTip(a.errors().join("\n"));
+	}
+	button(Ok)->setEnabled(m_correct);
+	m_exp->setCorrect(m_correct);
+	
+	return val;
 }
 
 void VarEdit::edit()
 {
-	Analitza::Analitza a;
-	QString funct = m_exp->text();
-	
-	if(m_exp->text().isEmpty()) {
-		m_exp->setCorrect(true);
-		m_valid->setText(QString());
-		return;
-	}
-	
-	Analitza::Expression e(m_exp->text(), m_exp->isMathML());
-	a.setExpression(e);
-	
-	if(a.isCorrect()) {
-		if(!e.bvarList().isEmpty())
-			m_valid->setText(i18n("%1:=%2", m_var, m_exp->text()));
-		else {
-			Analitza::Expression val = a.calculate();
-			
-			if(!a.isCorrect()) {
-				m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-				m_valid->setToolTip(a.errors().join("\n"));
-				m_correct=false;
-			} else {
-				m_valid->setText(i18n("<b style='color:#090'>%1 := %2</b>", m_var, val.toString()));
-				m_valid->setToolTip(QString());
-				m_correct=true;
-			}
-		}
-	}
-	
-	m_exp->setCorrect(m_correct);
-	enableButtonApply(m_correct);
+	val();
 }
 
 void VarEdit::ok()
 {
 	if(m_correct)
 		accept();
-}
-
-QString VarEdit::text() const
-{
-	return m_exp->text();
 }
 
 void VarEdit::setAnalitza(Analitza::Analitza * na)
