@@ -263,7 +263,7 @@ QString lambda(const Container* c, MathMLPresentationExpressionWriter* w)
 	QString ret="<mrow>";
 	foreach(const Ci* bvar, c->bvarCi())
 		ret+=bvar->visit(w);
-	ret+="<mo>-></mo>";
+	ret+="<mo>&RightArrow;</mo>";
 	ret+=c->m_params.last()->visit(w);
 	ret+="</mrow>";
 	return ret;
