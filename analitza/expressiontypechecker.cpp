@@ -121,19 +121,12 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 	return ret;
 }
 
-ExpressionType ExpressionTypeChecker::check(const Expression& _exp)
+ExpressionType ExpressionTypeChecker::check(const Expression& exp)
 {
 	m_stars=1;
-	Expression exp(_exp);
 	current=ExpressionType(ExpressionType::Error);
 	
-// 	Object::ScopeInformation scope=AnalitzaUtils::variablesScope(m_v);
-// 	bool deps=exp.tree()->decorate(scope);
-	
 	exp.tree()->visit(this);
-	
-// 	if(current.isError())
-// 		addError(i18n("Could not figure out the expression type"));
 	
 	return current;
 }
@@ -150,27 +143,20 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 	switch(exp->type()) {
 		case Object::variable: {
 			const Ci* var=static_cast<const Ci*>(exp);
+			ExpressionType t;
 			
-			if(m_v->contains(var->name())) {
-				ExpressionType t=typeForVar(var->name());
-				
-				ret=t==targetType;
-				if(!ret && t.canReduceTo(targetType)) {
-					assumptions->insert(var->name(), targetType);
-					ret=true;
-				}
-				
-			} else if(assumptions->contains(var->name())) {
-				ret=assumptions->value(var->name())==targetType;
-				if(!ret && assumptions->value(var->name()).canReduceTo(targetType)) {
-					assumptions->insert(var->name(), targetType);
-					ret=true;
-				}
-				
-			} else {
+			if(m_v->contains(var->name()))
+				t=typeForVar(var->name());
+			else if(assumptions->contains(var->name()))
+				t=assumptions->value(var->name());
+			
+			ret=(t==targetType);
+			
+			if(!ret && t.canReduceTo(targetType)) {
 				assumptions->insert(var->name(), targetType);
 				ret=true;
 			}
+			
 		}	break;
 		case Object::value:
 		case Object::container:
@@ -296,20 +282,14 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 						
 // 						qDebug() << "XXXXXX" << first.assumptions() << _first.assumptions() << starToType;
 						
-						valid&=matchAssumptions(&starToType, first.assumptions(), second.assumptions()); //match assumptions
-						if(!valid)
-							continue;
-						
 						QMap<QString, ExpressionType> assumptions=first.starsToType(starToType).assumptions();
 						valid&=merge(assumptions, second.starsToType(starToType).assumptions());
 						
 // 						qDebug() << "fifuuuuuuu" << first << (*(it-1))->toString() << 
 // 													second << (*it)->toString() << assumptions;
 						
-						valid &= first.canReduceTo(opt.param1.starsToType(starToType));
-// 						qDebug() << "A" << valid;
+						valid &= first .canReduceTo(opt.param1.starsToType(starToType));
 						valid &= second.canReduceTo(opt.param2.starsToType(starToType));
-// 						qDebug() << "B" << valid << s << opt.param2.starsToType(starToType);
 						
 // 						qDebug() << "POPOPO" << /*(*(it-1))->toString() << (*(it))->toString() <<*/ valid << first << second;
 						if(valid) {
@@ -376,14 +356,14 @@ ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2)
 		}
 		return t;
 	}
-	else if(t1.type()==ExpressionType::Many && t1.alternatives().contains(t2))
-		return t2;
-	else if(t2.type()==ExpressionType::Many && t2.alternatives().contains(t1))
-		return t1;
 	else if(t2.isUndefined() || t2.isError())
 		return t1;
 	else if(t1.isUndefined() || t1.isError())
 		return t2;
+	else if(t1.type()==ExpressionType::Many && t1.alternatives().contains(t2))
+		return t2;
+	else if(t2.type()==ExpressionType::Many && t2.alternatives().contains(t1))
+		return t1;
 	else if(t2.type()==ExpressionType::Any)
 		return t1;
 	else if(t1.type()==ExpressionType::Any)
