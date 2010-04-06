@@ -34,6 +34,7 @@
 #include "variables.h"
 #include "expression.h"
 #include <qtimer.h>
+#include <qtextdocument.h>
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -101,8 +102,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
 		QString operation=input;
-		operation.replace('%', " % "); //To avoid %1 or %2 constructions
-		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", operation, a.errors().join("</li>\n<li>"));
+		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(operation), a.errors().join("</li>\n<li>"));
 	}
 	
 	updateView(newEntry);
