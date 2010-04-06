@@ -79,7 +79,7 @@ ConsoleHtml::~ConsoleHtml() {}
 	return s1;
 }*/
 
-bool ConsoleHtml::addOperation(const Analitza::Expression& e)
+bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
 {
 	QString result, newEntry;
 	Analitza::Expression res;
@@ -100,9 +100,9 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e)
 		m_script += e; //Script won't have the errors
 		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
-		QString operation=e.toString();
+		QString operation=input;
 		operation.replace('%', " % "); //To avoid %1 or %2 constructions
-		m_htmlLog += i18n("<ul class='error'>Error: %1<li>%2</li></ul>", operation, a.errors().join("</li>\n<li>"));
+		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", operation, a.errors().join("</li>\n<li>"));
 	}
 	
 	updateView(newEntry);
@@ -128,7 +128,7 @@ bool ConsoleHtml::loadScript(const QString& path)
 				parser.parse(&lex);
 				
 				if(!line.isEmpty() && lex.isCompletelyRead()) {
-					correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)));
+					correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)), line);
 					line.clear();
 				}
 			}
@@ -207,8 +207,7 @@ void ConsoleHtml::scrollDown()
 
 void ConsoleHtml::copy() const
 {
-	QClipboard *clipboard = QApplication::clipboard();
-	clipboard->setText(selectedText());
+	QApplication::clipboard()->setText(selectedText());
 }
 
 void ConsoleHtml::context(const QString & /*url*/, const QPoint & p)

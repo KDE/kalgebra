@@ -59,7 +59,7 @@ class ConsoleHtml : public KHTMLPart
 		
 	public slots:
 		/** Adds the operation defined by the expression @p e. */
-		bool addOperation(const Analitza::Expression& e);
+		bool addOperation(const Analitza::Expression& e, const QString& input);
 		
 		/** Loads a script from @p path. */
 		bool loadScript(const QString& path);

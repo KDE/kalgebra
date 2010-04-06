@@ -330,14 +330,14 @@ void KAlgebra::edit_var(const QModelIndex &idx)
 	
 	if(e.exec() == QDialog::Accepted) {
 		QString str=var+" := "+e.val().toString();
-		c_results->addOperation(Analitza::Expression(str, false));
+		c_results->addOperation(Analitza::Expression(str, false), str);
 	}
 }
 
 void KAlgebra::operate()
 {
 	if(!c_exp->text().isEmpty()){
-		c_exp->setCorrect(c_results->addOperation(c_exp->expression()));
+		c_exp->setCorrect(c_results->addOperation(c_exp->expression(), c_exp->toPlainText()));
 		c_exp->selectAll();
 	}
 }
@@ -441,6 +441,8 @@ void KAlgebra::tabChanged(int n)
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
 	d_dock->hide();
+	m_status->clear();
+	
 	switch(n) {
 		case 0:
 			c_dock_vars->show();
