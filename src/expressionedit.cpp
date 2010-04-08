@@ -49,7 +49,7 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	m_helptip->setAutoFillBackground(false);
 	m_helptip->hide();
 	QPalette palette;
-	palette.setColor(m_helptip->backgroundRole(), QColor(255,230,255));
+	palette.setColor(m_helptip->backgroundRole(), palette.color(QPalette::Active, QPalette::ToolTipBase));
 	m_helptip->setPalette(palette);
 	
 	m_highlight= new AlgebraHighlighter(this->document(), a);
