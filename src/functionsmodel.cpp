@@ -26,7 +26,7 @@
 #include <expression.h>
 
 FunctionsModel::FunctionsModel(QObject *parent)
-	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500)
+	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500), m_fcount(1)
 {}
 
 QVariant FunctionsModel::data(const QModelIndex & index, int role) const
@@ -312,6 +312,11 @@ void FunctionsModel::setResolution(uint res)
 		QModelIndex idx=index(0, 0), idxEnd=index(rowCount()-1, 0);
 		emit dataChanged(idx, idxEnd);
 	}
+}
+
+QString FunctionsModel::freeId()
+{
+	return QString("f%1").arg(m_fcount++);
 }
 
 #include "functionsmodel.moc"

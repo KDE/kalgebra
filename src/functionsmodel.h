@@ -83,6 +83,10 @@ class FunctionsModel : public QAbstractTableModel
 		virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 		
 		virtual bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
+		
+		/** Returns the id for the next function that's not used by any other, starting by f */
+		QString freeId();
+		
 	public slots:
 		void setSelected(const QModelIndex& idx);
 		
@@ -108,7 +112,8 @@ class FunctionsModel : public QAbstractTableModel
 		QList<function> funclist;
 		int m_selectedRow;
 		uint m_resolution;
-
+		
+		uint m_fcount;
 };
 
 #endif
