@@ -122,26 +122,20 @@ void KAlgebraPlasmoid::plasmoidFont(bool big, const QColor& c, bool bold)
 	f.setBold(bold);
 	int size;
 	
-	if(formFactor()==Horizontal) {
-		f.setPointSize(Theme::defaultTheme()->font(Theme::DefaultFont).pointSize());
-		QFontMetrics fm(f);
-		m_output->setMinimumWidth(fm.width(m_output->text()));
-	} else {
-		if(big) {
-			size=(m_output->size().height()*2)/3;
-			f.setPointSize(size);
-			QFontMetrics fm(f);
-			
-			int w=m_output->nativeWidget()->width();
-			Q_ASSERT(w>0);
-			for(; fm.width(m_output->text()) > w; size--) {
-				f.setPointSize(size);
-				fm=QFontMetrics(f);
-			}
-		} else
-			size=simplificationSize();
+	if(big) {
+		size=(m_output->size().height()*2)/3;
 		f.setPointSize(size);
-	}
+		QFontMetrics fm(f);
+		
+		int w=m_output->size().width();
+		Q_ASSERT(w>0);
+		for(; fm.width(m_output->text()) > w; size--) {
+			f.setPointSize(size);
+			fm=QFontMetrics(f);
+		}
+	} else
+		size=simplificationSize();
+	f.setPointSize(size);
 	
 	QPalette palette = m_output->palette();
 	palette.setColor(QPalette::WindowText, c);
