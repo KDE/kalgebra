@@ -87,7 +87,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
 	
-	viewTabs->addTab(m_graph, i18n("Preview"));
+	viewTabs->addTab(m_graph, KIcon("document-preview"), i18n("Preview"));
 	QWidget *options=new QWidget(viewTabs);
 	options->setLayout(new QVBoxLayout);
 	m_uplimit=new ExpressionEdit(options);
@@ -99,7 +99,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	options->layout()->addWidget(new QLabel(i18n("To:"), options));
 	options->layout()->addWidget(m_uplimit);
 	options->layout()->addItem(new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-	viewTabs->addTab(options, i18n("Options"));
+	viewTabs->addTab(options, KIcon("configure"), i18n("Options"));
 	connect(m_uplimit, SIGNAL(textChanged()), this, SLOT(updateUplimit()));
 	connect(m_downlimit, SIGNAL(textChanged()), this, SLOT(updateDownlimit()));
 	
