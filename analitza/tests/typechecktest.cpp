@@ -108,6 +108,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("somelist") << "t->list{t,t**2}" << "num -> [num]";
 	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
 									"? selector(2, vector{x, 1/x} ) }" << "(num -> num) | (<num,-1> -> <num,-1>)";
+	QTest::newRow("div") << "v->selector(v, 1)/selector(v, 2)" << "(<num,-1> -> num) | ([num] -> num)";
 }
 
 void TypeCheckTest::testConstruction()
