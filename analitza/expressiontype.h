@@ -69,7 +69,7 @@ class ANALITZA_EXPORT ExpressionType
 		
 		bool isUndefined() const { return m_type==Undefined; }
 		bool canReduceTo(const ExpressionType& type) const;
-		int increaseStars(int stars);
+		int increaseStars(int stars, QMap<int, int>* values=0);
 		
 		ExpressionType& simplifyStars();
 	private:

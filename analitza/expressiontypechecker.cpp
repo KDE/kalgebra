@@ -1,3 +1,4 @@
+
 /*************************************************************************************
  *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
@@ -76,7 +77,15 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 			} else {
 				ExpressionType cosa(type);
 				cosa.clearAssumptions();
-				ret[stars]=cosa.starsToType(initial);
+				
+				QMap<int, int> increases;
+				m_stars=cosa.increaseStars(m_stars, &increases);
+				ret[stars]=cosa;
+				
+				QMap<int,int>::const_iterator itI=increases.constBegin(), itIEnd=increases.constEnd();
+				for(; itI!=itIEnd; ++itI) {
+					ret.insert(itI.value(), ExpressionType(ExpressionType::Any, itI.key()));
+				}
 				
 				QMap<int, ExpressionType>::iterator it=ret.begin(), itEnd=ret.end();
 				for(; it!=itEnd; ++it)
@@ -116,7 +125,7 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 // 			Q_ASSERT(false && "bffff");
 			break;
 	}
-// 	qDebug() << ";;;;;;;" << candidate << type << initial;
+// 	qDebug() << ";;;;;;;" << candidate << type << ret;
 	
 	return ret;
 }
@@ -237,6 +246,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 	if(parameters.size()==1) {
 		parameters.first()->visit(this);
 		QList<ExpressionType> types=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+		const QMap<QString, ExpressionType> assumptions=current.assumptions();
 		
 		foreach(const ExpressionType& t, types) {
 			QList<TypePair> thing=computePairs(Operations::inferUnary(o->operatorType()), t);
@@ -268,35 +278,42 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 					
 					foreach(const TypeTriplet& opt, res) {
 						Q_ASSERT(!opt.returnValue.isError());
-						QMap<int, ExpressionType> starToType;
+						QMap<int, ExpressionType> starToType, starToParam;
 						
 						bool valid=matchAssumptions(&starToType, _first.assumptions(), _second.assumptions()); //match assumptions
 						
-						starToType=computeStars(starToType, opt.param1, _first);
-						starToType=computeStars(starToType, opt.param2, _second);
-						starToType=computeStars(starToType, _first,  opt.param1);
-						starToType=computeStars(starToType, _second, opt.param2);
-						
 						ExpressionType first =_first .starsToType(starToType);
 						ExpressionType second=_second.starsToType(starToType);
+// 						qDebug() << "9999999" << _second.assumptions() << second.assumptions() << starToType;
+						starToType.clear();
 						
-// 						qDebug() << "XXXXXX" << first.assumptions() << _first.assumptions() << starToType;
+						starToType=computeStars(starToType, first,  opt.param1);
+						starToType=computeStars(starToType, second, opt.param2);
 						
-						QMap<QString, ExpressionType> assumptions=first.starsToType(starToType).assumptions();
-						valid&=merge(assumptions, second.starsToType(starToType).assumptions());
+						first =first .starsToType(starToType);
+						second=second.starsToType(starToType);
+						
+						starToParam=computeStars(starToParam, opt.param1, first);
+						starToParam=computeStars(starToParam, opt.param2, second);
+// 						qDebug() << "XXXXXX" << starToParam;
+// 						qDebug() << "PPPPPP" << opt << first << second;
+						
+						QMap<QString, ExpressionType> assumptions=first.assumptions();
+						valid&=merge(assumptions, second.assumptions());
 						
 // 						qDebug() << "fifuuuuuuu" << first << (*(it-1))->toString() << 
 // 													second << (*it)->toString() << assumptions;
 						
-						valid &= first .canReduceTo(opt.param1.starsToType(starToType));
-						valid &= second.canReduceTo(opt.param2.starsToType(starToType));
+						valid &= first .canReduceTo(opt.param1.starsToType(starToParam));
+						valid &= second.canReduceTo(opt.param2.starsToType(starToParam));
 						
-// 						qDebug() << "POPOPO" << /*(*(it-1))->toString() << (*(it))->toString() <<*/ valid << first << second;
+// 						qDebug() << "POPOPO" << (*(it-1))->toString() << (*(it))->toString() << valid << first << second << starToParam;
 						if(valid) {
-							ExpressionType toadd=opt.returnValue.starsToType(starToType);
+							ExpressionType toadd=opt.returnValue.starsToType(starToParam);
 							toadd.addAssumptions(assumptions);
+// 							toadd=toadd;
 							
-// 							qDebug() << "&&&&&&" << toadd << toadd.assumptions() << starToType;
+// 							qDebug() << "&&&&&&" << toadd << assumptions << starToParam << starToType;
 							ret.addAlternative(toadd);
 						}
 					}

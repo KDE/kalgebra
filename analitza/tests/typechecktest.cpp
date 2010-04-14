@@ -108,7 +108,9 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("somelist") << "t->list{t,t**2}" << "num -> [num]";
 	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
 									"? selector(2, vector{x, 1/x} ) }" << "(num -> num) | (<num,-1> -> <num,-1>)";
-	QTest::newRow("div") << "v->selector(v, 1)/selector(v, 2)" << "(<num,-1> -> num) | ([num] -> num)";
+	QTest::newRow("div") << "v->selector(1, v)/selector(2, v)" << "(<num,-1> -> num) | (<num,-1> -> <num,-1>) | ([num] -> num) | ([<num,-1>] -> <num,-1>)";
+	
+	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
 }
 
 void TypeCheckTest::testConstruction()
@@ -138,7 +140,7 @@ void TypeCheckTest::testUncorrection()
 	
 	Analitza::ExpressionType result=t.check(e);
 	
-	if(!t.isCorrect())
+	if(t.isCorrect())
 		qDebug() << "wrong type:" << result.toString();
 	QVERIFY(!t.isCorrect());
 }
@@ -163,8 +165,7 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("infinite_2") << "fwrong";
 	QTest::newRow("number call") << "number(3)";
 	QTest::newRow("wrong param count") << "golambda(2)";
+	QTest::newRow("unresolved operation") << "selector(2,2)";
 	
 	//TODO: Add invalid recursive call
-	//TODO: selector(cos(x), x)
-// 	QTest::newRow("wrong param count") << "vector{}";
 }

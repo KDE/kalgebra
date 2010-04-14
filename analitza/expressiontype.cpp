@@ -156,29 +156,28 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 {
 	ExpressionType ret;
 // 	static int deep=0;
-// 	deep++;
-// 	qDebug() << "hohohoho"<< QString(deep, '-') << *this << m_assumptions << m_assumptions.size() << m_contained.size();
+// 	qDebug() << qPrintable("hohohoho"+QString(++deep, '-')) << *this << info;
 	
-	if(m_type==ExpressionType::Any || (m_type==ExpressionType::Vector && m_size<0)) {
-		if(info.contains(m_any)) {
-			ret=info.value(m_any);
-			Q_ASSERT(ret.assumptions().isEmpty());
-			
-			ret.m_assumptions=m_assumptions;
-		} else
-			ret=*this;
-	} else {
-		ret=*this;
-		ret.m_contained.clear();
+// 	qDebug() << ".........." << *this << info.keys();
+	if((m_type==ExpressionType::Any || (m_type==ExpressionType::Vector && m_size<0)) && info.contains(m_any)) {
+		ret=info.value(m_any);
+		Q_ASSERT(ret.assumptions().isEmpty());
 		
-		for(int i=0; i<m_contained.size(); i++) {
-			ret.m_contained+=m_contained[i].starsToType(info);
+		ret.m_assumptions=m_assumptions;
+	} else{
+		ret=*this;
+		
+		QList<ExpressionType>::iterator it=ret.m_contained.begin(), itEnd=ret.m_contained.end();
+		for(; it!=itEnd; ++it) {
+			*it=it->starsToType(info);
 		}
 	}
 	
-	QMap<QString, ExpressionType>::iterator it=ret.m_assumptions.begin(), itEnd=ret.m_assumptions.end();
-	for(; it!=itEnd; ++it) {
-		*it=it->starsToType(info);
+	{
+		QMap<QString, ExpressionType>::iterator it=ret.m_assumptions.begin(), itEnd=ret.m_assumptions.end();
+		for(; it!=itEnd; ++it) {
+			*it=it->starsToType(info);
+		}
 	}
 // 	deep--;
 // 	qDebug() << "MMMMMMMM" << ret << ret.assumptions() << m_assumptions;
@@ -242,14 +241,19 @@ QMap<QString, ExpressionType> ExpressionType::assumptions() const
 	return m_assumptions;
 }
 
-int ExpressionType::increaseStars(int stars)
+int ExpressionType::increaseStars(int stars, QMap<int, int>* values)
 {
 	int ret=stars;
 	switch(m_type) {
-		case ExpressionType::Any:
+		case ExpressionType::Any: {
+			int old=m_any;
 			m_any=stars+m_any;
-			if(m_any>stars) stars=m_any+1;
-			break;
+			if(m_any>stars)
+				stars=m_any+1;
+			
+			if(values)
+				values->insert(old, m_any);
+		}	break;
 		case ExpressionType::Many:
 		case ExpressionType::Vector:
 		case ExpressionType::List:
