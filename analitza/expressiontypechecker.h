@@ -75,6 +75,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		Variables* m_v;
 		QMap<QString, ExpressionType> m_typeForBVar;
 		QMap<QString, ExpressionType> m_vars;
+		QSet<QString> m_lambdascope;
 		QStack<const Object*> m_calls;
 };
 

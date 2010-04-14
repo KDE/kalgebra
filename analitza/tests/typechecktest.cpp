@@ -111,6 +111,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("div") << "v->selector(1, v)/selector(2, v)" << "(<num,-1> -> num) | (<num,-1> -> <num,-1>) | ([num] -> num) | ([<num,-1>] -> <num,-1>)";
 	
 	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
+	QTest::newRow("shadowed_param") << "fv->cos(fv)" << "num -> num";
 }
 
 void TypeCheckTest::testConstruction()

@@ -151,17 +151,11 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 	bool ret=false;
 	switch(exp->type()) {
 		case Object::variable: {
-			const Ci* var=static_cast<const Ci*>(exp);
-			ExpressionType t;
+			exp->visit(this);
+			ret=(current==targetType);
 			
-			if(m_v->contains(var->name()))
-				t=typeForVar(var->name());
-			else if(assumptions->contains(var->name()))
-				t=assumptions->value(var->name());
-			
-			ret=(t==targetType);
-			
-			if(!ret && t.canReduceTo(targetType)) {
+			if(!ret && current.canReduceTo(targetType)) {
+				const Ci* var=static_cast<const Ci*>(exp);
 				assumptions->insert(var->name(), targetType);
 				ret=true;
 			}
@@ -333,15 +327,15 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 
 QString ExpressionTypeChecker::accept(const Ci* var)
 {
-	if(m_v->contains(var->name())) {
-		current=typeForVar(var->name());
-	} else if(m_typeForBVar.contains(var->name())) {
+	if(m_typeForBVar.contains(var->name())) {
 		current=m_typeForBVar.value(var->name());
+	} else if(!m_lambdascope.contains(var->name()) && m_v->contains(var->name())) {
+		current=typeForVar(var->name());
 	} else {
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
 		current.addAssumption(var->name(), current);
-// 		qDebug() << "created" << var->name() << current;
 	}
+	qDebug() << "XXXXX" << var->name() << current << m_lambdascope;
 	
 	return QString();
 }
@@ -561,7 +555,11 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			c->m_params.last()->visit(this);
 			break;
 		case Container::lambda: {
+			QSet<QString> aux=m_lambdascope;
+			m_lambdascope+=c->bvarStrings().toSet();
+			
 			c->m_params.last()->visit(this);
+			m_lambdascope=aux;
 			
 			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
 			
