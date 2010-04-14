@@ -335,7 +335,7 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
 		current.addAssumption(var->name(), current);
 	}
-	qDebug() << "XXXXX" << var->name() << current << m_lambdascope;
+// 	qDebug() << "XXXXX" << var->name() << current << m_lambdascope;
 	
 	return QString();
 }
