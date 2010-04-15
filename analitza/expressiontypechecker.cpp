@@ -67,13 +67,13 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 	switch(candidate.type()) {
 		case ExpressionType::Any: {
 			int stars=candidate.anyValue();
-				
+			
 			if(ret.contains(stars)) {
 				ExpressionType t=ret[stars];
-				if(t==candidate)
-					break;
+				ret.remove(stars);
 				
-				ret=computeStars(initial, t, type);
+				ret=computeStars(ret, t, type);
+				ret.insert(stars, t.starsToType(ret));
 			} else {
 				ExpressionType cosa(type);
 				cosa.clearAssumptions();
@@ -90,7 +90,6 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 				QMap<int, ExpressionType>::iterator it=ret.begin(), itEnd=ret.end();
 				for(; it!=itEnd; ++it)
 					*it=it->starsToType(ret);
-				
 			}
 			
 		}	break;
@@ -266,10 +265,9 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 			
 // 			static int ind=3;
 // 			qDebug() << qPrintable("+" +QString(ind++, '-')) << o->toString() << firstType << secondType;
+			const QList<TypeTriplet> res=Operations::infer(o->operatorType());
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
-					QList<TypeTriplet> res=Operations::infer(o->operatorType());
-					
 					foreach(const TypeTriplet& opt, res) {
 						Q_ASSERT(!opt.returnValue.isError());
 						QMap<int, ExpressionType> starToType, starToParam;
@@ -291,6 +289,12 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 						starToParam=computeStars(starToParam, opt.param2, second);
 // 						qDebug() << "XXXXXX" << starToParam;
 // 						qDebug() << "PPPPPP" << opt << first << second;
+						
+						starToType=computeStars(starToType, first,  opt.param1.starsToType(starToParam));
+						starToType=computeStars(starToType, second, opt.param2.starsToType(starToParam));
+						
+						first =first .starsToType(starToType);
+						second=second.starsToType(starToType);
 						
 						QMap<QString, ExpressionType> assumptions=first.assumptions();
 						valid&=merge(assumptions, second.assumptions());

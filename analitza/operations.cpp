@@ -523,15 +523,9 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 			break;
 		case Operator::eq:
 		case Operator::neq:
-			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
-			ret << TypeTriplet(
-								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::Value));
-			ret << TypeTriplet(
-								ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Any, 1),
+							   ExpressionType(ExpressionType::Any, 1),
+							   ExpressionType(ExpressionType::Value));
 			break;
 		case Operator::scalarproduct:
 			ret << TypeTriplet(

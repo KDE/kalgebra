@@ -304,7 +304,6 @@ void AnalitzaTest::testCorrection_data()
 	script.clear();
 	script << "fv:=vector{x->x, x->x+2}";
 	script << "(selector(1, fv))(1)";
-	script << "(selector(1, fv))(vector{1,2})+(selector(2, fv))(vector{1,2})";
 	script << "(selector(1, fv))(1)+(selector(2, fv))(2)";
 	QTest::newRow("selector+lambda") << script << "5";
 	

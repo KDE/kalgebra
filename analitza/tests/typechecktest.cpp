@@ -112,6 +112,7 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
 	QTest::newRow("shadowed_param") << "fv->cos(fv)" << "num -> num";
+	QTest::newRow("eq") << "x->eq(1,x)" << "num -> num";
 }
 
 void TypeCheckTest::testConstruction()
