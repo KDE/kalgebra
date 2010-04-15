@@ -502,9 +502,14 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 	
 	switch(op) {
 		case Operator::plus:
-		case Operator::times:
 		case Operator::divide:
 		case Operator::minus:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+							   ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1));
+			break;
+		case Operator::times:
 			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
 			ret << TypeTriplet(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
 							   ExpressionType(ExpressionType::Value),

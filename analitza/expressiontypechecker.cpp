@@ -474,6 +474,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 						QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
 // 						qDebug() << "SSSSSSSSSSSSSSSSSSSSS" << alts;
 						
+						bool countError=false;
 						foreach(const ExpressionType& opt, alts) {
 // 							qDebug() << "ooooopt" << opt;
 							if(opt.type()!=ExpressionType::Lambda) {
@@ -482,7 +483,8 @@ QString ExpressionTypeChecker::accept(const Container* c)
 							}
 							
 							if(opt.parameters().size()!=c->m_params.size()) {
-								addError(i18n("Invalid parameter count."));
+								if(!countError) addError(i18n("Invalid parameter count for '%1'. Should have %2 parameters", c->toString(), c->m_params.size()));
+								countError=true;
 								continue;
 							}
 							

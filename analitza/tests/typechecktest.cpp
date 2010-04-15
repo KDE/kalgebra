@@ -103,11 +103,11 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("selec_call") << "(selector(1, fv))(1)" << "num";
 	QTest::newRow("selec") << "selector(1, fv)" << "num -> num";
 	
-	QTest::newRow("piece") << "x->piecewise { gt(x,0) ? x, ? x+1 }" << "(num -> num) | (<num,-1> -> <num,-1>)";
+	QTest::newRow("piece") << "x->piecewise { gt(x,0) ? x, ? x+1 }" << "num -> num";
 	QTest::newRow("parametric") << "t->vector{t,t**2}" << "num -> <num,2>";
 	QTest::newRow("somelist") << "t->list{t,t**2}" << "num -> [num]";
 	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
-									"? selector(2, vector{x, 1/x} ) }" << "(num -> num) | (<num,-1> -> <num,-1>)";
+									"? selector(2, vector{x, 1/x} ) }" << "num -> num";
 	QTest::newRow("div") << "v->selector(1, v)/selector(2, v)" << "(<num,-1> -> num) | (<num,-1> -> <num,-1>) | ([num] -> num) | ([<num,-1>] -> <num,-1>)";
 	
 	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
@@ -167,6 +167,7 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("number call") << "number(3)";
 	QTest::newRow("wrong param count") << "golambda(2)";
 	QTest::newRow("unresolved operation") << "selector(2,2)";
+// 	QTest::newRow("lambda param count") << "(x->x)(x,x)";
 	
 	//TODO: Add invalid recursive call
 }
