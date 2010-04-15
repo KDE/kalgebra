@@ -496,9 +496,9 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 			break;
 		case Operator::scalarproduct:
 			ret << TypeTriplet(
-								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1),
-								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1));
+								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1),
+								ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), -1));
 			break;
 		case Operator::power:
 		case Operator::rem:
