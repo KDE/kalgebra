@@ -52,9 +52,6 @@ class Operations
 		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, QString &correct);
 		static Object* reduceUnary(Operator::OperatorType op, Object* oper, QString &correct);
 		
-		static ExpressionType type(Operator::OperatorType op, const ExpressionType& paramType1, const ExpressionType& paramType2);
-		static ExpressionType typeUnary(Operator::OperatorType op, const ExpressionType& paramType);
-		
 		static QList<TypeTriplet> infer(Operator::OperatorType op);
 		static QList<TypePair> inferUnary(Operator::OperatorType op);
 	private:
