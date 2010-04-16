@@ -22,6 +22,7 @@
 
 #include <KDebug>
 #include <KLocale>
+#include <expressiontype.h>
 #include <variable.h>
 #include <analitzautils.h>
 
@@ -30,6 +31,7 @@ using std::cos;
 using std::atan;
 using std::fabs;
 
+using Analitza::ExpressionType;
 using Analitza::Expression;
 using Analitza::Variables;
 using Analitza::Cn;
@@ -55,6 +57,7 @@ struct FunctionY : public FunctionImpl
 	QLineF derivative(const QPointF& p) const;
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
 	
 	QStringList boundings() const { return supportedBVars(); }
 	void calculateValues(double, double);
@@ -74,6 +77,7 @@ struct FunctionX : public FunctionY
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("y"); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
 	QStringList boundings() const { return supportedBVars(); }
 };
 

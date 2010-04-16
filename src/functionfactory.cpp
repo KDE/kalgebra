@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 #include "functionfactory.h"
+#include "expressiontype.h"
 
 using Analitza::Expression;
 using Analitza::Variables;
@@ -33,10 +34,17 @@ FunctionImpl* FunctionFactory::item(const Id& bvars, const Expression& exp, Vari
 	return m_items[bvars.join("|")](exp, v);
 }
 
-bool FunctionFactory::registerFunction(const FunctionFactory::Id& bvars, registerFunc_fn f)
+Analitza::ExpressionType FunctionFactory::type(const FunctionFactory::Id& bvars)
+{
+	return m_types[bvars.join("|")]();
+}
+
+bool FunctionFactory::registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft)
 {
 	Q_ASSERT(!contains(bvars));
 	m_items[bvars.join("|")]=f;
+	m_types[bvars.join("|")]=ft;
+	
 	return true;
 }
 

@@ -45,11 +45,16 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 		
 		//TODO: turn into assertion
 		if(!FunctionFactory::self()->contains(bvars))                                        
-			m_err << "Function type not recognized";                                     
-		else {                                                                               
-			m_function=FunctionFactory::self()->item(bvars, m_expression, v);                 
-			if(downlimit!=uplimit)                                                       
-				m_function->setLimits(downlimit, uplimit);                           
+			m_err << i18n("Function type not recognized");
+		else {
+			Analitza::ExpressionType t=a.type().returnValue();
+			
+			if(t.canReduceTo(FunctionFactory::self()->type(bvars))) {
+				m_function=FunctionFactory::self()->item(bvars, m_expression, v);
+				if(downlimit!=uplimit)
+					m_function->setLimits(downlimit, uplimit);
+			} else
+				m_err << i18n("Function type not correct for functions depending on %1", bvars.join(i18n(", ")));
 		}
 	} else {
 		m_err << i18n("The expression is not correct");

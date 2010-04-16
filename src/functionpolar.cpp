@@ -22,12 +22,14 @@
 
 #include <KLocale>
 #include <variable.h>
+#include <expressiontype.h>
 
 using std::acos;
 using std::atan;
 using std::sqrt;
 
 using Analitza::Expression;
+using Analitza::ExpressionType;
 using Analitza::Variables;
 using Analitza::Cn;
 
@@ -46,6 +48,7 @@ struct FunctionPolar : public FunctionImpl
 	QRect m_last_viewport;
 	QStringList boundings() const { return supportedBVars(); }
 	static QStringList supportedBVars() { return QStringList("q"); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
 	
 	Cn* m_th;
 };

@@ -24,9 +24,11 @@
 #include <KDebug>
 #include <KLocale>
 #include <container.h>
+#include <expressiontype.h>
 #include <variable.h>
 
 using Analitza::Expression;
+using Analitza::ExpressionType;
 using Analitza::Variables;
 using Analitza::Vector;
 using Analitza::Object;
@@ -52,6 +54,7 @@ struct FunctionParametric : public FunctionImpl
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2); }
 	QStringList boundings() const { return supportedBVars(); }
 	Cn* vx;
 };

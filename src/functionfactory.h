@@ -21,7 +21,7 @@
 
 #define REGISTER_FUNCTION(name) \
         static FunctionImpl* create##name(const Expression &exp, Variables* v) { return new name (exp, v); } \
-        namespace { bool _##name=FunctionFactory::self()->registerFunction(name::supportedBVars(), create##name); }
+        namespace { bool _##name=FunctionFactory::self()->registerFunction(name::supportedBVars(), create##name, name ::expectedType); }
 
 #include <QMap>
 #include <QStringList>
@@ -32,6 +32,7 @@ class QStringList;
 namespace Analitza
 {
 class Expression;
+class ExpressionType;
 class Variables;
 }
 
@@ -39,15 +40,18 @@ class FunctionFactory
 {
 	public:
 		typedef FunctionImpl* (*registerFunc_fn)(const Analitza::Expression&, Analitza::Variables* );
+		typedef Analitza::ExpressionType (*expectedType_fn)();
 		typedef QStringList Id;
 		FunctionImpl* item(const Id& bvars, const Analitza::Expression& exp, Analitza::Variables* v) const;
+		Analitza::ExpressionType type(const Id& bvars);
 		static FunctionFactory* self();
-		bool registerFunction(const Id& bvars, registerFunc_fn);
+		bool registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft);
 		bool contains(const Id& bvars) const;
 	private:
 		static FunctionFactory* m_self;
 		FunctionFactory() { Q_ASSERT(!m_self); m_self=this; }
 		QMap<QString, registerFunc_fn> m_items;
+		QMap<QString, expectedType_fn> m_types;
 };
 
 
