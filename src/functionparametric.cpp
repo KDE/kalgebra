@@ -82,19 +82,15 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 		Expression res=func.calculateLambda();
 		
 		Object* vo=res.tree();
+		Vector* v=static_cast<Vector*>(vo);
+		Cn* x=static_cast<Cn*>(v->at(0));
+		Cn* y=static_cast<Cn*>(v->at(1));
+		addValue(QPointF(x->value(), y->value()));
 // 		objectWalker(vo);
-		if(vo->type()==Object::vector) {
-			Vector* v=static_cast<Vector*>(vo);
-			bool valid=v->size()==2
+		Q_ASSERT(vo->type()==Object::vector);
+		Q_ASSERT(v->size()==2
 				&& v->at(0)->type()==Object::value
-				&& v->at(1)->type()==Object::value;
-			
-			if(valid) {
-				Cn* x=static_cast<Cn*>(v->at(0));
-				Cn* y=static_cast<Cn*>(v->at(1));
-				addValue(QPointF(x->value(), y->value()));
-			}
-		}
+				&& v->at(1)->type()==Object::value);
 	}
 }
 

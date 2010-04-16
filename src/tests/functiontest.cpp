@@ -135,7 +135,7 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("empty function") << "" << false;
 	QTest::newRow("undefined var") << "x:=y" << false;
 	QTest::newRow("parametric-novector") << "t->3" << false;
-	QTest::newRow("parametric-wrongvector") << "t->vector{}" << false;
+	QTest::newRow("parametric-wrongvector") << "t->vector{3}" << false;
 	QTest::newRow("wrong-dimension") << "vector{2,3}" << false;
 	QTest::newRow("wrong-dimension-y") << "y->vector{2,3}" << false;
 	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}" << false;
