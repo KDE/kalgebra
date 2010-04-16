@@ -24,6 +24,7 @@
 #include <cstdio>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <QTime>
 
 using namespace std;
 
@@ -33,17 +34,31 @@ Analitza::Analitza a;
 
 enum CalcType { Evaluate, Calculate };
 
+static const char* prompt=">>> ";
+static const char* insidePrompt="... ";
+
+struct Config {
+	CalcType calcType;
+	bool showElapsedType;
+};
+static Config configuration;
+
 void calculate(const Expression& e, CalcType t)
 {
 	Expression ans;
 	a.setExpression(e);
 	if(e.isCorrect()) {
+		QTime time;
+		if(configuration.showElapsedType) time.start();
+		
 		if(t==Calculate)
 			ans=a.calculate();
 		else
 			ans=a.evaluate();
+		
+		if(configuration.showElapsedType) qDebug() << "Ellapsed time: " << time.elapsed();
 	}
-			
+	
 	if(a.isCorrect()) {
 		qDebug() << qPrintable(ans.toString());
 		a.insertVariable("ans", ans);
@@ -55,13 +70,33 @@ void calculate(const Expression& e, CalcType t)
 	}
 }
 
-const char* prompt=">>> ";
-const char* insidePrompt="... ";
-
 int main(int argc, char *argv[])
 {
-	Q_UNUSED(argc);
-	Q_UNUSED(argv);
+	configuration.calcType=Evaluate;
+	configuration.showElapsedType=false;
+	
+	for(int i=1; i<argc; ++i) {
+		QByteArray arg=argv[i];
+		if(arg=="--print-time")
+			configuration.showElapsedType=true;
+		else if(arg=="--calculate")
+			configuration.calcType=Calculate;
+		else if(arg=="--evaluate")
+			configuration.calcType=Evaluate;
+		else if(arg=="--help" || arg=="-h") {
+			qDebug() << "This is KAlgebra console version";
+			qDebug() << "Use: " << argv[0] << "[Options]";
+			qDebug() << "\t--evaluate:\tTries to simplify symbolically before calculating";
+			qDebug() << "\t--calculate:\tCalculates straight away. If some symbol is missing, it will fail";
+			qDebug() << "\t--print-times:\tOutputs the ellapsed time of an operation";
+			qDebug() << "\t--help:\t\twill print this help";
+			return 0;
+		} else {
+			qDebug() << "Unknown argument: " << argv[i];
+			return 1;
+		}
+	}
+	
 	bool done=false;
 	bool inside=false;
 	
@@ -89,7 +124,7 @@ int main(int argc, char *argv[])
 			if(lex.isCompletelyRead()) {
 				Expression e(ex.mathML(), true);
 // 				qDebug() << entry << e.toString();
-				calculate(e, Evaluate);
+				calculate(e, configuration.calcType);
 				inside =false;
 				entry.clear();
 			} else {
