@@ -65,7 +65,7 @@ void Analitza::Analitza::setExpression(const Expression & e)
 		m_hasdeps=m_exp.tree()->decorate(varsScope());
 		
 		ExpressionTypeChecker check(m_vars);
-		ExpressionType s=check.check(m_exp);
+		m_currentType=check.check(m_exp);
 		
 		m_err += check.errors();
 	}

@@ -24,6 +24,7 @@
 
 #include "expression.h"
 #include "analitzaexport.h"
+#include "expressiontype.h"
 
 namespace Analitza
 {
@@ -126,12 +127,17 @@ class ANALITZA_EXPORT Analitza
 		/** Returns whether the current expression has all data it needs to be calculated.*/
 		bool hasDependencies() const { return m_hasdeps; }
 		
-		/** This function is useful if you want to work programatically on functions with undefined variables.
+		/** This method is useful if you want to work programatically on functions with undefined variables.
 			@returns the same expression set but with explicit dependencies.
 			
 			e.g. x+2 would return x->x+2
 		*/
 		Expression dependenciesToLambda() const;
+		
+		/** This method lets you retrieve the current type in use.
+		 @returns the type of the current expression.
+		 */
+		ExpressionType type() const { return m_currentType; }
 	private:
 		Expression m_exp;
 		Variables *m_vars;
@@ -139,6 +145,7 @@ class ANALITZA_EXPORT Analitza
 		
 		const bool m_varsOwned;
 		bool m_hasdeps;
+		ExpressionType m_currentType;
 		
 		Object::ScopeInformation varsScope() const;
 		

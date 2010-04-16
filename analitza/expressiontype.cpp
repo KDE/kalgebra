@@ -306,3 +306,18 @@ ExpressionType& ExpressionType::simplifyStars()
 	starsSimplification(*this, map, next);
 	return *this;
 }
+
+ExpressionType ExpressionType::returnValue() const
+{
+	ExpressionType ret;
+	
+	if(m_type==Analitza::ExpressionType::Many) {
+		ret=ExpressionType(ExpressionType::Many);
+		foreach(const ExpressionType& t, m_contained)
+			ret.addAlternative(t.returnValue());
+	} else if(m_type==Analitza::ExpressionType::Lambda)
+		ret=m_contained.last();
+	
+	return ret;
+}
+
