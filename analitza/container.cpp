@@ -69,10 +69,8 @@ Container::Container(const Container& c) : Object(Object::container), m_cont_typ
 {
 	Q_ASSERT(c.type()==Object::container);
 	
-	Container::const_iterator it=c.m_params.constBegin();
-	for(; it!=c.m_params.constEnd(); ++it) {
-		appendBranch((*it)->copy());
-	}
+	foreach(const Object* o, c.m_params)
+		appendBranch(o->copy());
 }
 
 Container* Container::copy() const
@@ -294,7 +292,6 @@ void Container::appendBranch(Object* o)
 	m_params.append(o);
 }
 
-///Rename to decorate
 bool Container::decorate(const ScopeInformation& scope)
 {
 	if(m_cont_type==bvar)

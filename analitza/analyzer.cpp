@@ -662,9 +662,15 @@ Analitza::Object* Analitza::Analyzer::operate(const Container* c)
 	Q_ASSERT(!c->isEmpty());
 	Object* ret=0;
 	
-	switch(c->containerType()) { //TODO: Diffs should be implemented here.
+	switch(c->containerType()) {
 		case Container::math:
 			ret=calc(*c->firstValue());
+			break;
+		case Container::declare:
+			ret=calcDeclare(c);
+			break;
+		case Container::piecewise:
+			ret=calcPiecewise(c);
 			break;
 		case Container::lambda:
 			ret=c->copy();
@@ -674,46 +680,51 @@ Analitza::Object* Analitza::Analyzer::operate(const Container* c)
 			Operator op = c->firstOperator();
 			Operator::OperatorType opt=op.operatorType();
 			
-			if(opt==Operator::sum) 
-				ret = sum(*c);
-			else if(opt==Operator::product)
-				ret = product(*c);
-			else if(opt==Operator::diff) {
-				//TODO: Make multibvar
-				QStringList bvars=c->bvarStrings();
-				
-				//We construct the lambda
-				Object* o=derivative(bvars[0], *c->firstValue());
-				
-				Container* cc=new Container(Container::lambda);
-				foreach(const QString& v, bvars) {
-					Container* bvar=new Container(Container::bvar);
-					bvar->appendBranch(new Ci(v));
-					cc->appendBranch(bvar);
-				}
-				cc->appendBranch(simp(o));
-				ret=cc;
-				
-				ret->decorate(Object::ScopeInformation());
-				
-			} else if(opt==Operator::function) {
-				ret = func(*c);
-			} else {
-				QList<Object*> numbers;
-				Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
-				for(; it!=itEnd; ++it) {
-					numbers.append(calc(*it));
-				}
-				
-				Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
-							(op.nparams()>-1 && numbers.count()==op.nparams()) ||
-							opt==Operator::minus);
-				
-				if(!opt) {
-					ret = numbers.first();
-				} else if(KDE_ISLIKELY(!numbers.isEmpty())) {
-					ret = numbers.first();
+			switch(opt) {
+				case Operator::sum:
+					ret = sum(*c);
+					break;
+				case Operator::product:
+					ret = product(*c);
+					break;
+				case Operator::function:
+					ret = func(*c);
+					break;
+				case Operator::none:
+					ret=calc(*c->firstValue());
+					break;
+				case Operator::diff: {
+					//TODO: Make multibvar
+					QStringList bvars=c->bvarStrings();
 					
+					//We construct the lambda
+					Object* o=derivative(bvars[0], *c->firstValue());
+					
+					Container* cc=new Container(Container::lambda);
+					foreach(const QString& v, bvars) {
+						Container* bvar=new Container(Container::bvar);
+						bvar->appendBranch(new Ci(v));
+						cc->appendBranch(bvar);
+					}
+					cc->appendBranch(simp(o));
+					ret=cc;
+					
+					ret->decorate(Object::ScopeInformation());
+					
+				}	break;
+				default: {
+					QList<Object*> numbers;
+					Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
+					for(; it!=itEnd; ++it)
+						numbers.append(calc(*it));
+					
+					Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
+								(op.nparams()>-1 && numbers.count()==op.nparams()) ||
+								opt==Operator::minus);
+					
+					Q_ASSERT(!numbers.isEmpty());
+					ret = numbers.first();
+						
 					QString correct;
 					if(numbers.count()>=2) {
 						Container::const_iterator it=numbers.constBegin()+1;
@@ -733,17 +744,9 @@ Analitza::Object* Analitza::Analyzer::operate(const Container* c)
 						if(KDE_ISUNLIKELY(!correct.isEmpty()))
 							m_err.append(correct);
 					}
-				} else {
-					ret = numbers.first();
-				}
+				}	break;
 			}
 		}	break;
-		case Container::declare:
-			ret=calcDeclare(c);
-			break;
-		case Container::piecewise:
-			ret=calcPiecewise(c);
-			break;
 		case Container::piece:
 		case Container::otherwise:
 		case Container::bvar:
@@ -1011,383 +1014,396 @@ Analitza::Object* Analitza::Analyzer::simp(Object* root)
 			*it = simp(*it);
 	} else if(root->isContainer()) {
 		Container *c= (Container*) root;
-		bool d;
-		if(c->containerType()==Container::piecewise) {
-			root=simpPiecewise(c);
-		} else if(c->containerType()==Container::lambda) {
-			c->m_params.last()=simp(c->m_params.last());
-		} else if(c->containerType()==Container::apply) {
-			Container::iterator it;
-			Operator o = c->firstOperator();
-			Q_ASSERT(c->isCorrect());
-			
-			switch(o.operatorType()) {
-				case Operator::times:
-					for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
-						d=false;
-						*it = simp(*it);
-						if((*it)->isContainer()) {
-							Container *intr = static_cast<Container*>(*it);
-							if(intr->firstOperator()==o) {
-								levelOut(c, intr, it);
-								d=true;
-							}
-						}
-						
-						if(!d && (*it)->type() == Object::value) {
-							Cn* n = (Cn*) (*it);
-							if(n->value()==1. && c->m_params.count()>2) { //1*exp=exp
-								d=true;
-							} else if(n->value()==0.) { //0*exp=0
-								delete root;
-								root = new Cn(0.);
-								return root;
-							}
-						}
-						
-						if(!d)
-							++it;
-						else {
-							delete *it;
-							it = c->m_params.erase(it);
-						}
+		
+		switch(c->containerType()) {
+			case Container::piecewise:
+				root=simpPiecewise(c);
+				break;
+			case Container::apply:
+				root=simpApply(c);
+				break;
+			case Container::lambda:
+				c->m_params.last()=simp(c->m_params.last());
+				break;
+			default: {
+				Container::iterator it = c->firstValue();
+				
+				for(; it!=c->m_params.end(); ++it)
+					*it = simp(*it);
+			}	break;
+		}
+	}
+	return root;
+}
+
+Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
+{
+	Object* root=c;
+	Container::iterator it;
+	Operator o = c->firstOperator();
+	Q_ASSERT(c->isCorrect());
+	bool d;
+	
+	switch(o.operatorType()) {
+		case Operator::times:
+			for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
+				d=false;
+				*it = simp(*it);
+				if((*it)->isContainer()) {
+					Container *intr = static_cast<Container*>(*it);
+					if(intr->firstOperator()==o) {
+						levelOut(c, intr, it);
+						d=true;
 					}
-					
-					if(c->isUnary()) {
-						Container *aux=c;
-						root=*c->firstValue();
-						*aux->firstValue()=0;
-						delete aux;
-					} else {
-						Object *ret=simpScalar(c);
-						if(ret->isContainer()) {
-							c=static_cast<Container*>(ret);
-							ret=simpPolynomials(c);
-							c=ret->isContainer() ? static_cast<Container*>(ret) : 0;
-						} else
-							c=0;
-						
-						if(c && c->isEmpty()) {
-							delete root;
-							root = new Cn(0.);
-						} else
-							root=ret;
-					}
-					break;
-				case Operator::minus:
-				case Operator::plus: {
-					bool somed=false, lastdel=false;
-					it=c->m_params.end()-1;
-					Object* first=*c->firstValue();
-					
-					for(; it!=c->m_params.begin(); --it) {
-						lastdel=false;
-						*it = simp(*it);
-						
-						d=false;
-						if((*it)->isContainer()) {
-							Container *intr = (Container*) *it;
-							Operator op=intr->firstOperator();
-							if(intr->containerType()==Container::apply
-								&& (op==o || (*it!=first && op==Operator::plus && o==Operator::minus)))
-							{
-								if(!(intr->isUnary() && op==Operator::minus))
-								{
-									levelOut(c, intr, it);
-									d=true;
-								}
-							}
-						}
-#ifndef Q_CC_MSVC
-						#warning review condition
-#endif
-						if(!d && ((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
-							d=true;
-						}
-						
-						if(d) {
-							lastdel=true;
-							somed=true;
-							delete *it;
-							if(first==*it) first=0;
-							it = c->m_params.erase(it);
-						}
-					}
-					
-					if(lastdel && o==Operator::minus && !c->isUnary()) {
-						Container::iterator it=c->firstValue();
-						Container* cc=new Container(Container::apply);
-						cc->appendBranch(new Operator(Operator::minus));
-						cc->appendBranch(*it);
-						*it=cc;
-					}
-					
-					root=c;
-					
-					if(c->isUnary()) {
-						if(o==Operator::plus || (somed && !lastdel)) {
-							root=*c->firstValue();
-							*c->firstValue()=0;
-							delete c;
-							c=0;
-						} else if((*c->firstValue())->isContainer()) {
-							Container *c1=(Container*) *c->firstValue();
-							if(c1->containerType()==Container::apply &&
-								c1->firstOperator()==Operator::minus &&
-								c1->isUnary())
-							{
-								root=*c1->firstValue();
-								*c->firstValue()=0;
-								*c1->firstValue()=0;
-								delete c;
-								delete c1;
-								c=0;
-							}
-						}
-					} else {
-						root=simpScalar(c);
-						
-						if(root->isContainer()) {
-							c=static_cast<Container*>(root);
-							root=simpPolynomials(c);
-							
-							c=root->isContainer() ? static_cast<Container*>(root) : 0;
-						} else
-							c=0;
-					}
-					
-					if(c && c->isEmpty()) {
+				}
+				
+				if(!d && (*it)->type() == Object::value) {
+					Cn* n = (Cn*) (*it);
+					if(n->value()==1. && c->m_params.count()>2) { //1*exp=exp
+						d=true;
+					} else if(n->value()==0.) { //0*exp=0
 						delete root;
 						root = new Cn(0.);
+						return root;
 					}
-				}	break;
-				case Operator::power: {
-					for(it = c->firstValue(); it!=c->m_params.end(); ++it)
-						*it = simp(*it);
-					
-					if(c->m_params[2]->type()==Object::value) {
-						Cn *n = (Cn*) c->m_params[2];
-						if(n->value()==0.) { //0*exp=0
-							delete root;
-							root = new Cn(1.);
-							break;
-						} else if(n->value()==1.) { 
-							root = c->m_params[1];
-							c->m_params[1]=0;
-							delete c;
-							break;
-						}
-					}
-					
-					if(c->m_params[1]->isContainer()) {
-						Container *cp = (Container*) c->m_params[1];
-						if(cp->firstOperator()==Operator::power) {
-							c->m_params[1] = cp->m_params[1];
-							
-							Container *cm = new Container(Container::apply);
-							cm->appendBranch(new Operator(Operator::times));
-							cm->appendBranch(c->m_params[2]);
-							cm->appendBranch(cp->m_params[2]);
-							c->m_params[2] = cm;
-							
-							cp->m_params[1]=0;
-							cp->m_params[2]=0;
-							delete cp;
-							c->m_params[2]=simp(c->m_params[2]);
-						}
-					}
-				} break;
-				case Operator::divide:
-					for(it = c->firstValue(); it!=c->m_params.end(); ++it)
-						*it = simp(*it);
-					
-					Object *f, *g; //f/g
-					f=*c->firstValue();
-					g=*(c->firstValue()+1);
-					
-					if(equalTree(f, g)) {
-						delete root;
-						root = new Cn(1.);
-						break;
-					} else if(g->type()==Object::value) {
-						Cn* gnum=(Cn*) g;
-						if(gnum->value()==1.) {
-							*c->firstValue()=0;
-							delete root;
-							root=f;
-							break;
-						}
-					}
-					
-					break;
-				case Operator::ln:
-					it = c->firstValue();
-					if((*it)->type()==Object::variable) {
-						Ci *val = (Ci*) *it;
-						if(val->name()=="e") {
-							delete root;
-							root = new Cn(1.);
-							break;
-						}
-					} else {
-						*it = simp(*it);
-					}
-					break;
-				//TODO: extend to ::product
-				case Operator::sum: {
-					
-					QStringList bvars=c->bvarStrings();
-					const int offset=1+bvars.size(); //op+bvars
-					Object *uplimit=0, *downlimit=0, *domain=0;
-					
-					//TODO: simplify this code
-					for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
-						if((*it)->isContainer()) {
-							Container *limit=static_cast<Container*>(*it);
-							if(limit->containerType()==Container::uplimit
-								|| limit->containerType()==Container::downlimit
-								|| limit->containerType()==Container::domainofapplication)
-							{
-								if(limit->containerType()==Container::uplimit) uplimit=limit->m_params.first();
-								if(limit->containerType()==Container::downlimit) downlimit=limit->m_params.first();
-								if(limit->containerType()==Container::domainofapplication) domain=limit->m_params.first();
-								
-								limit->m_params.first()=simp(limit->m_params.first());
-							} else
-								*it = simp(*it);
-							
-						}else
-							*it = simp(*it);
-					}
-					
-					//if bvars is empty, we are dealing with an invalid sum()
-					Object* function = *c->firstValue();
-					if(!bvars.isEmpty() && !domain && !hasTheVar(bvars.toSet(), function)) {
-						Container *cDiff=new Container(Container::apply);
-						cDiff->appendBranch(new Operator(Operator::minus));
-						cDiff->appendBranch(c->ulimit()->copy());
-						cDiff->appendBranch(c->dlimit()->copy());
-						
-						Container *nc=new Container(Container::apply);
-						nc->appendBranch(new Operator(Operator::times));
-						nc->appendBranch(cDiff);
-						nc->appendBranch(function);
-						
-						c->m_params.last()=0;
-						delete c;
-						root=simp(nc);
-					} else if(function->isContainer())
-					   root=simpSum(c);
-					
-				}	break;
-				case Operator::card: {
-					Object* val=simp(*c->firstValue());
-					if(val->type()==Object::vector)
-					{
-						c->m_params.last()=0;
-						QString correct;
-						val=Operations::reduceUnary(Operator::card, val, correct);
-						//TODO: if(!correct) Handle me!
-						delete c;
-						root=val;
-					}
-				}	break;
-				case Operator::selector: {
-					c->m_params[1]=simp(c->m_params[1]);
-					c->m_params[2]=simp(c->m_params[2]);
-					
-					Object* idx=c->m_params[1];
-					Object* value=c->m_params[2];
-					if(idx->type()==Object::value && value->type()==Object::vector) {
-						QString err;
-						Object* ret=Operations::reduce(Operator::selector, idx->copy(), value->copy(), err);
-						
-						if(ret) {
-							root=ret;
-							c->m_params[1]=0;
-							c->m_params[2]=0;
-							
-							delete c;
-						}
-					}
-				}	break;
-				case Operator::_union: {
-					Container::iterator it=c->firstValue(), itEnd=c->m_params.end();
-					
-					QList<Object*> newParams;
-					for(; it!=itEnd; ++it) {
-						*it=simp(*it);
-						
-						if(newParams.isEmpty())
-							newParams.append(*it);
-						else {
-							QString err;
-							Object* ret=Operations::reduce(Operator::_union, newParams.last(), *it, err);
-							if(ret) {
-								newParams.last()=ret;
-								delete *it;
-							} else {
-								newParams.append(*it);
-							}
-						}
-						*it=0;
-					}
-					
-					if(newParams.last()==0)
-						newParams.removeLast();
-					
-					//if only one, remove union
-					if(newParams.size()==1) {
-						delete c;
-						root=newParams.last();
-					} else {
-						newParams.prepend(c->m_params.takeFirst());
-						qDeleteAll(c->m_params);
-						c->m_params=newParams;
-						root=c;
-					}
-					
-				}	break;
-				case Operator::function: {
-					it=c->m_params.begin();
-					Object* function=*it; ++it;
-					
-					bool allequal=false;
-					Container* cfunc=0;
-					QList<Ci*> bvars;
-					if(function->isContainer()) {
-						cfunc=(Container*) function;
-						allequal=true;
-						Q_ASSERT(cfunc->containerType()==Container::lambda);
-						
-						cfunc=(Container*) function;
-						bvars=cfunc->bvarCi();
-					}
-					
-					for(int i=0; it!=c->m_params.end(); ++it, ++i) {
-						*it = simp(*it);
-						allequal = allequal && equalTree(*it, bvars[i]);
-					}
-					
-					if(allequal) { //x->x = x
-						root=cfunc->m_params.last();
-						cfunc->m_params.last()=0;
-						delete c;
-					}
-				}	break;
-				default:
-					it = c->firstValue();
-					
-					for(; it!=c->m_params.end(); ++it)
-						*it = simp(*it);
-					break;
+				}
+				
+				if(!d)
+					++it;
+				else {
+					delete *it;
+					it = c->m_params.erase(it);
+				}
 			}
-		} else {
-			Container::iterator it = c->firstValue();
+			
+			if(c->isUnary()) {
+				Container *aux=c;
+				root=*c->firstValue();
+				*aux->firstValue()=0;
+				delete aux;
+			} else {
+				Object *ret=simpScalar(c);
+				if(ret->isContainer()) {
+					c=static_cast<Container*>(ret);
+					ret=simpPolynomials(c);
+					c=ret->isContainer() ? static_cast<Container*>(ret) : 0;
+				} else
+					c=0;
+				
+				if(c && c->isEmpty()) {
+					delete root;
+					root = new Cn(0.);
+				} else
+					root=ret;
+			}
+			break;
+		case Operator::minus:
+		case Operator::plus: {
+			bool somed=false, lastdel=false;
+			it=c->m_params.end()-1;
+			Object* first=*c->firstValue();
+			
+			for(; it!=c->m_params.begin(); --it) {
+				lastdel=false;
+				*it = simp(*it);
+				
+				d=false;
+				if((*it)->isContainer()) {
+					Container *intr = (Container*) *it;
+					Operator op=intr->firstOperator();
+					if(intr->containerType()==Container::apply
+						&& (op==o || (*it!=first && op==Operator::plus && o==Operator::minus)))
+					{
+						if(!(intr->isUnary() && op==Operator::minus))
+						{
+							levelOut(c, intr, it);
+							d=true;
+						}
+					}
+				}
+#ifndef Q_CC_MSVC
+				#warning review condition
+#endif
+				if(!d && ((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
+					d=true;
+				}
+				
+				if(d) {
+					lastdel=true;
+					somed=true;
+					delete *it;
+					if(first==*it) first=0;
+					it = c->m_params.erase(it);
+				}
+			}
+			
+			if(lastdel && o==Operator::minus && !c->isUnary()) {
+				Container::iterator it=c->firstValue();
+				Container* cc=new Container(Container::apply);
+				cc->appendBranch(new Operator(Operator::minus));
+				cc->appendBranch(*it);
+				*it=cc;
+			}
+			
+			root=c;
+			
+			if(c->isUnary()) {
+				if(o==Operator::plus || (somed && !lastdel)) {
+					root=*c->firstValue();
+					*c->firstValue()=0;
+					delete c;
+					c=0;
+				} else if((*c->firstValue())->isContainer()) {
+					Container *c1=(Container*) *c->firstValue();
+					if(c1->containerType()==Container::apply &&
+						c1->firstOperator()==Operator::minus &&
+						c1->isUnary())
+					{
+						root=*c1->firstValue();
+						*c->firstValue()=0;
+						*c1->firstValue()=0;
+						delete c;
+						delete c1;
+						c=0;
+					}
+				}
+			} else {
+				root=simpScalar(c);
+				
+				if(root->isContainer()) {
+					c=static_cast<Container*>(root);
+					root=simpPolynomials(c);
+					
+					c=root->isContainer() ? static_cast<Container*>(root) : 0;
+				} else
+					c=0;
+			}
+			
+			if(c && c->isEmpty()) {
+				delete root;
+				root = new Cn(0.);
+			}
+		}	break;
+		case Operator::power: {
+			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
+				*it = simp(*it);
+			
+			if(c->m_params[2]->type()==Object::value) {
+				Cn *n = (Cn*) c->m_params[2];
+				if(n->value()==0.) { //0*exp=0
+					delete root;
+					root = new Cn(1.);
+					break;
+				} else if(n->value()==1.) { 
+					root = c->m_params[1];
+					c->m_params[1]=0;
+					delete c;
+					break;
+				}
+			}
+			
+			if(c->m_params[1]->isContainer()) {
+				Container *cp = (Container*) c->m_params[1];
+				if(cp->firstOperator()==Operator::power) {
+					c->m_params[1] = cp->m_params[1];
+					
+					Container *cm = new Container(Container::apply);
+					cm->appendBranch(new Operator(Operator::times));
+					cm->appendBranch(c->m_params[2]);
+					cm->appendBranch(cp->m_params[2]);
+					c->m_params[2] = cm;
+					
+					cp->m_params[1]=0;
+					cp->m_params[2]=0;
+					delete cp;
+					c->m_params[2]=simp(c->m_params[2]);
+				}
+			}
+		} break;
+		case Operator::divide:
+			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
+				*it = simp(*it);
+			
+			Object *f, *g; //f/g
+			f=*c->firstValue();
+			g=*(c->firstValue()+1);
+			
+			if(equalTree(f, g)) {
+				delete root;
+				root = new Cn(1.);
+				break;
+			} else if(g->type()==Object::value) {
+				Cn* gnum=(Cn*) g;
+				if(gnum->value()==1.) {
+					*c->firstValue()=0;
+					delete root;
+					root=f;
+					break;
+				}
+			}
+			
+			break;
+		case Operator::ln:
+			it = c->firstValue();
+			if((*it)->type()==Object::variable) {
+				Ci *val = (Ci*) *it;
+				if(val->name()=="e") {
+					delete root;
+					root = new Cn(1.);
+					break;
+				}
+			} else {
+				*it = simp(*it);
+			}
+			break;
+		//TODO: extend to ::product
+		case Operator::sum: {
+			
+			QStringList bvars=c->bvarStrings();
+			const int offset=1+bvars.size(); //op+bvars
+			Object *uplimit=0, *downlimit=0, *domain=0;
+			
+			//TODO: simplify this code
+			for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
+				if((*it)->isContainer()) {
+					Container *limit=static_cast<Container*>(*it);
+					if(limit->containerType()==Container::uplimit
+						|| limit->containerType()==Container::downlimit
+						|| limit->containerType()==Container::domainofapplication)
+					{
+						if(limit->containerType()==Container::uplimit) uplimit=limit->m_params.first();
+						if(limit->containerType()==Container::downlimit) downlimit=limit->m_params.first();
+						if(limit->containerType()==Container::domainofapplication) domain=limit->m_params.first();
+						
+						limit->m_params.first()=simp(limit->m_params.first());
+					} else
+						*it = simp(*it);
+					
+				}else
+					*it = simp(*it);
+			}
+			
+			//if bvars is empty, we are dealing with an invalid sum()
+			Object* function = *c->firstValue();
+			if(!bvars.isEmpty() && !domain && !hasTheVar(bvars.toSet(), function)) {
+				Container *cDiff=new Container(Container::apply);
+				cDiff->appendBranch(new Operator(Operator::minus));
+				cDiff->appendBranch(c->ulimit()->copy());
+				cDiff->appendBranch(c->dlimit()->copy());
+				
+				Container *nc=new Container(Container::apply);
+				nc->appendBranch(new Operator(Operator::times));
+				nc->appendBranch(cDiff);
+				nc->appendBranch(function);
+				
+				c->m_params.last()=0;
+				delete c;
+				root=simp(nc);
+			} else if(function->isContainer())
+				root=simpSum(c);
+			
+		}	break;
+		case Operator::card: {
+			Object* val=simp(*c->firstValue());
+			if(val->type()==Object::vector)
+			{
+				c->m_params.last()=0;
+				QString correct;
+				val=Operations::reduceUnary(Operator::card, val, correct);
+				//TODO: if(!correct) Handle me!
+				delete c;
+				root=val;
+			}
+		}	break;
+		case Operator::selector: {
+			c->m_params[1]=simp(c->m_params[1]);
+			c->m_params[2]=simp(c->m_params[2]);
+			
+			Object* idx=c->m_params[1];
+			Object* value=c->m_params[2];
+			if(idx->type()==Object::value && value->type()==Object::vector) {
+				QString err;
+				Object* ret=Operations::reduce(Operator::selector, idx->copy(), value->copy(), err);
+				
+				if(ret) {
+					root=ret;
+					c->m_params[1]=0;
+					c->m_params[2]=0;
+					
+					delete c;
+				}
+			}
+		}	break;
+		case Operator::_union: {
+			Container::iterator it=c->firstValue(), itEnd=c->m_params.end();
+			
+			QList<Object*> newParams;
+			for(; it!=itEnd; ++it) {
+				*it=simp(*it);
+				
+				if(newParams.isEmpty())
+					newParams.append(*it);
+				else {
+					QString err;
+					Object* ret=Operations::reduce(Operator::_union, newParams.last(), *it, err);
+					if(ret) {
+						newParams.last()=ret;
+						delete *it;
+					} else {
+						newParams.append(*it);
+					}
+				}
+				*it=0;
+			}
+			
+			if(newParams.last()==0)
+				newParams.removeLast();
+			
+			//if only one, remove union
+			if(newParams.size()==1) {
+				delete c;
+				root=newParams.last();
+			} else {
+				newParams.prepend(c->m_params.takeFirst());
+				qDeleteAll(c->m_params);
+				c->m_params=newParams;
+				root=c;
+			}
+			
+		}	break;
+		case Operator::function: {
+			it=c->m_params.begin();
+			Object* function=*it; ++it;
+			
+			bool allequal=false;
+			Container* cfunc=0;
+			QList<Ci*> bvars;
+			if(function->isContainer()) {
+				cfunc=(Container*) function;
+				allequal=true;
+				Q_ASSERT(cfunc->containerType()==Container::lambda);
+				
+				cfunc=(Container*) function;
+				bvars=cfunc->bvarCi();
+			}
+			
+			for(int i=0; it!=c->m_params.end(); ++it, ++i) {
+				*it = simp(*it);
+				allequal = allequal && equalTree(*it, bvars[i]);
+			}
+			
+			if(allequal) { //x->x = x
+				root=cfunc->m_params.last();
+				cfunc->m_params.last()=0;
+				delete c;
+			}
+		}	break;
+		default:
+			it = c->firstValue();
 			
 			for(; it!=c->m_params.end(); ++it)
 				*it = simp(*it);
-		}
+			break;
 	}
 	return root;
 }

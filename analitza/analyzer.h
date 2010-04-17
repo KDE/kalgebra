@@ -165,6 +165,7 @@ class ANALITZA_EXPORT Analyzer
 		Object* simpPolynomials(Container* c);
 		Object* simpSum(Container* c);
 		Object* simpPiecewise(Container* c);
+		Object* simpApply(Container* c);
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
