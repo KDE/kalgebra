@@ -25,7 +25,7 @@
 #include <Plasma/LineEdit>
 #include <KLineEdit>
 #include <QGraphicsLinearLayout>
-#include "analitza.h"
+#include "analyzer.h"
 
 class QSizeF;
 class QLabel;
@@ -55,7 +55,7 @@ class KAlgebraPlasmoid : public Plasma::PopupApplet
 		QGraphicsLinearLayout* m_layout;
 		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;
-		Analitza::Analitza a;
+		Analitza::Analyzer a;
 };
 
 // This is the command that links your applet to the .desktop file

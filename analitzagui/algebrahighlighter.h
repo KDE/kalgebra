@@ -27,7 +27,7 @@
  *	@author <aleixpol@kde.org>  
  */
 
-namespace Analitza { class Analitza; }
+namespace Analitza { class Analyzer; }
 
 class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 {
@@ -41,7 +41,7 @@ class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 		} Mode;
 		
 		/** Constructor. Creates an AlgebraHighlighter from a QTextDocument @p doc. */
-		explicit AlgebraHighlighter(QTextDocument *doc, const Analitza::Analitza* na=0);
+		explicit AlgebraHighlighter(QTextDocument *doc, const Analitza::Analyzer* na=0);
 		//int highlightParagraph(const QString &text, int endStateOfLastPara);
 		
 		/** Returns the currently highlight mode. */
@@ -61,7 +61,7 @@ class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 		void setPos(uint p) { m_pos=p; }
 		
 		/** Sets the corresponding Analitza class. */
-		void setAnalitza(const Analitza::Analitza* na) { a = na; }
+		void setAnalitza(const Analitza::Analyzer* na) { a = na; }
 		
 		///@returns the name of the function that's being edited, if any
 		QString editingName() const;
@@ -89,7 +89,7 @@ class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 		QString m_aName;
 		
 		QTextCharFormat bold;
-		const Analitza::Analitza* a;
+		const Analitza::Analyzer* a;
 };
 
 #endif

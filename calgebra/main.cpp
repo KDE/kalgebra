@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "analitza.h"
+#include "analyzer.h"
 #include "expression.h"
 #include "explexer.h"
 #include "expressionparser.h"
@@ -30,7 +30,7 @@ using namespace std;
 
 using Analitza::Expression;
 
-Analitza::Analitza a;
+Analitza::Analyzer a;
 
 enum CalcType { Evaluate, Calculate };
 

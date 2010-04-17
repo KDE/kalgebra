@@ -18,18 +18,18 @@
  *************************************************************************************/
 
 #include "algebrahighlighter.h"
-#include <analitza/expressionparser.h>
 #include <QApplication>
 #include <QStack>
 #include <QPalette>
 
 #include <analitza/expression.h>
-#include <analitza/analitza.h>
+#include <analitza/analyzer.h>
 #include <analitza/variables.h>
 #include <analitza/container.h>
 #include <analitza/explexer.h>
+#include <analitza/expressionparser.h>
 
-AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza::Analitza *na)
+AlgebraHighlighter::AlgebraHighlighter(QTextDocument *doc, const Analitza::Analyzer *na)
 	: QSyntaxHighlighter(doc), m_correct(true), m_mode(Autodetect), m_pos(0), a(na)
 {
 	bold.setFontWeight(QFont::Bold);
