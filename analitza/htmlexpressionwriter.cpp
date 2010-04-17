@@ -79,7 +79,7 @@ QString HtmlExpressionWriter::accept(const Cn* var)
 	if(var->isBoolean())
 		return var->isTrue() ? "true" : "false";
 	else
-		return QString::number(var->value(), 'g', 12);
+		return "<span class='num'>"+QString::number(var->value(), 'g', 12)+"</span>";
 }
 
 QString HtmlExpressionWriter::accept(const Analitza::Ci* var)
@@ -146,14 +146,14 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		
 		toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
 	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
-		toret += ret.join(s_operators.value(op.operatorType()));
+		toret += ret.join(oper(s_operators.value(op.operatorType())));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
 		toret += oper('-')+ret[0];
 	else {
 		QString bounding;
 		if(!bounds.isEmpty() || !bvars.isEmpty()) {
 			if(bvars.count()!=1) bounding +=oper('(');
-			bounding += bvars.join(", ");
+			bounding += bvars.join(oper(", "));
 			if(bvars.count()!=1) bounding +=oper(')');
 			
 			bounding = ':'+bounding +bounds;
@@ -177,7 +177,10 @@ QString HtmlExpressionWriter::accept(const Container* var)
 			break;
 		case Container::lambda: {
 			QString last=ret.takeLast();
-			QStringList bvars = var->bvarStrings();
+			QStringList bvars;
+			foreach(const Ci* bvar, var->bvarCi())
+				bvars += bvar->visit(this);
+			
 			if(bvars.count()!=1) toret +=oper('(');
 			toret += bvars.join(", ");
 			if(bvars.count()!=1) toret +=oper(')');
