@@ -27,6 +27,7 @@
 namespace Analitza
 {
 
+class Apply;
 class Ci;
 class Cn;
 class Container;
@@ -51,6 +52,7 @@ class ExpressionWriter
 		virtual QString accept(const Container* var) = 0;
 		virtual QString accept(const Vector* var) = 0;
 		virtual QString accept(const List* l) = 0;
+		virtual QString accept(const Apply* a) = 0;
 		
 		virtual QString result() const=0;
 };

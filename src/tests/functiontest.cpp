@@ -19,7 +19,6 @@
 #include "functiontest.h"
 #include "function.h"
 #include "expression.h"
-#include "analitza.h"
 #include "variables.h"
 #include <qtest_kde.h>
 #include <cmath>
@@ -65,8 +64,8 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("x->sum") << "x->sum(t : t=0..3)";
 	QTest::newRow("x->piece") << "x->piecewise { gt(x,0) ? selector(1, vector{x, 1/x}),"
 									"? selector(2, vector{x, 1/x} ) }";
-	QTest::newRow("x->diff1") << "diff(x:x)";
-	QTest::newRow("x->diffx") << "diff(x^2:x)";
+	QTest::newRow("x->diff1") << "x->(diff(x:x))(x)";
+	QTest::newRow("x->diffx") << "x->(diff(x^2:x))(x)";
 	QTest::newRow("y->flat") << "y->1";
 	QTest::newRow("y->trigonometric") << "y->sin y";
 	QTest::newRow("polar->scalar") << "q->2";

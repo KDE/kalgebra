@@ -24,8 +24,21 @@
 #include <QStringList>
 #include "list.h"
 #include "variable.h"
+#include "apply.h"
+#include "analitzautils.h"
 
 using namespace Analitza;
+
+template <class T>
+QStringList StringExpressionWriter::allValues(T it, const T& itEnd, ExpressionWriter* writer)
+{
+	QStringList elements;
+	for(; it!=itEnd; ++it)
+		elements += (*it)->visit(writer);
+	
+	return elements;
+}
+
 
 QMap<Operator::OperatorType, QString> initOperators()
 {
@@ -63,32 +76,19 @@ QString StringExpressionWriter::accept(const Operator* op)
 
 QString StringExpressionWriter::accept(const Vector* vec)
 {
-	QStringList elements;
-	for(Vector::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
-	{
-		elements += (*it)->visit(this);
-	}
-	return QString("vector { %1 }").arg(elements.join(QString(", ")));
+	return QString("vector { %1 }").arg(allValues<Vector::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(", ")));
 }
 
 QString StringExpressionWriter::accept(const List* vec)
 {
-	QStringList elements;
-	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
-	{
-		elements += (*it)->visit(this);
-	}
-	return QString("list { %1 }").arg(elements.join(QString(", ")));
+	return QString("list { %1 }").arg(allValues<List::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(", ")));
 }
 
 QString StringExpressionWriter::accept(const Cn* var)
 {
-	if(var->isBoolean()) {
-		if(var->isTrue())
-			return "true";
-		else
-			return "false";
-	} else
+	if(var->isBoolean())
+		return var->isTrue() ? "true" : "false";
+	else
 		return QString::number(var->value(), 'g', 12);
 }
 
@@ -121,56 +121,81 @@ int StringExpressionWriter::weight(const Operator* op, int size)
 	}
 }
 
+QString StringExpressionWriter::accept ( const Analitza::Apply* a )
+{
+	Operator op=a->firstOperator();
+	QStringList ret;
+	QString toret;
+	QString bounds;
+	QStringList bvars=a->bvarStrings();
+	
+	if(a->ulimit() || a->dlimit()) {
+		bounds += '=';
+		if(a->dlimit())
+			bounds += a->dlimit()->visit(this);
+		bounds += "..";
+		if(a->ulimit())
+			bounds += a->ulimit()->visit(this);
+	}
+	else if(a->domain())
+		bounds += '@'+a->domain()->visit(this);
+	
+	foreach(Object* o, a->m_params) {
+		Object::ObjectType type=o->type();
+		switch(type) {
+			case Object::oper:
+				Q_ASSERT(false);
+				break;
+			case Object::variable:
+				ret << static_cast<const Ci*>(o)->visit(this);
+				break;
+			case Object::apply: {
+				const Apply *c = (const Apply*) o;
+				QString s = c->visit(this);
+				if(s_operators.contains(op.operatorType()) && !c->isUnary()) {
+					Operator child_op = c->firstOperator();
+					
+					if(child_op.operatorType() && weight(&op, c->countValues())>=weight(&child_op, c->countValues()))
+						s=QString("(%1)").arg(s);
+				}
+				ret << s;
+			}	break;
+			default:
+				ret << o->visit(this);
+				break;
+		}
+	}
+	
+	bool func=op.operatorType()==Operator::function;
+	if(func) {
+		QString n = ret.takeFirst();
+		if(a->m_params.first()->type()!=Object::variable)
+			n='('+n+')';
+		
+		toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
+	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
+		toret += ret.join(s_operators.value(op.operatorType()));
+	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
+		toret += '-'+ret[0];
+	else {
+		QString bounding;
+		if(!bounds.isEmpty() || !bvars.isEmpty()) {
+			if(bvars.count()!=1) bounding +='(';
+			bounding += bvars.join(", ");
+			if(bvars.count()!=1) bounding +=')';
+			
+			bounding = ':'+bounding +bounds;
+		}
+			
+		toret += QString("%1(%2%3)").arg(op.visit(this)).arg(ret.join(", ")).arg(bounding);
+	}
+	
+	return toret;
+}
+
 QString StringExpressionWriter::accept(const Container* var)
 {
-	QStringList ret;
-	Operator *op=0;
-	QString bounds;
-	QStringList bvars;
-	
-	Container::const_iterator it=var->firstValue();
-	for(int i=0; i<var->m_params.count(); i++) {
-		Q_ASSERT(var->m_params[i]);
-		
-		Object::ObjectType type=var->m_params[i]->type();
-		if(type == Object::oper)
-			op = (Operator*) var->m_params[i];
-		else if(type == Object::variable) {
-			Ci *b = (Ci*) var->m_params[i];
-			ret << b->visit(this);
-		} else if(type == Object::container) {
-			Container *c = (Container*) var->m_params[i];
-			QString s = c->visit(this);
-			
-			if(op && c->containerType()==Container::apply && s_operators.contains(op->operatorType())) {
-				Operator child_op = c->firstOperator();
-				
-				if(child_op.operatorType() && weight(op, var->countValues())>=weight(&child_op, c->countValues()))
-					s=QString("(%1)").arg(s);
-				
-			}
-			
-			if(c->containerType() == Container::bvar) { //bvar
-				Object *ul = var->ulimit(), *dl = var->dlimit(), *domain=var->domain();
-				if(dl || ul) {
-					bounds += '=';
-					if(dl)
-						bounds += dl->visit(this);
-					bounds += "..";
-					if(ul)
-						bounds += ul->visit(this);
-				}
-				else if(domain)
-					bounds += "@"+domain->visit(this);
-				
-				bvars += s;
-			}
-			else if(c->containerType()!=Container::uplimit && c->containerType()!=Container::downlimit && c->containerType()!=Container::domainofapplication)
-				ret << s;
-		} else 
-			ret << var->m_params[i]->visit(this);
-	}
-	bool func=!op || (op->operatorType()==Operator::function);
+	QStringList ret = allValues(var->firstValue(), var->constEnd(), this);
 	
 	QString toret;
 	switch(var->containerType()) {
@@ -179,40 +204,14 @@ QString StringExpressionWriter::accept(const Container* var)
 			break;
 		case Container::lambda: {
 			QString last=ret.takeLast();
+			QStringList bvars = var->bvarStrings();
 			if(bvars.count()!=1) toret +='(';
 			toret += bvars.join(", ");
 			if(bvars.count()!=1) toret +=')';
-			if(!bounds.isEmpty()) toret+='='+bounds;
 			toret += "->" + last;
 		}	break;
 		case Container::math:
 			toret += ret.join("; ");
-			break;
-		case Container::apply:
-			if(func){
-				QString n = ret.takeFirst();
-				if(var->m_params.first()->type()!=Object::variable)
-					n='('+n+')';
-				
-				toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
-			} else if(op==0)
-				toret += ret.join(" ");
-			else if(ret.count()>1 && s_operators.contains(op->operatorType())) {
-				toret += ret.join(s_operators.value(op->operatorType()));
-			} else if(ret.count()==1 && op->operatorType()==Operator::minus) {
-				toret += '-'+ret[0];
-			} else {
-				QString bounding;
-				if(!bounds.isEmpty() || !bvars.isEmpty()) {
-					if(bvars.count()!=1) bounding +='(';
-					bounding += bvars.join(", ");
-					if(bvars.count()!=1) bounding +=')';
-					
-					bounding = ':'+bounding +bounds;
-				}
-					
-				toret += QString("%1(%2%3)").arg(op->visit(this)).arg(ret.join(", ")).arg(bounding);
-			}
 			break;
 		case Container::uplimit: //x->(n1..n2) is put at the same time
 		case Container::downlimit:

@@ -29,12 +29,15 @@ class Object;
 class Container;
 class Variables;
 class Expression;
+class Apply;
 }
 
 namespace AnalitzaUtils
 {
-	bool hasTheVar(const QSet<QString>& vars, const Analitza::Object *o);
-	bool hasTheVar(const QSet<QString>& vars, const Analitza::Container* c);
+	bool hasTheVar(const QSet<QString>& vars, const Analitza::Object * o);
+	bool hasTheVar(const QSet<QString>& vars, const Analitza::Apply * a);
+	bool hasTheVar(const QSet<QString>& vars, const Analitza::Container * c);
+	
 	bool isLambda(const Analitza::Object* o);
 	QStringList dependencies(const Analitza::Object* o, const QStringList& scope);
 	

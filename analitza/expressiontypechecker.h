@@ -44,6 +44,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		virtual QString accept(const Container* var);
 		virtual QString accept(const Vector* var);
 		virtual QString accept(const List* l);
+		virtual QString accept ( const Analitza::Apply* a );
 		
 		virtual QString result() const { return QString(); }
 		

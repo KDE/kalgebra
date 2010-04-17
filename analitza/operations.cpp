@@ -319,6 +319,7 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 		case Object::variable:
 		case Object::oper:
 		case Object::container:
+		case Object::apply:
 			//This should never happen
 			break;
 	}

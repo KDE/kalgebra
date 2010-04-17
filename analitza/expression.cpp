@@ -33,6 +33,7 @@
 #include "mathmlpresentationexpressionwriter.h"
 #include "list.h"
 #include "analitzautils.h"
+#include "apply.h"
 
 static void print_dom(const QDomNode& in, int ind);
 
@@ -45,6 +46,8 @@ public:
 	
 	bool canAdd(const Object* where, const Object* branch);
 	bool check(const Container* c);
+	bool check(const Apply* c);
+	
 	Object* branch(const QDomElement& elem, const QMap<QString, Object**>& scope);
 	
 	template <class T>
@@ -139,52 +142,55 @@ bool Expression::setText(const QString & exp)
 	return corr;
 }
 
+bool Expression::ExpressionPrivate::check(const Apply* c)
+{
+	bool ret=true;
+	Operator op=c->firstOperator();
+	Operator::OperatorType opt=op.operatorType();
+	int cnt=c->countValues();
+	
+	if(((op.nparams()<0 && cnt<=1) || (op.nparams()>-1 && cnt!=op.nparams())) && opt!=Operator::minus)
+	{
+		if(op.nparams()<0)
+			m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());
+		else
+			m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
+		ret=false;
+	}
+	
+	if(op.isBounded() && !c->hasBVars()) {
+		m_err << i18n("Missing boundary for '%1'", op.toString());
+	}
+	
+	if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
+		if(!(c->ulimit() && c->dlimit()) && !c->domain()) {
+			m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarStrings().join(" "), op.toString());
+		}
+	}
+	
+	if(op==Operator::function) {
+		const Object *o=*c->firstValue();
+		bool isLambda=o->type()==Object::container &&
+			static_cast<const Container*>(o)->containerType()==Container::lambda;
+		
+		if(isLambda) {
+			const Container* lambda=static_cast<const Container*>(o);
+			QStringList bvars=lambda->bvarStrings();
+			if(bvars.count()!=cnt-1) {
+				m_err << i18np( "Wrong parameter count, had 1 parameter for '%2'",
+								"Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
+				ret=false;
+			}
+		}
+	}
+	return ret;
+}
+
 bool Expression::ExpressionPrivate::check(const Container* c)
 {
 	bool ret=true;
 	
 	switch(c->containerType()) {
-		case Container::apply: {
-			Operator op=c->firstOperator();
-			Operator::OperatorType opt=op.operatorType();
-			int cnt=c->countValues();
-			
-			if(((op.nparams()<0 && cnt<=1) || (op.nparams()>-1 && cnt!=op.nparams())) && opt!=Operator::minus)
-			{
-				if(op.nparams()<0)
-					m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());
-				else
-					m_err << i18n("<em>%1</em> requires %2 parameters", op.toString(), op.nparams());
-				ret=false;
-			}
-			
-			if(op.isBounded() && !c->extractType(Container::bvar)) {
-				m_err << i18n("Missing boundary for '%1'", op.toString());
-			}
-			
-			if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
-				if(!(c->ulimit() && c->dlimit()) && !c->domain()) {
-					m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarStrings().join(" "), op.toString());
-				}
-			}
-			
-			if(op==Operator::function) {
-				const Object *o=c->m_params[0];
-				bool isLambda=o->isContainer() &&
-					static_cast<const Container*>(o)->containerType()==Container::lambda;
-				
-				if(isLambda) {
-					const Container* lambda=static_cast<const Container*>(o);
-					QStringList bvars=lambda->bvarStrings();
-					if(bvars.count()!=cnt-1) {
-						m_err << i18np( "Wrong parameter count, had 1 parameter for '%2'",
-										"Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
-						ret=false;
-					}
-				}
-			}
-			
-		}	break;
 		case Container::declare:
 			if(c->m_params.size()!=2) {
 				m_err << i18n("Wrong declare");
@@ -209,10 +215,10 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 	Q_ASSERT(where && branch);
 	bool correct=true;
 	
-	if(branch->isContainer()) {
+	if(branch->type()==Object::container) {
 		const Container* c1=static_cast<const Container*>(branch);
 		if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
-			bool isPiecewise=where->isContainer()
+			bool isPiecewise=where->type()==Object::container
 				&& static_cast<const Container*>(where)->containerType()==Container::piecewise;
 			if(!isPiecewise) {
 				m_err << i18nc("there was a conditional outside a condition structure",
@@ -222,12 +228,12 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 		}
 	}
 	
-	if(where->isContainer()) {
+	if(where->type()==Object::container) {
 		const Container* cWhere=static_cast<const Container*>(where);
 		
 		if(cWhere->containerType()==Container::piecewise) {
 			bool isCondition=false;
-			if(branch->isContainer()) {
+			if(branch->type()==Object::container) {
 				Container::ContainerType ct=static_cast<const Container*>(branch)->containerType();
 				isCondition=ct==Container::piece || ct==Container::otherwise;
 				
@@ -334,6 +340,14 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMa
 		case Object::list:
 			ret=addElements<List>(new List, &elem, newScope);
 			break;
+		case Object::apply: {
+			Apply *a=addElements<Apply>(new Apply, &elem, newScope);
+			if(a && !check(a)) {
+				delete a;
+				a=0;
+			}
+			ret=a;
+		}	break;
 		case Object::none:
 			m_err << i18nc("Error message due to an unrecognized input",
 							  "Not supported/unknown: %1", elem.tagName());
@@ -380,6 +394,8 @@ enum Object::ObjectType Expression::whatType(const QString& tag)
 		ret= Object::vector;
 	else if(tag=="list")
 		ret= Object::list;
+	else if(tag=="apply")
+		ret= Object::apply;
 	else if(Operator::toOperatorType(tag)!=0)
 		ret= Object::oper;
 	else if(Container::toContainerType(tag)!=0)
@@ -408,10 +424,12 @@ bool Expression::isCorrect() const
 QStringList Expression::bvarList() const
 {
 	Container *c = (Container*) d->m_tree;
-	if(c!=0 && c->isContainer()) {
+	if(c!=0 && c->type()==Object::container) {
 		c = (Container*) c->m_params[0];
 		
-		if(c->isContainer())
+		if(c->isApply())
+			return c->bvarStrings();
+		else if(c->isContainer())
 			return c->bvarStrings();
 	}
 	return QStringList();
@@ -429,11 +447,11 @@ Cn Expression::toReal() const
 
 bool Expression::isLambda() const
 {
-	if(d->m_tree && d->m_tree->isContainer()) {
+	if(d->m_tree && d->m_tree->type()==Object::container) {
 		Container* c = (Container*) d->m_tree;
 		if(c->containerType()==Container::math) {
 			Container *c1 = (Container*) c->m_params.first();
-			return c1->isContainer() && c1->containerType()==Container::lambda;
+			return c1->type()==Object::container && c1->containerType()==Container::lambda;
 		}
 		return c->containerType()==Container::lambda;
 	}
@@ -443,11 +461,11 @@ bool Expression::isLambda() const
 QList<Ci*> Expression::parameters() const
 {
 	QList<Ci*> ret;
-	if(d->m_tree && d->m_tree->isContainer()) {
+	if(d->m_tree && d->m_tree->type()==Object::container) {
 		Container* c = (Container*) d->m_tree;
 		if(c->containerType()==Container::math) {
 			Container *c1 = (Container*) c->m_params.first();
-			if(c1->isContainer() && c1->containerType()==Container::lambda)
+			if(c1->type()==Object::container && c1->containerType()==Container::lambda)
 				return c1->bvarCi();
 		}
 		return c->bvarCi();

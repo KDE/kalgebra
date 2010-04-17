@@ -33,7 +33,6 @@ using namespace Analitza;
 char Container::m_typeStr[][20] = {
 		"none",
 		"math",
-		"apply",
 		"declare",
 		"lambda",
 		"bvar",
@@ -48,7 +47,6 @@ char Container::m_typeStr[][20] = {
 QMap<QString, Container::ContainerType> createNameToType()
 {
 	QMap<QString, Container::ContainerType> ret;
-	ret["apply"]=Container::apply;
 	ret["declare"]=Container::declare;
 	ret["math"]=Container::math;
 	ret["lambda"]=Container::lambda;
@@ -141,33 +139,6 @@ QStringList Container::bvarStrings() const
 	return bvars;
 }
 
-Object* Container::ulimit() const
-{
-	Container* c=extractType(uplimit);
-	if(c)
-		return c->m_params.first();
-	else
-		return 0;
-}
-
-Object* Container::dlimit() const
-{
-	Container* c=extractType(downlimit);
-	if(c)
-		return c->m_params.first();
-	else
-		return 0;
-}
-
-Object* Container::domain() const
-{
-	Container* c=extractType(domainofapplication);
-	if(c)
-		return c->m_params.first();
-	else
-		return 0;
-}
-
 bool Container::operator==(const Container& c) const
 {
 	bool eq=c.m_params.count()==m_params.count();
@@ -181,7 +152,7 @@ bool Container::operator==(const Container& c) const
 
 bool Container::isNumber() const
 {
-	return m_cont_type==apply || m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
+	return m_cont_type==math || m_cont_type==lambda || m_cont_type==declare ||
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
@@ -193,6 +164,7 @@ bool isValue(Object* o)
 		case Object::variable:
 		case Object::vector:
 		case Object::list:
+		case Object::apply:
 			ret=true;
 			break;
 		case Object::container:
@@ -237,10 +209,6 @@ bool Container::isUnary() const
 bool Container::isCorrect() const
 {
 	bool ret=m_type==Object::container && m_cont_type!=none;
-	if(m_cont_type==Container::apply) {
-		Operator o=firstOperator();
-		ret &= o.nparams()<0 || countValues()==o.nparams();
-	}
 	return ret;
 }
 
@@ -298,8 +266,6 @@ bool Container::decorate(const ScopeInformation& scope)
 		return false;
 	
 	Container::const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
-	if((*it)->type()==Object::oper)
-		++it;
 	
 	ScopeInformation newScope(scope);
 	QList<Ci*> bvars=bvarCi();
@@ -315,18 +281,7 @@ bool Container::decorate(const ScopeInformation& scope)
 		++it;
 	}
 	
-	bool ret=false;
-	//We need to use the parent scope for (up/down)limit
-	for(; it!=itEnd;) {
-		Container *c = (Container*) (*it);
-		
-		if(c->isContainer() && (c->containerType()==uplimit ||  c->containerType()==downlimit)) {
-			ret |= (*it)->decorate(scope);
-			++it;
-		} else
-			break;
-	}
-	
+	bool ret=false;	
 	for(; it!=itEnd; ++it) {
 		ret |= (*it)->decorate(newScope);
 	}

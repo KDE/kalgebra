@@ -19,6 +19,7 @@ set(analitza_SRCS
 	variable.cpp
 	vector.cpp
 	list.cpp
+	apply.cpp
 	
 	expressiontype.cpp
 	expressiontypechecker.cpp

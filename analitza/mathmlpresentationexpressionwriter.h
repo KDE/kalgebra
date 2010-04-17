@@ -35,7 +35,7 @@ namespace Analitza
 class MathMLPresentationExpressionWriter : public ExpressionWriter
 {
 	public:
-		typedef QString (*operatorToString)(const Container* o, MathMLPresentationExpressionWriter* w);
+		typedef QString (*operatorToString)(const Apply* o, MathMLPresentationExpressionWriter* w);
 		MathMLPresentationExpressionWriter(const Object* o);
 		
 		virtual QString accept(const Ci* var);
@@ -44,6 +44,7 @@ class MathMLPresentationExpressionWriter : public ExpressionWriter
 		virtual QString accept(const Operator* var);
 		virtual QString accept(const Vector* var);
 		virtual QString accept(const List* l);
+		virtual QString accept(const Apply* a);
 		
 		QString result() const { return m_result; }
 		

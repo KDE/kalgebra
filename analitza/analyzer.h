@@ -28,6 +28,9 @@
 
 namespace Analitza
 {
+
+class Apply;
+
 class BoundingIterator;
 class Object;
 class Variables;
@@ -151,28 +154,30 @@ class ANALITZA_EXPORT Analyzer
 		
 		Object* calc(const Object* e);
 		Object* operate(const Container*);
+		Object* operate(const Apply*);
 		Object* eval(const Object* e, bool vars, const QSet<QString>& unscoped);
 		
-		Object* sum(const Container& c);
-		Object* product(const Container& c);
-		Object* func(const Container& c);
+		Object* sum(const Apply& c);
+		Object* product(const Apply& c);
+		Object* func(const Apply& c);
 		
 		Object* calcPiecewise(const Container* c);
 		Object* calcDeclare(const Container* c);
 		
 		Object* simp(Object* root);
-		Object* simpScalar(Container* c);
-		Object* simpPolynomials(Container* c);
-		Object* simpSum(Container* c);
+		Object* simpScalar(Apply* c);
+		Object* simpPolynomials(Apply* c);
+		Object* simpSum(Apply* c);
+		Object* simpApply(Apply* c);
 		Object* simpPiecewise(Container* c);
-		Object* simpApply(Container* c);
 		
 		Object* derivative(const QString &var, const Object*);
 		Object* derivative(const QString &var, const Container*);
-		void levelOut(Container *c, Container *ob, QList<Object*>::iterator &it);
-		Object* boundedOperation(const Container & n, const Operator & t, Object* initial);
+		Object* derivative(const QString &var, const Apply*);
+		void levelOut(Apply *c, Apply *ob, QList<Object*>::iterator &it);
+		Object* boundedOperation(const Apply & n, const Operator & t, Object* initial);
 		
-		BoundingIterator* initializeBVars(const Container* n);
+		BoundingIterator* initializeBVars(const Apply* n);
 };
 
 }

@@ -30,18 +30,20 @@
 #include "variable.h"
 #include "analitzautils.h"
 #include "expressiontypechecker.h"
+#include "apply.h"
 
 using namespace AnalitzaUtils;
+using namespace Analitza;
 
-Analitza::Analyzer::Analyzer()
+Analyzer::Analyzer()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
 {}
 
-Analitza::Analyzer::Analyzer(Variables* v)
+Analyzer::Analyzer(Variables* v)
 	: m_vars(v), m_varsOwned(false), m_hasdeps(true)
 { Q_ASSERT(v); }
 
-Analitza::Analyzer::Analyzer(const Analyzer& a)
+Analyzer::Analyzer(const Analyzer& a)
 	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(true)
 {
 	m_vars = new Variables(*a.m_vars);
@@ -49,14 +51,14 @@ Analitza::Analyzer::Analyzer(const Analyzer& a)
 		m_hasdeps=m_exp.tree()->decorate(varsScope());
 }
 
-Analitza::Analyzer::~Analyzer()
+Analyzer::~Analyzer()
 {
 	if(m_varsOwned)
 		delete m_vars;
 }
 
 
-void Analitza::Analyzer::setExpression(const Expression & e)
+void Analyzer::setExpression(const Expression & e)
 {
 	m_exp=e;
 	flushErrors();
@@ -71,7 +73,7 @@ void Analitza::Analyzer::setExpression(const Expression & e)
 	}
 }
 
-Analitza::Expression Analitza::Analyzer::evaluate()
+Expression Analyzer::evaluate()
 {
 	m_err.clear();
 	Expression e;
@@ -87,7 +89,7 @@ Analitza::Expression Analitza::Analyzer::evaluate()
 	return e;
 }
 
-Analitza::Expression Analitza::Analyzer::calculate()
+Expression Analyzer::calculate()
 {
 	Expression e;
 	
@@ -104,7 +106,7 @@ Analitza::Expression Analitza::Analyzer::calculate()
 	return e;
 }
 
-Analitza::Expression Analitza::Analyzer::calculateLambda()
+Expression Analyzer::calculateLambda()
 {
 	Expression e;
 	
@@ -132,7 +134,7 @@ Analitza::Expression Analitza::Analyzer::calculateLambda()
 	return e;
 }
 
-Analitza::Object* Analitza::Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
+Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
@@ -177,76 +179,6 @@ Analitza::Object* Analitza::Analyzer::eval(const Object* branch, bool resolve, c
 				if(!ret)
 					ret=c->copy();
 			} 	break;
-			case Container::apply: {
-				Operator op = c->firstOperator();
-				switch(op.operatorType()) {
-					case Operator::diff: {
-						//FIXME: Must support multiple bvars
-						QStringList bvars = c->bvarStrings();
-						
-						Q_ASSERT(!c->isEmpty());
-						Object* o=derivative(bvars[0], *c->firstValue());
-						
-						Container* cc=new Container(Container::lambda);
-						foreach(const QString& v, bvars) {
-							Container* bvar=new Container(Container::bvar);
-							bvar->appendBranch(new Ci(v));
-							cc->appendBranch(bvar);
-						}
-						cc->appendBranch(simp(o));
-						ret=cc;
-						
-					}	break;
-					case Operator::function: {
-						//it is a function. I'll take only this case for the moment
-						//it is only meant for operations with scoped variables that _change_ its value => have a value
-						Object* body=simp(eval(c->m_params[0], true, unscoped));
-						
-						if(resolve && body && body->isContainer()) {
-							const Container *cbody = (Container*) body;
-							
-							if(cbody->m_params.size()==c->m_params.size()) {
-								QStringList bvars=cbody->bvarStrings();
-								
-								int i=0;
-								Object::ScopeInformation scope;
-								QVector<Object*> values(bvars.size());
-								
-								foreach(const QString& bvar, bvars) {
-									values[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
-									scope.insert(bvar, &values[i]);
-									++i;
-								}
-								
-								cbody->m_params.last()->decorate(scope);
-								ret=eval(cbody->m_params.last(), resolve, unscoped);
-								
-								qDeleteAll(values);
-							}
-						}
-						
-						if(!ret)
-							ret=c->copy();
-						
-						delete body;
-					}	break;
-					default: {
-						QSet<QString> newUnscoped(unscoped);
-						if(op.isBounded()) {
-							newUnscoped+=c->bvarStrings().toSet();
-						}
-						Container *r = c->copy();
-						Container::iterator it(r->firstValue());
-						for(; it!=r->m_params.end(); ++it) {
-							Object *o=*it;
-							*it= eval(*it, resolve, newUnscoped);
-							delete o;
-						}
-						
-						ret=r;
-					}	break;
-				}
-			}	break;
 			case Container::lambda: {
 				QSet<QString> newUnscoped(unscoped);
 				newUnscoped+=c->bvarStrings().toSet();
@@ -295,6 +227,76 @@ Analitza::Object* Analitza::Analyzer::eval(const Object* branch, bool resolve, c
 			nv->appendBranch(res);
 		}
 		ret=nv;
+	} else if(branch->type()==Object::apply) {
+		const Apply* c=static_cast<const Apply*>(branch);
+		Operator op = c->firstOperator();
+		switch(op.operatorType()) {
+			case Operator::diff: {
+				//FIXME: Must support multiple bvars
+				QStringList bvars = c->bvarStrings();
+				
+				Q_ASSERT(!c->isEmpty());
+				Object* o=derivative(bvars[0], *c->firstValue());
+				
+				Container* cc=new Container(Container::lambda);
+				foreach(const QString& v, bvars) {
+					Container* bvar=new Container(Container::bvar);
+					bvar->appendBranch(new Ci(v));
+					cc->appendBranch(bvar);
+				}
+				cc->appendBranch(simp(o));
+				ret=cc;
+				
+			}	break;
+			case Operator::function: {
+				//it is a function. I'll take only this case for the moment
+				//it is only meant for operations with scoped variables that _change_ its value => have a value
+				Object* body=simp(eval(c->m_params[0], true, unscoped));
+				
+				if(resolve && body && body->isContainer()) {
+					const Container *cbody = (Container*) body;
+					
+					if(cbody->m_params.size()==c->m_params.size()) {
+						QStringList bvars=cbody->bvarStrings();
+						
+						int i=0;
+						Object::ScopeInformation scope;
+						QVector<Object*> values(bvars.size());
+						
+						foreach(const QString& bvar, bvars) {
+							values[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
+							scope.insert(bvar, &values[i]);
+							++i;
+						}
+						
+						cbody->m_params.last()->decorate(scope);
+						ret=eval(cbody->m_params.last(), resolve, unscoped);
+						
+						qDeleteAll(values);
+					}
+				}
+				
+				if(!ret)
+					ret=c->copy();
+				
+				delete body;
+			}	break;
+			default: {
+				QSet<QString> newUnscoped(unscoped);
+				if(op.isBounded()) {
+					newUnscoped+=c->bvarStrings().toSet();
+				}
+				Apply *r = c->copy();
+				Container::iterator it(r->firstValue());
+				for(; it!=r->m_params.end(); ++it) {
+					Object *o=*it;
+					*it= eval(*it, resolve, newUnscoped);
+					delete o;
+				}
+				
+				ret=r;
+			}	break;
+		}
 	}
 	
 	if(!ret)
@@ -303,19 +305,20 @@ Analitza::Object* Analitza::Analyzer::eval(const Object* branch, bool resolve, c
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::derivative(const QString &var, const Object* o)
+Object* Analyzer::derivative(const QString &var, const Object* o)
 {
 	Q_ASSERT(o);
 	Object *ret=0;
-	const Container *c;
 	const Ci* v;
 	
 	if(o->type()!=Object::oper && !hasVars(o, var))
 		ret = new Cn(0.);
 	else switch(o->type()) {
 		case Object::container:
-			c=(Container*) o;
-			ret = derivative(var, c);
+			ret = derivative(var, (const Container*) o);
+			break;
+		case Object::apply:
+			ret = derivative(var, (const Apply*) o);
 			break;
 		case Object::variable:
 			v = (Ci*) o;
@@ -346,185 +349,191 @@ Analitza::Object* Analitza::Analyzer::derivative(const QString &var, const Objec
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::derivative(const QString &var, const Container *c)
+Object* Analyzer::derivative(const QString &var, const Apply* c)
 {
-	if(c->containerType()==Container::apply) {
-		Operator op = c->firstOperator();
-		switch(op.operatorType()) {
-			case Operator::minus:
-			case Operator::plus: {
-				Container *r= new Container(Container::apply);
-				r->appendBranch(new Operator(op));
+	Operator op = c->firstOperator();
+	switch(op.operatorType()) {
+		case Operator::minus:
+		case Operator::plus: {
+			Apply *r= new Apply;
+			r->appendBranch(new Operator(op));
+			
+			Container::const_iterator it(c->firstValue());
+			for(; it!=c->m_params.end(); ++it)
+				r->appendBranch(derivative(var, *it));
+			return r;
+		} break;
+		case Operator::times: {
+			Apply *nx = new Apply;
+			nx->appendBranch(new Operator(Operator::plus));
+			
+			Apply::const_iterator it(c->firstValue());
+			for(; it!=c->m_params.end(); ++it) {
+				Apply *neach = new Apply;
+				neach->appendBranch(new Operator(Operator::times));
 				
-				Container::const_iterator it(c->firstValue());
-				for(; it!=c->m_params.end(); ++it)
-					r->appendBranch(derivative(var, *it));
-				return r;
-			} break;
-			case Operator::times: {
-				Container *nx = new Container(Container::apply);
-				nx->appendBranch(new Operator(Operator::plus));
-				
-				Container::const_iterator it(c->firstValue());
-				for(; it!=c->m_params.end(); ++it) {
-					Container *neach = new Container(Container::apply);
-					neach->appendBranch(new Operator(Operator::times));
+				Apply::const_iterator iobj(c->firstValue());
+				for(; iobj!=c->m_params.end(); ++iobj) {
+					Object* o;
+					if(iobj==it)
+						o=derivative(var, *iobj);
+					else
+						o=(*iobj)->copy();
 					
-					Container::const_iterator iobj(c->firstValue());
-					for(; iobj!=c->m_params.end(); ++iobj) {
-						Object* o;
-						if(iobj==it)
-							o=derivative(var, *iobj);
-						else
-							o=(*iobj)->copy();
-						
-						neach->appendBranch(o);
-					}
-					nx->appendBranch(neach);
+					neach->appendBranch(o);
 				}
-				return nx;
-			} break;
-			case Operator::power: {
-				if(hasVars(c->m_params[2], var)) {
-					//http://en.wikipedia.org/wiki/Table_of_derivatives
-					//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
-					Container *nc = new Container(Container::apply);
-					nc->appendBranch(new Operator(Operator::times));
-					nc->appendBranch(c->copy());
-					Container *nAss = new Container(Container::apply);
-					nAss->appendBranch(new Operator(Operator::plus));
-					nc->appendBranch(nAss);
-					
-					Container *nChain1 = new Container(Container::apply);
-					nChain1->appendBranch(new Operator(Operator::times));
-					nChain1->appendBranch(derivative(var, *c->firstValue()));
-					
-					Container *cDiv = new Container(Container::apply);
-					cDiv->appendBranch(new Operator(Operator::divide));
-					cDiv->appendBranch((*(c->firstValue()+1))->copy());
-					cDiv->appendBranch((*c->firstValue())->copy());
-					nChain1->appendBranch(cDiv);
-					
-					Container *nChain2 = new Container(Container::apply);
-					nChain2->appendBranch(new Operator(Operator::times));
-					nChain2->appendBranch(derivative(var, *(c->firstValue()+1)));
-					
-					Container *cLog = new Container(Container::apply);
-					cLog->appendBranch(new Operator(Operator::ln));
-					cLog->appendBranch((*c->firstValue())->copy());
-					nChain2->appendBranch(cLog);
-					
-					nAss->appendBranch(nChain1);
-					nAss->appendBranch(nChain2);
-					return nc;
-				} else {
-					Container *cx = new Container(Container::apply);
-					cx->appendBranch(new Operator(Operator::times));
-					cx->appendBranch(c->m_params[2]->copy());
-					cx->appendBranch(derivative(var, *c->firstValue()));
-					
-					Container* nc= new Container(Container::apply);
-					nc->appendBranch(c->m_params[0]->copy());
-					nc->appendBranch(c->m_params[1]->copy());
-					cx->appendBranch(nc);
-					
-					Container *degree = new Container(Container::apply);
-					degree->appendBranch(new Operator(Operator::minus));
-					degree->appendBranch(c->m_params[2]->copy());
-					degree->appendBranch(new Cn(1.));
-					nc->appendBranch(degree);
-					return cx;
-				}
-			} break;
-			case Operator::sin: {
-				Container *ncChain = new Container(Container::apply);
-				ncChain->appendBranch(new Operator(Operator::times));
-				ncChain->appendBranch(derivative(var, *c->firstValue()));
-				Container *nc = new Container(Container::apply);
-				nc->appendBranch(new Operator(Operator::cos));
-				nc->appendBranch((*c->firstValue())->copy());
-				ncChain->appendBranch(nc);
-				return ncChain;
-			} break;
-			case Operator::cos: {
-				Container *ncChain = new Container(Container::apply);
-				ncChain->appendBranch(new Operator(Operator::times));
-				ncChain->appendBranch(derivative(var, *c->firstValue()));
-				
-				Container *nc = new Container(Container::apply);
-				nc->appendBranch(new Operator(Operator::sin));
-				nc->appendBranch((*c->firstValue())->copy());
-				Container *negation = new Container(Container::apply);
-				negation->appendBranch(new Operator(Operator::minus));
-				negation->appendBranch(nc);
-				ncChain->appendBranch(negation);
-				return ncChain;
-			} break;
-			case Operator::tan: {
-				Container *ncChain = new Container(Container::apply);
-				ncChain->appendBranch(new Operator(Operator::divide));
-				ncChain->appendBranch(derivative(var, *c->firstValue()));
-				
-				Container *nc = new Container(Container::apply);
-				nc->appendBranch(new Operator(Operator::power));
-				
-				Container *lilcosine = new Container(Container::apply);
-				lilcosine->appendBranch(new Operator(Operator::cos));
-				lilcosine->appendBranch((*c->firstValue())->copy());
-				nc->appendBranch(lilcosine);
-				nc->appendBranch(new Cn(2.));
-				ncChain->appendBranch(nc);
-				return ncChain;
-			} break;
-			case Operator::divide: {
-				Object *f, *g; //referring to f/g
-				f=*c->firstValue();
-				g=*(c->firstValue()+1);
-				
-				Container *nc = new Container(Container::apply);
-				nc->appendBranch(new Operator(Operator::divide));
-				
-				Container *cmin = new Container(Container::apply);
-				cmin->appendBranch(new Operator(Operator::minus));
-				
-				Container *cmin1 =new Container(Container::apply);
-				cmin1->appendBranch(new Operator(Operator::times));
-				cmin1->appendBranch(derivative(var, f));
-				cmin1->appendBranch(g->copy());
-				cmin->appendBranch(cmin1);
-				nc->appendBranch(cmin);
-				
-				Container *cmin2 =new Container(Container::apply);
-				cmin2->appendBranch(new Operator(Operator::times));
-				cmin2->appendBranch(f->copy());
-				cmin2->appendBranch(derivative(var, g));
-				cmin->appendBranch(cmin2);
-				
-				Container *cquad = new Container(Container::apply);
-				cquad->appendBranch(new Operator(Operator::power));
-				cquad->appendBranch(g->copy());
-				cquad->appendBranch(new Cn(2.));
-				nc->appendBranch(cquad);
-				
-	// 			qDebug() << "iei!" << cmin->toString();
-				return nc;
-			} break;
-			case Operator::ln: {
-				Container *nc = new Container(Container::apply);
-				nc->appendBranch(new Operator(Operator::divide));
-				nc->appendBranch(derivative(var, *c->firstValue()));
-				nc->appendBranch((*c->firstValue())->copy());
-				return nc;
-			} break;
-			default: {
-				m_err.append(i18n("The %1 derivative has not been implemented.", op.toString()));
-				Container* obj = new Container(Container::apply);
-				obj->appendBranch(new Operator(Operator::diff));
-				obj->appendBranch(c->copy());
-				return obj;
+				nx->appendBranch(neach);
 			}
+			return nx;
+		} break;
+		case Operator::power: {
+			if(hasVars(c->m_params[1], var)) {
+				//http://en.wikipedia.org/wiki/Table_of_derivatives
+				//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
+				Apply *nc = new Apply;
+				nc->appendBranch(new Operator(Operator::times));
+				nc->appendBranch(c->copy());
+				Apply *nAss = new Apply;
+				nAss->appendBranch(new Operator(Operator::plus));
+				nc->appendBranch(nAss);
+				
+				Apply *nChain1 = new Apply;
+				nChain1->appendBranch(new Operator(Operator::times));
+				nChain1->appendBranch(derivative(var, *c->firstValue()));
+				
+				Apply *cDiv = new Apply;
+				cDiv->appendBranch(new Operator(Operator::divide));
+				cDiv->appendBranch((*(c->firstValue()+1))->copy());
+				cDiv->appendBranch((*c->firstValue())->copy());
+				nChain1->appendBranch(cDiv);
+				
+				Apply *nChain2 = new Apply;
+				nChain2->appendBranch(new Operator(Operator::times));
+				nChain2->appendBranch(derivative(var, *(c->firstValue()+1)));
+				
+				Apply *cLog = new Apply;
+				cLog->appendBranch(new Operator(Operator::ln));
+				cLog->appendBranch((*c->firstValue())->copy());
+				nChain2->appendBranch(cLog);
+				
+				nAss->appendBranch(nChain1);
+				nAss->appendBranch(nChain2);
+				
+				return nc;
+			} else {
+				Apply *cx = new Apply;
+				cx->appendBranch(new Operator(Operator::times));
+				cx->appendBranch(c->m_params[1]->copy());
+				cx->appendBranch(derivative(var, *c->firstValue()));
+				
+				Apply* nc= new Apply;
+				nc->appendBranch(new Operator(Operator::power));
+				nc->appendBranch(c->m_params[0]->copy());
+				cx->appendBranch(nc);
+				
+				Apply *degree = new Apply;
+				degree->appendBranch(new Operator(Operator::minus));
+				degree->appendBranch(c->m_params[1]->copy());
+				degree->appendBranch(new Cn(1.));
+				nc->appendBranch(degree);
+				
+				return cx;
+			}
+		} break;
+		case Operator::sin: {
+			Apply *ncChain = new Apply;
+			ncChain->appendBranch(new Operator(Operator::times));
+			ncChain->appendBranch(derivative(var, *c->firstValue()));
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::cos));
+			nc->appendBranch((*c->firstValue())->copy());
+			ncChain->appendBranch(nc);
+			return ncChain;
+		} break;
+		case Operator::cos: {
+			Apply *ncChain = new Apply;
+			ncChain->appendBranch(new Operator(Operator::times));
+			ncChain->appendBranch(derivative(var, *c->firstValue()));
+			
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::sin));
+			nc->appendBranch((*c->firstValue())->copy());
+			Apply *negation = new Apply;
+			negation->appendBranch(new Operator(Operator::minus));
+			negation->appendBranch(nc);
+			ncChain->appendBranch(negation);
+			return ncChain;
+		} break;
+		case Operator::tan: {
+			Apply *ncChain = new Apply;
+			ncChain->appendBranch(new Operator(Operator::divide));
+			ncChain->appendBranch(derivative(var, *c->firstValue()));
+			
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::power));
+			
+			Apply *lilcosine = new Apply;
+			lilcosine->appendBranch(new Operator(Operator::cos));
+			lilcosine->appendBranch((*c->firstValue())->copy());
+			nc->appendBranch(lilcosine);
+			nc->appendBranch(new Cn(2.));
+			ncChain->appendBranch(nc);
+			return ncChain;
+		} break;
+		case Operator::divide: {
+			Object *f, *g; //referring to f/g
+			f=*c->firstValue();
+			g=*(c->firstValue()+1);
+			
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::divide));
+			
+			Apply *cmin = new Apply;
+			cmin->appendBranch(new Operator(Operator::minus));
+			
+			Apply *cmin1 =new Apply;
+			cmin1->appendBranch(new Operator(Operator::times));
+			cmin1->appendBranch(derivative(var, f));
+			cmin1->appendBranch(g->copy());
+			cmin->appendBranch(cmin1);
+			nc->appendBranch(cmin);
+			
+			Apply *cmin2 =new Apply;
+			cmin2->appendBranch(new Operator(Operator::times));
+			cmin2->appendBranch(f->copy());
+			cmin2->appendBranch(derivative(var, g));
+			cmin->appendBranch(cmin2);
+			
+			Apply *cquad = new Apply;
+			cquad->appendBranch(new Operator(Operator::power));
+			cquad->appendBranch(g->copy());
+			cquad->appendBranch(new Cn(2.));
+			nc->appendBranch(cquad);
+			
+// 			qDebug() << "iei!" << cmin->toString();
+			return nc;
+		} break;
+		case Operator::ln: {
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::divide));
+			nc->appendBranch(derivative(var, *c->firstValue()));
+			nc->appendBranch((*c->firstValue())->copy());
+			return nc;
+		} break;
+		default: {
+			m_err.append(i18n("The %1 derivative has not been implemented.", op.toString()));
+			Apply* obj = new Apply;
+			obj->appendBranch(new Operator(Operator::diff));
+			obj->appendBranch(c->copy());
+			return obj;
 		}
-	} else if(c->containerType()==Container::lambda) {
+	}
+	return 0;
+}
+
+Object* Analyzer::derivative(const QString &var, const Container *c)
+{
+	if(c->containerType()==Container::lambda) {
 		//TODO REVIEW
 		return derivative(var, c->m_params.last());
 	} else if(c->containerType()==Container::piecewise) {
@@ -553,7 +562,7 @@ Analitza::Object* Analitza::Analyzer::derivative(const QString &var, const Conta
 	return 0;
 }
 
-Analitza::Object* Analitza::Analyzer::calcPiecewise(const Container* c)
+Object* Analyzer::calcPiecewise(const Container* c)
 {
 	Object* ret=0;
 	//Here we have a list of options and finally the otherwise option
@@ -592,7 +601,7 @@ Analitza::Object* Analitza::Analyzer::calcPiecewise(const Container* c)
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::calcDeclare(const Container* c)
+Object* Analyzer::calcDeclare(const Container* c)
 {
 	Object *ret=0;
 	
@@ -612,14 +621,17 @@ Analitza::Object* Analitza::Analyzer::calcDeclare(const Container* c)
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::calc(const Object* root)
+Object* Analyzer::calc(const Object* root)
 {
 	Q_ASSERT(root);
 	Object* ret=0;
 	
 	switch(root->type()) {
 		case Object::container:
-			ret = operate((Container*) root);
+			ret = operate((const Container*) root);
+			break;
+		case Object::apply:
+			ret = operate((const Apply*) root);
 			break;
 		case Object::vector: {
 			const Vector *v=static_cast<const Vector*>(root);
@@ -653,10 +665,87 @@ Analitza::Object* Analitza::Analyzer::calc(const Object* root)
 			break;
 	}
 	
+	Q_ASSERT(ret);
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::operate(const Container* c)
+Object* Analyzer::operate(const Apply* c)
+{
+	Object* ret=0;
+	Operator op = c->firstOperator();
+	Operator::OperatorType opt=op.operatorType();
+	
+	switch(opt) {
+		case Operator::sum:
+			ret = sum(*c);
+			break;
+		case Operator::product:
+			ret = product(*c);
+			break;
+		case Operator::function:
+			ret = func(*c);
+			break;
+		case Operator::none:
+			ret=calc(*c->firstValue());
+			break;
+		case Operator::diff: {
+			//TODO: Make multibvar
+			QStringList bvars=c->bvarStrings();
+			
+			//We construct the lambda
+			Object* o=derivative(bvars[0], *c->firstValue());
+			
+			Container* cc=new Container(Container::lambda);
+			foreach(const QString& v, bvars) {
+				Container* bvar=new Container(Container::bvar);
+				bvar->appendBranch(new Ci(v));
+				cc->appendBranch(bvar);
+			}
+			cc->appendBranch(simp(o));
+			ret=cc;
+			
+			ret->decorate(Object::ScopeInformation());
+			
+		}	break;
+		default: {
+			QList<Object*> numbers;
+			Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
+			for(; it!=itEnd; ++it)
+				numbers.append(calc(*it));
+			
+			Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
+						(op.nparams()>-1 && numbers.count()==op.nparams()) ||
+						opt==Operator::minus);
+			
+			Q_ASSERT(!numbers.isEmpty());
+			ret = numbers.first();
+			
+			QString correct;
+			if(numbers.count()>=2) {
+				Container::const_iterator it=numbers.constBegin()+1;
+				Container::const_iterator itEnd=numbers.constEnd();
+				
+				for(; it!=itEnd; ++it) {
+					ret=Operations::reduce(opt, ret, *it, correct);
+					
+					if(KDE_ISUNLIKELY(!correct.isEmpty())) {
+						m_err.append(correct);
+						correct.clear();
+						break;
+					}
+				}
+			} else {
+				ret=Operations::reduceUnary(opt, ret, correct);
+				if(KDE_ISUNLIKELY(!correct.isEmpty()))
+					m_err.append(correct);
+			}
+		}	break;
+	}
+	Q_ASSERT(ret);
+	return ret;
+}
+
+Object* Analyzer::operate(const Container* c)
 {
 	Q_ASSERT(c);
 	Q_ASSERT(!c->isEmpty());
@@ -675,78 +764,6 @@ Analitza::Object* Analitza::Analyzer::operate(const Container* c)
 		case Container::lambda:
 			ret=c->copy();
 			break;
-		case Container::apply:
-		{
-			Operator op = c->firstOperator();
-			Operator::OperatorType opt=op.operatorType();
-			
-			switch(opt) {
-				case Operator::sum:
-					ret = sum(*c);
-					break;
-				case Operator::product:
-					ret = product(*c);
-					break;
-				case Operator::function:
-					ret = func(*c);
-					break;
-				case Operator::none:
-					ret=calc(*c->firstValue());
-					break;
-				case Operator::diff: {
-					//TODO: Make multibvar
-					QStringList bvars=c->bvarStrings();
-					
-					//We construct the lambda
-					Object* o=derivative(bvars[0], *c->firstValue());
-					
-					Container* cc=new Container(Container::lambda);
-					foreach(const QString& v, bvars) {
-						Container* bvar=new Container(Container::bvar);
-						bvar->appendBranch(new Ci(v));
-						cc->appendBranch(bvar);
-					}
-					cc->appendBranch(simp(o));
-					ret=cc;
-					
-					ret->decorate(Object::ScopeInformation());
-					
-				}	break;
-				default: {
-					QList<Object*> numbers;
-					Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
-					for(; it!=itEnd; ++it)
-						numbers.append(calc(*it));
-					
-					Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
-								(op.nparams()>-1 && numbers.count()==op.nparams()) ||
-								opt==Operator::minus);
-					
-					Q_ASSERT(!numbers.isEmpty());
-					ret = numbers.first();
-						
-					QString correct;
-					if(numbers.count()>=2) {
-						Container::const_iterator it=numbers.constBegin()+1;
-						Container::const_iterator itEnd=numbers.constEnd();
-						
-						for(; it!=itEnd; ++it) {
-							ret=Operations::reduce(opt, ret, *it, correct);
-							
-							if(KDE_ISUNLIKELY(!correct.isEmpty())) {
-								m_err.append(correct);
-								correct.clear();
-								break;
-							}
-						}
-					} else {
-						ret=Operations::reduceUnary(opt, ret, correct);
-						if(KDE_ISUNLIKELY(!correct.isEmpty()))
-							m_err.append(correct);
-					}
-				}	break;
-			}
-		}	break;
 		case Container::piece:
 		case Container::otherwise:
 		case Container::bvar:
@@ -833,7 +850,7 @@ namespace Analitza
 	};
 }
 
-Analitza::BoundingIterator* Analitza::Analyzer::initializeBVars(const Container* n)
+BoundingIterator* Analyzer::initializeBVars(const Apply* n)
 {
 	BoundingIterator* ret=0;
 	QList<Ci*> bvars=n->bvarCi();
@@ -889,7 +906,7 @@ Analitza::BoundingIterator* Analitza::Analyzer::initializeBVars(const Container*
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::boundedOperation(const Container& n, const Operator& t, Object* initial)
+Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* initial)
 {
 	Object* ret=initial;
 	BoundingIterator* it=initializeBVars(&n);
@@ -910,21 +927,22 @@ Analitza::Object* Analitza::Analyzer::boundedOperation(const Container& n, const
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::product(const Container& n)
+Object* Analyzer::product(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
 }
 
-Analitza::Object* Analitza::Analyzer::sum(const Container& n)
+Object* Analyzer::sum(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
 }
 
-Analitza::Object* Analitza::Analyzer::func(const Container& n)
+Object* Analyzer::func(const Apply& n)
 {
 	Object* obj=calc(n.m_params[0]);
 	Container *function = (Container*) obj;
 	
+	//TODO: needed?
 	if(KDE_ISUNLIKELY(!obj->isContainer()
 				|| function->containerType()!=Container::lambda
 				|| function->m_params.size()!=n.m_params.size()))
@@ -963,7 +981,7 @@ Analitza::Object* Analitza::Analyzer::func(const Container& n)
 /////////////////////////////////////////////
 /////////////////////////////////////////////
 
-void Analitza::Analyzer::simplify()
+void Analyzer::simplify()
 {
 	if(m_exp.isCorrect()) {
 		Object* o=simp(m_exp.tree());
@@ -972,18 +990,17 @@ void Analitza::Analyzer::simplify()
 	}
 }
 
-void Analitza::Analyzer::levelOut(Container *c, Container *ob, Container::iterator &pos)
+void Analyzer::levelOut(Apply *c, Apply *ob, Apply::iterator &pos)
 {
 	Container::iterator it = ob->firstValue();
-	for(; it!=ob->m_params.end();) {
+	for(; it!=ob->m_params.end(); pos++) {
 		pos=c->m_params.insert(pos, *it);
 		
-		pos++;
 		it=ob->m_params.erase(it);
 	}
 }
 
-Analitza::Object* Analitza::Analyzer::simp(Object* root)
+Object* Analyzer::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
 	
@@ -1012,15 +1029,14 @@ Analitza::Object* Analitza::Analyzer::simp(Object* root)
 		
 		for(; it!=itEnd; ++it)
 			*it = simp(*it);
+	} else if(root->type()==Object::apply) {
+		root = simpApply((Apply*) root);
 	} else if(root->isContainer()) {
 		Container *c= (Container*) root;
 		
 		switch(c->containerType()) {
 			case Container::piecewise:
 				root=simpPiecewise(c);
-				break;
-			case Container::apply:
-				root=simpApply(c);
 				break;
 			case Container::lambda:
 				c->m_params.last()=simp(c->m_params.last());
@@ -1036,7 +1052,7 @@ Analitza::Object* Analitza::Analyzer::simp(Object* root)
 	return root;
 }
 
-Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
+Object* Analyzer::simpApply(Apply* c)
 {
 	Object* root=c;
 	Container::iterator it;
@@ -1049,8 +1065,8 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
 				d=false;
 				*it = simp(*it);
-				if((*it)->isContainer()) {
-					Container *intr = static_cast<Container*>(*it);
+				if((*it)->isApply()) {
+					Apply *intr = static_cast<Apply*>(*it);
 					if(intr->firstOperator()==o) {
 						levelOut(c, intr, it);
 						d=true;
@@ -1059,9 +1075,9 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 				
 				if(!d && (*it)->type() == Object::value) {
 					Cn* n = (Cn*) (*it);
-					if(n->value()==1. && c->m_params.count()>2) { //1*exp=exp
+					if(n->value()==1. && c->m_params.count()>1) { //1*exp=exp
 						d=true;
-					} else if(n->value()==0.) { //0*exp=0
+					} else if(n->value()==0.) { //0*exp=0 //TODO Change to isZero and return the same type in 0
 						delete root;
 						root = new Cn(0.);
 						return root;
@@ -1077,16 +1093,16 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			}
 			
 			if(c->isUnary()) {
-				Container *aux=c;
+				Apply *aux=c;
 				root=*c->firstValue();
 				*aux->firstValue()=0;
 				delete aux;
 			} else {
 				Object *ret=simpScalar(c);
-				if(ret->isContainer()) {
-					c=static_cast<Container*>(ret);
+				if(ret->isApply()) {
+					c=static_cast<Apply*>(ret);
 					ret=simpPolynomials(c);
-					c=ret->isContainer() ? static_cast<Container*>(ret) : 0;
+					c=ret->isContainer() ? static_cast<Apply*>(ret) : 0;
 				} else
 					c=0;
 				
@@ -1103,16 +1119,19 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			it=c->m_params.end()-1;
 			Object* first=*c->firstValue();
 			
-			for(; it!=c->m_params.begin(); --it) {
+			bool done=false;
+			QString delme=c->toString();
+			for(; !done; --it) {
+				done=it==c->m_params.begin();
 				lastdel=false;
 				*it = simp(*it);
 				
 				d=false;
-				if((*it)->isContainer()) {
-					Container *intr = (Container*) *it;
+				
+				if((*it)->isApply()) {
+					Apply *intr = (Apply*) *it;
 					Operator op=intr->firstOperator();
-					if(intr->containerType()==Container::apply
-						&& (op==o || (*it!=first && op==Operator::plus && o==Operator::minus)))
+					if(op==o || (*it!=first && op==Operator::plus && o==Operator::minus))
 					{
 						if(!(intr->isUnary() && op==Operator::minus))
 						{
@@ -1121,15 +1140,13 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 						}
 					}
 				}
-#ifndef Q_CC_MSVC
-				#warning review condition
-#endif
+				
 				if(!d && ((*it)->type()==Object::value || ((*it)->type()==Object::vector && !hasVars(*it))) && (*it)->isZero()) {
 					d=true;
+					lastdel=true;
 				}
 				
 				if(d) {
-					lastdel=true;
 					somed=true;
 					delete *it;
 					if(first==*it) first=0;
@@ -1137,26 +1154,27 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 				}
 			}
 			
+// 			qDebug()<< "KOKOKO" << delme << c->toString() << lastdel;
+			
 			if(lastdel && o==Operator::minus && !c->isUnary()) {
-				Container::iterator it=c->firstValue();
-				Container* cc=new Container(Container::apply);
+				Apply::iterator it=c->firstValue();
+				Apply* cc=new Apply;
 				cc->appendBranch(new Operator(Operator::minus));
 				cc->appendBranch(*it);
 				*it=cc;
 			}
-			
 			root=c;
 			
+// 			qDebug()<< "PEPEPE" << delme << c->toString();
 			if(c->isUnary()) {
 				if(o==Operator::plus || (somed && !lastdel)) {
 					root=*c->firstValue();
 					*c->firstValue()=0;
 					delete c;
 					c=0;
-				} else if((*c->firstValue())->isContainer()) {
-					Container *c1=(Container*) *c->firstValue();
-					if(c1->containerType()==Container::apply &&
-						c1->firstOperator()==Operator::minus &&
+				} else if((*c->firstValue())->isApply()) {
+					Apply *c1=(Apply*) *c->firstValue();
+					if( c1->firstOperator()==Operator::minus &&
 						c1->isUnary())
 					{
 						root=*c1->firstValue();
@@ -1170,14 +1188,16 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			} else {
 				root=simpScalar(c);
 				
-				if(root->isContainer()) {
-					c=static_cast<Container*>(root);
+				if(root->isApply()) {
+					c=static_cast<Apply*>(root);
+					
 					root=simpPolynomials(c);
 					
-					c=root->isContainer() ? static_cast<Container*>(root) : 0;
+					c=root->isApply() ? static_cast<Apply*>(root) : 0;
 				} else
 					c=0;
 			}
+// 			qDebug()<< "PAAPPA" << root->toString();
 			
 			if(c && c->isEmpty()) {
 				delete root;
@@ -1188,35 +1208,35 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
 				*it = simp(*it);
 			
-			if(c->m_params[2]->type()==Object::value) {
-				Cn *n = (Cn*) c->m_params[2];
+			if(c->m_params[1]->type()==Object::value) {
+				Cn *n = (Cn*) c->m_params[1];
 				if(n->value()==0.) { //0*exp=0
 					delete root;
 					root = new Cn(1.);
 					break;
 				} else if(n->value()==1.) { 
-					root = c->m_params[1];
-					c->m_params[1]=0;
+					root = c->m_params[0];
+					c->m_params[0]=0;
 					delete c;
 					break;
 				}
 			}
 			
-			if(c->m_params[1]->isContainer()) {
-				Container *cp = (Container*) c->m_params[1];
+			if(c->m_params[0]->isApply()) {
+				Apply *cp = (Apply*) c->m_params[0];
 				if(cp->firstOperator()==Operator::power) {
-					c->m_params[1] = cp->m_params[1];
+					c->m_params[0] = cp->m_params[0];
 					
-					Container *cm = new Container(Container::apply);
+					Apply *cm = new Apply;
 					cm->appendBranch(new Operator(Operator::times));
-					cm->appendBranch(c->m_params[2]);
-					cm->appendBranch(cp->m_params[2]);
-					c->m_params[2] = cm;
+					cm->appendBranch(c->m_params[1]);
+					cm->appendBranch(cp->m_params[1]);
+					c->m_params[1] = cm;
 					
+					cp->m_params[0]=0;
 					cp->m_params[1]=0;
-					cp->m_params[2]=0;
 					delete cp;
-					c->m_params[2]=simp(c->m_params[2]);
+					c->m_params[1]=simp(c->m_params[1]);
 				}
 			}
 		} break;
@@ -1260,38 +1280,21 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 		case Operator::sum: {
 			
 			QStringList bvars=c->bvarStrings();
-			const int offset=1+bvars.size(); //op+bvars
-			Object *uplimit=0, *downlimit=0, *domain=0;
+			Object *uplimit=c->ulimit(), *downlimit=c->dlimit(), *domain=c->domain();
 			
 			//TODO: simplify this code
-			for(it = c->m_params.begin()+offset; it!=c->m_params.end(); ++it) {
-				if((*it)->isContainer()) {
-					Container *limit=static_cast<Container*>(*it);
-					if(limit->containerType()==Container::uplimit
-						|| limit->containerType()==Container::downlimit
-						|| limit->containerType()==Container::domainofapplication)
-					{
-						if(limit->containerType()==Container::uplimit) uplimit=limit->m_params.first();
-						if(limit->containerType()==Container::downlimit) downlimit=limit->m_params.first();
-						if(limit->containerType()==Container::domainofapplication) domain=limit->m_params.first();
-						
-						limit->m_params.first()=simp(limit->m_params.first());
-					} else
-						*it = simp(*it);
-					
-				}else
-					*it = simp(*it);
-			}
+			for(it = c->m_params.begin(); it!=c->m_params.end(); ++it)
+				*it = simp(*it);
 			
 			//if bvars is empty, we are dealing with an invalid sum()
 			Object* function = *c->firstValue();
 			if(!bvars.isEmpty() && !domain && !hasTheVar(bvars.toSet(), function)) {
-				Container *cDiff=new Container(Container::apply);
+				Apply *cDiff=new Apply;
 				cDiff->appendBranch(new Operator(Operator::minus));
-				cDiff->appendBranch(c->ulimit()->copy());
-				cDiff->appendBranch(c->dlimit()->copy());
+				cDiff->appendBranch(uplimit  ->copy());
+				cDiff->appendBranch(downlimit->copy());
 				
-				Container *nc=new Container(Container::apply);
+				Apply *nc=new Apply;
 				nc->appendBranch(new Operator(Operator::times));
 				nc->appendBranch(cDiff);
 				nc->appendBranch(function);
@@ -1299,7 +1302,7 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 				c->m_params.last()=0;
 				delete c;
 				root=simp(nc);
-			} else if(function->isContainer())
+			} else if(function->isApply())
 				root=simpSum(c);
 			
 		}	break;
@@ -1316,26 +1319,26 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			}
 		}	break;
 		case Operator::selector: {
+			c->m_params[0]=simp(c->m_params[0]);
 			c->m_params[1]=simp(c->m_params[1]);
-			c->m_params[2]=simp(c->m_params[2]);
 			
-			Object* idx=c->m_params[1];
-			Object* value=c->m_params[2];
+			Object* idx=c->m_params[0];
+			Object* value=c->m_params[1];
 			if(idx->type()==Object::value && value->type()==Object::vector) {
 				QString err;
 				Object* ret=Operations::reduce(Operator::selector, idx->copy(), value->copy(), err);
 				
 				if(ret) {
 					root=ret;
+					c->m_params[0]=0;
 					c->m_params[1]=0;
-					c->m_params[2]=0;
 					
 					delete c;
 				}
 			}
 		}	break;
 		case Operator::_union: {
-			Container::iterator it=c->firstValue(), itEnd=c->m_params.end();
+			Apply::iterator it=c->firstValue(), itEnd=c->m_params.end();
 			
 			QList<Object*> newParams;
 			for(; it!=itEnd; ++it) {
@@ -1364,7 +1367,6 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 				delete c;
 				root=newParams.last();
 			} else {
-				newParams.prepend(c->m_params.takeFirst());
 				qDeleteAll(c->m_params);
 				c->m_params=newParams;
 				root=c;
@@ -1399,16 +1401,22 @@ Analitza::Object* Analitza::Analyzer::simpApply(Container* c)
 			}
 		}	break;
 		default:
-			it = c->firstValue();
+			if(c->ulimit())
+				c->ulimit()=simp(c->ulimit());
+			if(c->dlimit())
+				c->dlimit()=simp(c->dlimit());
+			if(c->domain())
+				c->domain()=simp(c->domain());
 			
-			for(; it!=c->m_params.end(); ++it)
+			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
 				*it = simp(*it);
 			break;
 	}
+	
 	return root;
 }
 
-Analitza::Object* Analitza::Analyzer::simpScalar(Container * c)
+Object* Analyzer::simpScalar(Apply * c)
 {
 	Object *value=0;
 	Container::iterator i = c->firstValue();
@@ -1455,50 +1463,50 @@ Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 	} else if(p.first==1.) {
 		toAdd=p.second;
 	} else if(p.first==-1. && (o==Operator::plus || o==Operator::minus)) {
-		Container *cint = new Container(Container::apply);
+		Apply *cint = new Apply;
 		cint->appendBranch(new Operator(Operator::minus));
 		cint->appendBranch(p.second);
 		toAdd=cint;
 	} else {
-		Container *cint = new Container(Container::apply);
+		Apply *cint = new Apply;
 		cint->appendBranch(new Operator(o.multiplicityOperator()));
 		cint->appendBranch(p.second);
 		cint->appendBranch(new Cn(p.first));
 		if(o.multiplicityOperator()==Operator::times)
-			cint->m_params.swap(1,2);
+			cint->m_params.swap(0,1);
 		toAdd=cint;
 	}
 	return toAdd;
 }
 }
 
-Analitza::Object* Analitza::Analyzer::simpPolynomials(Container* c)
+Object* Analyzer::simpPolynomials(Apply* c)
 {
-	Q_ASSERT(c!=0 && dynamic_cast<Container*>(c));
+	Q_ASSERT(c!=0 && dynamic_cast<Apply*>(c));
 	
 	QList<QPair<double, Object*> > monos;
 	Operator o(c->firstOperator());
 	bool sign=true, first=true;
-	Container::const_iterator it(c->firstValue());
+	Apply::const_iterator it(c->firstValue());
 	
 	for(; it!=c->constEnd(); ++it) {
 		Object *o2=*it;
 		QPair<double, Object*> imono;
 		bool ismono=false;
 		
-		if(o2->isContainer()) {
-			Container *cx = (Container*) o2;
-			if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==3) {
+		if(o2->isApply()) {
+			Apply *cx = (Apply*) o2;
+			if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==2) {
 				bool valid=false;
 				int scalar, var;
 				
-				if(cx->m_params[1]->type()==Object::value) {
-					scalar=1;
-					var=2;
-					valid=true;
-				} else if(cx->m_params[2]->type()==Object::value) {
-					scalar=2;
+				if(cx->m_params[0]->type()==Object::value) {
+					scalar=0;
 					var=1;
+					valid=true;
+				} else if(cx->m_params[1]->type()==Object::value) {
+					scalar=1;
+					var=0;
 					valid=true;
 				}
 				
@@ -1529,8 +1537,8 @@ Analitza::Object* Analitza::Analyzer::simpPolynomials(Container* c)
 			imono.second = o2;
 		}
 		
-		if(o!=Operator::times && imono.second->isContainer()) {
-			Container *m = (Container*) imono.second;
+		if(o!=Operator::times && imono.second->isApply()) {
+			Apply *m = (Apply*) imono.second;
 			if(m->firstOperator()==Operator::minus && m->isUnary()) {
 				imono.second = *m->firstValue();
 				imono.first *= -1.;
@@ -1591,7 +1599,7 @@ Analitza::Object* Analitza::Analyzer::simpPolynomials(Container* c)
 	if(monos.count()==1) {
 		root=createMono(o, monos.first());
 	} else if(monos.count()>1) {
-		c= new Container(Container::apply);
+		c= new Apply;
 		c->appendBranch(new Operator(o));
 		
 		QList<QPair<double, Object*> >::iterator i=monos.begin();
@@ -1609,7 +1617,7 @@ Analitza::Object* Analitza::Analyzer::simpPolynomials(Container* c)
 	}
 	
 	if(!sign && root) {
-		Container *cn=new Container(Container::apply);
+		Apply *cn=new Apply;
 		cn->appendBranch(new Operator(Operator::minus));
 		cn->appendBranch(root);
 		root=cn;
@@ -1623,10 +1631,13 @@ Analitza::Object* Analitza::Analyzer::simpPolynomials(Container* c)
 	return root;
 }
 
-Analitza::Object* Analitza::Analyzer::simpSum(Container * c)
+Object* Analyzer::simpSum(Apply* c)
 {
 	Object* ret=c;
-	Container* cval=static_cast<Container*>(*c->firstValue());
+	if(!c->isApply())
+		return c;
+	
+	Apply* cval=static_cast<Apply*>(*c->firstValue());
 	Operator o=cval->firstOperator();
 	if(o==Operator::times) {
 		QSet<QString> bvars=c->bvarStrings().toSet();
@@ -1650,7 +1661,7 @@ Analitza::Object* Analitza::Analyzer::simpSum(Container * c)
 		}
 		
 		if(!out.isEmpty()) {
-			Container* nc=new Container(Container::apply);
+			Apply* nc=new Apply;
 			nc->appendBranch(new Operator(Operator::times));
 			nc->m_params << out;
 			nc->appendBranch(c);
@@ -1666,7 +1677,7 @@ Analitza::Object* Analitza::Analyzer::simpSum(Container * c)
 	return ret;
 }
 
-Analitza::Object* Analitza::Analyzer::simpPiecewise(Container *c)
+Object* Analyzer::simpPiecewise(Container *c)
 {
 	Object *root=c;
 	//Here we have a list of options and finally the otherwise option
@@ -1721,12 +1732,12 @@ Analitza::Object* Analitza::Analyzer::simpPiecewise(Container *c)
 	return root;
 }
 
-Analitza::Object::ScopeInformation Analitza::Analyzer::varsScope() const
+Object::ScopeInformation Analyzer::varsScope() const
 {
 	return AnalitzaUtils::variablesScope(m_vars);
 }
 
-Analitza::Expression Analitza::Analyzer::derivative()
+Expression Analyzer::derivative()
 {
 	m_err.clear();
 	//TODO: Must support multiple bvars
@@ -1749,6 +1760,7 @@ Analitza::Expression Analitza::Analyzer::derivative()
 			vars+="x";
 		
 		Object* o = derivative(vars.first(), deriv);
+// 		qDebug() << "SSS" << o->toString();
 		o=simp(o);
 		Container* lambda=new Container(Container::lambda);
 		foreach(const QString& dep, vars) {
@@ -1763,7 +1775,7 @@ Analitza::Expression Analitza::Analyzer::derivative()
 	return exp;
 }
 
-Analitza::Expression Analitza::Analyzer::dependenciesToLambda() const
+Expression Analyzer::dependenciesToLambda() const
 {
 	if(m_hasdeps) {
 		QStringList deps=dependencies(m_exp.tree(), varsScope().keys());
@@ -1794,12 +1806,12 @@ Analitza::Expression Analitza::Analyzer::dependenciesToLambda() const
 	}
 }
 
-bool Analitza::Analyzer::insertVariable(const QString & name, const Expression & value)
+bool Analyzer::insertVariable(const QString & name, const Expression & value)
 {
 	return insertVariable(name, value.tree());
 }
 
-bool Analitza::Analyzer::insertVariable(const QString & name, const Object * value)
+bool Analyzer::insertVariable(const QString & name, const Object * value)
 {
 	bool islambda=false;
 	if(value->isContainer()) {
@@ -1816,7 +1828,7 @@ bool Analitza::Analyzer::insertVariable(const QString & name, const Object * val
 	return !wrong;
 }
 
-Analitza::Cn* Analitza::Analyzer::insertValueVariable(const QString& name, double value)
+Cn* Analyzer::insertValueVariable(const QString& name, double value)
 {
 	Cn* val=m_vars->modify(name, value);
 	m_hasdeps=m_exp.tree()->decorate(varsScope());
@@ -1824,7 +1836,7 @@ Analitza::Cn* Analitza::Analyzer::insertValueVariable(const QString& name, doubl
 }
 
 typedef QPair<QString, double> StringDoublePair;
-double Analitza::Analyzer::derivative(const QList<StringDoublePair>& values )
+double Analyzer::derivative(const QList<StringDoublePair>& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
 	//Image

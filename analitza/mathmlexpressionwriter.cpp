@@ -24,6 +24,7 @@
 #include <QStringList>
 #include "list.h"
 #include "variable.h"
+#include "apply.h"
 
 using namespace Analitza;
 
@@ -42,7 +43,10 @@ QString MathMLExpressionWriter::accept(const Ci* var)
 
 QString MathMLExpressionWriter::accept(const Operator* op)
 {
-	return QString("<%1 />").arg(op->name());
+	if(op->operatorType()==Operator::function)
+		return QString();
+	else
+		return QString("<%1 />").arg(op->name());
 }
 
 QString MathMLExpressionWriter::accept(const Cn* val)
@@ -82,11 +86,25 @@ QString MathMLExpressionWriter::accept(const List* vec)
 QString MathMLExpressionWriter::accept(const Container* c)
 {
 	QString ret;
-	QList<Object*>::const_iterator i;
-	for(i=c->m_params.constBegin(); i!=c->constEnd(); ++i) {
-		Q_ASSERT(*i);
-		ret += (*i)->visit(this);
-	}
+	foreach(const Object* o, c->m_params)
+		ret += o->visit(this);
 	
 	return QString("<%1>%2</%1>").arg(c->tagName()).arg(ret);
+}
+
+QString MathMLExpressionWriter::accept(const Apply* a)
+{
+	QString ret;
+	
+	ret += a->firstOperator().visit(this);
+	foreach(const Ci* bvar, a->bvarCi())
+		ret += "<bvar>"+bvar->visit(this)+"</bvar>";
+	if(a->ulimit()) ret += "<uplimit>"+a->ulimit()->visit(this)+"</uplimit>";
+	if(a->dlimit()) ret += "<downlimit>"+a->dlimit()->visit(this)+"</downlimit>";
+	if(a->domain()) ret += "<domainofapplication>"+a->domain()->visit(this)+"</domainofapplication>";
+	
+	foreach(const Object* o, a->m_params)
+		ret += o->visit(this);
+	
+	return QString("<apply>%1</apply>").arg(ret);
 }

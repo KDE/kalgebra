@@ -26,6 +26,7 @@
 #include "container.h"
 #include "variables.h"
 #include "expression.h"
+#include "apply.h"
 
 using namespace Analitza;
 namespace AnalitzaUtils
@@ -56,7 +57,14 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 		}	break;
 		case Object::container: {
 			Container *c = (Container*) o;
-			Container::iterator it = c->firstValue(), first = c->firstValue();
+			
+			foreach(const Object* o, c->m_params) {
+				ret += dependencies(o, scope).toSet();
+			}
+		} break;
+		case Object::apply: {
+			Apply* c = (Apply*) o;
+			Apply::iterator it = c->firstValue(), first = c->firstValue();
 			
 			QStringList newScope=scope+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();
@@ -64,11 +72,10 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			//uplimit and downlimit are in the parent scope
 			if(ul) ret += dependencies(ul, scope).toSet();
 			if(dl) ret += dependencies(dl, scope).toSet();
-			
 			for(; it!=c->m_params.end(); ++it) {
 				ret += dependencies(*it, newScope).toSet();
 			}
-		} break;
+		}	break;
 		case Object::none:
 		case Object::value:
 		case Object::oper:
@@ -105,6 +112,14 @@ bool hasTheVar(const QSet<QString> & vars, const Object * o)
 			}
 			found=hasTheVar(varsCopy, c);
 		}	break;
+		case Object::apply: {
+			const Apply *c=static_cast<const Apply*>(o);
+			QSet<QString> bvars=c->bvarStrings().toSet(), varsCopy=vars;
+			foreach(const QString &var, bvars) {
+				varsCopy.remove(var);
+			}
+			found=hasTheVar(varsCopy, c);
+		}	break;
 		case Object::variable:
 			cand=static_cast<const Ci*>(o);
 			found=vars.contains(cand->name());
@@ -118,7 +133,7 @@ bool hasTheVar(const QSet<QString> & vars, const Object * o)
 	return found;
 }
 
-bool hasTheVar(const QSet<QString> & vars, const Container * c)
+bool hasTheVar(const QSet<QString> & vars, const Container* c)
 {
 	bool found=false;
 	if(c->containerType()!=Container::bvar) {
@@ -127,6 +142,17 @@ bool hasTheVar(const QSet<QString> & vars, const Container * c)
 			if(hasTheVar(vars, *it))
 				found=true;
 		}
+	}
+	return found;
+}
+
+bool hasTheVar(const QSet<QString> & vars, const Apply* a)
+{
+	bool found=false;
+	Apply::const_iterator it=a->firstValue(), itEnd=a->constEnd();
+	for(; !found && it!=itEnd; ++it) {
+		if(hasTheVar(vars, *it))
+			found=true;
 	}
 	return found;
 }
@@ -166,6 +192,14 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			const Container *c = (const Container*) o;
 			
 			const QStringList scope=bvars+c->bvarStrings();
+			foreach(const Object* o, c->m_params) {
+				r |= hasVars(o, var, bvars+scope, vars);
+			}
+		}	break;
+		case Object::apply: {
+			const Apply *c = (const Apply*) o;
+			
+			const QStringList scope=bvars+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();
 			
 			//uplimit and downlimit are in the parent scope
@@ -176,13 +210,12 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			for(; !r && it!=c->constEnd(); ++it) {
 				r |= hasVars(*it, var, scope, vars);
 			}
-		} break;
+		}	break;
 		case Object::none:
 		case Object::value:
 		case Object::oper:
 			r=false;
 	}
-	
 	return r;
 }
 
@@ -225,6 +258,19 @@ struct ObjectWalker : public ExpressionWriter
 		return QString();
 	}
 	
+	virtual QString accept ( const Apply* c )
+	{
+		qDebug() << prefix().constData() << "| apply op:" << c->firstOperator().toString();
+		ind++;
+		if(c->ulimit()) { qDebug() << prefix().constData() << "ul: "; visitNow(c->ulimit()); }
+		if(c->dlimit()) { qDebug() << prefix().constData() << "dl: "; visitNow(c->dlimit()); }
+		
+		for(Container::const_iterator it=c->m_params.constBegin(); it<c->constEnd(); ++it)
+			visitNow(*it);
+		ind--;
+		return QString();
+	}
+	
 	virtual QString accept(const Vector* v)
 	{
 		qDebug() << prefix().constData() << "| vector: " << v->size();
@@ -253,7 +299,7 @@ struct ObjectWalker : public ExpressionWriter
 		return ret;
 	}
 	
-	void visitNow(const Object* o) { if(o) o->visit(this); else qDebug() << prefix() << "Null" ;}
+	void visitNow(const Object* o) { if(o) o->visit(this); else qDebug() << prefix().constData() << "Null" ;}
 	
 	QString result() const { return QString(); }
 	
@@ -301,6 +347,9 @@ bool equalTree(const Object * o1, const Object * o2)
 			break;
 		case Object::list:
 			eq = *static_cast<const List*>(o1)==*static_cast<const List*>(o2);
+			break;
+		case Object::apply:
+			eq = *static_cast<const Apply*>(o1)==*static_cast<const Apply*>(o2);
 			break;
 		case Object::none:
 			eq=false;

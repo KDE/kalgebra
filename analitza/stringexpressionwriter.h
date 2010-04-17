@@ -42,12 +42,16 @@ class StringExpressionWriter : public ExpressionWriter
 		virtual QString accept(const Operator* var);
 		virtual QString accept(const Vector* var);
 		virtual QString accept(const List* l);
+		virtual QString accept(const Apply* a);
 		
 		QString result() const { return m_result; }
 		
 		static int weight(const Operator* op, int size);
 		static const QMap<Operator::OperatorType, QString> s_operators;
 	private:
+		template <class T>
+			static QStringList allValues(T it, const T& itEnd, ExpressionWriter* writer);
+
 		QString m_result;
 };
 

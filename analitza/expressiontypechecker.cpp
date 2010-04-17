@@ -27,6 +27,7 @@
 #include "analitzautils.h"
 #include "operations.h"
 #include <klocalizedstring.h>
+#include "apply.h"
 
 bool merge(QMap<QString, Analitza::ExpressionType>& data, const QMap<QString, Analitza::ExpressionType>& newmap);
 
@@ -164,6 +165,7 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 		case Object::container:
 		case Object::vector:
 		case Object::list:
+		case Object::apply:
 			exp->visit(this);
 			ret=current.canReduceTo(targetType) && merge(*assumptions, current.assumptions());
 			break;
@@ -400,6 +402,145 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 	return ret;
 }
 
+QString ExpressionTypeChecker::accept(const Apply* c)
+{
+	QMap<QString, ExpressionType> ctx=m_typeForBVar;
+	QMap<QString, ExpressionType> assumptions;
+	Operator o=c->firstOperator();
+	
+	if(o.isBounded()) {
+		Object* ul=c->ulimit();
+		if(ul) {
+			ul->visit(this);
+			
+			m_typeForBVar[c->bvarStrings().first()]=current; //FIXME: should remove when done
+			if(!current.isError())
+				assumptions=typeIs(c->dlimit(), ExpressionType(current));
+		}
+	}
+	
+	switch(o.operatorType()) {
+		case Operator::none:
+		case Operator::sum:
+		case Operator::product:
+			(*c->firstValue())->visit(this);
+			break;
+		case Operator::diff:
+			//TODO Check inside
+			
+			current=ExpressionType(ExpressionType::Lambda);
+			current.addParameter(ExpressionType::Value);
+			current.addParameter(ExpressionType::Value);
+			break;
+		case Operator::function: {
+// 					qDebug() << "calling" << c->toString();
+			c->m_params.first()->visit(this);
+// 					qDebug() << "retrieved lambda" << c->m_params.first()->toString() << current << current.assumptions();
+			
+			if(current.isError()) { //FIXME:if its error it means that we are in a recursive case, undefined?
+				Container::const_iterator it=c->m_params.constBegin()+1, itEnd=c->m_params.constEnd();
+				
+				ExpressionType ret(ExpressionType::Undefined);
+				for(; it!=itEnd; ++it) {
+					(*it)->visit(this);
+					ret.addAssumptions(current.assumptions());
+				}
+				
+				current=ret;
+			} else if(current.type()==ExpressionType::Any) {
+				ExpressionType func(ExpressionType::Lambda);
+				ExpressionType ret=current;
+				
+				QMap<int, ExpressionType> starToType;
+				Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
+				for(; it!=itEnd; ++it) {
+					(*it)->visit(this);
+					func.addParameter(current);
+					ret.addAssumptions(current.assumptions());
+				}
+				func.addParameter(ret);
+				
+// 						qDebug() << "xXXXXX" << c->m_params.first()->toString();
+				if(c->m_params.first()->type()==Object::variable) {
+					QString name=static_cast<Ci*>(c->m_params.first())->name();
+					assumptions.insert(name, func);
+					
+					ret.addAssumptions(assumptions);
+				}
+				
+				current=ret;
+			} else {
+				ExpressionType ret(ExpressionType::Many), signature(current);
+				
+				QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
+// 						qDebug() << "SSSSSSSSSSSSSSSSSSSSS" << alts;
+				
+				bool countError=false;
+				foreach(const ExpressionType& opt, alts) {
+// 							qDebug() << "ooooopt" << opt;
+					if(opt.type()!=ExpressionType::Lambda) {
+// 								addError(i18n("We can only call functions."));
+						continue;
+					}
+					
+					if(opt.parameters().size()!=c->m_params.size()) {
+						if(!countError) addError(i18n("Invalid parameter count for '%1'. Should have %2 parameters", c->toString(), c->m_params.size()));
+						countError=true;
+						continue;
+					}
+					
+					bool valid=true;
+					QMap<QString, ExpressionType> assumptions;
+					QMap<int, ExpressionType> starToType;
+					
+					for(int i=0; valid && i<opt.parameters().size()-1; i++) {
+						c->m_params[i+1]->visit(this);
+						
+						if(!opt.parameters()[i].canReduceTo(current)) {
+							continue;
+						}
+						
+						starToType=computeStars(starToType, opt.parameters()[i], current);
+						
+						valid&=merge(assumptions, opt.parameters()[i].assumptions());
+					}
+					
+					QMap<QString, ExpressionType>::iterator it=assumptions.begin(), itEnd=assumptions.end();
+					for(; valid && it!=itEnd; ++it) {
+						*it=it->starsToType(starToType);
+					}
+					
+					for(int i=0; valid && i<opt.parameters().size()-1; i++) {
+						ExpressionType t=opt.parameters()[i].starsToType(starToType);
+						valid=t.isError() ? false : inferType(c->m_params[i+1], t, &assumptions);
+// 								qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
+					}
+					
+					if(valid) {
+						ExpressionType t=opt.parameters().last().starsToType(starToType);
+						
+						t.addAssumptions(assumptions);
+						ret.addAlternative(t);
+					}
+				}
+					
+				if(ret.alternatives().isEmpty()) {
+					current=ExpressionType(ExpressionType::Error);
+					addError(i18n("Could not call '%1'", c->toString()));
+				} else
+					current=ret;
+			}
+		} break;
+		default:
+			current=solve(&o, c->values());
+			if(current.type()==ExpressionType::Error)
+				addError(i18n("Could not solve '%1'", c->toString()));
+			break;
+	}
+	m_typeForBVar=ctx;
+	return QString();
+}
+
 //1. Check if parameters are applied correctly
 //2. Return the operator result type
 QString ExpressionTypeChecker::accept(const Container* c)
@@ -407,141 +548,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 // 	qDebug() << "XIUXIU" << c->toString();
 	QMap<QString, ExpressionType> assumptions;
 	switch(c->containerType()) {
-		case Container::apply: {
-			QMap<QString, ExpressionType> ctx=m_typeForBVar;
-			Operator o=c->firstOperator();
-			
-			if(o.isBounded()) {
-				Object* ul=c->ulimit();
-				if(ul) {
-					ul->visit(this);
-					
-					m_typeForBVar[c->bvarStrings().first()]=current; //FIXME: should remove when done
-					if(!current.isError())
-						assumptions=typeIs(c->dlimit(), ExpressionType(current));
-				}
-			}
-			
-			switch(o.operatorType()) {
-				case Operator::none:
-				case Operator::sum:
-				case Operator::product:
-					(*c->firstValue())->visit(this);
-					break;
-				case Operator::diff:
-					//TODO Check inside
-					
-					current=ExpressionType(ExpressionType::Lambda);
-					current.addParameter(ExpressionType::Value);
-					current.addParameter(ExpressionType::Value);
-					break;
-				case Operator::function: {
-// 					qDebug() << "calling" << c->toString();
-					c->m_params.first()->visit(this);
-// 					qDebug() << "retrieved lambda" << c->m_params.first()->toString() << current << current.assumptions();
-					
-					if(current.isError()) { //FIXME:if its error it means that we are in a recursive case, undefined?
-						Container::const_iterator it=c->m_params.constBegin()+1, itEnd=c->m_params.constEnd();
-						
-						ExpressionType ret(ExpressionType::Undefined);
-						for(; it!=itEnd; ++it) {
-							(*it)->visit(this);
-							ret.addAssumptions(current.assumptions());
-						}
-						
-						current=ret;
-					} else if(current.type()==ExpressionType::Any) {
-						ExpressionType func(ExpressionType::Lambda);
-						ExpressionType ret=current;
-						
-						QMap<int, ExpressionType> starToType;
-						Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
-						for(; it!=itEnd; ++it) {
-							(*it)->visit(this);
-							func.addParameter(current);
-							ret.addAssumptions(current.assumptions());
-						}
-						func.addParameter(ret);
-						
-// 						qDebug() << "xXXXXX" << c->m_params.first()->toString();
-						if(c->m_params.first()->type()==Object::variable) {
-							QString name=static_cast<Ci*>(c->m_params.first())->name();
-							assumptions.insert(name, func);
-							
-							ret.addAssumptions(assumptions);
-						}
-						
-						current=ret;
-					} else {
-						ExpressionType ret(ExpressionType::Many), signature(current);
-						
-						QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
-// 						qDebug() << "SSSSSSSSSSSSSSSSSSSSS" << alts;
-						
-						bool countError=false;
-						foreach(const ExpressionType& opt, alts) {
-// 							qDebug() << "ooooopt" << opt;
-							if(opt.type()!=ExpressionType::Lambda) {
-// 								addError(i18n("We can only call functions."));
-								continue;
-							}
-							
-							if(opt.parameters().size()!=c->m_params.size()) {
-								if(!countError) addError(i18n("Invalid parameter count for '%1'. Should have %2 parameters", c->toString(), c->m_params.size()));
-								countError=true;
-								continue;
-							}
-							
-							bool valid=true;
-							QMap<QString, ExpressionType> assumptions;
-							QMap<int, ExpressionType> starToType;
-							
-							for(int i=0; valid && i<opt.parameters().size()-1; i++) {
-								c->m_params[i+1]->visit(this);
-								
-								if(!opt.parameters()[i].canReduceTo(current)) {
-									continue;
-								}
-								
-								starToType=computeStars(starToType, opt.parameters()[i], current);
-								
-								valid&=merge(assumptions, opt.parameters()[i].assumptions());
-							}
-							
-							QMap<QString, ExpressionType>::iterator it=assumptions.begin(), itEnd=assumptions.end();
-							for(; valid && it!=itEnd; ++it) {
-								*it=it->starsToType(starToType);
-							}
-							
-							for(int i=0; valid && i<opt.parameters().size()-1; i++) {
-								ExpressionType t=opt.parameters()[i].starsToType(starToType);
-								valid=t.isError() ? false : inferType(c->m_params[i+1], t, &assumptions);
-// 								qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
-							}
-							
-							if(valid) {
-								ExpressionType t=opt.parameters().last().starsToType(starToType);
-								
-								t.addAssumptions(assumptions);
-								ret.addAlternative(t);
-							}
-						}
-							
-						if(ret.alternatives().isEmpty()) {
-							current=ExpressionType(ExpressionType::Error);
-							addError(i18n("Could not call '%1'", c->toString()));
-						} else
-							current=ret;
-					}
-				} break;
-				default:
-					current=solve(&o, c->values());
-					if(current.type()==ExpressionType::Error)
-						addError(i18n("Could not solve '%1'", c->toString()));
-					break;
-			}
-			m_typeForBVar=ctx;
-		}	break;
 		case Container::piecewise: {
 			ExpressionType type=commonType(c->m_params);
 			

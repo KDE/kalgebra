@@ -23,6 +23,7 @@
 
 #include <qtest_kde.h>
 #include <cmath>
+#include <analitzautils.h>
 
 using namespace std;
 using Analitza::Expression;
@@ -107,6 +108,7 @@ void ExpressionTest::testConversion()
 	e->setMathML(parser.mathML());
 	if(!e->isCorrect())
 		qDebug() << "semantic errors: " << e->error();
+	
 	QVERIFY(e->isCorrect());
 	QCOMPARE(e->toString(), input);
 	QCOMPARE(removeTags(e->toHtml()), input);

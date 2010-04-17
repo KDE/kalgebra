@@ -68,13 +68,14 @@ Q_OBJECT
 		void testCompareTrees_data();
 		void testCompareTrees();
 		
-		void testOperators_data();
-		void testOperators();
-		
 // 		void testJumps_data();
 // 		void testJumps();
 		void cleanupTestCase();
 	private:
+		
+		void testOperators_data(); //I don't like this test
+		void testOperators();
+		
 		Analitza::Analyzer *a;
 };
 

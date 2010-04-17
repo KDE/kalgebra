@@ -21,6 +21,7 @@
 #include <qtest_kde.h>
 #include <cmath>
 
+#include "apply.h"
 #include "container.h"
 #include "variables.h"
 #include "vector.h"
@@ -124,7 +125,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("minus3.2") << "minus(x,x,x,x,x,x)" << "-4*x";
 	QTest::newRow("addition") << "x+x" << "2*x";
 	QTest::newRow("simple polynomial") << "x+x+x**2+x**2" << "2*x+2*x^2";
-	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-(x^2)";
+	QTest::newRow("simplification of unary minus in times") << "x*(-x)" << "-x^2";
 	QTest::newRow("strange") << "0*x-1*1" << "-1";
 	QTest::newRow("strange2") << "x-x" << "0";
 	QTest::newRow("old leak") << "x^1" << "x";
@@ -456,6 +457,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::addColumn<QString>("expression");
 	QTest::addColumn<QString>("result");
 	
+	QTest::newRow("identity") << "1*x" << "x";
 	QTest::newRow("minus") << "x-x-x" << "-x";
 	QTest::newRow("no var") << "2+2" << "4";
 	QTest::newRow("simple") << "x+x" << "2*x";
@@ -725,7 +727,7 @@ void AnalitzaTest::testOperators()
 	
 	foreach(Object* obj, values) {
 		foreach(int paramCnt, params) {
-			Container* apply=new Container(Container::apply);
+			Analitza::Apply* apply=new Analitza::Apply;
 			apply->appendBranch(new Operator(o));
 			for(; paramCnt>0; paramCnt--)  {
 				apply->appendBranch(obj->copy());
@@ -733,15 +735,16 @@ void AnalitzaTest::testOperators()
 			
 			if(o.isBounded()) {
 				Container *bvar=new Container(Container::bvar);
-				apply->m_params.prepend(bvar);
+				apply->appendBranch(bvar);
 				
 				QList<Object*> bvarValues=QList<Object*>() << new Ci("x");
 				foreach(Object* obvar, bvarValues) {
-					Container* cc=(Container*) apply->copy();
-					Container* bvar=(Container*) cc->m_params[0];
+					Analitza::Apply* cc=(Analitza::Apply*) apply->copy();
+					Container* bvar=(Container*) cc->bvarCi().first();
 					bvar->appendBranch(obvar->copy());
 					
 					Expression e1(cc);
+					qDebug() << "KKKKK" << cc->toString();
 					a->setExpression(e1);
 					
 					a->calculate();
@@ -764,13 +767,13 @@ void AnalitzaTest::testOperators()
 	QString bvar="x";
 	foreach(double v, diffValues) {
 		foreach(int paramCnt, params) {
-			Container *diffApply=new Container(Container::apply);
+			Analitza::Apply *diffApply=new Analitza::Apply;
 			diffApply->appendBranch(new Operator(Operator::diff));
 			Container* diffBVar=new Container(Container::bvar);
 			diffBVar->appendBranch(new Ci(bvar));
 			diffApply->appendBranch(diffBVar);
 			
-			Container* apply=new Container(Container::apply);
+			Analitza::Apply* apply=new Analitza::Apply;
 			apply->appendBranch(new Operator(o));
 			diffApply->appendBranch(apply);
 			

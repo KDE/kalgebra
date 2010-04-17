@@ -44,7 +44,6 @@ public:
 	enum ContainerType {
 		none=0, 	/**< No container type, usually means an error */
 		math,		/**< Describes a container as a %lt;math&gt; tag */
-		apply,		/**< Describes a container as a %lt;apply&gt; tag */
 		declare,	/**< Describes a container as a %lt;declare&gt; tag */
 		lambda,		/**< Describes a container as a %lt;lambda&gt; tag */
 		bvar,		/**< Describes a container as a %lt;bvar&gt; tag */
@@ -105,15 +104,6 @@ public:
 	
 	/** Returns the end iterator on the contained object list */
 	Container::const_iterator constEnd() const { return m_params.constEnd(); }
-	
-	/** Returns the container's uplimit. */
-	Object* ulimit() const;
-	
-	/** Returns the container's downlimit. */
-	Object* dlimit() const;
-	
-	/** Returns the domain of application definition. */
-	Object* domain() const;
 	
 	/** Returns whether it is an unary container. This means that there is only one value inside. */
 	bool isUnary() const;

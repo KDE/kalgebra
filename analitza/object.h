@@ -45,6 +45,7 @@ public:
 		variable,	/**< Describes an object as a variable. */
 		vector,		/**< Describes an object as a vector. */
 		list,		/**< Describes an object as a list. */
+		apply,		/**< Describes an object as an application. */
 		oper,		/**< Describes an object as an operator. */
 		container	/**< Describes an object as a container. */
 	};
@@ -56,7 +57,8 @@ public:
 	/** Returns the object type of the object */
 	enum ObjectType type() const { return m_type; }
 	
-	/** Returns whether it is a container or not. */
+	/** Returns whether it is an application or not. */
+	bool isApply() const { return m_type==apply; }
 	bool isContainer() const { return m_type==container; }
 	
 	/** Returns the string representation of the object. */
