@@ -17,8 +17,8 @@
  *************************************************************************************/
 
 
-#ifndef ANALITZA_H
-#define ANALITZA_H
+#ifndef ANALIZER_H
+#define ANALIZER_H
 
 #include <QStringList>
 
@@ -44,26 +44,26 @@ class BoundingIterator
 
 //FIXME: Explain that better and with examples.
 /**
- *	This is the base Math class. Analitza will be the one that will calculate things.
+ *	This is the base Math class. Analyzer will be the one that will calculate things.
  *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
-class ANALITZA_EXPORT Analitza
+class ANALITZA_EXPORT Analyzer
 {
 	public:
-		/** Constructor. Creates an empty Analitza module with a Variables module. */
-		Analitza();
+		/** Constructor. Creates an empty Analyzer module with a Variables module. */
+		Analyzer();
 		
-		/** Constructor. Creates an empty Analitza module. 
-			@param v: Sets a custom variables module. This module will _not_ be deleted along with Analitza
+		/** Constructor. Creates an empty Analyzer module. 
+			@param v: Sets a custom variables module. This module will _not_ be deleted along with Analyzer
 		*/
-		Analitza(Variables* v);
+		Analyzer(Variables* v);
 		
-		/** Copy constructor. Creates a copy of the @p a Analitza instance. Inherits its Variable structure. */
-		Analitza(const Analitza& a);
+		/** Copy constructor. Creates a copy of the @p a Analyzer instance. Inherits its Variable structure. */
+		Analyzer(const Analyzer& a);
 		
 		/** Destructor. */
-		~Analitza();
+		~Analyzer();
 		
 		/** Sets an expression to calculate. */
 		void setExpression(const Expression &e);

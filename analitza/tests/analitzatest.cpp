@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "analitzatest.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include <qtest_kde.h>
 #include <cmath>
 
@@ -49,7 +49,7 @@ AnalitzaTest::~AnalitzaTest()
 
 void AnalitzaTest::initTestCase()
 {
-	a=new Analitza::Analitza;
+	a=new Analitza::Analyzer;
 }
 
 void AnalitzaTest::cleanupTestCase()
@@ -333,7 +333,7 @@ void AnalitzaTest::testCorrection()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
-	Analitza::Analitza b;
+	Analitza::Analyzer b;
 	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -368,7 +368,7 @@ void AnalitzaTest::testTypeUncorrection()
 	QFETCH(QStringList, expression);
 	
 	bool correct=false;
-	Analitza::Analitza b;
+	Analitza::Analyzer b;
 	
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -421,7 +421,7 @@ void AnalitzaTest::testUncorrection()
 	QFETCH(QStringList, expression);
 	
 	bool correct=false;
-	Analitza::Analitza b;
+	Analitza::Analyzer b;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
 		correct=e.isCorrect();
@@ -493,7 +493,7 @@ void AnalitzaTest::testEvaluate()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
-	Analitza::Analitza b;
+	Analitza::Analyzer b;
 	Expression res;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);

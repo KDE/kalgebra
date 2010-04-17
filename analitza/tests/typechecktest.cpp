@@ -22,7 +22,7 @@
 #include <cmath>
 #include "expression.h"
 #include <expressiontypechecker.h>
-#include <analitza.h>
+#include <analyzer.h>
 
 QTEST_KDEMAIN_CORE( TypeCheckTest )
 

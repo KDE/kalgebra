@@ -24,7 +24,7 @@
 /**
 	@author 
 */
-namespace Analitza { class Analitza; }
+namespace Analitza { class Analyzer; }
 
 class AnalitzaTest : public QObject
 {
@@ -75,7 +75,7 @@ Q_OBJECT
 // 		void testJumps();
 		void cleanupTestCase();
 	private:
-		Analitza::Analitza *a;
+		Analitza::Analyzer *a;
 };
 
 #endif

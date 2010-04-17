@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "expressiontest.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include "explexer.h"
 #include "expressionparser.h"
 

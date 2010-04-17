@@ -9,7 +9,7 @@ set(analitza_SRCS
 	mathmlexpressionwriter.cpp
 	mathmlpresentationexpressionwriter.cpp
 	htmlexpressionwriter.cpp
-	analitza.cpp
+	analyzer.cpp
 	container.cpp
 	operator.cpp
 	operations.cpp
