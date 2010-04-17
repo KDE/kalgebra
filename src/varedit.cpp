@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "varedit.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include "expression.h"
 #include "variables.h"
 #include "expressionedit.h"
@@ -73,7 +73,7 @@ void VarEdit::setName(const QString& newVar)
 Analitza::Expression VarEdit::val()
 {
 	Analitza::Expression val;
-	Analitza::Analitza a(vars);
+	Analitza::Analyzer a(vars);
 	
 	a.setExpression(m_exp->expression());
 	
@@ -107,7 +107,7 @@ void VarEdit::ok()
 		accept();
 }
 
-void VarEdit::setAnalitza(Analitza::Analitza * na)
+void VarEdit::setAnalitza(Analitza::Analyzer * na)
 {
 	vars= na->variables();
 	m_exp->setAnalitza(na);

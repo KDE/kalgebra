@@ -29,7 +29,7 @@
 namespace Analitza
 {
 class Variables;
-class Analitza;
+class Analyzer;
 }
 
 class OperatorsModel;
@@ -69,8 +69,8 @@ class ExpressionEdit : public QPlainTextEdit
 		/** Returns whether there is MathML on the widget. */
 		bool isMathML() const;
 		
-		/** Sets an Analitza @p in module associated to the ExpressionEdit. It is used to autocomplete variables. */
-		void setAnalitza(Analitza::Analitza* in);
+		/** Sets an Analyzer @p in module associated to the ExpressionEdit. It is used to autocomplete variables. */
+		void setAnalitza(Analitza::Analyzer* in);
 		
 		/** Returns the expression string that we have. */
 		QString text() const { return this->toPlainText();}
@@ -154,7 +154,7 @@ class ExpressionEdit : public QPlainTextEdit
 		bool help;
 		bool m_auto;
 		
-		Analitza::Analitza *a;
+		Analitza::Analyzer *a;
 		bool m_correct;
 		QString m_ans;
 		QCompleter *m_completer;

@@ -24,7 +24,7 @@
 
 #include <khtml_part.h>
 
-#include "analitza.h"
+#include "analyzer.h"
 
 /**
  *	The Console widget is able to receive an operation, solve it and show the value.
@@ -49,7 +49,7 @@ class ConsoleHtml : public KHTMLPart
 		virtual ~ConsoleHtml();
 		
 		/** Retrieves a pointer to the Analitza calculator associated. */
-		Analitza::Analitza* analitza() { return &a; }
+		Analitza::Analyzer* analitza() { return &a; }
 		
 		/** Sets a @p newMode console mode. */
 		void setMode(ConsoleMode newMode) { m_mode = newMode; }
@@ -95,7 +95,7 @@ class ConsoleHtml : public KHTMLPart
 		void scrollDown();
 		
 	private:
-		Analitza::Analitza a;
+		Analitza::Analyzer a;
 		void sendStatus(const QString& msg) { emit status(msg); }
 		ConsoleMode m_mode;
 		QList<Analitza::Expression> m_script;

@@ -32,7 +32,7 @@
 #include "explexer.h"
 #include "expressionparser.h"
 #include "operator.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include "variables.h"
 #include "container.h"
 
@@ -275,7 +275,7 @@ void ExpressionEdit::showSimplified()
 	Analitza::Expression e=expression();
 	if(e.isCorrect())
 	{
-		Analitza::Analitza a;
+		Analitza::Analyzer a;
 		a.setExpression(e);
 		a.simplify();
 		QString help=i18n("Result: %1", a.expression().toString());
@@ -425,7 +425,7 @@ void ExpressionEdit::simplify()
 {
 	Analitza::Expression e=expression();
 	if(e.isCorrect()) {
-		Analitza::Analitza a;
+		Analitza::Analyzer a;
 		a.setExpression(e);
 		a.simplify();
 		
@@ -449,7 +449,7 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	delete popup;
 }
 
-void ExpressionEdit::setAnalitza(Analitza::Analitza * in)
+void ExpressionEdit::setAnalitza(Analitza::Analyzer * in)
 {
 	m_highlight->setAnalitza(in);
 	a=in;

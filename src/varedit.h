@@ -28,7 +28,7 @@
 
 namespace Analitza
 {
-class Analitza;
+class Analyzer;
 class Variables;
 class Expression;
 }
@@ -50,7 +50,7 @@ class VarEdit : public KDialog
 		void setName(const QString& newVar);	//This should edit the variable name
 		
 		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
-		void setAnalitza(Analitza::Analitza *na);
+		void setAnalitza(Analitza::Analyzer *na);
 		
 		/** Returns the resulting variable expression */
 		Analitza::Expression val();

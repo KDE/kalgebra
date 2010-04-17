@@ -32,7 +32,7 @@
 #include <QPixmap>
 #include <QTime>
 
-#include "analitza.h"
+#include "analyzer.h"
 #include "value.h"
 
 using std::fabs;
@@ -280,7 +280,7 @@ bool Graph3D::create()
 	int part = k/m_n;
 	QList<Calculate3D*> threads;
 	
-	Analitza::Analitza a;
+	Analitza::Analyzer a;
 	a.setExpression(func3d);
 	
 	QTime t;
@@ -436,7 +436,7 @@ void Graph3D::setFunc(const Expression& exp)
 
 int Graph3D::load() 
 {
-	Analitza::Analitza f3d;
+	Analitza::Analyzer f3d;
 	f3d.setExpression(func3d);
 	f3d.insertValueVariable("x", 0.);
 	f3d.insertValueVariable("y", 0.);

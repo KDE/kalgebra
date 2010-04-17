@@ -22,7 +22,7 @@
 #include <QGLWidget>
 #include <QtCore/QThread>
 
-#include "analitza.h"
+#include "analyzer.h"
 
 /**
  *	Used to calculate 3D Graphs in parallel.
@@ -41,7 +41,7 @@ public:
 		@param m	Distance of each dimension from the (0, 0) to be calculated.
 		@param s	Step between each 2 values.
 	*/
-	Calculate3D(QObject *p, const Analitza::Analitza &na, double** poi, int fr, int to, double m, double s) : 
+	Calculate3D(QObject *p, const Analitza::Analyzer &na, double** poi, int fr, int to, double m, double s) : 
 		QThread(p), a(na), points(poi), from(fr), to(to), size(m), step(s) {}
 	
 	/** Runs the thread. */
@@ -50,7 +50,7 @@ public:
 	/** Sets the end of the segment to calculate. */
 	void setTo(int nto) { to = nto; }
 private:
-	Analitza::Analitza a;
+	Analitza::Analyzer a;
 	double **points;
 	int from;
 	int to;

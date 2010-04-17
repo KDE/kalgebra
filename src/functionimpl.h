@@ -20,7 +20,7 @@
 #define FUNCTIONIMPL_H
 
 #include "function.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include <cmath>
 
 namespace Analitza { class Expression; }
@@ -54,7 +54,7 @@ struct FunctionImpl
 	
 	QVector<QPointF> points;
 	QList<int> m_jumps;
-	Analitza::Analitza func;
+	Analitza::Analyzer func;
 	Analitza::Expression *m_deriv;
 	QStringList m_err;
 	uint m_res;

@@ -27,7 +27,7 @@
 
 namespace Analitza
 {
-class Analitza;
+class Analyzer;
 class Variables;
 }
 

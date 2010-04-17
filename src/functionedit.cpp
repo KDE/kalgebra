@@ -27,7 +27,7 @@
 #include <KIcon>
 #include <KTabWidget>
 
-#include "analitza.h"
+#include "analyzer.h"
 #include "expression.h"
 #include "graph2d.h"
 #include "variables.h"
@@ -161,7 +161,7 @@ void FunctionEdit::colorChange(int)
 static double calcExp(const Analitza::Expression& exp, Analitza::Variables* v, bool* corr)
 {
 	Q_ASSERT(exp.isCorrect());
-	Analitza::Analitza d(v);
+	Analitza::Analyzer d(v);
 	d.setExpression(exp);
 	Analitza::Expression r=d.calculate();
 	

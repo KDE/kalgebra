@@ -199,7 +199,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 
 QLineF FunctionY::derivative(const QPointF& p) const
 {
-	Analitza::Analitza a(func.variables());
+	Analitza::Analyzer a(func.variables());
 	double ret;
 	
 	if(m_deriv) {

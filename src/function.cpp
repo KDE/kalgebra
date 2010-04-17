@@ -19,7 +19,7 @@
 #include "function.h"
 
 #include "variables.h"
-#include "analitza.h"
+#include "analyzer.h"
 #include "expression.h"
 #include "functionimpl.h"
 #include "functionfactory.h"
@@ -36,7 +36,7 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 	: m_function(0), m_expression(newFunc), m_show(true), m_color(color), m_name(name)
 {
 	if(newFunc.isCorrect()) {
-		Analitza::Analitza a(v);
+		Analitza::Analyzer a(v);
 		a.setExpression(newFunc);
 		
 		m_expression=a.dependenciesToLambda();
