@@ -288,15 +288,15 @@ void ExpressionEdit::cursorMov()
 
 void ExpressionEdit::showSimplified()
 {
-	Analitza::Expression e=expression();
-	if(e.isCorrect())
-	{
-		Analitza::Analyzer a;
-		a.setExpression(e);
+	Analitza::Analyzer a;
+	a.setExpression(expression());
+	if(a.isCorrect()) {
 		a.simplify();
 		QString help=i18n("Result: %1", a.expression().toString());
 		helper(help);
 	}
+	else
+		m_helptip->hide();
 }
 
 
