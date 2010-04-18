@@ -575,11 +575,12 @@ Object* Analyzer::calcPiecewise(const Container* c)
 				p->containerType()==Container::otherwise) );
 		bool isPiece = p->containerType()==Container::piece;
 		if(isPiece) {
-			Cn* ret=(Cn*) calc(p->m_params[1]);
-			if(ret->type()==Object::value && ret->isTrue()) {
+			QScopedPointer<Cn> ret((Cn*) calc(p->m_params[1]));
+			if(ret->isTrue()) {
 				r=p->m_params[0];
+				break;
 			}
-			delete ret;
+			
 		} else {
 			//it is an otherwise
 			Q_ASSERT(!otherwise);
@@ -593,7 +594,7 @@ Object* Analyzer::calcPiecewise(const Container* c)
 			m_err << i18nc("Error message, no proper condition found.", "Could not find a proper choice for a condition statement.");
 	}
 				
-	if(r)
+	if(KDE_ISLIKELY(r))
 		ret=calc(r);
 	else
 		ret=new Cn(0.);
@@ -942,22 +943,7 @@ Object* Analyzer::func(const Apply& n)
 	Object* obj=calc(n.m_params[0]);
 	Container *function = (Container*) obj;
 	
-	//TODO: needed?
-	if(KDE_ISUNLIKELY(!obj->isContainer()
-				|| function->containerType()!=Container::lambda
-				|| function->m_params.size()!=n.m_params.size()))
-	{
-		if(!obj->isContainer() || function->containerType()!=Container::lambda)
-			m_err << i18n("We can only call functions");
-		else
-			m_err << i18n("Wrong parameter count");
-		
-		delete obj;
-		return new Cn(0.);
-	}
-	
 	obj->decorate(Object::ScopeInformation());
-	Object* ret=0;
 	QList<Ci*> vars = function->bvarCi();
 	
 	int i=0;
@@ -967,7 +953,7 @@ Object* Analyzer::func(const Apply& n)
 		param->value()=val;
 	}
 	
-	ret=calc(function->m_params.last());
+	Object* ret=calc(function->m_params.last());
 	
 	foreach(Ci* param, vars) {
 		delete param->value();

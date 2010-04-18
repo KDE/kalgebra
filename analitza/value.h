@@ -89,7 +89,7 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	@return If it is a boolean value, returns if it is true or not, otherwise retuns false.
 		 */
-		bool isTrue() const { return m_format==Boolean && m_value!=0.; }
+		bool isTrue() const { return /*m_format==Boolean &&*/ m_value!=0.; }
 		
 // 		static double toNum(const QString& num, const QString& type, int base);
 // 		static enum ValueFormat whatValueFormat(const QDomElement&);
