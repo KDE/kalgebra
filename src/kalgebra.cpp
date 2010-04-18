@@ -49,8 +49,10 @@
 #include <KStatusBar>
 #include <KLocale>
 #include <KStandardAction>
+#include <KProcess>
 #include "variablesdelegate.h"
 #include "viewportwidget.h"
+#include <QApplication>
 
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
@@ -61,6 +63,10 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
+	
+	QMenu* g_menu = menuBar()->addMenu(i18n("File"));
+	g_menu->addAction(KStandardAction::openNew(this, SLOT(newInstance()), this));
+	g_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
 	
 	m_status = new QLabel(this);
 	statusBar()->insertWidget(0, m_status);
@@ -101,9 +107,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	
 	////////menu
-	QMenu *c_menu = menuBar()->addMenu(i18n("C&onsole"));
+	c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	
-	c_menu->addAction(KStandardAction::openNew(c_results, SLOT(clear()), this));
 	c_menu->addAction(KIcon("document-open"), i18nc("@item:inmenu", "&Load Script"),
 						this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
 	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Script"),
@@ -111,7 +116,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Log"),
 						this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
-	c_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
+	c_menu->addAction(KStandardAction::clear(c_results, SLOT(clear()), this));
 	////////////
 	//////EOConsola
 	
@@ -168,7 +173,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
 	
 	////////menu
-	QMenu *b_menu = menuBar()->addMenu(i18n("2&D Graph"));
+	b_menu = menuBar()->addMenu(i18n("2&D Graph"));
 	QAction* b_actions[6];
 	b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
 	b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
@@ -219,7 +224,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(m_graph3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	
 	////////menu
-	QMenu *t_menu = menuBar()->addMenu(i18n("3D &Graph"));
+	t_menu = menuBar()->addMenu(i18n("3D &Graph"));
 	QAction* t_actions[5];
 	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
@@ -279,6 +284,11 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
+}
+
+void KAlgebra::newInstance()
+{
+	KProcess::execute(QApplication::applicationFilePath());
 }
 
 void KAlgebra::new_func()
@@ -441,15 +451,22 @@ void KAlgebra::tabChanged(int n)
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
 	d_dock->hide();
+	
+	c_menu->setEnabled(false);
+	b_menu->setEnabled(false);
+	t_menu->setEnabled(false);
+	
 	m_status->clear();
 	
 	switch(n) {
 		case 0:
+			c_menu->setEnabled(true);
 			c_dock_vars->show();
 			c_dock_vars->raise();
 			c_exp->setFocus();
 			break;
 		case 1:
+			b_menu->setEnabled(true);
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
 			
@@ -459,6 +476,7 @@ void KAlgebra::tabChanged(int n)
 			break;
 #ifdef HAVE_OPENGL
 		case 2:
+			t_menu->setEnabled(true);
 			t_exp->setFocus();
 			break;
 #endif

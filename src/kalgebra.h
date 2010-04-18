@@ -46,14 +46,15 @@ class KAlgebra : public KMainWindow
 		QLabel *m_status;
 		
 		//consoleeWidget
+		QMenu* c_menu;
 		ExpressionEdit *c_exp;
 		ConsoleHtml *c_results;
 		QTreeView *c_variables;
-		int outs;
 		QDockWidget *c_dock_vars;
 		VariablesModel* c_varsModel;
 		
 		//graf 2d
+		QMenu* b_menu;
 		FunctionsModel* b_funcsModel;
 		QTreeView *b_funcs;
 		QTabWidget *b_tools;
@@ -64,6 +65,7 @@ class KAlgebra : public KMainWindow
 
 #ifdef HAVE_OPENGL
 		//graph 3d
+		QMenu* t_menu;
 		ExpressionEdit *t_exp;
 		Graph3D *m_graph3d;
 #endif
@@ -73,6 +75,8 @@ class KAlgebra : public KMainWindow
 		KLineEdit *d_filter;
 		
 	private slots:
+		void newInstance();
+		
 		void operate();
 		void loadScript();
 		void saveScript();

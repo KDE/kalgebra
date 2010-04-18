@@ -439,15 +439,13 @@ void ExpressionEdit::focusOutEvent ( QFocusEvent * )
 
 void ExpressionEdit::simplify()
 {
-	Analitza::Expression e=expression();
-	if(e.isCorrect()) {
-		Analitza::Analyzer a;
-		a.setExpression(e);
+	Analitza::Analyzer a;
+	a.setExpression(expression());
+	if(a.isCorrect()) {
 		a.simplify();
-		
 		setExpression(a.expression());
 	}
-	this->selectAll();
+	selectAll();
 }
 
 void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
