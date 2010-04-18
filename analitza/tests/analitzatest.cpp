@@ -330,6 +330,7 @@ void AnalitzaTest::testCorrection_data()
 	script.clear();
 	script << "f:=v->sum(i**2 : i@v)";
 	script << "f(list{1,2,3})";
+	script << "f(vector{1,2,3})";
 	QTest::newRow("sum.list") << script << "14";
 }
 

@@ -867,6 +867,9 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n)
 				case Object::list:
 					ret=new TypeBoundingIterator<List, List::const_iterator>(bvars.toVector(), static_cast<List*>(domain));
 					break;
+				case Object::vector:
+					ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(bvars.toVector(), static_cast<Vector*>(domain));
+					break;
 				default:
 					m_err.append(i18n("Type not supported for bounding."));
 			}
