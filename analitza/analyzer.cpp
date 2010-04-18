@@ -282,13 +282,29 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				delete body;
 			}	break;
 			default: {
+				Apply *r = c->copy();
+				
 				QSet<QString> newUnscoped(unscoped);
 				if(op.isBounded()) {
+					if(r->domain()) {
+						QScopedPointer<Object> o(r->domain());
+						r->domain()=eval(r->domain(), resolve, unscoped);
+					}
+					if(r->dlimit()) {
+						QScopedPointer<Object> o(r->dlimit());
+						r->dlimit()=eval(r->dlimit(), resolve, unscoped);
+					}
+					if(r->ulimit()) {
+						QScopedPointer<Object> o(r->ulimit());
+						r->ulimit()=eval(r->ulimit(), resolve, unscoped);
+					}
+					
 					newUnscoped+=c->bvarStrings().toSet();
+					
 				}
-				Apply *r = c->copy();
-				Container::iterator it(r->firstValue());
-				for(; it!=r->m_params.end(); ++it) {
+				
+				Container::iterator it=r->firstValue(), itEnd=r->m_params.end();
+				for(; it!=itEnd; ++it) {
 					Object *o=*it;
 					*it= eval(*it, resolve, newUnscoped);
 					delete o;
