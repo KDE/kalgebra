@@ -51,7 +51,7 @@ static QString joinOp(const Apply* c, MathMLPresentationExpressionWriter* w)
 template <const char **C, const char **D>
 static QString infix(const Apply* c, MathMLPresentationExpressionWriter* w)
 {
-	QString exp=QString("<mo>%1</mo>%2<mo>%3</mo>").arg(*C)
+	QString exp=QString("<mrow><mo>%1</mo>%2<mo>%3</mo></mrow>").arg(*C)
 		.arg(convertElements<Apply::const_iterator>(c->firstValue(), c->constEnd(), w).join(QString())).arg(*D);
 	return exp;
 }
@@ -125,7 +125,18 @@ QString product(const Apply* c, MathMLPresentationExpressionWriter* w)
 QString selector(const Apply* c, MathMLPresentationExpressionWriter* w)
 {
 	QStringList el=convertElements(c->firstValue(), c->constEnd(), w);
-	return "<msub>"+el.last()+el.first()+"</msub>";
+	return "<msub><mrow>"+el.last()+"</mrow><mrow>"+el.first()+"</mrow></msub>";
+}
+
+QString function(const Apply* c, MathMLPresentationExpressionWriter* w)
+{
+	QString ret="<mrow>";
+	foreach(const Ci* bvar, c->bvarCi())
+		ret+=bvar->visit(w);
+	foreach(const Object* o, c->values())
+		ret+=o->visit(w);
+	ret+="</mrow>";
+	return ret;
 }
 
 const char* plus="+", *times="*", *equal="=";
@@ -136,7 +147,7 @@ const char* mabs="|", *factorial="!";
 const char *lfloor="&lfloor;", *rfloor="&rfloor;";
 const char *lceil="&lceil;", *rceil="&rceil;";
 const char *cardinal="#", *scalarproduct="X";
-const char *log10="<msub><mo>log</mo><mn>10</mn></msub>", *logE="<msub><mo>log</mo><mn>&ExponentialE;</mn></msub>";
+const char *_log10="<msub><mo>log</mo><mn>10</mn></msub>", *logE="<msub><mo>log</mo><mn>&ExponentialE;</mn></msub>";
 }
 
 MathMLPresentationExpressionWriter::operatorToString
@@ -160,11 +171,11 @@ MathMLPresentationExpressionWriter::operatorToString
 			0,// arccot,// arccoth,
 			0,0,0,// arccosh, arccsc, arccsch,
 			0,0,0,0,// arcsec, arcsech, arcsinh, arctanh,
-			exp, 0,0,//prefixOp<&logE>, prefixOp<&log10>,// exp, ln, log,
+			exp, prefixOp<&_log10>, prefixOp<&logE>,// exp, ln, log,
 // 			0,0,0,0,// // 			conjugate, arg, real, imaginary,
 			sum, product, diff,// sum, product, diff,
-			prefix<&cardinal>, joinOp<&scalarproduct>, selector
-			// function
+			prefix<&cardinal>, joinOp<&scalarproduct>, selector, 0,
+			function // function
 	};
 
 MathMLPresentationExpressionWriter::MathMLPresentationExpressionWriter(const Object* o)
@@ -286,8 +297,11 @@ QString Analitza::MathMLPresentationExpressionWriter::accept ( const Analitza::A
 {
 	QString ret;
 	Operator op=a->firstOperator();
-	if(m_operatorToPresentation[op.operatorType()]!=0) {
-		operatorToString call=m_operatorToPresentation[op.operatorType()];
+	
+	operatorToString call=m_operatorToPresentation[op.operatorType()];
+	qDebug() << "PEEEEEE" << int(call) << op.toString();
+	
+	if(call!=0) {
 		ret = call(a, this);
 	} else if(op.operatorType()!=0) {
 		QString bvars;
