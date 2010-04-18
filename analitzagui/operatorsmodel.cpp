@@ -435,13 +435,13 @@ QString OperatorsModel::example(Operator o)
 			s="card(vector { x, 1, 2 })";
 			break;
 		case Operator::scalarproduct:
-			s="scalarproduct(vector { 0, x }, vector { x, 0 })";
+			s="selector(1, scalarproduct(vector { 0, x }, vector { x, 0 }))";
 			break;
 		case Operator::diff:
-			s="diff(x^2:x)";
+			s="(diff(x^2:x))(x)";
 			break;
 		case Operator::_union:
-			s="union(list { 1, 2, 3 }, list { 4, 5, 6 })";
+			s="selector(rem(floor(x), 5)+3, union(list { 1, 2, 3 }, list { 4, 5, 6 }))";
 			break;
 		case Operator::factorial:
 		case Operator::arcsech:
