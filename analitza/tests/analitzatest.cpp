@@ -326,6 +326,11 @@ void AnalitzaTest::testCorrection_data()
 				" isprime(from)? union(list{from}, primes(from+1, to)), ? primes(from+1, to)}";
 	script << "primes(1, 25)";
 	QTest::newRow("primes") << script << "list { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23 }";
+	
+	script.clear();
+	script << "f:=v->sum(i**2 : i@v)";
+	script << "f(list{1,2,3})";
+	QTest::newRow("sum.list") << script << "14";
 }
 
 //testCalculate

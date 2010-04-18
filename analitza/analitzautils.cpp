@@ -200,11 +200,12 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			const Apply *c = (const Apply*) o;
 			
 			const QStringList scope=bvars+c->bvarStrings();
-			Object* ul=c->ulimit(), *dl=c->dlimit();
+			Object* ul=c->ulimit(), *dl=c->dlimit(), *dn=c->domain();
 			
 			//uplimit and downlimit are in the parent scope
 			if(ul) r |= hasVars(ul, var, bvars, vars);
 			if(dl) r |= hasVars(dl, var, bvars, vars);
+			if(dn) r |= hasVars(dn, var, bvars, vars);
 			
 			Container::const_iterator it = c->firstValue();
 			for(; !r && it!=c->constEnd(); ++it) {
