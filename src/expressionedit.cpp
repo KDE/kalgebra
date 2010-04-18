@@ -36,6 +36,27 @@
 #include "variables.h"
 #include "container.h"
 
+class HelpTip : public QLabel
+{
+	public:
+		HelpTip(QWidget* parent)
+			: QLabel(parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint)
+		{
+			setFrameShape(QFrame::Box);
+			setFocusPolicy(Qt::NoFocus);
+			setAutoFillBackground(false);
+			
+			QPalette p=palette();
+			p.setColor(backgroundRole(), p.color(QPalette::Active, QPalette::ToolTipBase));
+			setPalette(p);
+		}
+		
+		void mousePressEvent(QMouseEvent* ev)
+		{
+			hide();
+		}
+};
+
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
 	: QPlainTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")
 {
@@ -43,14 +64,8 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	this->setTabChangesFocus(true);
 	m_history.append(QString());
 	
-	m_helptip = new QLabel(this, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
-	m_helptip->setFrameShape(QFrame::Box);
-	m_helptip->setFocusPolicy(Qt::NoFocus);
-	m_helptip->setAutoFillBackground(false);
+	m_helptip = new HelpTip(this);
 	m_helptip->hide();
-	QPalette palette;
-	palette.setColor(m_helptip->backgroundRole(), palette.color(QPalette::Active, QPalette::ToolTipBase));
-	m_helptip->setPalette(palette);
 	
 	m_highlight= new AlgebraHighlighter(this->document(), a);
 	
@@ -172,6 +187,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				m_completer->popup()->hide();
 			else
 				selectAll();
+			m_helptip->hide();
 			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
