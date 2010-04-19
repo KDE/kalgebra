@@ -288,7 +288,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 
 void KAlgebra::newInstance()
 {
-	KProcess::execute(QApplication::applicationFilePath());
+	KProcess::startDetached(QApplication::applicationFilePath());
 }
 
 void KAlgebra::new_func()
