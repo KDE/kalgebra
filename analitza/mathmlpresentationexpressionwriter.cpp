@@ -299,7 +299,6 @@ QString Analitza::MathMLPresentationExpressionWriter::accept ( const Analitza::A
 	Operator op=a->firstOperator();
 	
 	operatorToString call=m_operatorToPresentation[op.operatorType()];
-	qDebug() << "PEEEEEE" << int(call) << op.toString();
 	
 	if(call!=0) {
 		ret = call(a, this);
