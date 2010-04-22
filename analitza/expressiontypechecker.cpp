@@ -484,7 +484,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					}
 					
 					if(opt.parameters().size()!=c->m_params.size()) {
-						if(!countError) addError(i18n("Invalid parameter count for '%1'. Should have %2 parameters", c->toString(), c->m_params.size()));
+						if(!countError) addError(i18np("Invalid parameter count for '%2'. Should have 1 parameter.",
+						                               "Invalid parameter count for '%2'. Should have %1 parameters.",
+						                               c->m_params.size(), c->toString()));
 						countError=true;
 						continue;
 					}

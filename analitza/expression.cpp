@@ -333,7 +333,7 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMa
 		case Object::vector: {
 			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem, newScope);
 			if(elem.childNodes().count()==0) {
-				m_err << i18n("We don't want empty vectors");
+				m_err << i18n("Do not want empty vectors");
 			}
 // 			qDebug() << "PEEEEEEU" << v->size();
 		}	break;
