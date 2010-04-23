@@ -139,6 +139,7 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("wrong-dimension-y") << "y->vector{2,3}" << false;
 	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}" << false;
 	QTest::newRow("wrong-parametric") << "t->v" << false;
+	QTest::newRow("wrong-variable") << "x->x(x)" << false;
 }
 
 void FunctionTest::testCorrect()

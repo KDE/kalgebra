@@ -54,7 +54,7 @@ struct FunctionParametric : public FunctionImpl
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
-	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2)); }
 	QStringList boundings() const { return supportedBVars(); }
 	Cn* vx;
 };

@@ -57,7 +57,7 @@ struct FunctionY : public FunctionImpl
 	QLineF derivative(const QPointF& p) const;
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
-	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
+    static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
 	
 	QStringList boundings() const { return supportedBVars(); }
 	void calculateValues(double, double);
@@ -77,7 +77,7 @@ struct FunctionX : public FunctionY
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("y"); }
-	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
+	static ExpressionType expectedType() { return FunctionY::expectedType(); }
 	QStringList boundings() const { return supportedBVars(); }
 };
 

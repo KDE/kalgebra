@@ -27,6 +27,8 @@
 #include <KLocale>
 #include <cmath>
 
+using Analitza::ExpressionType;
+
 function::function()
 	: m_function(0), m_show(true), m_color(Qt::black)
 {}
@@ -40,6 +42,7 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 		a.setExpression(newFunc);
 		
 		m_expression=a.dependenciesToLambda();
+        a.setExpression(m_expression);
 		
 		QStringList bvars=m_expression.bvarList();
 		
@@ -47,9 +50,13 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 		if(!FunctionFactory::self()->contains(bvars))                                        
 			m_err << i18n("Function type not recognized");
 		else {
-			Analitza::ExpressionType t=a.type().returnValue();
+			bool correct=true;
+			ExpressionType expected=FunctionFactory::self()->type(bvars);
+			ExpressionType actual=a.type();
 			
-			if(t.canReduceTo(FunctionFactory::self()->type(bvars))) {
+			correct &= actual.canReduceTo(expected);
+			
+			if(correct) {
 				m_function=FunctionFactory::self()->item(bvars, m_expression, v);
 				if(downlimit!=uplimit)
 					m_function->setLimits(downlimit, uplimit);

@@ -48,7 +48,7 @@ struct FunctionPolar : public FunctionImpl
 	QRect m_last_viewport;
 	QStringList boundings() const { return supportedBVars(); }
 	static QStringList supportedBVars() { return QStringList("q"); }
-	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Value); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
 	
 	Cn* m_th;
 };
