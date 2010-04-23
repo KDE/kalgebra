@@ -54,7 +54,7 @@ class ANALITZA_EXPORT ExpressionType
 		int size() const { return m_size; }
 		int anyValue() const { return m_any; }
 		
-		void addParameter(const ExpressionType& t) { Q_ASSERT(m_type==Lambda); m_contained.append(t); }
+		ExpressionType& addParameter(const ExpressionType& t) { Q_ASSERT(m_type==Lambda); m_contained.append(t); return *this; }
 		QList<ExpressionType> parameters() const { Q_ASSERT(m_type==Lambda); return m_contained; }
 		ExpressionType returnValue() const;
 		

@@ -208,10 +208,7 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 	} else if(m_type==Lambda && m_contained.size()==type.m_contained.size()) {
 		ret = true;
 		for(int i=0; ret && i<m_contained.size(); i++) {
-			if(!m_contained[i].canReduceTo(type.m_contained[i])) {
-				ret=true;
-				break;
-			}
+			ret&=m_contained[i].canReduceTo(type.m_contained[i]);
 		}
 	} else if(m_type==Vector && type.m_type==Vector) {
 		ret  = m_size<0 || type.m_size<0 || m_size==type.m_size;
