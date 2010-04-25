@@ -582,8 +582,6 @@ Object* Analyzer::calcPiecewise(const Container* c)
 {
 	Object* ret=0;
 	//Here we have a list of options and finally the otherwise option
-	const Container *otherwise=0;
-	const Object *r=0;
 	foreach(Object *o, c->m_params) {
 		Container *p=static_cast<Container*>(o);
 		Q_ASSERT( o->isContainer() &&
@@ -591,30 +589,24 @@ Object* Analyzer::calcPiecewise(const Container* c)
 				p->containerType()==Container::otherwise) );
 		bool isPiece = p->containerType()==Container::piece;
 		if(isPiece) {
-			QScopedPointer<Cn> ret((Cn*) calc(p->m_params[1]));
-			if(ret->isTrue()) {
-				r=p->m_params[0];
+			QScopedPointer<Cn> condition((Cn*) calc(p->m_params[1]));
+			if(condition->isTrue()) {
+				ret=calc(p->m_params[0]);
 				break;
 			}
 			
 		} else {
 			//it is an otherwise
-			Q_ASSERT(!otherwise);
-			otherwise=p;
+			ret=calc(p->m_params.first());
+			break;
 		}
 	}
-	if(!r) {
-		if(otherwise)
-			r=otherwise->m_params[0];
-		else
-			m_err << i18nc("Error message, no proper condition found.", "Could not find a proper choice for a condition statement.");
-	}
-				
-	if(KDE_ISLIKELY(r))
-		ret=calc(r);
-	else
+	
+	if(KDE_ISUNLIKELY(!ret)) {
+		m_err << i18nc("Error message, no proper condition found.", "Could not find a proper choice for a condition statement.");
 		ret=new Cn(0.);
-	Q_ASSERT(ret);
+	}
+	
 	return ret;
 }
 
