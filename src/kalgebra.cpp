@@ -64,7 +64,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
 	
-	QMenu* g_menu = menuBar()->addMenu(i18n("File"));
+	QMenu* g_menu = menuBar()->addMenu(i18n("Session"));
 	g_menu->addAction(KStandardAction::openNew(this, SLOT(newInstance()), this));
 	g_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
 	
