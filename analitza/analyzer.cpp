@@ -725,22 +725,23 @@ Object* Analyzer::operate(const Apply* c)
 			
 		}	break;
 		default: {
-			QList<Object*> numbers;
-			Container::const_iterator it = c->firstValue(), itEnd=c->constEnd();
-			for(; it!=itEnd; ++it)
-				numbers.append(calc(*it));
+			int count=c->countValues();
+			Q_ASSERT(count>0);
 			
-			Q_ASSERT(	(op.nparams()<0 && numbers.count()>1) ||
-						(op.nparams()>-1 && numbers.count()==op.nparams()) ||
+			Object* numbers[count];
+			Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
+			for(int i=0; it!=itEnd; ++it, ++i)
+				numbers[i]=calc(*it);
+			
+			Q_ASSERT(	(op.nparams()< 0 && count>1) ||
+						(op.nparams()>-1 && count==op.nparams()) ||
 						opt==Operator::minus);
 			
-			Q_ASSERT(!numbers.isEmpty());
-			ret = numbers.first();
+			ret = numbers[0];
 			
 			QString correct;
-			if(numbers.count()>=2) {
-				Container::const_iterator it=numbers.constBegin()+1;
-				Container::const_iterator itEnd=numbers.constEnd();
+			if(count>=2) {
+				Object** it=&numbers[1], **itEnd=&numbers[count];
 				
 				for(; it!=itEnd; ++it) {
 					ret=Operations::reduce(opt, ret, *it, correct);
