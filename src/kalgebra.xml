@@ -148,8 +148,8 @@
     </contexts>
 
     <itemDatas>
-      <itemData name="Normal Text" defStyleNum="dsNormal" color="#AC0008"/>
-      <itemData name="Variable" defStyleNum="dsNormal" />
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="Variable" defStyleNum="dsNormal" color="#AC0008" />
       <itemData name="Operator" defStyleNum="dsNormal" bold="1"/>
       <itemData name="Number" defStyleNum="dsFloat" color="#2b74c7"/>
       <itemData name="Delimiter" defStyleNum="dsNormal" bold="1"/>
