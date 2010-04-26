@@ -63,7 +63,7 @@ void ExpTest::testSimple_data()
 	
 	QTest::newRow("function") << "func(x, y)" << "<math><apply><ci type='function'>func</ci>"
 												"<ci>x</ci><ci>y</ci></apply></math>";
-	QTest::newRow("function_np") << "sin 1/x" << "<math><apply><divide /><apply><sin /><cn>1</cn></apply><ci>x</ci></apply></math>";
+	QTest::newRow("function_np") << "sin x/x" << "<math><apply><divide /><apply><sin /><ci>x</ci></apply><ci>x</ci></apply></math>";
 	QTest::newRow("block") << "blk{x, y}" << "<math><blk><ci>x</ci><ci>y</ci></blk></math>";
 	
 	QTest::newRow("sum") << "sum(x : x=1..10)" << "<math>"
@@ -200,6 +200,7 @@ void ExpTest::testCorrection_data()
 	QTest::newRow("omartinez bug") << "piecewise { gt(x,23)?a }" << true;
 	QTest::newRow("wrong coma") << "2+2," << false;
 	QTest::newRow("wrong token") << "q-<" << false;
+	QTest::newRow("misplaced declaration") << "2+2+(w:=2)" << false;
 }
 
 void ExpTest::testCorrection()

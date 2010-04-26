@@ -32,7 +32,6 @@
 
 
 %left tComa
-%right tAssig
 %left tLambda
 %left otherwise_prec
 %left tQm
@@ -191,12 +190,15 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
           switch (r) {
 ./
 
+Program ::= Declaration ;/. case $rule_number: ./
 Program ::= Expression ;
 /.
 case $rule_number:
 	m_exp = "<math>"+sym(1)+"</math>";
 	break;
 ./
+
+Declaration ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
 
 -- primary
 Id ::=  tId; /. case $rule_number: ./
@@ -311,7 +313,6 @@ Expression ::= Expression tGt  Expression ; /. case $rule_number: sym(1) = "<app
 Expression ::= Expression tNeq Expression ; /. case $rule_number: sym(1) = "<apply><neq />"   +sym(1)+sym(3)+"</apply>"; break; ./
 
 Expression ::= Expression tQm  Expression ; /. case $rule_number: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; ./
-Expression ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<declare><ci>"+sym(1)+"</ci>"+sym(3)+"</declare>"; break; ./
 
 -- parameters
 Parameters ::= Expression ;

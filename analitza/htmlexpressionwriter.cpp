@@ -48,6 +48,7 @@ static const QMap<Operator::OperatorType, QString> s_operators=initOperators();
 
 QString oper(const QString& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
 QString oper(const QChar& op) { return i18nc("html representation of an operator", "<span class='op'>%1</span>", op); }
+QString keyword(const QString& op) { return i18nc("html representation of an operator", "<span class='keyword'>%1</span>", op); }
 
 HtmlExpressionWriter::HtmlExpressionWriter(const Object* o)
 {
@@ -61,7 +62,7 @@ QString HtmlExpressionWriter::accept(const Vector* vec)
 	{
 		elements += (*it)->visit(this);
 	}
-	return "vector "+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
+	return keyword("vector ")+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const List* vec)
@@ -71,13 +72,13 @@ QString HtmlExpressionWriter::accept(const List* vec)
 	{
 		elements += (*it)->visit(this);
 	}
-	return "list "+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
+	return keyword("list ")+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const Cn* var)
 {
 	if(var->isBoolean())
-		return var->isTrue() ? "true" : "false";
+		return "<span class='var'>"+QString(var->isTrue() ? "true" : "false")+"</span>";
 	else
 		return "<span class='num'>"+QString::number(var->value(), 'g', 12)+"</span>";
 }
@@ -89,7 +90,7 @@ QString HtmlExpressionWriter::accept(const Analitza::Ci* var)
 
 QString HtmlExpressionWriter::accept(const Analitza::Operator* o)
 {
-	return o->toString();
+	return "<span class='func'>"+o->toString()+"</span>";
 }
 
 QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
@@ -128,7 +129,7 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 					
 					if(child_op.operatorType() && 
 							StringExpressionWriter::weight(&op, c->countValues())>=StringExpressionWriter::weight(&child_op, c->countValues()))
-						s=QString("(%1)").arg(s);
+						s=oper('(')+s+oper(')');
 				}
 				ret << s;
 			}	break;
@@ -144,7 +145,7 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		if(a->m_params.first()->type()!=Object::variable)
 			n=oper('(')+n+oper(')');
 		
-		toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
+		toret += n+oper('(') + ret.join(oper(", ")) + oper(')');
 	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
 		toret += ret.join(oper(s_operators.value(op.operatorType())));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
@@ -158,8 +159,8 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 			
 			bounding = ':'+bounding +bounds;
 		}
-			
-		toret += QString("%1(%2%3)").arg(op.visit(this)).arg(ret.join(", ")).arg(bounding);
+		
+		toret += op.visit(this)+oper('(')+ret.join(oper(", "))+bounding+oper(')');
 	}
 	
 	return toret;
