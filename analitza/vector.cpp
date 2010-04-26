@@ -62,22 +62,6 @@ QString Vector::visit(ExpressionWriter* e) const
 	return e->accept(this);
 }
 
-bool Vector::isCorrect() const
-{
-	bool corr = !m_elements.isEmpty();
-	foreach(const Object* o, m_elements) {
-		corr |= o->isCorrect();
-	}
-	return corr;
-}
-
-void Vector::negate()
-{
-	foreach(Object* o, m_elements) {
-		o->negate();
-	}
-}
-
 bool Vector::isZero() const
 {
 	foreach(const Object* o, m_elements) {

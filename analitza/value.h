@@ -130,11 +130,6 @@ class ANALITZA_EXPORT Cn : public Object
 		Cn operator=(double d) { m_value=d; return *this; }
 		
 		/**
-		 *	The sign of the value will be inverted.
-		 */
-		void negate() { m_value*=-1.; }
-		
-		/**
 		 *	Increments by one the value.
 		 */
 		Cn operator++() { m_value++; return *this; }
@@ -150,9 +145,6 @@ class ANALITZA_EXPORT Cn : public Object
 		virtual bool matches(const Object* exp, QMap< QString, const Object* >* found) const;
 		/*/** Sets whether it is a correct Cn. 
 		void setCorrect(bool b) {m_correct = b; }*/
-		
-		/** Returns whether it is a correct Cn. */
-		bool isCorrect() const { return true; }
 		
 		virtual Object* copy() const;
 		virtual bool decorate(const QMap< QString, Object** >& scope);

@@ -81,13 +81,6 @@ QString Container::visit(ExpressionWriter* e) const
 	return e->accept(this);
 }
 
-void Container::negate()
-{
-	foreach(Object* o, m_params) {
-		o->negate();
-	}
-}
-
 bool Container::isZero() const
 {
 	bool a=true;
@@ -167,12 +160,6 @@ bool isValue(Object* o)
 		case Object::none:
 			break;
 	}
-	return ret;
-}
-
-bool Container::isCorrect() const
-{
-	bool ret=m_type==Object::container && m_cont_type!=none;
 	return ret;
 }
 

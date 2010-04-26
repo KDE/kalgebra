@@ -1054,7 +1054,6 @@ Object* Analyzer::simpApply(Apply* c)
 	Object* root=c;
 	Container::iterator it;
 	Operator o = c->firstOperator();
-	Q_ASSERT(c->isCorrect());
 	bool d;
 	
 	switch(o.operatorType()) {

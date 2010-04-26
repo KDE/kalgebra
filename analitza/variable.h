@@ -32,9 +32,6 @@ class ANALITZA_EXPORT Ci : public Object
 		
 		~Ci();
 		
-		/** Sets a @p n name to a variable */
-		void setName(const QString& n) { m_name=n; }
-		
 		/** Returns the variable name */
 		QString name() const { return m_name; }
 		
@@ -52,9 +49,6 @@ class ANALITZA_EXPORT Ci : public Object
 		
 		/** Returns the HTML representation of the variable */
 		QString toHtml() const { return QString("<span class='%1'>%2</span>").arg(m_function ? "func" : "var").arg(m_name); }
-		
-		/** Returns whether it is a correct object. */
-		bool isCorrect() const { return m_type==Object::variable && !m_name.isEmpty(); }
 		
 		///Value for the variable, only valid after colorizing the tree
 		Object*& value() const { Q_ASSERT(m_value); return *m_value; }

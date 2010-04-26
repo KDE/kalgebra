@@ -24,7 +24,9 @@ using namespace Analitza;
 
 Ci::Ci(const QString& b)
 	: Object(variable), m_name(b), m_function(false), m_owner(false), m_value(0)
-{}
+{
+	Q_ASSERT(!b.isEmpty());
+}
 
 Ci::~Ci()
 {

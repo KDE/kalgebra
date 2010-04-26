@@ -105,9 +105,6 @@ public:
 	/** Returns whether it is an empty container. */
 	bool isEmpty() const { return m_params.isEmpty(); }
 	
-	/** Returns whether it is correct container. */
-	bool isCorrect() const;
-	
 	/** @return Returns whether it provides a numerical result instead of information. */
 	bool isNumber() const;
 	
@@ -115,8 +112,6 @@ public:
 	QString tagName() const;
 	
 	virtual QString visit(ExpressionWriter*) const;
-	
-	virtual void negate();
 	
 	virtual bool isZero() const;
 	

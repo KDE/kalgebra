@@ -142,12 +142,6 @@ bool Apply::decorate(const Object::ScopeInformation& scope)
 	return ret;
 }
 
-bool Apply::isCorrect() const
-{
-	int ops=firstOperator().nparams();
-	return ops<0 || m_params.size()==ops;
-}
-
 bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) const
 {
 	if(Object::apply!=exp->type())

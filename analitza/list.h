@@ -50,8 +50,6 @@ class ANALITZA_EXPORT List : public Object
 		QList<Object*> values() const { return m_elements; }
 		
 		virtual QString visit (ExpressionWriter* e) const;
-		virtual bool isCorrect() const;
-		virtual void negate();
 		virtual bool isZero() const;
 		
 		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;

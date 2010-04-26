@@ -30,7 +30,7 @@ class ExpressionWriter;
 
 /**
  *	\internal
- *	The atomic mean of the expression trees. Should never used alone, always inherited.
+ *	Abstract expression tree node
  *	@author Aleix Pol <aleixpol@kde.org>  
  */
 
@@ -57,8 +57,10 @@ public:
 	/** Returns the object type of the object */
 	enum ObjectType type() const { return m_type; }
 	
-	/** Returns whether it is an application or not. */
+	/** Returns whether it is an apply or not. */
 	bool isApply() const { return m_type==apply; }
+	
+	/** Returns whether it is a container or not. */
 	bool isContainer() const { return m_type==container; }
 	
 	/** Returns the string representation of the object. */
@@ -69,11 +71,6 @@ public:
 	
 	/** Returns some string depending on the visior */
 	virtual QString visit(ExpressionWriter* exp) const =0;
-	
-	/** Returns whether it is a correct object or not */
-	virtual bool isCorrect() const = 0;
-	
-	virtual void negate() {}
 	
 	virtual bool isZero() const { return false; }
 	

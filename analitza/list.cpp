@@ -60,22 +60,6 @@ QString List::visit(ExpressionWriter* e) const
 	return e->accept(this);
 }
 
-bool List::isCorrect() const
-{
-	bool corr = true;
-	foreach(const Object* o, m_elements)
-		corr |= o->isCorrect();
-	
-	return corr;
-}
-
-void List::negate()
-{
-	foreach(Object* o, m_elements) {
-		o->negate();
-	}
-}
-
 bool List::isZero() const
 {
 	return m_elements.isEmpty();
