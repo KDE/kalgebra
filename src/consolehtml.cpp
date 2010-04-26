@@ -150,10 +150,8 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 		correct=true;
 		
 		QString line;
-		qDebug()<< "XXXXXXXXXXXX" << stream.atEnd();
 		while (correct && !stream.atEnd()) {
 			line += stream.readLine(); // line of text excluding '\n'
-			qDebug() << "xxxxxxxxxxX" << line;
 			
 			ExpLexer lex(line);
 			ExpressionParser parser;

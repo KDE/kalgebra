@@ -237,9 +237,9 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 				Container::ContainerType ct=static_cast<const Container*>(branch)->containerType();
 				isCondition=ct==Container::piece || ct==Container::otherwise;
 				
-				if(ct==Container::otherwise && cWhere->extractType(Container::otherwise)) {
+				if(cWhere->extractType(Container::otherwise)) {
 					m_err << i18nc("this is an error message. otherwise is the else in a mathml condition",
-						"Only one <em>otherwise</em> parameters is enough");
+						"The <em>otherwise</em> parameter should be the last one");
 					correct=false;
 				}
 				
