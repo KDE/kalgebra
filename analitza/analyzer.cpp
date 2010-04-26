@@ -763,7 +763,7 @@ Object* Analyzer::operate(const Container* c)
 	
 	switch(c->containerType()) {
 		case Container::math:
-			ret=calc(*c->firstValue());
+			ret=calc(*c->constBegin());
 			break;
 		case Container::declare:
 			ret=calcDeclare(c);
@@ -952,10 +952,9 @@ Object* Analyzer::sum(const Apply& n)
 
 Object* Analyzer::func(const Apply& n)
 {
-	Object* obj=calc(n.m_params[0]);
-	Container *function = (Container*) obj;
+	Container *function = (Container*) calc(n.m_params[0]);
 	
-	obj->decorate(Object::ScopeInformation());
+	function->decorate(Object::ScopeInformation());
 	QList<Ci*> vars = function->bvarCi();
 	
 	int i=0;
@@ -1040,7 +1039,7 @@ Object* Analyzer::simp(Object* root)
 				c->m_params.last()=simp(c->m_params.last());
 				break;
 			default: {
-				Container::iterator it = c->firstValue();
+				Container::iterator it = c->begin();
 				
 				for(; it!=c->m_params.end(); ++it)
 					*it = simp(*it);

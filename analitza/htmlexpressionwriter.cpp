@@ -167,7 +167,7 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 
 QString HtmlExpressionWriter::accept(const Container* var)
 {
-	QStringList ret = allValues(var->firstValue(), var->constEnd(), this);
+	QStringList ret = allValues(var->constBegin(), var->constEnd(), this);
 	
 	
 	QString toret;

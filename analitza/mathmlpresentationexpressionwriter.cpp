@@ -210,7 +210,7 @@ QString piecewise(const Container* c, MathMLPresentationExpressionWriter* w)
 	QString ret="<mrow>"
 	"<mo stretchy='true'> { </mo>"
 	"<mtable columnalign='left left'>";
-	for(QList<Object*>::const_iterator it=c->firstValue(); it!=c->constEnd(); ++it) {
+	for(Container::const_iterator it=c->constBegin(); it!=c->constEnd(); ++it) {
 		Q_ASSERT((*it)->type()==Object::container);
 		Container *piece=static_cast<Container*>(*it);
 		if(piece->containerType()==Container::piece) {
@@ -259,7 +259,7 @@ QString MathMLPresentationExpressionWriter::accept(const Container* c)
 	
 	switch(c->containerType()) {
 		case Container::math:
-			ret="<math><mrow>"+convertElements(c->firstValue(), c->constEnd(), this).join(QString())+"</mrow></math>";
+			ret="<math><mrow>"+convertElements(c->constBegin(), c->constEnd(), this).join(QString())+"</mrow></math>";
 			break;
 		case Container::piecewise:
 			ret=piecewise(c, this);

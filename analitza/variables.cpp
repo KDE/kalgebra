@@ -50,7 +50,7 @@ void Variables::modify(const QString & name, const Expression & e)
 {
 	const Analitza::Object* o=e.tree();
 	if(e.tree()->type()==Object::container && static_cast<const Container*>(e.tree())->containerType()==Container::math) {
-		o=*static_cast<const Container*>(e.tree())->firstValue();
+		o=*static_cast<const Container*>(e.tree())->constBegin();
 	}
 	modify(name, o);
 }

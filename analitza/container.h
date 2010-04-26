@@ -93,23 +93,17 @@ public:
 	/** Returns a QStringList where we have all of the bvar in the container */
 	QList<Ci*> bvarCi() const;
 	
-	/** Returns the first operator found in the container */
-	Operator firstOperator() const;
+	/** Returns the begin iterator on the contained object list */
+	Container::iterator begin() { return m_params.begin(); }
 	
-	/** Returns an iterator pointing to the first value of the container */
-	Container::iterator firstValue();
-	
-	/** Returns a constant iterator pointing to the first value of the container */
-	Container::const_iterator firstValue() const;
+	/** Returns the begin iterator on the contained object list */
+	Container::const_iterator constBegin() const { return m_params.constBegin(); }
 	
 	/** Returns the end iterator on the contained object list */
 	Container::const_iterator constEnd() const { return m_params.constEnd(); }
 	
-	/** Returns whether it is an unary container. This means that there is only one value inside. */
-	bool isUnary() const;
-	
 	/** Returns whether it is an empty container. */
-	bool isEmpty() const { return firstValue()==m_params.end(); }
+	bool isEmpty() const { return m_params.isEmpty(); }
 	
 	/** Returns whether it is correct container. */
 	bool isCorrect() const;
@@ -119,8 +113,6 @@ public:
 	
 	/** @return Returns the string associated to the container type. */
 	QString tagName() const;
-	
-	int countValues() const;
 	
 	virtual QString visit(ExpressionWriter*) const;
 	
@@ -132,7 +124,6 @@ public:
 	
 	Container* extractType(Container::ContainerType t) const;
 	virtual bool decorate(const ScopeInformation& scope);
-    QList<Object*> values() const;
 
 // protected:
 	QList<Object*> m_params;

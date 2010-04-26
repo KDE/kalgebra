@@ -195,7 +195,7 @@ QString StringExpressionWriter::accept ( const Analitza::Apply* a )
 
 QString StringExpressionWriter::accept(const Container* var)
 {
-	QStringList ret = allValues(var->firstValue(), var->constEnd(), this);
+	QStringList ret = allValues(var->constBegin(), var->constEnd(), this);
 	
 	QString toret;
 	switch(var->containerType()) {

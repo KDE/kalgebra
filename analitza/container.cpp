@@ -76,16 +76,6 @@ Container* Container::copy() const
 	return new Container(*this);
 }
 
-Operator Container::firstOperator() const
-{
-	foreach(const Object* o, m_params) {
-		if(o->type()==Object::oper)
-			return *static_cast<const Operator*>(o);
-	}
-	
-	return Operator(Operator::function);
-}
-
 QString Container::visit(ExpressionWriter* e) const
 {
 	return e->accept(this);
@@ -115,13 +105,15 @@ Container::ContainerType Container::toContainerType(const QString& tag)
 QList<Ci*> Container::bvarCi() const
 {
 	QList<Ci*> ret;
-	QList<Object*>::const_iterator it, itEnd=firstValue();
+	QList<Object*>::const_iterator it, itEnd=m_params.constEnd();
 	
 	for(it=m_params.constBegin(); it!=itEnd; ++it) {
 		if((*it)->isContainer()) {
 			Container* c = (Container*) (*it);
-			if(c->containerType() == Container::bvar && !c->m_params.isEmpty() && c->m_params[0]->type()==Object::variable)
+			if(c->containerType() == Container::bvar) {
+				Q_ASSERT(!c->isEmpty() && c->m_params[0]->type()==Object::variable);
 				ret.append((Ci*) c->m_params[0]);
+			}
 		}
 	}
 	
@@ -178,34 +170,6 @@ bool isValue(Object* o)
 	return ret;
 }
 
-Container::iterator Container::firstValue()
-{
-	QList<Object *>::iterator it(m_params.begin()), itEnd(m_params.end());
-	for(; it!=itEnd; ++it) {
-		if(isValue(*it))
-			break;
-	}
-	
-	return it;
-}
-
-Container::const_iterator Container::firstValue() const
-{
-	QList<Object *>::const_iterator it(m_params.constBegin()), itEnd(m_params.constEnd());
-	for(; it!=itEnd; ++it) {
-		if(isValue(*it))
-			break;
-	}
-	
-	return it;
-}
-
-bool Container::isUnary() const
-{
-	QList<Object*>::const_iterator it(firstValue());
-	return ++it==m_params.end();
-}
-
 bool Container::isCorrect() const
 {
 	bool ret=m_type==Object::container && m_cont_type!=none;
@@ -232,17 +196,6 @@ bool Container::matches(const Object* exp, QMap<QString, const Object*>* found) 
 		matching &= (*it)->matches(*it2, found);
 	}
 	return matching;
-}
-
-int Container::countValues() const
-{
-	Container::const_iterator it=firstValue(), itEnd=m_params.constEnd();
-	int count=0;
-	
-	for(; it!=itEnd; ++it)
-		count++;
-	
-	return count;
 }
 
 Container* Container::extractType(Container::ContainerType t) const
@@ -286,19 +239,5 @@ bool Container::decorate(const ScopeInformation& scope)
 		ret |= (*it)->decorate(newScope);
 	}
 	
-	return ret;
-}
-
-QList<Object*> Analitza::Container::values() const
-{
-	QList<Object*> ret;
-	const_iterator it=firstValue(), itEnd=m_params.constEnd();
-	
-	if(firstOperator().operatorType()==Operator::function)
-		++it;
-	
-	for(; it!=itEnd; ++it) {
-		ret += *it;
-	}
 	return ret;
 }

@@ -137,7 +137,7 @@ bool hasTheVar(const QSet<QString> & vars, const Container* c)
 {
 	bool found=false;
 	if(c->containerType()!=Container::bvar) {
-		Container::const_iterator it=c->firstValue(), itEnd=c->constEnd();
+		Container::const_iterator it=c->constBegin(), itEnd=c->constEnd();
 		for(; !found && it!=itEnd; ++it) {
 			if(hasTheVar(vars, *it))
 				found=true;
