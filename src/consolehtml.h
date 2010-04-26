@@ -62,13 +62,13 @@ class ConsoleHtml : public KHTMLPart
 		bool addOperation(const Analitza::Expression& e, const QString& input);
 		
 		/** Loads a script from @p path. */
-		bool loadScript(const QString& path);
+		bool loadScript(const KUrl& path);
 		
 		/** Save a script yo @p path. */
 		bool saveScript(const QString& path) const;
 		
 		/** Saves a log to @p path. */
-		bool saveLog(const QString& path) const;
+		bool saveLog(const KUrl& path) const;
 		
 		/** Flushes the contents. */
 		void clear();
@@ -95,6 +95,8 @@ class ConsoleHtml : public KHTMLPart
 		void scrollDown();
 		
 	private:
+		QString retrieve(const KUrl& remoteUrl);
+		
 		Analitza::Analyzer a;
 		void sendStatus(const QString& msg) { emit status(msg); }
 		ConsoleMode m_mode;

@@ -28,6 +28,8 @@
 #include <KMenu>
 #include <KHTMLView>
 #include <KAction>
+#include <kio/copyjob.h>
+#include <kio/netaccess.h>
 
 #include "explexer.h"
 #include "expressionparser.h"
@@ -35,6 +37,9 @@
 #include "expression.h"
 #include <qtimer.h>
 #include <qtextdocument.h>
+#include <kio/job.h>
+#include <qtemporaryfile.h>
+#include <QDir>
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -102,8 +107,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		m_script += e; //Script won't have the errors
 		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
-		QString operation=input;
-		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(operation), a.errors().join("</li>\n<li>"));
+		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(input), a.errors().join("</li>\n<li>"));
 	}
 	
 	updateView(newEntry);
@@ -111,31 +115,62 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 	return a.isCorrect();
 }
 
-bool ConsoleHtml::loadScript(const QString& path)
+QString temporaryPath()
 {
+	QTemporaryFile temp("consolelog");
+	temp.open();
+	temp.close();
+	temp.setAutoRemove(false);
+	return QDir::tempPath()+'/'+temp.fileName();
+}
+
+QString ConsoleHtml::retrieve(const KUrl& remoteUrl)
+{
+	QString path=temporaryPath();
+	
+	KIO::CopyJob* job=KIO::copyAs(remoteUrl, KUrl(path));
+	
+	bool ret = KIO::NetAccess::synchronousRun(job, 0);
+	if(!ret)
+		path.clear();
+	
+	return path;
+}
+
+bool ConsoleHtml::loadScript(const KUrl& path)
+{
+	Q_ASSERT(!path.isEmpty());
+	
 	//FIXME: We have expression-only script support
 	bool correct=false;
-	if(!path.isEmpty()) {
-		QFile file(path);
+	QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
+	
+	if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		QTextStream stream(&file);
+		correct=true;
+		
 		QString line;
-		if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-			QTextStream stream(&file);
-			correct=true;
-			while (correct && !stream.atEnd()) {
-				line += stream.readLine(); // line of text excluding '\n'
-				
-				ExpLexer lex(line);
-				ExpressionParser parser;
-				parser.parse(&lex);
-				
-				if(!line.isEmpty() && lex.isCompletelyRead()) {
-					correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)), line);
-					line.clear();
-				}
+		qDebug()<< "XXXXXXXXXXXX" << stream.atEnd();
+		while (correct && !stream.atEnd()) {
+			line += stream.readLine(); // line of text excluding '\n'
+			qDebug() << "xxxxxxxxxxX" << line;
+			
+			ExpLexer lex(line);
+			ExpressionParser parser;
+			parser.parse(&lex);
+			
+			if(!line.isEmpty() && lex.isCompletelyRead()) {
+				correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)), line);
+				line.clear();
 			}
-			file.close();
 		}
 	}
+	
+	if(!correct) {
+		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1</ul>", path.prettyUrl());
+		updateView(QString());
+	}
+	
 	return correct;
 }
 
@@ -157,23 +192,27 @@ bool ConsoleHtml::saveScript(const QString & path) const
 	return correct;
 }
 
-bool ConsoleHtml::saveLog(const QString& path) const
+bool ConsoleHtml::saveLog(const KUrl& path) const
 {
+	Q_ASSERT(!path.isEmpty());
 	//FIXME: We have to choose between txt and html
 	bool correct=false;
-	if(!path.isEmpty()) {
-		QFile file(path);
-		correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-		
-		if(correct) {
-			QTextStream out(&file);
-			out << "<html>\n<head>" << m_css << "</head>" << endl;
-			out << "<body>" << endl;
-			foreach(const QString &entry, m_htmlLog)
-				out << "<p>" << entry << "</p>" << endl;
-			out << "</body>\n</html>" << endl;
-		}
-		file.close();
+	QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+	QFile file(savePath);
+	correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+	
+	if(correct) {
+		QTextStream out(&file);
+		out << "<html>\n<head>" << m_css << "</head>" << endl;
+		out << "<body>" << endl;
+		foreach(const QString &entry, m_htmlLog)
+			out << "<p>" << entry << "</p>" << endl;
+		out << "</body>\n</html>" << endl;
+	}
+	
+	if(!path.isLocalFile()) {
+		KIO::CopyJob* job=KIO::move(savePath, path);
+		correct=KIO::NetAccess::synchronousRun(job, 0);
 	}
 	return correct;
 }

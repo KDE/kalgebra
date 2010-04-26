@@ -362,9 +362,11 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	QString path = KFileDialog::getOpenFileName(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
+	KUrl path = KFileDialog::getOpenUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
+	
+	bool loaded=false;
 	if(!path.isEmpty())
-		c_results->loadScript(path);
+		loaded=c_results->loadScript(path);
 }
 
 void KAlgebra::saveScript()
