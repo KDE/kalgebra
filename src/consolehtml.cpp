@@ -58,6 +58,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.num { color: #0000C4; }\n";
 	m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
 	m_css +="\t.var { color: #640000; }\n";
+	m_css +="\t.keyword { color: #000064; }\n";
 	m_css +="\t.func { color: #008600; }\n";
 	m_css +="\t.result { padding-left: 10%; }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
