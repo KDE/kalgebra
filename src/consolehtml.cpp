@@ -172,20 +172,25 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 	return correct;
 }
 
-bool ConsoleHtml::saveScript(const QString & path) const
+bool ConsoleHtml::saveScript(const KUrl & path) const
 {
 	bool correct=false;
-	if(!path.isEmpty()) {
-		QFile file(path);
-		correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+	Q_ASSERT(!path.isEmpty());
 		
-		if(correct) {
-			QTextStream out(&file);
-			QList<Analitza::Expression>::const_iterator it = m_script.begin();
-			for(; it!=m_script.end(); ++it)
-				out << it->toString() << endl;
-		}
-		file.close();
+	QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+	QFile file(savePath);
+	correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+	
+	if(correct) {
+		QTextStream out(&file);
+		QList<Analitza::Expression>::const_iterator it = m_script.begin();
+		for(; it!=m_script.end(); ++it)
+			out << it->toString() << endl;
+	}
+	
+	if(!path.isLocalFile()) {
+		KIO::CopyJob* job=KIO::move(savePath, path);
+		correct=KIO::NetAccess::synchronousRun(job, 0);
 	}
 	return correct;
 }

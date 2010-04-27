@@ -29,6 +29,8 @@
 #include "functionsview.h"
 #include "askname.h"
 #include "value.h"
+#include "variablesdelegate.h"
+#include "viewportwidget.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif
@@ -50,9 +52,8 @@
 #include <KLocale>
 #include <KStandardAction>
 #include <KProcess>
-#include "variablesdelegate.h"
-#include "viewportwidget.h"
-#include <QApplication>
+#include <KRecentFilesAction>
+#include <KApplication>
 
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
@@ -110,14 +111,19 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	////////menu
 	c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	
-	c_menu->addAction(KIcon("document-open"), i18nc("@item:inmenu", "&Load Script"),
+	c_menu->addAction(KIcon("document-open"), i18nc("@item:inmenu", "&Load Script..."),
 						this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
-	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Script"),
+	c_recentScripts=new KRecentFilesAction(KIcon("document-open-recent"), i18n("Recent Scripts"), this);
+	connect(c_recentScripts, SIGNAL(urlSelected(KUrl)), this, SLOT(loadScript(KUrl)));
+	c_menu->addAction(c_recentScripts);
+	
+	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Script..."),
 						this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
-	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Log"),
+	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Export Log..."),
 						this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator();
 	c_menu->addAction(KStandardAction::clear(c_results, SLOT(clear()), this));
+	initializeRecentScripts();
 	////////////
 	//////EOConsola
 	
@@ -288,6 +294,28 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	tabChanged(0);
 }
 
+KAlgebra::~KAlgebra()
+{
+	KConfig conf("kalgebrarc");
+	KConfigGroup config(&conf, "Default");
+	QStringList urls;
+	foreach(const KUrl& url, c_recentScripts->urls())
+		urls += url.prettyUrl();
+	
+	config.writeEntry("recent", urls);
+}
+
+void KAlgebra::initializeRecentScripts()
+{
+	KConfig conf("kalgebrarc");
+	KConfigGroup config(&conf, "Default");
+	
+	QStringList urls=config.readEntry("recent", QStringList());
+	foreach(const QString& url, urls) {
+		c_recentScripts->addUrl(KUrl(url));
+	}
+}
+
 void KAlgebra::newInstance()
 {
 	KProcess::startDetached(QApplication::applicationFilePath());
@@ -364,16 +392,27 @@ void KAlgebra::loadScript()
 {
 	KUrl path = KFileDialog::getOpenUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
 	
-	bool loaded=false;
 	if(!path.isEmpty())
-		loaded=c_results->loadScript(path);
+		loadScript(path);
+}
+
+void KAlgebra::loadScript(const KUrl& path)
+{
+	bool loaded=c_results->loadScript(path);
+	
+	if(loaded)
+		c_recentScripts->addUrl(path);
 }
 
 void KAlgebra::saveScript()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this);
+	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this);
+	bool loaded=false;
 	if(!path.isEmpty())
-		c_results->saveScript(path);
+		loaded=c_results->saveScript(path);
+	
+	if(loaded)
+		c_recentScripts->addUrl(path);
 }
 
 void KAlgebra::saveLog()

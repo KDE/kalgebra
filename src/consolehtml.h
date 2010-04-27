@@ -65,7 +65,7 @@ class ConsoleHtml : public KHTMLPart
 		bool loadScript(const KUrl& path);
 		
 		/** Save a script yo @p path. */
-		bool saveScript(const QString& path) const;
+		bool saveScript(const KUrl& path) const;
 		
 		/** Saves a log to @p path. */
 		bool saveLog(const KUrl& path) const;

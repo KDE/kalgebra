@@ -35,18 +35,20 @@ class FunctionEdit;
 class Graph2D;
 class Graph3D;
 class FunctionsModel;
+class KRecentFilesAction;
 
 class KAlgebra : public KMainWindow
 {
 	Q_OBJECT
 	public:
 		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra() {}
+		~KAlgebra();
 	private:
 		QLabel *m_status;
 		
 		//consoleeWidget
 		QMenu* c_menu;
+		KRecentFilesAction* c_recentScripts;
 		ExpressionEdit *c_exp;
 		ConsoleHtml *c_results;
 		QTreeView *c_variables;
@@ -77,8 +79,10 @@ class KAlgebra : public KMainWindow
 	private slots:
 		void newInstance();
 		
+		void initializeRecentScripts();
 		void operate();
 		void loadScript();
+		void loadScript(const KUrl& path);
 		void saveScript();
 		void saveLog();
 		void updateInformation();
