@@ -128,7 +128,6 @@ class Graph3D : public QGLWidget
 		void mousePressEvent(QMouseEvent *e); QPoint press;
 		void mouseReleaseEvent(QMouseEvent *e);
 		void mouseMoveEvent(QMouseEvent *e);
-		int load();
 		void mem();
 		bool create(const Analitza::Expression& func3d);
 		void sendStatus(const QString& msg) { emit status(msg); }

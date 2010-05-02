@@ -292,8 +292,8 @@ bool Graph3D::create(const Expression& func3d)
 	}
 	
 	bool ret=true;
-	QList<Calculate3D*>::iterator it = threads.begin();
-	for(; it!=threads.end(); ++it) {
+	QList<Calculate3D*>::const_iterator it = threads.constBegin();
+	for(; it!=threads.constEnd(); ++it) {
 		if(!(*it)->wait(1000)) {
 			ret=false;
 			(*it)->terminate();
