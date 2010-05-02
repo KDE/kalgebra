@@ -135,8 +135,8 @@ void Graph3D::mouseMoveEvent(QMouseEvent *e)
 void Graph3D::drawAxes()
 {
 	glColor3f(0.8, 0.8, 0.4);
-	this->renderText(11.0, 0.0, 0.0, "X");
-	this->renderText(0.0, 11.0, 0.0, "Y");
+	this->renderText(11.0, 0.0, 0.0, "Y");
+	this->renderText(0.0, 11.0, 0.0, "X");
 	this->renderText(0.0, 0.0,-11.0, "Z");
 	
 	glBegin(GL_LINES);
@@ -319,11 +319,11 @@ void Calculate3D::run()
 	a.refExpression()->parameters().first()->value()=x;
 	a.refExpression()->parameters().last()->value()=y;
 	
-	for(int i=from; i<to; i++) {
-		x->setValue(i*step-size);
-		for(int j=0; j<k; j++) {
-			y->setValue(j*step-size);
-			points[i][j] = -a.calculateLambda().toReal().value();
+	for(int j=from; j<to; j++) {
+		y->setValue(j*step-size);
+		for(int i=0; i<k; i++) {
+			x->setValue(i*step-size);
+			points[j][i] = -a.calculateLambda().toReal().value();
 		}
 	}
 }
