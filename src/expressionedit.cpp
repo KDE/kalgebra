@@ -450,7 +450,7 @@ void ExpressionEdit::simplify()
 
 void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 {
-	QMenu *popup = createStandardContextMenu();
+	QScopedPointer<QMenu> popup(createStandardContextMenu());
 	popup->addSeparator();
 	if(isMathML())
 		popup->addAction(i18n("To Expression"), this, SLOT(toExpression()));
@@ -459,9 +459,23 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	
 	popup->addAction(i18n("Simplify"), this, SLOT(simplify()));
 	
+	QMenu* examples=popup->addMenu(i18n("Examples"));
+	examples->setEnabled(!m_examples.isEmpty());
+	foreach(const QString &example, m_examples) {
+		QAction* ac=examples->addAction(example);
+		ac->setData(example);
+	}
+	connect(examples, SIGNAL(triggered(QAction*)), SLOT(setActionText(QAction*)));
+	
 	popup->exec(e->globalPos());
-	delete popup;
+
 }
+
+void ExpressionEdit::setActionText(QAction* text)
+{
+	setPlainText(text->data().toString());
+}
+
 
 void ExpressionEdit::setAnalitza(Analitza::Analyzer * in)
 {

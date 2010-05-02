@@ -95,6 +95,9 @@ class ExpressionEdit : public QPlainTextEdit
 		
 		/** Returns the expression we have in the text. */
 		Analitza::Expression expression() const { return Analitza::Expression(text(), isMathML()); }
+		
+		/** Sets the @p examples to be shown in the context menu */
+		void setExamples(const QStringList& ex) { m_examples=ex; }
 	public slots:
 		
 		/** Inserts @p text text where the cursor is and selects it */
@@ -104,6 +107,7 @@ class ExpressionEdit : public QPlainTextEdit
 		void showSimplified();
 		void cursorMov();
 		void updateCompleter();
+		void setActionText(QAction* text);
 		
 		/** Shows a little tip widget containing the string @p str. If @p str is empty the widget is hidden. */
 		void helper(const QString& str);
@@ -160,6 +164,8 @@ class ExpressionEdit : public QPlainTextEdit
 		QCompleter *m_completer;
 		QTreeView *treeView;
 		OperatorsModel *m_ops;
+		
+		QStringList m_examples;
 };
 
 #endif

@@ -94,6 +94,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	c_exp = new ExpressionEdit(console);
 	c_exp->setAnalitza(c_results->analitza());
+	c_exp->setExamples(QStringList() << "square:=x->x**2" << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }");
 	c_dock_vars->setWidget(c_variables);
 	
 	tabs->addTab(console, i18n("&Console"));
@@ -220,6 +221,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	QWidget *tridim = new QWidget(tabs);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new ExpressionEdit(tridim);
+	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
+	t_exp->setAns("x");
 	m_graph3d = new Graph3D(tridim);
 	
 	tridim->setLayout(t_layo);
