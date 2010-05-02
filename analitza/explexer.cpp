@@ -53,7 +53,7 @@ void ExpLexer::getToken()
 		}
 		m_tokens.append(TOKEN(ExpressionTable::tPow, pos, QString(), 0));
 		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
-	} else if(a[pos].isDigit() || (a.size()>pos && a[pos]=='.' && a[pos].isDigit())) {
+	} else if(a[pos].isDigit() || (a.size()>pos+1 && a[pos]=='.' && a[pos+1].isDigit())) {
 		int coma=0;
 		for(; pos<a.length() && (a[pos].isDigit() || (pos+1<a.length() && a[pos]=='.' && a[pos+1]!='.')); pos++) {
 			ret.val += a[pos];
