@@ -421,7 +421,7 @@ void KAlgebra::saveScript()
 
 void KAlgebra::saveLog()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), "*|"+i18n("Text File (*)"),  this);
+	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.html|"+i18n("HTML File (*.html)"),  this);
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
