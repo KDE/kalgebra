@@ -434,7 +434,7 @@ void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
 void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setFunc(Analitza::Expression(t_exp->text(), t_exp->isMathML()));
+	m_graph3d->setFunc(t_exp->expression());
 	m_graph3d->setFocus();
 #endif
 }

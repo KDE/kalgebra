@@ -130,10 +130,10 @@ class Graph3D : public QGLWidget
 		void mouseMoveEvent(QMouseEvent *e);
 		int load();
 		void mem();
-		bool create();
+		bool create(const Analitza::Expression& func3d);
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
-		Analitza::Expression func3d;
+		Analitza::Analyzer a;
 		double default_step;
 		double default_size;
 		double zoom;

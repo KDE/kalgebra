@@ -34,19 +34,19 @@
 
 #include "analyzer.h"
 #include "value.h"
+#include <variable.h>
 
 using std::fabs;
 using std::log10;
 
-using Analitza::Cn;
-using Analitza::Expression;
+using namespace Analitza;
 
 enum ActionsEnum {
     KEYRIGHT=1<<0, KEYLEFT=1<<1, KEYUP=1<<2, KEYDOWN=1<<3, KEYAVPAG=1<<4, KEYREPAG=1<<5, KEYS=1<<6, KEYW=1<<7,
     KEYQ=1<<8, KEYE=1<<9, LCLICK=1<<10, RCLICK=1<<11, MCLICK=1<<12 };
 
 Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
-		default_step(0.15f), default_size(8.0f), zoom(1.0f), points(0), alpha(60.),
+		default_step(0.15f), default_size(10.0f), zoom(1.0f), points(0), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
 	this->setFocusPolicy(Qt::ClickFocus);
@@ -164,8 +164,8 @@ void Graph3D::paintGL()
 	if(keyspressed & KEYRIGHT)	rotation[2]-=3.f;
 	if(keyspressed & KEYW)		alpha/=2.f;
 	if(keyspressed & KEYS && alpha<=90.f)	alpha*=2.f;
-	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(); }
-	if(keyspressed & KEYE)		{ zoom*=2.0f; create(); }
+	if(keyspressed & KEYQ)		{ zoom/=2.0f; create(a.expression()); }
+	if(keyspressed & KEYE)		{ zoom*=2.0f; create(a.expression()); }
 	
 	if(rotation[0]>=360.f) rotation[0]-=360.f;
 	if(rotation[1]>=360.f) rotation[1]-=360.f;
@@ -187,7 +187,7 @@ void Graph3D::paintGL()
 	uint bound=(2*mida/step)-1;
 	drawAxes();
 	
-	if(!points || !func3d.isCorrect())
+	if(!points)
 		return;
 	
 	if(method==Dots) {
@@ -269,18 +269,14 @@ void Graph3D::paintGL()
 	glFlush();
 }
 
-bool Graph3D::create()
+bool Graph3D::create(const Expression& func3d)
 {
-	if(!func3d.isCorrect())
-		return false;
-	
 	double mida=default_size*zoom, step=default_step*zoom;
 	const int k=static_cast<int>(mida/step)*2;
 	
 	int part = k/m_n;
 	QList<Calculate3D*> threads;
 	
-	Analitza::Analyzer a;
 	a.setExpression(func3d);
 	
 	QTime t;
@@ -312,21 +308,22 @@ bool Graph3D::create()
 
 void Calculate3D::run()
 {
-	if(!a.isCorrect())
-		return;
-	
+	Q_ASSERT(a.isCorrect());
 	Q_ASSERT(points);
 	
 	const int k= static_cast<int>(size/step)*2;
 	
-	Cn *x=a.insertValueVariable("x", 0.);
-	Cn *y=a.insertValueVariable("y", 0.);
+	Cn *x=new Cn;
+	Cn *y=new Cn;
+	
+	a.refExpression()->parameters().first()->value()=x;
+	a.refExpression()->parameters().last()->value()=y;
 	
 	for(int i=from; i<to; i++) {
 		x->setValue(i*step-size);
 		for(int j=0; j<k; j++) {
 			y->setValue(j*step-size);
-			points[i][j] = -a.calculate().toReal().value();
+			points[i][j] = -a.calculateLambda().toReal().value();
 		}
 	}
 }
@@ -428,39 +425,40 @@ void Graph3D::timeOut()
 void Graph3D::setFunc(const Expression& exp)
 {
 	if(exp.isCorrect()) {
-		func3d = exp;
-		load();
-	} else
-		sendStatus(i18n("Error: %1", exp.error().join(", ")));
-}
-
-int Graph3D::load() 
-{
-	Analitza::Analyzer f3d;
-	f3d.setExpression(func3d);
-	f3d.insertValueVariable("x", 0.);
-	f3d.insertValueVariable("y", 0.);
-	Expression e=f3d.calculate();
-	
-	if(f3d.isCorrect() && e.isReal()) {
-		QTime t;
-		t.restart();
-		sendStatus(i18n("Generating... Please wait"));
-		mem();
-		create();
+		Analitza::Analyzer f3d;
+		f3d.setExpression(exp);
+		f3d.setExpression(f3d.dependenciesToLambda());
+		Expression e=f3d.calculate();
 		
-		// xgettext: no-c-format
-		sendStatus(i18nc("3D graph done in x milliseconds", "Done: %1ms", t.elapsed()));
-		this->repaint();
-		return 0;
-	} else {
-		if(f3d.isCorrect())
+		
+		if(f3d.refExpression()->bvarList()!=(QStringList("x") << "y")) {
+			sendStatus(i18n("Error: Wrong type of function"));
+			return;
+		}
+		
+		ExpressionType actual=f3d.type();
+		ExpressionType expected=ExpressionType(ExpressionType::Lambda)
+									.addParameter(ExpressionType::Value)
+									.addParameter(ExpressionType::Value)
+									.addParameter(ExpressionType::Value);
+		
+		if(!actual.canReduceTo(expected)) {
 			sendStatus(i18n("Error: We need values to draw a graph"));
+			return;
+		}
+		
+		if(f3d.isCorrect()) {
+			QTime t;
+			t.restart();
+			mem();
+			create(f3d.expression());
+			
+			sendStatus(i18nc("3D graph done in x milliseconds", "Done: %1ms", t.elapsed()));
+		}
 		else
 			sendStatus(i18n("Error: %1", f3d.errors().join(", ")));
-		this->repaint();
-		return -1;
-	}
+	} else
+		sendStatus(i18n("Error: %1", exp.error().join(", ")));
 }
 
 void Graph3D::mem()
@@ -518,7 +516,6 @@ void Graph3D::resetView()
 	default_size=8.0f;
 	if(zoom!=1.0f) {
 		zoom=1.0f;
-		create();
 	}
 	alpha=60.;
 	
