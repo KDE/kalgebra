@@ -48,8 +48,8 @@ Q_OBJECT
 		void testCopy_data();
 		
 		/** We check that some expressions are correct or not.*/
-		void testCorrection();
-		void testCorrection_data();
+		void testUncorrection();
+		void testUncorrection_data();
 		
 		void cleanupTestCase();
 		

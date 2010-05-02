@@ -126,6 +126,12 @@ void ExpressionTest::testCopy_data()
 	QTest::newRow("summatory") << "sum(x:x=1..10)";
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
 	QTest::newRow("vector") << "vector { x, y, z }";
+	
+	QTest::newRow("simple addition") << "2+4";
+	QTest::newRow("simple addition with var") << "2+x";
+	QTest::newRow("functin definition") << "f:=x->x+1";
+	QTest::newRow("summatory") << "sum(x:x=1..10)";
+	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
 }
 
 void ExpressionTest::testCopy()
@@ -140,68 +146,59 @@ void ExpressionTest::testCopy()
 	QCOMPARE(removeTags(e->toHtml()), input);
 }
 
-void ExpressionTest::testCorrection_data()
+void ExpressionTest::testUncorrection_data()
 {
 	QTest::addColumn<QString>("input");
-	QTest::addColumn<bool>("isCorrect");
 	
-	QTest::newRow("simple addition") << "2+4" << true;
-	QTest::newRow("simple addition with var") << "2+x" << true;
-	QTest::newRow("functin definition") << "f:=x->x+1" << true;
-	QTest::newRow("summatory") << "sum(x : x=1..10)" << true;
-	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }" << true;
-	QTest::newRow("summatory") << "sum(n*x : n=1..10)" << true;
-	QTest::newRow("incorrect bounds") << "product(x,1:3)" << false;
+	QTest::newRow("incorrect bounds") << "product(x,1:3)";
 	
-	QTest::newRow("addition with missing operand") << "2+" << false;
-	QTest::newRow("function definition") << "f:=n->" << false;
-	QTest::newRow("piecewise") << "piecewise { ?3, 2 }" << false;
+	QTest::newRow("addition with missing operand") << "2+";
+	QTest::newRow("function definition") << "f:=n->";
+	QTest::newRow("piecewise") << "piecewise { ?3, 2 }";
 	
-	QTest::newRow("limits") << "f:=n->3.." << false;
-	QTest::newRow("summatory with unknown uplimit") << "sum(x=1.. : x)" << false;
+	QTest::newRow("limits") << "f:=n->3..";
+	QTest::newRow("summatory with unknown uplimit") << "sum(x=1.. : x)";
 	//FIXME: Should be false in runtime, controlling it on the compiler.
 	//There is no way to have uplimit/downlimit separatedly with the current Exp parser
 	
-	QTest::newRow("uncotextualized bounds") << "9..99" << false;
-	QTest::newRow("uncotextualized bounds") << "9..(9+9)" << false;
-	QTest::newRow("uncotextualized bounds") << "x:=9..(9+9)" << false;
-	QTest::newRow("uncotextualized bounds") << "3+(9..(9+9))" << false;
-	QTest::newRow("uncotextualized bounds") << "3+9..(9+9)" << false;
-	QTest::newRow("missing )") << "(" << false;
-	QTest::newRow("missing }") << "vector{" << false;
-	QTest::newRow("wrong piecewise") << "piecewise { 0 ? 0 ? 0 }" << false;
-	QTest::newRow("vector piece") << "vector { 0 ? 0 }" << false;
-	QTest::newRow("wrong assignation") << "2:=3" << false;
-	QTest::newRow("non-condition in piecewise") << "piecewise{ 2, ?3 }" << false;
-	QTest::newRow("not-a-container") << "or{ x }" << false;
-	QTest::newRow("different tag") << "prp { x, y, z }" << false;
-	QTest::newRow("different tag") << "a+a=10.." << false;
-	QTest::newRow("xxx") << "piecewise {scalarproduct(vector{x, 1/x})}" << false;
-	QTest::newRow("wrong piece") << "plus(piece{2+2}, 1,2,3)" << false;
-	QTest::newRow("wrong sum") << "sum(x : x)" << false;
-	QTest::newRow("nopiece") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }" << false;
-	QTest::newRow("wrong count") << "plus(1)" << false;
-	QTest::newRow("wrong parameters") << "selector(vector{1,1/3})" << false;
-	QTest::newRow("empty vector") << "vector{}" << false;
+	QTest::newRow("uncotextualized bounds") << "9..99";
+	QTest::newRow("uncotextualized bounds") << "9..(9+9)";
+	QTest::newRow("uncotextualized bounds") << "x:=9..(9+9)";
+	QTest::newRow("uncotextualized bounds") << "3+(9..(9+9))";
+	QTest::newRow("uncotextualized bounds") << "3+9..(9+9)";
+	QTest::newRow("missing )") << "(";
+	QTest::newRow("missing }") << "vector{";
+	QTest::newRow("wrong piecewise") << "piecewise { 0 ? 0 ? 0 }";
+	QTest::newRow("vector piece") << "vector { 0 ? 0 }";
+	QTest::newRow("wrong assignation") << "2:=3";
+	QTest::newRow("non-condition in piecewise") << "piecewise{ 2, ?3 }";
+	QTest::newRow("not-a-container") << "or{ x }";
+	QTest::newRow("different tag") << "prp { x, y, z }";
+	QTest::newRow("different tag") << "a+a=10..";
+	QTest::newRow("xxx") << "piecewise {scalarproduct(vector{x, 1/x})}";
+	QTest::newRow("wrong piece") << "plus(piece{2+2}, 1,2,3)";
+	QTest::newRow("wrong sum") << "sum(x : x)";
+	QTest::newRow("nopiece") << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, fib(n-1)+fib(n-2) }";
+	QTest::newRow("wrong count") << "plus(1)";
+	QTest::newRow("wrong parameters") << "selector(vector{1,1/3})";
+	QTest::newRow("empty vector") << "vector{}";
+	
+	QTest::newRow("same args") << "(x,x)->x";
+	QTest::newRow("same boundings") << "sum(x : (x,x)=1..10)";
 }
 
-void ExpressionTest::testCorrection()
+void ExpressionTest::testUncorrection()
 {
 	QFETCH(QString, input);
-	QFETCH(bool, isCorrect);
 	for(int i=0; i<input.length(); i++)
-	{
 		e->setText(input.mid(0, i));
-	}
+	
 	e->setText(input);
 	
-	QCOMPARE(e->isCorrect(), isCorrect);
-	QCOMPARE(e->error().isEmpty(), isCorrect);
-	foreach(const QString& s, e->error()) {
-		QVERIFY(!s.isEmpty());
-		if(s.isEmpty())
-			qDebug() << e->error();
-	}
+	QVERIFY(!e->isCorrect());
+	QVERIFY(!e->error().isEmpty());
+	
+	QVERIFY(!e->error().contains(QString()));
 }
 
 #include "expressiontest.moc"

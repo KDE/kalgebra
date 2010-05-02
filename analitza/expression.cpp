@@ -168,21 +168,6 @@ bool Expression::ExpressionPrivate::check(const Apply* c)
 		}
 	}
 	
-	if(op==Operator::function) {
-		const Object *o=*c->firstValue();
-		bool isLambda=o->type()==Object::container &&
-			static_cast<const Container*>(o)->containerType()==Container::lambda;
-		
-		if(isLambda) {
-			const Container* lambda=static_cast<const Container*>(o);
-			QStringList bvars=lambda->bvarStrings();
-			if(bvars.count()!=cnt-1) {
-				m_err << i18np( "Wrong parameter count, had 1 parameter for '%2'",
-								"Wrong parameter count, had %1 parameters for '%2'", cnt, bvars.join(", "));
-				ret=false;
-			}
-		}
-	}
 	return ret;
 }
 
@@ -216,14 +201,28 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 	bool correct=true;
 	
 	if(branch->type()==Object::container) {
-		const Container* c1=static_cast<const Container*>(branch);
-		if(c1->containerType()==Container::piece || c1->containerType()==Container::otherwise) {
+		const Container* cBranch=static_cast<const Container*>(branch);
+		if(cBranch->containerType()==Container::piece || cBranch->containerType()==Container::otherwise) {
 			bool isPiecewise=where->type()==Object::container
 				&& static_cast<const Container*>(where)->containerType()==Container::piecewise;
 			if(!isPiecewise) {
 				m_err << i18nc("there was a conditional outside a condition structure",
 								"We can only have conditionals inside piecewise structures.");
 				correct=false;
+			}
+		} else if(cBranch->containerType()==Container::bvar && (where->isContainer() || where->isApply())) {
+			//we don't want 2 bvar in the same element
+			QStringList bvars;
+			if(where->isContainer())
+				bvars=static_cast<const Container*>(where)->bvarStrings();
+			else
+				bvars=static_cast<const Apply*>(where)->bvarStrings();
+			
+			const Ci* var= static_cast<const Ci*>(cBranch->m_params.first());
+			
+			if(bvars.contains(var->name())) {
+				correct=false;
+				m_err << i18n("Cannot have two parameters with the same name like '%1'.", var->name());
 			}
 		}
 	}
@@ -263,6 +262,7 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 			}
 		}
 	}
+	
 	Q_ASSERT(correct || !m_err.isEmpty());
 	
 	return correct;
