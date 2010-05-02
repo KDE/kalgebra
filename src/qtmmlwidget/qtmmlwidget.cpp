@@ -1,11 +1,11 @@
 /****************************************************************************
-**
-** This file is part of a Qt Solutions component.
 ** 
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
 ** 
-** Contact:  Qt Software Information (qt-info@nokia.com)
-** 
+** This file is part of a Qt Solutions component.
+**
 ** Commercial Usage  
 ** Licensees holding valid Qt Commercial licenses may use this file in
 ** accordance with the Qt Solutions Commercial License Agreement provided
@@ -22,7 +22,7 @@
 ** 
 ** In addition, as a special exception, Nokia gives you certain
 ** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
+** Exception version 1.1, included in the file LGPL_EXCEPTION.txt in this
 ** package.
 ** 
 ** GNU General Public License Usage 
@@ -40,7 +40,7 @@
 ** Party Software they are using.
 ** 
 ** If you are unsure which license is appropriate for your use, please
-** contact the sales department at qt-sales@nokia.com.
+** contact Nokia at qt-info@nokia.com.
 ** 
 ****************************************************************************/
 
@@ -3156,7 +3156,7 @@ void MmlDocument::_dump(const MmlNode *node, QString &indent) const
 {
     if (node == 0) return;
 
-    //qWarning() << indent + node->toStr();
+    qWarning((indent + node->toStr()).toLatin1().data());
 
     indent += "  ";
     const MmlNode *child = node->firstChild();
@@ -3702,7 +3702,7 @@ int MmlNode::scriptlevel(const MmlNode *) const
 	    return parent_sl + expl_sl;
 	}
 	else {
-	    qWarning() << "MmlNode::scriptlevel(): bad value " << expl_sl_str;
+	    qWarning(("MmlNode::scriptlevel(): bad value " + expl_sl_str).toLatin1().data());
 	    return parent_sl;
 	}
     }
@@ -3718,7 +3718,7 @@ int MmlNode::scriptlevel(const MmlNode *) const
     else if (expl_sl_str == "-")
 	return parent_sl - 1;
     else {
-	qWarning() << "MmlNode::scriptlevel(): could not parse value: " << expl_sl_str;
+	qWarning(("MmlNode::scriptlevel(): could not parse value: \"" + expl_sl_str + "\"").toLatin1().data());
 	return parent_sl;
     }
 }
@@ -4218,7 +4218,11 @@ void MmlRootBaseNode::paintSymbol(QPainter *p) const
 MmlTextNode::MmlTextNode(const QString &text, MmlDocument *document)
     : MmlNode(TextNode, document, MmlAttributeMap())
 {
-    m_text = text.trimmed();
+    m_text = text;
+    // Trim whitespace from ends, but keep nbsp and thinsp
+    m_text.remove(QRegExp("^[^\\S\\x00a0\\x2009]+"));
+    m_text.remove(QRegExp("[^\\S\\x00a0\\x2009]+$"));
+
     if (m_text == QString(QChar(0x62, 0x20))	     // &InvisibleTimes;
 	    || m_text == QString(QChar(0x63, 0x20))  // &InvisibleComma;
 	    || m_text == QString(QChar(0x61, 0x20))) // &ApplyFunction;
@@ -4253,7 +4257,7 @@ QRect MmlTextNode::symbolRect() const
 {
     QFontMetrics fm(font());
 
-    QRect br = fm.boundingRect(m_text);
+    QRect br = fm.tightBoundingRect(m_text);
     br.translate(0, fm.strikeOutPos());
 
     return br;
@@ -4990,11 +4994,11 @@ void MmlMoverNode::layoutSymbol()
     QRect over_rect = over->myRect();
 
     int spacing = (int)(g_mfrac_spacing*(over_rect.height()
-					    + base_rect.height()));
+                                         + base_rect.height()));
 
     base->setRelOrigin(QPoint(-base_rect.width()/2, 0));
     over->setRelOrigin(QPoint(-over_rect.width()/2,
-				base_rect.top() - spacing - over_rect.bottom()));
+                              base_rect.top() - spacing - over_rect.bottom()));
 }
 
 int MmlMoverNode::scriptlevel(const MmlNode *node) const
@@ -5768,7 +5772,7 @@ static QString decodeEntityValue(QString literal)
     while (!literal.isEmpty()) {
 
 	if (!literal.startsWith("&#")) {
-	    qWarning() << "decodeEntityValue(): bad entity literal: " << literal;
+	    qWarning(("decodeEntityValue(): bad entity literal: \"" + literal + "\"").toLatin1().data());
 	    return QString::null;
 	}
 
@@ -5776,7 +5780,7 @@ static QString decodeEntityValue(QString literal)
 
 	int i = literal.indexOf(';');
 	if (i == -1) {
-	    qWarning() << "decodeEntityValue(): bad entity literal: " << literal;
+	    qWarning(("decodeEntityValue(): bad entity literal: \"" + literal + "\"").toLatin1().data());
 	    return QString::null;
 	}
 
@@ -5784,7 +5788,7 @@ static QString decodeEntityValue(QString literal)
 	literal = literal.right(literal.length() - i - 1);
 
 	if (char_code.isEmpty()) {
-	    qWarning() << "decodeEntityValue(): bad entity literal: " << literal;
+	    qWarning(("decodeEntityValue(): bad entity literal: \"" + literal + "\"").toLatin1().data());
 	    return QString::null;
 	}
 
@@ -5793,7 +5797,7 @@ static QString decodeEntityValue(QString literal)
 	    bool ok;
 	    unsigned c = char_code.toUInt(&ok, 16);
 	    if (!ok) {
-		qWarning() << "decodeEntityValue(): bad entity literal: " << literal;
+		qWarning(("decodeEntityValue(): bad entity literal: \"" + literal + "\"").toLatin1().data());
 		return QString::null;
 	    }
 	    result += QChar(c);
@@ -5802,7 +5806,7 @@ static QString decodeEntityValue(QString literal)
 	    bool ok;
 	    unsigned c = char_code.toUInt(&ok, 10);
 	    if (!ok) {
-		qWarning() << "decodeEntityValue(): bad entity literal: " << literal;
+		qWarning(("decodeEntityValue(): bad entity literal: \"" + literal + "\"").toLatin1().data());
 		return QString::null;
 	    }
 	    result += QChar(c);
