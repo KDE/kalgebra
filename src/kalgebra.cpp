@@ -106,7 +106,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
 	connect(c_results, SIGNAL(paste(QString)), c_exp, SLOT(insertText(QString)));
-	connect(c_variables, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
+	connect(c_variables, SIGNAL(clicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	
 	////////menu
 	c_menu = menuBar()->addMenu(i18n("C&onsole"));
@@ -361,16 +361,20 @@ void KAlgebra::functools(int i)
 
 void KAlgebra::edit_var(const QModelIndex &idx)
 {
-	QModelIndex idxName=idx.sibling(idx.row(), 0);
-	VarEdit e(this, false);
-	QString var = c_variables->model()->data(idxName, Qt::DisplayRole).toString();
-	
-	e.setAnalitza(c_results->analitza());
-	e.setName(var);
-	
-	if(e.exec() == QDialog::Accepted) {
-		QString str=var+" := "+e.val().toString();
-		c_results->addOperation(Analitza::Expression(str, false), str);
+	if(idx.column()==0) {
+		c_exp->insertText(idx.data().toString());
+	} else {
+		QModelIndex idxName=idx.sibling(idx.row(), 0);
+		VarEdit e(this, false);
+		QString var = c_variables->model()->data(idxName, Qt::DisplayRole).toString();
+		
+		e.setAnalitza(c_results->analitza());
+		e.setName(var);
+		
+		if(e.exec() == QDialog::Accepted) {
+			QString str=var+" := "+e.val().toString();
+			c_results->addOperation(Analitza::Expression(str, false), str);
+		}
 	}
 }
 
