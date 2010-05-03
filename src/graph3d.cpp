@@ -452,7 +452,7 @@ void Graph3D::setFunc(const Expression& exp)
 			t.restart();
 			mem();
 			create(f3d.expression());
-			
+			// xgettext: no-c-format
 			sendStatus(i18nc("3D graph done in x milliseconds", "Done: %1ms", t.elapsed()));
 		}
 		else
