@@ -24,12 +24,12 @@
 #include <QLabel>
 #include <QTreeView>
 #include <analitzagui/algebrahighlighter.h>
-#include "expression.h"
 
 namespace Analitza
 {
 class Variables;
 class Analyzer;
+class Expression;
 }
 
 class OperatorsModel;
@@ -94,7 +94,7 @@ class ExpressionEdit : public QPlainTextEdit
 		void setExpression(const Analitza::Expression& e);
 		
 		/** Returns the expression we have in the text. */
-		Analitza::Expression expression() const { return Analitza::Expression(text(), isMathML()); }
+		Analitza::Expression expression() const;
 		
 		/** Sets the @p examples to be shown in the context menu */
 		void setExamples(const QStringList& ex) { m_examples=ex; }

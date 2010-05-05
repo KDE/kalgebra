@@ -53,7 +53,7 @@ public:
 	~FunctionEdit();
 	
 	/** Retrieves the resulting expression text. */
-	Analitza::Expression expression() const { return m_func->expression(); }
+	Analitza::Expression expression() const;
 	
 	function createFunction() const;
 	

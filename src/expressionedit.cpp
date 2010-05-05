@@ -511,4 +511,10 @@ void ExpressionEdit::insertText(const QString& text)
 	QTextCursor tc=textCursor();
 	tc.insertText(text);
 }
+
+Analitza::Expression ExpressionEdit::expression() const
+{
+	return Analitza::Expression(text(), isMathML());
+}
+
 #include "expressionedit.moc"

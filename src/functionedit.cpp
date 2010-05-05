@@ -300,4 +300,9 @@ function FunctionEdit::createFunction() const
 	return function(name(), expression(), m_vars, color(), m_calcUplimit, m_calcDownlimit);
 }
 
+Analitza::Expression FunctionEdit::expression() const
+{
+	return m_func->expression();
+}
+
 #include "functionedit.moc"
