@@ -1152,7 +1152,7 @@ Object* Analyzer::simpApply(Apply* c)
 			
 // 			qDebug()<< "KOKOKO" << delme << c->toString() << lastdel;
 			
-			if(lastdel && o==Operator::minus && !c->isUnary()) {
+			if(lastdel && o==Operator::minus && c->countValues()>1) {
 				Apply::iterator it=c->firstValue();
 				Apply* cc=new Apply;
 				cc->appendBranch(new Operator(Operator::minus));
@@ -1277,6 +1277,9 @@ Object* Analyzer::simpApply(Apply* c)
 			
 			QStringList bvars=c->bvarStrings();
 			Object *uplimit=c->ulimit(), *downlimit=c->dlimit(), *domain=c->domain();
+			if(uplimit) uplimit=simp(uplimit);
+			if(downlimit) downlimit=simp(downlimit);
+			if(domain) domain=simp(domain);
 			
 			//TODO: simplify this code
 			for(it = c->m_params.begin(); it!=c->m_params.end(); ++it)
@@ -1300,7 +1303,6 @@ Object* Analyzer::simpApply(Apply* c)
 				root=simp(nc);
 			} else if(function->isApply())
 				root=simpSum(c);
-			
 		}	break;
 		case Operator::card: {
 			Object* val=simp(*c->firstValue());
@@ -1630,46 +1632,41 @@ Object* Analyzer::simpPolynomials(Apply* c)
 Object* Analyzer::simpSum(Apply* c)
 {
 	Object* ret=c;
-	if(!c->isApply())
-		return c;
-	
 	Apply* cval=static_cast<Apply*>(*c->firstValue());
-	Operator o=cval->firstOperator();
-	if(o==Operator::times) {
+	
+	if(cval->isApply() && cval->firstOperator()==Operator::times) {
 		QSet<QString> bvars=c->bvarStrings().toSet();
 		QList<Object*> sum, out;
-		Container::iterator it=cval->m_params.begin(), itEnd=cval->m_params.end(), firstV=cval->firstValue();
-		bool firstFound=false;
-		int multCount=0;
+		Apply::iterator it=cval->firstValue(), itEnd=cval->end();
 		for(; it!=itEnd; ++it) {
-			if(it==firstV)
-				firstFound=true;
-			
-			if(!firstFound || hasTheVar(bvars, *it)) {
-				if(firstFound)
-					multCount++;
+			if(hasTheVar(bvars, *it)) {
 				sum.append(*it);
 			} else {
 				out.append(*it);
-			}
-			if(firstFound)
 				*it=0;
+			}
 		}
+		int removed=cval->m_params.removeAll(0);
 		
-		if(!out.isEmpty()) {
+		qDebug() << "xxxxxx" << out << sum;
+		if(removed>0) {
 			Apply* nc=new Apply;
 			nc->appendBranch(new Operator(Operator::times));
-			nc->m_params << out;
+			nc->m_params=out;
 			nc->appendBranch(c);
-			if(multCount>1)
-				cval->m_params=sum;
-			else if(multCount==1) {
+			
+			cval->m_params=sum;
+			if(sum.count()==1) {
+				cval->m_params.clear();
 				delete cval;
 				c->m_params.last()=sum.last();
 			}
+			
+			objectWalker(nc, ">>>>>>>");
 			ret=simp(nc);
 		}
 	}
+	
 	return ret;
 }
 

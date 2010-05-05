@@ -472,6 +472,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
+	QTest::newRow("sum") << "n->sum((i+n) * i : i=0..9)" << "n->sum((i+n)*i:i=0..9)";
 }
 
 void AnalitzaTest::testSimplify()
