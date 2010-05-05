@@ -1648,7 +1648,6 @@ Object* Analyzer::simpSum(Apply* c)
 		}
 		int removed=cval->m_params.removeAll(0);
 		
-		qDebug() << "xxxxxx" << out << sum;
 		if(removed>0) {
 			Apply* nc=new Apply;
 			nc->appendBranch(new Operator(Operator::times));
@@ -1662,7 +1661,6 @@ Object* Analyzer::simpSum(Apply* c)
 				c->m_params.last()=sum.last();
 			}
 			
-			objectWalker(nc, ">>>>>>>");
 			ret=simp(nc);
 		}
 	}
