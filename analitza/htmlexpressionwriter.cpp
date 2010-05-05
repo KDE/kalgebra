@@ -99,7 +99,6 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 	QStringList ret;
 	QString toret;
 	QString bounds;
-	QStringList bvars=a->bvarStrings();
 	
 	if(a->ulimit() || a->dlimit()) {
 		bounds += oper('=');
@@ -152,6 +151,10 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		toret += oper('-')+ret[0];
 	else {
 		QString bounding;
+		QStringList bvars;
+		foreach(const Ci* bvar, a->bvarCi())
+			bvars += bvar->visit(this);
+		
 		if(!bounds.isEmpty() || !bvars.isEmpty()) {
 			if(bvars.count()!=1) bounding +=oper('(');
 			bounding += bvars.join(oper(", "));
