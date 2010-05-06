@@ -342,20 +342,6 @@ void AnalitzaTest::testCorrection()
 	
 	Analitza::Analyzer b;
 	Expression res;
-	foreach(const QString &exp, expression) {
-		Expression e(exp, false);
-		if(!e.isCorrect()) qDebug() << "error:" << e.error();
-		QVERIFY(e.isCorrect());
-		
-		b.setExpression(e);
-		
-		if(!b.isCorrect()) qDebug() << "errors: " << b.errors();
-		QVERIFY(b.isCorrect());
-		b.calculate();
-		if(!b.isCorrect()) qDebug() << "errors:" << b.errors();
-		QVERIFY(b.isCorrect());
-	}
-	QCOMPARE(b.calculate().toString(), result);
 	
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -368,6 +354,22 @@ void AnalitzaTest::testCorrection()
 		QVERIFY(b.isCorrect());
 	}
 	QCOMPARE(res.toString(), result);
+	
+	Analitza::Analyzer b1;
+	foreach(const QString &exp, expression) {
+		Expression e(exp, false);
+		if(!e.isCorrect()) qDebug() << "error:" << e.error();
+		QVERIFY(e.isCorrect());
+		
+		b1.setExpression(e);
+		
+		if(!b1.isCorrect()) qDebug() << "errors: " << b1.errors();
+		QVERIFY(b1.isCorrect());
+		b1.calculate();
+		if(!b1.isCorrect()) qDebug() << "errors:" << e.toString() << b1.errors();
+		QVERIFY(b1.isCorrect());
+	}
+	QCOMPARE(b1.calculate().toString(), result);
 }
 
 void AnalitzaTest::testTypeUncorrection()
@@ -495,6 +497,12 @@ void AnalitzaTest::testEvaluate_data()
 	script << "f:=x->x";
 	script << "f(x)";
 	QTest::newRow("function parameter") << script << "x";
+	
+	script.clear();
+	script << "comb:=(n, i)->factorial(n)/(factorial(i)*factorial(n-i))";
+	script << "pu:=n->sum(comb(n,i)*1^(n-i)*(1-p)^i:i=0..2)";
+	script << "pu(3)";
+	QTest::newRow("calls") << script << "sum(6/(factorial(i)*factorial(3-i))*(3-i)*(1-p)^i:i=0..2)";
 }
 
 void AnalitzaTest::testEvaluate()
@@ -513,7 +521,7 @@ void AnalitzaTest::testEvaluate()
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
 		QVERIFY(b.isCorrect());
-		b.calculate();
+// 		b.calculate(); //we can do that just if we know that all variables doesn't have dependencies
 	}
 	QCOMPARE(res.toString(), result);
 }

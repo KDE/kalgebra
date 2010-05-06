@@ -96,12 +96,12 @@ Expression Analyzer::calculate()
 	if(!m_hasdeps && m_exp.isCorrect()) {
 		e.setTree(calc(m_exp.tree()));
 	} else {
-		m_err << i18n("Must specify a correct operation");
-		
 		if(m_exp.isCorrect() && m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
 							dependencies(m_exp.tree(), varsScope().keys()).join(
 								i18nc("identifier separator in error message", "', '")));
+		else
+			m_err << i18n("Must specify a correct operation");
 	}
 	return e;
 }
@@ -257,22 +257,23 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					const Container *cbody = (Container*) body;
 					
 					if(cbody->m_params.size()==c->m_params.size()) {
-						QStringList bvars=cbody->bvarStrings();
+						const_cast<Container *>(cbody)->decorate(Object::ScopeInformation());
 						
+						QList<Ci*> bvars=cbody->bvarCi();
 						int i=0;
-						Object::ScopeInformation scope;
-						QVector<Object*> values(bvars.size());
 						
-						foreach(const QString& bvar, bvars) {
-							values[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
-							scope.insert(bvar, &values[i]);
+						foreach(const Ci* bvar, bvars) {
+							Object* val=simp(eval(c->m_params[i+1], resolve, unscoped));
+							bvar->value()=val;
 							++i;
 						}
 						
-						cbody->m_params.last()->decorate(scope);
 						ret=eval(cbody->m_params.last(), resolve, unscoped);
 						
-						qDeleteAll(values);
+						foreach(const Ci* bvar, bvars) {
+							delete bvar->value();
+							bvar->value()=0;
+						}
 					}
 				}
 				
