@@ -178,6 +178,10 @@ class ANALITZA_EXPORT Analyzer
 		Object* boundedOperation(const Apply & n, const Operator & t, Object* initial);
 		
 		BoundingIterator* initializeBVars(const Apply* n);
+		
+		template <class T, class Tit>
+		void iterateAndSimp(T* v);
+
 };
 
 }

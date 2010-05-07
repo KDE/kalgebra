@@ -500,7 +500,7 @@ void AnalitzaTest::testEvaluate_data()
 	
 	script.clear();
 	script << "comb:=(n, i)->factorial(n)/(factorial(i)*factorial(n-i))";
-	script << "pu:=n->sum(comb(n,i)*1^(n-i)*(1-p)^i:i=0..2)";
+	script << "pu:=n->sum(comb(n,i)*1^(n-i)*(1-p)^i:i=0..(floor(n)))";
 	script << "pu(3)";
 	QTest::newRow("calls") << script << "sum(6/(factorial(i)*factorial(3-i))*(3-i)*(1-p)^i:i=0..2)";
 }

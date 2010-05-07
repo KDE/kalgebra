@@ -60,7 +60,10 @@ class ANALITZA_EXPORT Apply : public Object
 		Object*& ulimit() { return m_ulimit; }
 		Object*& dlimit() { return m_dlimit; }
 		Object*& domain() { return m_domain; }
+		
+		/** @deprecated should use begin() now */
 		iterator firstValue() { return m_params.begin(); }
+		iterator begin() { return m_params.begin(); }
 		iterator end() { return m_params.end(); }
 		const_iterator firstValue() const { return m_params.constBegin(); }
 		const_iterator constEnd() const { return m_params.constEnd(); }

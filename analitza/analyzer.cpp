@@ -998,6 +998,15 @@ void Analyzer::levelOut(Apply *c, Apply *ob, Apply::iterator &pos)
 	}
 }
 
+template <class T, class Tit>
+void Analyzer::iterateAndSimp(T* v)
+{
+	Tit it = v->begin(), itEnd=v->end();
+	
+	for(; it!=itEnd; ++it)
+		*it = simp(*it);
+}
+
 Object* Analyzer::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
@@ -1016,17 +1025,9 @@ Object* Analyzer::simp(Object* root)
 				root = simp(root);
 		}
 	} else if(root->type()==Object::vector) {
-		Vector* v=static_cast<Vector*>(root);
-		Vector::iterator it = v->begin(), itEnd=v->end();
-		
-		for(; it!=itEnd; ++it)
-			*it = simp(*it);
+		iterateAndSimp<Vector, Vector::iterator>(static_cast<Vector*>(root));
 	} else if(root->type()==Object::list) {
-		List* v=static_cast<List*>(root);
-		List::iterator it = v->begin(), itEnd=v->end();
-		
-		for(; it!=itEnd; ++it)
-			*it = simp(*it);
+		iterateAndSimp<List, List::iterator>(static_cast<List*>(root));
 	} else if(root->type()==Object::apply) {
 		root = simpApply((Apply*) root);
 	} else if(root->isContainer()) {
@@ -1040,10 +1041,7 @@ Object* Analyzer::simp(Object* root)
 				c->m_params.last()=simp(c->m_params.last());
 				break;
 			default: {
-				Container::iterator it = c->begin();
-				
-				for(; it!=c->m_params.end(); ++it)
-					*it = simp(*it);
+				iterateAndSimp<Container, Container::iterator>(c);
 			}	break;
 		}
 	}
@@ -1407,8 +1405,7 @@ Object* Analyzer::simpApply(Apply* c)
 			if(c->domain())
 				c->domain()=simp(c->domain());
 			
-			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
-				*it = simp(*it);
+			iterateAndSimp<Apply, Apply::iterator>(c);
 			break;
 	}
 	

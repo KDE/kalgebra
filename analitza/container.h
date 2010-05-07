@@ -102,6 +102,9 @@ public:
 	/** Returns the end iterator on the contained object list */
 	Container::const_iterator constEnd() const { return m_params.constEnd(); }
 	
+	/** Returns the end iterator on the contained object list */
+	Container::iterator end() { return m_params.end(); }
+	
 	/** Returns whether it is an empty container. */
 	bool isEmpty() const { return m_params.isEmpty(); }
 	
