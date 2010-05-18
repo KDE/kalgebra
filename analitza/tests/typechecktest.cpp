@@ -113,6 +113,9 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
 	QTest::newRow("shadowed_param") << "fv->cos(fv)" << "num -> num";
 	QTest::newRow("eq") << "x->eq(1,x)" << "num -> num";
+	
+	QTest::newRow("bounded sum") << "n->sum(x : x=0..n)" << "num -> num";
+	QTest::newRow("bounded sum") << "n->sum(x : x@list{3,3,n,3})" << "num -> num";
 }
 
 void TypeCheckTest::testConstruction()

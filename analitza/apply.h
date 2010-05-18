@@ -76,6 +76,9 @@ class ANALITZA_EXPORT Apply : public Object
 		void insertBranch(Apply::iterator before, Object* o) { m_params.insert(before, o); }
 		QList<Object*> values() const { return m_params; }
 		
+		/** @returns if there's any bounding specified */
+		bool hasBoundings() const;
+		
 		QList<Object*> m_params;
 	private:
 		Apply(const Apply& );

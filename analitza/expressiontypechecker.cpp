@@ -416,7 +416,12 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 			m_typeForBVar[c->bvarStrings().first()]=current; //FIXME: should remove when done
 			if(!current.isError())
 				assumptions=typeIs(c->dlimit(), ExpressionType(current));
+		} else if(c->domain()) {
+			c->domain()->visit(this);
+			
+			m_typeForBVar[c->bvarStrings().first()]=current.contained(); //FIXME: should remove when done
 		}
+// 		TODO: Add assumptions for types deducted in boundings
 	}
 	
 	switch(o.operatorType()) {

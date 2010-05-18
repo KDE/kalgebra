@@ -162,3 +162,8 @@ bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) cons
 	}
 	return matching;
 }
+
+bool Analitza::Apply::hasBoundings() const
+{
+	return m_dlimit || m_ulimit || m_domain;
+}
