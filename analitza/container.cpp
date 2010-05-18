@@ -215,8 +215,12 @@ bool Container::decorate(const ScopeInformation& scope)
 	}
 	
 	foreach(Ci* var, bvars) {
-		Object** o=new Object*(0);
-		var->setValue(o, true);
+		Object** o;
+		if(!var->isDefined()) {
+			o=new Object*(0);
+			var->setValue(o, true);
+		} else
+			o=&var->value();
 		newScope.insert(var->name(), o);
 		++it;
 	}

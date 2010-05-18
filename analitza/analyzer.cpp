@@ -138,6 +138,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 {
 	Q_ASSERT(branch && branch->type()!=Object::none);
 	Object *ret=0;
+// 	qDebug() << "POPOPO" << branch->toString();
 	
 	//Won't calc() so would be a good idea to have it simplified
 	if(branch->isContainer()) {
@@ -154,7 +155,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			case Container::piecewise: {
 				Container::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd();
 				
-				bool boundeddep=false;
+				bool allfalse=true;
 				for(; !ret && it!=itEnd; ++it) {
 					Container *p=static_cast<Container*>(*it);
 					Q_ASSERT( (*it)->isContainer() &&
@@ -162,23 +163,26 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					bool isPiece = p->containerType()==Container::piece;
 					if(isPiece) {
 						Object *cond=simp(eval(p->m_params[1], resolve, unscoped));
-						boundeddep=hasTheVar(unscoped, cond);
+						
 						if(cond->type()==Object::value) {
 							Cn* cval=static_cast<Cn*>(cond);
 							if(cval->isTrue()) {
+								allfalse=false;
 								ret=eval(p->m_params[0], resolve, unscoped);
 							}
-						}
+						} else
+							allfalse=false;
+// 						qDebug() << "%%%%%" << cond->toString() << p->m_params[1]->toString() << allfalse;
+						
 						delete cond;
-					} else { //FIXME: Maybe should look for more pieces?
-						if(!boundeddep)
-							ret=eval(p->m_params[0], resolve, unscoped);
+					} else if(allfalse) { //FIXME: Maybe should look for more pieces?
+						ret=eval(p->m_params[0], resolve, unscoped);
 					}
 				}
-				
 				if(!ret)
 					ret=c->copy();
-			} 	break;
+				
+			}	break;
 			case Container::lambda: {
 				QSet<QString> newUnscoped(unscoped);
 				newUnscoped+=c->bvarStrings().toSet();
@@ -206,9 +210,13 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		Ci* var=(Ci*) branch;
 		 
 		Object* val=var->isDefined() ? var->value() : 0;
-		if(val && !unscoped.contains(var->name()) && !equalTree(var, val))
-			ret = eval(val, resolve, unscoped);
+		if(val && !unscoped.contains(var->name()) && !equalTree(var, val)) {
+			QSet<QString> newUnscoped=unscoped;
+			newUnscoped.insert(var->name());
+			ret = eval(val, resolve, newUnscoped);
+		}
 		
+// 		qDebug() << "peeee" << var->name() << val << resolve << unscoped;
 	} else if(branch->type()==Object::vector) {
 		const Vector* v=static_cast<const Vector*>(branch);
 		Vector* nv=new Vector(v->size());
@@ -226,6 +234,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 			Object* res=eval(*it, resolve, unscoped);
 			nv->appendBranch(res);
 		}
+// 		qDebug() << "XXX" << ;
 		ret=nv;
 	} else if(branch->type()==Object::apply) {
 		const Apply* c=static_cast<const Apply*>(branch);
@@ -257,7 +266,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					const Container *cbody = (Container*) body;
 					
 					if(cbody->m_params.size()==c->m_params.size()) {
-						const_cast<Container *>(cbody)->decorate(Object::ScopeInformation());
+						const_cast<Container *>(cbody)->decorate(varsScope());
 						
 						QList<Ci*> bvars=cbody->bvarCi();
 						int i=0;
@@ -265,6 +274,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						foreach(const Ci* bvar, bvars) {
 							Object* val=simp(eval(c->m_params[i+1], resolve, unscoped));
 							bvar->value()=val;
+							
 							++i;
 						}
 						
@@ -311,7 +321,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					delete o;
 				}
 				
-				ret=r;
+				ret=simp(r);
 			}	break;
 		}
 	}
@@ -319,6 +329,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 	if(!ret)
 		ret=branch->copy();
 	Q_ASSERT(ret);
+	
 	return ret;
 }
 
@@ -714,7 +725,7 @@ Object* Analyzer::operate(const Apply* c)
 			cc->appendBranch(simp(o));
 			ret=cc;
 			
-			ret->decorate(Object::ScopeInformation());
+			ret->decorate(varsScope());
 			
 		}	break;
 		default: {
@@ -955,7 +966,7 @@ Object* Analyzer::func(const Apply& n)
 {
 	Container *function = (Container*) calc(n.m_params[0]);
 	
-	function->decorate(Object::ScopeInformation());
+	function->decorate(varsScope());
 	QList<Ci*> vars = function->bvarCi();
 	
 	int i=0;
@@ -972,6 +983,7 @@ Object* Analyzer::func(const Apply& n)
 	}
 	delete function;
 	
+	ret->decorate(varsScope());
 	return ret;
 }
 
@@ -1011,7 +1023,7 @@ Object* Analyzer::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
 	
-	if(!isLambda(root) && !hasVars(root))
+	if(!root->isContainer() && !hasVars(root))
 	{
 		if(root->type()!=Object::value && root->type() !=Object::oper) {
 			bool deps=root->decorate(Object::ScopeInformation());
@@ -1040,9 +1052,9 @@ Object* Analyzer::simp(Object* root)
 			case Container::lambda:
 				c->m_params.last()=simp(c->m_params.last());
 				break;
-			default: {
+			default:
 				iterateAndSimp<Container, Container::iterator>(c);
-			}	break;
+				break;
 		}
 	}
 	return root;
@@ -1115,7 +1127,7 @@ Object* Analyzer::simpApply(Apply* c)
 			Object* first=*c->firstValue();
 			
 			bool done=false;
-			QString delme=c->toString();
+			
 			for(; !done; --it) {
 				done=it==c->m_params.begin();
 				lastdel=false;
@@ -1300,8 +1312,10 @@ Object* Analyzer::simpApply(Apply* c)
 				c->m_params.last()=0;
 				delete c;
 				root=simp(nc);
-			} else if(function->isApply())
+			} else if(function->isApply()) {
 				root=simpSum(c);
+			}
+			
 		}	break;
 		case Operator::card: {
 			Object* val=simp(*c->firstValue());
@@ -1367,6 +1381,20 @@ Object* Analyzer::simpApply(Apply* c)
 				qDeleteAll(c->m_params);
 				c->m_params=newParams;
 				root=c;
+			}
+			
+		}	break;
+		case Operator::eq: {
+			Apply::iterator it=c->firstValue()+1, itEnd=c->m_params.end();
+			
+			bool alleq=true;
+			for(; alleq && it!=itEnd; ++it) {
+				alleq=equalTree(*c->firstValue(), *it);
+			}
+			
+			if(alleq) {
+				delete c;
+				root = new Cn(true);
 			}
 			
 		}	break;
@@ -1689,7 +1717,10 @@ Object* Analyzer::simpPiecewise(Container *c)
 					p->m_params.removeAt(1);
 					p->setContainerType(Container::otherwise);
 					isPiece=false;
-// 					stop=true;
+					
+					p->m_params[0]=simp(p->m_params[0]);
+					otherwise=p;
+					newList.append(p);
 				} else {
 					delete p;
 				}
@@ -1700,8 +1731,7 @@ Object* Analyzer::simpPiecewise(Container *c)
 				newList.append(p);
 			}
 					
-		} else {
-					//it is an otherwise
+		} else { //it is an otherwise
 			if(otherwise) {
 				delete p;
 			} else {
@@ -1712,10 +1742,10 @@ Object* Analyzer::simpPiecewise(Container *c)
 		}
 	}
 	c->m_params = newList;
-			
-	if(c->m_params.count()==1 && otherwise) {
+	
+	if(newList.count()==1 && otherwise) {
 		root=otherwise->m_params[0];
-		c->m_params[0]=0;
+		c->m_params.clear();
 		delete c;
 	}
 	return root;

@@ -229,18 +229,19 @@ struct ObjectWalker : public ExpressionWriter
 	
 	virtual QString accept(const Ci* var)
  	{
-		QString value="undef";
+		QString value;
 		if(var->isDefined()) {
 			if(var->value())
 				value="def";
 			else
 				value="zero";
-		}
+		} else
+			value="undef";
 		
 		qDebug() << prefix().constData() << "| variable: " << var->name() << var->isDefined() << "Val:" << value;
 		if(var->isDefined()) {
 			ind++;
-			//visitNow(var->value());
+// 			visitNow(var->value());
 			ind--;
 		}
 		return QString();

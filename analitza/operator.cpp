@@ -167,7 +167,7 @@ int Operator::nparams(Operator::OperatorType t)
 	return 0;
 }
 
-Object* Operator::copy() const
+Operator* Operator::copy() const
 {
 	return new Operator(m_optype);
 }

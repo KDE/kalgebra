@@ -272,19 +272,14 @@ void AnalitzaTest::testCorrection_data()
 // 	QTest::newRow("long func") << script << "3";
 	
 	script.clear();
-	script << "fact:=n->piecewise { eq(n,1)?1, ? n*fact(n-1) }";
+	script << "fact:=n->piecewise { n=1?1, ? n*fact(n-1) }";
 	script << "fact(5)";
 	QTest::newRow("piecewise factorial") << script << "120";
 	
 	script.clear();
-	script << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }";
+	script << "fib:=n->piecewise { n=0?0, n=1?1, ?fib(n-1)+fib(n-2) }";
 	script << "fib(6)";
 	QTest::newRow("piecewise fibonacci") << script << "8";
-	
-	script.clear();
-	script << "func:=n->n+1";
-	script << "func(5)";
-	QTest::newRow("simple function") << script << "6";
 	
 	script.clear();
 	script << "n:=vector{1}";
@@ -475,6 +470,10 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
 	QTest::newRow("sum") << "n->sum((i+n) * i : i=0..9)" << "n->sum((i+n)*i:i=0..9)";
+	
+	QTest::newRow("piecewise1") << "piecewise { 1=2 ? 4, ? 3}" << "3";
+	QTest::newRow("piecewise2") << "piecewise { x=2 ? 4, ? 3}" << "piecewise { x=2 ? 4, ? 3 }";
+	QTest::newRow("piecewise3") << "piecewise { 2=2 ? 4, ? 3}" << "4";
 }
 
 void AnalitzaTest::testSimplify()
@@ -499,10 +498,9 @@ void AnalitzaTest::testEvaluate_data()
 	QTest::newRow("function parameter") << script << "x";
 	
 	script.clear();
-	script << "comb:=(n, i)->factorial(n)/(factorial(i)*factorial(n-i))";
-	script << "pu:=n->sum(comb(n,i)*1^(n-i)*(1-p)^i:i=0..(floor(n)))";
+	script << "pu:=n->sum(p**i:i=0..(floor(n)))";
 	script << "pu(3)";
-	QTest::newRow("calls") << script << "sum(6/(factorial(i)*factorial(3-i))*(3-i)*(1-p)^i:i=0..2)";
+	QTest::newRow("calls") << script << "sum(p^i:i=0..3)";
 }
 
 void AnalitzaTest::testEvaluate()

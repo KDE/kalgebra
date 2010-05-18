@@ -105,7 +105,7 @@ class ANALITZA_EXPORT Operator : public Object
 		virtual bool decorate(const QMap< QString, Object** >& ) { return false; }
 		
 		virtual QString visit(ExpressionWriter*) const;
-		virtual Object* copy() const;
+		virtual Operator* copy() const;
 		
 		static const char words[nOfOps][14];
 	private:

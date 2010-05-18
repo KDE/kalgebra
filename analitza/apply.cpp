@@ -110,7 +110,7 @@ Apply* Apply::copy() const
 	ret->m_dlimit = m_dlimit? m_dlimit->copy() : 0;
 	ret->m_ulimit = m_ulimit? m_ulimit->copy() : 0;
 	ret->m_domain = m_domain? m_domain->copy() : 0;
-	ret->m_op = m_op? (Operator*) m_op->copy() : 0;
+	ret->m_op     = m_op    ? m_op->copy()     : 0;
 	
 	foreach(const Ci* var, m_bvars)
 		ret->m_bvars += (Ci*) var->copy();
@@ -126,8 +126,12 @@ bool Apply::decorate(const Object::ScopeInformation& scope)
 	ScopeInformation newScope(scope);
 	
 	foreach(Ci* var, m_bvars) {
-		Object** o=new Object*(0);
-		var->setValue(o, true);
+		Object** o;
+		if(!var->isDefined()) {
+			o=new Object*(0);
+			var->setValue(o, true);
+		} else
+			o=&var->value();
 		newScope.insert(var->name(), o);
 	}
 	
