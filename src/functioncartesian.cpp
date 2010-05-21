@@ -43,12 +43,26 @@ struct FunctionY : public FunctionImpl
 	{
 		Analitza::Ci* vi=func.refExpression()->parameters().first();
 		vi->value()=vx;
+		
+		if(func.isCorrect()) {
+			Expression deriv = func.derivative("x");
+			if(func.isCorrect())
+				m_deriv = new Expression(deriv);
+			func.flushErrors();
+		}
 	}
 	
 	FunctionY(const FunctionY &fy) : FunctionImpl(fy), vx(new Cn)
 	{
 		Analitza::Ci* vi=func.refExpression()->parameters().first();
 		vi->value()=vx;
+		
+		if(func.isCorrect()) {
+			Expression deriv = func.derivative("y");
+			if(func.isCorrect())
+				m_deriv = new Expression(deriv);
+			func.flushErrors();
+		}
 	}
 	virtual ~FunctionY() { delete vx; }
 	
