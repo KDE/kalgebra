@@ -1,7 +1,5 @@
 include_directories(../analitza .. ${OPENGL_INCLUDE_DIR})
 
-add_subdirectory(tests)
-
 set(kalgebra_SRCS
 	kalgebra.cpp
 	dictionary.cpp
