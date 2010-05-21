@@ -30,7 +30,7 @@
 #include <QPixmap>
 #include <QModelIndex>
 
-#include "function.h"
+#include "analitzagui/function.h"
 
 /**
  *	This class lets you create a widget that can draw multiple 2D graphs.

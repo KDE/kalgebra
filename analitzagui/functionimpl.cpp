@@ -17,14 +17,14 @@
  *************************************************************************************/
 
 #include "functionimpl.h"
-#include "variables.h"
-#include "expression.h"
+#include "analitza/variables.h"
+#include "analitza/expression.h"
+#include <analitza/container.h>
+#include <analitza/analitzautils.h>
 #include "functionfactory.h"
 
 #include <KLocale>
 #include <KDebug>
-#include <container.h>
-#include <analitzautils.h>
 
 using std::acos;
 using std::atan;

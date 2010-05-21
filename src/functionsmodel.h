@@ -20,7 +20,7 @@
 #define FUNCTIONSMODEL_H
 
 #include <QAbstractTableModel>
-#include "function.h"
+#include "analitzagui/function.h"
 
 /** Functions model is a model class that has a relation of all operators string with their FunctionType. */
 class FunctionsModel : public QAbstractTableModel

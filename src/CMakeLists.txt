@@ -7,7 +7,6 @@ set(kalgebra_SRCS
 	dictionary.cpp
 	#console.cpp
 	consolehtml.cpp
-	function.cpp
 	functionedit.cpp
 	varedit.cpp
 	main.cpp
@@ -17,13 +16,7 @@ set(kalgebra_SRCS
 	variablesdelegate.cpp
 	viewportwidget.cpp
 	functionsview.cpp
-	functionimpl.cpp
 	functionsmodel.cpp
-	functionfactory.cpp
-	functionpolar.cpp
-	functioncartesian.cpp
-	functionparametric.cpp
-	functionimplicit.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )

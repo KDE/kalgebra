@@ -20,7 +20,7 @@
 #define FUNCTIONIMPL_H
 
 #include "function.h"
-#include "analyzer.h"
+#include "analitza/analyzer.h"
 #include <cmath>
 
 namespace Analitza { class Expression; }

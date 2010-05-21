@@ -7,6 +7,15 @@ add_subdirectory(tests)
 set(analitzagui_SRCS
 	operatorsmodel.cpp
 	algebrahighlighter.cpp
+
+	function.cpp
+	functionimpl.cpp
+	functionfactory.cpp
+	functionpolar.cpp
+	functioncartesian.cpp
+	functionparametric.cpp
+	functionimplicit.cpp
+
 )
 
 kde4_add_library(analitzagui SHARED ${analitzagui_SRCS})

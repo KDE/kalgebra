@@ -32,7 +32,7 @@
 #include "graph2d.h"
 #include "variables.h"
 #include "functionsmodel.h"
-#include "functionfactory.h"
+#include "analitzagui/functionfactory.h"
 #include "value.h"
 #include <analitzagui/algebrahighlighter.h>
 

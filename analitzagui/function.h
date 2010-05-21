@@ -23,7 +23,8 @@
 #include <QRect>
 #include <QLine>
 #include <QPair>
-#include <expression.h>
+#include <analitza/expression.h>
+#include "analitzaguiexport.h"
 
 namespace Analitza
 {
@@ -38,7 +39,7 @@ class Variables;
 
 struct FunctionImpl;
 
-class function
+class ANALITZAGUI_EXPORT function
 {
 	public:
 		/** Defines a function axe type. */

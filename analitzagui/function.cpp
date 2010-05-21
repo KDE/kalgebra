@@ -18,9 +18,9 @@
 
 #include "function.h"
 
-#include "variables.h"
-#include "analyzer.h"
-#include "expression.h"
+#include "analitza/variables.h"
+#include "analitza/analyzer.h"
+#include "analitza/expression.h"
 #include "functionimpl.h"
 #include "functionfactory.h"
 

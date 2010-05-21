@@ -17,9 +17,9 @@
  *************************************************************************************/
 
 #include "functiontest.h"
-#include "function.h"
-#include "expression.h"
-#include "variables.h"
+#include "analitzagui/function.h"
+#include "analitza/expression.h"
+#include "analitza/variables.h"
 #include <qtest_kde.h>
 #include <cmath>
 
@@ -132,7 +132,7 @@ void FunctionTest::testCorrect_data()
 	QTest::addColumn<bool>("correct");
 	
 	QTest::newRow("empty function") << "" << false;
-	QTest::newRow("undefined var") << "x:=y" << false;
+	QTest::newRow("undefined var") << "x:=w" << false;
 	QTest::newRow("parametric-novector") << "t->3" << false;
 	QTest::newRow("parametric-wrongvector") << "t->vector{3}" << false;
 	QTest::newRow("wrong-dimension") << "vector{2,3}" << false;

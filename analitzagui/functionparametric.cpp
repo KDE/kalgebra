@@ -18,14 +18,14 @@
 
 #include "functionimpl.h"
 #include "functionfactory.h"
-#include "value.h"
-#include "vector.h"
+#include "analitza/value.h"
+#include "analitza/vector.h"
+#include <analitza/container.h>
+#include <analitza/expressiontype.h>
+#include <analitza/variable.h>
 
 #include <KDebug>
 #include <KLocale>
-#include <container.h>
-#include <expressiontype.h>
-#include <variable.h>
 
 using Analitza::Expression;
 using Analitza::ExpressionType;

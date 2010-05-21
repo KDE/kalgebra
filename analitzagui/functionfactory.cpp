@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "functionfactory.h"
-#include "expressiontype.h"
+#include "analitza/expressiontype.h"
 
 using Analitza::Expression;
 using Analitza::Variables;

@@ -18,13 +18,13 @@
 
 #include "functionimpl.h"
 #include "functionfactory.h"
-#include "value.h"
+#include "analitza/value.h"
+#include <analitza/expressiontype.h>
+#include <analitza/variable.h>
+#include <analitza/analitzautils.h>
 
 #include <KDebug>
 #include <KLocale>
-#include <expressiontype.h>
-#include <variable.h>
-#include <analitzautils.h>
 
 using std::sin;
 using std::cos;

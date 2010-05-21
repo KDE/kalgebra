@@ -18,11 +18,11 @@
 
 #include "functionimpl.h"
 #include "functionfactory.h"
-#include "value.h"
+#include "analitza/value.h"
+#include <analitza/variable.h>
+#include <analitza/expressiontype.h>
 
 #include <KLocale>
-#include <variable.h>
-#include <expressiontype.h>
 
 using std::acos;
 using std::atan;
