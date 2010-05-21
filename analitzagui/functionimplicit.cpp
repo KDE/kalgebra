@@ -299,7 +299,7 @@ struct FunctionImplicit : public FunctionImpl
 
     void updatePoints(const QRect& viewport);
     QPair<QPointF, QString> calc(const QPointF& dp);
-    QLineF derivative(const QPointF& p) const;
+    QLineF derivative(const QPointF& p);
     virtual FunctionImpl* copy() { return new FunctionImplicit(*this); }
 
     static QStringList supportedBVars()
@@ -775,16 +775,16 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& p)
     return QPair<QPointF, QString>(p, QString("asdads"));
 }
 
-QLineF FunctionImplicit::derivative(const QPointF& p) const
+QLineF FunctionImplicit::derivative(const QPointF& p)
 {
-//    qreal eval = evalImplicitFunction(p.x(), p.y());
-//    QLineF ret;
-//
-//    qreal fx = evalPartialDerivativeX(p.x(), p.y());
-//    qreal fy = evalPartialDerivativeY(p.x(), p.y());
-//
-//    QVector2D T = QVector2D(-fy, fx);
-//    T.normalize();
+    qreal eval = evalImplicitFunction(p.x(), p.y());
+    QLineF ret;
+
+    qreal fx = evalPartialDerivativeX(p.x(), p.y());
+    qreal fy = evalPartialDerivativeY(p.x(), p.y());
+
+    QVector2D T = QVector2D(-fy, fx);
+    T.normalize();
 
 
 /*
@@ -792,8 +792,8 @@ QLineF FunctionImplicit::derivative(const QPointF& p) const
     QPointF to(p.x() + 5*T.x(), p.y() + 5*T.y());
 */
 
-    //return slopeToLine(T.y()/T.x());
-    return QLineF();
+    return slopeToLine(T.y()/T.x());
+//    return QLineF();
 
 //    qreal range = 0.05;
 //

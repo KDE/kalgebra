@@ -50,7 +50,7 @@ struct FunctionParametric : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
+    QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
@@ -118,7 +118,8 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& p)
 	return QPair<QPointF, QString>(p, QString());
 }
 
-QLineF FunctionParametric::derivative(const QPointF& p) const
+QLineF FunctionParametric::derivative(const QPointF& p)
 {
+    //TODO
 	return QLineF(p,p);
 }

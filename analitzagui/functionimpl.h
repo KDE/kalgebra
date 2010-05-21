@@ -44,7 +44,7 @@ struct FunctionImpl
 	virtual function::Axe axeType() const { return function::Cartesian; }
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 	virtual void updatePoints(const QRect& viewport)=0;
-	virtual QLineF derivative(const QPointF& p) const=0;
+    virtual QLineF derivative(const QPointF& p)=0;
 	virtual FunctionImpl* copy()=0;
 	virtual QStringList boundings() const=0;
 	

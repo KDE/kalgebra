@@ -68,7 +68,7 @@ struct FunctionY : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
+    QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
     static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
@@ -87,7 +87,7 @@ struct FunctionX : public FunctionY
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	QLineF derivative(const QPointF& p) const;
+    QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionX(*this); }
 	
 	static QStringList supportedBVars() { return QStringList("y"); }
@@ -211,7 +211,7 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 	return QPair<QPointF, QString>(dp, pos);
 }
 
-QLineF FunctionY::derivative(const QPointF& p) const
+QLineF FunctionY::derivative(const QPointF& p)
 {
 	Analitza::Analyzer a(func.variables());
 	double ret;
@@ -249,7 +249,7 @@ void FunctionX::updatePoints(const QRect& viewport)
 	}
 }
 
-QLineF FunctionX::derivative(const QPointF& p) const
+QLineF FunctionX::derivative(const QPointF& p)
 {
 	QPointF p1(p.y(), p.x());
 	QLineF ret=FunctionY::derivative(p1);

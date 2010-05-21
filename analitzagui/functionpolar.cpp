@@ -41,7 +41,7 @@ struct FunctionPolar : public FunctionImpl
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	function::Axe axeType() const { return function::Polar; }
-	QLineF derivative(const QPointF& p) const;
+    QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
@@ -139,8 +139,9 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	return QPair<QPointF, QString>(dp, pos);
 }
 
-QLineF FunctionPolar::derivative(const QPointF& p) const
+QLineF FunctionPolar::derivative(const QPointF& p)
 {
+    //TODO
 	Q_UNUSED(p);
 	return QLineF();
 }
