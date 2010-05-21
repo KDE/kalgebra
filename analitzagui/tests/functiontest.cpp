@@ -74,6 +74,7 @@ void FunctionTest::testCopy_data()
 	QTest::newRow("polar->strange") << "q->q/q";
 	
 	QTest::newRow("parametric") << "t->vector{t,t**2}";
+	QTest::newRow("implicit") << "(x,y)->x+y";
 }
 
 void FunctionTest::testCopy()
