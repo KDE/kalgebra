@@ -1,4 +1,3 @@
-
 /*************************************************************************************
  *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
@@ -419,7 +418,20 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 		} else if(c->domain()) {
 			c->domain()->visit(this);
 			
-			m_typeForBVar[c->bvarStrings().first()]=current.contained(); //FIXME: should remove when done
+			if(current.type()==ExpressionType::Any) {
+				ExpressionType anyItem(ExpressionType::Any, m_stars++);
+				
+				ExpressionType anyList(ExpressionType::List, anyItem);
+				ExpressionType anyVector(ExpressionType::Vector, anyItem, -1);
+				
+				ExpressionType anyContainer(ExpressionType::Many);
+				anyContainer.addAlternative(anyList);
+				anyContainer.addAlternative(anyVector);
+				
+				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
+				m_typeForBVar[c->bvarStrings().first()]=anyItem;
+			} else
+				m_typeForBVar[c->bvarStrings().first()]=current.contained(); //FIXME: should remove when done
 		}
 // 		TODO: Add assumptions for types deducted in boundings
 	}
@@ -429,6 +441,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 		case Operator::sum:
 		case Operator::product:
 			(*c->firstValue())->visit(this);
+			
 			break;
 		case Operator::diff:
 			//TODO Check inside
@@ -545,6 +558,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 			break;
 	}
 	m_typeForBVar=ctx;
+	
 	return QString();
 }
 
@@ -583,22 +597,49 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
 			
 			ExpressionType res=ExpressionType(ExpressionType::Many);
+			
+			bool containsManyParameter=false;
 			foreach(const ExpressionType& alt, alts) {
 				if(alt.isUndefined()) {
 					addError("Could not make up the return value of the lambda definition");
 				} else {
 					ExpressionType option(ExpressionType::Lambda);
 					foreach(const QString& bvar, c->bvarStrings()) {
+						ExpressionType toadd;
 						if(alt.assumptions().contains(bvar))
-							option.addParameter(alt.assumptionFor(bvar));
+							toadd=alt.assumptionFor(bvar);
 						else if(m_typeForBVar.contains(bvar))
-							option.addParameter(m_typeForBVar.value(bvar));
+							toadd=m_typeForBVar.value(bvar);
 						else
-							option.addParameter(ExpressionType(ExpressionType::Any, m_stars++));
+							toadd=ExpressionType(ExpressionType::Any, m_stars++);
+						
+						containsManyParameter |= toadd.type()==ExpressionType::Many;
+						option.addParameter(toadd);
 					}
 					option.addParameter(alt); //Return value
 					
-					res.addAlternative(option);
+					if(containsManyParameter) {
+						QList<ExpressionType> alts;
+						alts.append(ExpressionType(ExpressionType::Lambda));
+						
+						foreach(const ExpressionType& param, option.parameters()) {
+							QList<ExpressionType> types=param.type()==ExpressionType::Many ? param.alternatives() : QList<ExpressionType>() << param;
+							
+							QList<ExpressionType> options;
+							foreach(const ExpressionType& t, types) {
+								foreach(const ExpressionType& alt, alts) {
+									ExpressionType newsignature=alt;
+									newsignature.addParameter(t);
+									options += newsignature;
+								}
+							}
+							alts=options;
+						}
+						
+						foreach(const ExpressionType& alt, alts)
+							res.addAlternative(alt);
+					} else
+						res.addAlternative(option);
 				}
 			}
 			current=res;

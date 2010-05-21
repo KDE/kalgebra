@@ -87,7 +87,7 @@ class ANALITZA_EXPORT Analyzer
 		Expression evaluate();
 		
 		/** Evaluates the derivative of an expression expression, like expression() but sorrounded with a diff(). */
-		Expression derivative(/*QStringList vars*/);
+		Expression derivative(const QString& var);
 		
 		/** Evaluates the derivative of an expression expression. */
 		double derivative(const QList< QPair<QString, double > >& values );

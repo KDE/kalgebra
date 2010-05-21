@@ -217,7 +217,7 @@ void AnalitzaTest::testDerivativeSimple()
 	Expression e(expression, false);
 	a->setExpression(e);
 	QVERIFY(a->isCorrect());
-	a->setExpression(a->derivative());
+	a->setExpression(a->derivative("x"));
 	a->simplify();
 	Expression deriv=a->expression();
 	QCOMPARE(deriv.toString(), "x->"+result);
@@ -340,10 +340,11 @@ void AnalitzaTest::testCorrection()
 	
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
-// 		qDebug() << e.error();
+		qDebug() << "cacacaca" << exp;
 		QVERIFY(e.isCorrect());
 		
 		b.setExpression(e);
+		qDebug() << "p";
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
 		QVERIFY(b.isCorrect());
@@ -757,12 +758,11 @@ void AnalitzaTest::testOperators()
 					bvar->appendBranch(obvar->copy());
 					
 					Expression e1(cc);
-					qDebug() << "KKKKK" << cc->toString();
 					a->setExpression(e1);
 					
 					a->calculate();
 					a->evaluate();
-					a->derivative();
+					a->derivative("x");
 				}
 				qDeleteAll(bvarValues);
 			} else {
@@ -770,7 +770,7 @@ void AnalitzaTest::testOperators()
 				a->setExpression(e);
 				a->calculate();
 				a->evaluate();
-				a->derivative();
+				a->derivative("x");
 			}
 		}
 	}
@@ -798,7 +798,7 @@ void AnalitzaTest::testOperators()
 			a->calculate();
 			a->evaluate();
 			a->simplify();
-			a->derivative();
+			a->derivative("x");
 			a->derivative(QList< QPair<QString, double> >() << qMakePair(bvar, v));
 		}
 	}

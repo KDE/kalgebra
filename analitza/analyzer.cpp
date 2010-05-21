@@ -1756,41 +1756,41 @@ Object::ScopeInformation Analyzer::varsScope() const
 	return AnalitzaUtils::variablesScope(m_vars);
 }
 
-Expression Analyzer::derivative()
+Expression Analyzer::derivative(const QString& var)
 {
-	m_err.clear();
-	//TODO: Must support multiple bvars
-	//TODO: return new expression
+	Q_ASSERT(m_exp.isCorrect());
+	
 	Expression exp;
-	if(m_exp.isCorrect()) {
-		QStringList vars;
-		Object* deriv=m_exp.tree();
-		if(m_exp.isLambda()){
-			Q_ASSERT(deriv->isContainer());
-			Container* lambda=(Container*) deriv;
-			if(lambda->containerType()==Container::math) {
-				Q_ASSERT(lambda->m_params.first()->isContainer());
-				lambda = (Container*) lambda->m_params.first();
-			}
-			vars=lambda->bvarStrings();
-			Q_ASSERT(lambda->containerType()==Container::lambda);
-			deriv=lambda->m_params.last();
-		} else
-			vars+="x";
-		
-		Object* o = derivative(vars.first(), deriv);
-// 		qDebug() << "SSS" << o->toString();
-		o=simp(o);
-		Container* lambda=new Container(Container::lambda);
-		foreach(const QString& dep, vars) {
-			Container* bvar=new Container(Container::bvar);
-			bvar->appendBranch(new Ci(dep));
-			lambda->appendBranch(bvar);
+	QStringList vars;
+	Object* deriv=m_exp.tree();
+	if(m_exp.isLambda()){
+		Q_ASSERT(deriv->isContainer());
+		Container* lambda=(Container*) deriv;
+		if(lambda->containerType()==Container::math) {
+			Q_ASSERT(lambda->m_params.first()->isContainer());
+			lambda = (Container*) lambda->m_params.first();
 		}
-		lambda->appendBranch(o);
+		Q_ASSERT(lambda->bvarStrings().contains(var));
+		Q_ASSERT(lambda->containerType()==Container::lambda);
 		
-		exp.setTree(lambda);
+		vars=lambda->bvarStrings();
+		deriv=lambda->m_params.last();
+	} else
+		vars += var;
+	
+// 	Q_ASSERT(hasTheVar(QSet<QString>() << var, deriv));
+	Object* o = derivative(var, deriv);
+	o=simp(o);
+	Container* lambda=new Container(Container::lambda);
+	foreach(const QString& dep, vars) {
+		Container* bvar=new Container(Container::bvar);
+		bvar->appendBranch(new Ci(dep));
+		lambda->appendBranch(bvar);
 	}
+	lambda->appendBranch(o);
+	
+	exp.setTree(lambda);
+	
 	return exp;
 }
 
