@@ -15,6 +15,7 @@ set(kalgebra_SRCS
 	graph2d.cpp
 	variablesmodel.cpp
 	variablesdelegate.cpp
+	viewportwidget.cpp
 	functionsview.cpp
 	functionimpl.cpp
 	functionsmodel.cpp
@@ -22,7 +23,7 @@ set(kalgebra_SRCS
 	functionpolar.cpp
 	functioncartesian.cpp
 	functionparametric.cpp
-	viewportwidget.cpp
+	functionimplicit.cpp
 
 	qtmmlwidget/qtmmlwidget.cpp
 )
