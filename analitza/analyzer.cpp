@@ -1770,7 +1770,6 @@ Expression Analyzer::derivative(const QString& var)
 			Q_ASSERT(lambda->m_params.first()->isContainer());
 			lambda = (Container*) lambda->m_params.first();
 		}
-		Q_ASSERT(lambda->bvarStrings().contains(var));
 		Q_ASSERT(lambda->containerType()==Container::lambda);
 		
 		vars=lambda->bvarStrings();
