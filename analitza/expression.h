@@ -107,6 +107,11 @@ class ANALITZA_EXPORT Expression
 		bool isLambda() const;
 		
 		/**
+		 *	Returns the expression of the lambda body (without resolving the dependencies)
+		 */
+		Expression lambdaBody() const;
+		
+		/**
 		 *	Returns whether it is a vector expression.
 		 */
 		bool isVector() const;

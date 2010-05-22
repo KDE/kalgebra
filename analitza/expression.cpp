@@ -474,6 +474,22 @@ QList<Ci*> Expression::parameters() const
 	return ret;
 }
 
+Expression Expression::lambdaBody() const
+{
+	Q_ASSERT(isLambda());
+	Object *ret=0;
+	if(d->m_tree) {
+		Container* c = (Container*) d->m_tree;
+		if(c->containerType()==Container::math) {
+			Container *c1 = (Container*) c->m_params.first();
+			ret = c1->m_params.last();
+		} else
+		ret = c->m_params.last();
+	}
+	
+	return Expression(ret->copy());
+}
+
 bool Expression::isVector() const
 {
 	if(d->m_tree) {
