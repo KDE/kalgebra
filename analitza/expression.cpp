@@ -474,6 +474,33 @@ QList<Ci*> Expression::parameters() const
 	return ret;
 }
 
+bool Expression::isVector() const
+{
+	if(d->m_tree) {
+		if(d->m_tree->isContainer()) {
+			Container *c = (Container*) d->m_tree;
+			return c->containerType()==Container::math && c->m_params.first()->type()==Object::vector;
+		} else
+			return d->m_tree->type()==Container::vector;
+	}
+	return false;
+}
+
+Expression Expression::elementAt(int position) const
+{
+	Q_ASSERT(isVector());
+	Vector *v=0;
+	if(d->m_tree) {
+		if(d->m_tree->isContainer()) {
+			Container *c = (Container*) d->m_tree;
+			v=static_cast<Vector*>(c->m_params.first());
+		} else
+			v=static_cast<Vector*>(d->m_tree);
+	}
+	
+	return Expression(v->at(position)->copy());
+}
+
 QStringList Expression::error() const
 {
 	return d->m_err;

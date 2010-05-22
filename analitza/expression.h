@@ -107,6 +107,16 @@ class ANALITZA_EXPORT Expression
 		bool isLambda() const;
 		
 		/**
+		 *	Returns whether it is a vector expression.
+		 */
+		bool isVector() const;
+		
+		/**
+		 *	Returns the element at @p position in a vector
+		 */
+		Expression elementAt(int position) const;
+		
+		/**
 		 *	Returns the tree associated to this object.
 		 */
 		const Object* tree() const;
