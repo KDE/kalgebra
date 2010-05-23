@@ -415,8 +415,6 @@ void FunctionImplicit::initImplicitFunction()
 
     // initial point
     initialPoint = findBestPointOnCurve();
-
-    //qDebug() << initialPoint; // funciona!!! :)
 }
 
 qreal FunctionImplicit::evalImplicitFunction(qreal x, qreal y)
@@ -445,11 +443,9 @@ qreal FunctionImplicit::evalPartialDerivativeY(qreal x, qreal y)
 
 QPointF FunctionImplicit::findBestPointOnCurve(const QPointF &refPoint)
 {
-    //////////
-
     simplexes.clear();
 
-    double m_simplexEdge = 0.0001;
+    double m_simplexEdge = 0.5;
 
     // si no tenemos simplex, calculamos el primer simplex, los demas los
     // generamos por reflexion
@@ -514,13 +510,13 @@ QPointF FunctionImplicit::findBestPointOnCurve(const QPointF &refPoint)
             if (isUnderSide) // si esta en la parte - entonces buscamos el maximo
                 findMax = true;
 
-            /*
-            qDebug() << "Simplex ->" << simplexes.last().vertex1().value() << simplexes.last().vertex2().value() << simplexes.last().vertex3().value();
-            qDebug() << "Con v1  ->" << simplexes.last().vertex1().x() <<  " - " << simplexes.last().vertex1().y();
-            qDebug() << "Con v2  ->" << simplexes.last().vertex2().x() <<  " - " << simplexes.last().vertex2().y();
-            qDebug() << "Con v3  ->" << simplexes.last().vertex3().x() <<  " - " << simplexes.last().vertex3().y();
-            qDebug() << "------------------------------------------------------------------";
-            */
+            //
+            //qDebug() << "Simplex ->" << simplexes.last().vertex1().value() << simplexes.last().vertex2().value() << simplexes.last().vertex3().value();
+            //qDebug() << "Con v1  ->" << simplexes.last().vertex1().x() <<  " - " << simplexes.last().vertex1().y();
+            //qDebug() << "Con v2  ->" << simplexes.last().vertex2().x() <<  " - " << simplexes.last().vertex2().y();
+            //qDebug() << "Con v3  ->" << simplexes.last().vertex3().x() <<  " - " << simplexes.last().vertex3().y();
+            //qDebug() << "------------------------------------------------------------------";
+            //
 
             // REGLA 1 del simplex seq original
             // Este es el vertice E en el papel "Hallar nuevo simplex"
@@ -770,7 +766,7 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
     }
 }
 
-QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& p)
+QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 {
 /*
     qreal eval = evalImplicitFunction(p.x(), p.y());
@@ -789,12 +785,47 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& p)
 
     }
 */
+    QString expLiteral = func.expression().lambdaBody().toString();
+    expLiteral.replace("y", QString::number(point.y()));
+    expLiteral.prepend("x->");
 
-    QPointF pp = findBestPointOnCurve(p);
+    Analitza::Analyzer f(func.variables());
+    f.setExpression(Analitza::Expression(expLiteral, false));
+    f.refExpression()->parameters()[0]->value() = vx;
 
-    qDebug() << pp;
+    Analitza::Analyzer df(func.variables());
+    df.setExpression(f.derivative("x"));
+    df.refExpression()->parameters()[0]->value() = vx;
 
-    return QPair<QPointF, QString>(pp, QString(""));
+    const int MAX_I = 256;
+    const double E = 0.0001;
+    double x0 = point.x();
+    double x = x0;
+    double error = 1000.0;
+    int i = 0;
+
+    while (true)
+    {
+        vx->setValue(x0);
+
+        double r = f.calculateLambda().toReal().value();
+        double d = df.calculateLambda().toReal().value();
+
+        i++;
+        x = x0 - r/d;
+
+        if ((error < E) || (i > MAX_I))
+            break;
+
+        error = fabs(x - x0);
+        x0 = x;
+    }
+
+//    QPointF pp = findBestPointOnCurve(p);
+//
+//    qDebug() << pp;
+
+    return QPair<QPointF, QString>(QPointF(x, point.y()), QString(""));
 }
 
 QLineF FunctionImplicit::derivative(const QPointF& p)
@@ -824,3 +855,4 @@ QLineF FunctionImplicit::derivative(const QPointF& p)
 
 //    return ret;
 }
+
