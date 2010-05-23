@@ -325,7 +325,7 @@ struct FunctionImplicit : public FunctionImpl
     qreal evalPartialDerivativeX(qreal x, qreal y);
     qreal evalPartialDerivativeY(qreal x, qreal y);
 
-    QPointF findBestPointOnCurve();
+    QPointF findBestPointOnCurve(const QPointF &refPoint = QPointF(22.0, -52.0));
 
     // attrs form implict alg
     Analitza::Cn *vx; // var x
@@ -375,7 +375,7 @@ namespace
     QLineF slopeToLine(const double &der)
     {
         double arcder = atan(der);
-        const double len=3.*der;
+        const double len=7.*der;
         QPointF from, to;
         from.setX(len*cos(arcder));
         from.setY(len*sin(arcder));
@@ -443,22 +443,22 @@ qreal FunctionImplicit::evalPartialDerivativeY(qreal x, qreal y)
     return dy.calculateLambda().toReal().value();
 }
 
-QPointF FunctionImplicit::findBestPointOnCurve()
+QPointF FunctionImplicit::findBestPointOnCurve(const QPointF &refPoint)
 {
     //////////
 
     simplexes.clear();
 
-    double m_simplexEdge = 0.5;
+    double m_simplexEdge = 0.0001;
 
     // si no tenemos simplex, calculamos el primer simplex, los demas los
     // generamos por reflexion
     // Genero el primer simplex
-    qreal relativePosX = 22;
-    qreal relativePosY = -52;
+    double relativePosX = refPoint.x();
+    double relativePosY = refPoint.y();
 
-    qreal p = m_simplexEdge*P_CONST_COEF;
-    qreal q = m_simplexEdge*Q_CONST_COEF;
+    double p = m_simplexEdge*P_CONST_COEF;
+    double q = m_simplexEdge*Q_CONST_COEF;
 
     Vertex vertex1(relativePosX, relativePosY, 
                    evalImplicitFunction(relativePosX, relativePosY));
@@ -772,7 +772,29 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
 
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& p)
 {
-    return QPair<QPointF, QString>(p, QString("asdads"));
+/*
+    qreal eval = evalImplicitFunction(p.x(), p.y());
+
+    qreal range = 0.1;
+
+    qDebug() << eval;
+
+    //if ((-range < eval) && (eval < range))
+    {
+        qreal fx = evalPartialDerivativeX(p.x(), p.y());
+        qreal fy = evalPartialDerivativeY(p.x(), p.y());
+
+        QVector2D T = QVector2D(-fy, fx);
+        T.normalize();
+
+    }
+*/
+
+    QPointF pp = findBestPointOnCurve(p);
+
+    qDebug() << pp;
+
+    return QPair<QPointF, QString>(pp, QString(""));
 }
 
 QLineF FunctionImplicit::derivative(const QPointF& p)
