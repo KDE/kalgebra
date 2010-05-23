@@ -339,6 +339,7 @@ struct FunctionImplicit : public FunctionImpl
     QVector<Simplex> simplexes;
 
     QPointF initialPoint;
+    QPointF last_calc;
 };
 
 REGISTER_FUNCTION(FunctionImplicit)
@@ -768,23 +769,8 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
 
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 {
-/*
-    qreal eval = evalImplicitFunction(p.x(), p.y());
+    // Check for x
 
-    qreal range = 0.1;
-
-    qDebug() << eval;
-
-    //if ((-range < eval) && (eval < range))
-    {
-        qreal fx = evalPartialDerivativeX(p.x(), p.y());
-        qreal fy = evalPartialDerivativeY(p.x(), p.y());
-
-        QVector2D T = QVector2D(-fy, fx);
-        T.normalize();
-
-    }
-*/
     QString expLiteral = func.expression().lambdaBody().toString();
     expLiteral.replace("y", QString::number(point.y()));
     expLiteral.prepend("x->");
@@ -803,6 +789,7 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
     double x = x0;
     double error = 1000.0;
     int i = 0;
+    bool has_root_x = true;
 
     while (true)
     {
@@ -814,18 +801,74 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
         i++;
         x = x0 - r/d;
 
-        if ((error < E) || (i > MAX_I))
+        if (error < E) break;
+        if (i > MAX_I)
+        {
+            has_root_x = false;
             break;
+        }
 
         error = fabs(x - x0);
         x0 = x;
     }
 
-//    QPointF pp = findBestPointOnCurve(p);
-//
-//    qDebug() << pp;
+    // Check for y
+    if (!has_root_x)
+    {
+        expLiteral = func.expression().lambdaBody().toString();
+        expLiteral.replace("x", QString::number(point.x()));
+        expLiteral.prepend("y->");
 
-    return QPair<QPointF, QString>(QPointF(x, point.y()), QString(""));
+        Analitza::Analyzer f(func.variables());
+        f.setExpression(Analitza::Expression(expLiteral, false));
+        f.refExpression()->parameters()[0]->value() = vy;
+
+        Analitza::Analyzer df(func.variables());
+        df.setExpression(f.derivative("y"));
+        df.refExpression()->parameters()[0]->value() = vy;
+
+        double y0 = point.y();
+        double y = y0;
+        error = 1000.0;
+        i = 0;
+        bool has_root_y = true;
+
+        while (true)
+        {
+            vy->setValue(y0);
+
+            double r = f.calculateLambda().toReal().value();
+            double d = df.calculateLambda().toReal().value();
+
+            i++;
+            y = y0 - r/d;
+
+            if (error < E) break;
+            if (i > MAX_I)
+            {
+                has_root_y = false;
+                break;
+            }
+
+            error = fabs(y - y0);
+            y0 = y;
+        }
+
+        if (!has_root_y)
+            return QPair<QPointF, QString>(last_calc, QString(""));
+        else
+        {
+            last_calc = QPointF(point.x(), y);
+
+            return QPair<QPointF, QString>(last_calc, QString(""));
+        }
+    }
+    else
+    {
+        last_calc = QPointF(x, point.y());
+
+        return QPair<QPointF, QString>(last_calc, QString(""));
+    }
 }
 
 QLineF FunctionImplicit::derivative(const QPointF& p)
