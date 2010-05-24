@@ -213,30 +213,18 @@ QPair<QPointF, QString> FunctionY::calc(const QPointF& p)
 
 QLineF FunctionY::derivative(const QPointF& p)
 {
-	Analitza::Analyzer a(func.variables());
-	double ret;
-	
-	if(m_deriv) {
-		Cn* v=new Cn(p.x());
-		a.setExpression(*m_deriv);
-		
-		a.expression().parameters().first()->value()=v;
-		
-		if(a.isCorrect())
-			ret = a.calculateLambda().toReal().value();
-		
-		if(!a.isCorrect()) {
-			kDebug() << "Derivative error: " <<  a.errors();
-			return QLineF();
-		}
-	} else {
-		QList<QPair<QString, double> > vars;
-		vars.append(QPair<QString, double>(boundings().first(), p.x()));
-		a.setExpression(func.expression());
-		ret=a.derivative(vars);
-	}
-	
-	return slopeToLine(ret);
+    Analitza::Analyzer df(func.variables());
+    df.setExpression(func.derivative("x"));
+    df.expression().parameters().first()->value() = vx;
+
+    if(!df.isCorrect()) {
+        kDebug() << "Derivative error: " <<  df.errors();
+        return QLineF();
+    }
+
+    vx->setValue(p.x());
+
+    return slopeToLine(df.calculateLambda().toReal().value());
 }
 
 void FunctionX::updatePoints(const QRect& viewport)
