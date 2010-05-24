@@ -189,6 +189,8 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 						parameter.top().pos=lex.current.pos;
 					}
 					
+					
+					
 					if(m_pos>lex.current.pos && !parameter.isEmpty()
 							&& lex.current.type==ExpressionTable::tColon) {
 						parameter.top().bounding=true;

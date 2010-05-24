@@ -307,6 +307,7 @@ struct FunctionImplicit : public FunctionImpl
     QVector<Simplex> simplexes;
 
     QPointF initialPoint;
+    static QStringList examples() { return QStringList("(2*x+y)*(x^2+y^2)^4+2*y*(5*x^4+10*x^2*y^2-3*y^4)-2*x+y"); }
     QPointF last_calc;
 };
 

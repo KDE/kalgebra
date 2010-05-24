@@ -104,6 +104,7 @@ struct FunctionParametric : public FunctionImpl
 	static QStringList supportedBVars() { return QStringList("t"); }
 	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2)); }
 	QStringList boundings() const { return supportedBVars(); }
+	static QStringList examples() { return QStringList("t->vector {t,t**2}"); }
 	Cn* vx;
 };
 REGISTER_FUNCTION(FunctionParametric)

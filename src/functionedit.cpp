@@ -52,7 +52,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_name = new KLineEdit(this);
 	
 	m_func = new ExpressionEdit(this);
-    m_func->setExamples(QStringList() << "x**sin x" << "8*sin(3q)" << "t->vector{t, t**2}" << "(2*x+y)*(x^2+y^2)^4+2*y*(5*x^4+10*x^2*y^2-3*y^4)-2*x+y");
+    m_func->setExamples(FunctionFactory::self()->examples());
 	m_func->setAns("x");
 	connect(m_func, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));

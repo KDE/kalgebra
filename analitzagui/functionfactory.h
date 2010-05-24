@@ -21,10 +21,11 @@
 
 #define REGISTER_FUNCTION(name) \
         static FunctionImpl* create##name(const Expression &exp, Variables* v) { return new name (exp, v); } \
-        namespace { bool _##name=FunctionFactory::self()->registerFunction(name::supportedBVars(), create##name, name ::expectedType); }
+        namespace { bool _##name=FunctionFactory::self()->registerFunction(name::supportedBVars(), create##name, name ::expectedType, name ::examples()); }
 
 #include <QMap>
 #include <QStringList>
+#include "analitzaguiexport.h"
 
 struct FunctionImpl;
 class QStringList;
@@ -36,7 +37,7 @@ class ExpressionType;
 class Variables;
 }
 
-class FunctionFactory
+class ANALITZAGUI_EXPORT FunctionFactory
 {
 	public:
 		typedef FunctionImpl* (*registerFunc_fn)(const Analitza::Expression&, Analitza::Variables* );
@@ -45,13 +46,15 @@ class FunctionFactory
 		FunctionImpl* item(const Id& bvars, const Analitza::Expression& exp, Analitza::Variables* v) const;
 		Analitza::ExpressionType type(const Id& bvars);
 		static FunctionFactory* self();
-		bool registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft);
+		bool registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft, const QStringList& examples);
 		bool contains(const Id& bvars) const;
+		QStringList examples() const;
 	private:
 		static FunctionFactory* m_self;
 		FunctionFactory() { Q_ASSERT(!m_self); m_self=this; }
 		QMap<QString, registerFunc_fn> m_items;
 		QMap<QString, expectedType_fn> m_types;
+		QStringList m_examples;
 };
 
 

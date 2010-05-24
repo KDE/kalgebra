@@ -39,13 +39,19 @@ Analitza::ExpressionType FunctionFactory::type(const FunctionFactory::Id& bvars)
 	return m_types[bvars.join("|")]();
 }
 
-bool FunctionFactory::registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft)
+bool FunctionFactory::registerFunction(const Id& bvars, registerFunc_fn f, expectedType_fn ft, const QStringList& examples)
 {
 	Q_ASSERT(!contains(bvars));
 	m_items[bvars.join("|")]=f;
 	m_types[bvars.join("|")]=ft;
+	m_examples.append(examples);
 	
 	return true;
+}
+
+QStringList FunctionFactory::examples() const
+{
+	return m_examples;
 }
 
 FunctionFactory* FunctionFactory::self()

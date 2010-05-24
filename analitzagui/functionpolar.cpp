@@ -43,6 +43,7 @@ struct FunctionPolar : public FunctionImpl
 	function::Axe axeType() const { return function::Polar; }
     QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
+    static QStringList examples() { return QStringList("q->3*sin(7*q)"); } //afiestas's favourite plot
 	
 	inline QPointF fromPolar(double r, double th) { return QPointF(r*std::cos(th), r*std::sin(th)); }
 	QRect m_last_viewport;

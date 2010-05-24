@@ -38,7 +38,7 @@ struct FunctionImpl
 	//helpers
 	/** adds a value to the points vector is needed. @returns if it was added. */
 	bool addValue(const QPointF& p);
-	bool isSimilar(double a, double b, double diff=0.0001);
+	static bool isSimilar(double a, double b, double diff=0.0001);
 	
 	//To reimplement
 	virtual function::Axe axeType() const { return function::Cartesian; }

@@ -39,13 +39,13 @@ using Analitza::Cn;
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
-	explicit FunctionY(const Expression &e, Variables* v) : FunctionImpl(e, v ,0,0), vx(new Cn)
+	explicit FunctionY(const Expression &e, Variables* v, const QString& bvar="x") : FunctionImpl(e, v ,0,0), vx(new Cn)
 	{
 		Analitza::Ci* vi=func.refExpression()->parameters().first();
 		vi->value()=vx;
 		
 		if(func.isCorrect()) {
-			Expression deriv = func.derivative("x");
+			Expression deriv = func.derivative(bvar);
 			if(func.isCorrect())
 				m_deriv = new Expression(deriv);
 			func.flushErrors();
@@ -56,13 +56,6 @@ struct FunctionY : public FunctionImpl
 	{
 		Analitza::Ci* vi=func.refExpression()->parameters().first();
 		vi->value()=vx;
-		
-		if(func.isCorrect()) {
-			Expression deriv = func.derivative("y");
-			if(func.isCorrect())
-				m_deriv = new Expression(deriv);
-			func.flushErrors();
-		}
 	}
 	virtual ~FunctionY() { delete vx; }
 	
@@ -75,6 +68,7 @@ struct FunctionY : public FunctionImpl
 	
 	QStringList boundings() const { return supportedBVars(); }
 	void calculateValues(double, double);
+	static QStringList examples() { return QStringList("x->x**sin x"); }
 	
 	Analitza::Cn* vx;
 };
@@ -82,7 +76,7 @@ struct FunctionY : public FunctionImpl
 ///Functions where the y is bounding. like y->sin(y). FunctionY mirrored
 struct FunctionX : public FunctionY
 {
-	explicit FunctionX(const Expression &e, Variables* v) : FunctionY(e, v) {}
+	explicit FunctionX(const Expression &e, Variables* v) : FunctionY(e, v, "y") {}
 	FunctionX(const FunctionX &fx) : FunctionY(fx) {}
 	
 	void updatePoints(const QRect& viewport);
@@ -93,6 +87,7 @@ struct FunctionX : public FunctionY
 	static QStringList supportedBVars() { return QStringList("y"); }
 	static ExpressionType expectedType() { return FunctionY::expectedType(); }
 	QStringList boundings() const { return supportedBVars(); }
+	static QStringList examples() { return QStringList("y->sin y"); }
 };
 
 REGISTER_FUNCTION(FunctionY)
