@@ -183,6 +183,8 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 
 QLineF FunctionPolar::derivative(const QPointF& point)
 {
+    //TODO review calc and this method
+
     QString rt = func.expression().lambdaBody().toString();
     rt.replace("q", "t");
 
@@ -206,8 +208,6 @@ QLineF FunctionPolar::derivative(const QPointF& point)
         df.setExpression(f.derivative("t"));
         df.refExpression()->parameters()[0]->value() = m_th;
 
-        qDebug() << f.expression().toString();
-
 //TODO
 //    Analitza::Analyzer g(func.variables());
 //    g.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(1).toString() + "+" + QString::number(-1.0*point.y()), false));
@@ -219,7 +219,14 @@ QLineF FunctionPolar::derivative(const QPointF& point)
 
         const int MAX_I = 256;
         const double E = 0.0001;
-        double t0 = 1.0;
+        double t0 = atan(point.y()/ point.x());
+
+        if(point.x()<0.)	t0 += pi;
+        else if(t0<0.)	t0 += 2.*pi;
+
+        t0=qMax(t0, downlimit());
+        t0=qMin(t0, uplimit());
+
         double t = t0;
         double error = 1000.0;
         int i = 0;
