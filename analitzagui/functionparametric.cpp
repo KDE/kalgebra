@@ -233,8 +233,6 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& point)
 
         vx->setValue(t);
 
-        qDebug() << "TTTTT -> " << t;
-
         Vector* v2 = static_cast<Vector*>(func.calculateLambda().tree());
         Analitza::Cn *comp1 = static_cast<Cn*>(v2->at(0));
         Analitza::Cn *comp2 = static_cast<Cn*>(v2->at(1));
@@ -317,8 +315,6 @@ QLineF FunctionParametric::derivative(const QPointF& point)
         dfunc.setExpression(func.derivative("t"));
         dfunc.refExpression()->parameters()[0]->value() = vx;
 
-        qDebug() << func.derivative("t").toString();
-
         vx->setValue(t);
 
         Vector* v = static_cast<Vector*>(dfunc.calculateLambda().tree());
@@ -326,8 +322,6 @@ QLineF FunctionParametric::derivative(const QPointF& point)
         Analitza::Cn *comp2 = static_cast<Cn*>(v->at(1));
 
         double m = comp2->value()/comp1->value();
-
-        qDebug() << "Slope -> " << m;
 
         return slopeToLine(m);
     }
