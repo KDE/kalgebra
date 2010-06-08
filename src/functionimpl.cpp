@@ -44,7 +44,7 @@ FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl
 	func.simplify();
 	
 	if(func.isCorrect()) {
-		Expression deriv = func.derivative();
+		Expression deriv = func.derivative(newFunc.bvarList().first());
 		if(func.isCorrect())
 			m_deriv = new Expression(deriv);
 	}
