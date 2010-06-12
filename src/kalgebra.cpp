@@ -504,8 +504,9 @@ void KAlgebra::tabChanged(int n)
 	
 	c_menu->setEnabled(false);
 	b_menu->setEnabled(false);
+#ifdef HAVE_OPENGL
 	t_menu->setEnabled(false);
-	
+#endif
 	m_status->clear();
 	
 	switch(n) {
