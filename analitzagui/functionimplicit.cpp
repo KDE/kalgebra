@@ -167,7 +167,7 @@ class Simplex
         Target m_target; // default Undef
 };
 
-const qreal SQRT_3 = sqrt(3);
+const qreal SQRT_3 = qSqrt(3);
 
 Simplex::Simplex()
     : m_edge(1.0)
