@@ -18,6 +18,7 @@
  *************************************************************************************/
 
 #include <QVector2D>
+#include <qmath.h>
 #include <KDebug>
 #include <KLocale>
 
