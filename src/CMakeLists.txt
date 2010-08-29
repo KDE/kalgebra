@@ -1,4 +1,4 @@
-include_directories(../analitza .. ${OPENGL_INCLUDE_DIR})
+include_directories(../analitza .. ${OPENGL_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
 
 set(kalgebra_SRCS
 	kalgebra.cpp
@@ -15,8 +15,6 @@ set(kalgebra_SRCS
 	viewportwidget.cpp
 	functionsview.cpp
 	functionsmodel.cpp
-
-	qtmmlwidget/qtmmlwidget.cpp
 )
 
 if(OPENGL_FOUND)
@@ -31,7 +29,7 @@ endif(OPENGL_FOUND)
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza analitzagui)
+target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza analitzagui qtmmlwidget)
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
