@@ -48,6 +48,12 @@ struct FunctionImpl
     virtual QLineF derivative(const QPointF& p)=0;
 	virtual QStringList boundings() const=0;
 	
+	/** 
+	 * @returns whether the points vector contains segments (all disconnected is true)
+	 * or continuous lines (all disconnected is false).
+	 */
+	virtual bool allDisconnected() { return false; }
+	
 	double uplimit() const;
 	double downlimit() const;
 	void setLimits(double downlimit, double uplimit);

@@ -119,6 +119,8 @@ class ANALITZAGUI_EXPORT function
 		void setUplimit(const Analitza::Expression& e);
 		void setDownlimit(const Analitza::Expression& e);
 		
+		bool allDisconnected() const;
+		
 	private:
 		FunctionImpl* m_function;
 		Analitza::Expression m_expression;

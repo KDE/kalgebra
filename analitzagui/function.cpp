@@ -175,3 +175,7 @@ QList<int> function::jumps() const
 	return m_function->m_jumps;
 }
 
+bool function::allDisconnected() const
+{
+    return m_function->allDisconnected();
+}

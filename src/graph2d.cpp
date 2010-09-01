@@ -213,7 +213,6 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 	finestra.setRenderHint(QPainter::Antialiasing, true);
 	
 	int k=0;
-	QRectF panorama(QPoint(0,0), size());
 	FunctionsModel::const_iterator it=m_model->constBegin(), itEnd=m_model->constEnd();
 	for (; it!=itEnd; ++it, ++k ) {
 		if(!it->isShown())
@@ -228,7 +227,13 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 		unsigned int pointsCount = vect.count();
 		QPointF ultim(toWidget(vect[0]));
 		
-		int nextjump= jumps.isEmpty() ? -1 : jumps.takeFirst();
+		bool allJumps = it->allDisconnected();
+		int nextjump;
+		if(allJumps)
+			nextjump = 0;
+		else
+			nextjump = jumps.isEmpty() ? -1 : jumps.takeFirst();
+        
 #ifdef DEBUG_GRAPH
 		qDebug() << "---------" << jumps.count()+1;
 #endif
@@ -262,13 +267,18 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 				finestra.drawPoint(ultim);
 				finestra.setPen(pfunc);
 #endif
-			} else if(nextjump==int(j)) {
+            } else if(nextjump==int(j)) {
 				do {
 					if(nextjump!=int(j))
 						finestra.drawPoint(act);
-					nextjump=jumps.isEmpty() ? -1 : jumps.takeFirst();
+					
+					if(allJumps)
+						nextjump += 2;
+					else
+						nextjump = jumps.isEmpty() ? -1 : jumps.takeFirst();
+					
 				} while(!jumps.isEmpty() && jumps.first()==nextjump+1);
-				
+
 #ifdef DEBUG_GRAPH
 				qDebug() << "jumpiiiiiing" << ultim << toWidget(vect.at(j));
 				QPen p(Qt::blue);
