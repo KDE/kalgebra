@@ -19,12 +19,12 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
-#include <QColor>
 #include <QRect>
 #include <QLine>
 #include <QPair>
 #include <analitza/expression.h>
 #include "analitzaguiexport.h"
+#include <QPen>
 
 namespace Analitza
 {
@@ -54,9 +54,9 @@ class ANALITZAGUI_EXPORT function
 		/** Constructor. Creates a new function.
 			@param name the function name.
 			@param newExp the function expression tree.
-			@param color the function representation color.
+			@param pen the pen used to paint the function.
 		*/
-		function(const QString& name, const Analitza::Expression& newExp, Analitza::Variables* v, const QColor& color,
+		function(const QString& name, const Analitza::Expression& newExp, Analitza::Variables* v, const QPen& m_pen,
 				double uplimit, double downlimit);
 		
 		/** Destructor. */
@@ -73,10 +73,10 @@ class ANALITZAGUI_EXPORT function
 		uint resolution() const;
 		
 		/** Retrieves the color of the function. */
-		QColor color() const { return m_color; }
+		QColor color() const { return m_pen.color(); }
 		
 		/** Sets the color of the function. */
-		void setColor(const QColor& newColor) { m_color=newColor; }
+		void setColor(const QColor& newColor) { m_pen.setColor(newColor); }
 		
 		/** Sets whether the function has to be shown. */
 		void setShown(bool newShow) { m_show=newShow; }
@@ -125,7 +125,7 @@ class ANALITZAGUI_EXPORT function
 		FunctionImpl* m_function;
 		Analitza::Expression m_expression;
 		bool m_show;
-		QColor m_color;
+		QPen m_pen;
 		QString m_name;
 		QStringList m_err;
 };

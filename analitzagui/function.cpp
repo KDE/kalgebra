@@ -30,12 +30,12 @@
 using Analitza::ExpressionType;
 
 function::function()
-	: m_function(0), m_show(true), m_color(Qt::black)
+	: m_function(0), m_show(true), m_pen(Qt::black)
 {}
 
 function::function(const QString &name, const Analitza::Expression& newFunc, Analitza::Variables* v,
-				   const QColor& color, double uplimit, double downlimit)
-	: m_function(0), m_expression(newFunc), m_show(true), m_color(color), m_name(name)
+				   const QPen& pen, double uplimit, double downlimit)
+	: m_function(0), m_expression(newFunc), m_show(true), m_pen(pen), m_name(name)
 {
 	if(newFunc.isCorrect()) {
 		Analitza::Analyzer a(v);
@@ -69,7 +69,7 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 }
 
 function::function(const function& f)
-	: m_function(0), m_expression(f.expression()), m_show(f.m_show), m_color(f.m_color)
+	: m_function(0), m_expression(f.expression()), m_show(f.m_show), m_pen(f.m_pen)
 	, m_name(f.m_name), m_err(f.m_err)
 {
 	if(f.m_function)
@@ -94,7 +94,7 @@ function function::operator=(const function& f)
 			m_function=0;
 		m_expression=f.m_expression;
 		m_show=f.m_show;
-		m_color=f.m_color;
+		m_pen=f.m_pen;
 		m_name=f.m_name;
 		m_err=f.m_err;
 	}
