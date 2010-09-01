@@ -163,7 +163,7 @@ void Box::printValues()
 //END Box class
 
 //NOTE This version of FunctionImplicit implements the quadtree approach
-struct KEOMATH_EXPORT FunctionImplicit : public FunctionImpl
+struct FunctionImplicit : public FunctionImpl
 {
     explicit FunctionImplicit(const Expression &e, Variables* v)
         : FunctionImpl(e, v, 0,2*M_PI)
