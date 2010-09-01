@@ -78,176 +78,92 @@ namespace
     }
 }
 
-//BEGIN Vertex
+//BEGIN Box class
 
-// Vertex for he simplex
-class Vertex : public QPointF
+class Box : public QRectF
 {
     public:
-        explicit Vertex()
-            : QPointF()
-        {}
+        explicit Box();
+        Box(const Box &box);
+        Box(const QRect &rect);
+        Box(const QRectF &rect);
+        Box(qreal x, qreal y, qreal width, qreal height);
 
-        Vertex(const QPointF point, qreal value = 0.)
-            : QPointF(point)
-        {
-            setValue(value);
-        }
+        // no usar we sw usar la convencion de la plataforma topleftbox ...
+        Box nwBox() const;
+        Box neBox() const;
+        Box seBox() const;
+        Box swBox() const;
 
-        Vertex(qreal x, qreal y, qreal value = 0.)
-            : QPointF(x, y)
-        {
-            setValue(value);
-        }
+        qreal topLeftValue;
+        qreal topRightValue;
+        qreal bottomRightValue;
+        qreal bottomLeftValue;
 
-        qreal value() const { return m_value; }
-        bool isUpperSide() const { return m_isUpperSide; }
-        unsigned short int order() const { return m_order; }
-
-        void setValue(qreal value)
-        {
-            m_value = value;
-
-            if (value > 0.)
-                m_isUpperSide = true;
-            else
-                // the value never will be zero (in theory)
-                m_isUpperSide = false;
-        }
-
-        void setOrder(unsigned short int order) { m_order = order; }
-
-    private:
-        //NOTE We get this value when eval the implicit function
-        qreal m_value;
-        bool m_isUpperSide; // if the vertex is upper the curve
-        unsigned short int m_order; // order of the vertex: 1 (new) and 3 (older)
+        void printValues();
 };
 
-//END Vertex
-
-//BEGIN Simplex
-
-// A simplex in 2D space
-
-const double P_CONST_COEF = 0.9659258262890682; // (N + sqrt(N + 1.) - 1.)/(sqrt(2.)*N);
-const double Q_CONST_COEF = 0.2588190451025207; // (sqrt(N + 1.) - 1.)/(sqrt(2.)*N);
-
-class Simplex
+Box::Box()
+    : QRectF()
 {
-    public:
-        // Min means that simplex is tracking a minimum
-        // Undef means that the simplex is over the curve
-        enum Target {Undef = 0, Min, Max};
 
-        Simplex();
-        // The constructor define the order of the vertexes
-        Simplex(const Vertex & vertex1, const Vertex & vertex2, const Vertex & vertex3, Target target = Undef);
+}
 
-        Vertex vertex1() const; // new vertex
-        Vertex vertex2() const;
-        Vertex vertex3() const; // old vertex
+Box::Box(const QRect &rect)
+    :  QRectF(rect)
+{
 
-        // Wich vertex contains the greater value
-        // zeta > beta > alfa
-        Vertex vertexAlfa() const;
-        Vertex vertexBeta() const;
-        Vertex vertexZeta() const;
+}
 
-        qreal edge() const;
-        QPointF centerOfGravity() const;
+Box::Box(const QRectF &rect)
+    : QRectF(rect)
+{
 
-        Target target() const;
+}
 
-    private:
-        // This vector contains six vertexes: vertex1, vertex2,
-        // vertex3, vertexAlfa, vertexBeta and vertexZeta
-        QVector<Vertex> m_vertexList;
-        qreal m_edge; // edge of the vertex
-
-        Target m_target; // default Undef
-};
-
-const qreal SQRT_3 = qSqrt(3);
-
-Simplex::Simplex()
-    : m_edge(1.0)
-    , m_target(Undef)
+Box::Box(const Box &box)
+    : QRectF(box)
 {
 }
 
-Simplex::Simplex(const Vertex & vertex1, const Vertex & vertex2, const Vertex & vertex3, Target target)
-    : m_target(target)
+Box::Box(qreal x, qreal y, qreal width, qreal height)
+    : QRectF(x, y, width, height)
 {
-    Vertex vector = vertex2 - vertex1;
-    qreal norm = sqrt(vector.x()*vector.x() + vector.y()*vector.y());
-    m_edge = norm;
 
-    m_vertexList.append(vertex1);
-    m_vertexList.append(vertex2);
-    m_vertexList.append(vertex3);
-
-    // update the order ... see the constructor
-    m_vertexList[0].setOrder(1);
-    m_vertexList[1].setOrder(2);
-    m_vertexList[2].setOrder(3);
-
-    m_vertexList.append(vertex1);
-    m_vertexList.append(vertex2);
-    m_vertexList.append(vertex3);
-
-    m_vertexList[3].setOrder(1);
-    m_vertexList[4].setOrder(2);
-    m_vertexList[5].setOrder(3);
-
-    for (short int i = 0; i < 3; ++i)
-        for (short int j = 0; j < 3; ++j)
-            if (m_vertexList[i + 3].value() < m_vertexList[j + 3].value())
-            {
-                Vertex tmp;
-                tmp.setX(m_vertexList[i + 3].x());
-                tmp.setY(m_vertexList[i + 3].y());
-                tmp.setValue(m_vertexList[i + 3].value());
-                tmp.setOrder(m_vertexList[i + 3].order());
-
-                m_vertexList[i + 3].setX(m_vertexList[j + 3].x());
-                m_vertexList[i + 3].setY(m_vertexList[j + 3].y());
-                m_vertexList[i + 3].setValue(m_vertexList[j + 3].value());
-                m_vertexList[i + 3].setOrder(m_vertexList[j + 3].order());
-
-                m_vertexList[j + 3].setX(tmp.x());
-                m_vertexList[j + 3].setY(tmp.y());
-                m_vertexList[j + 3].setValue(tmp.value());
-                m_vertexList[j + 3].setOrder(tmp.order());
-            }
 }
 
-Vertex Simplex::vertex1() const { return m_vertexList[0]; }
-Vertex Simplex::vertex2() const { return m_vertexList[1]; }
-Vertex Simplex::vertex3() const { return m_vertexList[2]; }
-
-Vertex Simplex::vertexAlfa() const { return m_vertexList[3]; }
-Vertex Simplex::vertexBeta() const { return m_vertexList[4]; }
-Vertex Simplex::vertexZeta() const { return m_vertexList[5]; }
-
-qreal Simplex::edge() const { return m_edge; }
-
-QPointF Simplex::centerOfGravity() const
+Box Box::nwBox() const
 {
-    return (vertex1() + vertex2() + vertex3())/3.;
+    return Box(x(), y(), width()*0.5, height()*0.5);
 }
 
-Simplex::Target Simplex::target() const
+Box Box::neBox() const
 {
-    return m_target;
+    return Box(x() + width()*0.5, y(), width()*0.5, height()*0.5);
 }
 
-//END Simplex
+Box Box::seBox() const
+{
+    return Box(x() + width()*0.5, y() + height()*0.5, width()*0.5, height()*0.5);
+}
 
-//NOTE This version of FunctionImplicit implements a
-// an algorithm of the type tangential, it draw follows the
-// tangent
-struct FunctionImplicit : public FunctionImpl
+Box Box::swBox() const
+{
+    return Box(x(), y() + height()*0.5, width()*0.5, height()*0.5);
+}
+
+void Box::printValues()
+{
+    qDebug() << "TL -> " << topLeftValue;
+    qDebug() << "TR -> " << topRightValue;
+    qDebug() << "BR -> " << bottomRightValue;
+    qDebug() << "BL -> " << bottomLeftValue;
+}
+
+//END Box class
+
+//NOTE This version of FunctionImplicit implements the quadtree approach
+struct KEOMATH_EXPORT FunctionImplicit : public FunctionImpl
 {
     explicit FunctionImplicit(const Expression &e, Variables* v)
         : FunctionImpl(e, v, 0,2*M_PI)
@@ -296,21 +212,52 @@ struct FunctionImplicit : public FunctionImpl
     qreal evalPartialDerivativeX(qreal x, qreal y);
     qreal evalPartialDerivativeY(qreal x, qreal y);
 
-    QPointF findBestPointOnCurve(const QPointF &refPoint = QPointF(22.0, -52.0));
+    Analitza::Analyzer dx; // partial derivative respect to var x
+    Analitza::Analyzer dy; // partial derivative respect to var y
 
     Analitza::Cn *vx; // var x
     Analitza::Cn *vy; // var y
 
-    Analitza::Analyzer dx; // partial derivative respect to var x
-    Analitza::Analyzer dy; // partial derivative respect to var x
-
-    // Used for search a close point on curve
-    QVector<Simplex> simplexes;
-
     QPointF initialPoint;
-    static QStringList examples() { return QStringList("(2*x+y)*(x^2+y^2)^4+2*y*(5*x^4+10*x^2*y^2-3*y^4)-2*x+y"); }
+    static QStringList examples()
+    {
+        QStringList ret;
+        ret << "x*x+y*y-10" << "(2*x+y)*(x^2+y^2)^4+2*y*(5*x^4+10*x^2*y^2-3*y^4)-2*x+y" <<
+        "sin(x)-cos(y)" << "(x^2+y^2-16)+x^2*y^2" << "(x^2+y^2)*(y^2+x*(x+4))-4*4*x*y^2" <<
+        "(x^2+y^2)^2-19*x*(x^2-y^2)" << "x*(x^2-3*y^2)-9*(x^2+y^2)" <<
+        "(x^2+y^2)*(x^2+y^2-16)^2-4*16*(x^2+y^2-4*x)^2" << "y^2*(y^2-10)-x^2*(x^2-9)" <<
+        "x^702+y^702-9000000";
+
+        return ret;
+    }
     QPointF last_calc;
+
+    // small size means better quality but decrease the performance of updating
+    static const qreal MIN_SIZE_OF_BOX;
+    static const qreal MIN_SIZE_OF_BOX_FOR_CHECK_SIGNS;
+
+    public:
+        bool isBoxEmpty(const Box &box);
+        void subdivideSpace(const Box &root);
+        bool allDisconnected() { return true; } // true when we work implicit curves
+
+    private:
+        void addPath(const QPointF &a, const QPointF &b)
+        {
+//            addValue(a);
+//            addValue(b);
+            points.append(a);
+            points.append(b);
+//            static int i = 0;
+//            m_jumps.append(2*i);
+//            i++;
+        }
 };
+
+//const qreal FunctionImplicit::MIN_SIZE_OF_BOX = 0.005; 0.005 good value for high quality
+const qreal FunctionImplicit::MIN_SIZE_OF_BOX = 0.025;
+//const qreal FunctionImplicit::MIN_SIZE_OF_BOX_FOR_CHECK_SIGNS = 1.5; 1.0 is ok for high quality
+const qreal FunctionImplicit::MIN_SIZE_OF_BOX_FOR_CHECK_SIGNS = 1.15;
 
 REGISTER_FUNCTION(FunctionImplicit)
 
@@ -329,8 +276,6 @@ void FunctionImplicit::initImplicitFunction()
     dy.setExpression(func.derivative("y"));
     dy.refExpression()->parameters()[0]->value() = vx;
     dy.refExpression()->parameters()[1]->value() = vy;
-
-    initialPoint = findBestPointOnCurve();
 }
 
 qreal FunctionImplicit::evalImplicitFunction(qreal x, qreal y)
@@ -357,126 +302,127 @@ qreal FunctionImplicit::evalPartialDerivativeY(qreal x, qreal y)
     return dy.calculateLambda().toReal().value();
 }
 
-QPointF FunctionImplicit::findBestPointOnCurve(const QPointF &refPoint)
+//Begin Quadtree
+
+bool FunctionImplicit::isBoxEmpty(const Box &cell)
 {
-    simplexes.clear();
+    Box box(cell);
 
-    double m_simplexEdge = 0.5;
+    vx->setValue(box.topLeft().x());
+    vy->setValue(box.topLeft().y());
+    box.topLeftValue = func.calculateLambda().toReal().value();
 
-    // clac the first simplex, next simplexes will be generated by reflection
-    double relativePosX = refPoint.x();
-    double relativePosY = refPoint.y();
+    vx->setValue(box.topRight().x());
+    vy->setValue(box.topRight().y());
+    box.topRightValue = func.calculateLambda().toReal().value();
 
-    double p = m_simplexEdge*P_CONST_COEF;
-    double q = m_simplexEdge*Q_CONST_COEF;
+    vx->setValue(box.bottomRight().x());
+    vy->setValue(box.bottomRight().y());
+    box.bottomRightValue = func.calculateLambda().toReal().value();
 
-    Vertex vertex1(relativePosX, relativePosY,
-                   evalImplicitFunction(relativePosX, relativePosY));
+    vx->setValue(box.bottomLeft().x());
+    vy->setValue(box.bottomLeft().y());
+    box.bottomLeftValue = func.calculateLambda().toReal().value();
 
-    Vertex vertex2(relativePosX + p, relativePosY + q,
-                   evalImplicitFunction(relativePosX + p, relativePosY + q));
+    qreal topSignShift = box.topLeftValue*box.topRightValue;
+    qreal rightSignShift = box.topRightValue*box.bottomRightValue;
+    qreal bottomSignShift = box.bottomRightValue*box.bottomLeftValue;
+    qreal leftSignShift = box.bottomLeftValue*box.topLeftValue;
 
-    Vertex vertex3(relativePosX + q, relativePosY + p,
-                   evalImplicitFunction(relativePosX + q, relativePosY + p));
-
-    simplexes.append(Simplex(vertex1, vertex2, vertex3));
-
-    int max_iter = 0;
-
-    while (max_iter < 2048)
+    // if there is sign shift on any vertice then a segment
+    // of the curve is in the box
+    if ((topSignShift < 0) || (rightSignShift < 0) || (bottomSignShift < 0) || (leftSignShift < 0))
     {
-        max_iter++;
-
-        bool isUpperSide = ((simplexes.last().vertex1().isUpperSide() == true) &&
-                            (simplexes.last().vertex2().isUpperSide() == true) &&
-                            (simplexes.last().vertex3().isUpperSide() == true));
-
-        bool isUnderSide = ((simplexes.last().vertex1().isUpperSide() == false) &&
-                            (simplexes.last().vertex2().isUpperSide() == false) &&
-                            (simplexes.last().vertex3().isUpperSide() == false));
-
-        if (isUpperSide || isUnderSide)
+        if (box.width() < MIN_SIZE_OF_BOX)
         {
-            bool findMax;
+            // | (t->b)
+            if ((topSignShift < 0) && (rightSignShift > 0) && (bottomSignShift < 0) && (leftSignShift > 0))
+                addPath(QPointF(box.center().x(), box.top()),
+                    QPointF(box.center().x(), box.bottom()));
 
-            if (isUpperSide) // then we have to search a minimum
-                findMax = false;
+            // - (r->l)
+            if ((topSignShift > 0) && (rightSignShift < 0) && (bottomSignShift > 0) && (leftSignShift < 0))
+                addPath(QPointF(box.left(), box.center().y()),
+                    QPointF(box.right(), box.center().y()));
 
-            if (isUnderSide) // then we have to search a maximun
-                findMax = true;
+            // \ (t->r)
+            if ((topSignShift < 0) && (rightSignShift < 0) && (bottomSignShift > 0) && (leftSignShift > 0))
+                addPath(QPointF(box.center().x(), box.top()),
+                    QPointF(box.right(), box.center().y()));
+            // / (r->b)
+            if ((topSignShift > 0) && (rightSignShift < 0) && (bottomSignShift < 0) && (leftSignShift > 0))
+                addPath(QPointF(box.right(), box.center().y()),
+                    QPointF(box.center().x(), box.bottom()));
 
-            // This vertex will be generated by reflection
-            Vertex newVertex;
+            // \ (b->r)
+            if ((topSignShift > 0) && (rightSignShift < 0) && (bottomSignShift < 0) && (leftSignShift > 0))
+                addPath(QPointF(box.center().x(), box.bottom()),
+                    QPointF(box.right(), box.center().y()));
 
-            if (findMax)
-                newVertex = (simplexes.last().vertexBeta() +
-                             simplexes.last().vertexZeta()) -
-                             simplexes.last().vertexAlfa();
-            else
-                newVertex = (simplexes.last().vertexAlfa() +
-                             simplexes.last().vertexBeta()) -
-                             simplexes.last().vertexZeta();
+            // / (r->t)
+            if ((topSignShift < 0) && (rightSignShift < 0) && (bottomSignShift > 0) && (leftSignShift > 0))
+                addPath(QPointF(box.right(), box.center().y()),
+                    QPointF(box.center().x(), box.top()));
 
-            //update the value of the vertex
-            newVertex.setValue(evalImplicitFunction(newVertex.x(), newVertex.y()));
+            // - t
+            if ((topSignShift < 0) && (rightSignShift > 0) && (bottomSignShift > 0) && (leftSignShift > 0))
+                addPath(box.topLeft(), box.topRight());
 
-            Vertex vertex1 = newVertex;
-            Vertex vertex2;
-            Vertex vertex3;
+            // - b
+            if ((topSignShift > 0) && (rightSignShift > 0) && (bottomSignShift < 0) && (leftSignShift > 0))
+                addPath(box.bottomLeft(), box.bottomRight());
 
-            if (findMax)
-            {
-                vertex2 = simplexes.last().vertexZeta().order() > simplexes.last().vertexBeta().order()? simplexes.last().vertexBeta():simplexes.last().vertexZeta();
-                vertex3 = simplexes.last().vertexZeta().order() > simplexes.last().vertexBeta().order()? simplexes.last().vertexZeta():simplexes.last().vertexBeta();
-            }
-            else
-            {
-                vertex2 = simplexes.last().vertexAlfa().order() > simplexes.last().vertexBeta().order()? simplexes.last().vertexBeta():simplexes.last().vertexAlfa();
-                vertex3 = simplexes.last().vertexAlfa().order() > simplexes.last().vertexBeta().order()? simplexes.last().vertexAlfa():simplexes.last().vertexBeta();
-            }
+            // | r
+            if ((topSignShift > 0) && (rightSignShift > 0) && (bottomSignShift < 0) && (leftSignShift > 0))
+                addPath(box.topRight(), box.bottomRight());
 
-            bool checkRule2 = false;
-
-            if (findMax)
-            {
-                if (simplexes.last().vertexAlfa().order() == 1)
-                    checkRule2 = true;
-            }
-            else
-            {
-                if (simplexes.last().vertexZeta().order() == 1)
-                    checkRule2 = true;
-            }
-
-            if (checkRule2)
-            {
-                newVertex = (simplexes.last().vertexAlfa() + simplexes.last().vertexZeta()) - simplexes.last().vertexBeta();
-                newVertex.setValue(evalImplicitFunction(newVertex.x(), newVertex.y()));
-
-                vertex1 = newVertex;
-                vertex2 = simplexes.last().vertexZeta().order() > simplexes.last().vertexAlfa().order()? simplexes.last().vertexAlfa():simplexes.last().vertexZeta();
-                vertex3 = simplexes.last().vertexZeta().order() > simplexes.last().vertexAlfa().order()? simplexes.last().vertexZeta():simplexes.last().vertexAlfa();
-            }
-
-            Simplex::Target target = Simplex::Undef;
-
-            if (findMax)
-                target = Simplex::Max; // simplex was seraching a maximun
-            else
-                target = Simplex::Min; // simplex was seraching a maximun
-
-            simplexes.append(Simplex(vertex1, vertex2, vertex3, target));
+            // | l
+            if ((topSignShift > 0) && (rightSignShift > 0) && (bottomSignShift > 0) && (leftSignShift < 0))
+                addPath(box.topLeft(), box.bottomLeft());
         }
-        else
-            break;
+
+        return false;
     }
 
-    return QPointF(simplexes.last().centerOfGravity().x(), simplexes.last().centerOfGravity().y());
+    return true;
 }
+
+//TODO must return a quadtree
+void FunctionImplicit::subdivideSpace(const Box &root)
+{
+    QVector<Box> boxes;
+    boxes.append(root.nwBox());
+    boxes.append(root.neBox());
+    boxes.append(root.seBox());
+    boxes.append(root.swBox());
+
+    for (int i = 0; i < boxes.size(); i++)
+    {
+        bool empty_box = isBoxEmpty(boxes.at(i));
+
+        if ((empty_box) && (boxes.at(i).width() > MIN_SIZE_OF_BOX_FOR_CHECK_SIGNS))
+          empty_box = false;
+
+        if (empty_box)
+        {
+        }
+        else
+        {
+            if (boxes.at(i).width() < MIN_SIZE_OF_BOX)
+            {
+//                points.append(boxes.at(i).center());
+            }
+            else
+                subdivideSpace(boxes.at(i));
+        }
+    }
+}
+
+//End Quadtree
 
 void FunctionImplicit::updatePoints(const QRect& viewport)
 {
-    Q_UNUSED(viewport);
+//    Q_UNUSED(viewport);
     Q_ASSERT(func.expression().isCorrect());
 
     if(int(resolution())==points.capacity())
@@ -485,114 +431,21 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
     //double ulimit = uplimit();
     //double dlimit = downlimit();
 
-    points.clear();
-    points.reserve(resolution());
+	points.clear();
+	points.reserve(resolution());
 
-    double e = 0.01;
-    int iter = 0;
-    double k = 1.;
+//    tree<Box>::iterator top;
+//    top = quadtree.begin();
+//    currentroot = quadtree.insert(top, Box(viewport.x(), viewport.y(), viewport.width(), viewport.height()));
 
-    // initial point
-    double xi = initialPoint.x();
-    double yi = initialPoint.y();
+//    points.clear();
+	Box root(viewport); //TODO translate points before?
 
-    double h = 0.1; // best resolution vals < 0.1
+	if (viewport.width() < 23)
+		root = Box(-15,-18,34,33);
+//		root = Box(-15,-18,34,33); // default fixed viewport settings
 
-    QVector2D oldT(0., 0.);
-
-    int mmmcont = 0;
-
-    for (int i = 0; i < 1024; i++)
-    {
-        double fx = evalPartialDerivativeX(xi, yi);
-        double fy = evalPartialDerivativeY(xi, yi);
-
-        QVector2D T = QVector2D(-fy, fx);
-        T.normalize();
-        T *= h;
-
-        double cond = oldT.x()*T.x() + oldT.y()*T.y();
-
-        if (cond < 0)
-        {
-            // change the direction of the tangent for draw
-            // curves with quadruple point
-            k *= -k;
-
-            mmmcont++;
-
-            //WARNING check this hardcode num
-            // in general check another method for singular points
-            if (mmmcont > 69)
-                T *= -1.0;
-        }
-        else
-        // change the direction of the tangent
-            k = 1.;
-
-        T *= k;
-
-        QPointF p0(xi + T.x(), yi + T.y());
-        QPointF point = p0;
-
-        oldT = T;
-
-        if (fabs(T.x()) > fabs(T.y())) // m < 1
-        {
-            double error = 500.0f;
-            iter = 0;
-            double yant = p0.y();
-            double y = 0.0f;
-
-            while (true)
-            {
-                double fn_val = evalImplicitFunction(p0.x(), yant);
-                double dy_val = evalPartialDerivativeY(p0.x(), yant);
-
-                iter++;
-
-                y = yant - fn_val/dy_val;
-
-                if ((error < e) || (iter > 256)) // 256 const max iter num
-                    break;
-
-                error = fabs(y - yant);
-                yant = y;
-            }
-
-            point = QPointF(p0.x(), y);
-        }
-        else
-        {
-            double error = 500.0f;
-            iter = 0;
-            double xant = p0.x();
-            double x = 0.0f;
-
-            while (true)
-            {
-                double fn_val = evalImplicitFunction(xant, p0.y());
-                double dx_val = evalPartialDerivativeX(xant, p0.y());
-
-                iter++;
-
-                x = xant - fn_val/dx_val;
-
-                if ((error < e) || (iter > 256)) // 256 const max iter num
-                    break;
-
-                error = fabs(x - xant);
-                xant = x;
-            }
-
-            point = QPointF(x, p0.y());
-        }
-
-        addValue(point);
-
-        xi = point.x();
-        yi = point.y();
-    }
+    subdivideSpace(root);
 }
 
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
