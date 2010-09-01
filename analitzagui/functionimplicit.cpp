@@ -219,17 +219,8 @@ struct FunctionImplicit : public FunctionImpl
     Analitza::Cn *vy; // var y
 
     QPointF initialPoint;
-    static QStringList examples()
-    {
-        QStringList ret;
-        ret << "x*x+y*y-10" << "(2*x+y)*(x^2+y^2)^4+2*y*(5*x^4+10*x^2*y^2-3*y^4)-2*x+y" <<
-        "sin(x)-cos(y)" << "(x^2+y^2-16)+x^2*y^2" << "(x^2+y^2)*(y^2+x*(x+4))-4*4*x*y^2" <<
-        "(x^2+y^2)^2-19*x*(x^2-y^2)" << "x*(x^2-3*y^2)-9*(x^2+y^2)" <<
-        "(x^2+y^2)*(x^2+y^2-16)^2-4*16*(x^2+y^2-4*x)^2" << "y^2*(y^2-10)-x^2*(x^2-9)" <<
-        "x^702+y^702-9000000";
-
-        return ret;
-    }
+    static QStringList examples() { return QStringList("x^3-y^2+2") << "y^2*(y^2-10)-x^2*(x^2-9)"; }
+    
     QPointF last_calc;
 
     // small size means better quality but decrease the performance of updating
