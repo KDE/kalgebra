@@ -208,6 +208,8 @@ QLineF FunctionPolar::derivative(const QPointF& point)
         df.setExpression(f.derivative("t"));
         df.refExpression()->parameters()[0]->value() = m_th;
 
+		if (!df.isCorrect()) return QLineF();
+
 //TODO
 //    Analitza::Analyzer g(func.variables());
 //    g.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(1).toString() + "+" + QString::number(-1.0*point.y()), false));
