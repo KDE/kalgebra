@@ -51,7 +51,7 @@ class HelpTip : public QLabel
 			setPalette(p);
 		}
 		
-		void mousePressEvent(QMouseEvent* ev)
+		void mousePressEvent(QMouseEvent*)
 		{
 			hide();
 		}

@@ -122,6 +122,16 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 						this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
 	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Export Log..."),
 						this, SLOT(saveLog()), QKeySequence::Save);
+	c_menu->addSeparator()->setText(i18n("Execution Mode"));
+	QActionGroup *execGroup = new QActionGroup(c_menu);
+	QAction* calc = c_menu->addAction(i18nc("@item:inmenu", "Calculate"), this, SLOT(consoleCalculate()));
+	QAction* eval = c_menu->addAction(i18nc("@item:inmenu", "Evaluate"), this, SLOT(consoleEvaluate()));
+	
+	calc->setCheckable(true);
+	eval->setCheckable(true);
+	eval->setChecked(true);
+	execGroup->addAction(calc);
+	execGroup->addAction(eval);
 	c_menu->addSeparator();
 	c_menu->addAction(KStandardAction::clear(c_results, SLOT(clear()), this));
 	initializeRecentScripts();
@@ -550,6 +560,16 @@ void KAlgebra::updateInformation()
 {
 	c_varsModel->updateInformation();
 	c_variables->header()->resizeSections(QHeaderView::ResizeToContents);
+}
+
+void KAlgebra::consoleCalculate()
+{
+	c_results->setMode(ConsoleHtml::Calculation);
+}
+
+void KAlgebra::consoleEvaluate()
+{
+	c_results->setMode(ConsoleHtml::Evaluation);
 }
 
 void KAlgebra::valueChanged()

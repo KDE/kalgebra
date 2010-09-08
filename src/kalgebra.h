@@ -86,6 +86,8 @@ class KAlgebra : public KMainWindow
 		void saveScript();
 		void saveLog();
 		void updateInformation();
+		void consoleCalculate();
+		void consoleEvaluate();
 		
 		void select(const QModelIndex& idx);
 		void new_func();
