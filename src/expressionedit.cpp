@@ -209,6 +209,11 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				ch=true;
 			}
 			break;
+		case Qt::Key_Left:
+		case Qt::Key_Right:
+			m_highlight->rehighlight();
+			QPlainTextEdit::keyPressEvent(e);
+			break;
 		case Qt::Key_Plus:
 		case Qt::Key_Asterisk:
 		case Qt::Key_Slash:
@@ -270,7 +275,6 @@ void ExpressionEdit::cursorMov()
 	m_highlight->setPos(pos);
 	if(text().isEmpty())
 		setCorrect(true);
-	m_highlight->rehighlight();
 	
 	QString help = helpShow(m_highlight->editingName(),
 							m_highlight->editingParameter(),
