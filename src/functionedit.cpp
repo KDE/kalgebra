@@ -26,6 +26,7 @@
 #include <KLocale>
 #include <KIcon>
 #include <KTabWidget>
+#include <KColorScheme>
 
 #include "graph2d.h"
 #include "functionsmodel.h"
@@ -198,7 +199,7 @@ void FunctionEdit::updateDownlimit()
 	}
 }
 
-void FunctionEdit::setState(const QString& text, const QColor& state)
+void FunctionEdit::setState(const QString& text, bool negative)
 {
 	QFont errorFont=m_valid->font();
 	errorFont.setBold(true);
@@ -219,11 +220,14 @@ void FunctionEdit::setState(const QString& text, const QColor& state)
 	}
 	m_valid->setText(error);
 	
+	KColorScheme scheme(QPalette::Normal);
+	KColorScheme::ForegroundRole role = negative? KColorScheme::NegativeText : KColorScheme::PositiveText;
+	
 	QPalette p=m_valid->palette();
-	p.setColor(foregroundRole(), state);
+	p.setColor(foregroundRole(), scheme.foreground(role).color());
 	m_valid->setPalette(p);
 	
-	if(state==Qt::red)
+	if(negative)
 		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	else
 		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
@@ -245,12 +249,12 @@ void FunctionEdit::edit()
 	}
 	
 	if(!m_uplimit->isCorrect() || !m_downlimit->isCorrect()) {
-		setState(i18n("The options you specified are not correct"), Qt::red);
+		setState(i18n("The options you specified are not correct"), true);
 		return;
 	}
 	
 	if(m_calcDownlimit>m_calcUplimit) {
-		setState(i18n("Downlimit cannot be greater than uplimit"), Qt::red);
+		setState(i18n("Downlimit cannot be greater than uplimit"), true);
 		return;
 	}
 	
@@ -267,7 +271,7 @@ void FunctionEdit::edit()
 		m_funcsModel->clear();
 		m_funcsModel->addFunction(f);
 		setState(QString("%1:=%2")
-			.arg(m_name->text()).arg(f.expression().toString()), QColor(0, 140, 0));
+			.arg(m_name->text()).arg(f.expression().toString()), false);
 	} else {
 		QStringList errors = f.errors();
 		Q_ASSERT(!errors.isEmpty());
@@ -276,9 +280,8 @@ void FunctionEdit::edit()
 		m_graph->forceRepaint();
 // 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		
-		setState(errors.first(), Qt::red);
+		setState(errors.first(), true);
 		m_valid->setToolTip(errors.join("<br />"));
-		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
 	}
 	m_func->setCorrect(f.isCorrect());
 	m_ok->setEnabled(f.isCorrect());
