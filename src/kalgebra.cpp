@@ -299,8 +299,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
-	connect(b_funcsModel, SIGNAL(functionModified(QString, Expression)),
-			c_results, SLOT(modifyVariable(QString, Expression)));
+	connect(b_funcsModel, SIGNAL(functionModified(QString, Analitza::Expression)),
+			c_results, SLOT(modifyVariable(QString, Analitza::Expression)));
 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
 			c_results, SLOT(removeVariable(QString)));
 	
