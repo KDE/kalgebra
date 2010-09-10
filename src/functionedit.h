@@ -102,7 +102,7 @@ private slots:
 	void updateDownlimit();
 	
 private:
-	void setState(const QString& text, const QColor& state);
+	void setState(const QString& text, bool negative);
 	
 	ExpressionEdit *m_func;
 	ExpressionEdit *m_uplimit, *m_downlimit;
