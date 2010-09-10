@@ -75,7 +75,6 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("parametric") << "t->vector{t,t**2}";
 	QTest::newRow("implicit") << "(x,y)->x+y";
-	QTest::newRow("implicit2ççççççç") << "(x,y)->3-sin x*sin y";
 }
 
 void FunctionTest::testCopy()
@@ -142,6 +141,8 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}" << false;
 	QTest::newRow("wrong-parametric") << "t->v" << false;
 	QTest::newRow("wrong-variable") << "x->x(x)" << false;
+	
+	QTest::newRow("implicit.notindomain") << "(x,y)->3-sin x*sin y" << false;
 }
 
 void FunctionTest::testCorrect()
