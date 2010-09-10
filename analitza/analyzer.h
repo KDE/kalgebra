@@ -75,9 +75,6 @@ class ANALITZA_EXPORT Analyzer
 		/** Returns the expression in display. */
 		const Expression& expression() const { return m_exp; }
 		
-		/** Returns the expression in display. Use carefully */
-		Expression* refExpression() { return &m_exp; }
-		
 		/** Calculates the expression and returns a value alone. */
 		Expression calculate();
 		
