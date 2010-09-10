@@ -27,13 +27,13 @@
 #include <KIcon>
 #include <KTabWidget>
 
-#include "analyzer.h"
-#include "expression.h"
 #include "graph2d.h"
-#include "variables.h"
 #include "functionsmodel.h"
-#include "analitzagui/functionfactory.h"
-#include "value.h"
+#include <analitza/analyzer.h>
+#include <analitza/expression.h>
+#include <analitza/variables.h>
+#include <analitza/value.h>
+#include <analitzagui/functionfactory.h>
 #include <analitzagui/algebrahighlighter.h>
 
 namespace {

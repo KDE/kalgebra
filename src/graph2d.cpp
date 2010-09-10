@@ -35,7 +35,7 @@
 #include <KDebug>
 #include <cmath>
 
-#include "analyzer.h"
+#include <analitza/analyzer.h>
 #include "functionsmodel.h"
 
 // #define DEBUG_GRAPH

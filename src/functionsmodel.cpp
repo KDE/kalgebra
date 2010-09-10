@@ -23,7 +23,7 @@
 #include <QPixmap>
 #include <QFont>
 #include <cmath>
-#include <expression.h>
+#include <analitza/expression.h>
 
 FunctionsModel::FunctionsModel(QObject *parent)
 	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500), m_fcount(1)

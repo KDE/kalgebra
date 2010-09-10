@@ -29,12 +29,12 @@
 
 #include <KLocale>
 
-#include "explexer.h"
-#include "expressionparser.h"
-#include "operator.h"
-#include "analyzer.h"
-#include "variables.h"
-#include "container.h"
+#include <analitza/explexer.h>
+#include <analitza/expressionparser.h>
+#include <analitza/operator.h>
+#include <analitza/analyzer.h>
+#include <analitza/variables.h>
+#include <analitza/container.h>
 
 class HelpTip : public QLabel
 {

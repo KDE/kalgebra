@@ -24,7 +24,7 @@
 
 #include <khtml_part.h>
 
-#include "analyzer.h"
+#include <analitza/analyzer.h>
 
 /**
  *	The Console widget is able to receive an operation, solve it and show the value.
@@ -103,7 +103,7 @@ class ConsoleHtml : public KHTMLPart
 		QList<Analitza::Expression> m_script;
 		QStringList m_htmlLog;
 		
-		void updateView(const QString& e);
+		void updateView(const QString& newEntry, const QString& options);
 		
 		QString m_css;
 };

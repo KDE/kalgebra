@@ -22,7 +22,7 @@
 #include <QGLWidget>
 #include <QtCore/QThread>
 
-#include "analyzer.h"
+#include "analitza/analyzer.h"
 
 /**
  *	Used to calculate 3D Graphs in parallel.
@@ -106,6 +106,8 @@ class Graph3D : public QGLWidget
 		void setMethod(Type m);
 		
 		void wheelEvent(QWheelEvent *e);
+		
+		bool checkExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& type);
 		
 	public slots:
 		/** Resets the view coordinates. */

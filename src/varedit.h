@@ -24,7 +24,7 @@
 #include <QRadioButton>
 #include <QLabel>
 
-#include "expression.h"
+#include <analitza/expression.h>
 
 namespace Analitza
 {

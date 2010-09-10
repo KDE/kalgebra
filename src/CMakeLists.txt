@@ -1,4 +1,4 @@
-include_directories(../analitza .. ${OPENGL_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
+include_directories(.. ${OPENGL_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
 
 set(kalgebra_SRCS
 	kalgebra.cpp

@@ -32,9 +32,9 @@
 #include <QPixmap>
 #include <QTime>
 
-#include "analyzer.h"
-#include "value.h"
-#include <variable.h>
+#include <analitza/analyzer.h>
+#include <analitza/value.h>
+#include <analitza/variable.h>
 
 using std::fabs;
 using std::log10;
@@ -425,28 +425,30 @@ void Graph3D::timeOut()
 	this->repaint();
 }
 
+bool Graph3D::checkExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& actual)
+{
+	if(exp.bvarList()!=(QStringList("x") << "y")) {
+		return false;
+	}
+	
+	static ExpressionType expected=ExpressionType(ExpressionType::Lambda)
+									.addParameter(ExpressionType::Value)
+									.addParameter(ExpressionType::Value)
+									.addParameter(ExpressionType::Value);
+	
+	return actual.canReduceTo(expected);
+}
+
 void Graph3D::setFunc(const Expression& exp)
 {
 	if(exp.isCorrect()) {
 		Analitza::Analyzer f3d;
 		f3d.setExpression(exp);
 		f3d.setExpression(f3d.dependenciesToLambda());
-		Expression e=f3d.calculate();
+		f3d.calculate();
 		
-		
-		if(f3d.refExpression()->bvarList()!=(QStringList("x") << "y")) {
+		if(!checkExpression(f3d.expression(), f3d.type())) {
 			sendStatus(i18n("Error: Wrong type of function"));
-			return;
-		}
-		
-		ExpressionType actual=f3d.type();
-		ExpressionType expected=ExpressionType(ExpressionType::Lambda)
-									.addParameter(ExpressionType::Value)
-									.addParameter(ExpressionType::Value)
-									.addParameter(ExpressionType::Value);
-		
-		if(!actual.canReduceTo(expected)) {
-			sendStatus(i18n("Error: We need values to draw a graph"));
 			return;
 		}
 		

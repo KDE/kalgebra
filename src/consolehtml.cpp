@@ -22,6 +22,10 @@
 #include <QClipboard>
 #include <QApplication>
 #include <QScrollBar>
+#include <QTemporaryFile>
+#include <QTimer>
+#include <QTextDocument>
+#include <QDir>
 
 #include <KLocale>
 #include <KStandardAction>
@@ -30,16 +34,13 @@
 #include <KAction>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
-
-#include "explexer.h"
-#include "expressionparser.h"
-#include "variables.h"
-#include "expression.h"
-#include <qtimer.h>
-#include <qtextdocument.h>
 #include <kio/job.h>
-#include <qtemporaryfile.h>
-#include <QDir>
+
+#include <analitza/explexer.h>
+#include <analitza/expressionparser.h>
+#include <analitza/variables.h>
+#include <analitza/expression.h>
+#include <analitzagui/functionfactory.h>
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -66,6 +67,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.keyword { color: #000064; }\n";
 	m_css +="\t.func { color: #008600; }\n";
 	m_css +="\t.result { padding-left: 10%; }\n";
+	m_css +="\t.ask { text-align: right; }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
@@ -77,14 +79,6 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 }
 
 ConsoleHtml::~ConsoleHtml() {}
-
-/*QString printable(const QString &s)
-{
-	QString s1(s);
-	s1.replace("<", "&lt;");
-	s1.replace(">", "&gt;");
-	return s1;
-}*/
 
 bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
 {
@@ -100,6 +94,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		}
 	}
 	
+	QString options;
 	if(a.isCorrect()) {
 		result = res.toHtml();
 		
@@ -110,7 +105,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(input), a.errors().join("</li>\n<li>"));
 	}
 	
-	updateView(newEntry);
+	updateView(newEntry, options);
 	
 	return a.isCorrect();
 }
@@ -166,7 +161,7 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 	
 	if(!correct) {
 		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1</ul>", path.prettyUrl());
-		updateView(QString());
+		updateView(QString(), QString());
 	}
 	
 	return correct;
@@ -183,9 +178,8 @@ bool ConsoleHtml::saveScript(const KUrl & path) const
 	
 	if(correct) {
 		QTextStream out(&file);
-		QList<Analitza::Expression>::const_iterator it = m_script.begin();
-		for(; it!=m_script.end(); ++it)
-			out << it->toString() << endl;
+		foreach(const Analitza::Expression& exp, m_script)
+			out << exp.toString() << endl;
 	}
 	
 	if(!path.isLocalFile()) {
@@ -220,7 +214,7 @@ bool ConsoleHtml::saveLog(const KUrl& path) const
 	return correct;
 }
 
-void ConsoleHtml::updateView(const QString& newEntry)
+void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 {
 	//FIXME: Check that the output html is not correct
 	begin();
@@ -228,12 +222,12 @@ void ConsoleHtml::updateView(const QString& newEntry)
 	write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n");
 	write(m_css);
 	write("</head>\n<body>");
-	foreach(const QString &entry, m_htmlLog) {
+	foreach(const QString &entry, m_htmlLog)
 		write("<p class='normal'>"+entry+"</p>");
-	}
+	
 	if(!newEntry.isEmpty()) {
 		m_htmlLog += newEntry;
-		write("<p class='last'>"+newEntry+"</p>");
+		write("<p class='last'>"+newEntry+options+"</p>");
 	}
 	write("</body></html>");
 	end();
@@ -272,7 +266,7 @@ void ConsoleHtml::clear()
 {
 	m_script.clear();
 	m_htmlLog.clear();
-	updateView(QString());
+	updateView(QString(), QString());
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)

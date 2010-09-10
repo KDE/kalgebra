@@ -18,9 +18,9 @@
 
 #include "dictionary.h"
 #include "functionsmodel.h"
-#include "expression.h"
 #include "graph2d.h"
-#include "variables.h"
+#include <analitza/variables.h>
+#include <analitza/expression.h>
 #include <analitzagui/operatorsmodel.h>
 
 #include <QLabel>

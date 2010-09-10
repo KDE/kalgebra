@@ -20,7 +20,6 @@
 #define VARIABLESMODEL_H
 
 #include <QAbstractTableModel>
-#include "operator.h"
 
 namespace Analitza
 {

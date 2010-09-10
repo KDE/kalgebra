@@ -17,9 +17,9 @@
  *************************************************************************************/
 
 #include "varedit.h"
-#include "analyzer.h"
-#include "expression.h"
-#include "variables.h"
+#include <analitza/analyzer.h>
+#include <analitza/expression.h>
+#include <analitza/variables.h>
 #include "expressionedit.h"
 
 #include <KLocale>
