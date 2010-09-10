@@ -170,9 +170,6 @@ struct FunctionImplicit : public FunctionImpl
         , dx(new Analitza::Variables)
         , dy(new Analitza::Variables)
     {
-        Analitza::Ci* vi=func.refExpression()->parameters().first();
-        vi->value()=vx;
-
         initImplicitFunction();
     }
 
@@ -180,9 +177,6 @@ struct FunctionImplicit : public FunctionImpl
         , dx(new Analitza::Variables)
         , dy(new Analitza::Variables)
     {
-        Analitza::Ci* vi=func.refExpression()->parameters().first();
-        vi->value()=vx;
-
         initImplicitFunction();
     }
 
@@ -222,6 +216,7 @@ struct FunctionImplicit : public FunctionImpl
     static QStringList examples() { return QStringList("x^3-y^2+2") << "y^2*(y^2-10)-x^2*(x^2-9)"; }
     
     QPointF last_calc;
+	QVector<Analitza::Object*> m_runStack;
 
     // small size means better quality but decrease the performance of updating
     static const qreal MIN_SIZE_OF_BOX;
@@ -256,17 +251,16 @@ void FunctionImplicit::initImplicitFunction()
 {
     vx = new Analitza::Cn;
     vy = new Analitza::Cn;
+	m_runStack.append(vx);
+	m_runStack.append(vy);
 
-    func.refExpression()->parameters()[0]->value() = vx;
-    func.refExpression()->parameters()[1]->value() = vy;
+    func.setStack(m_runStack);
 
     dx.setExpression(func.derivative("x"));
-    dx.refExpression()->parameters()[0]->value() = vx;
-    dx.refExpression()->parameters()[1]->value() = vy;
+    dx.setStack(m_runStack);
 
     dy.setExpression(func.derivative("y"));
-    dy.refExpression()->parameters()[0]->value() = vx;
-    dy.refExpression()->parameters()[1]->value() = vy;
+    dy.setStack(m_runStack);
 }
 
 qreal FunctionImplicit::evalImplicitFunction(qreal x, qreal y)
@@ -442,6 +436,8 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 {
     // Check for x
+    QVector<Analitza::Object*> vxStack; vxStack.append(vx);
+    QVector<Analitza::Object*> vyStack; vyStack.append(vy);
 
     QString expLiteral = func.expression().lambdaBody().toString();
     expLiteral.replace("y", QString::number(point.y()));
@@ -449,11 +445,11 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 
     Analitza::Analyzer f(func.variables());
     f.setExpression(Analitza::Expression(expLiteral, false));
-    f.refExpression()->parameters()[0]->value() = vx;
+    f.setStack(vxStack);
 
     Analitza::Analyzer df(func.variables());
     df.setExpression(f.derivative("x"));
-    df.refExpression()->parameters()[0]->value() = vx;
+    df.setStack(vxStack);
 
     const int MAX_I = 256;
     const double E = 0.0001;
@@ -493,11 +489,11 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 
         Analitza::Analyzer f(func.variables());
         f.setExpression(Analitza::Expression(expLiteral, false));
-        f.refExpression()->parameters()[0]->value() = vy;
+        f.setStack(vyStack);
 
         Analitza::Analyzer df(func.variables());
         df.setExpression(f.derivative("y"));
-        df.refExpression()->parameters()[0]->value() = vy;
+        df.setStack(vyStack);
 
         double y0 = point.y();
         double y = y0;
@@ -526,20 +522,15 @@ QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
             y0 = y;
         }
 
-        if (!has_root_y)
-            return QPair<QPointF, QString>(last_calc, QString(""));
-        else
-        {
-            last_calc = QPointF(point.x(), y);
-
-            return QPair<QPointF, QString>(last_calc, QString(""));
-        }
+		if (has_root_y)
+			last_calc = QPointF(point.x(), y);
+		return QPair<QPointF, QString>(last_calc, QString());
     }
     else
     {
         last_calc = QPointF(x, point.y());
 
-        return QPair<QPointF, QString>(last_calc, QString(""));
+        return QPair<QPointF, QString>(last_calc, QString());
     }
 }
 

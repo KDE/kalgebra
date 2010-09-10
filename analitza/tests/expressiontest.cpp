@@ -183,6 +183,9 @@ void ExpressionTest::testUncorrection_data()
 	QTest::newRow("wrong parameters") << "selector(vector{1,1/3})";
 	QTest::newRow("empty vector") << "vector{}";
 	
+	QTest::newRow("summatory with unknown uplimit") << "sum(x : x=1..)";
+	QTest::newRow("summatory with unknown downlimit") << "sum(x : x=..3)";
+	
 	QTest::newRow("same args") << "(x,x)->x";
 	QTest::newRow("same boundings") << "sum(x : (x,x)=1..10)";
 }

@@ -316,8 +316,10 @@ void Calculate3D::run()
 	Cn *x=new Cn;
 	Cn *y=new Cn;
 	
-	a.refExpression()->parameters().first()->value()=x;
-	a.refExpression()->parameters().last()->value()=y;
+	QVector<Analitza::Object*> runStack;
+	runStack.append(x);
+	runStack.append(y);
+	a.setStack(runStack);
 	
 	for(int j=from; j<to; j++) {
 		y->setValue(j*step-size);
@@ -326,6 +328,7 @@ void Calculate3D::run()
 			points[j][i] = -a.calculateLambda().toReal().value();
 		}
 	}
+	qDeleteAll(runStack);
 }
 
 void Graph3D::wheelEvent(QWheelEvent * e)

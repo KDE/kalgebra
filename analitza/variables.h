@@ -86,6 +86,8 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		*	The variable @p name will no longer exist.
 		*/
 		bool destroy(const QString& name);
+		
+		void initializeConstants();
 };
 
 }

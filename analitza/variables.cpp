@@ -25,6 +25,11 @@ using namespace Analitza;
 
 Variables::Variables() : QHash<QString, Object*>()
 {
+	initializeConstants();
+}
+
+void Variables::initializeConstants()
+{
 	insert("true", new Cn(true));
 	insert("false", new Cn(false));
 	insert("pi", new Cn(Cn::pi()));

@@ -75,6 +75,7 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("parametric") << "t->vector{t,t**2}";
 	QTest::newRow("implicit") << "(x,y)->x+y";
+	QTest::newRow("implicit2ççççççç") << "(x,y)->3-sin x*sin y";
 }
 
 void FunctionTest::testCopy()
@@ -172,8 +173,8 @@ void FunctionTest::testJumps_data()
 	QTest::addColumn<QString>("input");
 	QTest::addColumn<int>("jumps");
 	
-	QTest::newRow("tanx") << "tan x" << 6;
-	QTest::newRow("divx") << "1/x" << 1;
+	QTest::newRow("tanx") << "x->tan x" << 6;
+	QTest::newRow("divx") << "x->1/x" << 1;
 }
 
 void FunctionTest::testJumps()

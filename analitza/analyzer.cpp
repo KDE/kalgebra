@@ -32,6 +32,18 @@
 #include "expressiontypechecker.h"
 #include "apply.h"
 
+template <class T>
+QStringList printAll(const QVector<T*> & p)
+{
+	QStringList ret;
+	foreach(T* v, p)
+		if(v)
+			ret += v->toString();
+		else
+			ret += "<null>";
+	return ret;
+}
+
 using namespace AnalitzaUtils;
 using namespace Analitza;
 
@@ -44,11 +56,9 @@ Analyzer::Analyzer(Variables* v)
 { Q_ASSERT(v); }
 
 Analyzer::Analyzer(const Analyzer& a)
-	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(true)
+	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(a.m_hasdeps)
 {
 	m_vars = new Variables(*a.m_vars);
-	if(m_exp.isCorrect())
-		m_hasdeps=m_exp.tree()->decorate(varsScope());
 }
 
 Analyzer::~Analyzer()
@@ -57,19 +67,17 @@ Analyzer::~Analyzer()
 		delete m_vars;
 }
 
-
 void Analyzer::setExpression(const Expression & e)
 {
 	m_exp=e;
 	flushErrors();
 	
 	if(m_exp.isCorrect()) {
-		m_hasdeps=m_exp.tree()->decorate(varsScope());
-		
 		ExpressionTypeChecker check(m_vars);
 		m_currentType=check.check(m_exp);
 		
 		m_err += check.errors();
+		m_hasdeps = hasVars(e.tree(), QString(), m_vars->keys());
 	}
 }
 
@@ -79,6 +87,8 @@ Expression Analyzer::evaluate()
 	Expression e;
 	
 	if(m_exp.isCorrect()) {
+		m_runStackTop = 0;
+		m_runStack.clear();
 		Object *o=eval(m_exp.tree(), true, QSet<QString>());
 		
 		o=simp(o);
@@ -94,11 +104,13 @@ Expression Analyzer::calculate()
 	Expression e;
 	
 	if(!m_hasdeps && m_exp.isCorrect()) {
+		m_runStackTop = 0;
+		m_runStack.clear();
 		e.setTree(calc(m_exp.tree()));
 	} else {
 		if(m_exp.isCorrect() && m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
-							dependencies(m_exp.tree(), varsScope().keys()).join(
+							dependencies(m_exp.tree(), m_vars->keys()).join(
 								i18nc("identifier separator in error message", "', '")));
 		else
 			m_err << i18n("Must specify a correct operation");
@@ -122,13 +134,14 @@ Expression Analyzer::calculateLambda()
 		Container* lambda=(Container*) math;
 		Q_ASSERT(lambda->containerType()==Container::lambda);
 		
+		m_runStackTop = 0;
 		e.setTree(calc(lambda->m_params.last()));
 	} else {
 		m_err << i18n("Must specify a correct operation");
 		
 		if(m_exp.isCorrect() && m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
-							dependencies(m_exp.tree(), varsScope().keys()).join(
+							dependencies(m_exp.tree(), m_vars->keys()).join(
 								i18nc("identifier separator in error message", "', '")));
 	}
 	return e;
@@ -136,7 +149,7 @@ Expression Analyzer::calculateLambda()
 
 Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& unscoped)
 {
-	Q_ASSERT(branch && branch->type()!=Object::none);
+	Q_ASSERT(branch);
 	Object *ret=0;
 // 	qDebug() << "POPOPO" << branch->toString();
 	
@@ -189,8 +202,12 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				
 				Container *r = c->copy();
 				Object* old=r->m_params.last();
+				
 				r->m_params.last()=eval(old, false, newUnscoped);
 				delete old;
+				
+				alphaConversion(r, r->bvarCi().first()->depth());
+				Expression::computeDepth(r);
 				
 				ret=r;
 			} break;
@@ -206,14 +223,16 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				break;
 		}
 	} else if(resolve && branch->type()==Object::variable) {
-		//FIXME: Should check if it is that crappy 
 		Ci* var=(Ci*) branch;
-		 
-		Object* val=var->isDefined() ? var->value() : 0;
-		if(val && !unscoped.contains(var->name()) && !equalTree(var, val)) {
-			QSet<QString> newUnscoped=unscoped;
-			newUnscoped.insert(var->name());
-			ret = eval(val, resolve, newUnscoped);
+		
+		if(!unscoped.contains(var->name())) {
+			Object* val = variableValue(var);
+			
+			if(val && !equalTree(var, val)) {
+				QSet<QString> newUnscoped=unscoped;
+				newUnscoped.insert(var->name());
+				ret = eval(val, resolve, newUnscoped);
+			}
 		}
 		
 // 		qDebug() << "peeee" << var->name() << val << resolve << unscoped;
@@ -256,6 +275,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				cc->appendBranch(simp(o));
 				ret=cc;
 				
+				Expression::computeDepth(ret);
 			}	break;
 			case Operator::function: {
 				//it is a function. I'll take only this case for the moment
@@ -266,24 +286,21 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					const Container *cbody = (Container*) body;
 					
 					if(cbody->m_params.size()==c->m_params.size()) {
-						const_cast<Container *>(cbody)->decorate(varsScope());
-						
 						QList<Ci*> bvars=cbody->bvarCi();
-						int i=0;
+						int top = m_runStack.size(), aux = m_runStackTop;
+						m_runStack.resize(top+bvars.size());
 						
-						foreach(const Ci* bvar, bvars) {
+						for(int i=0; i<bvars.size(); i++) {
 							Object* val=simp(eval(c->m_params[i+1], resolve, unscoped));
-							bvar->value()=val;
-							
-							++i;
+							m_runStack[top+i]=val;
 						}
+						m_runStackTop = top;
 						
 						ret=eval(cbody->m_params.last(), resolve, unscoped);
 						
-						foreach(const Ci* bvar, bvars) {
-							delete bvar->value();
-							bvar->value()=0;
-						}
+						qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+						m_runStack.resize(top);
+						m_runStackTop = aux;
 					}
 				}
 				
@@ -311,7 +328,6 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					}
 					
 					newUnscoped+=c->bvarStrings().toSet();
-					
 				}
 				
 				Container::iterator it=r->firstValue(), itEnd=r->m_params.end();
@@ -679,7 +695,7 @@ Object* Analyzer::calc(const Object* root)
 			break;
 		case Object::variable: {
 			Ci* a=(Ci*) root;
-			ret = calc(a->value());
+			ret = calc(variableValue(a));
 		}	break;
 		case Object::oper:
 		case Object::none:
@@ -711,46 +727,37 @@ Object* Analyzer::operate(const Apply* c)
 			break;
 		case Operator::diff: {
 			//TODO: Make multibvar
-			QStringList bvars=c->bvarStrings();
+			QList<Ci*> bvars=c->bvarCi();
 			
 			//We construct the lambda
-			Object* o=derivative(bvars[0], *c->firstValue());
+			Object* o=derivative(bvars[0]->name(), *c->firstValue());
 			
 			Container* cc=new Container(Container::lambda);
-			foreach(const QString& v, bvars) {
+			foreach(const Ci* v, bvars) {
 				Container* bvar=new Container(Container::bvar);
-				bvar->appendBranch(new Ci(v));
+				bvar->appendBranch(v->copy());
 				cc->appendBranch(bvar);
 			}
 			cc->appendBranch(simp(o));
 			ret=cc;
 			
-			ret->decorate(varsScope());
-			
+			Expression::computeDepth(ret);
 		}	break;
 		default: {
 			int count=c->countValues();
 			Q_ASSERT(count>0);
-			
-			QVector<Object *> numbers(count);
-			Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
-			for(int i=0; it!=itEnd; ++it, ++i)
-				numbers[i]=calc(*it);
-			
 			Q_ASSERT(	(op.nparams()< 0 && count>1) ||
 						(op.nparams()>-1 && count==op.nparams()) ||
 						opt==Operator::minus);
 			
-			ret = numbers[0];
-			
 			QString correct;
 			if(count>=2) {
-				QVector<Object *>::iterator it = numbers.begin();
-				QVector<Object *>::iterator itEnd = numbers.end();
-
+				Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
+				
+				ret = calc(*it);
 				++it;
 				for(; it!=itEnd; ++it) {
-					ret=Operations::reduce(opt, ret, *it, correct);
+					ret=Operations::reduce(opt, ret, calc(*it), correct);
 					
 					if(KDE_ISUNLIKELY(!correct.isEmpty())) {
 						m_err.append(correct);
@@ -759,12 +766,13 @@ Object* Analyzer::operate(const Apply* c)
 					}
 				}
 			} else {
-				ret=Operations::reduceUnary(opt, ret, correct);
+				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), correct);
 				if(KDE_ISUNLIKELY(!correct.isEmpty()))
 					m_err.append(correct);
 			}
 		}	break;
 	}
+	
 	Q_ASSERT(ret);
 	return ret;
 }
@@ -785,9 +793,16 @@ Object* Analyzer::operate(const Container* c)
 		case Container::piecewise:
 			ret=calcPiecewise(c);
 			break;
-		case Container::lambda:
-			ret=c->copy();
-			break;
+		case Container::lambda: {
+			Container * cc=c->copy();
+// 			AnalitzaUtils::objectWalker(cc, "aa");
+			alphaConversion(cc, cc->bvarCi().first()->depth());
+// 			AnalitzaUtils::objectWalker(cc, "bb");
+			Expression::computeDepth(cc);
+// 			AnalitzaUtils::objectWalker(cc, "cc");
+// 			qDebug() << "PAAAAAAAAAAAAAA" << printAll(m_runStack);
+			ret=cc;
+		}	break;
 		case Container::piece:
 		case Container::otherwise:
 		case Container::bvar:
@@ -808,14 +823,15 @@ namespace Analitza
 	class TypeBoundingIterator : public BoundingIterator
 	{
 		public:
-			TypeBoundingIterator(const QVector<Ci*>& vars, T* l)
-				: m_vars(vars), iterators(vars.size()), list(l)
+			TypeBoundingIterator(QVector<Object*>& runStack, int top, const QVector<Ci*>& vars, T* l)
+				: iterators(vars.size()), list(l)
 				, itBegin(l->constBegin()), itEnd(l->constEnd())
+				, m_runStack(runStack), m_top(top)
 			{
-				int i=0;
-				foreach(Ci* v, vars) {
-					v->value()=*itBegin;
-					iterators[i++]=itBegin;
+				int s=vars.size();
+				for(int i=0; i<s; i++) {
+					m_runStack[m_top+i]=*itBegin;
+					iterators[i]=itBegin;
 				}
 			}
 			
@@ -830,16 +846,17 @@ namespace Analitza
 					
 					if(cont)
 						iterators[i]=itBegin;
-					m_vars[i]->value()=*iterators[i];
+					m_runStack[m_top+i]=*iterators[i];
 				}
 				
 				return !cont;
 			}
 		private:
-			QVector<Ci*> m_vars;
 			QVector<Iterator> iterators;
 			T* list;
 			const Iterator itBegin, itEnd;
+			QVector<Object*>& m_runStack;
+			int m_top;
 	};
 	
 	class RangeBoundingIterator : public BoundingIterator
@@ -874,7 +891,7 @@ namespace Analitza
 	};
 }
 
-BoundingIterator* Analyzer::initializeBVars(const Apply* n)
+BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 {
 	BoundingIterator* ret=0;
 	QList<Ci*> bvars=n->bvarCi();
@@ -888,10 +905,10 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n)
 		if(isCorrect()) {
 			switch(domain->type()) {
 				case Object::list:
-					ret=new TypeBoundingIterator<List, List::const_iterator>(bvars.toVector(), static_cast<List*>(domain));
+					ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<List*>(domain));
 					break;
 				case Object::vector:
-					ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(bvars.toVector(), static_cast<Vector*>(domain));
+					ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
 					break;
 				default:
 					m_err.append(i18n("Type not supported for bounding."));
@@ -912,12 +929,10 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n)
 			
 			if(dl<ul) {
 				QVector<Cn*> rr(bvars.size());
-				int i=0;
 				
-				foreach(Ci* bvar, bvars) {
+				for(int i=0; i<bvars.size(); ++i) {
 					rr[i]=new Cn(dl);
-					bvar->value()=rr[i];
-					i++;
+					m_runStack[base+i]=rr[i];
 				}
 				
 				ret=new RangeBoundingIterator(rr, dl, ul, 1);
@@ -936,24 +951,28 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n)
 Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* initial)
 {
 	Object* ret=initial;
-	BoundingIterator* it=initializeBVars(&n);
-	if(it)
-	{
-		QString correct;
-		Operator::OperatorType type=t.operatorType();
-		do {
-			Object *val=calc(n.m_params.last());
-			
-			ret=Operations::reduce(type, ret, val, correct);
-		} while(it->hasNext());
+	int top = m_runStack.size();
+	m_runStack.resize(top+n.bvarCi().size());
+	
+	BoundingIterator* it=initializeBVars(&n, top);
+	if(!it)
+		return initial;
+	
+	QString correct;
+	Operator::OperatorType type=t.operatorType();
+	do {
+		Object *val=calc(n.m_params.last());
 		
-		foreach(Ci* var, n.bvarCi())
-			var->value()=0;
-	}
+		ret=Operations::reduce(type, ret, val, correct);
+	} while(KDE_ISLIKELY(it->hasNext() && correct.isEmpty()));
+	
+	m_runStack.resize(top);
+	
 	delete it;
 	return ret;
 }
 
+//TODO: warning memory leak on third parameter
 Object* Analyzer::product(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
@@ -966,26 +985,37 @@ Object* Analyzer::sum(const Apply& n)
 
 Object* Analyzer::func(const Apply& n)
 {
-	Container *function = (Container*) calc(n.m_params[0]);
+// 	qDebug() << "calling" << n.toString();
+	bool borrowed = n.m_params[0]->type()==Object::variable;
+	Container *function;
+	if(borrowed)
+		function = (Container*) variableValue((Ci*) n.m_params[0]);
+	else
+		function = (Container*) calc(n.m_params[0]);
 	
-	function->decorate(varsScope());
 	QList<Ci*> vars = function->bvarCi();
 	
-	int i=0;
+	int top = m_runStack.size(), aux=m_runStackTop;
+	m_runStack.resize(top+vars.size());
 	
-	foreach(Ci* param, vars) {
-		Object* val=calc(n.m_params[++i]);
-		param->value()=val;
+	for(int i=0; i<vars.size(); i++) {
+// 		qDebug() << "cp" << n.m_params[i+1]->toString();
+		Object* val=calc(n.m_params[i+1]);
+		m_runStack[top+i] = val;
+// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
 	}
+	m_runStackTop = top;
 	
+// 	qDebug() << "diiiiiiiii" << m_runStack.size() << vars.size() << m_runStackTop;
 	Object* ret=calc(function->m_params.last());
 	
-	foreach(Ci* param, vars) {
-		delete param->value();
-	}
-	delete function;
+	qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+	if(!borrowed)
+		delete function;
 	
-	ret->decorate(varsScope());
+	m_runStackTop = aux;
+	m_runStack.resize(top);
+	
 	return ret;
 }
 
@@ -996,6 +1026,7 @@ Object* Analyzer::func(const Apply& n)
 void Analyzer::simplify()
 {
 	if(m_exp.isCorrect()) {
+		m_runStackTop = 0;
 		Object* o=simp(m_exp.tree());
 		m_exp.setTree(o);
 		setExpression(m_exp);
@@ -1028,9 +1059,6 @@ Object* Analyzer::simp(Object* root)
 	if(!root->isContainer() && !hasVars(root))
 	{
 		if(root->type()!=Object::value && root->type() !=Object::oper) {
-			bool deps=root->decorate(Object::ScopeInformation());
-			Q_ASSERT(!deps);
-			
 			Object* aux=root;
 			root = calc(root);
 			delete aux;
@@ -1051,9 +1079,13 @@ Object* Analyzer::simp(Object* root)
 			case Container::piecewise:
 				root=simpPiecewise(c);
 				break;
-			case Container::lambda:
+			case Container::lambda: {
+				int top = m_runStack.size();
+				m_runStack.resize(top+c->bvarCi().size());
+				
 				c->m_params.last()=simp(c->m_params.last());
-				break;
+				m_runStack.resize(top);
+			}	break;
 			default:
 				iterateAndSimp<Container, Container::iterator>(c);
 				break;
@@ -1753,11 +1785,6 @@ Object* Analyzer::simpPiecewise(Container *c)
 	return root;
 }
 
-Object::ScopeInformation Analyzer::varsScope() const
-{
-	return AnalitzaUtils::variablesScope(m_vars);
-}
-
 Expression Analyzer::derivative(const QString& var)
 {
 	Q_ASSERT(m_exp.isCorrect());
@@ -1798,7 +1825,7 @@ Expression Analyzer::derivative(const QString& var)
 Expression Analyzer::dependenciesToLambda() const
 {
 	if(m_hasdeps) {
-		QStringList deps=dependencies(m_exp.tree(), varsScope().keys());
+		QStringList deps=dependencies(m_exp.tree(), m_vars->keys());
 		Container* cc=new Container(Container::lambda);
 		foreach(const QString& dep, deps) {
 			Container* bvar=new Container(Container::bvar);
@@ -1819,6 +1846,7 @@ Expression Analyzer::dependenciesToLambda() const
 		
 		Container* math=new Container(Container::math);
 		math->appendBranch(cc);
+		Expression::computeDepth(math);
 		
 		return Expression(math);
 	} else {
@@ -1851,7 +1879,6 @@ bool Analyzer::insertVariable(const QString & name, const Object * value)
 Cn* Analyzer::insertValueVariable(const QString& name, double value)
 {
 	Cn* val=m_vars->modify(name, value);
-	m_hasdeps=m_exp.tree()->decorate(varsScope());
 	return val;
 }
 
@@ -1864,18 +1891,17 @@ double Analyzer::derivative(const QList<StringDoublePair>& values )
 	
 	Q_ASSERT(m_exp.isCorrect());
 	
-	Object::ScopeInformation scope=varsScope();
 	QVector<Object*> deps(values.size());
 	
 	int i=0;
 	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
 		deps[i]=new Cn(valp.second);
-		scope.insert(valp.first, &deps[i]);
-		
+// 		scope.insert(valp.first, &deps[i]);
+#warning todo	
 		i++;
 	}
-	bool hasdeps=m_exp.tree()->decorate(scope);
-	if(hasdeps)
+	
+	if(hasVars(m_exp.tree(), QString(), m_vars->keys(), m_vars))
 		return 0.;
 	
 	Expression e1(calc(m_exp.tree()));
@@ -1905,4 +1931,78 @@ double Analyzer::derivative(const QList<StringDoublePair>& values )
 	}
 	
 	return (e2.toReal().value()-e1.toReal().value())/h;
+}
+
+Analitza::Object* Analyzer::variableValue(Ci* var)
+{
+	Object* ret;
+	
+// 	qDebug() << "ziiiiiiii" << var->name() << '('<< m_runStackTop << '+' << var->depth() << ')' << m_runStack;
+	if(var->depth()>=0)
+		ret = m_runStack[m_runStackTop + var->depth()];
+	else
+		ret = m_vars->value(var->name());
+	
+	Q_ASSERT(ret);
+	return ret;
+}
+
+Object* Analyzer::applyAlpha(Object* o, int min)
+{
+	if(o)
+		switch(o->type()) {
+			case Object::container:	alphaConversion(static_cast<Container*>(o), min); break;
+			case Object::vector:	alphaConversion<Vector, Vector::iterator>(static_cast<Vector*>(o), min); break;
+			case Object::list:	alphaConversion<List, List::iterator>(static_cast<List*>(o), min); break;
+			case Object::apply:		alphaConversion(static_cast<Apply*>(o), min); break;
+			case Object::variable: {
+				Ci *var = static_cast<Ci*>(o);
+				int depth = var->depth();
+// 				qDebug() << "puuuu" << var->name() << depth << printAll(m_runStack);
+				if(depth<min && m_runStackTop+var->depth()<m_runStack.size()) {
+					Object* newvalue = variableValue(var);
+					if(newvalue) {
+						delete var;
+						return newvalue->copy();
+					}
+				}
+			}	break;
+			default:
+				break;
+		}
+	return o;
+}
+
+template <class T, class Tit>
+void Analyzer::alphaConversion(T* o, int min)
+{
+	Q_ASSERT(o);
+	Tit it=o->begin(), itEnd=o->end();
+	for(; it!=itEnd; ++it) {
+		*it = applyAlpha(*it, min);
+	}
+}
+
+void Analyzer::alphaConversion(Container* o, int min)
+{
+	Q_ASSERT(o);
+	Container::iterator it=o->begin(), itEnd=o->end();
+	for(; it!=itEnd; ++it) {
+		if((*it)->type()==Object::container && static_cast<Container*>(*it)->containerType()==Container::bvar)
+			continue;
+		
+		*it = applyAlpha(*it, min);
+	}
+}
+
+void Analyzer::alphaConversion(Apply* o, int min)
+{
+	Q_ASSERT(o);
+	o->ulimit()=applyAlpha(o->ulimit(), min);
+	o->dlimit()=applyAlpha(o->dlimit(), min);
+	o->domain()=applyAlpha(o->domain(), min);
+	
+	Apply::iterator it=o->firstValue(), itEnd=o->end();
+	for(; it!=itEnd; ++it)
+		*it = applyAlpha(*it, min);
 }

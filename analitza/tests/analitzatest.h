@@ -35,14 +35,14 @@ Q_OBJECT
 	
 	private slots:
 		void initTestCase();
-		void testTrivialEvaluate_data();
-		void testTrivialEvaluate();
 		void testTrivialCalculate_data();
 		void testTrivialCalculate();
-		void testDerivativeSimple_data();
-		void testDerivativeSimple();
+		void testTrivialEvaluate_data();
+		void testTrivialEvaluate();
 		void testSimplify_data();
 		void testSimplify();
+		void testDerivativeSimple_data();
+		void testDerivativeSimple();
 		
 		void testVector_data();
 		void testVector();

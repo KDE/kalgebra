@@ -170,11 +170,11 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 	switch(o->type()) {
 		case Object::variable: {
 			Ci *i = (Ci*) o;
-			
 			r=((i->name()==var) || var.isEmpty()) && !bvars.contains(i->name());
 			
 			if(r && vars && !var.isEmpty() && vars->contains(i->name()))
 				r=hasVars(vars->value(i->name()), var, bvars, vars);
+			
 		}	break;
 		case Object::vector: {
 			Vector *v=(Vector*) o;
@@ -191,9 +191,15 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 		case Object::container: {
 			const Container *c = (const Container*) o;
 			
-			const QStringList scope=bvars+c->bvarStrings();
-			foreach(const Object* o, c->m_params) {
-				r |= hasVars(o, var, bvars+scope, vars);
+			QStringList newScope=bvars+c->bvarStrings();
+			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+			if(c->containerType()==Container::declare) {
+				newScope += static_cast<const Ci*>(*c->constBegin())->name();
+				++it;
+			}
+			
+			for(; it!=itEnd; ++it) {
+				r |= hasVars(*it, var, newScope, vars);
 			}
 		}	break;
 		case Object::apply: {
@@ -207,7 +213,7 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			if(dl) r |= hasVars(dl, var, bvars, vars);
 			if(dn) r |= hasVars(dn, var, bvars, vars);
 			
-			Container::const_iterator it = c->firstValue();
+			Apply::const_iterator it = c->firstValue();
 			for(; !r && it!=c->constEnd(); ++it) {
 				r |= hasVars(*it, var, scope, vars);
 			}
@@ -230,20 +236,12 @@ struct ObjectWalker : public ExpressionWriter
 	virtual QString accept(const Ci* var)
  	{
 		QString value;
-		if(var->isDefined()) {
-			if(var->value())
-				value="def";
-			else
-				value="zero";
-		} else
-			value="undef";
+		if(var->depth()>=0)
+			value="stack("+QString::number(var->depth())+')';
+		else
+			value="symbols";
 		
-		qDebug() << prefix().constData() << "| variable: " << var->name() << var->isDefined() << "Val:" << value;
-		if(var->isDefined()) {
-			ind++;
-// 			visitNow(var->value());
-			ind--;
-		}
+		qDebug() << prefix().constData() << "| variable: " << var->name() << var->depth() << "Val:" << value;
 		return QString();
 	}
 	
@@ -266,6 +264,7 @@ struct ObjectWalker : public ExpressionWriter
 		ind++;
 		if(c->ulimit()) { qDebug() << prefix().constData() << "ul: "; visitNow(c->ulimit()); }
 		if(c->dlimit()) { qDebug() << prefix().constData() << "dl: "; visitNow(c->dlimit()); }
+		if(!c->bvarCi().isEmpty()) { qDebug() << prefix().constData() << "bvars: " << c->bvarStrings(); }
 		
 		for(Container::const_iterator it=c->m_params.constBegin(); it<c->constEnd(); ++it)
 			visitNow(*it);
@@ -360,23 +359,5 @@ bool equalTree(const Object * o1, const Object * o2)
 	}
 	return eq;
 }
-
-Analitza::Object::ScopeInformation variablesScope(Analitza::Variables* v)
-{
-	Analitza::Object::ScopeInformation varsScope;
-	Analitza::Variables::iterator it, itEnd=v->end();
-	for(it=v->begin(); it!=itEnd; ++it) {
-		Object** o=&it.value();
-		varsScope.insert(it.key(), o);
-	}
-	
-	
-	for(it=v->begin(); it!=itEnd; ++it) {
-		(*it)->decorate(varsScope);
-	}
-	
-	return varsScope;
-}
-
 
 }

@@ -23,25 +23,19 @@
 using namespace Analitza;
 
 Ci::Ci(const QString& b)
-	: Object(variable), m_name(b), m_function(false), m_owner(false), m_value(0)
+	: Object(variable), m_name(b), m_function(false), m_depth(-1)
 {
 	Q_ASSERT(!b.isEmpty());
 }
 
 Ci::~Ci()
-{
-	if(m_owner)
-		delete m_value;
-}
+{}
 
 Object* Ci::copy() const
 {
 	Ci *c = new Ci(m_name);
 	c->m_function = m_function;
-	if(!m_owner) {
-		c->m_value=m_value;
-		c->m_owner=false;
-	}
+	c->m_depth = m_depth;
 	return c;
 }
 
@@ -76,24 +70,4 @@ bool Ci::matches(const Object* exp, QMap<QString, const Object*>* found) const
 		}
 	}
 	return ret;
-}
-
-void Ci::setValue(Object** value, bool owner)
-{
-	if(m_owner)
-		delete m_value;
-	
-	m_value=value;
-	m_owner=owner;
-}
-
-bool Ci::decorate(const ScopeInformation& scope)
-{
-	ScopeInformation::const_iterator it=scope.find(m_name);
-	bool found=it!=scope.end();
-	if(found) {
-		setValue(*it, false);
-	}
-	
-	return !isDefined();
 }

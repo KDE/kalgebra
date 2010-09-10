@@ -25,6 +25,7 @@
 #include "expression.h"
 #include "analitzaexport.h"
 #include "expressiontype.h"
+#include <QStack>
 
 namespace Analitza
 {
@@ -80,7 +81,10 @@ class ANALITZA_EXPORT Analyzer
 		/** Calculates the expression and returns a value alone. */
 		Expression calculate();
 		
-		/** Calculates the expression and returns a value alone. The parameters need to be set using ::refExpression()->parameters()*/
+		/**
+		 * Calculates the expression and returns a value alone.
+		 * The parameters need to be set by passing a stack instance
+		 */
 		Expression calculateLambda();
 		
 		/** Evaluates an expression, like calculate() but returns a tree. */
@@ -141,16 +145,18 @@ class ANALITZA_EXPORT Analyzer
 		 @returns the type of the current expression.
 		 */
 		ExpressionType type() const { return m_currentType; }
+		
+		void setStack(const QVector<Object*>& stack) { m_runStack = stack; }
 	private:
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;
+		QVector<Object*> m_runStack;
+		int m_runStackTop;
 		
 		const bool m_varsOwned;
 		bool m_hasdeps;
 		ExpressionType m_currentType;
-		
-		Object::ScopeInformation varsScope() const;
 		
 		Object* calc(const Object* e);
 		Object* operate(const Container*);
@@ -177,11 +183,18 @@ class ANALITZA_EXPORT Analyzer
 		void levelOut(Apply *c, Apply *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Apply & n, const Operator & t, Object* initial);
 		
-		BoundingIterator* initializeBVars(const Apply* n);
+		BoundingIterator* initializeBVars(const Apply* n, int base);
 		
 		template <class T, class Tit>
 		void iterateAndSimp(T* v);
-
+		
+		Object* variableValue(Ci* var);
+		
+		template <class T, class Tit>
+		void alphaConversion(T* o, int min);
+		void alphaConversion(Apply* a, int min);
+		void alphaConversion(Container* a, int min);
+		Object* applyAlpha(Analitza::Object* o, int min);
 };
 
 }

@@ -121,31 +121,6 @@ Apply* Apply::copy() const
 	return ret;
 }
 
-bool Apply::decorate(const Object::ScopeInformation& scope)
-{
-	ScopeInformation newScope(scope);
-	
-	foreach(Ci* var, m_bvars) {
-		Object** o;
-		if(!var->isDefined()) {
-			o=new Object*(0);
-			var->setValue(o, true);
-		} else
-			o=&var->value();
-		newScope.insert(var->name(), o);
-	}
-	
-	bool ret=false;
-	ret |= m_ulimit ? m_ulimit->decorate(scope) : false;
-	ret |= m_dlimit ? m_dlimit->decorate(scope) : false;
-	ret |= m_domain ? m_domain->decorate(scope) : false;
-	
-	foreach(Object* o, m_params)
-		ret |= o->decorate(newScope);
-	
-	return ret;
-}
-
 bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) const
 {
 	if(Object::apply!=exp->type())

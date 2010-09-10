@@ -121,7 +121,6 @@ public:
 	virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
 	
 	Container* extractType(Container::ContainerType t) const;
-	virtual bool decorate(const ScopeInformation& scope);
 
 // protected:
 	QList<Object*> m_params;

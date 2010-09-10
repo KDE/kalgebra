@@ -22,6 +22,8 @@
 #include <analitza/variables.h>
 #include <qtest_kde.h>
 #include <cmath>
+#include <analitza/analitzautils.h>
+#include <analitza/value.h>
 
 using namespace std;
 using Analitza::Expression;
@@ -69,6 +71,8 @@ void OperatorsModelTest::testExamples()
 	QVERIFY(!example.isEmpty());
 	Expression ex(example, false);
 	QCOMPARE(ex.toString(), example);
+	QVERIFY(!ex.toMathMLPresentation().isEmpty());
+	ex = ex.lambdaBody();
 	
 	Analitza::Analyzer a;
 	a.setExpression(ex);
@@ -81,7 +85,6 @@ void OperatorsModelTest::testExamples()
 	Expression e = a.calculate();
 	if(!a.isCorrect()) qDebug() << example << "3. error" << a.errors();// QVERIFY(a.isCorrect());
 	if(!e.isCorrect()) qDebug() << example << "4. error" << e.error(); // QVERIFY(e.isCorrect());
-	QVERIFY(!a.expression().toMathMLPresentation().isEmpty());
 	
 	e = a.evaluate();
 	if(!a.isCorrect()) qDebug() << example << "5. error" << a.errors();// QVERIFY(a.isCorrect());

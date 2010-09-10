@@ -41,8 +41,8 @@ struct FunctionY : public FunctionImpl
 {
 	explicit FunctionY(const Expression &e, Variables* v, const QString& bvar="x") : FunctionImpl(e, v ,0,0), vx(new Cn)
 	{
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=vx;
+		m_runStack.append(vx);
+		func.setStack(m_runStack);
 		
 		if(func.isCorrect()) {
 			Expression deriv = func.derivative(bvar);
@@ -54,8 +54,8 @@ struct FunctionY : public FunctionImpl
 	
 	FunctionY(const FunctionY &fy) : FunctionImpl(fy), vx(new Cn)
 	{
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=vx;
+		m_runStack.append(vx);
+		func.setStack(m_runStack);
 	}
 	virtual ~FunctionY() { delete vx; }
 	
@@ -71,6 +71,7 @@ struct FunctionY : public FunctionImpl
 	static QStringList examples() { return QStringList("x->x**sin x"); }
 	
 	Analitza::Cn* vx;
+	QVector<Analitza::Object*> m_runStack;
 };
 
 ///Functions where the y is bounding. like y->sin(y). FunctionY mirrored
@@ -212,11 +213,10 @@ QLineF FunctionY::derivative(const QPointF& p)
     double ret;
 
     if(m_deriv) {
-        Cn* v=new Cn(p.x());
+        vx->setValue(p.x());
         a.setExpression(*m_deriv);
 
-        a.expression().parameters().first()->value()=v;
-
+        a.setStack(m_runStack);
         if(a.isCorrect())
             ret = a.calculateLambda().toReal().value();
 

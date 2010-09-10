@@ -55,7 +55,6 @@ class ANALITZA_EXPORT Vector : public Object
 		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
 		virtual Object* copy() const;
 		bool operator==(const Vector& v) const;
-		virtual bool decorate(const QMap< QString, Object** >& scope);
 	private:
 		QVector<Object*> m_elements;
 };

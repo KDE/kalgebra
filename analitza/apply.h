@@ -43,7 +43,6 @@ class ANALITZA_EXPORT Apply : public Object
 		typedef QList<Object*>::iterator iterator;
 		
 		virtual Apply* copy() const;
-		virtual bool decorate(const Analitza::Object::ScopeInformation& scope);
 		virtual bool matches(const Analitza::Object* exp, QMap< QString, const Analitza::Object* >* found) const;
 		virtual QString visit(ExpressionWriter* exp) const;
 		Operator firstOperator() const { if(m_op) return *m_op; else return Operator(Operator::function); }

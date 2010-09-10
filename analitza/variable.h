@@ -50,25 +50,17 @@ class ANALITZA_EXPORT Ci : public Object
 		/** Returns the HTML representation of the variable */
 		QString toHtml() const { return QString("<span class='%1'>%2</span>").arg(m_function ? "func" : "var").arg(m_name); }
 		
-		///Value for the variable, only valid after colorizing the tree
-		Object*& value() const { Q_ASSERT(m_value); return *m_value; }
-		
-		///@p param value sets the new value for the item
-		void setValue(Object** value, bool owner);
-		
-		bool isDefined() const { return m_value!=0; }
-		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool matches(const Object* pattern, QMap<QString, const Object*>* found) const;
 		virtual Object* copy() const;
 		
-		virtual bool decorate(const ScopeInformation& scope);
+		void setBVarDepth(int depth) { m_depth = depth; }
+		int depth() const { return m_depth; }
 		
 	private:
 		QString m_name;
 		bool m_function;
-		bool m_owner;
-		Object** m_value;
+		int m_depth;
 };
 
 }

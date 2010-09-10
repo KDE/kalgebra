@@ -199,36 +199,3 @@ void Container::appendBranch(Object* o)
 {
 	m_params.append(o);
 }
-
-bool Container::decorate(const ScopeInformation& scope)
-{
-	if(m_cont_type==bvar)
-		return false;
-	
-	Container::const_iterator it=m_params.constBegin(), itEnd=m_params.constEnd();
-	
-	ScopeInformation newScope(scope);
-	QList<Ci*> bvars=bvarCi();
-	if(m_cont_type==declare) {
-		Q_ASSERT((*it)->type()==variable);
-		bvars.append((Ci*) *it);
-	}
-	
-	foreach(Ci* var, bvars) {
-		Object** o;
-		if(!var->isDefined()) {
-			o=new Object*(0);
-			var->setValue(o, true);
-		} else
-			o=&var->value();
-		newScope.insert(var->name(), o);
-		++it;
-	}
-	
-	bool ret=false;	
-	for(; it!=itEnd; ++it) {
-		ret |= (*it)->decorate(newScope);
-	}
-	
-	return ret;
-}

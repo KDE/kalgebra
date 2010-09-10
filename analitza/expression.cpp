@@ -48,15 +48,15 @@ public:
 	bool check(const Container* c);
 	bool check(const Apply* c);
 	
-	Object* branch(const QDomElement& elem, const QMap<QString, Object**>& scope);
+	Object* branch(const QDomElement& elem);
 	
 	template <class T>
-	T* addElements(T* v, const QDomElement* elem, QMap<QString, Object**>& scope)
+	T* addElements(T* v, const QDomElement* elem)
 	{
 		QDomNode n = elem->firstChild();
 		while(!n.isNull()) {
 			if(n.isElement()) {
-				Object* ob= branch(n.toElement(), scope);
+				Object* ob= branch(n.toElement()); //TODO: We should do that better
 				
 				if(ob && canAdd(v, ob)) {
 					v->appendBranch(ob);
@@ -268,6 +268,86 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 	return correct;
 }
 
+static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
+{
+	Q_ASSERT(o);
+	switch(o->type()) {
+		case Object::variable: {
+			Ci *i = (Ci*) o;
+			QMap<QString, int>::const_iterator it = scope.constFind(i->name());
+			i->setBVarDepth(it==scope.constEnd() 
+							? -1
+							: *it);
+			
+		}	break;
+		case Object::vector: {
+			Vector *v=(Vector*) o;
+			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
+				variableDepth(*it, next, scope);
+			
+		}	break;
+		case Object::list: {
+			List *v=(List*) o;
+			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it)
+				variableDepth(*it, next, scope);
+			
+		}	break;
+		case Object::container: {
+			const Container *c = (const Container*) o;
+			
+			QMap<QString, int> newScope=scope;
+			
+			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
+			if(c->containerType()==Container::declare)
+				++it;
+			
+			foreach(Ci* bvar, c->bvarCi()) {
+				newScope.insert(bvar->name(), next);
+				bvar->setBVarDepth(next++);
+			}
+			
+			for(; it!=itEnd; ++it)
+				variableDepth(*it, next, newScope);
+			
+		}	break;
+		case Object::apply: {
+			const Apply *c = (const Apply*) o;
+			
+			Object* ul=c->ulimit(), *dl=c->dlimit(), *dn=c->domain();
+			
+			//uplimit and downlimit are in the parent scope
+			if(ul) variableDepth(ul, next, scope);
+			if(dl) variableDepth(dl, next, scope);
+			if(dn) variableDepth(dn, next, scope);
+			
+			QMap<QString, int> newScope=scope;
+			
+			foreach(Ci* bvar, c->bvarCi()) {
+				newScope.insert(bvar->name(), next);
+				bvar->setBVarDepth(next++);
+			}
+			
+			Container::const_iterator it = c->firstValue();
+			for(; it!=c->constEnd(); ++it) {
+				variableDepth(*it, next, newScope);
+			}
+		}	break;
+		case Object::none:
+		case Object::value:
+		case Object::oper:
+			break;
+	}
+}
+
+void Expression::computeDepth(Object* o)
+{
+	int next=0;
+	QMap<QString, int> scope;
+	
+	if(o)
+		variableDepth(o, next, scope);
+}
+
 bool Expression::setMathML(const QString & s)
 {
 	d->m_err.clear();
@@ -280,22 +360,24 @@ bool Expression::setMathML(const QString & s)
 		return false;
 	}
 	
-	d->m_tree = d->branch(doc.documentElement(), QMap<QString, Object**>());
+	d->m_tree = d->branch(doc.documentElement());
+	
+	computeDepth(d->m_tree);
+	
 	return d->m_tree;
 }
 
-Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMap<QString, Object**>& scope)
+Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 {
 	Cn *num; Operator *op;
 	Object* ret=0;
-	QMap<QString, Object**> newScope(scope);
 	
 	switch(whatType(elem.tagName())) {
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			
 			if(t!=Container::none) {
-				Container* c=addElements<Container>(new Container(t), &elem, newScope);
+				Container* c=addElements<Container>(new Container(t), &elem);
 				
 				if(c && !check(c)) {
 					delete c;
@@ -327,21 +409,20 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem, const QMa
 		case Object::variable: {
 			Ci* var = new Ci(elem.text());
 			var->setFunction(elem.attribute("type")=="function");
-			var->setValue(newScope.value(var->name()), false);
 			ret=var;
 		}	break;
 		case Object::vector: {
-			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem, newScope);
+			ret=addElements<Vector>(new Vector(elem.childNodes().count()), &elem);
 			if(elem.childNodes().count()==0) {
 				m_err << i18n("Do not want empty vectors");
 			}
 // 			qDebug() << "PEEEEEEU" << v->size();
 		}	break;
 		case Object::list:
-			ret=addElements<List>(new List, &elem, newScope);
+			ret=addElements<List>(new List, &elem);
 			break;
 		case Object::apply: {
-			Apply *a=addElements<Apply>(new Apply, &elem, newScope);
+			Apply *a=addElements<Apply>(new Apply, &elem);
 			if(a && !check(a)) {
 				delete a;
 				a=0;
@@ -487,7 +568,9 @@ Expression Expression::lambdaBody() const
 		ret = c->m_params.last();
 	}
 	
-	return Expression(ret->copy());
+	Object* o = ret->copy();
+	computeDepth(o);
+	return Expression(o);
 }
 
 bool Expression::isVector() const

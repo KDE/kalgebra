@@ -182,6 +182,7 @@ class ANALITZA_EXPORT Expression
 		 */
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
+		static void computeDepth(Object* o);
 	private:
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;

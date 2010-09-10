@@ -55,8 +55,6 @@ namespace AnalitzaUtils
 	/** Convenience function */
 	void ANALITZA_EXPORT objectWalker(const Analitza::Expression& o, const QByteArray& prefix=QByteArray());
 	
-	/** Creates a scope out of a variables instance */
-	Analitza::Object::ScopeInformation variablesScope(Analitza::Variables* v);
 }
 
 #endif // ANALITZAUTILS_H

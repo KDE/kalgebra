@@ -93,6 +93,7 @@ struct FunctionPolar : public FunctionImpl
 	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
 	
 	Cn* m_th;
+	QVector<Analitza::Object*> m_runStack;
 };
 
 REGISTER_FUNCTION(FunctionPolar)
@@ -102,21 +103,18 @@ FunctionPolar::FunctionPolar(const Expression &e, Variables* v)
 	: FunctionImpl(e, v, 0, 2*M_PI)
 	, m_th(new Cn)
 {
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=m_th;
+	m_runStack.append(m_th);
 }
 
 FunctionPolar::FunctionPolar(const FunctionPolar &fp)
 	: FunctionImpl(fp)
 	, m_th(new Cn)
 {
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=m_th;
+	m_runStack.append(m_th);
 }
 
 void FunctionPolar::updatePoints(const QRect& viewport)
 {
-	Q_UNUSED(viewport);
 	Q_ASSERT(func.expression().isCorrect());
 	if(int(resolution())==points.capacity())
 		return;
@@ -127,6 +125,7 @@ void FunctionPolar::updatePoints(const QRect& viewport)
 	points.clear();
 	points.reserve(resolution());
 	
+	func.setStack(m_runStack);
 	double inv_res= double((ulimit-dlimit)/resolution());
 	double final=ulimit-inv_res;
 	for(double th=dlimit; th<final; th+=inv_res) {
@@ -150,6 +149,7 @@ QPair<QPointF, QString> FunctionPolar::calc(const QPointF& p)
 	th=qMax(th, downlimit());
 	th=qMin(th, uplimit());
 	
+	func.setStack(m_runStack);
 	QPointF dist;
 	m_th->setValue(th);
 	do {
@@ -196,17 +196,16 @@ QLineF FunctionPolar::derivative(const QPointF& point)
 
     Analitza::Analyzer newfunc(func.variables());
     newfunc.setExpression(Analitza::Expression(polart, false));
-    newfunc.refExpression()->parameters()[0]->value() = m_th;
 
     if(newfunc.isCorrect() && newfunc.expression().lambdaBody().isVector())
     {
         Analitza::Analyzer f(newfunc.variables());
+		f.setStack(m_runStack);
         f.setExpression(Analitza::Expression("t->" + newfunc.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
-        f.refExpression()->parameters()[0]->value() = m_th;
 
         Analitza::Analyzer df(newfunc.variables());
+		df.setStack(m_runStack);
         df.setExpression(f.derivative("t"));
-        df.refExpression()->parameters()[0]->value() = m_th;
 
 		if (!df.isCorrect()) return QLineF();
 
@@ -275,7 +274,7 @@ QLineF FunctionPolar::derivative(const QPointF& point)
 
         Analitza::Analyzer dfunc(newfunc.variables());
         dfunc.setExpression(newfunc.derivative("t"));
-        dfunc.refExpression()->parameters()[0]->value() = m_th;
+		dfunc.setStack(m_runStack);
 
         m_th->setValue(t);
 

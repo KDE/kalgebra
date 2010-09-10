@@ -79,21 +79,21 @@ struct FunctionParametric : public FunctionImpl
 {
 	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI), vx(new Cn)
 	{
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=vx;
-
-        if(func.isCorrect()) {
-            Expression deriv = func.derivative("t");
-            if(func.isCorrect())
-                m_deriv = new Expression(deriv);
-            func.flushErrors();
-        }
+		func.setStack(m_runStack);
+		m_runStack.append(vx);
+		
+		if(func.isCorrect()) {
+			Expression deriv = func.derivative("t");
+			if(func.isCorrect())
+				m_deriv = new Expression(deriv);
+			func.flushErrors();
+		}
 	}
 	
 	FunctionParametric(const FunctionParametric &fx) : FunctionImpl(fx), vx(new Cn)
 	{
-		Analitza::Ci* vi=func.refExpression()->parameters().first();
-		vi->value()=vx;
+		m_runStack.append(vx);
+		func.setStack(m_runStack);
 	}
 	
 	void updatePoints(const QRect& viewport);
@@ -106,6 +106,8 @@ struct FunctionParametric : public FunctionImpl
 	QStringList boundings() const { return supportedBVars(); }
 	static QStringList examples() { return QStringList("t->vector {t,t**2}"); }
 	Cn* vx;
+	
+	QVector<Analitza::Object*> m_runStack;
 };
 REGISTER_FUNCTION(FunctionParametric)
 
@@ -169,11 +171,11 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& point)
     {
         Analitza::Analyzer f(func.variables());
         f.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
-        f.refExpression()->parameters()[0]->value() = vx;
+        f.setStack(m_runStack);
 
         Analitza::Analyzer df(func.variables());
         df.setExpression(f.derivative("t"));
-        df.refExpression()->parameters()[0]->value() = vx;
+        df.setStack(m_runStack);
 
 //TODO
 //    Analitza::Analyzer g(func.variables());
@@ -249,11 +251,11 @@ QLineF FunctionParametric::derivative(const QPointF& point)
     {
         Analitza::Analyzer f(func.variables());
         f.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
-        f.refExpression()->parameters()[0]->value() = vx;
+        f.setStack(m_runStack);
 
         Analitza::Analyzer df(func.variables());
         df.setExpression(f.derivative("t"));
-        df.refExpression()->parameters()[0]->value() = vx;
+        df.setStack(m_runStack);
 
 //TODO
 //    Analitza::Analyzer g(func.variables());
@@ -313,7 +315,7 @@ QLineF FunctionParametric::derivative(const QPointF& point)
 
         Analitza::Analyzer dfunc(func.variables());
         dfunc.setExpression(func.derivative("t"));
-        dfunc.refExpression()->parameters()[0]->value() = vx;
+        dfunc.setStack(m_runStack);
 
         vx->setValue(t);
 
