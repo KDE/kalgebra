@@ -45,6 +45,7 @@ class KAlgebra : public KMainWindow
 		~KAlgebra();
 	private:
 		QLabel *m_status;
+		QTabWidget* m_tabs;
 		
 		//consoleeWidget
 		QMenu* c_menu;
@@ -101,6 +102,7 @@ class KAlgebra : public KMainWindow
 		void set_res_vfine();
 		void valueChanged();
 		void varsContextMenu(const QPoint&);
+		void add2D(const QString& exp);
 		
 		void new_func3d();
 		void set_dots();
@@ -108,6 +110,7 @@ class KAlgebra : public KMainWindow
 		void set_solid();
 		void toggleTransparency();
 		void save3DGraph();
+		void add3D(const QString& exp);
 		
 		void saveGraph();
 		void functools ( int );

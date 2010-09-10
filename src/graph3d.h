@@ -107,7 +107,7 @@ class Graph3D : public QGLWidget
 		
 		void wheelEvent(QWheelEvent *e);
 		
-		bool checkExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& type);
+		static bool checkExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& type);
 		
 	public slots:
 		/** Resets the view coordinates. */

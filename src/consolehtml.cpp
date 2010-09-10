@@ -41,6 +41,7 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 #include <analitzagui/functionfactory.h>
+#include "graph3d.h"
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -67,7 +68,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\t.keyword { color: #000064; }\n";
 	m_css +="\t.func { color: #008600; }\n";
 	m_css +="\t.result { padding-left: 10%; }\n";
-	m_css +="\t.ask { text-align: right; }\n";
+	m_css +="\t.options { font-size: small; text-align:right }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
@@ -76,9 +77,22 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	end();
 	
 	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
+	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
 }
 
 ConsoleHtml::~ConsoleHtml() {}
+
+void ConsoleHtml::openClickedUrl(const KUrl& url)
+{
+	QString type=url.queryItem("q");
+	QString exp = url.queryItem("func");
+	if(type=="2D")
+		emit add2D(exp);
+	else if(type=="3D")
+		emit add3D(exp);
+	else
+		qDebug() << "error URL:" << url;
+}
 
 bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
 {
@@ -97,6 +111,44 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 	QString options;
 	if(a.isCorrect()) {
 		result = res.toHtml();
+		
+		Analitza::Expression lambdaexp = a.dependenciesToLambda();
+		QStringList bvars = lambdaexp.bvarList();
+		
+		Analitza::ExpressionType functype;
+		{
+			Analitza::Analyzer b;
+			b.setExpression(lambdaexp);
+			
+			functype = b.type();
+		}
+		
+		if(FunctionFactory::self()->contains(bvars)) {
+			Analitza::ExpressionType type = FunctionFactory::self()->type(bvars);
+			
+			
+			bool is2d = functype.canReduceTo(type);
+			
+			if(is2d) {
+				KUrl url("plotFunction");
+				url.addQueryItem("q", "2D");
+				url.addQueryItem("func", lambdaexp.toString());
+				
+				options += i18n(" <a href='%1'>Plot 2D</a>", url.url());
+			}
+		} 
+		
+		if(Graph3D::checkExpression(lambdaexp, functype))
+		{
+			KUrl url("plotFunction");
+			url.addQueryItem("q", "3D");
+			url.addQueryItem("func", lambdaexp.toString());
+			
+			options += i18n(" <a href='%1'>Plot 3D</a>", url.url());
+		}
+		
+		if(!options.isEmpty())
+			options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
 		
 		a.insertVariable("ans", res);
 		m_script += e; //Script won't have the errors
@@ -227,7 +279,8 @@ void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 	
 	if(!newEntry.isEmpty()) {
 		m_htmlLog += newEntry;
-		write("<p class='last'>"+newEntry+options+"</p>");
+		write(options);
+		write("<p class='last'>"+newEntry+"</p>");
 	}
 	write("</body></html>");
 	end();

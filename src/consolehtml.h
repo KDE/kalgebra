@@ -76,6 +76,8 @@ class ConsoleHtml : public KHTMLPart
 		/** Copies the selected text to the clipboard */
 		void copy() const;
 		
+		void openClickedUrl(const KUrl& url);
+		
 	signals:
 		/** Emits a notification that tells that the widget status. */
 		void status(const QString &msg);
@@ -85,6 +87,9 @@ class ConsoleHtml : public KHTMLPart
 		
 		/** Emits the selected code to be pasted somewhere */
 		void paste(const QString& code);
+		
+		void add2D(const QString& expression);
+		void add3D(const QString& expression);
 		
 	private slots:
 		void context(const QString&, const QPoint& p);

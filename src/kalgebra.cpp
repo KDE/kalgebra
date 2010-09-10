@@ -59,8 +59,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
 	resize(900, 500);
 	
-	QTabWidget *tabs = new QTabWidget(this);
-	this->setCentralWidget(tabs);
+	m_tabs = new QTabWidget(this);
+	this->setCentralWidget(m_tabs);
 	
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
@@ -74,7 +74,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
     menuBar()->addMenu("|")->setEnabled(false);
 	
 	///////Console
-	QWidget *console = new QWidget(tabs);
+	QWidget *console = new QWidget(m_tabs);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
 	c_results = new ConsoleHtml(console);
 	c_results->view()->setFocusPolicy(Qt::NoFocus);
@@ -97,7 +97,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_exp->setExamples(QStringList() << "square:=x->x**2" << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }");
 	c_dock_vars->setWidget(c_variables);
 	
-	tabs->addTab(console, i18n("&Console"));
+	m_tabs->addTab(console, i18n("&Console"));
 	console->setLayout(c_layo);
 	c_layo->addWidget(c_results->view());
 	c_layo->addWidget(c_exp);
@@ -107,8 +107,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
 	connect(c_results, SIGNAL(paste(QString)), c_exp, SLOT(insertText(QString)));
+	connect(c_results, SIGNAL(add2D(QString)), this, SLOT(add2D(QString)));
+	connect(c_results, SIGNAL(add3D(QString)), this, SLOT(add3D(QString)));
 	connect(c_variables, SIGNAL(clicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
-	
 	////////menu
 	c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	
@@ -141,7 +142,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//////2D Graph
 	b_funcsModel=new FunctionsModel(this);
 	
-	m_graph2d = new Graph2D(b_funcsModel, tabs);
+	m_graph2d = new Graph2D(b_funcsModel, m_tabs);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
@@ -180,7 +181,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-	tabs->addTab(m_graph2d, i18n("&2D Graph"));
+	m_tabs->addTab(m_graph2d, i18n("&2D Graph"));
 	
 	connect(b_varsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(valueChanged()));
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
@@ -228,7 +229,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	/////3DGraph
 #ifdef HAVE_OPENGL
-	QWidget *tridim = new QWidget(tabs);
+	QWidget *tridim = new QWidget(m_tabs);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new ExpressionEdit(tridim);
 	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
@@ -236,7 +237,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	m_graph3d = new Graph3D(tridim);
 	
 	tridim->setLayout(t_layo);
-	tabs->addTab(tridim, i18n("&3D Graph"));
+	m_tabs->addTab(tridim, i18n("&3D Graph"));
 	t_layo->addWidget(m_graph3d);
 	t_layo->addWidget(t_exp);
 	
@@ -273,8 +274,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	d_dock = new QDockWidget(i18n("Operations"), this);
 	d_dock->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
 	this->addDockWidget(Qt::RightDockWidgetArea, d_dock);
-	Dictionary *dic = new Dictionary(tabs);
-	tabs->addTab(dic, i18n("&Dictionary"));
+	Dictionary *dic = new Dictionary(m_tabs);
+	m_tabs->addTab(dic, i18n("&Dictionary"));
 	
 	QWidget *w=new QWidget;
 	QLayout *leftLayo=new QVBoxLayout(w);
@@ -303,7 +304,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
 			c_results, SLOT(removeVariable(QString)));
 	
-	connect(tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+	connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
 }
 
@@ -332,6 +333,16 @@ void KAlgebra::initializeRecentScripts()
 void KAlgebra::newInstance()
 {
 	KProcess::startDetached(QApplication::applicationFilePath());
+}
+
+void KAlgebra::add2D(const QString& exp)
+{
+	qDebug() << "adding" << exp;
+	
+	function f(b_funcsModel->freeId(), Analitza::Expression(exp, false), c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
+	b_funcsModel->addFunction(f);
+	
+	m_tabs->setCurrentIndex(1);
 }
 
 void KAlgebra::new_func()
@@ -591,6 +602,12 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 		if(a.exec()==QDialog::Accepted)
 			b_varsModel->insertVariable(a.name(), Analitza::Expression(Analitza::Cn(0)));
 	}
+}
+
+void KAlgebra::add3D(const QString& exp)
+{
+	m_graph3d->setFunc(Analitza::Expression(exp, false));
+	m_tabs->setCurrentIndex(2);
 }
 
 void KAlgebra::dictionaryFilterChanged(const QString&)
