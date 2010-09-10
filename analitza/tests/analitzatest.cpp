@@ -81,7 +81,7 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("boolean and") << "and(1,0)" << 0.;
 	QTest::newRow("boolean or") << "or(0,1)" << 1.;
 	QTest::newRow("boolean not") << "not(0)" << 1.;
-	QTest::newRow("lambda") << "(x->x+2)(2)" << 4.;
+	QTest::newRow("lambda")  << "(x->x+2)(2)" << 4.;
 	QTest::newRow("lambda2") << "(x->3*x^2)(1)" << 3.;
 	QTest::newRow("lambda3") << "(x->x*sum(t:t=0..3))(2)" << 12.;
 	
@@ -101,7 +101,7 @@ void AnalitzaTest::testTrivialCalculate()
 	
 	if(!a->isCorrect()) qDebug() << "error: " << a->errors();
 	QVERIFY(a->isCorrect());
-// 	QCOMPARE(a->evaluate().toReal().value(), result);
+	QCOMPARE(a->evaluate().toReal().value(), result);
 	QVERIFY(a->isCorrect());
 	Expression ee=a->calculate();
 	if(!a->isCorrect()) qDebug() << "error: " << a->errors();
@@ -496,6 +496,8 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("piecewise1") << "piecewise { 1=2 ? 4, ? 3}" << "3";
 	QTest::newRow("piecewise2") << "piecewise { x=2 ? 4, ? 3}" << "piecewise { x=2 ? 4, ? 3 }";
 	QTest::newRow("piecewise3") << "piecewise { 2=2 ? 4, ? 3}" << "4";
+	
+	QTest::newRow("sum.dlul") << "w->sum(x : x=(floor(2.5)+w)..(ceiling(2.5)))" << "w->sum(x:x=w+2..3)";
 }
 
 void AnalitzaTest::testSimplify()
@@ -504,6 +506,7 @@ void AnalitzaTest::testSimplify()
 	QFETCH(QString, result);
 	
 	a->setExpression(Expression(expression, false));
+	if(!a->isCorrect()) qDebug() << "error:" << a->errors();
 	QVERIFY(a->isCorrect());
 	a->simplify();
 	QCOMPARE(a->expression().toString(), result);

@@ -208,7 +208,6 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				
 				alphaConversion(r, r->bvarCi().first()->depth());
 				Expression::computeDepth(r);
-				
 				ret=r;
 			} break;
 			case Container::math:
@@ -258,6 +257,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 	} else if(branch->type()==Object::apply) {
 		const Apply* c=static_cast<const Apply*>(branch);
 		Operator op = c->firstOperator();
+		
 		switch(op.operatorType()) {
 			case Operator::diff: {
 				//FIXME: Must support multiple bvars
@@ -301,6 +301,8 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						qDeleteAll(m_runStack.begin()+top, m_runStack.end());
 						m_runStack.resize(top);
 						m_runStackTop = aux;
+						
+						Expression::computeDepth(ret);
 					}
 				}
 				
@@ -313,6 +315,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				Apply *r = c->copy();
 				
 				QSet<QString> newUnscoped(unscoped);
+				int top = m_runStack.size(), aux = m_runStackTop;
 				if(op.isBounded()) {
 					if(r->domain()) {
 						QScopedPointer<Object> o(r->domain());
@@ -327,17 +330,27 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						r->ulimit()=eval(r->ulimit(), resolve, unscoped);
 					}
 					
-					newUnscoped+=c->bvarStrings().toSet();
+					QSet<QString> bvars = c->bvarStrings().toSet();
+					newUnscoped += bvars;
+					m_runStack.resize(top + bvars.size());
+					m_runStackTop = top;
+				
+					//We leave the bvars 0'd
 				}
 				
-				Container::iterator it=r->firstValue(), itEnd=r->m_params.end();
+				Apply::iterator it=r->firstValue(), itEnd=r->end();
 				for(; it!=itEnd; ++it) {
 					Object *o=*it;
 					*it= eval(*it, resolve, newUnscoped);
 					delete o;
 				}
 				
-				ret=simp(r);
+				m_runStack.resize(top);
+				m_runStackTop = aux;
+				
+// 				ret=simp(r);
+				ret=r;
+				
 			}	break;
 		}
 	}
@@ -403,7 +416,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			r->appendBranch(new Operator(op));
 			
 			Container::const_iterator it(c->firstValue());
-			for(; it!=c->m_params.end(); ++it)
+			for(; it!=c->constEnd(); ++it)
 				r->appendBranch(derivative(var, *it));
 			return r;
 		} break;
@@ -412,12 +425,12 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			nx->appendBranch(new Operator(Operator::plus));
 			
 			Apply::const_iterator it(c->firstValue());
-			for(; it!=c->m_params.end(); ++it) {
+			for(; it!=c->constEnd(); ++it) {
 				Apply *neach = new Apply;
 				neach->appendBranch(new Operator(Operator::times));
 				
 				Apply::const_iterator iobj(c->firstValue());
-				for(; iobj!=c->m_params.end(); ++iobj) {
+				for(; iobj!=c->constEnd(); ++iobj) {
 					Object* o;
 					if(iobj==it)
 						o=derivative(var, *iobj);
@@ -1036,7 +1049,7 @@ void Analyzer::simplify()
 void Analyzer::levelOut(Apply *c, Apply *ob, Apply::iterator &pos)
 {
 	Container::iterator it = ob->firstValue();
-	for(; it!=ob->m_params.end(); pos++) {
+	for(; it!=ob->end(); pos++) {
 		pos=c->m_params.insert(pos, *it);
 		
 		it=ob->m_params.erase(it);
@@ -1103,7 +1116,7 @@ Object* Analyzer::simpApply(Apply* c)
 	
 	switch(o.operatorType()) {
 		case Operator::times:
-			for(it=c->firstValue(); c->m_params.count()>1 && it!=c->m_params.end();) {
+			for(it=c->firstValue(); c->m_params.count()>1 && it!=c->end();) {
 				d=false;
 				*it = simp(*it);
 				if((*it)->isApply()) {
@@ -1157,7 +1170,7 @@ Object* Analyzer::simpApply(Apply* c)
 		case Operator::minus:
 		case Operator::plus: {
 			bool somed=false, lastdel=false;
-			it=c->m_params.end()-1;
+			it=c->end()-1;
 			Object* first=*c->firstValue();
 			
 			bool done=false;
@@ -1246,7 +1259,7 @@ Object* Analyzer::simpApply(Apply* c)
 			}
 		}	break;
 		case Operator::power: {
-			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
+			for(it = c->firstValue(); it!=c->end(); ++it)
 				*it = simp(*it);
 			
 			if(c->m_params[1]->type()==Object::value) {
@@ -1282,7 +1295,7 @@ Object* Analyzer::simpApply(Apply* c)
 			}
 		} break;
 		case Operator::divide:
-			for(it = c->firstValue(); it!=c->m_params.end(); ++it)
+			for(it = c->firstValue(); it!=c->end(); ++it)
 				*it = simp(*it);
 			
 			Object *f, *g; //f/g
@@ -1321,13 +1334,14 @@ Object* Analyzer::simpApply(Apply* c)
 		case Operator::sum: {
 			
 			QStringList bvars=c->bvarStrings();
+			if(c->ulimit()) c->ulimit()=simp(c->ulimit());
+			if(c->dlimit()) c->dlimit()=simp(c->dlimit());
+			if(c->domain()) c->domain()=simp(c->domain());
+			
 			Object *uplimit=c->ulimit(), *downlimit=c->dlimit(), *domain=c->domain();
-			if(uplimit) uplimit=simp(uplimit);
-			if(downlimit) downlimit=simp(downlimit);
-			if(domain) domain=simp(domain);
 			
 			//TODO: simplify this code
-			for(it = c->m_params.begin(); it!=c->m_params.end(); ++it)
+			for(it = c->m_params.begin(); it!=c->end(); ++it)
 				*it = simp(*it);
 			
 			//if bvars is empty, we are dealing with an invalid sum()
@@ -1383,7 +1397,7 @@ Object* Analyzer::simpApply(Apply* c)
 			}
 		}	break;
 		case Operator::_union: {
-			Apply::iterator it=c->firstValue(), itEnd=c->m_params.end();
+			Apply::iterator it=c->firstValue(), itEnd=c->end();
 			
 			QList<Object*> newParams;
 			for(; it!=itEnd; ++it) {
@@ -1419,7 +1433,7 @@ Object* Analyzer::simpApply(Apply* c)
 			
 		}	break;
 		case Operator::eq: {
-			Apply::iterator it=c->firstValue()+1, itEnd=c->m_params.end();
+			Apply::iterator it=c->firstValue()+1, itEnd=c->end();
 			
 			bool alleq=true;
 			for(; alleq && it!=itEnd; ++it) {
@@ -1448,7 +1462,7 @@ Object* Analyzer::simpApply(Apply* c)
 				bvars=cfunc->bvarCi();
 			}
 			
-			for(int i=0; it!=c->m_params.end(); ++it, ++i) {
+			for(int i=0; it!=c->end(); ++it, ++i) {
 				*it = simp(*it);
 				allequal = allequal && equalTree(*it, bvars[i]);
 			}
@@ -1479,8 +1493,8 @@ Object* Analyzer::simpScalar(Apply * c)
 	Object *value=0;
 	Container::iterator i = c->firstValue();
 	Operator o = c->firstOperator();
-	bool firstvalue = i!=c->m_params.end() && ((*i)->type()==Object::value || ((*i)->type()==Object::vector && !hasVars(*i)));
-	for(; i!=c->m_params.end();) {
+	bool firstvalue = i!=c->end() && ((*i)->type()==Object::value || ((*i)->type()==Object::vector && !hasVars(*i)));
+	for(; i!=c->end();) {
 		bool d=false;
 		
 		//TODO: hasVars needed? should have already been simplifyed before, just check type==cn
@@ -1937,13 +1951,12 @@ Analitza::Object* Analyzer::variableValue(Ci* var)
 {
 	Object* ret;
 	
-// 	qDebug() << "ziiiiiiii" << var->name() << '('<< m_runStackTop << '+' << var->depth() << ')' << m_runStack;
+// 	qDebug() << "ziiiiiiii" << var->name() << '('<< m_runStackTop << '+' << var->depth() << ')' << printAll(m_runStack);
 	if(var->depth()>=0)
 		ret = m_runStack[m_runStackTop + var->depth()];
 	else
 		ret = m_vars->value(var->name());
 	
-	Q_ASSERT(ret);
 	return ret;
 }
 
