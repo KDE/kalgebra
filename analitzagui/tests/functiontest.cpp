@@ -130,25 +130,23 @@ void FunctionTest::testCopy()
 void FunctionTest::testCorrect_data()
 {
 	QTest::addColumn<QString>("input");
-	QTest::addColumn<bool>("correct");
 	
-	QTest::newRow("empty function") << "" << false;
-	QTest::newRow("undefined var") << "x:=w" << false;
-	QTest::newRow("parametric-novector") << "t->3" << false;
-	QTest::newRow("parametric-wrongvector") << "t->vector{3}" << false;
-	QTest::newRow("wrong-dimension") << "vector{2,3}" << false;
-	QTest::newRow("wrong-dimension-y") << "y->vector{2,3}" << false;
-	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}" << false;
-	QTest::newRow("wrong-parametric") << "t->v" << false;
-	QTest::newRow("wrong-variable") << "x->x(x)" << false;
+	QTest::newRow("empty function") << "";
+	QTest::newRow("undefined var") << "x:=w";
+	QTest::newRow("parametric-novector") << "t->3";
+	QTest::newRow("parametric-wrongvector") << "t->vector{3}";
+	QTest::newRow("wrong-dimension") << "vector{2,3}";
+	QTest::newRow("wrong-dimension-y") << "y->vector{2,3}";
+	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}";
+	QTest::newRow("wrong-parametric") << "t->v";
+	QTest::newRow("wrong-variable") << "x->x(x)";
 	
-	QTest::newRow("implicit.notindomain") << "(x,y)->3-sin x*sin y" << false;
+	QTest::newRow("implicit.notindomain") << "(x,y)->3-sin x*sin y";
 }
 
 void FunctionTest::testCorrect()
 {
 	QFETCH(QString, input);
-	QFETCH(bool, correct);
 	function f3("hola", Expression(input, false), m_vars, QPen(Qt::red), 0,0);
 	
 	if(f3.isCorrect()) {
@@ -158,15 +156,13 @@ void FunctionTest::testCorrect()
 			f3.update_points(QRect(-10, 10, 10, -10));
 	}
 	
-	if(correct) qDebug() << f3.errors();
-	QCOMPARE(correct, f3.isCorrect());
-	
-	if(correct)
+	if(f3.isCorrect())
 	{
 		f3.update_points(QRect(-10, 10, 10, -10));
 		QVERIFY(f3.points().size()>1);
 		QVERIFY(f3.points().size()<=100);
 	}
+	QVERIFY(!f3.isCorrect());
 }
 
 void FunctionTest::testJumps_data()
