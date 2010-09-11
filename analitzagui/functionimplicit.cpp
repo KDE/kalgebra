@@ -431,6 +431,11 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
 //		root = Box(-15,-18,34,33); // default fixed viewport settings
 
     subdivideSpace(root);
+
+    if (points.size() <= 2)
+    {
+        m_err << i18nc("This function can't be represented as a curve. To draw implicit curve, the function has to satisfy the implicit function theorem.", "Implicit function undefined in the plane");
+    }
 }
 
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
