@@ -107,7 +107,7 @@ void function::update_points(const QRect& viewport)
 	Q_ASSERT(resolution()>2);
 	
 	m_function->updatePoints(viewport);
-	Q_ASSERT(m_function->points.size()>=2);
+	Q_ASSERT(!m_function->isCorrect() || m_function->points.size()>=2);
 }
 
 void function::setResolution(unsigned int resolution)
