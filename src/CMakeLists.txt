@@ -10,7 +10,6 @@ set(kalgebra_SRCS
 	main.cpp
 	expressionedit.cpp
 	graph2d.cpp
-	variablesmodel.cpp
 	variablesdelegate.cpp
 	viewportwidget.cpp
 	functionsview.cpp

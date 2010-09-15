@@ -24,7 +24,7 @@
 #include "graph2d.h"
 #include "analitza/variables.h"
 #include "analitza/value.h"
-#include "variablesmodel.h"
+#include "analitzagui/variablesmodel.h"
 #include "dictionary.h"
 #include "functionsmodel.h"
 #include "functionsview.h"

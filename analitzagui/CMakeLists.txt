@@ -7,6 +7,7 @@ add_subdirectory(tests)
 set(analitzagui_SRCS
 	operatorsmodel.cpp
 	algebrahighlighter.cpp
+	variablesmodel.cpp
 
 	function.cpp
 	functionimpl.cpp
@@ -33,4 +34,3 @@ if(INSTALL_ANALITZA_HEADERS)
 
                 DESTINATION ${INCLUDE_INSTALL_DIR}/analitzagui/ COMPONENT Devel)
 endif(INSTALL_ANALITZA_HEADERS)
-

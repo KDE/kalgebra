@@ -20,6 +20,7 @@
 #define VARIABLESMODEL_H
 
 #include <QAbstractTableModel>
+#include "analitzaguiexport.h"
 
 namespace Analitza
 {
@@ -28,7 +29,7 @@ class Expression;
 }
 
 /** Variables model is a model class that has a relation of all operators string with their VariableType. */
-class VariablesModel : public QAbstractTableModel
+class ANALITZAGUI_EXPORT VariablesModel : public QAbstractTableModel
 {
 	Q_OBJECT
 	public:
