@@ -98,8 +98,9 @@ struct FunctionParametric : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-    QLineF derivative(const QPointF& p);
+	QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionParametric(*this); }
+	virtual QString iconName() const { return "newparametric"; }
 	
 	static QStringList supportedBVars() { return QStringList("t"); }
 	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2)); }

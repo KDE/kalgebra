@@ -184,6 +184,7 @@ struct FunctionImplicit : public FunctionImpl
     QPair<QPointF, QString> calc(const QPointF& dp);
     QLineF derivative(const QPointF& p);
     virtual FunctionImpl* copy() { return new FunctionImplicit(*this); }
+    virtual QString iconName() const { return "newimplicit"; }
 
     static QStringList supportedBVars()
     {

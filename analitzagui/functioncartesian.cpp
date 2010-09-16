@@ -61,10 +61,11 @@ struct FunctionY : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-    QLineF derivative(const QPointF& p);
+	QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionY(*this); }
 	static QStringList supportedBVars() { return QStringList("x"); }
-    static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
+	static ExpressionType expectedType() { return ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Value)).addParameter(ExpressionType(ExpressionType::Value)); }
+	virtual QString iconName() const { return "newfunction"; }
 	
 	QStringList boundings() const { return supportedBVars(); }
 	void calculateValues(double, double);

@@ -24,6 +24,7 @@
 #include <QFont>
 #include <cmath>
 #include <analitza/expression.h>
+#include <QIcon>
 
 FunctionsModel::FunctionsModel(QObject *parent)
 	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500), m_fcount(1)
@@ -37,31 +38,40 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 	int var=index.row();
 	const function &f=funclist[var];
 	
-	if(role==Qt::DisplayRole) {
-		switch(index.column()) {
-			case 0:
-				ret=f.name();
-				break;
-			case 1:
-				ret=f.expression().toString();
-				break;
-		}
-	} else if(role==Qt::DecorationRole) {
-		if(index.column()==0) {
-			QPixmap ico(15, 15);
-			ico.fill(f.color());
-			ret=ico;
-		}
-	} else if(role==Qt::FontRole) {
-		if(var==m_selectedRow) {
-			QFont f(qApp->font());
-			f.setBold(true);
-			ret=f;
-		}
-	} else if(role==Selection) {
-		ret = m_selectedRow;
-	} else if(role==Shown) {
-		ret=funclist[index.row()].isShown();
+	switch(role) {
+		case Qt::DisplayRole:
+			switch(index.column()) {
+				case 0:
+					ret=f.name();
+					break;
+				case 1:
+					ret=f.expression().toString();
+					break;
+			}
+			break;
+		case Qt::DecorationRole:
+			if(index.column()==0) {
+				QPixmap ico(15, 15);
+				ico.fill(f.color());
+				ret=ico;
+			} else {
+				ret = QIcon::fromTheme(f.icon());
+			}
+			break;
+		case Qt::FontRole:
+			if(var==m_selectedRow) {
+				QFont f(qApp->font());
+				f.setBold(true);
+				ret=f;
+			}
+			break;
+		case Selection:
+			ret = m_selectedRow;
+			break;
+		case Shown:
+			ret=funclist[index.row()].isShown();
+			break;
+		
 	}
 	return ret;
 }

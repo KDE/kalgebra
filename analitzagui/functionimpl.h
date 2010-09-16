@@ -47,6 +47,7 @@ struct FunctionImpl
 	virtual FunctionImpl* copy()=0;
     virtual QLineF derivative(const QPointF& p)=0;
 	virtual QStringList boundings() const=0;
+	virtual QString iconName() const=0;
 	
 	/** 
 	 * @returns whether the points vector contains segments (all disconnected is true)

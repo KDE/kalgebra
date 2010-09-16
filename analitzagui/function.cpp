@@ -179,3 +179,8 @@ bool function::allDisconnected() const
 {
     return m_function->allDisconnected();
 }
+
+QString function::icon() const
+{
+	return m_function->iconName();
+}

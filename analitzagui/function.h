@@ -110,6 +110,9 @@ class ANALITZAGUI_EXPORT function
 		/** Queries if it is a correct function. */
 		bool isCorrect() const;
 		
+		/** @returns an icon name related to the type of the function. */
+		QString icon() const;
+		
 		QStringList errors() const;
 		
 		const Analitza::Expression& expression() const;
