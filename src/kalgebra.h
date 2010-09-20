@@ -37,12 +37,17 @@ class Graph3D;
 class FunctionsModel;
 class KRecentFilesAction;
 
+namespace Analitza { class Expression; }
+
 class KAlgebra : public KMainWindow
 {
 	Q_OBJECT
 	public:
 		KAlgebra ( QWidget *parent=0 );
 		~KAlgebra();
+		
+		void add2D(const Analitza::Expression& exp);
+		void add3D(const Analitza::Expression& exp);
 	private:
 		QLabel *m_status;
 		QTabWidget* m_tabs;
@@ -102,7 +107,6 @@ class KAlgebra : public KMainWindow
 		void set_res_vfine();
 		void valueChanged();
 		void varsContextMenu(const QPoint&);
-		void add2D(const QString& exp);
 		
 		void new_func3d();
 		void set_dots();
@@ -110,7 +114,6 @@ class KAlgebra : public KMainWindow
 		void set_solid();
 		void toggleTransparency();
 		void save3DGraph();
-		void add3D(const QString& exp);
 		
 		void saveGraph();
 		void functools ( int );

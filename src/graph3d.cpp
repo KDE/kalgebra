@@ -425,9 +425,9 @@ void Graph3D::timeOut()
 	this->repaint();
 }
 
-bool Graph3D::checkExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& actual)
+bool Graph3D::checkExpression(const QStringList& bvars, const Analitza::ExpressionType& actual)
 {
-	if(exp.bvarList()!=(QStringList("x") << "y")) {
+	if(bvars!=(QStringList("x") << "y")) {
 		return false;
 	}
 	
@@ -447,7 +447,7 @@ void Graph3D::setFunc(const Expression& exp)
 		f3d.setExpression(f3d.dependenciesToLambda());
 		f3d.calculate();
 		
-		if(!checkExpression(f3d.expression(), f3d.type())) {
+		if(!checkExpression(f3d.expression().bvarList(), f3d.type())) {
 			sendStatus(i18n("Error: Wrong type of function"));
 			return;
 		}

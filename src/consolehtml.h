@@ -26,6 +26,17 @@
 
 #include <analitza/analyzer.h>
 
+class InlineOptions
+{
+	public:
+		virtual ~InlineOptions() {}
+		
+		virtual QString id() const = 0;
+		virtual QString caption() const = 0;
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const = 0;
+		virtual void triggerOption(const Analitza::Expression& exp) = 0;
+};
+
 /**
  *	The Console widget is able to receive an operation, solve it and show the value.
  *	It also is able to load scripts and save logs.
@@ -57,6 +68,7 @@ class ConsoleHtml : public KHTMLPart
 		/** Retrieves the console mode. */
 		ConsoleMode mode() const { return m_mode; }
 		
+		void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
 	public slots:
 		/** Adds the operation defined by the expression @p e. */
 		bool addOperation(const Analitza::Expression& e, const QString& input);
@@ -88,9 +100,6 @@ class ConsoleHtml : public KHTMLPart
 		/** Emits the selected code to be pasted somewhere */
 		void paste(const QString& code);
 		
-		void add2D(const QString& expression);
-		void add3D(const QString& expression);
-		
 	private slots:
 		void context(const QString&, const QPoint& p);
 		
@@ -111,6 +120,7 @@ class ConsoleHtml : public KHTMLPart
 		void updateView(const QString& newEntry, const QString& options);
 		
 		QString m_css;
+		QList<InlineOptions*> m_options;
 };
 
 #endif

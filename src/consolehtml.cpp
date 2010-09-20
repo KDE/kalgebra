@@ -40,8 +40,6 @@
 #include <analitza/expressionparser.h>
 #include <analitza/variables.h>
 #include <analitza/expression.h>
-#include <analitzagui/functionfactory.h>
-#include "graph3d.h"
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
@@ -80,18 +78,22 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
 }
 
-ConsoleHtml::~ConsoleHtml() {}
+ConsoleHtml::~ConsoleHtml()
+{
+	qDeleteAll(m_options);
+}
 
 void ConsoleHtml::openClickedUrl(const KUrl& url)
 {
-	QString type=url.queryItem("q");
-	QString exp = url.queryItem("func");
-	if(type=="2D")
-		emit add2D(exp);
-	else if(type=="3D")
-		emit add3D(exp);
-	else
-		qDebug() << "error URL:" << url;
+	QString id =url.queryItem("id");
+	QString exp=url.queryItem("func");
+	
+	qDebug() << "open!!" << id;
+	foreach(InlineOptions* opt, m_options) {
+		if(opt->id() == id) {
+			opt->triggerOption(Analitza::Expression(exp, false));
+		}
+	}
 }
 
 bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
@@ -123,28 +125,14 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 			functype = b.type();
 		}
 		
-		if(FunctionFactory::self()->contains(bvars)) {
-			Analitza::ExpressionType type = FunctionFactory::self()->type(bvars);
-			
-			
-			bool is2d = functype.canReduceTo(type);
-			
-			if(is2d) {
-				KUrl url("plotFunction");
-				url.addQueryItem("q", "2D");
+		foreach(InlineOptions* opt, m_options) {
+			if(opt->matchesExpression(lambdaexp, functype)) {
+				KUrl url("/query");
+				url.addQueryItem("id", opt->id());
 				url.addQueryItem("func", lambdaexp.toString());
 				
-				options += i18n(" <a href='%1'>Plot 2D</a>", url.url());
+				options += i18n(" <a href='%1'>%2</a>", url.url(), opt->caption());
 			}
-		} 
-		
-		if(Graph3D::checkExpression(lambdaexp, functype))
-		{
-			KUrl url("plotFunction");
-			url.addQueryItem("q", "3D");
-			url.addQueryItem("func", lambdaexp.toString());
-			
-			options += i18n(" <a href='%1'>Plot 3D</a>", url.url());
 		}
 		
 		if(!options.isEmpty())

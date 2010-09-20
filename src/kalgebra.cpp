@@ -54,6 +54,52 @@
 #include <KProcess>
 #include <KRecentFilesAction>
 #include <KApplication>
+#include <analitzagui/functionfactory.h>
+
+class Add2DOption : public InlineOptions
+{
+	public:
+		Add2DOption(KAlgebra* c)
+		: m_kalgebra(c)
+		{}
+		
+		virtual QString id() const { return "add2d"; }
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
+		{
+			FunctionFactory::self()->contains(exp.bvarList());
+			Analitza::ExpressionType type = FunctionFactory::self()->type(exp.bvarList());
+				
+			return functype.canReduceTo(type);
+		}
+
+		virtual QString caption() const { return i18n("Plot 2D"); }
+
+		virtual void triggerOption(const Analitza::Expression& exp) { m_kalgebra->add2D(exp); }
+	
+	private:
+		KAlgebra* m_kalgebra;
+};
+
+class Add3DOption : public InlineOptions
+{
+	public:
+		Add3DOption(KAlgebra* c)
+		: m_kalgebra(c)
+		{}
+		
+		virtual QString id() const { return "add3d"; }
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
+		{
+			return Graph3D::checkExpression(exp.bvarList(), functype);
+		}
+
+		virtual QString caption() const { return i18n("Plot 3D"); }
+
+		virtual void triggerOption(const Analitza::Expression& exp) { m_kalgebra->add3D(exp); }
+	
+	private:
+		KAlgebra* m_kalgebra;
+};
 
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
@@ -107,8 +153,6 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(c_results, SIGNAL(changed()), this, SLOT(updateInformation()));
 	connect(c_results, SIGNAL(changed()), c_exp, SLOT(updateCompleter()));
 	connect(c_results, SIGNAL(paste(QString)), c_exp, SLOT(insertText(QString)));
-	connect(c_results, SIGNAL(add2D(QString)), this, SLOT(add2D(QString)));
-	connect(c_results, SIGNAL(add3D(QString)), this, SLOT(add3D(QString)));
 	connect(c_variables, SIGNAL(clicked(QModelIndex)), this, SLOT(edit_var(QModelIndex)));
 	////////menu
 	c_menu = menuBar()->addMenu(i18n("C&onsole"));
@@ -182,6 +226,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_dock_funcs->setWidget(b_tools);
 	b_dock_funcs->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
 	m_tabs->addTab(m_graph2d, i18n("&2D Graph"));
+	c_results->addOptionsObserver(new Add2DOption(this));
 	
 	connect(b_varsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(valueChanged()));
 	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
@@ -243,6 +288,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(new_func3d()));
 	connect(m_graph3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	c_results->addOptionsObserver(new Add3DOption(this));
 	
 	////////menu
 	t_menu = menuBar()->addMenu(i18n("3D &Graph"));
@@ -335,11 +381,11 @@ void KAlgebra::newInstance()
 	KProcess::startDetached(QApplication::applicationFilePath());
 }
 
-void KAlgebra::add2D(const QString& exp)
+void KAlgebra::add2D(const Analitza::Expression& exp)
 {
-	qDebug() << "adding" << exp;
+	qDebug() << "adding" << exp.toString();
 	
-	function f(b_funcsModel->freeId(), Analitza::Expression(exp, false), c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
+	function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
 	b_funcsModel->addFunction(f);
 	
 	m_tabs->setCurrentIndex(1);
@@ -604,9 +650,9 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 	}
 }
 
-void KAlgebra::add3D(const QString& exp)
+void KAlgebra::add3D(const Analitza::Expression& exp)
 {
-	m_graph3d->setFunc(Analitza::Expression(exp, false));
+	m_graph3d->setFunc(exp);
 	m_tabs->setCurrentIndex(2);
 }
 
