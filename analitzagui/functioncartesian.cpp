@@ -39,7 +39,7 @@ using Analitza::Cn;
 ///Functions where the x is bounding. like x->sin(x)
 struct FunctionY : public FunctionImpl
 {
-	explicit FunctionY(const Expression &e, Variables* v, const QString& bvar="x") : FunctionImpl(e, v ,0,0), vx(new Cn)
+	explicit FunctionY(const Expression &e, Variables* v, const QString& bvar=QChar('x')) : FunctionImpl(e, v ,0,0), vx(new Cn)
 	{
 		m_runStack.append(vx);
 		func.setStack(m_runStack);

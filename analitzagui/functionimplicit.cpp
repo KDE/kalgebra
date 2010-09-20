@@ -28,7 +28,6 @@
 #include "analitza/expressiontype.h"
 #include "analitza/variable.h"
 #include "analitza/variables.h"
-#include "analitza/value.h"
 #include "functionimpl.h"
 #include "functionfactory.h"
 
