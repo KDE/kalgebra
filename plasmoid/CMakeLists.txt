@@ -1,7 +1,6 @@
 project(kalgebra-plasmoid)
 
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-include_directories(${CMAKE_SOURCE_DIR}/kalgebra/analitza)
 set(kalgebraplasma_SRCS kalgebraplasma.cpp)
 
 kde4_add_plugin(plasma_applet_kalgebra ${kalgebraplasma_SRCS})

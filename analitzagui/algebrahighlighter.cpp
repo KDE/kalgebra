@@ -76,8 +76,6 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
 	QColor id(150,0,50);
 	QColor uncorrect(Qt::red);
-	QColor brHighlight(0xff,0xa0,0xff);
-	QColor prHighlight(0xff,0xff,0x80);
 	m_editingParameter=0;
 	m_editingName.clear();
 	

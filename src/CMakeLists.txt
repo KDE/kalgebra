@@ -1,4 +1,4 @@
-include_directories(.. ${OPENGL_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
+include_directories(${OPENGL_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
 
 set(kalgebra_SRCS
 	kalgebra.cpp
@@ -17,10 +17,10 @@ set(kalgebra_SRCS
 )
 
 if(OPENGL_FOUND)
-   set(kalgebra_SRCS
-	${kalgebra_SRCS}
-	graph3d.cpp
-   )
+	set(kalgebra_SRCS
+		${kalgebra_SRCS}
+		graph3d.cpp
+	)
 endif(OPENGL_FOUND)
 
 #uncomment this if oxygen icons for kalgebra are available

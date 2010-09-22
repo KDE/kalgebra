@@ -25,7 +25,7 @@
 #include <Plasma/LineEdit>
 #include <KLineEdit>
 #include <QGraphicsLinearLayout>
-#include "analyzer.h"
+#include <analitza/analyzer.h>
 
 class QSizeF;
 class QLabel;

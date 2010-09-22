@@ -1,4 +1,4 @@
-include_directories(${CMAKE_SOURCE_DIR}/kalgebra/analitza ${READLINE_INCLUDE_DIR})
+include_directories(${READLINE_INCLUDE_DIR})
 
 set(calgebra_SRCS
 	main.cpp

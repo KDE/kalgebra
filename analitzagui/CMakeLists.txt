@@ -1,7 +1,5 @@
 project(analitzagui)
 
-include_directories(..)
-
 add_subdirectory(tests)
 
 set(analitzagui_SRCS

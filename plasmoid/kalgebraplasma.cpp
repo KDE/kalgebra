@@ -32,7 +32,7 @@
 #include <plasma/tooltipcontent.h>
 #include <plasma/tooltipmanager.h>
 
-#include "expression.h"
+#include <analitza/expression.h>
 
 using namespace Plasma;
 using Analitza::Expression;

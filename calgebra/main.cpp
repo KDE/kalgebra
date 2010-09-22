@@ -16,10 +16,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "analyzer.h"
-#include "expression.h"
-#include "explexer.h"
-#include "expressionparser.h"
+#include <analitza/expression.h>
+#include <analitza/analyzer.h>
+#include <analitza/explexer.h>
+#include <analitza/expressionparser.h>
 
 #include <cstdio>
 #include <readline/readline.h>
