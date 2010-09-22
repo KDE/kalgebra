@@ -1,0 +1,2 @@
+add_executable(docbook_analitzacommands main.cpp)
+target_link_libraries(docbook_analitzacommands analitzagui ${QT_QTGUI_LIBRARY})

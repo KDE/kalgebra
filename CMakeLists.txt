@@ -15,13 +15,19 @@ option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI comp
 
 include_directories(.)
 
-#adding subdirs
 add_subdirectory(analitza)
 add_subdirectory(analitzagui)
 add_subdirectory(src)
 add_subdirectory(icons)
 add_subdirectory(plasmoid)
-# add_subdirectory(utils)
+add_subdirectory(utils)
+
+add_custom_target(commandsdoc
+	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
+	DEPENDS docbook_analitzacommands
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc/kalgebra/
+	COMMENT "Generating commands docbook information"
+)
 
 if(HAVE_READLINE)
 	add_subdirectory(calgebra)

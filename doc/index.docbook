@@ -2,6 +2,9 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY kappname "&kalgebra;">
   <!ENTITY package "kdeedu">
+  
+  <!ENTITY commands SYSTEM "commands.docbook">
+  
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -285,9 +288,9 @@ you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.<
 <para>The dictionary is a collection of all &kalgebra; available operations. It can be
 useful to check in the dictionary what is an operation useful for and to know how many parameters does
 a function stand for.</para>
-
 </chapter>
 
+&commands;
 
 <chapter id="credits">
 <title>Credits and License</title>
