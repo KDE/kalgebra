@@ -73,7 +73,7 @@ QString Cn::visit(ExpressionWriter* e) const
 bool Cn::setValue(const QDomElement& val)
 {
 // 	this->m_vformat=whatValueFormat(val);
-	bool wrong;
+	bool wrong=false;
 	QString tag = val.tagName();
 	m_format=Real;
 	

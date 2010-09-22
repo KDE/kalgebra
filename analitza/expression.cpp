@@ -341,11 +341,11 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 
 void Expression::computeDepth(Object* o)
 {
-	int next=0;
-	QMap<QString, int> scope;
-	
-	if(o)
+	if(o) {
+		QMap<QString, int> scope;
+		int next=0;
 		variableDepth(o, next, scope);
+	}
 }
 
 bool Expression::setMathML(const QString & s)
