@@ -27,7 +27,6 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	OperatorsModel m;
 	
-	qDebug() << "seh" << app.arguments();
 	QFile f(app.arguments().last());
 	bool fileopened = f.open(QFile::WriteOnly);
 	Q_ASSERT(fileopened);
