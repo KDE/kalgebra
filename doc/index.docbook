@@ -33,8 +33,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2009-11-8</date>
-<releaseinfo>0.9 (&kde; 4.4.0)</releaseinfo>
+<date>2010-09-22</date>
+<releaseinfo>0.10 (&kde; 4.5)</releaseinfo>
 
 <abstract>
 <para>
@@ -82,6 +82,31 @@ a <guilabel>3D Graph</guilabel> tab and a <guilabel>Dictionary</guilabel> tab. B
 these tabs you will find an input field to type your functions or do your
 calculations.
 </para>
+
+<para>Common menu options for <guilabel>Console</guilabel> tab, the <guilabel>2D Graph</guilabel> tab, 
+and <guilabel>3D Graph</guilabel>tab:</para>
+
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>N</keycap></keycombo></shortcut>
+<guimenu>Session</guimenu><guimenuitem>New</guimenuitem>
+</menuchoice></term>
+<listitem><para>Opens a new &kalgebra; window.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo action="simul">&Ctrl;
+<keycap>Q</keycap></keycombo></shortcut>
+<guimenu>Session</guimenu><guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shuts the program down.</para></listitem>
+</varlistentry>
+
+</variablelist>
 
 </chapter>
 
@@ -153,17 +178,8 @@ Every time you enter an expression, the "ans" variable value will be changed to 
 <varlistentry>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
-<keycap>N</keycap></keycombo></shortcut>
-<guimenuitem>New</guimenuitem>
-</menuchoice></term>
-<listitem><para>Flushes the log.</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><menuchoice>
-<shortcut><keycombo action="simul">&Ctrl;
 <keycap>L</keycap></keycombo></shortcut>
-<guimenuitem>Load Script</guimenuitem>
+<guimenu>Console</guimenu><guimenuitem>Load Script</guimenuitem>
 </menuchoice></term>
 <listitem><para>Executes the instructions in a file sequentially.
 Nice if you want to define some libraries or resume some previous work.</para></listitem>
@@ -173,7 +189,7 @@ Nice if you want to define some libraries or resume some previous work.</para></
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>G</keycap></keycombo></shortcut>
-<guimenuitem>Save Script</guimenuitem>
+<guimenu>Console</guimenu><guimenuitem>Save Script</guimenuitem>
 </menuchoice></term>
 <listitem><para>Saves the instructions you have typed since the session began to be able to reuse. Generates text files so it should be easy to fix 
 using any text editor, like Kate.</para></listitem>
@@ -183,18 +199,9 @@ using any text editor, like Kate.</para></listitem>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>S</keycap></keycombo></shortcut>
-<guimenuitem>Save Log</guimenuitem>
+<guimenu>Console</guimenu><guimenuitem>Save Log</guimenuitem>
 </menuchoice></term>
 <listitem><para>Saves the log with all results into an HTML file to be able to print or publish.</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><menuchoice>
-<shortcut><keycombo action="simul">&Ctrl;
-<keycap>Q</keycap></keycombo></shortcut>
-<guimenuitem>Quit</guimenuitem>
-</menuchoice></term>
-<listitem><para>Shuts the program down.</para></listitem>
 </varlistentry>
 
 </variablelist>
