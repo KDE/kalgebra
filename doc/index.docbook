@@ -199,7 +199,7 @@ using any text editor, like Kate.</para></listitem>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>S</keycap></keycombo></shortcut>
-<guimenu>Console</guimenu><guimenuitem>Save Log</guimenuitem>
+<guimenu>Console</guimenu><guimenuitem>Export Log</guimenuitem>
 </menuchoice></term>
 <listitem><para>Saves the log with all results into an HTML file to be able to print or publish.</para></listitem>
 </varlistentry>
