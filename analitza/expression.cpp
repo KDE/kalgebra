@@ -160,6 +160,8 @@ bool Expression::ExpressionPrivate::check(const Apply* c)
 	
 	if(op.isBounded() && !c->hasBVars()) {
 		m_err << i18n("Missing boundary for '%1'", op.toString());
+	} else if(!op.isBounded() && c->hasBVars()) {
+		m_err << i18n("Unexpected bounding for '%1'", op.toString());
 	}
 	
 	if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {

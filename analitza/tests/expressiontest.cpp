@@ -182,6 +182,7 @@ void ExpressionTest::testUncorrection_data()
 	QTest::newRow("wrong count") << "plus(1)";
 	QTest::newRow("wrong parameters") << "selector(vector{1,1/3})";
 	QTest::newRow("empty vector") << "vector{}";
+	QTest::newRow("bounded sinus") << "sin(x:x)";
 	
 	QTest::newRow("summatory with unknown uplimit") << "sum(x : x=1..)";
 	QTest::newRow("summatory with unknown downlimit") << "sum(x : x=..3)";
