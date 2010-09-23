@@ -91,7 +91,7 @@ class ANALITZA_EXPORT Analyzer
 		Expression derivative(const QString& var);
 		
 		/** Evaluates the derivative of an expression expression. */
-		double derivative(const QList< QPair<QString, double > >& values );
+		double derivative(const QVector<Object*>& values );
 		
 		/** Returns whether there has been a problem in the last calculation. */
 		bool isCorrect() const { return m_err.isEmpty() && m_exp.isCorrect(); }

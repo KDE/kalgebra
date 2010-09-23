@@ -236,23 +236,23 @@ void AnalitzaTest::testDerivativeSimple()
 	QVERIFY(a->isCorrect());
 	
 	double val=1.;
-	QList<QPair<QString, double> > vars;
-	vars.append(QPair<QString, double>("x", val));
+	QVector<Object*> vars;
+	vars.append(new Cn(val));
 	
-	a->setExpression(e);
+	a->setExpression(Expression("x->"+expression, false));
 	double valCalc=a->derivative(vars);
-#warning uncomment
-// 	if(a->isCorrect()) {
-// 		Expression ee(QString("(x->%1)(%2)").arg(result).arg(val));
-// 		a->setExpression(ee);
-// 		QVERIFY(a->isCorrect());
-// 		
-// 		qDebug() << "tutututut" << ee.toString() << a->errors() << a->variables()->keys();
-// 		Expression r=a->calculate();
-// 		
-// 		if(a->isCorrect())
-// 			QCOMPARE(QString::number(valCalc), QString::number(r.toReal().value()));
-// 	}
+	qDeleteAll(vars);
+	
+	if(a->isCorrect()) {
+		Expression ee(QString("(x->%1)(%2)").arg(result).arg(val));
+		a->setExpression(ee);
+		QVERIFY(a->isCorrect());
+		
+		Expression r=a->calculate();
+		
+		if(a->isCorrect())
+			QCOMPARE(QString::number(valCalc), QString::number(r.toReal().value()));
+	}
 	a->setExpression(Expression("diff("+expression+":x)", false));
 	a->simplify();
 	QVERIFY(a->isCorrect());
@@ -359,24 +359,23 @@ void AnalitzaTest::testCorrection()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
-	Analitza::Analyzer b;
-	
 	Analitza::Analyzer b1;
-// 	foreach(const QString &exp, expression) {
-// 		Expression e(exp, false);
-// 		if(!e.isCorrect()) qDebug() << "error:" << e.error();
-// 		QVERIFY(e.isCorrect());
-// 		
-// 		b1.setExpression(e);
-// 		
-// 		if(!b1.isCorrect()) qDebug() << "errors: " << b1.errors();
-// 		QVERIFY(b1.isCorrect());
-// 		b1.calculate();
-// 		if(!b1.isCorrect()) qDebug() << "errors:" << e.toString() << b1.errors();
-// 		QVERIFY(b1.isCorrect());
-// 	}
-// 	QCOMPARE(b1.calculate().toString(), result);
+	foreach(const QString &exp, expression) {
+		Expression e(exp, false);
+		if(!e.isCorrect()) qDebug() << "error:" << e.error();
+		QVERIFY(e.isCorrect());
+		
+		b1.setExpression(e);
+		
+		if(!b1.isCorrect()) qDebug() << "errors: " << b1.errors();
+		QVERIFY(b1.isCorrect());
+		b1.calculate();
+		if(!b1.isCorrect()) qDebug() << "errors:" << e.toString() << b1.errors();
+		QVERIFY(b1.isCorrect());
+	}
+	QCOMPARE(b1.calculate().toString(), result);
 	
+	Analitza::Analyzer b;
 	Expression evalResult;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -823,7 +822,12 @@ void AnalitzaTest::testOperators()
 			a->evaluate();
 			a->simplify();
 			a->derivative("x");
-			a->derivative(QList< QPair<QString, double> >() << qMakePair(bvar, v));
+			
+			Cn* vv = new Cn(v);
+			QVector<Object*> stack;
+			stack += vv;
+			a->derivative(stack);
+			delete vv;
 		}
 	}
 }

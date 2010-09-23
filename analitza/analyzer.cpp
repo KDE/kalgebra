@@ -1896,27 +1896,14 @@ Cn* Analyzer::insertValueVariable(const QString& name, double value)
 	return val;
 }
 
-typedef QPair<QString, double> StringDoublePair;
-double Analyzer::derivative(const QList<StringDoublePair>& values )
+double Analyzer::derivative(const QVector<Object*>& values )
 {
 	//c++ numerical recipes p. 192. Only for f'
 	//Image
-	//TODO: Should adapt to insertValueVariable
-	
 	Q_ASSERT(m_exp.isCorrect());
+	Q_ASSERT(values.size()==m_exp.bvarList().size());
 	
-	QVector<Object*> deps(values.size());
-	
-	int i=0;
-	foreach(const StringDoublePair& valp, values) {//TODO: it should be +-hh
-		deps[i]=new Cn(valp.second);
-// 		scope.insert(valp.first, &deps[i]);
-#warning todo	
-		i++;
-	}
-	
-	if(hasVars(m_exp.tree(), QString(), m_vars->keys(), m_vars))
-		return 0.;
+	setStack(values);
 	
 	Expression e1(calc(m_exp.tree()));
 	if(!isCorrect())
@@ -1924,20 +1911,18 @@ double Analyzer::derivative(const QList<StringDoublePair>& values )
 	
 	//Image+h
 	double h=0.0000000001;
-	i=0;
-	foreach(const StringDoublePair& valp, values) {
+	for(int i=0; i<values.size(); i++) {
 // 		volatile double temp=valp.second+h;
 // 		double hh=temp-valp.second;
-		((Cn*) deps[i])->setValue(valp.second+h);
 		
-		i++;
+		Q_ASSERT(values[i]->type()==Object::value);
+		Cn* v=static_cast<Cn*>(values[i]);
+		v->setValue(v->value()+h);
 	}
 	
 	Expression e2(calc(m_exp.tree()));
 	if(!isCorrect())
 		return 0.;
-	
-	qDeleteAll(deps);
 	
 	if(!e1.isReal() || !e2.isReal()) {
 		m_err << i18n("The result is not a number");
