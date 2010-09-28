@@ -334,18 +334,18 @@
 		<listitem><para>Name: sum</para></listitem>
 		<listitem><para>Description: Summator</para></listitem>
 		<listitem><para>Parameters: sum(par1 : var=from..to)</para></listitem>
-		<listitem><para>Example: x-&gt;x*sum(t:t=0..3)</para></listitem>
+		<listitem><para>Example: x-&gt;x*sum(t*t:t=0..3)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='product'><title>product</title><itemizedlist>
 		<listitem><para>Name: product</para></listitem>
 		<listitem><para>Description: Productor</para></listitem>
 		<listitem><para>Parameters: product(par1 : var=from..to)</para></listitem>
-		<listitem><para>Example: x-&gt;product(t:t=1..3)</para></listitem>
+		<listitem><para>Example: x-&gt;product(t+t:t=1..3)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='diff'><title>diff</title><itemizedlist>
 		<listitem><para>Name: diff</para></listitem>
 		<listitem><para>Description: Differentiation</para></listitem>
-		<listitem><para>Parameters: diff(par1 : var=from..to)</para></listitem>
+		<listitem><para>Parameters: diff(par1 : var)</para></listitem>
 		<listitem><para>Example: x-&gt;(diff(x^2:x))(x)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='card'><title>card</title><itemizedlist>
