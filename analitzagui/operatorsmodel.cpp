@@ -115,7 +115,9 @@ QString OperatorsModel::sample(Operator oper)
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
-		bounds=" : var=from..to";
+		bounds=i18n(" : var");
+		if(oper.operatorType()==Operator::sum || oper.operatorType()==Operator::product) //TODO: make that generic
+			bounds += i18n("=from..to");
 	}
 	
 	QString sample = i18n("%1(", funcname);
@@ -426,10 +428,10 @@ QString OperatorsModel::example(Operator o)
 			s="piecewise { x>0 ? selector(1, vector { x, 1/x }), ? selector(2, vector { x, 1/x }) }";
 			break;
 		case Operator::sum:
-			s="x*sum(t:t=0..3)";
+			s="x*sum(t*t:t=0..3)";
 			break;
 		case Operator::product:
-			s="product(t:t=1..3)";
+			s="product(t+t:t=1..3)";
 			break;
 		case Operator::card:
 			s="card(vector { x, 1, 2 })";
