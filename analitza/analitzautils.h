@@ -44,7 +44,7 @@ namespace AnalitzaUtils
 	/** Returns whether there is any variable in the @p o tree.
 			@p bvars tells the already defined variables (which won't return true). */
 	bool hasVars(const Analitza::Object* o,
-					const QStringList& bvars=QStringList(), const Analitza::Variables* vars=0);
+					const QStringList& bvars=QStringList());
 	
 	/** Returns whether @p o1 is equal to @p o2. */
 	bool equalTree(const Analitza::Object * o1, const Analitza::Object * o2);

@@ -139,8 +139,7 @@ bool hasTheVar(const QSet<QString> & vars, const Container* c)
 	if(c->containerType()!=Container::bvar) {
 		Container::const_iterator it=c->constBegin(), itEnd=c->constEnd();
 		for(; !found && it!=itEnd; ++it) {
-			if(hasTheVar(vars, *it))
-				found=true;
+			found=hasTheVar(vars, *it);
 		}
 	}
 	return found;
@@ -151,8 +150,7 @@ bool hasTheVar(const QSet<QString> & vars, const Apply* a)
 	bool found=false;
 	Apply::const_iterator it=a->firstValue(), itEnd=a->constEnd();
 	for(; !found && it!=itEnd; ++it) {
-		if(hasTheVar(vars, *it))
-			found=true;
+		found=hasTheVar(vars, *it);
 	}
 	return found;
 }
@@ -162,7 +160,7 @@ bool isLambda(const Object* o)
 	return o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::lambda;
 }
 
-bool hasVars(const Analitza::Object* o, const QStringList& bvars, const Analitza::Variables* vars)
+bool hasVars(const Analitza::Object* o, const QStringList& bvars)
 {
 	Q_ASSERT(o);
 	
@@ -172,20 +170,17 @@ bool hasVars(const Analitza::Object* o, const QStringList& bvars, const Analitza
 			Ci *i = (Ci*) o;
 			r=!bvars.contains(i->name());
 			
-			if(r && vars && vars->contains(i->name()))
-				r=hasVars(vars->value(i->name()), bvars, vars);
-			
 		}	break;
 		case Object::vector: {
 			Vector *v=(Vector*) o;
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				r |= hasVars(*it, bvars, vars);
+				r |= hasVars(*it, bvars);
 			}
 		}	break;
 		case Object::list: {
 			List *v=(List*) o;
 			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				r |= hasVars(*it, bvars, vars);
+				r |= hasVars(*it, bvars);
 			}
 		}	break;
 		case Object::container: {
@@ -199,7 +194,7 @@ bool hasVars(const Analitza::Object* o, const QStringList& bvars, const Analitza
 			}
 			
 			for(; it!=itEnd; ++it) {
-				r |= hasVars(*it, newScope, vars);
+				r |= hasVars(*it, newScope);
 			}
 		}	break;
 		case Object::apply: {
@@ -209,13 +204,13 @@ bool hasVars(const Analitza::Object* o, const QStringList& bvars, const Analitza
 			Object* ul=c->ulimit(), *dl=c->dlimit(), *dn=c->domain();
 			
 			//uplimit and downlimit are in the parent scope
-			if(ul) r |= hasVars(ul, bvars, vars);
-			if(dl) r |= hasVars(dl, bvars, vars);
-			if(dn) r |= hasVars(dn, bvars, vars);
+			if(ul) r |= hasVars(ul, bvars);
+			if(dl) r |= hasVars(dl, bvars);
+			if(dn) r |= hasVars(dn, bvars);
 			
 			Apply::const_iterator it = c->firstValue();
 			for(; !r && it!=c->constEnd(); ++it) {
-				r |= hasVars(*it, scope, vars);
+				r |= hasVars(*it, scope);
 			}
 		}	break;
 		case Object::none:
