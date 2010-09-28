@@ -131,6 +131,7 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 
 ExpressionType ExpressionTypeChecker::check(const Expression& exp)
 {
+	m_deps.clear();
 	m_stars=1;
 	current=ExpressionType(ExpressionType::Error);
 	
@@ -339,8 +340,10 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 	} else {
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
 		current.addAssumption(var->name(), current);
+		
+		if(var->depth()<0 && !m_v->contains(var->name()))
+			m_deps += var->name();
 	}
-// 	qDebug() << "XXXXX" << var->name() << current << m_lambdascope;
 	
 	return QString();
 }
@@ -409,10 +412,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 	
 	if(o.isBounded()) {
 		Object* ul=c->ulimit();
+		ExpressionType tt;
 		if(ul) {
 			ul->visit(this);
 			
-			m_typeForBVar[c->bvarStrings().first()]=current; //FIXME: should remove when done
+			tt=current; //FIXME: should remove when done
 			if(!current.isError())
 				assumptions=typeIs(c->dlimit(), ExpressionType(current));
 		} else if(c->domain()) {
@@ -429,10 +433,13 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				anyContainer.addAlternative(anyVector);
 				
 				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
-				m_typeForBVar[c->bvarStrings().first()]=anyItem;
+				tt=anyItem;
 			} else
-				m_typeForBVar[c->bvarStrings().first()]=current.contained(); //FIXME: should remove when done
+				tt=current.contained(); //FIXME: should remove when done
 		}
+		
+		foreach(const QString& s, c->bvarStrings())
+			m_typeForBVar[s]=ExpressionType(tt);
 // 		TODO: Add assumptions for types deducted in boundings
 	}
 	
@@ -584,9 +591,14 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			c->m_params.first()->visit(this); //we return the body
 			current.addAssumptions(assumptions);
 		}	break;
-		case Container::declare:
+		case Container::declare:{
 			c->m_params.last()->visit(this);
-			break;
+			
+			//We don't want to mark what we're defining a dependency
+			Q_ASSERT(c->m_params.first()->type()==Object::variable);
+			Ci* var = static_cast<Ci*>(c->m_params.first());
+			m_deps.removeAll(var->name());
+		}	break;
 		case Container::lambda: {
 			QSet<QString> aux=m_lambdascope;
 			m_lambdascope+=c->bvarStrings().toSet();

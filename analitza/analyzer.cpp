@@ -77,7 +77,7 @@ void Analyzer::setExpression(const Expression & e)
 		m_currentType=check.check(m_exp);
 		
 		m_err += check.errors();
-		m_hasdeps = hasVars(e.tree(), QString(), m_vars->keys());
+		m_hasdeps = check.hasDependencies();
 	}
 }
 
@@ -368,7 +368,7 @@ Object* Analyzer::derivative(const QString &var, const Object* o)
 	Object *ret=0;
 	const Ci* v;
 	
-	if(o->type()!=Object::oper && !hasVars(o, var))
+	if(o->type()!=Object::oper && !hasTheVar(QSet<QString>() << var, o))
 		ret = new Cn(0.);
 	else switch(o->type()) {
 		case Object::container:
@@ -444,7 +444,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			return nx;
 		} break;
 		case Operator::power: {
-			if(hasVars(c->m_params[1], var)) {
+			if(hasTheVar(QSet<QString>() << var, c->m_params[1])) {
 				//http://en.wikipedia.org/wiki/Table_of_derivatives
 				//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
 				Apply *nc = new Apply;
@@ -1881,7 +1881,7 @@ bool Analyzer::insertVariable(const QString & name, const Object * value)
 		islambda= c->containerType()==Container::lambda;
 	}
 	
-	bool wrong=!islambda && hasVars(value, name, QStringList(), m_vars);
+	bool wrong=!islambda && hasTheVar(QSet<QString>() << name, value);
 	if(wrong)
 		m_err << i18nc("By a cycle i mean a variable that depends on itself", "Defined a variable cycle");
 	else

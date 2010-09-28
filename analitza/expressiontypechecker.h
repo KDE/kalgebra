@@ -48,6 +48,8 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		
 		virtual QString result() const { return QString(); }
 		
+		QStringList dependencies() const { return m_deps; }
+		bool hasDependencies() const { return !m_deps.isEmpty(); }
 		bool isCorrect() const { return m_err.isEmpty(); }
 		QStringList errors() const;
 		
@@ -78,6 +80,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QMap<QString, ExpressionType> m_vars;
 		QSet<QString> m_lambdascope;
 		QStack<const Object*> m_calls;
+		QStringList m_deps;
 };
 
 QDebug operator<<(QDebug dbg, const ExpressionType &c);

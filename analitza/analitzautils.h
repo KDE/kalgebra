@@ -41,9 +41,9 @@ namespace AnalitzaUtils
 	bool isLambda(const Analitza::Object* o);
 	QStringList dependencies(const Analitza::Object* o, const QStringList& scope);
 	
-	/** Returns whether there is any @p var variable in the @p o tree.
+	/** Returns whether there is any variable in the @p o tree.
 			@p bvars tells the already defined variables (which won't return true). */
-	bool hasVars(const Analitza::Object* o, const QString &var=QString(),
+	bool hasVars(const Analitza::Object* o,
 					const QStringList& bvars=QStringList(), const Analitza::Variables* vars=0);
 	
 	/** Returns whether @p o1 is equal to @p o2. */

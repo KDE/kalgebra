@@ -162,7 +162,7 @@ bool isLambda(const Object* o)
 	return o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::lambda;
 }
 
-bool hasVars(const Object *o, const QString &var, const QStringList& bvars, const Variables* vars)
+bool hasVars(const Analitza::Object* o, const QStringList& bvars, const Analitza::Variables* vars)
 {
 	Q_ASSERT(o);
 	
@@ -170,22 +170,22 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 	switch(o->type()) {
 		case Object::variable: {
 			Ci *i = (Ci*) o;
-			r=((i->name()==var) || var.isEmpty()) && !bvars.contains(i->name());
+			r=!bvars.contains(i->name());
 			
-			if(r && vars && !var.isEmpty() && vars->contains(i->name()))
-				r=hasVars(vars->value(i->name()), var, bvars, vars);
+			if(r && vars && vars->contains(i->name()))
+				r=hasVars(vars->value(i->name()), bvars, vars);
 			
 		}	break;
 		case Object::vector: {
 			Vector *v=(Vector*) o;
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				r |= hasVars(*it, var, bvars, vars);
+				r |= hasVars(*it, bvars, vars);
 			}
 		}	break;
 		case Object::list: {
 			List *v=(List*) o;
 			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
-				r |= hasVars(*it, var, bvars, vars);
+				r |= hasVars(*it, bvars, vars);
 			}
 		}	break;
 		case Object::container: {
@@ -199,7 +199,7 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			}
 			
 			for(; it!=itEnd; ++it) {
-				r |= hasVars(*it, var, newScope, vars);
+				r |= hasVars(*it, newScope, vars);
 			}
 		}	break;
 		case Object::apply: {
@@ -209,13 +209,13 @@ bool hasVars(const Object *o, const QString &var, const QStringList& bvars, cons
 			Object* ul=c->ulimit(), *dl=c->dlimit(), *dn=c->domain();
 			
 			//uplimit and downlimit are in the parent scope
-			if(ul) r |= hasVars(ul, var, bvars, vars);
-			if(dl) r |= hasVars(dl, var, bvars, vars);
-			if(dn) r |= hasVars(dn, var, bvars, vars);
+			if(ul) r |= hasVars(ul, bvars, vars);
+			if(dl) r |= hasVars(dl, bvars, vars);
+			if(dn) r |= hasVars(dn, bvars, vars);
 			
 			Apply::const_iterator it = c->firstValue();
 			for(; !r && it!=c->constEnd(); ++it) {
-				r |= hasVars(*it, var, scope, vars);
+				r |= hasVars(*it, scope, vars);
 			}
 		}	break;
 		case Object::none:

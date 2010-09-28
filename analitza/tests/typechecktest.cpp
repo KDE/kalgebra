@@ -116,6 +116,8 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("list@sum") << "v->sum(i**2 : i@v)" << "([num] -> num) | (<num,-1> -> num)";
 	
 	QTest::newRow("bounded sum") << "n->sum(x : x=n..0)" << "num -> num";
+	
+	QTest::newRow("unknown") << "w" << "*";
 }
 
 void TypeCheckTest::testConstruction()
