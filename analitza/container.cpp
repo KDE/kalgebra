@@ -113,6 +113,18 @@ QList<Ci*> Container::bvarCi() const
 	return ret;
 }
 
+int Container::bvarCount() const
+{
+	int r=0;
+	QList<Object*>::const_iterator it, itEnd=m_params.constEnd();
+	for(it=m_params.constBegin(); it!=itEnd; ++it) {
+		if((*it)->isContainer() && static_cast<Container*>(*it)->containerType() == Container::bvar)
+			r++;
+	}
+	
+	return r;
+}
+
 QStringList Container::bvarStrings() const
 {
 	QStringList bvars;

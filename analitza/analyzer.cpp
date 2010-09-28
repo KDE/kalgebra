@@ -286,11 +286,11 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					const Container *cbody = (Container*) body;
 					
 					if(cbody->m_params.size()==c->m_params.size()) {
-						QList<Ci*> bvars=cbody->bvarCi();
+						int bvarsSize = cbody->bvarCount();
 						int top = m_runStack.size(), aux = m_runStackTop;
-						m_runStack.resize(top+bvars.size());
+						m_runStack.resize(top+bvarsSize);
 						
-						for(int i=0; i<bvars.size(); i++) {
+						for(int i=0; i<bvarsSize; i++) {
 							Object* val=simp(eval(c->m_params[i+1], resolve, unscoped));
 							m_runStack[top+i]=val;
 						}
