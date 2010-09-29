@@ -163,6 +163,7 @@ class ExpressionEdit : public QPlainTextEdit
 		OperatorsModel *m_ops;
 		
 		QStringList m_examples;
+		QTimer* m_hideHelpTip;
 };
 
 #endif

@@ -25,10 +25,11 @@
 #include <QHeaderView>
 #include <QApplication>
 #include <QTimer>
-#include <analitzagui/operatorsmodel.h>
+#include <QPropertyAnimation>
 
 #include <KLocale>
 
+#include <analitzagui/operatorsmodel.h>
 #include <analitza/explexer.h>
 #include <analitza/expressionparser.h>
 #include <analitza/operator.h>
@@ -65,6 +66,9 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	
 	m_helptip = new HelpTip(this);
 	m_helptip->hide();
+	m_hideHelpTip = new QTimer(this);
+	m_hideHelpTip->setInterval(500);
+	connect(m_hideHelpTip, SIGNAL(timeout()), m_helptip, SLOT(hide()));
 	
 	m_highlight= new AlgebraHighlighter(this->document(), a);
 	
@@ -297,13 +301,12 @@ void ExpressionEdit::showSimplified()
 {
 	Analitza::Analyzer a;
 	a.setExpression(expression());
+	QString help;
 	if(a.isCorrect()) {
 		a.simplify();
-		QString help=i18n("Result: %1", a.expression().toString());
-		helper(help);
+		help=i18n("Result: %1", a.expression().toString());
 	}
-	else
-		m_helptip->hide();
+	helper(help);
 }
 
 
@@ -392,21 +395,33 @@ void ExpressionEdit::helper(const QString& msg)
 // 	pixelsOffset -= contentsX();
 	QPoint pos = mapToGlobal( QPoint( pixelsOffset, height() ) );
 	
-	helper(msg, pos-QPoint(0, 50));
+	if(msg.isEmpty()) {
+		if(!m_hideHelpTip->isActive())
+			m_hideHelpTip->start();
+	} else {
+		helper(msg, pos-QPoint(0, 50));
+		m_hideHelpTip->stop();
+	}
 }
 
 void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 {
-	if(isVisible() && !msg.isEmpty()){
+	if(isVisible()){
 		QFontMetrics fm(m_helptip->font());
 		m_helptip->setText(msg);
-		m_helptip->setGeometry(QRect(p, p+QPoint(fm.width(msg)+20, fm.height())));
-		
-		m_helptip->show();
-		m_helptip->raise();
+		QRect rect(p, p+QPoint(fm.width(msg)+20, fm.height()));
+		if(!m_helptip->isVisible()) {
+			m_helptip->setGeometry(rect);
+			
+			m_helptip->show();
+			m_helptip->raise();
+		} else {
+			QPropertyAnimation* anim = new QPropertyAnimation(m_helptip, "geometry", this);
+			anim->setEndValue(rect);
+			anim->start(QAbstractAnimation::DeleteWhenStopped);
+		}
 		setFocus();
-	} else
-		m_helptip->hide();
+	}
 }
 
 void ExpressionEdit::setCorrect(bool correct)

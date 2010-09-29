@@ -36,6 +36,7 @@
 #endif
 
 #include <analitzagui/operatorsmodel.h>
+#include <analitzagui/functionfactory.h>
 
 #include <QVBoxLayout>
 #include <QHeaderView>
@@ -54,8 +55,6 @@
 #include <KProcess>
 #include <KRecentFilesAction>
 #include <KApplication>
-#include <analitzagui/functionfactory.h>
-
 class Add2DOption : public InlineOptions
 {
 	public:
