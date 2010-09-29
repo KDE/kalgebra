@@ -72,23 +72,23 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	m_completer->setWidget(this);
 	m_completer->setCompletionColumn(0);
 	m_completer->setCompletionRole(Qt::DisplayRole);
-	treeView = new QTreeView;
-	m_completer->setPopup(treeView);
-	treeView->setRootIsDecorated(false);
-	treeView->header()->hide();
-// 	treeView->resizeColumnToContents(1);
-	treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	treeView->setMinimumWidth(300);
+	QTreeView* completionView = new QTreeView;
+	m_completer->setPopup(completionView);
+	completionView->setRootIsDecorated(false);
+	completionView->header()->hide();
+// 	completionView->resizeColumnToContents(1);
+	completionView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	completionView->setMinimumWidth(300);
 	m_ops = new OperatorsModel(m_completer);
 	m_completer->setModel(m_ops);
 	
 	updateCompleter();
 	
-	treeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
-	treeView->showColumn(0);
-	treeView->showColumn(1);
-	treeView->hideColumn(2);
-	treeView->hideColumn(3);
+	completionView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+	completionView->showColumn(0);
+	completionView->showColumn(1);
+	completionView->hideColumn(2);
+	completionView->hideColumn(3);
 	
 	connect(this, SIGNAL(returnPressed()), this, SLOT(returnP()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMov()));
@@ -100,7 +100,10 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	this->setFixedHeight(QFontMetrics(currentCharFormat().font()).height()+15);
 }
 
-ExpressionEdit::~ExpressionEdit() {}
+ExpressionEdit::~ExpressionEdit()
+{
+	delete m_highlight;
+}
 
 void ExpressionEdit::setExpression(const Analitza::Expression& e)
 {
@@ -173,6 +176,7 @@ void ExpressionEdit::returnP()
 void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 {
 	bool ch=false;
+	QAbstractItemView* completionView = m_completer->popup();
 	
 	switch(e->key()){
 		case Qt::Key_F2:
@@ -182,28 +186,28 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			setMode(isMathML() ? AlgebraHighlighter::Expression : AlgebraHighlighter::MathML);
 			break;
 		case Qt::Key_Escape:
-			if(m_completer->popup()->isVisible())
-				m_completer->popup()->hide();
-			else
+			if(!completionView->isVisible())
 				selectAll();
+			
+			completionView->hide();
 			m_helptip->hide();
 			break;
 		case Qt::Key_Return:
 		case Qt::Key_Enter:
-			if(m_completer->popup()->isVisible() && !static_cast<QTreeView*>(m_completer->popup())->selectionModel()->selectedRows().isEmpty()) 
+			if(completionView->isVisible() && !completionView->selectionModel()->selectedRows().isEmpty()) 
 				completed(m_completer->currentCompletion());
 			else if(returnPress())
 					QPlainTextEdit::keyPressEvent(e);
-			m_completer->popup()->hide();
+			completionView->hide();
 			break;
 		case Qt::Key_Up:
-			if(!m_completer->popup()->isVisible()) {
+			if(!completionView->isVisible()) {
 				m_histPos--;
 				ch=true;
 			}
 			break;
 		case Qt::Key_Down:
-			if(!m_completer->popup()->isVisible()) {
+			if(!completionView->isVisible()) {
 				m_histPos++;
 				ch=true;
 			}
@@ -237,7 +241,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				m_completer->setCompletionPrefix(last);
 				m_completer->complete();
 			} else {
-				m_completer->popup()->hide();
+				completionView->hide();
 			}
 			break;
 	}
@@ -251,11 +255,11 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	}
 	
 	if(m_completer->completionCount()==1 && m_completer->completionPrefix()==m_completer->currentCompletion()) {
-		m_completer->popup()->hide();
+		completionView->hide();
 	}
 	
 	int lineCount=toPlainText().count('\n')+1;
-	this->setFixedHeight(QFontMetrics(currentCharFormat().font()).height()*lineCount+15);
+	setFixedHeight(QFontMetrics(currentCharFormat().font()).height()*lineCount+15);
 	setCorrect(m_highlight->isCorrect());
 }
 
@@ -400,7 +404,7 @@ void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 		
 		m_helptip->show();
 		m_helptip->raise();
-		this->setFocus();
+		setFocus();
 	} else
 		m_helptip->hide();
 }
@@ -472,12 +476,6 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	popup->exec(e->globalPos());
 
 }
-
-void ExpressionEdit::setActionText(QAction* text)
-{
-	setPlainText(text->data().toString());
-}
-
 
 void ExpressionEdit::setAnalitza(Analitza::Analyzer * in)
 {

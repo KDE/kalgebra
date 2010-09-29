@@ -107,7 +107,6 @@ class ExpressionEdit : public QPlainTextEdit
 		void showSimplified();
 		void cursorMov();
 		void updateCompleter();
-		void setActionText(QAction* text);
 		
 		/** Shows a little tip widget containing the string @p str. If @p str is empty the widget is hidden. */
 		void helper(const QString& str);
@@ -139,10 +138,6 @@ class ExpressionEdit : public QPlainTextEdit
 		void contextMenuEvent(QContextMenuEvent * e);
 	
 	private:
-		
-		QLabel *m_helptip;
-		AlgebraHighlighter *m_highlight;
-		
 		bool returnPress();
 		static QString helpShow(const QString& funcname, int param, bool bounds, const Analitza::Variables* v);
 		void helper(const QString&, const QPoint& p);
@@ -153,6 +148,9 @@ class ExpressionEdit : public QPlainTextEdit
 		void removenl();
 		void keyPressEvent(QKeyEvent * e);
 		
+		QLabel *m_helptip;
+		AlgebraHighlighter *m_highlight;
+		
 		int m_histPos;
 		QStringList m_history;
 		bool help;
@@ -162,7 +160,6 @@ class ExpressionEdit : public QPlainTextEdit
 		bool m_correct;
 		QString m_ans;
 		QCompleter *m_completer;
-		QTreeView *treeView;
 		OperatorsModel *m_ops;
 		
 		QStringList m_examples;
