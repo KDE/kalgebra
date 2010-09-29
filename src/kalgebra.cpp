@@ -79,6 +79,7 @@ class Add2DOption : public InlineOptions
 		KAlgebra* m_kalgebra;
 };
 
+#ifdef HAVE_OPENGL
 class Add3DOption : public InlineOptions
 {
 	public:
@@ -99,6 +100,7 @@ class Add3DOption : public InlineOptions
 	private:
 		KAlgebra* m_kalgebra;
 };
+#endif
 
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
