@@ -164,6 +164,7 @@ class ExpressionEdit : public QPlainTextEdit
 		
 		QStringList m_examples;
 		QTimer* m_hideHelpTip;
+		int m_lineHeight;
 };
 
 #endif

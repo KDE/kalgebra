@@ -101,7 +101,8 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 // 	connect(m_completer, SIGNAL(activated(const QModelIndex&)), this, SLOT(completed(const QModelIndex&)));
 	
 	setMode(inimode);
-	this->setFixedHeight(QFontMetrics(currentCharFormat().font()).height()+15);
+	m_lineHeight = QFontMetrics(currentCharFormat().font()).height();
+	setFixedHeight(m_lineHeight+15);
 }
 
 ExpressionEdit::~ExpressionEdit()
@@ -230,6 +231,8 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 				tc.setPosition(m_ans.length());
 				this->setTextCursor(tc);
 			}
+			QPlainTextEdit::keyPressEvent(e);
+			break;
 		case Qt::Key_Alt:
 			QPlainTextEdit::keyPressEvent(e);
 			break;
@@ -238,10 +241,6 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 			m_history.last() = this->toPlainText();
 			QString last = lastWord(textCursor().selectionStart());
 			if(!last.isEmpty()) {
-				QFontMetrics fm(font());
-				int curPos = this->textCursor().position();
-				int pixelsOffset = fm.width(toPlainText(), curPos);
-				QPoint pos(pixelsOffset+10, height());
 				m_completer->setCompletionPrefix(last);
 				m_completer->complete();
 			} else {
@@ -263,7 +262,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 	}
 	
 	int lineCount=toPlainText().count('\n')+1;
-	setFixedHeight(QFontMetrics(currentCharFormat().font()).height()*lineCount+15);
+	setFixedHeight(m_lineHeight*lineCount+15);
 	setCorrect(m_highlight->isCorrect());
 }
 
@@ -388,12 +387,7 @@ void ExpressionEdit::removenl()
 
 void ExpressionEdit::helper(const QString& msg)
 {
-	QFontMetrics fm( font() );
-	int curPos = 0;
-	curPos=this->textCursor().position();
-	int pixelsOffset = fm.width( toPlainText(), curPos );
-// 	pixelsOffset -= contentsX();
-	QPoint pos = mapToGlobal( QPoint( pixelsOffset, height() ) );
+	QPoint pos = mapToGlobal( QPoint( cursorRect().left(), height() ) );
 	
 	if(msg.isEmpty()) {
 		if(!m_hideHelpTip->isActive())
@@ -425,7 +419,7 @@ void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 
 void ExpressionEdit::setCorrect(bool correct)
 {
-	QPalette p=qApp->palette();
+	QPalette p=palette();
 	QColor c;
 	m_correct=correct;
 	

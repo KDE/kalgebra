@@ -34,7 +34,6 @@ class ANALITZAGUI_EXPORT AlgebraHighlighter : public QSyntaxHighlighter
 	public:
 		/** Defines the format status that could be used. */
 		typedef enum {
-			Disabled,	/**< No highlighting. */
 			Expression,	/**< String expression format. */
 			MathML,		/**< MathML format. */
 			Autodetect	/**< Try to guess which format is being used. */
