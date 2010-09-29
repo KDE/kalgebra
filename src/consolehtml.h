@@ -20,8 +20,6 @@
 #define CONSOLE_H
 
 #include <QWidget>
-#include <QTreeWidget>
-
 #include <khtml_part.h>
 
 #include <analitza/analyzer.h>
