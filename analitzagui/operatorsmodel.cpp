@@ -115,9 +115,9 @@ QString OperatorsModel::sample(Operator oper)
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
-		bounds=i18n(" : var");
-		if(oper.operatorType()==Operator::sum || oper.operatorType()==Operator::product) //TODO: make that generic
-			bounds += i18n("=from..to");
+		bounds=i18nc("Syntax for function bounding", " : var");
+		if(oper.operatorType()==Operator::sum || oper.operatorType()==Operator::product)
+			bounds += i18nc("Syntax for function bounding values", "=from..to");
 	}
 	
 	QString sample = i18n("%1(", funcname);
@@ -334,7 +334,7 @@ QString OperatorsModel::description(Operator o)
 			s = i18n("Scalar product");
 			break;
 		case Operator::selector:
-			s = i18n("Select an element from a container");
+			s = i18n("Select the par1-th element of par2 list or vector");
 			break;
 		case Operator::_union:
 			s = i18n("Joins several items of the same type");
@@ -425,7 +425,7 @@ QString OperatorsModel::example(Operator o)
 			s="root(x, 2)";
 			break;
 		case Operator::selector:
-			s="piecewise { x>0 ? selector(1, vector { x, 1/x }), ? selector(2, vector { x, 1/x }) }";
+			s="selector(piecewise { x>0 ? 1, ? 2 }, vector { x, 1/x })";
 			break;
 		case Operator::sum:
 			s="x*sum(t*t:t=0..3)";
