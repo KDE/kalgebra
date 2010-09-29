@@ -66,10 +66,9 @@ class Add2DOption : public InlineOptions
 		virtual QString id() const { return "add2d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
 		{
-			FunctionFactory::self()->contains(exp.bvarList());
-			Analitza::ExpressionType type = FunctionFactory::self()->type(exp.bvarList());
+			bool cont = FunctionFactory::self()->contains(exp.bvarList());
 				
-			return functype.canReduceTo(type);
+			return cont && functype.canReduceTo(FunctionFactory::self()->type(exp.bvarList()));
 		}
 
 		virtual QString caption() const { return i18n("Plot 2D"); }
