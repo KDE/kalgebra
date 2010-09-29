@@ -407,17 +407,16 @@ void ExpressionEdit::helper(const QString& msg)
 void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 {
 	if(isVisible()){
-		QFontMetrics fm(m_helptip->font());
 		m_helptip->setText(msg);
-		QRect rect(p, p+QPoint(fm.width(msg)+20, fm.height()));
+		m_helptip->resize(m_helptip->sizeHint());
 		if(!m_helptip->isVisible()) {
-			m_helptip->setGeometry(rect);
+			m_helptip->move(p);
 			
 			m_helptip->show();
 			m_helptip->raise();
 		} else {
-			QPropertyAnimation* anim = new QPropertyAnimation(m_helptip, "geometry", this);
-			anim->setEndValue(rect);
+			QPropertyAnimation* anim = new QPropertyAnimation(m_helptip, "pos", this);
+			anim->setEndValue(p);
 			anim->start(QAbstractAnimation::DeleteWhenStopped);
 		}
 		setFocus();
