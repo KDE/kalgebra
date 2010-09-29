@@ -19,8 +19,6 @@
 #include "functionimpl.h"
 #include "analitza/variables.h"
 #include "analitza/expression.h"
-#include <analitza/container.h>
-#include <analitza/analitzautils.h>
 #include "functionfactory.h"
 
 #include <KLocale>
@@ -35,7 +33,6 @@ using std::sqrt;
 
 using Analitza::Expression;
 using Analitza::Variables;
-using Analitza::Container;
 
 FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl, double defUl)
 	: points(), func(v), m_deriv(0), m_res(0), mUplimit(defUl), mDownlimit(defDl)
