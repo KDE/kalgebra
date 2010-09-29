@@ -69,24 +69,13 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		Cn* modify(const QString& name, const double& d);
 		
 		/**
-		*	If the variable @p name didn't exist it takes @p o value,
-		*	if not @p name variable takes @p o value until it is destroyed,
-		*	when it is going to recover the previous value.
+		*	The @p orig named variable will be called @p dest , then @p orig will be removed.
 		*/
-		void stack(const QString& name, const Object* o);
-		
-		void stack(const QString& name, double n);
+		void rename(const QString& orig, const QString& dest);
 		
 		/**
-		*	The @p orig named variable will be called @p dest , then @p orig will be deleted.
-		*/
-		bool rename(const QString& orig, const QString& dest);
-		
-		/**
-		*	The variable @p name will no longer exist.
-		*/
-		bool destroy(const QString& name);
-		
+		 * Adds again the initial constants
+		 */
 		void initializeConstants();
 };
 

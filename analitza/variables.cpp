@@ -46,64 +46,34 @@ Variables::Variables(const Variables& v) : QHash<QString, Object*>(v)
 
 Variables::~Variables()
 {
-	QHash<QString, Object*>::iterator i;
-	for (i = this->begin(); i != this->end(); ++i)
-		delete *i;
+	qDeleteAll(*this);
 }
 
 void Variables::modify(const QString & name, const Expression & e)
 {
 	const Analitza::Object* o=e.tree();
-	if(e.tree()->type()==Object::container && static_cast<const Container*>(e.tree())->containerType()==Container::math) {
-		o=*static_cast<const Container*>(e.tree())->constBegin();
+	if(o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::math) {
+		o=*static_cast<const Container*>(o)->constBegin();
 	}
 	modify(name, o);
 }
 
 Cn* Variables::modify(const QString & name, const double & d)
 {
-	if(contains(name))
-		delete value(name);
-	
 	Cn* val=new Cn(d);
-	insert(name, val);
+	modify(name, val);
 	return val;
 }
 
 void Variables::modify(const QString& name, const Object* o)
 {
-	if(contains(name))
-		delete value(name);
+	delete value(name);
 	
 	insert(name, o->copy());
 }
 
-
-bool Variables::rename(const QString& orig, const QString& dest)
+void Variables::rename(const QString& orig, const QString& dest)
 {
-	bool existed = contains(orig);
-	Object *aux = 0;
-	
-	if(existed) {
-		aux = take(orig);
-		insert(dest, aux);
-	}
-	
-	return existed;
-}
-
-bool Variables::destroy(const QString& s)
-{
-	delete take(s);
-	return true;
-}
-
-void Variables::stack(const QString &name, const Object *o)
-{
-	insertMulti(name, o->copy());
-}
-
-void Variables::stack(const QString & name, double n)
-{
-	insertMulti(name, new Cn(n));
+	Q_ASSERT(contains(orig));
+	insert(dest, take(orig));
 }
