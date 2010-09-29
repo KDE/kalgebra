@@ -77,3 +77,8 @@ void Variables::rename(const QString& orig, const QString& dest)
 	Q_ASSERT(contains(orig));
 	insert(dest, take(orig));
 }
+
+Expression Variables::valueExpression(const QString& name) const
+{
+	return Expression(value(name)->copy());
+}

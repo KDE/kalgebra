@@ -34,7 +34,6 @@
 #include <analitza/operator.h>
 #include <analitza/analyzer.h>
 #include <analitza/variables.h>
-#include <analitza/container.h>
 
 class HelpTip : public QLabel
 {
@@ -341,10 +340,9 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inboun
 			ret=sample+')';
 		}
 	} else if(v && v->contains(funcname)) { //if it is a function defined by the user
-		Analitza::Object* val=v->value(funcname);
-		if(val->isContainer()) {
-			Analitza::Container *c = (Analitza::Container*) val;
-			QStringList params = c->bvarStrings();
+		Analitza::Expression val=v->valueExpression(funcname);
+		if(val.isLambda()) {
+			QStringList params = val.bvarList();
 			
 			QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
 					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :

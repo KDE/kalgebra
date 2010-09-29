@@ -506,15 +506,18 @@ bool Expression::isCorrect() const
 
 QStringList Expression::bvarList() const
 {
-	Container *c = (Container*) d->m_tree;
-	if(c!=0 && c->type()==Object::container) {
-		c = (Container*) c->m_params[0];
-		
-		if(c->isApply())
-			return c->bvarStrings();
-		else if(c->isContainer())
-			return c->bvarStrings();
+	Q_ASSERT(d->m_tree);
+	const Object *o = d->m_tree;
+	
+	if(o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::math) {
+		o = (Container*) static_cast<const Container*>(o)->m_params[0];
 	}
+	
+	if(o->isApply())
+		return static_cast<const Apply*>(o)->bvarStrings();
+	else if(o->isContainer())
+		return static_cast<const Container*>(o)->bvarStrings();
+	
 	return QStringList();
 }
 
