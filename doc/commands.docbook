@@ -128,19 +128,19 @@
 	</itemizedlist></sect1>
 	<sect1 id='neq'><title>neq</title><itemizedlist>
 		<listitem><para>Name: neq</para></listitem>
-		<listitem><para>Description: Not equal. neq(a,b)=aâ b</para></listitem>
+		<listitem><para>Description: Not equal. neq(a,b) = a≠b</para></listitem>
 		<listitem><para>Parameters: neq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;x!=4</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='leq'><title>leq</title><itemizedlist>
 		<listitem><para>Name: leq</para></listitem>
-		<listitem><para>Description: Less or equal. leq(a,b)=aâ¤b</para></listitem>
+		<listitem><para>Description: Less or equal. leq(a,b) = a≤b</para></listitem>
 		<listitem><para>Parameters: leq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;x&lt;=4</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='geq'><title>geq</title><itemizedlist>
 		<listitem><para>Name: geq</para></listitem>
-		<listitem><para>Description: Greater or equal. geq(a,b)=aâ¥b</para></listitem>
+		<listitem><para>Description: Greater or equal. geq(a,b) = a≥b</para></listitem>
 		<listitem><para>Parameters: geq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;x&gt;=4</para></listitem>
 	</itemizedlist></sect1>
@@ -152,7 +152,7 @@
 	</itemizedlist></sect1>
 	<sect1 id='approx'><title>approx</title><itemizedlist>
 		<listitem><para>Name: approx</para></listitem>
-		<listitem><para>Description: Approximation. approx(a)=aÂ±n</para></listitem>
+		<listitem><para>Description: Approximation. approx(a) = a≈n</para></listitem>
 		<listitem><para>Parameters: approx(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;approx(x, 4)</para></listitem>
 	</itemizedlist></sect1>
@@ -164,13 +164,13 @@
 	</itemizedlist></sect1>
 	<sect1 id='floor'><title>floor</title><itemizedlist>
 		<listitem><para>Name: floor</para></listitem>
-		<listitem><para>Description: Floor value. floor(n)=ânâ</para></listitem>
+		<listitem><para>Description: Floor value. floor(n) = ⌊n⌋</para></listitem>
 		<listitem><para>Parameters: floor(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;floor(x)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='ceiling'><title>ceiling</title><itemizedlist>
 		<listitem><para>Name: ceiling</para></listitem>
-		<listitem><para>Description: Ceil value. ceil(n)=ânâ</para></listitem>
+		<listitem><para>Description: Ceil value. ceil(n) = ⌈n⌉</para></listitem>
 		<listitem><para>Parameters: ceiling(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;ceiling(x)</para></listitem>
 	</itemizedlist></sect1>
@@ -314,7 +314,7 @@
 	</itemizedlist></sect1>
 	<sect1 id='exp'><title>exp</title><itemizedlist>
 		<listitem><para>Name: exp</para></listitem>
-		<listitem><para>Description: Exponent (e^x)</para></listitem>
+		<listitem><para>Description: Exponent (e<superscript>x</superscript>)</para></listitem>
 		<listitem><para>Parameters: exp(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;exp(x)</para></listitem>
 	</itemizedlist></sect1>
@@ -332,20 +332,20 @@
 	</itemizedlist></sect1>
 	<sect1 id='sum'><title>sum</title><itemizedlist>
 		<listitem><para>Name: sum</para></listitem>
-		<listitem><para>Description: Summatory</para></listitem>
+		<listitem><para>Description: Summator</para></listitem>
 		<listitem><para>Parameters: sum(par1 : var=from..to)</para></listitem>
-		<listitem><para>Example: x-&gt;x*sum(t:t=0..3)</para></listitem>
+		<listitem><para>Example: x-&gt;x*sum(t*t:t=0..3)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='product'><title>product</title><itemizedlist>
 		<listitem><para>Name: product</para></listitem>
-		<listitem><para>Description: Productory</para></listitem>
+		<listitem><para>Description: Productor</para></listitem>
 		<listitem><para>Parameters: product(par1 : var=from..to)</para></listitem>
-		<listitem><para>Example: x-&gt;product(t:t=1..3)</para></listitem>
+		<listitem><para>Example: x-&gt;product(t+t:t=1..3)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='diff'><title>diff</title><itemizedlist>
 		<listitem><para>Name: diff</para></listitem>
 		<listitem><para>Description: Differentiation</para></listitem>
-		<listitem><para>Parameters: diff(par1 : var=from..to)</para></listitem>
+		<listitem><para>Parameters: diff(par1 : var)</para></listitem>
 		<listitem><para>Example: x-&gt;(diff(x^2:x))(x)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='card'><title>card</title><itemizedlist>
