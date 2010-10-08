@@ -115,7 +115,7 @@ QString OperatorsModel::sample(Operator oper)
 	QString funcname=oper.toString();
 	QString bounds;
 	if(oper.isBounded()) {
-		bounds=" : var=from..to";
+		bounds=i18n(" : var=from..to");
 	}
 	
 	QString sample = i18n("%1(", funcname);
