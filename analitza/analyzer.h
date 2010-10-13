@@ -39,13 +39,6 @@ class Container;
 class Operator;
 class Ci;
 
-class BoundingIterator
-{
-	public:
-		virtual ~BoundingIterator() {}
-		virtual bool hasNext()=0;
-};
-
 //FIXME: Explain that better and with examples.
 /**
  *	This is the base Math class. Analyzer will be the one that will calculate things.

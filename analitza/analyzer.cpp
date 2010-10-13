@@ -32,6 +32,19 @@
 #include "expressiontypechecker.h"
 #include "apply.h"
 
+using namespace AnalitzaUtils;
+using namespace Analitza;
+
+namespace Analitza
+{
+class BoundingIterator
+{
+	public:
+		virtual ~BoundingIterator() {}
+		virtual bool hasNext()=0;
+};
+}
+
 template <class T>
 QStringList printAll(const QVector<T*> & p)
 {
@@ -43,9 +56,6 @@ QStringList printAll(const QVector<T*> & p)
 			ret += "<null>";
 	return ret;
 }
-
-using namespace AnalitzaUtils;
-using namespace Analitza;
 
 Analyzer::Analyzer()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
