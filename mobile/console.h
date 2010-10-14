@@ -19,13 +19,11 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-//Depends on Qt 4.x
-
 #include <QWidget>
 #include <QListWidget>
 #include <QTreeWidget>
 
-#include "analitza.h"
+#include <analitza/analyzer.h>
 
 /**
  *	The Console widget is able to receive an operation, solve it and show the value.
@@ -49,8 +47,8 @@ class Console : public QListWidget
 		/** Destructor. */
 		~Console();
 		
-		/** Retrieves a pointer to the Analitza calculator associated. */
-		Analitza* analitza() { return &a; }
+		/** Retrieves a pointer to the Analitza::Analyzer calculator associated. */
+		Analitza::Analyzer* analitza() { return &a; }
 		
 		/** Sets a @p newMode console mode. */
 		void setMode(ConsoleMode newMode) { m_mode = newMode; }
@@ -63,7 +61,7 @@ class Console : public QListWidget
 		bool addOperation(const QString& op, bool mathml);
 		
 		/** Adds an operation @p op and tries to guess the format to the log. */
-		bool addOperation(const QString& op) { return addOperation(op, Expression::isMathML(op)); }
+		bool addOperation(const QString& op) { return addOperation(op, Analitza::Expression::isMathML(op)); }
 		
 		/** Loads a script from @p path. */
 		bool loadScript(const QString& path);
@@ -81,36 +79,13 @@ class Console : public QListWidget
 		void changed();
 	private:
 		int outs;
-		Analitza a;
+		Analitza::Analyzer a;
 		void sendStatus(const QString& msg) { emit status(msg); }
 		ConsoleMode m_mode;
 		QStringList m_script;
 		
-		bool addEvaluation(Expression&);
-		bool addCalculation(Expression&);
-};
-
-/** The VariableView is a widget that shows all variables with their values. */
-class VariableView : public QTreeWidget
-{
-Q_OBJECT
-public:
-	/** Constructor. Creates a new VariableView widget. */
-	VariableView(QWidget *parent=0);
-	
-	/** Destructor. */
-	~VariableView();
-	
-	/** Retrieves the used Analitza module. */
-	Analitza* analitza() const { return a; }
-	
-	/** Sets the used Analitza module. */
-	void setAnalitza(Analitza *na) { a=na; updateVariables(); }
-public slots:
-	/** Rechecks the Variables for the view. */
-	void updateVariables();
-private:
-	Analitza *a;
+		bool addEvaluation(Analitza::Expression&);
+		bool addCalculation(Analitza::Expression&);
 };
 
 #endif

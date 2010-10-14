@@ -100,6 +100,7 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 		return funclist.count();
 }
 
+//TODO: really need to return that?
 bool FunctionsModel::addFunction(const function& func)
 {
 	Q_ASSERT(func.isCorrect());

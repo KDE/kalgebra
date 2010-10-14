@@ -21,6 +21,7 @@ add_subdirectory(src)
 add_subdirectory(icons)
 add_subdirectory(plasmoid)
 add_subdirectory(utils)
+add_subdirectory(mobile)
 
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook

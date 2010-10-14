@@ -16,21 +16,35 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef FUNCTIONSVIEW_H
-#define FUNCTIONSVIEW_H
+#include "uiconfig.h"
+#include <QVBoxLayout>
+#include <QLineEdit>
+#include <QDoubleSpinBox>
+#include <QPushButton>
+#include <QDialog>
+#include <analitzagui/graph2d.h>
+#include "kalgebramobile.h"
+#include "console.h"
+#include "widgetswrappers.h"
+#include "functionsdialog.h"
 
-#include <QTreeView>
+#define WIDGET_CREATOR(klassname, ...)\
+QWidget* UiConfig::new##klassname(const QString& name)\
+{\
+	QWidget* w = new klassname( __VA_ARGS__ );\
+	w->setObjectName(name);\
+	return w;\
+}\
 
-class FunctionsModel;
+WIDGET_CREATOR(Console)
+WIDGET_CREATOR(QLineEdit)
+WIDGET_CREATOR(VerticalLayout)
+WIDGET_CREATOR(ListWidget)
+WIDGET_CREATOR(QDoubleSpinBox)
+WIDGET_CREATOR(QPushButton)
+WIDGET_CREATOR(FunctionsDialog, m_app->functionsModel())
+WIDGET_CREATOR(Graph2D, m_app->functionsModel())
 
-class FunctionsView : public QTreeView
-{
-	Q_OBJECT
-	public:
-		FunctionsView(QWidget *parent=0);
-		
-		virtual void selectionChanged ( const QItemSelection & selected, const QItemSelection & deselected );
-		virtual void mousePressEvent ( QMouseEvent * event );
-};
-
-#endif
+UiConfig::UiConfig(KAlgebraMobile* a, QObject* parent)
+	: QObject(parent), m_app(a)
+{}

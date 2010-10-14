@@ -22,8 +22,10 @@
 
 #include <klocale.h>
 
-#include "variables.h"
-#include "expression.h"
+#include <analitza/variables.h>
+#include <analitza/expression.h>
+
+using namespace Analitza;
 
 Console::Console(QWidget *parent) : QListWidget(parent), outs(0), m_mode(Evaluation) {}
 
@@ -39,9 +41,9 @@ bool Console::addOperation(const QString& op, bool mathml)
 			result = res.toString();
 			a.insertVariable("ans", res);
 		} else {
-			Cn val=a.calculate();
+			Expression val=a.calculate();
 			result = val.toString();
-			a.insertVariable("ans", &val);
+			a.insertVariable("ans", val);
 		}
 	}
 	
@@ -49,22 +51,22 @@ bool Console::addOperation(const QString& op, bool mathml)
 	QFont f = item->font();
 	if(a.isCorrect()) {
 		m_script += op; //Script won't have errors
-		item->setText(QString("%1 = %2").arg(a.expression()->toString()).arg(result));
+		item->setText(QString("%1 = %2").arg(a.expression().toString()).arg(result));
 		item->setToolTip(result);
 		if(++outs % 2)
 			item->setBackgroundColor(QColor(233,233,222));
 		else
 			item->setBackgroundColor(QColor(250,250,250));
 	} else {
-		item->setText(i18n("%1\nError: %2",op,a.m_err.join("\n")));
+		item->setText(i18n("%1\nError: %2",op,a.errors().join("\n")));
 		item->setBackgroundColor(QColor(255,222,222));
 		item->setTextAlignment(Qt::AlignRight);
 		f.setBold(true);
 		item->setFont(f);
 	}
 	
-	qApp->processEvents();
-	this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
+// 	qApp->processEvents();
+// 	this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
 	emit changed();
 	return a.isCorrect();
 }
@@ -129,41 +131,6 @@ bool Console::saveLog(const QString& path) const
 		file.close();
 	}
 	return correct;
-}
-
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-
-VariableView::VariableView(QWidget *parent) : QTreeWidget(parent), a(NULL)
-{
-	setColumnCount(2);
-	headerItem()->setText(0, i18nc("@title:column", "Name"));
-	headerItem()->setText(1, i18nc("@title:column", "Value"));
-	clear();
-	header()->setResizeMode(0, QHeaderView::ResizeToContents);
-	setRootIsDecorated(false);
-	setSortingEnabled(false);
-	setSelectionMode(QAbstractItemView::SingleSelection);
-}
-
-VariableView::~VariableView() {}
-
-void VariableView::updateVariables()
-{
-	clear();
-	if(a!=NULL) {
-		QList<QTreeWidgetItem *> items;
-		QHash<QString, Object*>::const_iterator it = a->m_vars->begin();
-		for(; it != a->m_vars->end(); ++it) {
-			QTreeWidgetItem* item = new QTreeWidgetItem(this);
-			item->setText(0, it.key());
-			item->setText(1, it.value()->toString());
-			
-			items.append(item);
-		}
-		sortItems(0, Qt::AscendingOrder);
-	}
 }
 
 #include "console.moc"

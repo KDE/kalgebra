@@ -20,7 +20,6 @@
 #include "varedit.h"
 #include "consolehtml.h"
 #include "dictionary.h"
-#include "functionsview.h"
 #include "askname.h"
 #include "variablesdelegate.h"
 #include "viewportwidget.h"
@@ -33,6 +32,7 @@
 
 #include <analitzagui/functionedit.h>
 #include <analitzagui/functionsmodel.h>
+#include <analitzagui/functionsview.h>
 #include <analitzagui/expressionedit.h>
 #include <analitzagui/graph2d.h>
 #include <analitzagui/variablesmodel.h>
@@ -56,6 +56,7 @@
 #include <KProcess>
 #include <KRecentFilesAction>
 #include <KApplication>
+
 class Add2DOption : public InlineOptions
 {
 	public:

@@ -16,6 +16,7 @@ set(analitzagui_SRCS
 	functionparametric.cpp
 	functionimplicit.cpp
 
+	functionsview.cpp
 	functionsmodel.cpp
 	functionedit.cpp
 	graph2d.cpp
