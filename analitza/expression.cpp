@@ -590,6 +590,51 @@ bool Expression::isVector() const
 	return false;
 }
 
+bool Expression::isList() const
+{
+	if(d->m_tree) {
+		if(d->m_tree->isContainer()) {
+			Container *c = (Container*) d->m_tree;
+			return c->containerType()==Container::math && c->m_params.first()->type()==Object::list;
+		} else
+			return d->m_tree->type()==Container::list;
+	}
+	return false;
+}
+
+QList<Expression> Expression::toExpressionList() const
+{
+	bool isvector = isVector();
+	if(!isvector || !isList() || !d->m_tree)
+		return QList<Expression>();
+	
+	QList<Expression> ret;
+	const Object* o=d->m_tree;
+	if(d->m_tree->isContainer()) {
+		const Container *c = (const Container*) d->m_tree;
+		Q_ASSERT(c->containerType()==Container::math);
+		o=c->m_params.first();
+	}
+	
+	if(isvector) {
+		const Vector* v = (const Vector*) o;
+		for(Vector::const_iterator it=v->constBegin(), itEnd=v->constEnd(); it!=itEnd; ++it) {
+			Object* newelement = (*it)->copy();
+			computeDepth(newelement);
+			ret << Expression(newelement);
+		}
+	} else {
+		const List* v = (const List*) o;
+		for(List::const_iterator it=v->constBegin(), itEnd=v->constEnd(); it!=itEnd; ++it) {
+			Object* newelement = (*it)->copy();
+			computeDepth(newelement);
+			ret << Expression(newelement);
+		}
+	}
+	
+	return ret;
+}
+
 Expression Expression::elementAt(int position) const
 {
 	Q_ASSERT(isVector());
@@ -604,7 +649,7 @@ Expression Expression::elementAt(int position) const
 	
 	return Expression(v->at(position)->copy());
 }
-
+// 
 QStringList Expression::error() const
 {
 	return d->m_err;
@@ -628,6 +673,16 @@ void Expression::setTree(Object* o)
 bool Expression::isReal() const
 {
 	return d->m_tree && d->m_tree->type()==Object::value;
+}
+
+Expression Expression::constructList(const QList< Expression >& exps)
+{
+	List* l = new List;
+	foreach(const Expression& e, exps)
+		l->appendBranch(e.tree()->copy());
+	
+	computeDepth(l);
+	return Expression(l);
 }
 
 static void print_dom(const QDomNode& in, int ind)

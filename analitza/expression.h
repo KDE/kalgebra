@@ -117,6 +117,11 @@ class ANALITZA_EXPORT Expression
 		bool isVector() const;
 		
 		/**
+		 *	Returns whether it is a vector expression.
+		 */
+		bool isList() const;
+		
+		/**
 		 *	Returns the element at @p position in a vector
 		 */
 		Expression elementAt(int position) const;
@@ -172,17 +177,26 @@ class ANALITZA_EXPORT Expression
 			a lambda construction. */
 		QList<Ci*> parameters() const;
 		
+		/** In case it was a vector or list, it returns a list of each expression on the vector. */
+		QList<Expression> toExpressionList() const;
+		
 		/**
 		 *	Converts a @p tag to an object type.
 		 */
 		static enum Object::ObjectType whatType(const QString& tag);
 		
 		/**
-		 *	Returns whether @p s is MathML or not. Very simple.
+		 *	@returns whether @p s is MathML or not. Very simple.
 		 */
 		static bool isMathML(const QString& s) { return !s.isEmpty() && s[0]=='<'; }
 		
 		static void computeDepth(Object* o);
+		
+		/**
+		 * @returns an expression containing a list of every expression passed on @p exps on the form:
+		 *    list { exps[0], exps[1], ... }
+		 */
+		static Expression constructList(const QList<Expression> & exps);
 	private:
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;
