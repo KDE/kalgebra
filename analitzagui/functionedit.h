@@ -27,14 +27,16 @@
 #include <KColorCombo>
 #include <KLineEdit>
 
-#include "expressionedit.h"
+#include "analitzaguiexport.h"
 
 class function;
 class Graph2D;
 class FunctionsModel;
+class ExpressionEdit;
 namespace Analitza
 {
 class Variables;
+class Expression;
 }
 
 /**
@@ -42,7 +44,7 @@ class Variables;
  *	@author Aleix Pol i Gonzalez
  */
 
-class FunctionEdit : public QWidget
+class ANALITZAGUI_EXPORT FunctionEdit : public QWidget
 {
 Q_OBJECT
 public:
@@ -67,7 +69,7 @@ public:
 	void setColor(const QColor &newColor);
 	
 	/** Returns whether it is a MathML function. */
-	bool isMathML() const { return m_func->isMathML();}
+	bool isMathML() const;
 	
 	/** Returns whether we are editing or adding a function. */
 	bool editing() const { return m_modmode; }

@@ -25,6 +25,8 @@
 #include <QTreeView>
 #include <analitzagui/algebrahighlighter.h>
 
+#include "analitzaguiexport.h"
+
 namespace Analitza
 {
 class Variables;
@@ -41,7 +43,7 @@ class QKeyEvent;
 *	@author Aleix Pol i Gonzalez <aleixpol@kde.org>  
 */
 
-class ExpressionEdit : public QPlainTextEdit
+class ANALITZAGUI_EXPORT ExpressionEdit : public QPlainTextEdit
 {
 	Q_OBJECT
 	public:

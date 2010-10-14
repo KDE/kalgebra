@@ -17,8 +17,8 @@
  *************************************************************************************/
 
 #include "dictionary.h"
-#include "functionsmodel.h"
-#include "graph2d.h"
+#include <analitzagui/functionsmodel.h>
+#include <analitzagui/graph2d.h>
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 #include <analitzagui/operatorsmodel.h>

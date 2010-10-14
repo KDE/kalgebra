@@ -20,7 +20,7 @@
 #include <analitza/analyzer.h>
 #include <analitza/expression.h>
 #include <analitza/variables.h>
-#include "expressionedit.h"
+#include <analitzagui/expressionedit.h>
 
 #include <KLocale>
 

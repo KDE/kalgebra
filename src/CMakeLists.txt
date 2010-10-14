@@ -5,15 +5,11 @@ set(kalgebra_SRCS
 	dictionary.cpp
 	#console.cpp
 	consolehtml.cpp
-	functionedit.cpp
 	varedit.cpp
 	main.cpp
-	expressionedit.cpp
-	graph2d.cpp
 	variablesdelegate.cpp
 	viewportwidget.cpp
 	functionsview.cpp
-	functionsmodel.cpp
 )
 
 if(OPENGL_FOUND)

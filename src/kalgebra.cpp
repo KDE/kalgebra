@@ -18,15 +18,8 @@
 
 #include "kalgebra.h"
 #include "varedit.h"
-#include "functionedit.h"
 #include "consolehtml.h"
-#include "expressionedit.h"
-#include "graph2d.h"
-#include "analitza/variables.h"
-#include "analitza/value.h"
-#include "analitzagui/variablesmodel.h"
 #include "dictionary.h"
-#include "functionsmodel.h"
 #include "functionsview.h"
 #include "askname.h"
 #include "variablesdelegate.h"
@@ -37,6 +30,14 @@
 
 #include <analitzagui/operatorsmodel.h>
 #include <analitzagui/functionfactory.h>
+
+#include <analitzagui/functionedit.h>
+#include <analitzagui/functionsmodel.h>
+#include <analitzagui/expressionedit.h>
+#include <analitzagui/graph2d.h>
+#include <analitzagui/variablesmodel.h>
+#include <analitza/variables.h>
+#include <analitza/value.h>
 
 #include <QVBoxLayout>
 #include <QHeaderView>

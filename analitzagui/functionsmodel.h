@@ -22,8 +22,10 @@
 #include <QAbstractTableModel>
 #include "analitzagui/function.h"
 
+#include "analitzaguiexport.h"
+
 /** Functions model is a model class that has a relation of all operators string with their FunctionType. */
-class FunctionsModel : public QAbstractTableModel
+class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 {
 	Q_OBJECT
 	public:

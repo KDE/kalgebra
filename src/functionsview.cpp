@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "functionsview.h"
-#include "functionsmodel.h"
+#include <analitzagui/functionsmodel.h>
 #include <KDebug>
 #include <KLocale>
 #include <KIcon>

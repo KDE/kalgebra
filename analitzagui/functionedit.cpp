@@ -30,6 +30,7 @@
 
 #include "graph2d.h"
 #include "functionsmodel.h"
+#include "expressionedit.h"
 #include <analitza/analyzer.h>
 #include <analitza/expression.h>
 #include <analitza/variables.h>
@@ -306,6 +307,11 @@ function FunctionEdit::createFunction() const
 Analitza::Expression FunctionEdit::expression() const
 {
 	return m_func->expression();
+}
+
+bool FunctionEdit::isMathML() const
+{
+    return m_func->isMathML();
 }
 
 #include "functionedit.moc"

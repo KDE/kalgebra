@@ -31,6 +31,7 @@
 #include <QModelIndex>
 
 #include "analitzagui/function.h"
+#include "analitzaguiexport.h"
 
 /**
  *	This class lets you create a widget that can draw multiple 2D graphs.
@@ -39,7 +40,7 @@
 
 class FunctionsModel;
 
-class Graph2D : public QWidget
+class ANALITZAGUI_EXPORT Graph2D : public QWidget
 {
 Q_OBJECT
 public:
