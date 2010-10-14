@@ -28,10 +28,10 @@
 #include "widgetswrappers.h"
 #include "functionsdialog.h"
 
-#define WIDGET_CREATOR(klassname, ...)\
+#define WIDGET_CREATOR(klassname, args...)\
 QWidget* UiConfig::new##klassname(const QString& name)\
 {\
-	QWidget* w = new klassname( __VA_ARGS__ );\
+	QWidget* w = new klassname( args );\
 	w->setObjectName(name);\
 	return w;\
 }\

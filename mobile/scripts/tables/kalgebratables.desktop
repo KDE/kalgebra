@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=kspread
+Type=Service
+ServiceTypes=KAlgebra/Script
+
+Name=Value Tables
+Comment=Provides a console to use KAlgebra as a calculator
+
+X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
+X-KDE-PluginInfo-Email=aleixpol@kde.org
+X-KDE-PluginInfo-Name=tables/tables.js
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL

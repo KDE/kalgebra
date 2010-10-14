@@ -25,15 +25,52 @@
 #include <KDialog>
 #include <KLocalizedString>
 #include <KIcon>
-#include "uiconfig.h"
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QMessageBox>
+#include <QStandardItemModel>
 #include <QDialogButtonBox>
 
-#define DEBUG
-#include "analitzawrapper.h"
-#include <QMessageBox>
 #include <analitzagui/functionsmodel.h>
+#include "analitzawrapper.h"
+#include "uiconfig.h"
+
+#include <KServiceTypeTrader>
+#include <KPluginInfo>
+#include <KStandardDirs>
+
+#define DEBUG
+
+class PluginsModel : public QStandardItemModel
+{
+	public:
+		enum Roles { PathRole = Qt::UserRole+1 };
+		
+		explicit PluginsModel(QObject* parent = 0)
+			:QStandardItemModel(parent)
+		{
+			m_plugins = KPluginInfo::fromServices( KServiceTypeTrader::self()->query( "KAlgebra/Script" ) );
+			
+			foreach(const KPluginInfo& info, m_plugins) {
+// 				const KPluginInfo& info;
+				QStandardItem* item = new QStandardItem(KIcon(info.icon()), info.name());
+				
+				QString postfix = "kalgebra/scripts/"+info.pluginName();
+				QString scriptPath = KStandardDirs::locate("data", postfix);
+				
+				qDebug() << "pepepe" << scriptPath << postfix << QFile::exists("/home/kde-devel/kde/share/apps/"+postfix);
+				Q_ASSERT(!scriptPath.isEmpty());
+				
+				item->setData(scriptPath, PathRole);
+				
+				appendRow(item);
+				
+			}
+		}
+		
+	private:
+		KPluginInfo::List m_plugins;
+};
 
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	: QMainWindow(parent, flags), m_model(0)
@@ -50,15 +87,14 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	toolbar->addSeparator();
 	toolbar->addAction(KIcon("debug-run"), i18n("Debug"), this, SLOT(debug()));
 #endif
+	m_pluginsModel = new PluginsModel(this);
+	
 	findScripts();
 }
 
 void KAlgebraMobile::findScripts()
 {
-	m_scripts << "/home/kde-devel/kdeedu/kalgebra/mobile/calculator.js"
-			  << "/home/kde-devel/kdeedu/kalgebra/mobile/tables.js"
-			  << "/home/kde-devel/kdeedu/kalgebra/mobile/plot2d.js";
-	m_pluginUI.resize(m_scripts.size());
+	m_pluginUI.resize(m_pluginsModel->rowCount());
 	displayPlugin(0);
 }
 
@@ -79,12 +115,9 @@ void KAlgebraMobile::selectPlugin()
 	d.setLayout(new QVBoxLayout);
 	
 	QComboBox* combo = new QComboBox(&d);
+	combo->setModel(m_pluginsModel);
 	d.layout()->addWidget(combo);
 	
-	int i=0;
-	foreach(const QString& script, m_scripts) {
-		combo->addItem(script.right(script.length()-script.lastIndexOf('/')-1), QVariant::fromValue<int>(i++));
-	}
 	QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &d);
 	connect(buttons, SIGNAL(accepted()), &d, SLOT(accept()));
 	connect(buttons, SIGNAL(rejected()), &d, SLOT(reject()));
@@ -92,10 +125,7 @@ void KAlgebraMobile::selectPlugin()
 	
 	int ret = d.exec();
 	if(ret == QDialog::Accepted) {
-		int idx = combo->currentIndex();
-		QVariant data = combo->itemData(idx);
-		
-		displayPlugin(data.toInt());
+		displayPlugin(combo->currentIndex());
 	}
 }
 
@@ -104,7 +134,7 @@ void KAlgebraMobile::displayPlugin(int plugin)
 	Q_ASSERT(plugin < m_pluginUI.size());
 	
 	if(!m_pluginUI[plugin]) {
-		QString scriptFileName = m_scripts[plugin];
+		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
 		QFile scriptFile(scriptFileName);
 		scriptFile.open(QIODevice::ReadOnly);
 		m_engine->evaluate(scriptFile.readAll(), scriptFileName);

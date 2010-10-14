@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=draw-bezier-curves
+Type=Service
+ServiceTypes=KAlgebra/Script
+
+Name=Graph 2D
+Comment=Draws any 2D graph you want
+
+X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
+X-KDE-PluginInfo-Email=aleixpol@kde.org
+X-KDE-PluginInfo-Name=plot2d/plot2d.js
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL

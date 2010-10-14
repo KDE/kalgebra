@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QPointer>
 
+class PluginsModel;
 class FunctionsModel;
 class QScriptValue;
 class AnalitzaWrapper;
@@ -41,13 +42,14 @@ class KAlgebraMobile : public QMainWindow
 		void handleException(const QScriptValue& exception);
 		
 	private:
+		void findScripts();
+		
 		QVector<QPointer<QWidget> > m_pluginUI;
-		QStringList m_scripts;
 		QScriptEngine* m_engine;
 		
 		AnalitzaWrapper* m_wrapper;
 		FunctionsModel* m_model;
-    void findScripts();
+		PluginsModel* m_pluginsModel;
 };
 
 #endif // KALGEBRAMOBILE_H
