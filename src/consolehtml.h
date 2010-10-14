@@ -99,6 +99,7 @@ class ConsoleHtml : public KHTMLPart
 		void paste(const QString& code);
 		
 	private slots:
+		void initialize();
 		void context(const QString&, const QPoint& p);
 		
 		void modifyVariable(const QString& name, const Analitza::Expression& exp);

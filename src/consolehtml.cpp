@@ -43,13 +43,26 @@
 
 ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
 {
-	QPalette p=qApp->palette();
-	
 	setJScriptEnabled(false);
 	setJavaEnabled(false);
 	setMetaRefreshEnabled(false);
 	setPluginsEnabled(false);
 	setOnlyLocalReferences(true);
+	
+	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
+	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
+	
+	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
+}
+
+ConsoleHtml::~ConsoleHtml()
+{
+	qDeleteAll(m_options);
+}
+
+void ConsoleHtml::initialize()
+{
+	QPalette p=qApp->palette();
 	
 	m_css ="<style type=\"text/css\">\n";
 	m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name());
@@ -70,17 +83,9 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	
-	begin();
-	write("<html>\n<head>"+m_css+"</head></html>");
-	end();
-	
-	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
-	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
-}
-
-ConsoleHtml::~ConsoleHtml()
-{
-	qDeleteAll(m_options);
+// 	begin();
+// 	write("<html>\n<head>"+m_css+"</head></html>");
+// 	end();
 }
 
 void ConsoleHtml::openClickedUrl(const KUrl& url)
