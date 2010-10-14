@@ -419,19 +419,19 @@ void ExpressionEdit::helper(const QString& msg, const QPoint& p)
 
 void ExpressionEdit::setCorrect(bool correct)
 {
-	QPalette p=palette();
+	QPalette p=qApp->palette();
 	QColor c;
 	m_correct=correct;
 	
 	if(m_correct && !isMathML())
-		c = p.color(QPalette::Active, QPalette::Base);
+		c = p.base().color();
 	else if(m_correct)
 		c = QColor(255,255,200);
 	else //if mathml
 		c = QColor(255,222,222);
 	
-	p.setColor(QPalette::Base, c);
-	this->setPalette(p);
+	p.setColor(QPalette::Active, QPalette::Base, c);
+	setPalette(p);
 }
 
 void ExpressionEdit::focusInEvent ( QFocusEvent * event )
