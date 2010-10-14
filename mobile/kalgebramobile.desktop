@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=KAlgebra Mobile
+GenericName=Pocket Graph Calculator
+Comment=Pocket Math Expression Solver and Plotter
+Exec=kalgebramobile
+MimeType=application/x-kalgebra;
+Icon=kalgebra
+Type=Application
+X-DocPath=kalgebra/index.html
+Terminal=false
+Categories=Qt;KDE;Education;Math;
