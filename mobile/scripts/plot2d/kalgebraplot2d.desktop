@@ -4,7 +4,9 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Graph 2D
+Name[x-test]=xxGraph 2Dxx
 Comment=Draws any 2D graph you want
+Comment[x-test]=xxDraws any 2D graph you wantxx
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org

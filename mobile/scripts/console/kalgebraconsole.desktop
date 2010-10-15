@@ -4,7 +4,9 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Console
+Name[x-test]=xxConsolexx
 Comment=Provides a console to use KAlgebra as a calculator
+Comment[x-test]=xxProvides a console to use KAlgebra as a calculatorxx
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org

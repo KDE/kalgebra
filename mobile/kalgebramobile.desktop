@@ -1,7 +1,10 @@
 [Desktop Entry]
 Name=KAlgebra Mobile
+Name[x-test]=xxKAlgebra Mobilexx
 GenericName=Pocket Graph Calculator
+GenericName[x-test]=xxPocket Graph Calculatorxx
 Comment=Pocket Math Expression Solver and Plotter
+Comment[x-test]=xxPocket Math Expression Solver and Plotterxx
 Exec=kalgebramobile
 MimeType=application/x-kalgebra;
 Icon=kalgebra
