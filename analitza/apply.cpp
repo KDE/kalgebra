@@ -95,12 +95,20 @@ QStringList Apply::bvarStrings() const
 
 bool Apply::operator==(const Apply& a) const
 {
-	bool eq=a.m_params.count()==m_params.count();
+	bool eq=a.m_params.count()==m_params.count() && a.firstOperator()==firstOperator();
+	eq &= bool(a.ulimit())==bool(m_ulimit);
+	eq &= bool(a.dlimit())==bool(m_dlimit);
+	eq &= bool(a.domain())==bool(m_domain);
+	
+	if(m_ulimit) eq &= AnalitzaUtils::equalTree(m_ulimit, a.m_ulimit);
+	if(m_dlimit) eq &= AnalitzaUtils::equalTree(m_dlimit, a.m_dlimit);
+	if(m_domain) eq &= AnalitzaUtils::equalTree(m_domain, a.m_domain);
 	
 	for(int i=0; eq && i<m_params.count(); ++i) {
 		Object *o=m_params[i], *o1=a.m_params[i];
 		eq = eq && AnalitzaUtils::equalTree(o, o1);
 	}
+	
 	return eq;
 }
 

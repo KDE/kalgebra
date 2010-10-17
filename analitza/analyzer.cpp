@@ -1315,7 +1315,6 @@ Object* Analyzer::simpApply(Apply* c)
 			if(equalTree(f, g)) {
 				delete root;
 				root = new Cn(1.);
-				break;
 			} else if(g->type()==Object::value) {
 				Cn* gnum=(Cn*) g;
 				if(gnum->value()==1.) {
@@ -1325,7 +1324,6 @@ Object* Analyzer::simpApply(Apply* c)
 					break;
 				}
 			}
-			
 			break;
 		case Operator::ln:
 			it = c->firstValue();
