@@ -18,8 +18,6 @@
 
 #include "graph2d.h"
 
-#include <math.h>
-
 #include <QSvgGenerator>
 #include <QWheelEvent>
 #include <QPaintEvent>
@@ -30,17 +28,15 @@
 #include <QKeyEvent>
 #include <QFile>
 #include <QApplication>
+#include <cmath>
 
 #include <KLocale>
 #include <KDebug>
-#include <cmath>
 
 #include <analitza/analyzer.h>
 #include "functionsmodel.h"
 
 // #define DEBUG_GRAPH
-
-using namespace std;
 
 QColor const Graph2D::m_axeColor(100,100,255);
 QColor const Graph2D::m_axe2Color(235,235,235);
