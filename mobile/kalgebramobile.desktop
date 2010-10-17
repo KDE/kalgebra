@@ -1,16 +1,22 @@
 [Desktop Entry]
 Name=KAlgebra Mobile
+Name[es]=KAlgebra móvil
 Name[pt]=KAlgebra Móvel
+Name[pt_BR]=KAlgebra Móvel
 Name[sv]=Kalgebra för mobil
 Name[uk]=Мобільна KAlgebra
 Name[x-test]=xxKAlgebra Mobilexx
 GenericName=Pocket Graph Calculator
+GenericName[es]=Calculadora gráfica de bolsillo
 GenericName[pt]=Calculadora Gráfica Portátil
+GenericName[pt_BR]=Calculadora gráfica portátil
 GenericName[sv]=Grafminiräknare
 GenericName[uk]=Кишеньковий графічний калькулятор
 GenericName[x-test]=xxPocket Graph Calculatorxx
 Comment=Pocket Math Expression Solver and Plotter
+Comment[es]=Resuelve y dibuja expresiones matemáticas
 Comment[pt]=Resolução e Desenho de Expressões Matemáticas Portátil
+Comment[pt_BR]=Solucionador e visualizador portátil de expressões matemáticas
 Comment[sv]=Lösning och uppritning av matematiska uttryck i fickformat
 Comment[uk]=Кишеньковий розв’язувач математичних рівнянь та графопобудовник
 Comment[x-test]=xxPocket Math Expression Solver and Plotterxx
