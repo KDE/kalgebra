@@ -36,6 +36,7 @@ class KAlgebraMobile : public QMainWindow
 		
 		void displayPlugin(int plugin);
 		FunctionsModel* functionsModel();
+		
 	public slots:
 		void selectPlugin();
 		void debug();

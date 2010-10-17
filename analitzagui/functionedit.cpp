@@ -259,7 +259,7 @@ void FunctionEdit::edit()
 		return;
 	}
 	
-	function f=createFunction();
+	Function f=createFunction();
 	if(f.isCorrect()) {
 		f.setResolution(resolution);
 		f.calc(QPointF());
@@ -299,9 +299,9 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 	m_func->setFocus();
 }
 
-function FunctionEdit::createFunction() const
+Function FunctionEdit::createFunction() const
 {
-	return function(name(), expression(), m_vars, color(), m_calcUplimit, m_calcDownlimit);
+	return Function(name(), expression(), m_vars, color(), m_calcUplimit, m_calcDownlimit);
 }
 
 Analitza::Expression FunctionEdit::expression() const

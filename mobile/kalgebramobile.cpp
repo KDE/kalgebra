@@ -40,6 +40,7 @@
 #include <KStandardDirs>
 
 #define DEBUG
+#include <QListView>
 
 class PluginsModel : public QStandardItemModel
 {
@@ -58,7 +59,6 @@ class PluginsModel : public QStandardItemModel
 				QString postfix = "kalgebra/scripts/"+info.pluginName();
 				QString scriptPath = KStandardDirs::locate("data", postfix);
 				
-				qDebug() << "pepepe" << scriptPath << postfix << QFile::exists("/home/kde-devel/kde/share/apps/"+postfix);
 				Q_ASSERT(!scriptPath.isEmpty());
 				
 				item->setData(scriptPath, PathRole);
@@ -114,8 +114,12 @@ void KAlgebraMobile::selectPlugin()
 	QDialog d;
 	d.setLayout(new QVBoxLayout);
 	
-	QComboBox* combo = new QComboBox(&d);
+	QListView* combo = new QListView(&d);
+	combo->setViewMode(QListView::IconMode);
 	combo->setModel(m_pluginsModel);
+	combo->setFrameStyle(QFrame::NoFrame);
+	combo->setBackgroundRole(QPalette::NoRole);
+	combo->setEditTriggers(0);
 	d.layout()->addWidget(combo);
 	
 	QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &d);
@@ -125,7 +129,7 @@ void KAlgebraMobile::selectPlugin()
 	
 	int ret = d.exec();
 	if(ret == QDialog::Accepted) {
-		displayPlugin(combo->currentIndex());
+		displayPlugin(combo->currentIndex().row());
 	}
 }
 

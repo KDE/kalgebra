@@ -30,7 +30,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 	Q_OBJECT
 	public:
 		enum FunctionsModelRoles { Selection=Qt::UserRole+1, Shown=Qt::UserRole+2 };
-		typedef QList<function>::const_iterator const_iterator;
+		typedef QList<Function>::const_iterator const_iterator;
 		friend class Graph2D;
 		
 		/** Constructor. Creates a new Function Model. */
@@ -44,7 +44,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		int columnCount(const QModelIndex & =QModelIndex()) const { return 2; }
 		
 		/** Adds another function @p f. Returns whether another function like @p f existed. */
-		bool addFunction(const function& f);
+		bool addFunction(const Function& f);
 	
 		/** Sets the function selected to @p exp. Returns whether another function like @p exp existed. */
 		bool setSelected(const QString& name);
@@ -57,13 +57,13 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 	
 		/** Edits the @p num nth function. The @p num should be less than the number of functions,
 			because you are editing. */
-		void editFunction(int num, const function& func);
+		void editFunction(int num, const Function& func);
 	
 		/** Edits the @p exp function. Returns whether another function like @p exp existed. */
-		bool editFunction(const QString& name, const function& func);
+		bool editFunction(const QString& name, const Function& func);
 	
 		/** Returns a pointer to the @p num nth function. */
-		function* editFunction(int num);
+		Function* editFunction(int num);
 		
 		void setResolution(uint res);
 		
@@ -75,7 +75,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		
 		void updatePoints(int i, const QRect& viewport);
 		
-		const function& currentFunction() const;
+		const Function& currentFunction() const;
 		
 		bool hasSelection() const { return m_selectedRow>=0 && !funclist.isEmpty(); }
 		
@@ -106,12 +106,12 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		void functionRemoved(const QString& name);
 		
 	private:
-		function& currentFunction();
+		Function& currentFunction();
 		
 		QLineF slope(const QPointF& dp) const;
 		QPair<QPointF, QString> calcImage(const QPointF& dp);
 		
-		QList<function> funclist;
+		QList<Function> funclist;
 		int m_selectedRow;
 		uint m_resolution;
 		

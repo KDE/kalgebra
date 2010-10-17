@@ -120,7 +120,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
-		m_funcs->addFunction(function("func", e, m_vars, QColor(0,150,0), 0, 0));
+		m_funcs->addFunction(Function("func", e, m_vars, QColor(0,150,0), 0, 0));
 	} else {
 		QString error;
 		m_name->setText(QString());

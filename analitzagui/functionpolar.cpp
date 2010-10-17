@@ -81,7 +81,7 @@ struct FunctionPolar : public FunctionImpl
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
-	function::Axe axeType() const { return function::Polar; }
+	Function::Axe axeType() const { return Function::Polar; }
 	QLineF derivative(const QPointF& p);
 	virtual FunctionImpl* copy() { return new FunctionPolar(*this); }
 	static QStringList examples() { return QStringList("q->3*sin(7*q)"); } //afiestas's favourite plot

@@ -39,28 +39,28 @@ class Variables;
 
 struct FunctionImpl;
 
-class ANALITZAGUI_EXPORT function
+class ANALITZAGUI_EXPORT Function
 {
 	public:
 		/** Defines a function axe type. */
 		enum Axe { Cartesian=0, Polar};
 		
 		/** Constructor. Create an empty function. */
-		function();
+		Function();
 		
 		/** Copy constructor. */
-		function(const function& f);
+		Function(const Function& f);
 		
 		/** Constructor. Creates a new function.
 			@param name the function name.
 			@param newExp the function expression tree.
 			@param pen the pen used to paint the function.
 		*/
-		function(const QString& name, const Analitza::Expression& newExp, Analitza::Variables* v, const QPen& m_pen,
+		Function(const QString& name, const Analitza::Expression& newExp, Analitza::Variables* v, const QPen& m_pen,
 				double uplimit, double downlimit);
 		
 		/** Destructor. */
-		~function();
+		~Function();
 		
 		/** Defines a new function behaviour.
 			@param viewport sets the coordinates the function will fit to.
@@ -85,7 +85,7 @@ class ANALITZAGUI_EXPORT function
 		bool isShown() const;
 		
 		/** Equal operator. */
-		bool operator==(const function& f) const { return f.m_name==m_name; }
+		bool operator==(const Function& f) const { return f.m_name==m_name; }
 		
 		/** Retrieves the function's name. */
 		QString name() const { return m_name; }
@@ -94,7 +94,7 @@ class ANALITZAGUI_EXPORT function
 		void setName(const QString &newName) { m_name = newName; }
 		
 		/** Copies a function */
-		function operator=(const function& f);
+		Function operator=(const Function& f);
 		
 		/** Returns the type of axe that the function has. */
 		Axe axeType() const;

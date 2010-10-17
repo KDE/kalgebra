@@ -43,6 +43,7 @@ class FunctionsModel;
 class ANALITZAGUI_EXPORT Graph2D : public QWidget
 {
 Q_OBJECT
+Q_PROPERTY(bool squares READ squares WRITE setSquares)
 public:
 	/** The graph mode will especify the selection mode we are using at the moment */
 	enum GraphMode {
@@ -134,7 +135,7 @@ private:
 	bool valid;
 	QLabel *micepos;
 	QPointF mark;
-	void drawAxes(QPainter*, function::Axe a);
+	void drawAxes(QPainter*, Function::Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
 	QPointF toWidget(const QPointF &) const;

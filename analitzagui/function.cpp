@@ -29,11 +29,11 @@
 
 using Analitza::ExpressionType;
 
-function::function()
+Function::Function()
 	: m_function(0), m_show(true), m_pen(Qt::black)
 {}
 
-function::function(const QString &name, const Analitza::Expression& newFunc, Analitza::Variables* v,
+Function::Function(const QString &name, const Analitza::Expression& newFunc, Analitza::Variables* v,
 				   const QPen& pen, double uplimit, double downlimit)
 	: m_function(0), m_expression(newFunc), m_show(true), m_pen(pen), m_name(name)
 {
@@ -68,7 +68,7 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 	}
 }
 
-function::function(const function& f)
+Function::Function(const Function& f)
 	: m_function(0), m_expression(f.expression()), m_show(f.m_show), m_pen(f.m_pen)
 	, m_name(f.m_name), m_err(f.m_err)
 {
@@ -76,12 +76,12 @@ function::function(const function& f)
 		m_function=f.m_function->copy();
 }
 
-function::~function()
+Function::~Function()
 {
 	delete m_function;
 }
 
-function function::operator=(const function& f)
+Function Function::operator=(const Function& f)
 {
 	if(&f!=this) {
 		delete m_function;
@@ -101,7 +101,7 @@ function function::operator=(const function& f)
 	return *this;
 }
 
-void function::update_points(const QRect& viewport)
+void Function::update_points(const QRect& viewport)
 {
 	Q_ASSERT(m_function);
 	Q_ASSERT(resolution()>2);
@@ -110,52 +110,52 @@ void function::update_points(const QRect& viewport)
 	Q_ASSERT(!m_function->isCorrect() || m_function->points.size()>=2);
 }
 
-void function::setResolution(unsigned int resolution)
+void Function::setResolution(unsigned int resolution)
 {
 	Q_ASSERT(m_function);
 	m_function->setResolution(resolution);
 }
 
-uint function::resolution() const
+uint Function::resolution() const
 {
 	return m_function->resolution();
 }
 
-function::Axe function::axeType() const
+Function::Axe Function::axeType() const
 {
 	return m_function->axeType();
 }
 
-bool function::isShown() const
+bool Function::isShown() const
 {
 	return m_show && m_function && m_function->isCorrect();
 }
 
-QLineF function::derivative(const QPointF & p) const
+QLineF Function::derivative(const QPointF & p) const
 {
 	Q_ASSERT(m_function);
 	return m_function->derivative(p);
 }
 
-const QVector<QPointF>& function::points() const
+const QVector<QPointF>& Function::points() const
 {
 	Q_ASSERT(m_function);
 	Q_ASSERT(m_function->points.size()>1);
 	return m_function->points;
 }
 
-QPair< QPointF, QString > function::calc(const QPointF & dp)
+QPair< QPointF, QString > Function::calc(const QPointF & dp)
 {
 	Q_ASSERT(m_function);
 	return m_function->calc(dp);
 }
 
-bool function::isCorrect() const
+bool Function::isCorrect() const
 {
 	return m_function && m_err.isEmpty() && m_function->isCorrect();
 }
 
-QStringList function::errors() const
+QStringList Function::errors() const
 {
 	QStringList err(m_err);
 	if(m_function) {
@@ -165,22 +165,22 @@ QStringList function::errors() const
 	return err;
 }
 
-const Analitza::Expression& function::expression() const
+const Analitza::Expression& Function::expression() const
 {
 	return m_expression;
 }
 
-QList<int> function::jumps() const
+QList<int> Function::jumps() const
 {
 	return m_function->m_jumps;
 }
 
-bool function::allDisconnected() const
+bool Function::allDisconnected() const
 {
     return m_function->allDisconnected();
 }
 
-QString function::icon() const
+QString Function::icon() const
 {
 	return m_function->iconName();
 }

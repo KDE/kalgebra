@@ -71,12 +71,12 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 
 Graph2D::~Graph2D() {}
 
-void Graph2D::drawAxes(QPainter *f, function::Axe a)
+void Graph2D::drawAxes(QPainter *f, Function::Axe a)
 {
 	f->setRenderHint(QPainter::Antialiasing, false);
 	
 	switch(a) {
-		case function::Polar:
+		case Function::Polar:
 			drawPolarAxes(f);
 			break;
 		default:
@@ -206,7 +206,7 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 //	finestra.initFrom(this);
 	finestra.setPen(pfunc);
 	
-	function::Axe t=function::Cartesian;
+	Function::Axe t=Function::Cartesian;
 	if(m_model->hasSelection())
 		t=m_model->currentFunction().axeType();
 	drawAxes(&finestra, t);

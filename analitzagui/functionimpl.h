@@ -41,7 +41,7 @@ struct FunctionImpl
 	static bool isSimilar(double a, double b, double diff=0.0001);
 	
 	//To reimplement
-	virtual function::Axe axeType() const { return function::Cartesian; }
+	virtual Function::Axe axeType() const { return Function::Cartesian; }
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 	virtual void updatePoints(const QRect& viewport)=0;
 	virtual FunctionImpl* copy()=0;

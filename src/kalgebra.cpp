@@ -387,7 +387,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
+	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
 	b_funcsModel->addFunction(f);
 	
 	m_tabs->setCurrentIndex(1);
@@ -395,7 +395,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 
 void KAlgebra::new_func()
 {
-	function f=b_funced->createFunction();
+	Function f=b_funced->createFunction();
 	
 	if(b_funced->editing()) {
 		b_funcsModel->editFunction(f.name(), f);

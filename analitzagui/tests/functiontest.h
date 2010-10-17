@@ -24,7 +24,7 @@
 /**
 	@author Aleix Pol
 */
-class function;
+class Function;
 namespace Analitza { class Variables; }
 
 class FunctionTest : public QObject

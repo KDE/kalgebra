@@ -82,16 +82,16 @@ void FunctionTest::testCopy()
 	QFETCH(QString, input);
 	Expression exp(input, false);
 	
-	function f("hola", exp, m_vars, QPen(Qt::red), 0,0);
+	Function f("hola", exp, m_vars, QPen(Qt::red), 0,0);
 	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
 	QVERIFY(f.isCorrect());
 	f.setResolution(resolution);
 	if(!f.isCorrect()) qDebug() << "error:" << f.errors();
 	QVERIFY(f.isCorrect());
-	function f2(f);
+	Function f2(f);
 	if(!f2.isCorrect()) qDebug()<< "error" << f2.errors();
 	QVERIFY(f2.isCorrect());
-	function f3;
+	Function f3;
 	f3=f2;
 	QVERIFY(f3.isCorrect());
 	f3.calc(QPointF(1,1));
@@ -147,7 +147,7 @@ void FunctionTest::testCorrect_data()
 void FunctionTest::testCorrect()
 {
 	QFETCH(QString, input);
-	function f3("hola", Expression(input, false), m_vars, QPen(Qt::red), 0,0);
+	Function f3("hola", Expression(input, false), m_vars, QPen(Qt::red), 0,0);
 	
 	if(f3.isCorrect()) {
 		f3.setResolution(resolution);
@@ -179,7 +179,7 @@ void FunctionTest::testJumps()
 	QFETCH(QString, input);
 	QFETCH(int, jumps);
 	
-	function f3("hola", Expression(input, false), m_vars, QPen(Qt::red), 0,0);
+	Function f3("hola", Expression(input, false), m_vars, QPen(Qt::red), 0,0);
 	QVERIFY(f3.isCorrect());
 	
 	f3.setResolution(resolution);

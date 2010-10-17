@@ -36,7 +36,7 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 	if(!index.isValid() || index.row()>=funclist.count())
 		return QVariant();
 	int var=index.row();
-	const function &f=funclist[var];
+	const Function &f=funclist[var];
 	
 	switch(role) {
 		case Qt::DisplayRole:
@@ -101,12 +101,12 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 }
 
 //TODO: really need to return that?
-bool FunctionsModel::addFunction(const function& func)
+bool FunctionsModel::addFunction(const Function& func)
 {
 	Q_ASSERT(func.isCorrect());
 	bool exists=false;
 	
-	for (QList<function>::iterator it = funclist.begin(); !exists && it!=funclist.end(); ++it)
+	for (QList<Function>::iterator it = funclist.begin(); !exists && it!=funclist.end(); ++it)
 		exists = (it->name() == func.name());
 	
 	if(!exists) {
@@ -133,7 +133,7 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	if(m_selectedRow>=row)
 		m_selectedRow-=count;
 	
-	QList<function>::iterator it=funclist.begin()+row;
+	QList<Function>::iterator it=funclist.begin()+row;
 	for(int i=count-1; i>=0; i--) {
 		QString name=it->name();
 		it=funclist.erase(it);
@@ -164,7 +164,7 @@ bool FunctionsModel::setSelected(const QString& exp)
 	int i=0;
 	int previous=m_selectedRow;
 	bool found=false;
-	foreach(const function& f, funclist) {
+	foreach(const Function& f, funclist) {
 		if(f.name() == exp) {
 			m_selectedRow=i;
 			found=true;
@@ -195,7 +195,7 @@ void FunctionsModel::clear()
 
 bool FunctionsModel::setShown(const QString& f, bool shown)
 {
-	for (QList<function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
+	for (QList<Function>::iterator it = funclist.begin(); it != funclist.end(); ++it ){
 		if(it->name() == f) {
 			it->setShown(shown);
 			return true;
@@ -205,13 +205,13 @@ bool FunctionsModel::setShown(const QString& f, bool shown)
 }
 
 //TODO remove me
-function* FunctionsModel::editFunction(int num)
+Function* FunctionsModel::editFunction(int num)
 {
 	Q_ASSERT(num<funclist.count());
 	return &funclist[num];
 }
 
-void FunctionsModel::editFunction(int num, const function& func)
+void FunctionsModel::editFunction(int num, const Function& func)
 {
 	Q_ASSERT(num<funclist.count());
 	funclist[num]=func;
@@ -224,12 +224,12 @@ void FunctionsModel::editFunction(int num, const function& func)
 // 	this->repaint(); emit update
 }
 
-bool FunctionsModel::editFunction(const QString& toChange, const function& func)
+bool FunctionsModel::editFunction(const QString& toChange, const Function& func)
 {
 	bool exist=false;
 	
 	int i=0;
-	for (QList<function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it, ++i ) {
+	for (QList<Function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it, ++i ) {
 		if(it->name() == toChange) {
 			exist=true;
 			*it = func;
@@ -263,13 +263,13 @@ void FunctionsModel::updatePoints(int i, const QRect & viewport)
 	funclist[i].update_points(viewport);
 }
 
-const function & FunctionsModel::currentFunction() const
+const Function & FunctionsModel::currentFunction() const
 {
 	Q_ASSERT(hasSelection());
 	return funclist[m_selectedRow];
 }
 
-function & FunctionsModel::currentFunction()
+Function & FunctionsModel::currentFunction()
 {
 	Q_ASSERT(hasSelection());
 	return funclist[m_selectedRow];
@@ -279,7 +279,7 @@ QLineF FunctionsModel::slope(const QPointF & dp) const
 {
 	QLineF ret;
 	if(hasSelection()) {
-		const function & f = currentFunction();
+		const Function & f = currentFunction();
 		if(f.isShown()) {
 			ret = f.derivative(dp);
 		}
@@ -293,7 +293,7 @@ QPair<QPointF, QString> FunctionsModel::calcImage(const QPointF & ndp)
 	ret.first=ndp;
 	
 	if(hasSelection()){
-		function & f = currentFunction();
+		Function & f = currentFunction();
 		if(f.isShown()) {
 			ret = f.calc(ndp);
 		}
@@ -318,7 +318,7 @@ void FunctionsModel::setResolution(uint res)
 {
 	m_resolution=res;
 	if(!funclist.isEmpty()) {
-		for (QList<function>::iterator it=funclist.begin(); it!=funclist.end(); ++it)
+		for (QList<Function>::iterator it=funclist.begin(); it!=funclist.end(); ++it)
 			it->setResolution(res);
 		QModelIndex idx=index(0, 0), idxEnd=index(rowCount()-1, 0);
 		emit dataChanged(idx, idxEnd);

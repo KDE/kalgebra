@@ -29,7 +29,7 @@
 
 #include "analitzaguiexport.h"
 
-class function;
+class Function;
 class Graph2D;
 class FunctionsModel;
 class ExpressionEdit;
@@ -57,7 +57,7 @@ public:
 	/** Retrieves the resulting expression text. */
 	Analitza::Expression expression() const;
 	
-	function createFunction() const;
+	Function createFunction() const;
 	
 	/** Sets an expression text to the ExpressionEdit widget. */
 	void setFunction(const QString &newText);
