@@ -654,8 +654,10 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 
 void KAlgebra::add3D(const Analitza::Expression& exp)
 {
+#ifdef HAVE_OPENGL
 	m_graph3d->setFunc(exp);
 	m_tabs->setCurrentIndex(2);
+#endif
 }
 
 void KAlgebra::dictionaryFilterChanged(const QString&)
