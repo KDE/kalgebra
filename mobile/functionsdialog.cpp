@@ -58,6 +58,7 @@ FunctionsDialog::FunctionsDialog(FunctionsModel* model, QWidget* parent)
 
 void FunctionsDialog::addFunction()
 {
+	m_edit->setName(m_model->freeId());
 	m_editDialog->show();
 }
 
