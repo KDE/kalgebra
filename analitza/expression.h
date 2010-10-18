@@ -180,6 +180,9 @@ class ANALITZA_EXPORT Expression
 		/** In case it was a vector or list, it returns a list of each expression on the vector. */
 		QList<Expression> toExpressionList() const;
 		
+		/** renames the @p depth -th variable into @p newName */
+		void renameArgument(int depth, const QString& newName);
+		
 		/**
 		 *	Converts a @p tag to an object type.
 		 */

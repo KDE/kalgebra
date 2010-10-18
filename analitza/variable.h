@@ -57,6 +57,8 @@ class ANALITZA_EXPORT Ci : public Object
 		void setBVarDepth(int depth) { m_depth = depth; }
 		int depth() const { return m_depth; }
 		
+		void setName(const QString& newName) { m_name = newName; }
+		
 	private:
 		QString m_name;
 		bool m_function;

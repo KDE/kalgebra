@@ -685,6 +685,48 @@ Expression Expression::constructList(const QList< Expression >& exps)
 	return Expression(l);
 }
 
+#define CHECK_TYPE(type)\
+		type* a = (type *) o;\
+		\
+		type::iterator it=a->begin(), itEnd=a->end();\
+		for(; it!=itEnd; ++it) {\
+			renameTree(*it, depth, newName);\
+		}\
+
+static void renameTree(Object* o, int depth, const QString& newName)
+{
+	if(!o)
+		return;
+	
+	switch(o->type()) {
+		case Object::variable: {
+			Ci* var = (Ci*) o;
+			if(var->depth()==depth) 
+				var->setName(newName);
+		}	break;
+		case Object::apply: {
+			CHECK_TYPE(Apply);
+			renameTree(a->ulimit(), depth, newName);
+			renameTree(a->dlimit(), depth, newName);
+			renameTree(a->domain(), depth, newName);
+		}	break;
+		case Object::container: { CHECK_TYPE(Container); } break;
+		case Object::list: { CHECK_TYPE(List); } break;
+		case Object::vector: { CHECK_TYPE(Vector); } break;
+		
+		case Object::none:
+		case Object::value:
+		case Object::oper:
+			break;
+	}
+}
+
+void Expression::renameArgument(int depth, const QString& newName)
+{
+	renameTree(d->m_tree, depth, newName);
+	computeDepth(d->m_tree);
+}
+
 static void print_dom(const QDomNode& in, int ind)
 {
 	QString a;
