@@ -5,6 +5,7 @@ ServiceTypes=KAlgebra/Script
 
 Name=Console
 Name[es]=Consola
+Name[et]=Konsool
 Name[pt]=Consola
 Name[pt_BR]=Console
 Name[sv]=Terminal
@@ -12,6 +13,7 @@ Name[uk]=Консоль
 Name[x-test]=xxConsolexx
 Comment=Provides a console to use KAlgebra as a calculator
 Comment[es]=Proporciona una consola para usar KAlgebra como calculadora
+Comment[et]=Konsool, mida KAlgebra saab kasutada arvutamiseks
 Comment[pt]=Oferece uma consola para usar o KAlgebra como uma calculadora
 Comment[pt_BR]=Fornece um console para usar o KAlgebra como uma calculadora
 Comment[sv]=Tillhandahåller en terminal för att använda Kalgebra som miniräknare
