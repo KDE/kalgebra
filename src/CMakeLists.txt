@@ -34,5 +34,5 @@ if(OPENGL_FOUND)
 endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install(PROGRAMS kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install(FILES kalgebra.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax )
