@@ -11,6 +11,7 @@ Name[pt_BR]=Console
 Name[sv]=Terminal
 Name[uk]=Консоль
 Name[x-test]=xxConsolexx
+Name[zh_TW]=主控台
 Comment=Provides a console to use KAlgebra as a calculator
 Comment[es]=Proporciona una consola para usar KAlgebra como calculadora
 Comment[et]=Konsool, mida KAlgebra saab kasutada arvutamiseks
@@ -19,6 +20,7 @@ Comment[pt_BR]=Fornece um console para usar o KAlgebra como uma calculadora
 Comment[sv]=Tillhandahåller en terminal för att använda Kalgebra som miniräknare
 Comment[uk]=Забезпечує роботу консолі-калькулятора на основі KAlgebra
 Comment[x-test]=xxProvides a console to use KAlgebra as a calculatorxx
+Comment[zh_TW]=提供主控台以使用 KAlgebra 做為計算機
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org
