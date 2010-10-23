@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=KAlgebra
+Name[ast]=KAlgebra
 Name[bg]=KAlgebra
 Name[ca]=KAlgebra
 Name[ca@valencia]=KAlgebra
@@ -51,6 +52,7 @@ Name[zh_CN]=KAlgebra
 Name[zh_TW]=KAlgebra
 Icon=kalgebra
 Comment=A Calculator
+Comment[ast]=Una calculadora
 Comment[ca]=Una calculadora
 Comment[ca@valencia]=Una calculadora
 Comment[cs]=Kalkulačka
