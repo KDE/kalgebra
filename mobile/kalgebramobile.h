@@ -47,7 +47,6 @@ class KAlgebraMobile : public QMainWindow
 	private:
 		void findScripts();
 		
-		QVector<QPointer<QWidget> > m_pluginUI;
 		QScriptEngine* m_engine;
 		
 		AnalitzaWrapper* m_wrapper;

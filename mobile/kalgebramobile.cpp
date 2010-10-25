@@ -99,7 +99,6 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 
 void KAlgebraMobile::findScripts()
 {
-	m_pluginUI.resize(m_pluginsModel->rowCount());
 	displayPlugin(0);
 }
 
@@ -141,26 +140,22 @@ void KAlgebraMobile::selectPlugin()
 
 void KAlgebraMobile::displayPlugin(int plugin)
 {
-	Q_ASSERT(plugin < m_pluginUI.size());
-	
-	if(!m_pluginUI[plugin]) {
-		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
-		QFile scriptFile(scriptFileName);
-		scriptFile.open(QIODevice::ReadOnly);
-		m_engine->evaluate(scriptFile.readAll(), scriptFileName);
-		scriptFile.close();
+	qDebug() << "loading... " << plugin;
+	QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
+	QFile scriptFile(scriptFileName);
+	scriptFile.open(QIODevice::ReadOnly);
+	m_engine->evaluate(scriptFile.readAll(), scriptFileName);
+	scriptFile.close();
 
-		QScriptValue ctor = m_engine->evaluate("configure");
-		QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
-		QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
-		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi << analitza);
-		
-		QWidget* ui = qobject_cast<QWidget*>(calc.toQObject());
-		Q_ASSERT(ui);
-		m_pluginUI[plugin] = ui;
-	}
+	QScriptValue ctor = m_engine->evaluate("configure");
+	QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
+	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
+	QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi << analitza);
 	
-	setCentralWidget(m_pluginUI[plugin]);
+	QWidget* ui = qobject_cast<QWidget*>(calc.toQObject());
+	Q_ASSERT(ui);
+	
+	setCentralWidget(ui);
 }
 
 void KAlgebraMobile::handleException(const QScriptValue& exception)
