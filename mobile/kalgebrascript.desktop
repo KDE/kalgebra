@@ -14,4 +14,5 @@ Name[uk]=Скрипт KAlgebra
 Name[x-test]=xxKAlgebra Scriptxx
 Name[zh_TW]=KAlgebra 文稿
 
-
+[PropertyDef::X-KAlgebra-Priority]
+Type=int

@@ -45,12 +45,13 @@
 class PluginsModel : public QStandardItemModel
 {
 	public:
-		enum Roles { PathRole = Qt::UserRole+1 };
+		enum Roles { PathRole = Qt::UserRole+1, PriorityRole };
 		
 		explicit PluginsModel(QObject* parent = 0)
 			:QStandardItemModel(parent)
 		{
 			m_plugins = KPluginInfo::fromServices( KServiceTypeTrader::self()->query( "KAlgebra/Script" ) );
+			setSortRole(PriorityRole);
 			
 			foreach(const KPluginInfo& info, m_plugins) {
 // 				const KPluginInfo& info;
@@ -61,11 +62,15 @@ class PluginsModel : public QStandardItemModel
 				
 				Q_ASSERT(!scriptPath.isEmpty());
 				
+				QVariant priority = info.property("X-KAlgebra-Priority");
+				if(!priority.isValid())
+					priority = 1000;
 				item->setData(scriptPath, PathRole);
+				item->setData(priority, PriorityRole);
 				
 				appendRow(item);
-				
 			}
+			sort(0);
 		}
 		
 	private:
@@ -120,6 +125,7 @@ void KAlgebraMobile::selectPlugin()
 	combo->setFrameStyle(QFrame::NoFrame);
 	combo->setBackgroundRole(QPalette::NoRole);
 	combo->setEditTriggers(0);
+	connect(combo, SIGNAL(clicked(QModelIndex)), &d, SLOT(accept()));
 	d.layout()->addWidget(combo);
 	
 	QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &d);
