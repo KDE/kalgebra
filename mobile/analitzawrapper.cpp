@@ -57,6 +57,8 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	if(!m_wrapped->isCorrect()) {
 		m_engine->currentContext()->throwError(i18n("Error: %1", m_wrapped->errors().join(", ")));
 		return QVariant();
+	} else if(m_varsModel) {
+		m_varsModel->updateInformation();
 	}
 	return expressionToVariant(res);
 }
