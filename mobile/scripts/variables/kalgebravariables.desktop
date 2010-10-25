@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=code-variable
+Type=Service
+ServiceTypes=KAlgebra/Script
+
+Name=Variables
+Comment=Provides an enumeration of all defined variables
+
+X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
+X-KDE-PluginInfo-Email=aleixpol@kde.org
+X-KDE-PluginInfo-Name=variables/variables.js
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL
