@@ -46,6 +46,7 @@ KAlgebraPlasmoid::KAlgebraPlasmoid(QObject *parent, const QVariantList &args)
 {
 	KGlobal::locale()->insertCatalog("kalgebra");
 	setAspectRatioMode(IgnoreAspectRatio);
+	setAssociatedApplication("kalgebra");
 }
 
 KAlgebraPlasmoid::~KAlgebraPlasmoid() {}
