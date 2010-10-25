@@ -78,7 +78,7 @@ class PluginsModel : public QStandardItemModel
 };
 
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
-	: QMainWindow(parent, flags), m_model(0)
+	: QMainWindow(parent, flags), m_functionsModel(0)
 {
 	m_engine = new QScriptEngine(this);
 	connect(m_engine, SIGNAL(signalHandlerException(QScriptValue)), SLOT(handleException(QScriptValue)));
@@ -170,8 +170,13 @@ void KAlgebraMobile::handleException(const QScriptValue& exception)
 
 FunctionsModel* KAlgebraMobile::functionsModel()
 {
-	if(!m_model)
-		m_model = new FunctionsModel(this);
+	if(!m_functionsModel)
+		m_functionsModel = new FunctionsModel(this);
 	
-	return m_model;
+	return m_functionsModel;
+}
+
+VariablesModel* KAlgebraMobile::variablesModel()
+{
+	return m_wrapper->variablesModel();
 }

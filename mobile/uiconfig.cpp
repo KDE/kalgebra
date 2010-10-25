@@ -27,6 +27,10 @@
 #include "console.h"
 #include "widgetswrappers.h"
 #include "functionsdialog.h"
+#include <analitzagui/variablesmodel.h>
+#include <qscriptengine.h>
+
+Q_DECLARE_METATYPE(QAbstractItemModel*);
 
 #define WIDGET_CREATOR(klassname, args...)\
 QWidget* UiConfig::new##klassname(const QString& name)\
@@ -42,8 +46,14 @@ WIDGET_CREATOR(VerticalLayout)
 WIDGET_CREATOR(ListWidget)
 WIDGET_CREATOR(QDoubleSpinBox)
 WIDGET_CREATOR(QPushButton)
+WIDGET_CREATOR(TreeView)
 WIDGET_CREATOR(FunctionsDialog, m_app->functionsModel())
 WIDGET_CREATOR(Graph2D, m_app->functionsModel())
+
+QScriptValue UiConfig::variablesModel()
+{
+	return m_app->engine()->newQObject(m_app->variablesModel(), QScriptEngine::QtOwnership);
+}
 
 UiConfig::UiConfig(KAlgebraMobile* a, QObject* parent)
 	: QObject(parent), m_app(a)

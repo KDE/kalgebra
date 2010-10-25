@@ -4,6 +4,7 @@
 #include <QtCore/QObject>
 #include <QVariant>
 
+class VariablesModel;
 class QScriptEngine;
 namespace Analitza {
 	class Analyzer;
@@ -25,11 +26,13 @@ class AnalitzaWrapper : public QObject
 		Q_SCRIPTABLE QVariant executeFunc(const QString& name, const QVariantList& args);
 		Q_SCRIPTABLE QString unusedVariableName() const;
 		Q_SCRIPTABLE void removeVariable(const QString& name);
-	
+		VariablesModel* variablesModel();
+		
 	private:
 		Analitza::Analyzer* m_wrapped;
 		bool m_calc;
 		QScriptEngine* m_engine;
+		VariablesModel* m_varsModel;
 };
 
 #endif // ANALITZAWRAPPER_H

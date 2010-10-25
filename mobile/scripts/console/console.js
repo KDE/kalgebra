@@ -1,18 +1,21 @@
 var ui;
+var analitza;
 
 function addOperation()
 {
 	with(ui) {
-		console.addOperation(display.text)
+		console.addItem(analitza.execute(display.text))
 		display.selectAll()
 	}
 }
 
-function configure(cfg, analitza)
+function configure(cfg, a)
 {
+	analitza=a;
+	
 	ui = cfg.newVerticalLayout();
 	ui.addWidget(cfg.newQLineEdit("display"));
-	ui.addWidget(cfg.newConsole("console"));
+	ui.addWidget(cfg.newListWidget("console"));
 	
 	ui.display.returnPressed.connect(addOperation);
 	return ui;

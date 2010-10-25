@@ -12,3 +12,13 @@ ListWidget::ListWidget(QWidget* parent)
 
 void ListWidget::addItem(const QString& item) { QListWidget::addItem(item); }
 void ListWidget::clear() { QListWidget::clear(); }
+
+////////////////////////////////////
+
+TreeView::TreeView(QWidget* parent): QTreeView(parent)
+{}
+
+void TreeView::setModel(QObject* model)
+{
+    QTreeView::setModel(qobject_cast<QAbstractItemModel*>(model));
+}

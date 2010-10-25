@@ -1,14 +1,16 @@
 #include "analitzawrapper.h"
 #include <analitza/analyzer.h>
-#include <QVariant>
 #include <analitza/value.h>
+#include <analitza/variables.h>
+#include <analitzagui/variablesmodel.h>
+
+#include <QVariant>
 #include <QScriptEngine>
 #include <KLocalizedString>
-#include <analitza/variables.h>
 
 AnalitzaWrapper::AnalitzaWrapper(QScriptEngine* engine, QObject* parent)
 	: QObject(parent)
-	, m_wrapped(new Analitza::Analyzer), m_calc(false), m_engine(engine)
+	, m_wrapped(new Analitza::Analyzer), m_calc(false), m_engine(engine), m_varsModel(0)
 {}
 
 QVariant expressionToVariant(const Analitza::Expression& res)
@@ -114,14 +116,19 @@ QString AnalitzaWrapper::unusedVariableName() const
 			candidate.chop(1);
 		
 		candidate += curr;
-		qDebug() << "aaa" << candidate << v->keys();
 	}
 	
-	qDebug() << "bbb" << candidate;
 	return candidate;
 }
 
 void AnalitzaWrapper::removeVariable(const QString& name)
 {
 	m_wrapped->variables()->remove(name);
+}
+
+VariablesModel* AnalitzaWrapper::variablesModel()
+{
+	if(!m_varsModel)
+		m_varsModel = new VariablesModel(m_wrapped->variables());
+	return m_varsModel;
 }

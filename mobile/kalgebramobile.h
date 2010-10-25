@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QPointer>
 
+class VariablesModel;
 class PluginsModel;
 class FunctionsModel;
 class QScriptValue;
@@ -36,7 +37,8 @@ class KAlgebraMobile : public QMainWindow
 		
 		void displayPlugin(int plugin);
 		FunctionsModel* functionsModel();
-		
+		VariablesModel* variablesModel();
+		QScriptEngine* engine() { return m_engine; }
 	public slots:
 		void selectPlugin();
 		void debug();
@@ -49,8 +51,9 @@ class KAlgebraMobile : public QMainWindow
 		QScriptEngine* m_engine;
 		
 		AnalitzaWrapper* m_wrapper;
-		FunctionsModel* m_model;
+		FunctionsModel* m_functionsModel;
 		PluginsModel* m_pluginsModel;
+		VariablesModel* m_variablesModel;
 };
 
 #endif // KALGEBRAMOBILE_H

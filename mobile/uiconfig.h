@@ -20,7 +20,10 @@
 #define UICONFIG_H
 
 #include <QtGui/QWidget>
+#include <QScriptValue>
 
+class QAbstractItemModel;
+class VariablesModel;
 class KAlgebraMobile;
 namespace Analitza {
 class Analyzer;
@@ -38,9 +41,12 @@ class UiConfig : public QObject
 		QWidget* newConsole(const QString& name);
 		QWidget* newListWidget(const QString& name);
 		QWidget* newQDoubleSpinBox(const QString& name);
+		QWidget* newTreeView(const QString& name);
 		QWidget* newQPushButton(const QString& name);
 		QWidget* newFunctionsDialog(const QString& name);
 		QWidget* newGraph2D(const QString& name);
+		
+		QScriptValue variablesModel();
 		
 	private:
 		KAlgebraMobile* m_app;

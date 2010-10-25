@@ -2,6 +2,7 @@
 #define WIDGETSWRAPPERS_H
 
 #include <QListWidget>
+#include <QTreeView>
 
 class VerticalLayout : public QWidget
 {
@@ -22,6 +23,14 @@ class ListWidget : public QListWidget
 	public slots:
 		void addItem(const QString& item);
 		void clear();
+};
+
+class TreeView : public QTreeView
+{
+	Q_OBJECT
+	public:
+		explicit TreeView(QWidget* parent = 0);
+		Q_SCRIPTABLE virtual void setModel(QObject* model);
 };
 
 #endif
