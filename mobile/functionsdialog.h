@@ -33,7 +33,7 @@ class FunctionsDialog : public QDialog
 {
 	Q_OBJECT
 	public:
-		explicit FunctionsDialog(FunctionsModel* model, QWidget* parent = 0);
+		explicit FunctionsDialog(FunctionsModel* model, Analitza::Variables* vars, QWidget* parent = 0);
 		
 	public slots:
 		void addFunction();

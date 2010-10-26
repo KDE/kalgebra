@@ -45,6 +45,8 @@ class ANALITZAGUI_EXPORT VariablesModel : public QAbstractTableModel
 		
 		void insertVariable(const QString& name, const Analitza::Expression& value);
 		void setEditable(bool ed) { m_editable=ed; }
+		
+		Analitza::Variables* variables() const { return m_vars; }
 	public slots:
 		/** Updates the variables information */
 		void updateInformation();

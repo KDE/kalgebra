@@ -47,7 +47,7 @@ WIDGET_CREATOR(ListWidget)
 WIDGET_CREATOR(QDoubleSpinBox)
 WIDGET_CREATOR(QPushButton)
 WIDGET_CREATOR(TreeView)
-WIDGET_CREATOR(FunctionsDialog, m_app->functionsModel())
+WIDGET_CREATOR(FunctionsDialog, m_app->functionsModel(), m_app->variablesModel()->variables())
 WIDGET_CREATOR(Graph2D, m_app->functionsModel())
 
 QScriptValue UiConfig::variablesModel()
