@@ -49,6 +49,8 @@ function::function(const QString &name, const Analitza::Expression& newFunc, Ana
 		//TODO: turn into assertion
 		if(!FunctionFactory::self()->contains(bvars))                                        
 			m_err << i18n("Function type not recognized");
+		else if(!a.isCorrect())
+			m_err << a.errors();
 		else {
 			bool correct=true;
 			ExpressionType expected=FunctionFactory::self()->type(bvars);
