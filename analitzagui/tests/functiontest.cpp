@@ -140,6 +140,7 @@ void FunctionTest::testCorrect_data()
 	QTest::newRow("wrong-dimension-q") << "q->vector{2,3}";
 	QTest::newRow("wrong-parametric") << "t->v";
 	QTest::newRow("wrong-variable") << "x->x(x)";
+	QTest::newRow("wrong-call") << "(x+1)(x+2)";
 	
 	QTest::newRow("implicit.notindomain") << "(x,y)->3-sin x*sin y";
 }
