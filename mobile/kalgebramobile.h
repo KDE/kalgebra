@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -53,6 +53,8 @@ class KAlgebraMobile : public QMainWindow
 		FunctionsModel* m_functionsModel;
 		PluginsModel* m_pluginsModel;
 		VariablesModel* m_variablesModel;
+		
+		int m_currentPlugin;
 };
 
 #endif // KALGEBRAMOBILE_H

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -78,11 +78,8 @@ class PluginsModel : public QStandardItemModel
 };
 
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
-	: QMainWindow(parent, flags), m_functionsModel(0)
+	: QMainWindow(parent, flags), m_functionsModel(0), m_currentPlugin(-1)
 {
-	m_engine = new QScriptEngine(this);
-	connect(m_engine, SIGNAL(signalHandlerException(QScriptValue)), SLOT(handleException(QScriptValue)));
-	
 	m_wrapper = new AnalitzaWrapper(m_engine, this);
 	
 	QToolBar* toolbar = addToolBar(i18n("Main Toolbar"));
@@ -94,11 +91,14 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 #endif
 	m_pluginsModel = new PluginsModel(this);
 	
+	setCentralWidget(new QWidget(this));
+	centralWidget()->setLayout(new QVBoxLayout(centralWidget()));
 	findScripts();
 }
 
 void KAlgebraMobile::findScripts()
 {
+	m_pluginUI.resize(m_pluginsModel->rowCount());
 	displayPlugin(0);
 }
 
@@ -140,22 +140,36 @@ void KAlgebraMobile::selectPlugin()
 
 void KAlgebraMobile::displayPlugin(int plugin)
 {
-	qDebug() << "loading... " << plugin;
-	QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
-	QFile scriptFile(scriptFileName);
-	scriptFile.open(QIODevice::ReadOnly);
-	m_engine->evaluate(scriptFile.readAll(), scriptFileName);
-	scriptFile.close();
+	Q_ASSERT(plugin < m_pluginUI.size());
+	
+	if(!m_pluginUI[plugin]) {
+		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
+		QFile scriptFile(scriptFileName);
+		scriptFile.open(QIODevice::ReadOnly);
+		m_engine->evaluate(scriptFile.readAll(), scriptFileName);
+		scriptFile.close();
 
-	QScriptValue ctor = m_engine->evaluate("configure");
-	QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
-	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
-	QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi << analitza);
+		QScriptValue ctor = m_engine->evaluate("configure");
+		QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
+		QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
+		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi << analitza);
+		
+		QWidget* ui = qobject_cast<QWidget*>(calc.toQObject());
+		ui->setParent(this);
+		Q_ASSERT(ui);
+		m_pluginUI[plugin] = ui;
+	}
 	
-	QWidget* ui = qobject_cast<QWidget*>(calc.toQObject());
-	Q_ASSERT(ui);
+	QLayout* layout = centralWidget()->layout();
+	while(!layout->isEmpty()) {
+		QLayoutItem* item = layout->takeAt(0);;
+		item->widget()->hide();
+		delete item;
+	}
 	
-	setCentralWidget(ui);
+	layout->addWidget(m_pluginUI[plugin]);
+	m_pluginUI[plugin]->show();
+	m_currentPlugin=plugin;
 }
 
 void KAlgebraMobile::handleException(const QScriptValue& exception)
