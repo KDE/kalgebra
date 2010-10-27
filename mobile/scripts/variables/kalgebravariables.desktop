@@ -4,8 +4,14 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Variables
+Name[pt]=Variáveis
+Name[sv]=Variabler
+Name[uk]=Змінні
 Name[x-test]=xxVariablesxx
 Comment=Provides an enumeration of all defined variables
+Comment[pt]=Fornece uma enumeração de todas as variáveis definidas
+Comment[sv]=Tillhandahåller en uppräkning av alla variabler
+Comment[uk]=Показує перелік всіх визначених змінних
 Comment[x-test]=xxProvides an enumeration of all defined variablesxx
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
