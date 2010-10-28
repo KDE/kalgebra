@@ -1,4 +1,4 @@
-configure.prototype.execute = function()
+KAlgebraExtension.prototype.execute = function()
 {
 	var a=Analitza;
 	with(this.ui) {
@@ -18,7 +18,7 @@ configure.prototype.execute = function()
 	}
 }
 
-function configure(cfg)
+function KAlgebraExtension(cfg)
 {
 	this.ui = cfg.newVerticalLayout();
 	this.ui.addWidget(cfg.newQLineEdit("display"));

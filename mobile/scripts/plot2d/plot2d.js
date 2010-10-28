@@ -1,9 +1,9 @@
-configure.prototype.edit = function()
+KAlgebraExtension.prototype.edit = function()
 {
 	this.dialog.show()
 }
 
-function configure(cfg)
+function KAlgebraExtension(cfg)
 {
 	this.ui = cfg.newVerticalLayout();
 	this.dialog = cfg.newFunctionsDialog("dialog");

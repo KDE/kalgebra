@@ -157,7 +157,7 @@ void KAlgebraMobile::displayPlugin(int plugin)
 		m_engine->evaluate(scriptFile.readAll(), scriptFileName);
 		scriptFile.close();
 
-		QScriptValue ctor = m_engine->evaluate("configure");
+		QScriptValue ctor = m_engine->evaluate("KAlgebraExtension");
 		QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
 		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi);
 		if(m_engine->hasUncaughtException())
