@@ -30,7 +30,9 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QDialogButtonBox>
+#include <QListView>
 
+#include <analitzagui/variablesmodel.h>
 #include <analitzagui/functionsmodel.h>
 #include "analitzawrapper.h"
 #include "uiconfig.h"
@@ -40,7 +42,6 @@
 #include <KStandardDirs>
 
 #define DEBUG
-#include <QListView>
 
 class PluginsModel : public QStandardItemModel
 {
@@ -93,15 +94,18 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	toolbar->addAction(KIcon("debug-run"), i18n("Debug"), this, SLOT(debug()));
 #endif
 	m_pluginsModel = new PluginsModel(this);
+	m_uiconfig = new UiConfig(this);
+	
+	QScriptValue global = m_engine->globalObject();
+	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
+	QScriptValue varsmodel= m_engine->newQObject(m_wrapper->variablesModel(), QScriptEngine::QtOwnership);
+	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
+	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
+	m_engine->setGlobalObject(global);
 	
 	setCentralWidget(new QWidget(this));
 	centralWidget()->setLayout(new QVBoxLayout(centralWidget()));
 	findScripts();
-	
-	QScriptValue global = m_engine->globalObject();
-	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
-	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
-	m_engine->setGlobalObject(global);
 }
 
 void KAlgebraMobile::findScripts()
@@ -158,7 +162,7 @@ void KAlgebraMobile::displayPlugin(int plugin)
 		scriptFile.close();
 
 		QScriptValue ctor = m_engine->evaluate("KAlgebraExtension");
-		QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
+		QScriptValue scriptUi = m_engine->newQObject(m_uiconfig, QScriptEngine::ScriptOwnership);
 		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi);
 		if(m_engine->hasUncaughtException())
 			qDebug() << m_engine->uncaughtException().toString();

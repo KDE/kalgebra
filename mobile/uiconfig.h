@@ -46,8 +46,6 @@ class UiConfig : public QObject
 		QWidget* newFunctionsDialog(const QString& name);
 		QWidget* newGraph2D(const QString& name);
 		
-		QScriptValue variablesModel();
-		
 	private:
 		KAlgebraMobile* m_app;
 };

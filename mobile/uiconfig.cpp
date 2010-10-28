@@ -50,11 +50,6 @@ WIDGET_CREATOR(TreeView)
 WIDGET_CREATOR(FunctionsDialog, m_app->functionsModel(), m_app->variablesModel()->variables())
 WIDGET_CREATOR(Graph2D, m_app->functionsModel())
 
-QScriptValue UiConfig::variablesModel()
-{
-	return m_app->engine()->newQObject(m_app->variablesModel(), QScriptEngine::QtOwnership);
-}
-
 UiConfig::UiConfig(KAlgebraMobile* a, QObject* parent)
 	: QObject(parent), m_app(a)
 {}

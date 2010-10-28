@@ -28,6 +28,7 @@ class FunctionsModel;
 class QScriptValue;
 class AnalitzaWrapper;
 class QScriptEngine;
+class UiConfig;
 
 class KAlgebraMobile : public QMainWindow
 {
@@ -53,7 +54,7 @@ class KAlgebraMobile : public QMainWindow
 		AnalitzaWrapper* m_wrapper;
 		FunctionsModel* m_functionsModel;
 		PluginsModel* m_pluginsModel;
-		VariablesModel* m_variablesModel;
+		UiConfig* m_uiconfig;
 };
 
 #endif // KALGEBRAMOBILE_H
