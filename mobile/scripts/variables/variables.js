@@ -1,10 +1,7 @@
-var ui;
-
-function configure(cfg, analitza)
+function configure(cfg)
 {
-	ui = cfg.newTreeView("view");
-	ui.rootIsDecorated = false;
-	ui.setModel(cfg.variablesModel());
-	return ui;
+	this.ui = cfg.newTreeView("view");
+	this.ui.rootIsDecorated = false;
+	this.ui.setModel(cfg.variablesModel());
 }
 

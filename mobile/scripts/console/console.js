@@ -1,23 +1,16 @@
-var ui;
-var analitza;
-
-function addOperation()
+configure.prototype.addOperation = function()
 {
-	with(ui) {
-		console.addItem(analitza.execute(display.text))
+	with(this.ui) {
+		console.addItem(Analitza.execute(display.text))
 		display.selectAll()
 	}
 }
 
-function configure(cfg, a)
+function configure(cfg)
 {
-	analitza=a;
+	this.ui = cfg.newVerticalLayout();
+	this.ui.addWidget(cfg.newQLineEdit("display"));
+	this.ui.addWidget(cfg.newListWidget("console"));
 	
-	ui = cfg.newVerticalLayout();
-	ui.addWidget(cfg.newQLineEdit("display"));
-	ui.addWidget(cfg.newListWidget("console"));
-	
-	ui.display.returnPressed.connect(addOperation);
-	return ui;
+	this.ui.display.returnPressed.connect(this, this.addOperation);
 }
-

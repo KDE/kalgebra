@@ -48,13 +48,12 @@ class KAlgebraMobile : public QMainWindow
 		void findScripts();
 		
 		QScriptEngine* m_engine;
+		QVector<QWidget*> m_pluginUI;
 		
 		AnalitzaWrapper* m_wrapper;
 		FunctionsModel* m_functionsModel;
 		PluginsModel* m_pluginsModel;
 		VariablesModel* m_variablesModel;
-		
-		int m_currentPlugin;
 };
 
 #endif // KALGEBRAMOBILE_H

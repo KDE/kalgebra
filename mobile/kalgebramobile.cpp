@@ -78,8 +78,11 @@ class PluginsModel : public QStandardItemModel
 };
 
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
-	: QMainWindow(parent, flags), m_functionsModel(0), m_currentPlugin(-1)
+	: QMainWindow(parent, flags), m_functionsModel(0)
 {
+	m_engine = new QScriptEngine(this);
+	connect(m_engine, SIGNAL(signalHandlerException(QScriptValue)), SLOT(handleException(QScriptValue)));
+	
 	m_wrapper = new AnalitzaWrapper(m_engine, this);
 	
 	QToolBar* toolbar = addToolBar(i18n("Main Toolbar"));
@@ -94,6 +97,11 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	setCentralWidget(new QWidget(this));
 	centralWidget()->setLayout(new QVBoxLayout(centralWidget()));
 	findScripts();
+	
+	QScriptValue global = m_engine->globalObject();
+	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
+	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
+	m_engine->setGlobalObject(global);
 }
 
 void KAlgebraMobile::findScripts()
@@ -151,12 +159,13 @@ void KAlgebraMobile::displayPlugin(int plugin)
 
 		QScriptValue ctor = m_engine->evaluate("configure");
 		QScriptValue scriptUi = m_engine->newQObject(new UiConfig(this), QScriptEngine::ScriptOwnership);
-		QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
-		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi << analitza);
+		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi);
+		if(m_engine->hasUncaughtException())
+			qDebug() << m_engine->uncaughtException().toString();
 		
-		QWidget* ui = qobject_cast<QWidget*>(calc.toQObject());
-		ui->setParent(this);
+		QWidget* ui = qobject_cast<QWidget*>(calc.property("ui").toQObject());
 		Q_ASSERT(ui);
+		ui->setParent(this);
 		m_pluginUI[plugin] = ui;
 	}
 	
@@ -169,7 +178,6 @@ void KAlgebraMobile::displayPlugin(int plugin)
 	
 	layout->addWidget(m_pluginUI[plugin]);
 	m_pluginUI[plugin]->show();
-	m_currentPlugin=plugin;
 }
 
 void KAlgebraMobile::handleException(const QScriptValue& exception)

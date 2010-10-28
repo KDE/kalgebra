@@ -1,23 +1,17 @@
-var ui;
-var dialog;
-var a;
-
-function edit()
+configure.prototype.edit = function()
 {
-	dialog.show()
+	this.dialog.show()
 }
 
-function configure(cfg, analitza)
+function configure(cfg)
 {
-	a=analitza;
-	ui = cfg.newVerticalLayout();
-	dialog = cfg.newFunctionsDialog("dialog");
+	this.ui = cfg.newVerticalLayout();
+	this.dialog = cfg.newFunctionsDialog("dialog");
 	
-	ui.addWidget(cfg.newGraph2D("graph"));
-	ui.addWidget(cfg.newQPushButton("edit"));
-	ui.edit.text = "Edit"
+	this.ui.addWidget(cfg.newGraph2D("graph"));
+	this.ui.addWidget(cfg.newQPushButton("edit"));
+	this.ui.edit.text = "Edit"
 	
-	ui.edit.clicked.connect(edit);
-	return ui;
+	this.ui.edit.clicked.connect(this, this.edit);
 }
 

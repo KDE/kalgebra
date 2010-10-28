@@ -1,9 +1,7 @@
-var ui;
-var a;
-
-function execute()
+configure.prototype.execute = function()
 {
-	with(ui) {
+	var a=Analitza;
+	with(this.ui) {
 		list.clear();
 		
 		var tmp = a.unusedVariableName();
@@ -20,17 +18,16 @@ function execute()
 	}
 }
 
-function configure(cfg, analitza)
+function configure(cfg)
 {
-	a=analitza;
-	ui = cfg.newVerticalLayout();
-	ui.addWidget(cfg.newQLineEdit("display"));
-	ui.addWidget(cfg.newQDoubleSpinBox("from")); ui.addWidget(cfg.newQDoubleSpinBox("to"));
-	ui.addWidget(cfg.newListWidget("list"));
-	ui.addWidget(cfg.newQPushButton("go"));
-	ui.go.text = "Go!"
+	this.ui = cfg.newVerticalLayout();
+	this.ui.addWidget(cfg.newQLineEdit("display"));
+	this.ui.addWidget(cfg.newQDoubleSpinBox("from"));
+	this.ui.addWidget(cfg.newQDoubleSpinBox("to"));
+	this.ui.addWidget(cfg.newListWidget("list"));
+	this.ui.addWidget(cfg.newQPushButton("go"));
+	this.ui.go.text = "Go!"
 	
-	ui.go.clicked.connect(execute);
-	return ui;
+	this.ui.go.clicked.connect(this, this.execute);
 }
 
