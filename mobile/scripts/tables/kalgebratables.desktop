@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Value Tables
+Name[en_GB]=Value Tables
 Name[es]=Tablas de valores
 Name[et]=Väärtustabelid
 Name[nl]=Waardetabellen
@@ -14,6 +15,7 @@ Name[uk]=Таблиці значень
 Name[x-test]=xxValue Tablesxx
 Name[zh_TW]=數值表
 Comment=Provides a console to use KAlgebra as a calculator
+Comment[en_GB]=Provides a console to use KAlgebra as a calculator
 Comment[es]=Proporciona una consola para usar KAlgebra como calculadora
 Comment[et]=Konsool, mida KAlgebra saab kasutada arvutamiseks
 Comment[nl]=Biedt een console om KAlgebra als rekenmachine te gebruiken

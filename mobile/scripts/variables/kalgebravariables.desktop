@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Variables
+Name[en_GB]=Variables
 Name[es]=Variables
 Name[nl]=Variabelen
 Name[pt]=Variáveis
@@ -12,6 +13,7 @@ Name[uk]=Змінні
 Name[x-test]=xxVariablesxx
 Name[zh_TW]=變數
 Comment=Provides an enumeration of all defined variables
+Comment[en_GB]=Provides an enumeration of all defined variables
 Comment[es]=Proporciona una enumeración de todas las variables definidas
 Comment[nl]=Biedt en opsomming van alle gedefinieerde variabelen
 Comment[pt]=Fornece uma enumeração de todas as variáveis definidas

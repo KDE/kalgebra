@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Graph 2D
+Name[en_GB]=Graph 2D
 Name[es]=Gráfico 2D
 Name[et]=2D graaf
 Name[nl]=2D-grafiek
@@ -14,6 +15,7 @@ Name[uk]=Двовимірний графік
 Name[x-test]=xxGraph 2Dxx
 Name[zh_TW]=平面圖形
 Comment=Draws any 2D graph you want
+Comment[en_GB]=Draws any 2D graph you want
 Comment[es]=Dibuja cualquier gráfico 2D que desee
 Comment[et]=Suvalise 2D graafi joonistamine
 Comment[nl]=Tekent elke wenselijke 2D-grafiek
