@@ -13,7 +13,7 @@ namespace Analitza {
 class AnalitzaWrapper : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(bool calculate READ isCalculate WRITE setCalculate);
+	Q_PROPERTY(bool calculate READ isCalculate WRITE setCalculate)
 	public:
 		explicit AnalitzaWrapper(QScriptEngine* engine, QObject* parent = 0);
 		
