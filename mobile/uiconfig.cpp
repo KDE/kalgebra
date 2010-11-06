@@ -30,7 +30,7 @@
 #include <analitzagui/variablesmodel.h>
 #include <qscriptengine.h>
 
-Q_DECLARE_METATYPE(QAbstractItemModel*);
+Q_DECLARE_METATYPE(QAbstractItemModel*)
 
 #define WIDGET_CREATOR(klassname, args...)\
 QWidget* UiConfig::new##klassname(const QString& name)\
