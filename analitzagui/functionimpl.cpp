@@ -20,6 +20,7 @@
 #include "analitza/variables.h"
 #include "analitza/expression.h"
 #include "functionfactory.h"
+#include <cmath>
 
 #include <KLocale>
 #include <KDebug>

@@ -21,8 +21,6 @@
 
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/QMap>
-#include <QtCore/QQueue>
 #include "abstractlexer.h"
 #include "analitzaexport.h"
 

@@ -22,7 +22,6 @@
 #include <KDebug>
 #include <QPixmap>
 #include <QFont>
-#include <cmath>
 #include <analitza/expression.h>
 #include <QIcon>
 

@@ -25,7 +25,6 @@
 #include <analitzagui/functionsmodel.h>
 #include <analitzagui/functionsview.h>
 #include <analitzagui/functionedit.h>
-#include <analitza/variables.h>
 
 FunctionsDialog::FunctionsDialog(FunctionsModel* model, Analitza::Variables* vars, QWidget* parent)
 	: QDialog(parent), m_model(model), m_vars(vars)

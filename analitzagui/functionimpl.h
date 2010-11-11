@@ -21,7 +21,6 @@
 
 #include "function.h"
 #include "analitza/analyzer.h"
-#include <cmath>
 
 namespace Analitza { class Expression; }
 

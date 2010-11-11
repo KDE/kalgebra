@@ -21,7 +21,6 @@
 #include <analitza/explexer.h>
 #include <analitza/expressionparser.h>
 
-#include <cstdio>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <QTime>
