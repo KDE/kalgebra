@@ -2,6 +2,12 @@ project(analitzagui)
 
 add_subdirectory(tests)
 
+find_path(IEEEFP_DIR ieeefp.h)
+if(IEEEFP_DIR)
+    include_directories(${IEEEFP_DIR})
+    add_definitions(-DHAVE_IEEEFP_H)
+endif(IEEEFP_DIR)
+
 set(analitzagui_SRCS
 	operatorsmodel.cpp
 	algebrahighlighter.cpp
