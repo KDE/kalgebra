@@ -38,8 +38,8 @@
 %left tEq tNeq tLt tLeq tGt tGeq
 %left tSub tAdd
 %left tMul tDiv
-%left tPow
 %left uminus_prec
+%left tPow
 
 %start Program
 

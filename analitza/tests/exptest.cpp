@@ -1,4 +1,4 @@
-/*************************************************************************************
+ /*************************************************************************************
  *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
@@ -95,6 +95,7 @@ void ExpTest::testSimple_data()
 	QTest::newRow("lambda call") << "(x->x+2)(2)" << "<math><apply><lambda><bvar><ci>x</ci></bvar><apply><plus /><ci>x</ci><cn>2</cn></apply></lambda><cn>2</cn></apply></math>";
 	QTest::newRow("union") << "union(list{1}, list {2})" << "<math><apply><union /><list><cn>1</cn></list><list><cn>2</cn></list></apply></math>";
 	QTest::newRow("list") << "list{}" << "<math><list /></math>";
+	QTest::newRow("minus order") << "-3^2" << "<math><apply><minus /><apply><power /><cn>3</cn><cn>2</cn></apply></apply></math>";
 }
 
 void ExpTest::testSimple()
