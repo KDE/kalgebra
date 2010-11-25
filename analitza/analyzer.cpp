@@ -1621,7 +1621,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	Operator o(c->firstOperator());
 	bool sign=true, first=true;
 	
-	for(Apply::const_iterator it=c->firstValue(), itEnd=c->constEnd(); it!=itEnd; ++it) {
+	for(Apply::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd(); it!=itEnd; ++it) {
 		Monomial imono = constructMonomial(o, *it, sign);
 		
 		if(o==Operator::minus && !first)
