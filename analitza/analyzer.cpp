@@ -1558,6 +1558,57 @@ Object* createMono(const Operator& o, const QPair<double, Object*>& p)
 	}
 	return toAdd;
 }
+
+QPair<double, Object*> constructMonomial(const Operator& o, Object* o2, bool& sign)
+{
+	bool ismono=false;
+	QPair<double, Object*> imono;
+	
+	if(o2->isApply()) {
+		Apply *cx = (Apply*) o2;
+		if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==2) {
+			bool valid=false;
+			int scalar, var;
+			
+			if(cx->m_params[0]->type()==Object::value) {
+				scalar=0;
+				var=1;
+				valid=true;
+			} else if(cx->m_params[1]->type()==Object::value) {
+				scalar=1;
+				var=0;
+				valid=true;
+			}
+			
+			if(valid) {
+				Cn* sc= (Cn*) cx->m_params[scalar];
+				imono.first = sc->value();
+				imono.second = cx->m_params[var];
+				
+				ismono=true;
+			}
+		} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
+			if(o==Operator::plus) {
+				imono = constructMonomial(o, *cx->firstValue(), sign);
+				
+				imono.first *= -1;
+				ismono=true;
+			} else if(o==Operator::times) {
+				imono.first = 1.;
+				imono.second = *cx->firstValue();
+				ismono=true;
+				sign = !sign;
+			}
+		}
+	}
+	
+	if(!ismono) {
+		imono.first = 1.;
+		imono.second = o2;
+	}
+	return imono;
+}
+
 }
 
 Object* Analyzer::simpPolynomials(Apply* c)
@@ -1570,52 +1621,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	Apply::const_iterator it(c->firstValue());
 	
 	for(; it!=c->constEnd(); ++it) {
-		Object *o2=*it;
-		QPair<double, Object*> imono;
-		bool ismono=false;
-		
-		if(o2->isApply()) {
-			Apply *cx = (Apply*) o2;
-			if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==2) {
-				bool valid=false;
-				int scalar, var;
-				
-				if(cx->m_params[0]->type()==Object::value) {
-					scalar=0;
-					var=1;
-					valid=true;
-				} else if(cx->m_params[1]->type()==Object::value) {
-					scalar=1;
-					var=0;
-					valid=true;
-				}
-				
-				if(valid) {
-					Cn* sc= (Cn*) cx->m_params[scalar];
-					imono.first = sc->value();
-					imono.second = cx->m_params[var];
-					
-					ismono=true;
-				}
-			} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
-				if(o==Operator::plus) {
-					//detecting -x as QPair<-1, o>
-					imono.first = -1.;
-					imono.second = *cx->firstValue();
-					ismono=true;
-				} else if(o==Operator::times) {
-					imono.first = 1.;
-					imono.second = *cx->firstValue();
-					ismono=true;
-					sign = !sign;
-				}
-			}
-		}
-		
-		if(!ismono) {
-			imono.first = 1.;
-			imono.second = o2;
-		}
+		QPair<double, Object*> imono = constructMonomial(o, *it, sign);
 		
 		if(o!=Operator::times && imono.second->isApply()) {
 			Apply *m = (Apply*) imono.second;
