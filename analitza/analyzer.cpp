@@ -1535,34 +1535,38 @@ Object* Analyzer::simpScalar(Apply * c)
 
 namespace Analitza
 {
-Object* createMono(const Operator& o, const QPair<double, Object*>& p)
+typedef QPair<double, Object*> Monomial;
+
+Object* createMono(const Operator& o, const Monomial& p)
 {
+	Operator::OperatorType mult = o.multiplicityOperator();
+	
 	Object* toAdd=0;
 	if(p.first==0.) {
 		delete p.second;
 	} else if(p.first==1.) {
 		toAdd=p.second;
-	} else if(p.first==-1. && (o==Operator::plus || o==Operator::minus)) {
+	} else if(p.first==-1. && mult==Operator::times) {
 		Apply *cint = new Apply;
 		cint->appendBranch(new Operator(Operator::minus));
 		cint->appendBranch(p.second);
 		toAdd=cint;
 	} else {
 		Apply *cint = new Apply;
-		cint->appendBranch(new Operator(o.multiplicityOperator()));
+		cint->appendBranch(new Operator(mult));
 		cint->appendBranch(p.second);
 		cint->appendBranch(new Cn(p.first));
-		if(o.multiplicityOperator()==Operator::times)
+		if(mult==Operator::times)
 			cint->m_params.swap(0,1);
 		toAdd=cint;
 	}
 	return toAdd;
 }
 
-QPair<double, Object*> constructMonomial(const Operator& o, Object* o2, bool& sign)
+Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 {
 	bool ismono=false;
-	QPair<double, Object*> imono;
+	Monomial imono;
 	
 	if(o2->isApply()) {
 		Apply *cx = (Apply*) o2;
@@ -1588,17 +1592,13 @@ QPair<double, Object*> constructMonomial(const Operator& o, Object* o2, bool& si
 				ismono=true;
 			}
 		} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
-			if(o==Operator::plus) {
-				imono = constructMonomial(o, *cx->firstValue(), sign);
+			imono = constructMonomial(o, *cx->firstValue(), sign);
+			ismono=true;
 				
-				imono.first *= -1;
-				ismono=true;
-			} else if(o==Operator::times) {
-				imono.first = 1.;
-				imono.second = *cx->firstValue();
-				ismono=true;
+			if(o==Operator::times)
 				sign = !sign;
-			}
+			else if(o==Operator::plus || o==Operator::minus)
+				imono.first *= -1;
 		}
 	}
 	
@@ -1606,6 +1606,7 @@ QPair<double, Object*> constructMonomial(const Operator& o, Object* o2, bool& si
 		imono.first = 1.;
 		imono.second = o2;
 	}
+	
 	return imono;
 }
 
@@ -1615,50 +1616,32 @@ Object* Analyzer::simpPolynomials(Apply* c)
 {
 	Q_ASSERT(c!=0 && dynamic_cast<Apply*>(c));
 	
-	QList<QPair<double, Object*> > monos;
+	QList<Monomial> monos;
 	Operator o(c->firstOperator());
 	bool sign=true, first=true;
-	Apply::const_iterator it(c->firstValue());
 	
-	for(; it!=c->constEnd(); ++it) {
-		QPair<double, Object*> imono = constructMonomial(o, *it, sign);
+	for(Apply::const_iterator it=c->firstValue(), itEnd=c->constEnd(); it!=itEnd; ++it) {
+		Monomial imono = constructMonomial(o, *it, sign);
 		
-		if(o!=Operator::times && imono.second->isApply()) {
-			Apply *m = (Apply*) imono.second;
-			if(m->firstOperator()==Operator::minus && m->isUnary()) {
-				imono.second = *m->firstValue();
-				imono.first *= -1.;
-			}
-		}
-		
-		if(o==Operator::minus && !first) {
+		if(o==Operator::minus && !first)
 			imono.first*=-1;
-		}
 		
 		bool found = false;
-		QList<QPair<double, Object*> >::iterator it1(monos.begin());
+		QList<Monomial>::iterator it1(monos.begin());
 		for(; it1!=monos.end(); ++it1) {
 			Object *o1=it1->second, *o2=imono.second;
-			if(o2->type()!=Object::oper && equalTree(o1, o2)) {
-				found = true;
+			found = equalTree(o1, o2);
+			if(found)
 				break;
-			}
 		}
 		
 // 		qDebug() << "->" << c->toString() << c->firstOperator().toString() << found;
 		if(found) {
-			bool prevPositive=it1->first>0.;
 			it1->first += imono.first;
-			bool postPositive=it1->first>0.;
 			
-// 			qDebug() << "getting near:::" << it1->first << prevPositive << postPositive << o.toString() << foundAtFirst;
 			if(it1->first==0.) {
 				delete it1->second;
 				monos.erase(it1);
-			} else if(o==Operator::minus) {
-				if(prevPositive != postPositive) {
-					sign = !sign;
-				}
 			}
 		} else {
 			imono.second = imono.second->copy();
@@ -1670,17 +1653,6 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	delete c;
 	c=0;
 	
-	//We delete the empty monomials. Should merge both loops
-	QList<QPair<double, Object*> >::iterator i=monos.begin();
-	for(; i!=monos.end(); ) {
-		//FIXME: REVIEW This loop should not be needed anymore
-		if(i->first==0.) {
-			delete i->second;
-			i=monos.erase(i);
-		} else
-			++i;
-	}
-	
 	Object *root=0;
 	if(monos.count()==1) {
 		root=createMono(o, monos.first());
@@ -1688,7 +1660,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 		c= new Apply;
 		c->appendBranch(new Operator(o));
 		
-		QList<QPair<double, Object*> >::iterator i=monos.begin();
+		QList<Monomial>::iterator i=monos.begin();
 		bool first=true;
 		for(; i!=monos.end(); ++i) {
 			if(!first && o==Operator::minus)
