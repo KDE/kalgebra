@@ -1567,14 +1567,15 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 {
 	bool ismono=false;
 	Monomial imono;
+	Operator::OperatorType mult = o.multiplicityOperator();
 	
 	if(o2->isApply()) {
 		Apply *cx = (Apply*) o2;
-		if(cx->firstOperator()==o.multiplicityOperator() && cx->m_params.count()==2) {
+		if(cx->firstOperator()==mult && cx->m_params.count()==2) {
 			bool valid=false;
 			int scalar, var;
 			
-			if(cx->m_params[0]->type()==Object::value) {
+			if(mult!=Operator::power && cx->m_params[0]->type()==Object::value) {
 				scalar=0;
 				var=1;
 				valid=true;

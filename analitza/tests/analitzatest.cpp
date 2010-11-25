@@ -484,6 +484,8 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("minus") << "x-x-x" << "-x";
 	QTest::newRow("compensation") << "-(4*x)+3*x" << "-x";
 	QTest::newRow("compensation*") << "-(x^4)*x^3" << "-x^7";
+	QTest::newRow("powers") << "3**x*5**x" << "3^x*5^x";
+// 	QTest::newRow("powerscomb") << "3**x*3**x" << "9^x";
 	QTest::newRow("no var") << "2+2" << "4";
 	QTest::newRow("simple") << "x+x" << "2*x";
 	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
