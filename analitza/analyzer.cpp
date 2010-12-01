@@ -57,18 +57,26 @@ QStringList printAll(const QVector<T*> & p)
 	return ret;
 }
 
+const int defsize = 5000;
+
 Analyzer::Analyzer()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
-{}
+{
+	m_runStack.reserve(defsize);
+}
 
 Analyzer::Analyzer(Variables* v)
 	: m_vars(v), m_varsOwned(false), m_hasdeps(true)
-{ Q_ASSERT(v); }
+{
+	m_runStack.reserve(defsize);
+	Q_ASSERT(v);
+}
 
 Analyzer::Analyzer(const Analyzer& a)
 	: m_exp(a.m_exp), m_err(a.m_err), m_varsOwned(true), m_hasdeps(a.m_hasdeps)
 {
 	m_vars = new Variables(*a.m_vars);
+	m_runStack.reserve(defsize);
 }
 
 Analyzer::~Analyzer()
@@ -1016,12 +1024,12 @@ Object* Analyzer::func(const Apply& n)
 	else
 		function = (Container*) calc(n.m_params[0]);
 	
-	QList<Ci*> vars = function->bvarCi();
+	int bvarsize = function->bvarCount();
 	
 	int top = m_runStack.size(), aux=m_runStackTop;
-	m_runStack.resize(top+vars.size());
+	m_runStack.resize(top+bvarsize);
 	
-	for(int i=0; i<vars.size(); i++) {
+	for(int i=0; i<bvarsize; i++) {
 // 		qDebug() << "cp" << n.m_params[i+1]->toString();
 		Object* val=calc(n.m_params[i+1]);
 		m_runStack[top+i] = val;
@@ -1104,7 +1112,7 @@ Object* Analyzer::simp(Object* root)
 				break;
 			case Container::lambda: {
 				int top = m_runStack.size();
-				m_runStack.resize(top+c->bvarCi().size());
+				m_runStack.resize(top+c->bvarCount());
 				
 				c->m_params.last()=simp(c->m_params.last());
 				m_runStack.resize(top);
