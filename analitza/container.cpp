@@ -118,7 +118,8 @@ int Container::bvarCount() const
 	int r=0;
 	QList<Object*>::const_iterator it, itEnd=m_params.constEnd();
 	for(it=m_params.constBegin(); it!=itEnd; ++it) {
-		if((*it)->isContainer() && static_cast<Container*>(*it)->containerType() == Container::bvar)
+		Object* o = *it;
+		if(o->isContainer() && static_cast<Container*>(o)->containerType() == Container::bvar)
 			r++;
 	}
 	
