@@ -189,6 +189,8 @@ void ExpressionTest::testUncorrection_data()
 	
 	QTest::newRow("same args") << "(x,x)->x";
 	QTest::newRow("same boundings") << "sum(x : (x,x)=1..10)";
+	
+	QTest::newRow("empty minus") << "minus()";
 }
 
 void ExpressionTest::testUncorrection()
