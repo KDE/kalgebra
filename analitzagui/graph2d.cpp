@@ -237,8 +237,8 @@ void Graph2D::drawFunctions(QPaintDevice *qpd)
 			QPointF act=toWidget(vect.at(j));
 			
 // 			qDebug() << "xxxxx" << act << ultim << isnan(act.y()) << isnan(ultim.y());
-			if(isinf(act.y()) && !isnan(act.y())) qDebug() << "toma ya" << act << ultim;
-			else if(isinf(act.y()) && isnan(act.y())) qDebug() << "joooooooooooo";
+			if(isinf(act.y()) && !isnan(act.y())) qDebug() << "trying to plot from a NaN value" << act << ultim;
+			else if(isinf(act.y()) && isnan(act.y())) qDebug() << "trying to plot to a NaN value";
 			
 			bool bothinf=(isinf(ultim.y()) && isinf(act.y())) || (isinf(ultim.x()) && isinf(act.x()));
 			if(!bothinf && !isnan(act.y()) && !isnan(ultim.y()) && nextjump!=int(j)) {
