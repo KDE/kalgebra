@@ -36,6 +36,11 @@
 #include <analitza/analyzer.h>
 #include "functionsmodel.h"
 
+#if defined(HAVE_IEEEFP_H)
+#include <ieeefp.h>
+bool isinf(double x) { return !finite(x) && x==x; }
+#endif
+
 // #define DEBUG_GRAPH
 
 QColor const Graph2D::m_axeColor(100,100,255);
