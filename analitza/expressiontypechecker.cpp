@@ -414,11 +414,19 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 		Object* ul=c->ulimit();
 		ExpressionType tt;
 		if(ul) {
+			Object* dl=c->dlimit();
 			ul->visit(this);
 			
 			tt=current; //FIXME: should remove when done
-			if(!current.isError())
-				assumptions=typeIs(c->dlimit(), ExpressionType(current));
+			if(!current.isError() && current.type()!=ExpressionType::Any)
+				assumptions=typeIs(dl, ExpressionType(current));
+			else {
+				dl->visit(this);
+				tt=current;
+				
+				if(!current.isError())
+					assumptions=typeIs(ul, ExpressionType(current));
+			}
 		} else if(c->domain()) {
 			c->domain()->visit(this);
 			
@@ -448,7 +456,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 		case Operator::sum:
 		case Operator::product:
 			(*c->firstValue())->visit(this);
-			
+			current.addAssumptions(assumptions);
 			break;
 		case Operator::diff:
 			//TODO Check inside
@@ -489,9 +497,8 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				if(c->m_params.first()->type()==Object::variable) {
 					QString name=static_cast<Ci*>(c->m_params.first())->name();
 					assumptions.insert(name, func);
-					
-					ret.addAssumptions(assumptions);
 				}
+				ret.addAssumptions(assumptions);
 				
 				current=ret;
 			} else {
@@ -636,7 +643,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 						
 						foreach(const ExpressionType& param, option.parameters()) {
 							QList<ExpressionType> types=param.type()==ExpressionType::Many ? param.alternatives() : QList<ExpressionType>() << param;
-							
 							QList<ExpressionType> options;
 							foreach(const ExpressionType& t, types) {
 								foreach(const ExpressionType& alt, alts) {
