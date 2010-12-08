@@ -40,6 +40,7 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("frec", Analitza::Expression("x->piecewise { frec(cos(x))>3? 2, ? 1}"));
 	v->modify("fact", Analitza::Expression("n->piecewise { n=1?1, ? n*fact(n-1) }"));
 	v->modify("golambda", Analitza::Expression("(func, param)->func(param)"));
+	v->modify("gonum", Analitza::Expression("func->func(1, 2)"));
 	
 	v->modify("fib", Analitza::Expression("n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
 	v->modify("fv", Analitza::Expression("vector{x->sin(x), x->cos(x)}"));
@@ -119,6 +120,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("bounded sum_down") << "n->sum(x : x=0..n)" << "num -> num";
 	
 	QTest::newRow("unknown") << "w" << "*";
+	QTest::newRow("gonum") << "gonum((x,y)->x*y)" << "num";
 }
 
 void TypeCheckTest::testConstruction()

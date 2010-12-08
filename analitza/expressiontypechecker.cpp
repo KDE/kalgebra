@@ -534,6 +534,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							continue;
 						}
 						
+						current.reduce(opt.parameters()[i]);
+// 						qDebug() << "ooooopt" << opt.parameters()[i] << current;
+						
 						starToType=computeStars(starToType, opt.parameters()[i], current);
 						
 						valid&=merge(assumptions, opt.parameters()[i].assumptions());

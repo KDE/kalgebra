@@ -208,7 +208,7 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 	} else if(m_type==Lambda && m_contained.size()==type.m_contained.size()) {
 		ret = true;
 		for(int i=0; ret && i<m_contained.size(); i++) {
-			ret&=m_contained[i].canReduceTo(type.m_contained[i]);
+			ret&=m_contained[i].canReduceTo(type.m_contained[i]) || type.m_contained[i].canReduceTo(m_contained[i]);
 		}
 	} else if(m_type==Vector && type.m_type==Vector) {
 		ret  = m_size<0 || type.m_size<0 || m_size==type.m_size;
@@ -318,3 +318,20 @@ ExpressionType ExpressionType::returnValue() const
 	return ret;
 }
 
+void ExpressionType::reduce(const Analitza::ExpressionType& type)
+{
+	if(m_type != Many)
+		return;
+	
+	QList<ExpressionType> newcontained;
+	
+	foreach(const ExpressionType& t, m_contained) {
+		if(t.canReduceTo(type))
+			newcontained.append(t);
+	}
+	
+	if(newcontained.size()==1)
+		*this = newcontained.first();
+	else
+		m_contained = newcontained;
+}

@@ -72,6 +72,9 @@ class ANALITZA_EXPORT ExpressionType
 		int increaseStars(int stars, QMap<int, int>* values=0);
 		
 		ExpressionType& simplifyStars();
+		
+		/** when it's a many type, reduce to the one(s) that can be reduced to */
+		void reduce(const ExpressionType& type);
 	private:
 		static void starsSimplification(ExpressionType& t, QMap<int, int>& reductions, int& next);
 		void printAssumptions(const ExpressionType& t, int ind=0) const;
