@@ -38,7 +38,7 @@
 
 #if defined(HAVE_IEEEFP_H)
 #include <ieeefp.h>
-bool isinf(double x) { return !finite(x) && x==x; }
+// bool isinf(double x) { return !finite(x) && x==x; }
 #endif
 
 // #define DEBUG_GRAPH

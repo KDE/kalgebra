@@ -27,11 +27,6 @@
 #include <KLocale>
 #include <cmath>
 
-#if defined(HAVE_IEEEFP_H)
-#include <ieeefp.h>
-bool isinf(double x) { return !finite(x) && x==x; }
-#endif
-
 using Analitza::ExpressionType;
 
 Function::Function()
