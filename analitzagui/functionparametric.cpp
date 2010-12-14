@@ -79,8 +79,8 @@ struct FunctionParametric : public FunctionImpl
 {
 	explicit FunctionParametric(const Expression &e, Variables* v) : FunctionImpl(e, v, 0,2*M_PI), vx(new Cn)
 	{
-		func.setStack(m_runStack);
 		m_runStack.append(vx);
+		func.setStack(m_runStack);
 		
 		if(func.isCorrect()) {
 			Expression deriv = func.derivative("t");
