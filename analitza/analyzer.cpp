@@ -303,7 +303,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				if(resolve && body && body->isContainer()) {
 					const Container *cbody = (Container*) body;
 					
-					if(cbody->m_params.size()==c->m_params.size()) {
+					if(cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
 						int bvarsSize = cbody->bvarCount();
 						int top = m_runStack.size(), aux = m_runStackTop;
 						m_runStack.resize(top+bvarsSize);
@@ -333,7 +333,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				Apply *r = c->copy();
 				
 				QSet<QString> newUnscoped(unscoped);
-				int top = m_runStack.size(), aux = m_runStackTop;
+				int top = m_runStack.size();
 				if(op.isBounded()) {
 					if(r->domain()) {
 						QScopedPointer<Object> o(r->domain());
@@ -351,9 +351,6 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					QSet<QString> bvars = c->bvarStrings().toSet();
 					newUnscoped += bvars;
 					m_runStack.resize(top + bvars.size());
-					m_runStackTop = top;
-				
-					//We leave the bvars 0'd
 				}
 				
 				Apply::iterator it=r->firstValue(), itEnd=r->end();
@@ -363,8 +360,8 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					delete o;
 				}
 				
+				qDeleteAll(m_runStack.begin()+top, m_runStack.end());
 				m_runStack.resize(top);
-				m_runStackTop = aux;
 				
 // 				ret=simp(r);
 				ret=r;
@@ -942,10 +939,11 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 					ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
 					break;
 				default:
+					Q_ASSERT(false && "Type not supported for bounding.");
 					m_err.append(i18n("Type not supported for bounding."));
 			}
 		} else
-			m_err.append(i18n("Incorrect domain."));
+			m_err.append(i18n("Incorrect domain.")); //FIXME: delete? should not be handled here
 	}
 	else
 	{
@@ -958,7 +956,7 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 			double ul=u->value();
 			double dl=d->value();
 			
-			if(dl<ul) {
+			if(dl<=ul) {
 				QVector<Cn*> rr(bvars.size());
 				
 				for(int i=0; i<bvars.size(); ++i) {
@@ -1003,7 +1001,7 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	return ret;
 }
 
-//TODO: warning memory leak on third parameter
+//TODO: warning memory leak on third parameter?
 Object* Analyzer::product(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
