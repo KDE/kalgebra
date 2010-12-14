@@ -88,6 +88,8 @@ void AnalitzaTest::testTrivialCalculate_data()
 	//comprehension
 	QTest::newRow("sum.2bvars") << "sum(x*y : (x, y)=1..3)" << 36.;
 	QTest::newRow("sum.list") << "sum(x : x@list{1,5,44})" << 50.;
+	
+	QTest::newRow("sum.sum") << "sum(sum(x : x=0..i) : i=0..10)" << 220.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
@@ -350,6 +352,14 @@ void AnalitzaTest::testCorrection_data()
 	script << "f:=o->vector { x->x+o, x->x*o }";
 	script << "vector { selector(1, f(3)), selector(1, f(4)) }";
 	QTest::newRow("lambda") << script << "vector { x->x+3, x->x+4 }";
+	
+	script.clear();
+	script << "comb:=(n, i)->factorial(n)/(factorial(i)*factorial(n-i))"
+		   << "p:=10^-2"
+		   << "pu:=n->sum(  comb(n,i)*p^(n-i)*(1-p)*sum(x:x=0..i)  :i=0..(floor((n-1)/2)))"
+		   << "pu(5)";
+	
+	QTest::newRow("bug241047") << script << "2.97495e-05";
 }
 
 //testCalculate
@@ -358,6 +368,7 @@ void AnalitzaTest::testCorrection()
 	QFETCH(QStringList, expression);
 	QFETCH(QString, result);
 	
+	Expression last;
 	Analitza::Analyzer b1;
 	foreach(const QString &exp, expression) {
 		Expression e(exp, false);
@@ -368,11 +379,11 @@ void AnalitzaTest::testCorrection()
 		
 		if(!b1.isCorrect()) qDebug() << "errors: " << b1.errors();
 		QVERIFY(b1.isCorrect());
-		b1.calculate();
+		last = b1.calculate();
 		if(!b1.isCorrect()) qDebug() << "errors:" << e.toString() << b1.errors();
 		QVERIFY(b1.isCorrect());
 	}
-	QCOMPARE(b1.calculate().toString(), result);
+	QCOMPARE(last.toString(), result);
 	
 	Analitza::Analyzer b;
 	Expression evalResult;
@@ -494,6 +505,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
 	QTest::newRow("sum") << "n->sum((i+n) * i : i=0..9)" << "n->sum((i+n)*i:i=0..9)";
+	QTest::newRow("sum.sum") << "k->sum(sum(x:x=0..i):i=0..k)" << "k->sum(sum(x:x=0..i):i=0..k)";
 	
 	QTest::newRow("piecewise1") << "piecewise { 1=2 ? 4, ? 3}" << "3";
 	QTest::newRow("piecewise2") << "piecewise { x=2 ? 4, ? 3}" << "piecewise { x=2 ? 4, ? 3 }";
