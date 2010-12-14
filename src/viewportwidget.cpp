@@ -23,8 +23,9 @@
 #include <QDoubleSpinBox>
 #include <KPushButton>
 #include <QBoxLayout>
+#include <limits>
 
-static const double LIMIT=5000.;
+static const double LIMIT=std::numeric_limits<double>::max();
 
 ViewportWidget::ViewportWidget(QWidget * parent, Qt::WFlags flags)
 	: QWidget (parent, flags)
