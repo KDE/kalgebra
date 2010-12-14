@@ -179,6 +179,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 		switch(c->containerType()) {
 			case Container::declare: {
 				Ci *var = (Ci*) c->m_params[0];
+				delete m_vars->take(var->name());
 				ret = eval(c->m_params[1], true, unscoped);
 				ret = simp(ret);
 				insertVariable(var->name(), ret);
