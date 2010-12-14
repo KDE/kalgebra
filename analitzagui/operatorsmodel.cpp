@@ -148,7 +148,7 @@ QString OperatorsModel::description(Operator o)
 			s = i18n("Division");
 			break;
 		case Operator::minus:
-			s = i18n("Subtraction");
+			s = i18n("Subtraction. Will remove all values from the first one.");
 			break;
 		case Operator::power:
 			s = i18n("Power");
