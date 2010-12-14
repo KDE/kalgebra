@@ -547,21 +547,25 @@ QRect Graph2D::toBiggerRect(const QRectF& ent)
 	return ret;
 }
 
-bool Graph2D::toImage(const QString &path)
+bool Graph2D::toImage(const QString &path, Format f)
 {
+	Q_ASSERT(!path.isEmpty());
 	bool b=false;
 	
-	if(!path.isEmpty() && path.endsWith(".svg")) {
-		QFile f(path);
-		QSvgGenerator gen;
-		gen.setOutputDevice(&f);
-		gen.setSize(this->size());
-		drawFunctions(&gen);
-		b=true;
-		forceRepaint();
-	} else if(!path.isEmpty() && path.endsWith(".png")) {
-		this->repaint();
-		b=buffer.save(path, "PNG");
+	switch(f) {
+		case SVG: {
+			QFile f(path);
+			QSvgGenerator gen;
+			gen.setOutputDevice(&f);
+			gen.setSize(this->size());
+			drawFunctions(&gen);
+			b=true;
+			forceRepaint();
+		}	break;
+		case PNG:
+			this->repaint();
+			b=buffer.save(path, "PNG");
+			break;
 	}
 	
 	return b;

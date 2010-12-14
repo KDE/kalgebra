@@ -52,6 +52,8 @@ public:
 		Selection	/**< There is a rectangle delimiting a region, for zooming. */
 	};
 	
+	enum Format { PNG, SVG };
+	
 	/** Constructor. Constructs a new Graph2D. */
 	explicit Graph2D(FunctionsModel* fm, QWidget *parent = 0);
 	
@@ -63,7 +65,7 @@ public:
 	QSize sizeHint() const { return QSize(100, 100); }
 	
 	/** Saves the graphs to a file located at @p path. */
-	bool toImage(const QString& path);
+	bool toImage(const QString& path, Format f);
 	
 	/** Sets whether we will see a grid or only the axes. */
 	void setSquares(bool newSquare) { m_squares=newSquare; forceRepaint(); }
