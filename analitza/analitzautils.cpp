@@ -87,6 +87,9 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 
 bool hasTheVar(const QSet<QString> & vars, const Object * o)
 {
+	if(!o)
+		return false;
+	
 	bool found=false;
 	const Ci* cand;
 	switch(o->type()) {
@@ -147,7 +150,7 @@ bool hasTheVar(const QSet<QString> & vars, const Container* c)
 
 bool hasTheVar(const QSet<QString> & vars, const Apply* a)
 {
-	bool found=false;
+	bool found=hasTheVar(vars, a->ulimit()) || hasTheVar(vars, a->dlimit()) || hasTheVar(vars, a->domain());
 	Apply::const_iterator it=a->firstValue(), itEnd=a->constEnd();
 	for(; !found && it!=itEnd; ++it) {
 		found=hasTheVar(vars, *it);
