@@ -482,7 +482,7 @@ void KAlgebra::loadScript(const KUrl& path)
 
 void KAlgebra::saveScript()
 {
-	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this);
+	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, QString(), KFileDialog::ConfirmOverwrite);
 	bool loaded=false;
 	if(!path.isEmpty())
 		loaded=c_results->saveScript(path);
@@ -493,7 +493,7 @@ void KAlgebra::saveScript()
 
 void KAlgebra::saveLog()
 {
-	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.html|"+i18n("HTML File (*.html)"),  this);
+	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.html|"+i18n("HTML File (*.html)"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
@@ -535,7 +535,7 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this);
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty())
 		m_graph3d->toPixmap().save(path, "PNG");
 #endif
@@ -560,7 +560,7 @@ void KAlgebra::toggleKeepAspect()
 
 void KAlgebra::saveGraph()
 {
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty())
 		m_graph2d->toImage(path);
 }
