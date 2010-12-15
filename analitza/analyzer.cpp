@@ -732,7 +732,7 @@ Object* Analyzer::operate(const Apply* c)
 			int count=c->countValues();
 			Q_ASSERT(count>0);
 			
-			Object* numbers[count];
+			QVector<Object*> numbers(count);
 			Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
 			for(int i=0; it!=itEnd; ++it, ++i)
 				numbers[i]=calc(*it);
