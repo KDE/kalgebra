@@ -1400,7 +1400,7 @@ Object* Analyzer::simpApply(Apply* c)
 			Object* value=c->m_params[1];
 			if(idx->type()==Object::value && value->type()==Object::vector) {
 				QString err;
-				Object* ret=Operations::reduce(Operator::selector, idx->copy(), value->copy(), err);
+				Object* ret=Operations::reduce(Operator::selector, idx, value, err);
 				
 				if(ret) {
 					root=ret;

@@ -191,6 +191,7 @@ void AnalitzaTest::testTrivialEvaluate()
 	if(!a->isCorrect())
 		qDebug() << "errors:" << a->errors();
 	
+	qDeleteAll(*a->variables());
 	a->variables()->clear();
 	a->variables()->initializeConstants();
 	
