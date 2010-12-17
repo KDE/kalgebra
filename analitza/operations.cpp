@@ -394,6 +394,7 @@ Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString
 			ret=new Cn(c->size());
 			break;
 		default:
+			//Should be dealt by typechecker. not necessary
 			correct=i18n("Could not calculate a vector's %1", Operator(op).toString());
 			ret=new Cn(0.);
 			break;
@@ -413,14 +414,16 @@ Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2
 				it=l2->erase(it);
 			}
 			
-// 			delete l2;
 			ret=l1;
 		}	break;
 		default:
+			//Should be dealt by typechecker. not necessary
 			correct=i18n("Could not calculate a list's %1", Operator(op).toString());
+			delete l1;
 			ret=new Cn(0.);
 			break;
 	}
+	delete l2;
 	return ret;
 }
 

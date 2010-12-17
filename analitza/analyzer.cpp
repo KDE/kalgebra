@@ -610,14 +610,17 @@ Object* Analyzer::derivative(const QString &var, const Container *c)
 		//TODO REVIEW
 		return derivative(var, c->m_params.last());
 	} else if(c->containerType()==Container::piecewise) {
-		Container *newPw = c->copy();
+		Container *newPw = new Container(Container::piecewise);
 		
-		foreach(Object* o, newPw->m_params) {
+		foreach(Object* o, c->m_params) {
 			Q_ASSERT(o->isContainer());
 			Container *p = (Container *) o;
-// 			Object *aux=p->m_params[0];
-			p->m_params[0]=derivative(var, p->m_params[0]);
-// 			delete aux;
+			Container *np = new Container(p->containerType());
+			
+			np->m_params += derivative(var, p->m_params[0]);
+			if(p->m_params.size()>1)
+				np->m_params += p->m_params[1]->copy();
+			newPw->appendBranch(np);
 		}
 		return newPw;
 	} else if(c->containerType()==Container::declare) {
@@ -1422,8 +1425,8 @@ Object* Analyzer::simpApply(Apply* c)
 					newParams.append(*it);
 				else {
 					QString err;
-					Object* ret=Operations::reduce(Operator::_union, newParams.last(), *it, err);
-					if(ret) {
+					if((*it)->type()==Object::list && newParams.last()->type()==Object::list) {
+						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), err);
 						newParams.last()=ret;
 						delete *it;
 					} else {

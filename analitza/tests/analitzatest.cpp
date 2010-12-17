@@ -225,6 +225,7 @@ void AnalitzaTest::testDerivativeSimple()
 	QFETCH(QString, expression);
 	QFETCH(QString, result);
 	
+	qDeleteAll(*a->variables());
 	a->variables()->clear();
 	a->variables()->initializeConstants();
 	
@@ -603,6 +604,7 @@ void AnalitzaTest::testVector_data()
 	QTest::newRow("selector1+list") << "selector(1, list{1,2,3})" << "1";
 	QTest::newRow("selector2+list") << "selector(2, list{1,2,3})" << "2";
 	QTest::newRow("selector3+list") << "selector(3, union(list{1,2}, list{3}))" << "3";
+	QTest::newRow("union") << "union(list{1,2}, list{3})" << "list { 1, 2, 3 }";
 }
 
 void AnalitzaTest::testCrash_data()
