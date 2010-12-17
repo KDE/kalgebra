@@ -1740,23 +1740,23 @@ Object* Analyzer::simpPiecewise(Container *c)
 {
 	Object *root=c;
 	//Here we have a list of options and finally the otherwise option
-	const Container *otherwise=0;
+	Container *otherwise=0;
 	Container::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd();
 	QList<Object*> newList;
 	
-	for(; /*!stop &&*/ it!=itEnd; ++it) {
+	for(; !otherwise && it!=itEnd; ++it) {
 		Container *p=static_cast<Container*>(*it);
 		Q_ASSERT( (*it)->isContainer() &&
 				(p->containerType()==Container::piece || p->containerType()==Container::otherwise) );
 		bool isPiece = p->containerType()==Container::piece;
 		
+		p->m_params.last()=simp(p->m_params.last());
+			
 		if(isPiece) {
-			p->m_params[1]=simp(p->m_params[1]);
 			if(p->m_params[1]->type()==Object::value) {
 				Cn* cond=static_cast<Cn*>(p->m_params[1]);
 				if(cond->isTrue()) {
-					delete p->m_params[1];
-					p->m_params.removeAt(1);
+					delete p->m_params.takeLast();
 					p->setContainerType(Container::otherwise);
 					isPiece=false;
 					
@@ -1767,29 +1767,25 @@ Object* Analyzer::simpPiecewise(Container *c)
 					delete p;
 				}
 			} else {
-						//TODO: It would be nice if we could simplify:
-						// if(x=n) simplify x as n
+				//TODO: It would be nice if we could simplify:
+				// if(x=n) simplify x as n
 				p->m_params[0]=simp(p->m_params[0]);
 				newList.append(p);
 			}
-					
 		} else { //it is an otherwise
-			if(otherwise) {
-				delete p;
-			} else {
-				p->m_params[0] = simp(p->m_params[0]);
-				otherwise=p;
-				newList.append(p);
-			}
+			otherwise=p;
+			newList.append(p);
 		}
 	}
-	c->m_params = newList;
+	qDeleteAll(it, itEnd);
 	
 	if(newList.count()==1 && otherwise) {
-		root=otherwise->m_params[0];
+		root=otherwise->m_params.takeAt(0);
+		delete otherwise;
 		c->m_params.clear();
 		delete c;
-	}
+	} else
+		c->m_params = newList;
 	return root;
 }
 
