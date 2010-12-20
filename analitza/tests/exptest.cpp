@@ -41,6 +41,11 @@ void ExpTest::testSimple_data()
 	QTest::addColumn<QString>("output");
 	
 	QTest::newRow("1 value") << "1" << "<math><cn>1</cn></math>";
+	QTest::newRow("1.5 value") << "1.5" << "<math><cn type='real'>1.5</cn></math>";
+	QTest::newRow(".5 value") << ".5" << "<math><cn type='real'>.5</cn></math>";
+// 	QTest::newRow("1. value") << "1." << "<math><cn type='real'>1.</cn></math>";
+	QTest::newRow("exp_vals") << "1e1+1e-2+-1e3" << "<math><apply><plus /><apply><plus /><cn type='real'>1e1</cn><cn type='real'>1e-2</cn></apply><apply><minus /><cn type='real'>1e3</cn></apply></apply></math>";
+	
 	QTest::newRow("addition") << "1+2" << "<math><apply><plus /><cn>1</cn><cn>2</cn></apply></math>";
 	QTest::newRow("equality") << "1=2" << "<math><apply><eq /><cn>1</cn><cn>2</cn></apply></math>";
 	QTest::newRow("substraction") << "2-3" << "<math><apply><minus /><cn>2</cn><cn>3</cn></apply></math>";

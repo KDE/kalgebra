@@ -64,6 +64,10 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::addColumn<double>("result");
 
 	QTest::newRow("a value") << "2" << 2.;
+	QTest::newRow("val.e0") << "12.0e-02" << 12e-2;
+	QTest::newRow("vale") << "12e-2" << 12e-2;
+	QTest::newRow("val") << "12e2" << 12e2;
+	
 	QTest::newRow("simple addition") << "2+2" << 4.;
 	QTest::newRow("simple power") << "2**99" << pow(2., 99.);
 	QTest::newRow("simple multiplication") << "3*3" << 9.;

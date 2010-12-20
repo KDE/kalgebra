@@ -24,6 +24,7 @@
 
 ExpLexer::ExpLexer(const QString &source)
 	: AbstractLexer(source), m_pos(0)
+	, m_realRx("^-?((\\.[0-9]+)|[0-9]+(\\.[0-9])?)(e-?[0-9]+)?", Qt::CaseSensitive, QRegExp::RegExp2)
 {}
 
 void ExpLexer::getToken()
@@ -53,29 +54,6 @@ void ExpLexer::getToken()
 		}
 		m_tokens.append(TOKEN(ExpressionTable::tPow, pos, QString(), 0));
 		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
-	} else if(a[pos].isDigit() || (a.size()>pos+1 && a[pos]=='.' && a[pos+1].isDigit())) {
-		int coma=0;
-		for(; pos<a.length() && (a[pos].isDigit() || (pos+1<a.length() && a[pos]=='.' && a[pos+1]!='.')); pos++) {
-			ret.val += a[pos];
-			if(a[pos]=='.') {
-				if(coma<2)
-					coma++;
-				else
-					m_err = i18nc("Error message", "Did not understand the real value: %1", ret.val);
-			}
-		}
-		
-		QStringList attrib;
-		if(coma)
-			attrib+="type='real'";
-		
-		Q_ASSERT(ret.val.size()>0);
-		
-		if(attrib.isEmpty())
-			ret.val = QString("<cn>%2</cn>").arg(ret.val);
-		else
-			ret.val = QString("<cn %1>%2</cn>").arg(attrib.join(" ")).arg(ret.val);
-		ret.type= ExpressionTable::tVal;
 	} else if(a[pos].isLetter()) {
 		for(; pos<a.length() && a[pos].isLetterOrNumber() && (a[pos].isLetter() || a[pos].decompositionTag()==QChar::NoDecomposition); pos++){
 			ret.val += a[pos];
@@ -83,8 +61,26 @@ void ExpLexer::getToken()
 		ret.type= ExpressionTable::tId;
 		Q_ASSERT(!ret.val.isEmpty());
 	} else {
-		ret.val=-1;
-		m_err=i18n("Unknown token %1", a[pos]);
+		int l = m_realRx.indexIn(a, pos, QRegExp::CaretAtOffset);
+		Q_ASSERT(l==pos || l==-1);
+		
+		if(l==pos) {
+			ret.val = m_realRx.cap();
+			
+			QString attrib;
+			if(!m_realRx.cap(2).isEmpty() || !m_realRx.cap(3).isEmpty() || !m_realRx.cap(4).isEmpty())
+				attrib+=" type='real'";
+			
+			Q_ASSERT(!ret.val.isEmpty());
+			
+			ret.val = QString("<cn%1>%2</cn>").arg(attrib).arg(ret.val);
+			ret.type= ExpressionTable::tVal;
+			
+			pos += m_realRx.matchedLength();
+		} else {
+			ret.val=-1;
+			m_err=i18n("Unknown token %1", a[pos]);
+		}
 	}
 	ret.len = pos-oldpos;
 	m_tokens.append(ret);

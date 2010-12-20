@@ -33,6 +33,7 @@ class ANALITZA_EXPORT ExpLexer : public AbstractLexer
 	private:
 		int m_pos;
 		void getToken();
+		QRegExp m_realRx;
 };
 
 #endif
