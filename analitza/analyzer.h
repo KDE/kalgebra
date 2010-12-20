@@ -174,6 +174,8 @@ class ANALITZA_EXPORT Analyzer
 		Object* boundedOperation(const Apply & n, const Operator & t, Object* initial);
 		
 		BoundingIterator* initializeBVars(const Apply* n, int base);
+		BoundingIterator* initBVarsContainer(const Apply* n, int base, Object* domain);
+		BoundingIterator* initBVarsRange(const Apply* n, int base, Object* dlimit, Object* ulimit);
 		
 		template <class T, class Tit>
 		void iterateAndSimp(T* v);

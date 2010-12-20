@@ -330,16 +330,23 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				
 				delete body;
 			}	break;
-			default: {
+			case Operator::sum:
+			case Operator::product: {
 				Apply *r = c->copy();
 				
 				QSet<QString> newUnscoped(unscoped);
 				int top = m_runStack.size();
-				if(op.isBounded()) {
-					if(r->domain()) {
-						QScopedPointer<Object> o(r->domain());
-						r->domain()=eval(r->domain(), resolve, unscoped);
-					}
+				bool resolved=false;
+				
+				QSet<QString> bvars = c->bvarStrings().toSet();
+				newUnscoped += bvars;
+				m_runStack.resize(top + bvars.size());
+				
+				if(r->domain()) {
+					QScopedPointer<Object> o(r->domain());
+					r->domain()=eval(r->domain(), resolve, unscoped);
+					resolved=r->domain()->type()==Object::list;
+				} else {
 					if(r->dlimit()) {
 						QScopedPointer<Object> o(r->dlimit());
 						r->dlimit()=eval(r->dlimit(), resolve, unscoped);
@@ -349,20 +356,60 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 						r->ulimit()=eval(r->ulimit(), resolve, unscoped);
 					}
 					
-					QSet<QString> bvars = c->bvarStrings().toSet();
-					newUnscoped += bvars;
-					m_runStack.resize(top + bvars.size());
+					resolved=r->dlimit()->type()==Object::value && r->ulimit()->type()==Object::value;
 				}
+				
+				if(resolved && hasVars(*r->firstValue(), newUnscoped.toList())) {
+					BoundingIterator *it = r->domain()? initBVarsContainer(r, top, r->domain()) : initBVarsRange(r, top, r->dlimit(), r->ulimit());
+					
+					if(it) {
+						QList<Object*> values;
+						Object* element = r->m_params.first();
+						do {
+							values += eval(element, resolve, unscoped);
+						} while(it->hasNext());
+						
+						if(values.size()==1)
+							ret = values.first();
+						else {
+							r->ulimit()=0;
+							r->dlimit()=0;
+							r->domain()=0;
+							
+							Apply *newC = new Apply;
+							newC->appendBranch(new Operator(op==Operator::product ? Operator::times : Operator::plus));
+							newC->m_params = values;
+							ret = newC;
+						}
+						delete r;
+					} else
+						ret = r;
+					
+					delete it;
+				} else {
+					Apply::iterator it=r->firstValue(), itEnd=r->end();
+					for(; it!=itEnd; ++it) {
+						Object *o=*it;
+						*it= eval(*it, resolve, unscoped);
+						delete o;
+					}
+					ret=r;
+				}
+				
+// 				qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+				m_runStack.resize(top);
+				
+			}	break;
+			default: {
+				Q_ASSERT(!op.isBounded());
+				Apply *r = c->copy();
 				
 				Apply::iterator it=r->firstValue(), itEnd=r->end();
 				for(; it!=itEnd; ++it) {
 					Object *o=*it;
-					*it= eval(*it, resolve, newUnscoped);
+					*it= eval(*it, resolve, unscoped);
 					delete o;
 				}
-				
-				qDeleteAll(m_runStack.begin()+top, m_runStack.end());
-				m_runStack.resize(top);
 				
 // 				ret=simp(r);
 				ret=r;
@@ -894,13 +941,15 @@ namespace Analitza
 	class RangeBoundingIterator : public BoundingIterator
 	{
 		public:
-			RangeBoundingIterator(const QVector<Cn*>& values, double dl, double ul, double step)
-				: values(values), dl(dl), ul(ul), step(step)
+			RangeBoundingIterator(const QVector<Cn*>& values, Cn* oul, Cn* odl, double step)
+				: values(values), dl(odl->value()), ul(oul->value()), step(step), objdl(odl), objul(oul)
 			{}
 			
 			~RangeBoundingIterator()
 			{
 				qDeleteAll(values);
+				delete objdl;
+				delete objul;
 			}
 			
 			bool hasNext()
@@ -920,64 +969,83 @@ namespace Analitza
 		private:
 			const QVector<Cn*> values;
 			const double dl, ul, step;
+			Object* objdl;
+			Object* objul;
 	};
 }
 
 BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 {
 	BoundingIterator* ret=0;
-	QList<Ci*> bvars=n->bvarCi();
 	
 	Object* domain=n->domain();
 	
 	if(domain)
 	{
 		domain=calc(domain);
+		ret = initBVarsContainer(n, base, domain);
 		
-		if(isCorrect()) {
-			switch(domain->type()) {
-				case Object::list:
-					ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<List*>(domain));
-					break;
-				case Object::vector:
-					ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
-					break;
-				default:
-					Q_ASSERT(false && "Type not supported for bounding.");
-					m_err.append(i18n("Type not supported for bounding."));
-			}
-		} else
-			m_err.append(i18n("Incorrect domain.")); //FIXME: delete? should not be handled here
+		if(!ret)
+			delete domain;
 	}
 	else
 	{
 		Object *objul=calc(n->ulimit());
 		Object *objdl=calc(n->dlimit());
 		
-		if(isCorrect() && objul->type()==Object::value && objdl->type()==Object::value) {
-			Cn *u=static_cast<Cn*>(objul);
-			Cn *d=static_cast<Cn*>(objdl);
-			double ul=u->value();
-			double dl=d->value();
-			
-			if(dl<=ul) {
-				QVector<Cn*> rr(bvars.size());
-				
-				for(int i=0; i<bvars.size(); ++i) {
-					rr[i]=new Cn(dl);
-					m_runStack[base+i]=rr[i];
-				}
-				
-				ret=new RangeBoundingIterator(rr, dl, ul, 1);
-			} else
-				m_err.append(i18n("The downlimit is greater than the uplimit"));
-		} else
-			m_err.append(i18n("Incorrect uplimit or downlimit."));
+		ret = initBVarsRange(n, base, objdl, objul);
 		
-		delete objul;
-		delete objdl;
-		
+		if(!ret) {
+			delete objdl;
+			delete objul;
+		}
 	}
+	return ret;
+}
+BoundingIterator* Analyzer::initBVarsContainer(const Analitza::Apply* n, int base, Object* domain)
+{
+	BoundingIterator* ret = 0;
+	if(isCorrect()) { //FIXME: delete? should not be handled here
+		QList<Ci*> bvars=n->bvarCi();
+		switch(domain->type()) {
+			case Object::list:
+				ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<List*>(domain));
+				break;
+			case Object::vector:
+				ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
+				break;
+			default:
+				Q_ASSERT(false && "Type not supported for bounding.");
+				m_err.append(i18n("Type not supported for bounding."));
+		}
+	} else
+		m_err.append(i18n("Incorrect domain."));
+	return ret;
+}
+
+BoundingIterator* Analyzer::initBVarsRange(const Apply* n, int base, Object* objdl, Object* objul)
+{
+	BoundingIterator* ret = 0;
+	if(isCorrect() && objul->type()==Object::value && objdl->type()==Object::value) {
+		Cn *u=static_cast<Cn*>(objul);
+		Cn *d=static_cast<Cn*>(objdl);
+		double ul=u->value();
+		double dl=d->value();
+		
+		if(dl<=ul) {
+			QList<Ci*> bvars=n->bvarCi();
+			QVector<Cn*> rr(bvars.size());
+			
+			for(int i=0; i<bvars.size(); ++i) {
+				rr[i]=new Cn(dl);
+				m_runStack[base+i]=rr[i];
+			}
+			
+			ret=new RangeBoundingIterator(rr, u, d, 1);
+		} else
+			m_err.append(i18n("The downlimit is greater than the uplimit"));
+	} else
+		m_err.append(i18n("Incorrect uplimit or downlimit."));
 	return ret;
 }
 
@@ -1370,9 +1438,14 @@ Object* Analyzer::simpApply(Apply* c)
 				cDiff->appendBranch(uplimit  ->copy());
 				cDiff->appendBranch(downlimit->copy());
 				
+				Apply *aPlusOne = new Apply;
+				aPlusOne->appendBranch(new Operator(Operator::plus));
+				aPlusOne->appendBranch(new Cn(1.));
+				aPlusOne->appendBranch(cDiff);
+				
 				Apply *nc=new Apply;
 				nc->appendBranch(new Operator(Operator::times));
-				nc->appendBranch(cDiff);
+				nc->appendBranch(aPlusOne);
 				nc->appendBranch(function);
 				
 				c->m_params.last()=0;

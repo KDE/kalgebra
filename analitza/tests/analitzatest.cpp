@@ -148,7 +148,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("sum") << "sum(n : n=1..99)" << "4950";
 	QTest::newRow("sum times") << "x*sum(n : n=0..99)" << "4950*x";
-	QTest::newRow("unrelated sum") << "sum(x : n=0..99)" << "99*x";
+	QTest::newRow("unrelated sum") << "sum(x : n=0..99)" << "100*x";
 	
 	QTest::newRow("product") << "product(n : n=1..5)" << "120";
 	QTest::newRow("factorial") << "factorial(5)" << "120";
@@ -178,7 +178,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("lists2") << "union(list{w}, x, list{y}, list{z})" << "union(list { w }, x, list { y, z })";
 	
 	QTest::newRow("sum.2bvars") << "sum(x*w : (x, y)=1..3)" << "18*w";
-// 	QTest::newRow("sum.list") << "sum(x+y : x@list{x,y,z})" << "x+4*y+z";
+	QTest::newRow("sum.list") << "sum(x+y : x@list{x,y,z})" << "x+4*y+z";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -362,6 +362,15 @@ void AnalitzaTest::testCorrection_data()
 		   << "pu(5)";
 	
 	QTest::newRow("bug241047") << script << "2.97495e-05";
+	
+	script.clear();
+	script << "comb:=(n, i)->factorial(n)/(factorial(i)*factorial(n-i))"
+		   << "probability:=(place, case, totalprobability,"
+					"positive, negative)->(comb(place,"
+					"case)*(positive/totalprobability)^case)*(negative/totalprobability)^(place-case)"
+		   << "sum(probability(5, t, 6, 1, 5):t=0..5)";
+	
+	QTest::newRow("probabilities") << script << "1";
 }
 
 //testCalculate
@@ -508,6 +517,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
 	QTest::newRow("sum") << "n->sum((i+n) * i : i=0..9)" << "n->sum((i+n)*i:i=0..9)";
 	QTest::newRow("sum.sum") << "k->sum(sum(x:x=0..i):i=0..k)" << "k->sum(sum(x:x=0..i):i=0..k)";
+	QTest::newRow("unrelated sum") << "sum(x : n=0..99)" << "100*x";
 	
 	QTest::newRow("piecewise1") << "piecewise { 1=2 ? 4, ? 3}" << "3";
 	QTest::newRow("piecewise2") << "piecewise { x=2 ? 4, ? 3}" << "piecewise { x=2 ? 4, ? 3 }";
