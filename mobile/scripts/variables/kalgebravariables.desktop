@@ -5,6 +5,7 @@ ServiceTypes=KAlgebra/Script
 
 Name=Variables
 Name[ca]=Variables
+Name[da]=Variable
 Name[en_GB]=Variables
 Name[es]=Variables
 Name[et]=Muutujad
@@ -20,6 +21,7 @@ Name[x-test]=xxVariablesxx
 Name[zh_TW]=變數
 Comment=Provides an enumeration of all defined variables
 Comment[ca]=Enumera totes les variables definides
+Comment[da]=Giver en nummerering af alle definerede værdier
 Comment[en_GB]=Provides an enumeration of all defined variables
 Comment[es]=Proporciona una enumeración de todas las variables definidas
 Comment[et]=Kõigi defineeritud muutujate loend
