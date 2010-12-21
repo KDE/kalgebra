@@ -109,6 +109,7 @@ class ANALITZAGUI_EXPORT ExpressionEdit : public QPlainTextEdit
 		void showSimplified();
 		void cursorMov();
 		void updateCompleter();
+		void setActionText(QAction* text);
 		
 		/** Shows a little tip widget containing the string @p str. If @p str is empty the widget is hidden. */
 		void helper(const QString& str);

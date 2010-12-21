@@ -126,7 +126,7 @@ void ExpressionEdit::updateCompleter()
 {
 	m_ops->updateInformation();
 }
-
+ 
 void ExpressionEdit::completed(const QString& newText)
 {
 	int c = newText.length() - lastWord(textCursor().selectionStart()).length();
@@ -483,6 +483,11 @@ void ExpressionEdit::contextMenuEvent(QContextMenuEvent * e)
 	
 	popup->exec(e->globalPos());
 
+}
+
+void ExpressionEdit::setActionText(QAction* text)
+{
+	setPlainText(text->data().toString());
 }
 
 void ExpressionEdit::setAnalitza(Analitza::Analyzer * in)
