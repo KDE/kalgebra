@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -434,6 +435,7 @@ void Graph2D::mouseReleaseEvent(QMouseEvent *e)
 
 void Graph2D::mouseMoveEvent(QMouseEvent *e)
 {
+	lastMark = mark; // calc the tangent geometrically 
 	mark=calcImage(fromWidget(e->pos()));
 	
 	if(!m_readonly && mode==Pan && ant != toViewport(e->pos())){
@@ -484,9 +486,41 @@ QPointF Graph2D::calcImage(const QPointF& ndp)
 	return m_model->calcImage(ndp).first;
 }
 
+//TODO duplicated code ... this have to go inside some namespace or static class ... AnalitzaMathUtils ?¿
+QLineF slopeToLine(const double &der)
+{
+	double arcder = atan(der);
+	const double len=3.*der;
+	QPointF from, to;
+	from.setX(len*cos(arcder));
+	from.setY(len*sin(arcder));
+
+	to.setX(-len*cos(arcder));
+	to.setY(-len*sin(arcder));
+	return QLineF(from, to);
+}
+
 QLineF Graph2D::slope(const QPointF & dp) const
 {
-	return m_model->slope(dp);
+//	return m_model->slope(dp);
+	if (!m_model) return QLineF();
+	
+	QLineF ret;
+	
+	if (m_model->hasSelection()) {
+		const Function & f = m_model->currentFunction();
+		
+		if (f.isShown()) {
+			QPointF a = dp;
+			QPointF b = lastMark;
+			
+			qreal s = (a.y()-b.y())/(a.x()-b.x());
+			
+			ret = slopeToLine(s);
+		}
+	}
+	
+	return ret;
 }
 
 void Graph2D::unselect()

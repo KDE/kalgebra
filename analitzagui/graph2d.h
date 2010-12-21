@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -137,6 +138,7 @@ private:
 	bool valid;
 	QLabel *micepos;
 	QPointF mark;
+	QPointF lastMark; // calc the tangent geometrically (by diff between lastmark and mark points)
 	void drawAxes(QPainter*, Function::Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
