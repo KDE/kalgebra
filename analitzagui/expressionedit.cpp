@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -446,9 +447,11 @@ void ExpressionEdit::focusInEvent ( QFocusEvent * event )
 	}
 }
 
-void ExpressionEdit::focusOutEvent ( QFocusEvent * )
+void ExpressionEdit::focusOutEvent ( QFocusEvent * event)
 {
 	m_helptip->hide();
+	
+	QPlainTextEdit::focusOutEvent(event);
 }
 
 void ExpressionEdit::simplify()
