@@ -440,109 +440,105 @@ void FunctionImplicit::updatePoints(const QRect& viewport)
 
 QPair<QPointF, QString> FunctionImplicit::calc(const QPointF& point)
 {
-    // Check for x
-    QVector<Analitza::Object*> vxStack; vxStack.append(vx);
-    QVector<Analitza::Object*> vyStack; vyStack.append(vy);
+	// Check for x
+	vy->setValue(point.y());
+	
+	Analitza::Analyzer f(func.variables());
+	f.setExpression(func.expression());
+	f.setStack(m_runStack);
+	
+	Analitza::Analyzer df(func.variables());
+	df.setExpression(f.derivative("x"));
+	df.setStack(m_runStack);
+	
+	const int MAX_I = 256;
+	const double E = 0.0001;
+	double x0 = point.x();
+	double x = x0;
+	double error = 1000.0;
+	int i = 0;
+	bool has_root_x = true;
+	
+	if (!f.isCorrect() || !df.isCorrect()) return QPair<QPointF, QString>(QPointF(), QString());
+	
+	while (true) {
+		vx->setValue(x0);
 
-    QString expLiteral = func.expression().lambdaBody().toString();
-    expLiteral.replace("y", QString::number(point.y()));
-    expLiteral.prepend("x->");
+		double r = f.calculateLambda().toReal().value();
+		double d = df.calculateLambda().toReal().value();
 
-    Analitza::Analyzer f(func.variables());
-    f.setExpression(Analitza::Expression(expLiteral, false));
-    f.setStack(vxStack);
+		i++;
+		x = x0 - r/d;
 
-    Analitza::Analyzer df(func.variables());
-    df.setExpression(f.derivative("x"));
-    df.setStack(vxStack);
+		if (error < E) break;
+		if (i > MAX_I)
+		{
+			has_root_x = false;
+			break;
+		}
 
-    const int MAX_I = 256;
-    const double E = 0.0001;
-    double x0 = point.x();
-    double x = x0;
-    double error = 1000.0;
-    int i = 0;
-    bool has_root_x = true;
+		error = fabs(x - x0);
+		x0 = x;
+	}
 
-    while (true)
-    {
-        vx->setValue(x0);
+	// Check for y
+	if (!has_root_x)
+	{
+		vx->setValue(point.x());
+		
+		Analitza::Analyzer f(func.variables());
+		f.setExpression(func.expression());
+		f.setStack(m_runStack);
 
-        double r = f.calculateLambda().toReal().value();
-        double d = df.calculateLambda().toReal().value();
+		Analitza::Analyzer df(func.variables());
+		df.setExpression(f.derivative("y"));
+		df.setStack(m_runStack);
 
-        i++;
-        x = x0 - r/d;
+		double y0 = point.y();
+		double y = y0;
+		error = 1000.0;
+		i = 0;
+		bool has_root_y = true;
 
-        if (error < E) break;
-        if (i > MAX_I)
-        {
-            has_root_x = false;
-            break;
-        }
+		while (true)
+		{
+			vy->setValue(y0);
 
-        error = fabs(x - x0);
-        x0 = x;
-    }
+			double r = f.calculateLambda().toReal().value();
+			double d = df.calculateLambda().toReal().value();
 
-    // Check for y
-    if (!has_root_x)
-    {
-        expLiteral = func.expression().lambdaBody().toString();
-        expLiteral.replace("x", QString::number(point.x()));
-        expLiteral.prepend("y->");
+			i++;
+			y = y0 - r/d;
 
-        Analitza::Analyzer f(func.variables());
-        f.setExpression(Analitza::Expression(expLiteral, false));
-        f.setStack(vyStack);
+			if (error < E) break;
+			if (i > MAX_I)
+			{
+				has_root_y = false;
+				break;
+			}
 
-        Analitza::Analyzer df(func.variables());
-        df.setExpression(f.derivative("y"));
-        df.setStack(vyStack);
-
-        double y0 = point.y();
-        double y = y0;
-        error = 1000.0;
-        i = 0;
-        bool has_root_y = true;
-
-        while (true)
-        {
-            vy->setValue(y0);
-
-            double r = f.calculateLambda().toReal().value();
-            double d = df.calculateLambda().toReal().value();
-
-            i++;
-            y = y0 - r/d;
-
-            if (error < E) break;
-            if (i > MAX_I)
-            {
-                has_root_y = false;
-                break;
-            }
-
-            error = fabs(y - y0);
-            y0 = y;
-        }
+			error = fabs(y - y0);
+			y0 = y;
+		}
 
 		if (has_root_y)
 			last_calc = QPointF(point.x(), y);
 		return QPair<QPointF, QString>(last_calc, QString());
-    }
-    else
-    {
-        last_calc = QPointF(x, point.y());
+	}
+	else
+	{
+		last_calc = QPointF(x, point.y());
 
-        return QPair<QPointF, QString>(last_calc, QString());
-    }
+		return QPair<QPointF, QString>(last_calc, QString());
+	}
 }
 
 QLineF FunctionImplicit::derivative(const QPointF& p)
 {
-    double fx = evalPartialDerivativeX(p.x(), p.y());
-    double fy = evalPartialDerivativeY(p.x(), p.y());
-
-    return slopeToLine(-fx/fy);
+// 	double fx = evalPartialDerivativeX(p.x(), p.y());
+// 	double fy = evalPartialDerivativeY(p.x(), p.y());
+// 
+// 	return slopeToLine(-fx/fy);
+	
+	return QLineF();
 }

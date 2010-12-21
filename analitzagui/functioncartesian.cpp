@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -183,7 +184,7 @@ void FunctionY::updatePoints(const QRect& viewport)
 QPair<QPointF, QString> FunctionX::calc(const QPointF& p)
 {
 	QPointF dp=p;
-	vx->setValue(dp.x());
+	vx->setValue(dp.y());
 	Expression r=func.calculateLambda();
 	
 	if(!r.isReal())
