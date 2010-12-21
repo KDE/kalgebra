@@ -116,29 +116,64 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 {
 	Q_UNUSED(viewport);
 	Q_ASSERT(func.expression().isCorrect());
-	if(int(resolution())==points.capacity())
-		return;
+	//if(int(resolution())==points.capacity())
+	//	return;
 	
 	double ulimit=uplimit();
 	double dlimit=downlimit();
 	
 	points.clear();
-	points.reserve(resolution());
+	m_jumps.clear();
+	//points.reserve(resolution());
+
 	
-	vx->setValue(0.);
-	
-	double inv_res= double((ulimit-dlimit)/resolution());
+// 	double inv_res= double((ulimit-dlimit)/resolution());
+	double inv_res= 0.01; 
 	double final=ulimit-inv_res;
-	for(double t=dlimit; t<final; t+=inv_res) {
+	
+		//by percy
+	QRectF vp(viewport);
+	
+	vp.setTop(viewport.top() - 2);
+	vp.setBottom(viewport.bottom() + 2);
+	vp.setLeft(viewport.left() + 2);
+	vp.setRight(viewport.right() - 2);
+	
+	QPointF curp;
+	
+	vx->setValue(dlimit);
+	Expression res;
+	Object* vo;
+	Vector* v;
+	Cn *x;
+	Cn *y;
+	
+	int i = 0;
+	bool jlock = false;
+	
+	for(double t=dlimit; t<ulimit; t+=inv_res, ++i) {
 		vx->setValue(t);
-		Expression res=func.calculateLambda();
+		res=func.calculateLambda();
 		
-		Object* vo=res.tree();
-		Vector* v=static_cast<Vector*>(vo);
-		Cn* x=static_cast<Cn*>(v->at(0));
-		Cn* y=static_cast<Cn*>(v->at(1));
-		addValue(QPointF(x->value(), y->value()));
-// 		objectWalker(vo);
+		vo=res.tree();
+		v=static_cast<Vector*>(vo);
+		x=static_cast<Cn*>(v->at(0));
+		y=static_cast<Cn*>(v->at(1));
+		
+		curp = QPointF(x->value(), y->value());
+		
+		if (vp.contains(curp))
+		{
+			points << curp;
+			jlock = false;
+		}
+		else if (!jlock)
+		{
+			m_jumps.append(i);
+			jlock = true;
+		}
+		
+		// 		objectWalker(vo);
 		Q_ASSERT(vo->type()==Object::vector);
 		Q_ASSERT(v->size()==2
 				&& v->at(0)->type()==Object::value

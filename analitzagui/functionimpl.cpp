@@ -1,6 +1,5 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
- *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -87,25 +86,6 @@ bool FunctionImpl::addValue(const QPointF& p)
 		appended=true;
 	}
 	return appended;
-}
-
-//TODO duplicated code ... this have to go inside some namespace or static class ... AnalitzaMathUtils ?Â¿
-QLineF slopeToLine(const double &der)
-{
-	double arcder = atan(der);
-	const double len=3.*der;
-	QPointF from, to;
-	from.setX(len*cos(arcder));
-	from.setY(len*sin(arcder));
-
-	to.setX(-len*cos(arcder));
-	to.setY(-len*sin(arcder));
-	return QLineF(from, to);
-}
-
-QLineF FunctionImpl::derivative(const QPointF& a, const QPointF& b) const
-{
-	return slopeToLine((a.y()-b.y())/(a.x()-b.x()));
 }
 
 void FunctionImpl::setResolution(uint res)

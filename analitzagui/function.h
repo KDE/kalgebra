@@ -1,6 +1,5 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
- *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -99,9 +98,6 @@ class ANALITZAGUI_EXPORT Function
 		
 		/** Returns the type of axe that the function has. */
 		Axe axeType() const;
-		
-		/** Returns the slope of the current function between two points @p a @p b. */
-		QLineF derivative(const QPointF& a, const QPointF& b) const;
 		
 		/** Returns the slope of the current function in the point @p p. */
 		QLineF derivative(const QPointF& p) const;

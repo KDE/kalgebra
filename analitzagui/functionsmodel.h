@@ -1,6 +1,5 @@
 /*************************************************************************************
  *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
- *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -109,8 +108,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 	private:
 		Function& currentFunction();
 		
-		QLineF slope(const QPointF& a, const QPointF& b) const; // geometrically
-		QLineF slope(const QPointF& dp) const; // analitically
+		QLineF slope(const QPointF& dp) const;
 		QPair<QPointF, QString> calcImage(const QPointF& dp);
 		
 		QList<Function> funclist;

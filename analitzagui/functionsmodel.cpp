@@ -1,6 +1,5 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
- *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -273,18 +272,6 @@ Function & FunctionsModel::currentFunction()
 {
 	Q_ASSERT(hasSelection());
 	return funclist[m_selectedRow];
-}
-
-QLineF FunctionsModel::slope(const QPointF& a, const QPointF& b) const
-{
-	QLineF ret;
-	if(hasSelection()) {
-		const Function & f = currentFunction();
-		if(f.isShown()) {
-			ret = f.derivative(a, b);
-		}
-	}
-	return ret;
 }
 
 QLineF FunctionsModel::slope(const QPointF & dp) const
