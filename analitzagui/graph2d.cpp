@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -316,7 +317,7 @@ void Graph2D::paintEvent(QPaintEvent * )
 		//Draw derivative
 		ccursor.setColor(m_derivativeColor);
 		ccursor.setStyle(Qt::SolidLine);
-		QLineF sl=slope(mark);
+		QLineF sl=slope(mark, lastMark);
 		sl.translate(mark);
 		
 		finestra.setPen(ccursor);
@@ -434,6 +435,8 @@ void Graph2D::mouseReleaseEvent(QMouseEvent *e)
 
 void Graph2D::mouseMoveEvent(QMouseEvent *e)
 {
+	lastMark = mark; // calc the tangent geometrically 
+
 	mark=calcImage(fromWidget(e->pos()));
 	
 	if(!m_readonly && mode==Pan && ant != toViewport(e->pos())){
@@ -482,6 +485,11 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 QPointF Graph2D::calcImage(const QPointF& ndp)
 {
 	return m_model->calcImage(ndp).first;
+}
+
+QLineF Graph2D::slope(const QPointF& a, const QPointF& b) const
+{
+	return m_model->slope(a, b);
 }
 
 QLineF Graph2D::slope(const QPointF & dp) const

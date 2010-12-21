@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -137,6 +138,7 @@ private:
 	bool valid;
 	QLabel *micepos;
 	QPointF mark;
+	QPointF lastMark;
 	void drawAxes(QPainter*, Function::Axe a);
 	void drawPolarAxes(QPainter*);
 	void drawCartesianAxes(QPainter*);
@@ -144,7 +146,8 @@ private:
 	QPointF fromWidget(const QPoint& p) const;
 	QPointF toViewport(const QPoint& mv) const;
 	QPointF calcImage(const QPointF& dp);
-	QLineF slope(const QPointF& dp) const;
+	QLineF slope(const QPointF& a, const QPointF& b) const; // geometrically
+	QLineF slope(const QPointF& dp) const; // analitically
 	
 	QLineF toWidget(const QLineF &) const;
 	

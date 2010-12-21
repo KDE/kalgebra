@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -37,6 +38,7 @@ struct FunctionImpl
 	//helpers
 	/** adds a value to the points vector is needed. @returns if it was added. */
 	bool addValue(const QPointF& p);
+	QLineF derivative(const QPointF& a, const QPointF& b) const;  // calc the tangent geometrically
 	static bool isSimilar(double a, double b, double diff=0.0001);
 	
 	//To reimplement
@@ -44,7 +46,7 @@ struct FunctionImpl
 	virtual QPair<QPointF, QString> calc(const QPointF& dp)=0;
 	virtual void updatePoints(const QRect& viewport)=0;
 	virtual FunctionImpl* copy()=0;
-    virtual QLineF derivative(const QPointF& p)=0;
+    virtual QLineF derivative(const QPointF& p)=0; // calc the tangent analitically
 	virtual QStringList boundings() const=0;
 	virtual QString iconName() const=0;
 	

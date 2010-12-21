@@ -1,5 +1,6 @@
 /*************************************************************************************
  *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Percy Camilo T. Aucahuasi <percy.camilo.ta@gmail.com>      *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -131,6 +132,12 @@ Function::Axe Function::axeType() const
 bool Function::isShown() const
 {
 	return m_show && m_function && m_function->isCorrect();
+}
+
+QLineF Function::derivative(const QPointF& a, const QPointF& b) const
+{
+	Q_ASSERT(m_function);
+	return m_function->derivative(a, b);
 }
 
 QLineF Function::derivative(const QPointF & p) const
