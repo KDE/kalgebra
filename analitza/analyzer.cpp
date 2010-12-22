@@ -640,6 +640,22 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			nc->appendBranch((*c->firstValue())->copy());
 			return nc;
 		} break;
+		case Operator::log: {
+			Apply *nc = new Apply;
+			nc->appendBranch(new Operator(Operator::divide));
+			nc->appendBranch(derivative(var, *c->firstValue()));
+			
+			Apply *logTen = new Apply;
+			logTen->appendBranch(new Operator(Operator::ln));
+			logTen->appendBranch(new Cn(10));
+			
+			Apply *timesLog = new Apply;
+			timesLog->appendBranch(new Operator(Operator::times));
+			timesLog->appendBranch(logTen);
+			timesLog->appendBranch((*c->firstValue())->copy());
+			nc->appendBranch(timesLog);
+			return nc;
+		} break;
 		default: {
 			m_err.append(i18n("The %1 derivative has not been implemented.", op.toString()));
 			Apply* obj = new Apply;

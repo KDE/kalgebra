@@ -222,6 +222,7 @@ void AnalitzaTest::testDerivativeSimple_data()
 	QTest::newRow("lambda") << "x->3" << "0";
 	QTest::newRow("timesminus") << "1-x*sin(x)" << "-sin(x)-x*cos(x)";
 	QTest::newRow("timesminus2") << "cos(x)-x*sin(x)" << "-2*sin(x)-x*cos(x)";
+	QTest::newRow("log") << "log(x)" << "1/(2.30258509299*x)";
 }
 
 void AnalitzaTest::testDerivativeSimple()
