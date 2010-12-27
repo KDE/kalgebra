@@ -105,7 +105,7 @@ class ConsoleHtml : public KHTMLPart
 		void modifyVariable(const QString& name, const Analitza::Expression& exp);
 		void removeVariable(const QString& name);
 		void paste();
-		void scrollDown();
+		void scrollDown(int min, int max);
 		
 	private:
 		QString retrieve(const KUrl& remoteUrl);
