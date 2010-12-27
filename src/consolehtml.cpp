@@ -49,8 +49,11 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	setPluginsEnabled(false);
 	setOnlyLocalReferences(true);
 	
+	view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	
 	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
 	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
+	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int, int)));
 	
 	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
@@ -279,13 +282,11 @@ void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 	end();
 	
 	emit changed();
-	
-	QTimer::singleShot(0, this, SLOT(scrollDown()));
 }
 
-void ConsoleHtml::scrollDown()
+void ConsoleHtml::scrollDown(int min, int max)
 {
-	view()->verticalScrollBar()->setValue(view()->verticalScrollBar()->maximum());
+	view()->verticalScrollBar()->setValue(max);
 }
 
 void ConsoleHtml::copy() const
