@@ -21,15 +21,16 @@
 
 #include "expressionwriter.h"
 #include "analitzaexport.h"
-#include "expression.h"
 #include "expressiontype.h"
 #include <QStack>
+#include <QStringList>
 
 namespace Analitza
 {
 struct TypePair;
 struct TypeTriplet;
 class Variables;
+class Expression;
 
 class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 {
@@ -44,7 +45,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		virtual QString accept(const Container* var);
 		virtual QString accept(const Vector* var);
 		virtual QString accept(const List* l);
-		virtual QString accept ( const Analitza::Apply* a );
+		virtual QString accept(const Apply* a);
 		
 		virtual QString result() const { return QString(); }
 		
