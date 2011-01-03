@@ -41,6 +41,8 @@
 // bool isinf(double x) { return !finite(x) && x==x; }
 #endif
 
+using namespace std;
+
 // #define DEBUG_GRAPH
 
 QColor const Graph2D::m_axeColor(100,100,255);
