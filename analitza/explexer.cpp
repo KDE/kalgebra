@@ -24,7 +24,7 @@
 
 ExpLexer::ExpLexer(const QString &source)
 	: AbstractLexer(source), m_pos(0)
-	, m_realRx("^-?((\\.[0-9]+)|[0-9]+(\\.[0-9])?)(e-?[0-9]+)?", Qt::CaseSensitive, QRegExp::RegExp2)
+	, m_realRx("^-?((\\.[0-9]+)|[0-9]+(\\.[0-9]+)?)(e-?[0-9]+)?", Qt::CaseSensitive, QRegExp::RegExp2)
 {}
 
 void ExpLexer::getToken()

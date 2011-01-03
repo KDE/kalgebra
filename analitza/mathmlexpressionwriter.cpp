@@ -56,8 +56,13 @@ QString MathMLExpressionWriter::accept(const Cn* val)
 			return "<cn type='constant'>true</cn>";
 		else
 			return "<cn type='constant'>false</cn>";
-	} else
-		return QString("<cn>%1</cn>").arg(val->value(), 0, 'g', 12);
+	} else {
+		QString type;
+		if(val->format()==Cn::Real)
+			type = " type='real'";
+		
+		return QString("<cn%1>%2</cn>").arg(type).arg(val->value(), 0, 'g', 12);
+	}
 }
 
 QString MathMLExpressionWriter::accept(const Vector* vec)
