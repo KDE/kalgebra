@@ -143,7 +143,7 @@ private:
 	QPointF toWidget(const QPointF &) const;
 	QPointF fromWidget(const QPoint& p) const;
 	QPointF toViewport(const QPoint& mv) const;
-	QPointF calcImage(const QPointF& dp);
+	QPointF calcImage(const QPointF& ndp) const;
 	QLineF slope(const QPointF& dp) const;
 	
 	QLineF toWidget(const QLineF &) const;

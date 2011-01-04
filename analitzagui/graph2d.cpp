@@ -481,14 +481,43 @@ void Graph2D::keyPressEvent(QKeyEvent * e)
 	}
 }
 
-QPointF Graph2D::calcImage(const QPointF& ndp)
+QPointF Graph2D::calcImage(const QPointF& ndp) const
 {
 	return m_model->calcImage(ndp).first;
 }
 
+qreal pointsDistance(const QPointF& p1, const QPointF& p2)
+{
+	qreal x=p1.x()-p2.x();
+	qreal y=p1.y()-p2.y();
+	
+	return x*x+y*y;
+}
+
+QLineF slopeToLine(const double &der)
+{
+	double arcder = atan(der);
+	const double len=3.*der;
+	QPointF from, to;
+	from.setX(len*cos(arcder));
+	from.setY(len*sin(arcder));
+
+	to.setX(-len*cos(arcder));
+	to.setY(-len*sin(arcder));
+	return QLineF(from, to);
+}
+
 QLineF Graph2D::slope(const QPointF & dp) const
 {
-	return m_model->slope(dp);
+	QLineF ret = m_model->slope(dp);
+	if(ret.isNull() && m_model->hasSelection()) {
+		QPointF a = calcImage(dp-QPointF(.1,.1));
+		QPointF b = calcImage(dp+QPointF(.1,.1));
+		
+		ret = slopeToLine((a.y()-b.y())/(a.x()-b.x()));
+	}
+	
+	return ret;
 }
 
 void Graph2D::unselect()
