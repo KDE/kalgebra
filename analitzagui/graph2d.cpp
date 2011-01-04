@@ -486,14 +486,6 @@ QPointF Graph2D::calcImage(const QPointF& ndp) const
 	return m_model->calcImage(ndp).first;
 }
 
-qreal pointsDistance(const QPointF& p1, const QPointF& p2)
-{
-	qreal x=p1.x()-p2.x();
-	qreal y=p1.y()-p2.y();
-	
-	return x*x+y*y;
-}
-
 QLineF slopeToLine(const double &der)
 {
 	double arcder = atan(der);
