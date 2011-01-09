@@ -117,6 +117,7 @@ void VariablesModel::updateInformation()
 void VariablesModel::insertVariable(const QString& name, const Expression& value)
 {
 	m_vars->modify(name, value);
+	reset();
 }
 
 #include "variablesmodel.moc"
