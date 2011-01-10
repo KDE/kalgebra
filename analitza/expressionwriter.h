@@ -22,11 +22,11 @@
 #include <QString>
 
 #include "analitzaexport.h"
-#include "object.h"
 
 namespace Analitza
 {
 
+class Object;
 class Apply;
 class Ci;
 class Cn;

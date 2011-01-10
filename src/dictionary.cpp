@@ -24,13 +24,10 @@
 #include <analitzagui/operatorsmodel.h>
 
 #include <QLabel>
-#include <QListView>
 #include <QGroupBox>
-#include <QSpacerItem>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>
-#include <KLineEdit>
 #include <KLocale>
 #include <QtMmlWidget>
 

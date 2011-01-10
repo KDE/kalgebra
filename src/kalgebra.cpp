@@ -41,8 +41,6 @@
 
 #include <QVBoxLayout>
 #include <QHeaderView>
-#include <QItemDelegate>
-#include <QItemEditorFactory>
 #include <QDockWidget>
 #include <QTableView>
 #include <KAction>

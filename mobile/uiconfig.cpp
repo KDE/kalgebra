@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include "uiconfig.h"
-#include <QVBoxLayout>
 #include <QLineEdit>
 #include <QDoubleSpinBox>
 #include <QPushButton>

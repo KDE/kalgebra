@@ -24,6 +24,7 @@
 #include "expressiontype.h"
 #include <QStack>
 #include <QStringList>
+#include <QSet>
 
 namespace Analitza
 {

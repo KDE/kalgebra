@@ -22,7 +22,6 @@
 #include "functionfactory.h"
 #include <cmath>
 
-#include <KLocale>
 #include <KDebug>
 
 using std::acos;
