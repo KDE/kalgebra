@@ -292,7 +292,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					cc->appendBranch(bvar);
 				}
 				cc->appendBranch(simp(o));
-				ret=cc;
+				ret=cc; 
 				
 				Expression::computeDepth(ret);
 			}	break;
@@ -560,7 +560,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 				return cx;
 			}
 		} break;
-		case Operator::sin: {
+		case Operator::sin: { //sin(x) -> diff(x)*cos(x)
 			Apply *ncChain = new Apply;
 			ncChain->appendBranch(new Operator(Operator::times));
 			ncChain->appendBranch(derivative(var, *c->firstValue()));
@@ -570,7 +570,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			ncChain->appendBranch(nc);
 			return ncChain;
 		} break;
-		case Operator::cos: {
+		case Operator::cos: { // cos(x) -> diff(x)*(-sin x)
 			Apply *ncChain = new Apply;
 			ncChain->appendBranch(new Operator(Operator::times));
 			ncChain->appendBranch(derivative(var, *c->firstValue()));
@@ -584,7 +584,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			ncChain->appendBranch(negation);
 			return ncChain;
 		} break;
-		case Operator::tan: {
+		case Operator::tan: { //tan(x) -> diff(x)/(cos(x)**2)
 			Apply *ncChain = new Apply;
 			ncChain->appendBranch(new Operator(Operator::divide));
 			ncChain->appendBranch(derivative(var, *c->firstValue()));
@@ -600,7 +600,7 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 			ncChain->appendBranch(nc);
 			return ncChain;
 		} break;
-		case Operator::divide: {
+		case Operator::divide: { //f/g -> (diff(f)*g-f*diff(g))/g**2
 			Object *f, *g; //referring to f/g
 			f=*c->firstValue();
 			g=*(c->firstValue()+1);
@@ -633,14 +633,14 @@ Object* Analyzer::derivative(const QString &var, const Apply* c)
 // 			qDebug() << "iei!" << cmin->toString();
 			return nc;
 		} break;
-		case Operator::ln: {
+		case Operator::ln: { //ln(x) -> diff(x)/x
 			Apply *nc = new Apply;
 			nc->appendBranch(new Operator(Operator::divide));
 			nc->appendBranch(derivative(var, *c->firstValue()));
 			nc->appendBranch((*c->firstValue())->copy());
 			return nc;
 		} break;
-		case Operator::log: {
+		case Operator::log: { //log(x) -> diff(x)/(ln(10)*x)
 			Apply *nc = new Apply;
 			nc->appendBranch(new Operator(Operator::divide));
 			nc->appendBranch(derivative(var, *c->firstValue()));
@@ -818,7 +818,7 @@ Object* Analyzer::operate(const Apply* c)
 			ret = func(*c);
 			break;
 		case Operator::none:
-			ret=calc(*c->firstValue());
+			ret = calc(*c->firstValue());
 			break;
 		case Operator::diff: {
 			//TODO: Make multibvar
