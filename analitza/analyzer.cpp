@@ -432,6 +432,9 @@ Object* Analyzer::derivative(const QString &var, const Object* o)
 	
 	ProvideDerivative v(var);
 	Object* ret = v.run(o);
+	
+	if(!v.isCorrect())
+		m_err += v.errors();
 	return ret;
 }
 
@@ -567,7 +570,9 @@ Object* Analyzer::operate(const Apply* c)
 				bvar->appendBranch(v->copy());
 				cc->appendBranch(bvar);
 			}
-			cc->appendBranch(simp(o));
+			if(isCorrect())
+				o=simp(o);
+			cc->appendBranch(o);
 			ret=cc;
 			
 			Expression::computeDepth(ret);
@@ -1638,7 +1643,8 @@ Expression Analyzer::derivative(const QString& var)
 	
 // 	Q_ASSERT(hasTheVar(QSet<QString>() << var, deriv));
 	Object* o = derivative(var, deriv);
-	o=simp(o);
+	if(isCorrect())
+		o=simp(o);
 	Container* lambda=new Container(Container::lambda);
 	foreach(const QString& dep, vars) {
 		Container* bvar=new Container(Container::bvar);

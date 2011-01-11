@@ -22,6 +22,7 @@
 #include "abstractexpressiontransformer.h"
 #include <QList>
 #include <QPair>
+#include <QStringList>
 
 namespace Analitza
 {
@@ -32,10 +33,15 @@ class ProvideDerivative : public AbstractExpressionTransformer
 		ProvideDerivative(const QString& var);
 		Object* run(const Object* o);
 		
-	private:
+		bool isCorrect() const { return m_errors.isEmpty(); }
+		QStringList errors() const { return m_errors; }
 		
+	private:
+		QStringList m_errors;
 		virtual Object* walkApply(const Analitza::Apply* pattern);
 		
+		Object* derivateContentVector(const Vector* v);
+		Object* derivateContentList(const List* v);
 		Object* derivativeContainer(const Container *c);
 		Object* derivativeApply(const Apply *c);
 		

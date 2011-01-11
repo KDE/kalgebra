@@ -24,6 +24,9 @@
 #include "value.h"
 #include "container.h"
 #include "variable.h"
+#include <KLocalizedString>
+#include "list.h"
+#include "vector.h"
 
 using namespace Analitza;
 using namespace AnalitzaUtils;
@@ -63,7 +66,8 @@ ProvideDerivative::ProvideDerivative(const QString& var) : var(var)
 
 Object* ProvideDerivative::run(const Object* o)
 {
-	return walk(makeDiff(o));
+	Object* ret = walk(makeDiff(o));
+	return ret;
 }
 
 Object* ProvideDerivative::walkApply(const Apply* a)
@@ -87,14 +91,32 @@ Object* ProvideDerivative::walkApply(const Apply* a)
 		}
 		Object* ret = 0;
 		if(val->isApply()) ret=derivativeApply(static_cast<Apply*>(val));
-		if(val->isContainer()) ret=derivativeContainer(static_cast<Container*>(val));
+		else if(val->isContainer()) ret=derivativeContainer(static_cast<Container*>(val));
+		else if(val->type()==Object::list) ret=derivateContentList(static_cast<const List*>(val));
+		else if(val->type()==Object::vector) ret=derivateContentVector(static_cast<const Vector*>(val));
 		
-		if(!ret)
+		if(!ret) {
 			ret = a->copy();
+			m_errors += i18n("Could not calculate the derivative for '%1'", ret->toString());
+		}
 		return ret;
 	} else
 		return AbstractExpressionTransformer::walkApply(a);
 }
+
+#define ITERATE(T, args...)\
+Object* ProvideDerivative::derivateContent##T(const T * v)\
+{\
+	T* ret = new T(args);\
+	T::const_iterator it=v->constBegin(), itEnd=v->constEnd();\
+	for(; it!=itEnd; ++it) {\
+		ret->appendBranch(walk(makeDiff(*it)));\
+	}\
+	return ret;\
+}
+
+ITERATE(List);
+ITERATE(Vector, v->size());
 
 Object* ProvideDerivative::derivativeApply(const Apply* c)
 {
