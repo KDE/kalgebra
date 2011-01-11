@@ -47,8 +47,6 @@ class ProvideDerivative : public AbstractExpressionTransformer
 		
 		Object* makeDiff(const Analitza::Object* o) const;
 		
-		typedef QPair<const Object*, const Object*> Transformation;
-		static QList<Transformation> s_transformations;
 		QString var;
 };
 

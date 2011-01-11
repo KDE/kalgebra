@@ -31,7 +31,50 @@
 using namespace Analitza;
 using namespace AnalitzaUtils;
 
-QList<QPair<const Object*, const Object*> > ProvideDerivative::s_transformations;
+struct Transformation
+{
+	Transformation(const Object* first, const Object* second)
+		: first(first), second(second)
+	{}
+	
+	typedef bool (*treeCheck)(const Object* o);
+	
+	Transformation(const Object* first, const Object* second, const QMap<QString, treeCheck>& conditions)
+		: first(first), second(second), conditions(conditions)
+	{}
+	
+	~Transformation() { delete first; delete second; }
+	
+	Object* applyTransformation(const Object* input) const {
+		QMap<QString, const Object*> matchedValues;
+		bool match = first->matches(input, &matchedValues);
+		
+// 		qDebug() << "beeeeee" << a->toString() << t.first->toString() << match;
+		if(match) {
+			bool satisfied=true;
+			for(QMap<QString, treeCheck>::const_iterator it=conditions.constBegin(), itEnd=conditions.constEnd(); satisfied && it!=itEnd; ++it) {
+				Q_ASSERT(matchedValues.contains(it.key()));
+				const Object* value = matchedValues.value(it.key());
+				
+				satisfied = it.value()(value);
+			}
+			
+			if(satisfied) {
+				SubstituteExpression exp;
+				Object* obj=exp.run(second, matchedValues);
+// 				qDebug() << "match!";
+				return obj;
+			}
+		}
+		return 0;
+	}
+	
+	const Object* first, *second;
+	QMap<QString, treeCheck> conditions;
+};
+
+
+QList<Transformation*> s_transformations;
 
 const Object* parse(const QString& exp)
 {
@@ -51,16 +94,26 @@ const Object* parse(const QString& exp)
 	return tree;
 }
 
+bool independentTree(const Object* o)
+{
+	return !hasVars(o);
+}
+
 ProvideDerivative::ProvideDerivative(const QString& var) : var(var)
 {
 	if(s_transformations.isEmpty()) {
-		s_transformations += qMakePair(parse("diff(x:x)"), parse("1"));
-		s_transformations += qMakePair(parse("diff(sin(p):x)"), parse("diff(p:x)*cos(p)"));
-		s_transformations += qMakePair(parse("diff(cos(p):x)"), parse("diff(p:x)*(-sin p)"));
-		s_transformations += qMakePair(parse("diff(tan(p):x)"), parse("diff(p:x)/(cos(p)**2)"));
-		s_transformations += qMakePair(parse("diff(f/g:x)"), parse("(diff(f:x)*g-f*diff(g:x))/g**2"));
-		s_transformations += qMakePair(parse("diff(ln(p):x)"), parse("diff(p:x)/p"));
-		s_transformations += qMakePair(parse("diff(log(p):x)"), parse("diff(p:x)/(ln(10)*p)"));
+		QMap<QString, Transformation::treeCheck> nat;
+		nat.insert("Real", independentTree);
+		
+		s_transformations += new Transformation(parse("diff(x:x)"), parse("1"));
+		s_transformations += new Transformation(parse("diff(sin(p):x)"), parse("diff(p:x)*cos(p)"));
+		s_transformations += new Transformation(parse("diff(cos(p):x)"), parse("diff(p:x)*(-sin p)"));
+		s_transformations += new Transformation(parse("diff(tan(p):x)"), parse("diff(p:x)/(cos(p)**2)"));
+		s_transformations += new Transformation(parse("diff(f/g:x)"), parse("(diff(f:x)*g-f*diff(g:x))/g**2"));
+		s_transformations += new Transformation(parse("diff(ln(p):x)"), parse("diff(p:x)/p"));
+		s_transformations += new Transformation(parse("diff(log(p):x)"), parse("diff(p:x)/(ln(10)*p)"));
+		s_transformations += new Transformation(parse("diff(f**Real:x)"), parse("Real*diff(f:x)*f**(Real-1)"), nat); //this is just a simplification, should be deprecated
+		s_transformations += new Transformation(parse("diff(f**g:x)"), parse("f**g*(diff(g:x)*ln f+g/f*diff(f:x))"));
 	}
 }
 
@@ -77,17 +130,10 @@ Object* ProvideDerivative::walkApply(const Apply* a)
 		if(!hasTheVar(QSet<QString>() << var, val))
 			return new Cn(0.);
 		
-		foreach(const Transformation& t, s_transformations) {
-			QMap<QString, const Object*> matchedValues;
-			bool match = t.first->matches(a, &matchedValues);
-			
-// 			qDebug() << "beeeeee" << a->toString() << t.first->toString() << match;
-			if(match) {
-				SubstituteExpression exp;
-				Object* obj=exp.run(t.second, matchedValues);
-// 				qDebug() << "match!";
-				return walk(obj);
-			}
+		foreach(Transformation* t, s_transformations) {
+			Object* newTree = t->applyTransformation(a);
+			if(newTree)
+				return walk(newTree);
 		}
 		Object* ret = 0;
 		if(val->isApply()) ret=derivativeApply(static_cast<Apply*>(val));
@@ -154,60 +200,6 @@ Object* ProvideDerivative::derivativeApply(const Apply* c)
 				nx->appendBranch(neach);
 			}
 			return nx;
-		} break;
-		case Operator::power: {
-			if(hasTheVar(QSet<QString>() << var, c->m_params[1])) {
-				//http://en.wikipedia.org/wiki/Table_of_derivatives
-				//else [if f(x)**g(x)] -> (e**(g(x)*ln f(x)))'
-				Apply *nc = new Apply;
-				nc->appendBranch(new Operator(Operator::times));
-				nc->appendBranch(c->copy());
-				Apply *nAss = new Apply;
-				nAss->appendBranch(new Operator(Operator::plus));
-				nc->appendBranch(nAss);
-				
-				Apply *nChain1 = new Apply;
-				nChain1->appendBranch(new Operator(Operator::times));
-				nChain1->appendBranch(walk(makeDiff(*c->firstValue())));
-				
-				Apply *cDiv = new Apply;
-				cDiv->appendBranch(new Operator(Operator::divide));
-				cDiv->appendBranch((*(c->firstValue()+1))->copy());
-				cDiv->appendBranch((*c->firstValue())->copy());
-				nChain1->appendBranch(cDiv);
-				
-				Apply *nChain2 = new Apply;
-				nChain2->appendBranch(new Operator(Operator::times));
-				nChain2->appendBranch(walk(makeDiff(*(c->firstValue()+1))));
-				
-				Apply *cLog = new Apply;
-				cLog->appendBranch(new Operator(Operator::ln));
-				cLog->appendBranch((*c->firstValue())->copy());
-				nChain2->appendBranch(cLog);
-				
-				nAss->appendBranch(nChain1);
-				nAss->appendBranch(nChain2);
-				
-				return nc;
-			} else {
-				Apply *cx = new Apply;
-				cx->appendBranch(new Operator(Operator::times));
-				cx->appendBranch(c->m_params[1]->copy());
-				cx->appendBranch(walk(makeDiff(*c->firstValue())));
-				
-				Apply* nc= new Apply;
-				nc->appendBranch(new Operator(Operator::power));
-				nc->appendBranch(c->m_params[0]->copy());
-				cx->appendBranch(nc);
-				
-				Apply *degree = new Apply;
-				degree->appendBranch(new Operator(Operator::minus));
-				degree->appendBranch(c->m_params[1]->copy());
-				degree->appendBranch(new Cn(1.));
-				nc->appendBranch(degree);
-				
-				return cx;
-			}
 		} break;
 		default:
 			break;
