@@ -8,6 +8,10 @@ set( analitzatest_SRCS analitzatest.cpp)
 kde4_add_unit_test(analitzatest ${analitzatest_SRCS})
 target_link_libraries(analitzatest ${testLibs})
 
+set( matchingtest_SRCS matchingtest.cpp ../substituteexpression.cpp)
+kde4_add_unit_test(matchingtest ${matchingtest_SRCS})
+target_link_libraries(matchingtest ${testLibs})
+
 set( expressiontest_SRCS expressiontest.cpp)
 kde4_add_unit_test(expressiontest ${expressiontest_SRCS})
 target_link_libraries(expressiontest ${testLibs})

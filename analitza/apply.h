@@ -50,7 +50,13 @@ class ANALITZA_EXPORT Apply : public Object
 		
 		void appendBranch(Object* o);
 		
+		/** Adds @p bvar into the list of bvars */
+		void addBVar(Analitza::Ci* bvar);
+		
+		/** Returns whether that apply has any bvar */
 		bool hasBVars() const { return !m_bvars.isEmpty(); }
+		
+		/** Returns the apply's bvars names */
 		QStringList bvarStrings() const;
 		Object* ulimit() const { return m_ulimit; }
 		Object* dlimit() const { return m_dlimit; }

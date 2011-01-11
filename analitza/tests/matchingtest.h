@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,53 +16,22 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "variable.h"
-#include "expressionwriter.h"
-#include "analitzautils.h"
 
-using namespace Analitza;
+#ifndef MATCHINGTEST_H
+#define MATCHINGTEST_H
 
-Ci::Ci(const QString& b)
-	: Object(variable), m_name(b), m_function(false), m_depth(-1)
+#include <QObject>
+
+
+class MatchingTest : public QObject
 {
-	Q_ASSERT(!b.isEmpty());
-}
+	Q_OBJECT
+	private slots:
+		void testCompareTrees_data();
+		void testCompareTrees();
+		
+		void testSubstitutions_data();
+		void testSubstitutions();
+};
 
-Ci::~Ci()
-{}
-
-Ci* Ci::copy() const
-{
-	Ci *c = new Ci(m_name);
-	c->m_function = m_function;
-	c->m_depth = m_depth;
-	return c;
-}
-
-QString Ci::visit(ExpressionWriter* e) const
-{
-	return e->accept(this);
-}
-
-QString Ci::toMathML() const
-{
-	if(m_function)
-		return QString("<ci type='function'>%1</ci>").arg(m_name);
-	else
-		return QString("<ci>%1</ci>").arg(m_name);
-}
-
-bool Ci::matches(const Object* exp, QMap<QString, const Object*>* found) const
-{
-	bool ret=false;
-	if(found->contains(m_name)) {
-		const Object* v=found->value(m_name);
-		Q_ASSERT(v);
-		ret=AnalitzaUtils::equalTree(exp, v);
-	} else {
-		found->insert(m_name, exp);
-		ret=true;
-	}
-// 	qDebug() << "maaatch" << toString() << exp->toString() << ret;
-	return ret;
-}
+#endif // MATCHINGTEST_H

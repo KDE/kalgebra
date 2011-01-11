@@ -65,11 +65,6 @@ Q_OBJECT
 		void testTypeUncorrection_data();
 		void testTypeUncorrection();
 		
-		void testCompareTrees_data();
-		void testCompareTrees();
-		
-// 		void testJumps_data();
-// 		void testJumps();
 		void cleanupTestCase();
 	private:
 		

@@ -52,7 +52,7 @@ class ANALITZA_EXPORT Ci : public Object
 		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool matches(const Object* pattern, QMap<QString, const Object*>* found) const;
-		virtual Object* copy() const;
+		Ci* copy() const;
 		
 		void setBVarDepth(int depth) { m_depth = depth; }
 		int depth() const { return m_depth; }
