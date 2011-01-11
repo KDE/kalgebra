@@ -17,41 +17,32 @@
  *************************************************************************************/
 
 
-#ifndef SUBSTITUTEEXPRESSION_H
-#define SUBSTITUTEEXPRESSION_H
-
-#include <QMap>
-#include <QStringList>
-#include "abstractexpressiontransformer.h"
+#ifndef ABSTRACTEXPRESSIONTRANSFORMER_H
+#define ABSTRACTEXPRESSIONTRANSFORMER_H
 
 namespace Analitza
 {
 
-class Operator;
-
-class Object;
 class Ci;
-class Cn;
-class Container;
 class Vector;
+class Container;
 class List;
 class Apply;
+class Object;
 
-class SubstituteExpression : public AbstractExpressionTransformer
+class AbstractExpressionTransformer
 {
 	public:
-		Object* run(const Object* pattern, const QMap<QString, const Object*>& values);
+		virtual ~AbstractExpressionTransformer();
 		
-	private:
-		Object* walkApply(const Apply* pattern);
-		Object* walkVariable(const Ci* pattern);
-		
-		QString solveRename(const QString& name) const;
-		
-		QMap<QString, const Object*> m_values;
-		QMap<QString, QString> m_renames;
-		QStringList m_bvars;
+		virtual Object* walk(const Object* o);
+		virtual Object* walkApply(const Apply* o);
+		virtual Object* walkVariable(const Ci* o);
+		virtual Object* walkList(const List* o);
+		virtual Object* walkVector(const Vector* o);
+		virtual Object* walkContainer(const Container* o);
 };
 
 }
-#endif // SUBSTITUTEEXPRESSION_H
+
+#endif // ABSTRACTEXPRESSIONWALKER_H

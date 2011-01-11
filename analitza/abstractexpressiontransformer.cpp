@@ -16,52 +16,68 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "substituteexpression.h"
-#include <QString>
-#include "object.h"
-#include "variable.h"
+
+#include "abstractexpressiontransformer.h"
+#include "list.h"
+#include "container.h"
+#include "vector.h"
 #include "apply.h"
-#include "pushvalue.h"
+#include "variable.h"
 
 using namespace Analitza;
 
-Object* SubstituteExpression::run(const Object* pattern, const QMap<QString, const Object*>& values)
+AbstractExpressionTransformer::~AbstractExpressionTransformer()
+{}
+
+Object* AbstractExpressionTransformer::walk(const Object* pattern)
 {
-	m_values=values;
+	if(!pattern)
+		return 0;
 	
-	return walk(pattern);
+	switch(pattern->type()) {
+		case Object::apply:
+			return walkApply(static_cast<const Apply*>(pattern));
+		case Object::variable:
+			return walkVariable(static_cast<const Ci*>(pattern));
+		case Object::container:
+			return walkContainer(static_cast<const Container*>(pattern));
+		case Object::list:
+			return walkList(static_cast<const List*>(pattern));
+		case Object::vector:
+			return walkVector(static_cast<const Vector*>(pattern));
+		case Object::oper:
+		case Object::value:
+			return pattern->copy();
+		case Object::none:
+			break;
+	}
+	
+	Q_ASSERT(false);
+	return 0;
 }
 
-QString SubstituteExpression::solveRename(const QString& name) const
-{
-	return m_renames.contains(name) ? m_renames[name] : name;
+#define ITERATION_WALKER(T, args...)\
+Object* AbstractExpressionTransformer::walk##T(const T* pattern)\
+{\
+	T* ret = new T(args);\
+	T ::const_iterator it=pattern->constBegin(), itEnd=pattern->constEnd();\
+	for(; it!=itEnd; ++it) {\
+		ret->appendBranch(walk(*it));\
+	}\
+	return ret;\
 }
 
-Object* SubstituteExpression::walkApply(const Apply* pattern)
+ITERATION_WALKER(List);
+ITERATION_WALKER(Vector, pattern->size());
+ITERATION_WALKER(Container, pattern->containerType());
+
+Object* AbstractExpressionTransformer::walkApply(const Analitza::Apply* pattern)
 {
 	Apply* ret = new Apply;
 	Apply::const_iterator it=pattern->firstValue(), itEnd=pattern->constEnd();
 	ret->ulimit()=walk(pattern->ulimit());
 	ret->dlimit()=walk(pattern->dlimit());
 	ret->domain()=walk(pattern->domain());
-	
-	PushValue<QStringList> v(m_bvars, m_bvars);
-	QList<Ci*> bvars = pattern->bvarCi();
-	foreach(Ci* bvar, bvars) {
-		Ci* nbvar = bvar->copy();
-		QString name = bvar->name();
-		
-		if(m_values.contains(name) && !m_renames.contains(name)) {
-			const Object* val = m_values.value(bvar->name());
-			Q_ASSERT(val->type()==Object::variable);
-			QString newname = static_cast<const Ci*>(val)->name();
-			m_renames.insert(name, newname);
-		}
-		
-		nbvar->setName(solveRename(name));
-		ret->addBVar(nbvar);
-		m_bvars.append(nbvar->name());
-	}
 	
 	if(pattern->firstOperator().isCorrect()) {
 		Operator op = pattern->firstOperator();
@@ -74,13 +90,7 @@ Object* SubstituteExpression::walkApply(const Apply* pattern)
 	return ret;
 }
 
-Object* SubstituteExpression::walkVariable(const Ci* pattern)
+Object* AbstractExpressionTransformer::walkVariable(const Analitza::Ci* pattern)
 {
-	QString name = solveRename(pattern->name());
-	QMap<QString, const Object*>::const_iterator it = m_values.constFind(name);
-	
-	if(it!=m_values.constEnd() /*&& !m_bvars.contains(name)*/)
-		return it.value()->copy();
-	else
-		return pattern->copy(); //Error?
+	return pattern->copy();
 }

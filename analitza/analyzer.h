@@ -168,8 +168,6 @@ class ANALITZA_EXPORT Analyzer
 		Object* simpPiecewise(Container* c);
 		
 		Object* derivative(const QString &var, const Object*);
-		Object* derivative(const QString &var, const Container*);
-		Object* derivative(const QString &var, const Apply*);
 		void levelOut(Apply *c, Apply *ob, QList<Object*>::iterator &it);
 		Object* boundedOperation(const Apply & n, const Operator & t, Object* initial);
 		

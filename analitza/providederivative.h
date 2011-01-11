@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2007 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -17,41 +17,34 @@
  *************************************************************************************/
 
 
-#ifndef SUBSTITUTEEXPRESSION_H
-#define SUBSTITUTEEXPRESSION_H
-
-#include <QMap>
-#include <QStringList>
+#ifndef PROVIDEDERIVATIVE_H
+#define PROVIDEDERIVATIVE_H
 #include "abstractexpressiontransformer.h"
+#include <QList>
+#include <QPair>
 
 namespace Analitza
 {
 
-class Operator;
-
-class Object;
-class Ci;
-class Cn;
-class Container;
-class Vector;
-class List;
-class Apply;
-
-class SubstituteExpression : public AbstractExpressionTransformer
+class ProvideDerivative : public AbstractExpressionTransformer
 {
 	public:
-		Object* run(const Object* pattern, const QMap<QString, const Object*>& values);
+		ProvideDerivative(const QString& var);
+		Object* run(const Object* o);
 		
 	private:
-		Object* walkApply(const Apply* pattern);
-		Object* walkVariable(const Ci* pattern);
 		
-		QString solveRename(const QString& name) const;
+		virtual Object* walkApply(const Analitza::Apply* pattern);
 		
-		QMap<QString, const Object*> m_values;
-		QMap<QString, QString> m_renames;
-		QStringList m_bvars;
+		Object* derivativeContainer(const Container *c);
+		Object* derivativeApply(const Apply *c);
+		
+		Object* makeDiff(const Analitza::Object* o) const;
+		
+		typedef QPair<const Object*, const Object*> Transformation;
+		static QList<Transformation> s_transformations;
+		QString var;
 };
 
 }
-#endif // SUBSTITUTEEXPRESSION_H
+#endif // PROVIDEDERIVATIVE_H

@@ -139,6 +139,7 @@ bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) cons
 	
 	QList<Ci*> vars=bvarCi(), cvars = c->bvarCi();
 	bool matching=vars.size()==cvars.size();
+	matching &= m_op->operatorType()==c->m_op->operatorType();
 	for(QList<Ci*>::const_iterator it=vars.constBegin(), cit=cvars.constBegin(), itEnd=vars.constEnd(); it!=itEnd; ++it) {
 		matching &= (*it)->matches(*cit, found);
 	}

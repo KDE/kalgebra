@@ -3,6 +3,8 @@ project(analitza)
 add_subdirectory(tests)
 
 set(analitza_SRCS
+	providederivative.cpp
+	abstractexpressiontransformer.cpp
 	expression.cpp
 	expressionwriter.cpp
 	stringexpressionwriter.cpp

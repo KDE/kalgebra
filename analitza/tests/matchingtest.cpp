@@ -43,6 +43,8 @@ void MatchingTest::testCompareTrees_data()
 	QTest::newRow("vector") << true << "vector{x,sin(x),x}" << "vector{2+2,sin(2+2),2+2}" << outputs;
 	QTest::newRow("multiple_wrong") << false << "sin(x)+sin(x)" << "sin(2+2)+sin(2+3)" << outputs;
 	QTest::newRow("multiple_vars") << true  << "sin(x)+sin(y)" << "sin(2+2)+sin(2+3)" << outputsXY;
+	QTest::newRow("diff") << true  << "diff(x:x)" << "diff(x:x)" << (QStringList("x") << "x");
+	QTest::newRow("correct boundings") << false << "diff(x**2:x)" << "diff(x:x)" << (QStringList("x") << "x");
 	
 	QTest::newRow("bounded") << true  << "diff(sum(p : w=a..b))" << "diff(sum(x+x:x=0..10))" << (QStringList() <<
 		"p" << "x+x" << "w" << "x" << "a" << "0" << "b" << "10");

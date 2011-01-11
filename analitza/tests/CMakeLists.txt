@@ -8,7 +8,7 @@ set( analitzatest_SRCS analitzatest.cpp)
 kde4_add_unit_test(analitzatest ${analitzatest_SRCS})
 target_link_libraries(analitzatest ${testLibs})
 
-set( matchingtest_SRCS matchingtest.cpp ../substituteexpression.cpp)
+set( matchingtest_SRCS matchingtest.cpp ../substituteexpression.cpp ../abstractexpressiontransformer.cpp)
 kde4_add_unit_test(matchingtest ${matchingtest_SRCS})
 target_link_libraries(matchingtest ${testLibs})
 
