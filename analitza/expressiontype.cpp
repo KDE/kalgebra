@@ -213,6 +213,7 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 			ret&=a.canReduceTo(b);
 			
 			if(ret && a.type()==Any) {
+				b.clearAssumptions();
 				reductionsApplied.insert(a.anyValue(), b);
 			}
 		}
