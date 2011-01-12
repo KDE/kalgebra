@@ -27,6 +27,7 @@
 #include <KLocalizedString>
 #include "list.h"
 #include "vector.h"
+#include <QtCore/qsharedpointer.h>
 
 using namespace Analitza;
 using namespace AnalitzaUtils;
@@ -42,8 +43,6 @@ struct Transformation
 	Transformation(const Object* first, const Object* second, const QMap<QString, treeCheck>& conditions)
 		: first(first), second(second), conditions(conditions)
 	{}
-	
-	~Transformation() { delete first; delete second; }
 	
 	Object* applyTransformation(const Object* input) const {
 		QMap<QString, const Object*> matchedValues;
@@ -61,7 +60,7 @@ struct Transformation
 			
 			if(satisfied) {
 				SubstituteExpression exp;
-				Object* obj=exp.run(second, matchedValues);
+				Object* obj=exp.run(second.data(), matchedValues);
 // 				qDebug() << "match!";
 				return obj;
 			}
@@ -69,12 +68,12 @@ struct Transformation
 		return 0;
 	}
 	
-	const Object* first, *second;
+	QSharedPointer<const Object> first, second;
 	QMap<QString, treeCheck> conditions;
 };
 
 
-QList<Transformation*> s_transformations;
+QList<Transformation> s_transformations;
 
 const Object* parse(const QString& exp)
 {
@@ -105,15 +104,15 @@ ProvideDerivative::ProvideDerivative(const QString& var) : var(var)
 		QMap<QString, Transformation::treeCheck> nat;
 		nat.insert("Real", independentTree);
 		
-		s_transformations += new Transformation(parse("diff(x:x)"), parse("1"));
-		s_transformations += new Transformation(parse("diff(sin(p):x)"), parse("diff(p:x)*cos(p)"));
-		s_transformations += new Transformation(parse("diff(cos(p):x)"), parse("diff(p:x)*(-sin p)"));
-		s_transformations += new Transformation(parse("diff(tan(p):x)"), parse("diff(p:x)/(cos(p)**2)"));
-		s_transformations += new Transformation(parse("diff(f/g:x)"), parse("(diff(f:x)*g-f*diff(g:x))/g**2"));
-		s_transformations += new Transformation(parse("diff(ln(p):x)"), parse("diff(p:x)/p"));
-		s_transformations += new Transformation(parse("diff(log(p):x)"), parse("diff(p:x)/(ln(10)*p)"));
-		s_transformations += new Transformation(parse("diff(f**Real:x)"), parse("Real*diff(f:x)*f**(Real-1)"), nat); //this is just a simplification, should be deprecated
-		s_transformations += new Transformation(parse("diff(f**g:x)"), parse("f**g*(diff(g:x)*ln f+g/f*diff(f:x))"));
+		s_transformations += Transformation(parse("diff(x:x)"), parse("1"));
+		s_transformations += Transformation(parse("diff(sin(p):x)"), parse("diff(p:x)*cos(p)"));
+		s_transformations += Transformation(parse("diff(cos(p):x)"), parse("diff(p:x)*(-sin p)"));
+		s_transformations += Transformation(parse("diff(tan(p):x)"), parse("diff(p:x)/(cos(p)**2)"));
+		s_transformations += Transformation(parse("diff(f/g:x)"), parse("(diff(f:x)*g-f*diff(g:x))/g**2"));
+		s_transformations += Transformation(parse("diff(ln(p):x)"), parse("diff(p:x)/p"));
+		s_transformations += Transformation(parse("diff(log(p):x)"), parse("diff(p:x)/(ln(10)*p)"));
+		s_transformations += Transformation(parse("diff(f**Real:x)"), parse("Real*diff(f:x)*f**(Real-1)"), nat); //this is just a simplification, should be deprecated
+		s_transformations += Transformation(parse("diff(f**g:x)"), parse("f**g*(diff(g:x)*ln f+g/f*diff(f:x))"));
 	}
 }
 
@@ -130,10 +129,13 @@ Object* ProvideDerivative::walkApply(const Apply* a)
 		if(!hasTheVar(QSet<QString>() << var, val))
 			return new Cn(0.);
 		
-		foreach(Transformation* t, s_transformations) {
-			Object* newTree = t->applyTransformation(a);
-			if(newTree)
-				return walk(newTree);
+		foreach(const Transformation& t, s_transformations) {
+			Object* newTree = t.applyTransformation(a);
+			if(newTree) {
+				Object* ret=walk(newTree);
+				delete newTree;
+				return ret;
+			}
 		}
 		Object* ret = 0;
 		if(val->isApply()) ret=derivativeApply(static_cast<Apply*>(val));

@@ -563,6 +563,7 @@ Object* Analyzer::operate(const Apply* c)
 			
 			//We construct the lambda
 			Object* o=derivative(bvars[0]->name(), *c->firstValue());
+			o=simp(o);
 			
 			Container* cc=new Container(Container::lambda);
 			foreach(const Ci* v, bvars) {
@@ -570,8 +571,7 @@ Object* Analyzer::operate(const Apply* c)
 				bvar->appendBranch(v->copy());
 				cc->appendBranch(bvar);
 			}
-			if(isCorrect())
-				o=simp(o);
+			
 			cc->appendBranch(o);
 			ret=cc;
 			
@@ -911,6 +911,8 @@ void Analyzer::iterateAndSimp(T* v)
 Object* Analyzer::simp(Object* root)
 {
 	Q_ASSERT(root && root->type()!=Object::none);
+	if(!isCorrect())
+		return root;
 	
 	if(!root->isContainer() && !hasVars(root))
 	{
@@ -1643,8 +1645,7 @@ Expression Analyzer::derivative(const QString& var)
 	
 // 	Q_ASSERT(hasTheVar(QSet<QString>() << var, deriv));
 	Object* o = derivative(var, deriv);
-	if(isCorrect())
-		o=simp(o);
+	o=simp(o);
 	Container* lambda=new Container(Container::lambda);
 	foreach(const QString& dep, vars) {
 		Container* bvar=new Container(Container::bvar);

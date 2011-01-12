@@ -466,6 +466,9 @@ void AnalitzaTest::testUncorrection_data()
 	script << "a:=b";
 	script << "b:=a";
 	QTest::newRow("var dependency cycle") << script;
+	
+	
+	QTest::newRow("unsupported diff") << QStringList("diff(arccos(x):x)");
 }
 
 void AnalitzaTest::testUncorrection()
