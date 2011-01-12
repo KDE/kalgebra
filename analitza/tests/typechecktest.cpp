@@ -26,24 +26,26 @@
 
 QTEST_KDEMAIN_CORE( TypeCheckTest )
 
+using namespace Analitza;
+
 TypeCheckTest::TypeCheckTest(QObject* parent)
 	: QObject(parent)
 	, v(new Analitza::Variables)
 {
-	v->modify("fnum", Analitza::Expression("x->3"));
-	v->modify("fplus", Analitza::Expression("x->x+x"));
-	v->modify("tovector", Analitza::Expression("x->vector{x,x}"));
-	v->modify("fnull", Analitza::Expression("x->x"));
-	v->modify("number", Analitza::Expression("3"));
-	v->modify("fwrong", Analitza::Expression("x->piecewise { 1>2 ? fwrong(x), ?fwrong(x+1) }"));
-// 	v->modify("frec", Analitza::Expression("x->piecewise { 3>3? frec(x-1), ? 1}"));
-	v->modify("frec", Analitza::Expression("x->piecewise { frec(cos(x))>3? 2, ? 1}"));
-	v->modify("fact", Analitza::Expression("n->piecewise { n=1?1, ? n*fact(n-1) }"));
-	v->modify("golambda", Analitza::Expression("(func, param)->func(param)"));
-	v->modify("gonum", Analitza::Expression("func->func(1, 2)"));
+	v->modify("fnum", Expression("x->3"));
+	v->modify("fplus", Expression("x->x+x"));
+	v->modify("tovector", Expression("x->vector{x,x}"));
+	v->modify("fnull", Expression("x->x"));
+	v->modify("number", Expression("3"));
+	v->modify("fwrong", Expression("x->piecewise { 1>2 ? fwrong(x), ?fwrong(x+1) }"));
+// 	v->modify("frec", Expression("x->piecewise { 3>3? frec(x-1), ? 1}"));
+	v->modify("frec", Expression("x->piecewise { frec(cos(x))>3? 2, ? 1}"));
+	v->modify("fact", Expression("n->piecewise { n=1?1, ? n*fact(n-1) }"));
+	v->modify("golambda", Expression("(func, param)->func(param)"));
+	v->modify("gonum", Expression("func->func(1, 2)")); // (num -> num -> *) -> *
 	
-	v->modify("fib", Analitza::Expression("n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
-	v->modify("fv", Analitza::Expression("vector{x->sin(x), x->cos(x)}"));
+	v->modify("fib", Expression("n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
+	v->modify("fv", Expression("vector{x->sin(x), x->cos(x)}"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -128,10 +130,10 @@ void TypeCheckTest::testConstruction()
 	QFETCH(QString, input);
 	QFETCH(QString, output);
 	
-	Analitza::Expression e(input);
+	Expression e(input);
 	if(!e.isCorrect()) qDebug() << "errors: " << e.error();
 	QVERIFY(e.isCorrect());
-	Analitza::ExpressionTypeChecker t(v);
+	ExpressionTypeChecker t(v);
 	
 	QCOMPARE(t.check(e).simplifyStars().toString(), output);
 	if(!t.isCorrect()) qDebug() << "errors: " << t.errors();
@@ -142,13 +144,13 @@ void TypeCheckTest::testUncorrection()
 {
 	QFETCH(QString, input);
 	
-	Analitza::Expression e(input);
+	Expression e(input);
 	if(!e.isCorrect())
 		qDebug() << "wrong exp:" << e.error();
 	QVERIFY(e.isCorrect());
-	Analitza::ExpressionTypeChecker t(v);
+	ExpressionTypeChecker t(v);
 	
-	Analitza::ExpressionType result=t.check(e);
+	ExpressionType result=t.check(e);
 	
 	if(t.isCorrect())
 		qDebug() << "wrong type:" << result.toString();
@@ -179,4 +181,32 @@ void TypeCheckTest::testUncorrection_data()
 // 	QTest::newRow("lambda param count") << "(x->x)(x,x)";
 	
 	//TODO: Add invalid recursive call
+}
+
+Q_DECLARE_METATYPE(ExpressionType);
+
+void TypeCheckTest::testReduction()
+{
+	QFETCH(ExpressionType, type);
+	QFETCH(ExpressionType, reduced);
+	QFETCH(bool, correct);
+	
+	QCOMPARE(type.canReduceTo(reduced), correct);
+}
+
+void TypeCheckTest::testReduction_data()
+{
+	QTest::addColumn<ExpressionType>("type");
+	QTest::addColumn<ExpressionType>("reduced");
+	QTest::addColumn<bool>("correct");
+	
+	ExpressionType lambdaStarStar(ExpressionType::Lambda); // * -> *
+	lambdaStarStar.addParameter(ExpressionType(ExpressionType::Any, 1));
+	lambdaStarStar.addParameter(ExpressionType(ExpressionType::Any, 1));
+	
+	ExpressionType lambdaNumVector2(ExpressionType::Lambda); // num -> <num, 2>
+	lambdaNumVector2.addParameter(ExpressionType(ExpressionType::Value));
+	lambdaNumVector2.addParameter(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2));
+	
+	QTest::newRow("sss") << lambdaStarStar << lambdaNumVector2 << false;
 }

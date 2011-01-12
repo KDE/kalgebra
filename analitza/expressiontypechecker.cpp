@@ -529,13 +529,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					
 					for(int i=0; valid && i<opt.parameters().size()-1; i++) {
 						c->m_params[i+1]->visit(this);
-						
-						if(!opt.parameters()[i].canReduceTo(current)) {
-							continue;
-						}
-						
 						current.reduce(opt.parameters()[i]);
-// 						qDebug() << "ooooopt" << opt.parameters()[i] << current;
 						
 						starToType=computeStars(starToType, opt.parameters()[i], current);
 						

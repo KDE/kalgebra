@@ -207,14 +207,20 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 		}
 	} else if(m_type==Lambda && m_contained.size()==type.m_contained.size()) {
 		ret = true;
+		QMap<int, ExpressionType> reductionsApplied;
 		for(int i=0; ret && i<m_contained.size(); i++) {
-			ret&=m_contained[i].canReduceTo(type.m_contained[i]) || type.m_contained[i].canReduceTo(m_contained[i]);
+			ExpressionType a=m_contained[i].starsToType(reductionsApplied), b=type.m_contained[i].starsToType(reductionsApplied);
+			ret&=a.canReduceTo(b);
+			
+			if(ret && a.type()==Any) {
+				reductionsApplied.insert(a.anyValue(), b);
+			}
 		}
 	} else if(m_type==Vector && type.m_type==Vector) {
 		ret  = m_size<0 || type.m_size<0 || m_size==type.m_size;
-		ret &= contained().canReduceTo(type.contained()) || type.contained().canReduceTo(contained());
+		ret &= contained().canReduceTo(type.contained());
 	} else if(m_type==List && type.m_type==List) {
-		ret = contained().canReduceTo(type.contained()) || type.contained().canReduceTo(contained());
+		ret = contained().canReduceTo(type.contained());
 	}
 	
 // 	qDebug() << "OOOOOOOOOOOOO" << *this << type << ret;
@@ -326,7 +332,7 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 	QList<ExpressionType> newcontained;
 	
 	foreach(const ExpressionType& t, m_contained) {
-		if(t.canReduceTo(type))
+		if(type.canReduceTo(t))
 			newcontained.append(t);
 	}
 	

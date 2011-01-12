@@ -38,6 +38,8 @@ class TypeCheckTest : public QObject
 		void testUncorrection();
 		void testUncorrection_data();
 		
+		void testReduction();
+		void testReduction_data();
 	private:
 		Analitza::Variables* v;
 };
