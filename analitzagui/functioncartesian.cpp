@@ -71,6 +71,7 @@ struct FunctionY : public FunctionImpl
 	QStringList boundings() const { return supportedBVars(); }
 	void calculateValues(double, double);
 	static QStringList examples() { return QStringList("x->x**sin x"); }
+	void optimizeJump();
 	
 	Analitza::Cn* vx;
 	QVector<Analitza::Object*> m_runStack;
@@ -106,12 +107,7 @@ namespace
 	{
 		static const double delta=3;
 		double diff=p2-p1, diff2=next-p2;
-		bool ret=false;
-		
-		if(diff>0 && diff2<-delta)
-			ret=true;
-		else if(diff<0 && diff2>delta)
-			ret=true;
+		bool ret = (diff>0 && diff2<-delta) || (diff<0 && diff2>delta);
 		
 		return ret;
 	}
@@ -159,12 +155,45 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 				m_jumps.append(points.count()-1);
 				jumping=true;
 			} else if(points.count()>3 && traverse(points[points.count()-3].y(), prevY, y.value())) {
+				optimizeJump();
 				m_jumps.append(points.count()-1);
 				jumping=true;
 			}
 		}
 	}
 // 	qDebug() << "juuuumps" << m_jumps << resolution();
+}
+
+void FunctionY::optimizeJump()
+{
+	QPointF before = points.at(points.count()-2), after=points.last();
+	qreal x1=before.x(), x2=after.x();
+	qreal y1=before.y(), y2=after.y();
+	int iterations=5;
+	
+// 	qDebug() << "+++++++++" << before << after;
+	for(; iterations>0; --iterations) {
+		qreal dist = x2-x1;
+		qreal x=x1+dist/2;
+		
+		vx->setValue(x);
+		qreal y = func.calculateLambda().toReal().value();
+		
+		if(fabs(y1-y)<fabs(y2-y)) {
+			before.setX(x);
+			before.setY(y);
+			x1=x;
+			y1=y;
+		} else {
+			after.setX(x);
+			after.setY(y);
+			x2=x;
+			y2=y;
+		}
+	}
+// 	qDebug() << "---------" << before << after;
+	points[points.count()-2]=before;
+	points.last()=after;
 }
 
 void FunctionY::updatePoints(const QRect& viewport)
