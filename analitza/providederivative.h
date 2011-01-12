@@ -45,8 +45,8 @@ class ProvideDerivative : public AbstractExpressionTransformer
 		Object* derivativeContainer(const Container *c);
 		Object* derivativeApply(const Apply *c);
 		
-		Object* makeDiff(const Analitza::Object* o) const;
-		
+		Apply* makeDiff(Analitza::Object* o) const;
+		void clearDiff(Apply* a);
 		QString var;
 };
 

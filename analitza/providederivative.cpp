@@ -118,7 +118,9 @@ ProvideDerivative::ProvideDerivative(const QString& var) : var(var)
 
 Object* ProvideDerivative::run(const Object* o)
 {
-	Object* ret = walk(makeDiff(o));
+	Apply* a=makeDiff(const_cast<Object*>(o));
+	Object* ret = walk(a);
+	clearDiff(a);
 	return ret;
 }
 
@@ -158,7 +160,9 @@ Object* ProvideDerivative::derivateContent##T(const T * v)\
 	T* ret = new T(args);\
 	T::const_iterator it=v->constBegin(), itEnd=v->constEnd();\
 	for(; it!=itEnd; ++it) {\
-		ret->appendBranch(walk(makeDiff(*it)));\
+		Apply* a=makeDiff(*it);\
+		ret->appendBranch(walk(a));\
+		clearDiff(a);\
 	}\
 	return ret;\
 }
@@ -176,8 +180,11 @@ Object* ProvideDerivative::derivativeApply(const Apply* c)
 			r->appendBranch(new Operator(op));
 			
 			Container::const_iterator it(c->firstValue());
-			for(; it!=c->constEnd(); ++it)
-				r->appendBranch(walk(makeDiff(*it)));
+			for(; it!=c->constEnd(); ++it) {
+				Apply* a=makeDiff(*it);
+				r->appendBranch(walk(a));
+				clearDiff(a);
+			}
 			return r;
 		} break;
 		case Operator::times: {
@@ -192,9 +199,11 @@ Object* ProvideDerivative::derivativeApply(const Apply* c)
 				Apply::const_iterator iobj(c->firstValue());
 				for(; iobj!=c->constEnd(); ++iobj) {
 					Object* o;
-					if(iobj==it)
-						o=walk(makeDiff(*iobj));
-					else
+					if(iobj==it) {
+						Apply* a=makeDiff(*iobj);
+						o=walk(a);
+						clearDiff(a);
+					} else
 						o=(*iobj)->copy();
 					
 					neach->appendBranch(o);
@@ -222,21 +231,23 @@ Object* ProvideDerivative::derivativeContainer(const Container *c)
 			Container *p = (Container *) o;
 			Container *np = new Container(p->containerType());
 			
-			np->m_params += walk(makeDiff(p->m_params[0]));
+			Apply* a=makeDiff(p->m_params[0]);
+			np->m_params += walk(a);
+			clearDiff(a);
 			if(p->m_params.size()>1)
 				np->m_params += p->m_params[1]->copy();
 			newPw->appendBranch(np);
 		}
 		return newPw;
 	} else if(c->containerType()==Container::declare) {
-		Container* obj = new Container(Container::declare);
-		obj->appendBranch(c->m_params.first()->copy());
-		obj->appendBranch(walk(makeDiff(c->m_params.last())));
-		return obj;
+		Q_ASSERT(false);
+		return c->copy();
 	} else {
 		Container *cret = new Container(c->containerType());
 		foreach(Object* o, c->m_params) {
-			cret->appendBranch(walk(makeDiff(o)));
+			Apply* a=makeDiff(o);
+			cret->appendBranch(walk(a));
+			clearDiff(a);
 		}
 		
 		return cret;
@@ -244,13 +255,18 @@ Object* ProvideDerivative::derivativeContainer(const Container *c)
 	return 0;
 }
 
-Object* ProvideDerivative::makeDiff(const Object* o) const
+Apply* ProvideDerivative::makeDiff(Object* o) const
 {
 	Apply* a = new Apply;
 	a->appendBranch(new Operator(Operator::diff));
-	a->appendBranch(o->copy());
+	a->appendBranch(o);
 	a->addBVar(new Ci(var));
 	
 	return a;
 }
 
+void ProvideDerivative::clearDiff(Apply* a)
+{
+	*a->firstValue()=0;
+	delete a;
+}
