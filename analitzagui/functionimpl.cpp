@@ -24,15 +24,8 @@
 
 #include <KDebug>
 
-using std::acos;
-using std::atan;
-using std::fabs;
-using std::cos;
-using std::sin;
-using std::sqrt;
-
-using Analitza::Expression;
-using Analitza::Variables;
+using namespace std;
+using namespace Analitza;
 
 FunctionImpl::FunctionImpl(const Expression& newFunc, Variables* v, double defDl, double defUl)
 	: points(), func(v), m_deriv(0), m_res(0), mUplimit(defUl), mDownlimit(defDl)
@@ -71,20 +64,16 @@ bool FunctionImpl::addValue(const QPointF& p)
 		return false;
 	}
 	
-	//TODO: Think of some optimization if needed
-	bool appended;
-	double slope1=(points[count-1].y()-points[count-2].y())/(points[count-1].x()-points[count-2].x());
-	double slope2=(points[count-1].y()-p.y())/(points[count-1].x()-p.x());
-	if(isSimilar(slope1, slope2) || (p.y()==points[count-1].y() && p.y()==points[count-2].y())) {
-// 		qDebug() << "join" << points[count-2] << points[count-1] << p;
-// 		qDebug() << "because" << slope1 << slope2 << isSimilar(slope1, slope2);
-		points.last()=p;
-		appended=false;
-	} else {
+	double angle1=std::atan2(points[count-1].y()-points[count-2].y(), points[count-1].x()-points[count-2].x());
+	double angle2=std::atan2(p.y()-points[count-1].y(), p.x()-points[count-1].x());
+	
+	bool append=!isSimilar(angle1, angle2);
+	if(append)
 		points.append(p);
-		appended=true;
-	}
-	return appended;
+	else
+		points.last()=p;
+	
+	return append;
 }
 
 void FunctionImpl::setResolution(uint res)
