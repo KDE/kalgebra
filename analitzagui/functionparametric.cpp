@@ -20,10 +20,7 @@
 #include "functionimpl.h"
 #include "functionfactory.h"
 #include "analitza/value.h"
-#include "analitza/vector.h"
-#include <analitza/container.h>
 #include <analitza/expressiontype.h>
-#include <analitza/variable.h>
 
 #include <KDebug>
 #include <KLocale>
@@ -31,7 +28,6 @@
 using Analitza::Expression;
 using Analitza::ExpressionType;
 using Analitza::Variables;
-using Analitza::Vector;
 using Analitza::Object;
 using Analitza::Cn;
 
@@ -129,7 +125,7 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	
 // 	double inv_res= double((ulimit-dlimit)/resolution());
 	double inv_res= 0.01; 
-	double final=ulimit-inv_res;
+// 	double final=ulimit-inv_res;
 	
 		//by percy
 	QRectF vp(viewport);
@@ -143,10 +139,6 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 	
 	vx->setValue(dlimit);
 	Expression res;
-	Object* vo;
-	Vector* v;
-	Cn *x;
-	Cn *y;
 	
 	int i = 0;
 	bool jlock = false;
@@ -155,12 +147,10 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 		vx->setValue(t);
 		res=func.calculateLambda();
 		
-		vo=res.tree();
-		v=static_cast<Vector*>(vo);
-		x=static_cast<Cn*>(v->at(0));
-		y=static_cast<Cn*>(v->at(1));
+		Cn x=res.elementAt(0).toReal();
+		Cn y=res.elementAt(1).toReal();
 		
-		curp = QPointF(x->value(), y->value());
+		curp = QPointF(x.value(), y.value());
 		
 		if (vp.contains(curp))
 		{
@@ -174,10 +164,7 @@ void FunctionParametric::updatePoints(const QRect& viewport)
 		}
 		
 		// 		objectWalker(vo);
-		Q_ASSERT(vo->type()==Object::vector);
-		Q_ASSERT(v->size()==2
-				&& v->at(0)->type()==Object::value
-				&& v->at(1)->type()==Object::value);
+		Q_ASSERT(res.isVector());
 	}
 }
 
@@ -185,9 +172,8 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& point)
 {
 	vx->setValue(0.);
 	Expression res=func.calculateLambda();
-	Object* vo=res.tree();
 
-    if(func.isCorrect() && func.expression().lambdaBody().isVector())
+    Q_ASSERT(func.isCorrect() && func.expression().lambdaBody().isVector());
     {
         Analitza::Analyzer f(func.variables());
         f.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
@@ -255,19 +241,16 @@ QPair<QPointF, QString> FunctionParametric::calc(const QPointF& point)
 
         vx->setValue(t);
 
-        Vector* v2 = static_cast<Vector*>(func.calculateLambda().tree());
-        Analitza::Cn *comp1 = static_cast<Cn*>(v2->at(0));
-        Analitza::Cn *comp2 = static_cast<Cn*>(v2->at(1));
+        Analitza::Cn comp1 = res.elementAt(0).toReal();
+        Analitza::Cn comp2 = res.elementAt(1).toReal();
 
-        return QPair<QPointF, QString>(QPointF(comp1->value(), comp2->value()), QString());
+        return QPair<QPointF, QString>(QPointF(comp1.value(), comp2.value()), QString());
     }
-    else
-        return QPair<QPointF, QString>(point, QString());
 }
 
 QLineF FunctionParametric::derivative(const QPointF& point)
 {
-    if(func.isCorrect() && func.expression().lambdaBody().isVector())
+    Q_ASSERT(func.isCorrect() && func.expression().lambdaBody().isVector());
     {
         Analitza::Analyzer f(func.variables());
         f.setExpression(Analitza::Expression("t->" + func.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
@@ -339,14 +322,12 @@ QLineF FunctionParametric::derivative(const QPointF& point)
 
         vx->setValue(t);
 
-        Vector* v = static_cast<Vector*>(dfunc.calculateLambda().tree());
-        Analitza::Cn *comp1 = static_cast<Cn*>(v->at(0));
-        Analitza::Cn *comp2 = static_cast<Cn*>(v->at(1));
+		Expression exp=dfunc.calculateLambda();
+        Analitza::Cn comp1 = exp.elementAt(0).toReal();
+        Analitza::Cn comp2 = exp.elementAt(1).toReal();
 
-        double m = comp2->value()/comp1->value();
+        double m = comp2.value()/comp1.value();
 
         return slopeToLine(m);
     }
-    else
-        return QLineF();
 }

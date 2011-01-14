@@ -110,7 +110,7 @@ void OperatorsModel::updateInformation()
 	reset();
 }
 
-QString OperatorsModel::sample(Operator oper)
+QString OperatorsModel::sample(const Analitza::Operator& oper)
 {
 	QString funcname=oper.toString();
 	QString bounds;
@@ -134,7 +134,7 @@ QString OperatorsModel::sample(Operator oper)
 	}
 }
 
-QString OperatorsModel::description(Operator o)
+QString OperatorsModel::description(const Analitza::Operator& o)
 {
 	QString s;
 	switch(o.operatorType()) {
@@ -347,7 +347,7 @@ QString OperatorsModel::description(Operator o)
 	return s;
 }
 
-QString OperatorsModel::example(Operator o)
+QString OperatorsModel::example(const Analitza::Operator& o)
 {
 	QString s;
 	

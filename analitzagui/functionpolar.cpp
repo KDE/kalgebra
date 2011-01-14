@@ -20,8 +20,6 @@
 #include "functionimpl.h"
 #include "functionfactory.h"
 #include "analitza/value.h"
-#include <analitza/variable.h>
-#include "analitza/vector.h"
 #include <analitza/expressiontype.h>
 
 #include <KLocale>
@@ -202,17 +200,17 @@ QLineF FunctionPolar::derivative(const QPointF& point)
     Analitza::Analyzer newfunc(func.variables());
     newfunc.setExpression(Analitza::Expression(polart, false));
 
-    if(newfunc.isCorrect() && newfunc.expression().lambdaBody().isVector())
-    {
-        Analitza::Analyzer f(newfunc.variables());
-		f.setStack(m_runStack);
-        f.setExpression(Analitza::Expression("t->" + newfunc.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
+    Q_ASSERT(newfunc.isCorrect() && newfunc.expression().lambdaBody().isVector());
+	
+	Analitza::Analyzer f(newfunc.variables());
+	f.setStack(m_runStack);
+	f.setExpression(Analitza::Expression("t->" + newfunc.expression().lambdaBody().elementAt(0).toString() + "+" + QString::number(-1.0*point.x()), false));
 
-        Analitza::Analyzer df(newfunc.variables());
-		df.setStack(m_runStack);
-        df.setExpression(f.derivative("t"));
+	Analitza::Analyzer df(newfunc.variables());
+	df.setStack(m_runStack);
+	df.setExpression(f.derivative("t"));
 
-		if (!df.isCorrect()) return QLineF();
+	if (!df.isCorrect()) return QLineF();
 
 //TODO
 //    Analitza::Analyzer g(func.variables());
@@ -223,36 +221,35 @@ QLineF FunctionPolar::derivative(const QPointF& point)
 //    dg.setExpression(g.derivative("t"));
 //    dg.refExpression()->parameters()[0]->value() = vx;
 
-        const int MAX_I = 256;
-        const double E = 0.0001;
-        double t0 = atan(point.y()/ point.x());
+	const int MAX_I = 256;
+	const double E = 0.0001;
+	double t0 = atan(point.y()/ point.x());
 
-        if(point.x()<0.)	t0 += pi;
-        else if(t0<0.)	t0 += 2.*pi;
+	if(point.x()<0.)	t0 += pi;
+	else if(t0<0.)	t0 += 2.*pi;
 
-        t0=qMax(t0, downlimit());
-        t0=qMin(t0, uplimit());
+	t0=qBound(downlimit(), t0, uplimit());
 
-        double t = t0;
-        double error = 1000.0;
-        int i = 0;
+	double t = t0;
+	double error = 1000.0;
+	int i = 0;
 
-        while (true)
-        {
-            m_th->setValue(t0);
+	while (true)
+	{
+		m_th->setValue(t0);
 
-            double r = f.calculateLambda().toReal().value();
-            double d = df.calculateLambda().toReal().value();
+		double r = f.calculateLambda().toReal().value();
+		double d = df.calculateLambda().toReal().value();
 
-            i++;
-            t = t0 - r/d;
+		i++;
+		t = t0 - r/d;
 
-            if ((error < E) || (i > MAX_I))
-                break;
+		if ((error < E) || (i > MAX_I))
+			break;
 
-            error = fabs(t - t0);
-            t0 = t;
-        }
+		error = fabs(t - t0);
+		t0 = t;
+	}
 
 //TODO
 //    t0 = 1.0;
@@ -277,20 +274,17 @@ QLineF FunctionPolar::derivative(const QPointF& point)
 //        t0 = t;
 //    }
 
-        Analitza::Analyzer dfunc(newfunc.variables());
-        dfunc.setExpression(newfunc.derivative("t"));
-		dfunc.setStack(m_runStack);
+	Analitza::Analyzer dfunc(newfunc.variables());
+	dfunc.setExpression(newfunc.derivative("t"));
+	dfunc.setStack(m_runStack);
 
-        m_th->setValue(t);
+	m_th->setValue(t);
 
-        Analitza::Vector* v = static_cast<Analitza::Vector*>(dfunc.calculateLambda().tree());
-        Analitza::Cn *comp1 = static_cast<Cn*>(v->at(0));
-        Analitza::Cn *comp2 = static_cast<Cn*>(v->at(1));
+	Expression res = dfunc.calculateLambda();
+	Cn comp1 = res.elementAt(0).toReal();
+	Cn comp2 = res.elementAt(1).toReal();
 
-        double m = comp2->value()/comp1->value();
+	double m = comp2.value()/comp1.value();
 
-        return slopeToLine(m);
-    }
-    else
-        return QLineF();
+	return slopeToLine(m);
 }

@@ -25,7 +25,6 @@
 #include <analitza/expression.h>
 #include <analitza/analyzer.h>
 #include <analitza/variables.h>
-#include <analitza/container.h>
 #include <analitza/explexer.h>
 #include <analitza/expressionparser.h>
 

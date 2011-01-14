@@ -23,8 +23,6 @@
 #include <KLocale>
 
 #include "analitza/value.h"
-#include "analitza/vector.h"
-#include "analitza/container.h"
 #include "analitza/expressiontype.h"
 #include "analitza/variable.h"
 #include "analitza/variables.h"
@@ -34,7 +32,6 @@
 using Analitza::Expression;
 using Analitza::ExpressionType;
 using Analitza::Variables;
-using Analitza::Vector;
 using Analitza::Object;
 using Analitza::Cn;
 

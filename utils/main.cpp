@@ -21,6 +21,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QTextDocument>
+#include <QtCore/QTextStream>
 
 int main(int argc, char** argv)
 {

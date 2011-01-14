@@ -20,12 +20,12 @@
 #define OPERATORSMODEL_H
 
 #include <QAbstractTableModel>
-#include <analitza/operator.h>
 #include "analitzaguiexport.h"
 
 namespace Analitza
 {
 class Variables;
+class Operator;
 }
 
 /** Operators model is a model class that has a relation of all operators string with their OperatorType. */
@@ -35,16 +35,13 @@ class ANALITZAGUI_EXPORT OperatorsModel : public QAbstractTableModel
 		/** Constructor. Creates a new Operator Model. */
 		explicit OperatorsModel(QObject *parent=0);
 		
-		/** Returns how many operators we have. */
-	// 	int count() const { return m_count; }
+		/** Returns the description of the @p o operator. */
+		static QString description(const Analitza::Operator& o);
 		
 		/** Returns the description of the @p o operator. */
-		static QString description(Analitza::Operator o);
+		static QString sample(const Analitza::Operator& o);
 		
-		/** Returns the description of the @p o operator. */
-		static QString sample(Analitza::Operator o);
-		
-		static QString example(Analitza::Operator o);
+		static QString example(const Analitza::Operator& o);
 		
 		/** Adds an entry to the model. */
 	// 	void addEntry(int i, const QString&, const QString&, const QString& ex=QString());
