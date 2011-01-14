@@ -519,31 +519,37 @@ QString OperatorsModel::parameterHelp(const QModelIndex& index, int param, bool 
 		ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
 							funcname, param+1);
 	} else {
-		QString sample = (param < op || (inbounds && oper.isBounded())) ?
-					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
-					i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
-		
-		for(int i=0; i<op; ++i) {
-			QString current=i18nc("Parameter in function prototype", "par%1", i+1);
-			
-			if(i==param)
-				current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
-			sample += current;
-			if(i<op-1)
-				sample += i18nc("Function parameter separator", ", ");
-		}
-		
-		if(oper.isBounded()) {
-			static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
-			QString p=bounds;
-			if(inbounds)
-				p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
-			sample += p;
-		}
-		
-		ret=sample+')';
+		ret=standardFunctionCallHelp(funcname, param, op, inbounds, oper.isBounded());
 	}
 	return ret;
+}
+
+QString OperatorsModel::standardFunctionCallHelp(const QString& funcname, int param, int paramcount, bool inbounds, bool isbounded)
+{
+	QString sample = (param < paramcount || (inbounds && isbounded)) ?
+		i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
+		i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
+		
+	for(int i=0; i<paramcount; ++i) {
+		QString current=i18nc("Parameter in function prototype", "par%1", i+1);
+		
+		if(i==param)
+			current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
+		sample += current;
+		if(i<paramcount-1)
+			sample += i18nc("Function parameter separator", ", ");
+	}
+	
+	if(isbounded) {
+		static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
+		QString p=bounds;
+		if(inbounds)
+			p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
+		sample += p;
+	}
+	
+	return sample+')';
+
 }
 
 

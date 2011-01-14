@@ -113,13 +113,13 @@ ExpressionEdit::~ExpressionEdit()
 void ExpressionEdit::setExpression(const Analitza::Expression& e)
 {
 	if(!e.isCorrect())
-		setText(QString());
+		clear();
 	else if(isMathML())
 		setText(e.toMathML());
 	else
 		setText(e.toString());
 	
-	setCorrect(e.isCorrect());
+	setCorrect(true);
 }
 
 void ExpressionEdit::updateCompleter()
@@ -314,29 +314,12 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool bounds
 	QString ret;
 	QModelIndex idx = m_ops->indexForOperatorName(funcname);
 	
-	if(idx.isValid()) {
+	if(idx.isValid())
 		ret = m_ops->parameterHelp(idx, param, bounds);
-	} else if(v && v->contains(funcname)) { //if it is a function defined by the user
+	else if(v && v->contains(funcname)) { //if it is a function defined by the user
 		Analitza::Expression val=v->valueExpression(funcname);
-		if(val.isLambda()) {
-			QStringList params = val.bvarList();
-			
-			QString sample = (param < params.count()) ? //Perhaps we could notify it in a better way
-					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
-					i18nc("Uncorrect function name in function prototype", "<em style='color:red'>%1</em>(",
-						  funcname);
-			
-			for(int i=0; i<params.count(); ++i) {
-				if(i==param)
-					sample += i18nc("Current parameter in function prototype", "<b>%1</b>", params[i]);
-				else
-					sample += params[i];
-				
-				if(i<params.count()-1)
-					sample+= i18nc("Function parameter separator", ", ");
-			}
-			ret=sample+')';
-		}
+		if(val.isLambda())
+			ret = m_ops->standardFunctionCallHelp(funcname, param, val.bvarList().size(), false, false);
 	}
 	return ret;
 }
