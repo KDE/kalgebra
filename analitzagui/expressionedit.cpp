@@ -58,7 +58,7 @@ class HelpTip : public QLabel
 };
 
 ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode)
-	: QPlainTextEdit(parent), m_histPos(0), help(true), m_auto(true), a(0), m_correct(true), m_ans("ans")
+	: QPlainTextEdit(parent), m_histPos(0), a(0), m_correct(true), m_ans("ans")
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	this->setTabChangesFocus(true);
@@ -225,7 +225,7 @@ void ExpressionEdit::keyPressEvent(QKeyEvent * e)
 		case Qt::Key_Plus:
 		case Qt::Key_Asterisk:
 		case Qt::Key_Slash:
-			if(this->toPlainText().length() == (this->textCursor().position()-this->textCursor().anchor()) && m_auto) {
+			if(this->toPlainText().length() == (this->textCursor().position()-this->textCursor().anchor())) {
 				this->setPlainText(m_ans);
 				QTextCursor tc = this->textCursor();
 				tc.setPosition(m_ans.length());
@@ -322,16 +322,6 @@ QString ExpressionEdit::helpShow(const QString& funcname, int param, bool bounds
 			ret = m_ops->standardFunctionCallHelp(funcname, param, val.bvarList().size(), false, false);
 	}
 	return ret;
-}
-
-void ExpressionEdit::setAutocomplete(bool a)
-{
-	m_auto = a;
-}
-
-bool ExpressionEdit::autocomplete()
-{
-	return m_auto;
 }
 
 void ExpressionEdit::removenl()

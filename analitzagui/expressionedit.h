@@ -156,8 +156,6 @@ class ANALITZAGUI_EXPORT ExpressionEdit : public QPlainTextEdit
 		
 		int m_histPos;
 		QStringList m_history;
-		bool help;
-		bool m_auto;
 		
 		Analitza::Analyzer *a;
 		bool m_correct;
