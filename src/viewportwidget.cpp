@@ -25,11 +25,11 @@
 #include <QBoxLayout>
 #include <limits>
 
-static const double LIMIT=std::numeric_limits<double>::max();
-
 ViewportWidget::ViewportWidget(QWidget * parent, Qt::WFlags flags)
 	: QWidget (parent, flags)
 {
+	const double LIMIT=std::numeric_limits<double>::max();
+	
 	m_top=new QDoubleSpinBox(this);
 	m_left=new QDoubleSpinBox(this);
 	m_width=new QDoubleSpinBox(this);

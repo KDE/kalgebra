@@ -98,7 +98,11 @@ struct FunctionPolar : public FunctionImpl
 };
 
 REGISTER_FUNCTION(FunctionPolar)
-static const double pi=acos(-1.);
+
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif
+static const double pi=M_PI;
 
 FunctionPolar::FunctionPolar(const Expression &e, Variables* v)
 	: FunctionImpl(e, v, 0, 2*M_PI)

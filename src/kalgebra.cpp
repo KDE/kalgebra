@@ -436,16 +436,18 @@ void KAlgebra::edit_var(const QModelIndex &idx)
 		c_exp->insertText(idx.data().toString());
 	} else {
 		QModelIndex idxName=idx.sibling(idx.row(), 0);
-		VarEdit e(this, false);
+		
+		QPointer<VarEdit> e(new VarEdit(this, false));
 		QString var = c_variables->model()->data(idxName, Qt::DisplayRole).toString();
 		
-		e.setAnalitza(c_results->analitza());
-		e.setName(var);
+		e->setAnalitza(c_results->analitza());
+		e->setName(var);
 		
-		if(e.exec() == QDialog::Accepted) {
-			QString str=var+" := "+e.val().toString();
+		if(e->exec() == QDialog::Accepted) {
+			QString str=var+" := "+e->val().toString();
 			c_results->addOperation(Analitza::Expression(str, false), str);
 		}
+		delete e;
 	}
 }
 
@@ -559,19 +561,20 @@ void KAlgebra::toggleKeepAspect()
 
 void KAlgebra::saveGraph()
 {
-	KFileDialog dialog(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
-	dialog.setOperationMode(KFileDialog::Saving);
-	dialog.setConfirmOverwrite(true);
+	QPointer<KFileDialog> dialog=new KFileDialog(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
+	dialog->setOperationMode(KFileDialog::Saving);
+	dialog->setConfirmOverwrite(true);
 	
-	if(dialog.exec()) {
-		QString filter = dialog.fileWidget()->currentFilter();
-		QString filename = dialog.selectedFile();
+	if(dialog->exec()) {
+		QString filter = dialog->fileWidget()->currentFilter();
+		QString filename = dialog->selectedFile();
 		
 		Graph2D::Format f=Graph2D::PNG;
 		if(filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg"))
 			f=Graph2D::SVG;
 		m_graph2d->toImage(filename, f);
 	}
+	delete dialog;
 }
 
 void KAlgebra::tabChanged(int n)
@@ -649,16 +652,18 @@ void KAlgebra::valueChanged()
 
 void KAlgebra::varsContextMenu(const QPoint& p)
 {
-	QMenu m;
-	m.addAction(i18n("Add variable"));
-	QAction* ac=m.exec(b_dock_funcs->widget()->mapToGlobal(p));
+	QPointer<QMenu> m=new QMenu;
+	m->addAction(i18n("Add variable"));
+	QAction* ac=m->exec(b_dock_funcs->widget()->mapToGlobal(p));
 	
 	if(ac) {
-		AskName a(i18n("Enter a name for the new variable"), 0);
+		QPointer<AskName> a=new AskName(i18n("Enter a name for the new variable"), 0);
 		
-		if(a.exec()==QDialog::Accepted)
-			b_varsModel->insertVariable(a.name(), Analitza::Expression(Analitza::Cn(0)));
+		if(a->exec()==QDialog::Accepted)
+			b_varsModel->insertVariable(a->name(), Analitza::Expression(Analitza::Cn(0)));
+		delete a;
 	}
+	delete m;
 }
 
 void KAlgebra::add3D(const Analitza::Expression& exp)
