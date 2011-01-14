@@ -33,7 +33,6 @@
 #include <analitzagui/operatorsmodel.h>
 #include <analitza/explexer.h>
 #include <analitza/expressionparser.h>
-#include <analitza/operator.h>
 #include <analitza/analyzer.h>
 #include <analitza/variables.h>
 
@@ -310,42 +309,13 @@ void ExpressionEdit::showSimplified()
 }
 
 
-QString ExpressionEdit::helpShow(const QString& funcname, int param, bool inbounds, const Analitza::Variables* v)
+QString ExpressionEdit::helpShow(const QString& funcname, int param, bool bounds, const Analitza::Variables* v) const
 {
 	QString ret;
-	Analitza::Operator::OperatorType o=Analitza::Operator::toOperatorType(funcname);
+	QModelIndex idx = m_ops->indexForOperatorName(funcname);
 	
-	static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
-	if(o!=Analitza::Operator::none) {
-		Analitza::Operator oper(o);
-		const int op=oper.nparams();
-		if(op == -1) {
-			ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
-							 funcname, param+1);
-		} else {
-			QString sample = (param < op || (inbounds && oper.isBounded())) ?
-						i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
-						i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
-			
-			for(int i=0; i<op; ++i) {
-				QString current=i18nc("Parameter in function prototype", "par%1", i+1);
-				
-				if(i==param)
-					current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
-				sample += current;
-				if(i<op-1)
-					sample += i18nc("Function parameter separator", ", ");
-			}
-			
-			if(oper.isBounded()) {
-				QString p=bounds;
-				if(inbounds)
-					p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
-				sample += p;
-			}
-			
-			ret=sample+')';
-		}
+	if(idx.isValid()) {
+		ret = m_ops->parameterHelp(idx, param, bounds);
 	} else if(v && v->contains(funcname)) { //if it is a function defined by the user
 		Analitza::Expression val=v->valueExpression(funcname);
 		if(val.isLambda()) {

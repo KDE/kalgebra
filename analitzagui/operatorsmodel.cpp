@@ -499,6 +499,54 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 	return "x->"+s;
 }
 
+QModelIndex OperatorsModel::indexForOperatorName(const QString& id) const
+{
+	Operator::OperatorType opt=Analitza::Operator::toOperatorType(id);
+	if(opt==Operator::none)
+		return QModelIndex();
+	else
+		return index(opt-1, 0);
+}
+
+QString OperatorsModel::parameterHelp(const QModelIndex& index, int param, bool inbounds) const
+{
+	Q_ASSERT(index.isValid());
+	QString ret;
+	Analitza::Operator oper((Analitza::Operator::OperatorType) (index.row()+1));
+	QString funcname = oper.toString();
+	const int op=oper.nparams();
+	if(op == -1) {
+		ret=i18nc("n-ary function prototype", "<em>%1</em>(..., <b>par%2</b>, ...)",
+							funcname, param+1);
+	} else {
+		QString sample = (param < op || (inbounds && oper.isBounded())) ?
+					i18nc("Function name in function prototype", "<em>%1</em>(", funcname) :
+					i18nc("Uncorrect function name in function prototype", "<em style='color:red'><b>%1</b></em>(", funcname);
+		
+		for(int i=0; i<op; ++i) {
+			QString current=i18nc("Parameter in function prototype", "par%1", i+1);
+			
+			if(i==param)
+				current=i18nc("Current parameter in function prototype", "<b>%1</b>", current);
+			sample += current;
+			if(i<op-1)
+				sample += i18nc("Function parameter separator", ", ");
+		}
+		
+		if(oper.isBounded()) {
+			static QString bounds=i18nc("Current parameter is the bounding", " : bounds");
+			QString p=bounds;
+			if(inbounds)
+				p=i18nc("Current parameter in function prototype", "<b>%1</b>", p);
+			sample += p;
+		}
+		
+		ret=sample+')';
+	}
+	return ret;
+}
+
+
 /*QString OperatorsModel::operToString(const Operator& op) const
 {
 	QStandardItem *it;

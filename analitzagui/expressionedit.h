@@ -142,7 +142,7 @@ class ANALITZAGUI_EXPORT ExpressionEdit : public QPlainTextEdit
 	
 	private:
 		bool returnPress();
-		static QString helpShow(const QString& funcname, int param, bool bounds, const Analitza::Variables* v);
+		QString helpShow(const QString& funcname, int param, bool bounds, const Analitza::Variables* v) const;
 		void helper(const QString&, const QPoint& p);
 		QString lastWord(int);
 		void focusInEvent (QFocusEvent * event);

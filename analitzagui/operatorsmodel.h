@@ -55,6 +55,8 @@ class ANALITZAGUI_EXPORT OperatorsModel : public QAbstractTableModel
 		int columnCount(const QModelIndex &parent=QModelIndex()) const;
 		
 		void setVariables(const Analitza::Variables* v) { m_vars=v; }
+		QModelIndex indexForOperatorName(const QString& id) const;
+		QString parameterHelp(const QModelIndex& idx, int param, bool inbounds) const;
 	
 	private:
 		const Analitza::Variables *m_vars;
