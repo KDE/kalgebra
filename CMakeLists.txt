@@ -15,6 +15,7 @@ option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI comp
 
 include_directories(.)
 
+add_subdirectory(doc)
 add_subdirectory(analitza)
 add_subdirectory(analitzagui)
 add_subdirectory(src)
