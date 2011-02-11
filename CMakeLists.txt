@@ -1,5 +1,13 @@
 project(kalgebra)
 
+find_package(KDE4 REQUIRED)
+include(KDE4Defaults)
+set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+
+find_package(LibKdeEdu REQUIRED)
+
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml)
+
 #Checking whether we can compile calgebra
 include(CheckIncludeFiles)
 macro_optional_find_package(Readline)
@@ -24,6 +32,9 @@ add_subdirectory(utils)
 if(NOT MSVC)
   add_subdirectory(mobile)
 endif(NOT MSVC)
+if(HAVE_READLINE)
+	add_subdirectory(calgebra)
+endif(HAVE_READLINE)
 
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
@@ -32,6 +43,3 @@ add_custom_target(commandsdoc
 	COMMENT "Generating commands docbook information"
 )
 
-if(HAVE_READLINE)
-	add_subdirectory(calgebra)
-endif(HAVE_READLINE)
