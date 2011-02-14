@@ -57,6 +57,9 @@ namespace AnalitzaUtils
 	
 	/** Creates a QVariant out of an Expression @p res */
 	QVariant ANALITZA_EXPORT expressionToVariant(const Analitza::Expression& res);
+	
+	/** Creates an expression out of a QVariant @p v, it will assert if it's not the correct type. */
+	Analitza::Expression ANALITZA_EXPORT variantToExpression(const QVariant& v);
 }
 
 #endif // ANALITZAUTILS_H

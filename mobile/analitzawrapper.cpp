@@ -56,26 +56,6 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	return AnalitzaUtils::expressionToVariant(res);
 }
 
-Analitza::Expression variantToExpression(const QVariant& v)
-{
-	if(v.canConvert(QVariant::Double))
-		return Analitza::Expression(Analitza::Cn(v.toReal()));
-	else if(v.canConvert(QVariant::List)) {
-		QVariantList list = v.toList();
-		QList<Analitza::Expression> expressionList;
-		
-		foreach(const QVariant& elem, list) {
-			expressionList << variantToExpression(elem);
-		}
-		
-		return Analitza::Expression::constructList(expressionList);
-	} else if(v.canConvert(QVariant::String))
-		return Analitza::Expression(v.toString());
-	
-	Q_ASSERT(false && "couldn't figure out the type");
-	return Analitza::Expression();
-}
-
 QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& args)
 {
 	if(!m_wrapped->variables()->contains(name)) {
@@ -86,7 +66,7 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 	QStack<Analitza::Object*> stack;
 	QList<Analitza::Expression> exps;
 	foreach(const QVariant& v, args) {
-		exps += variantToExpression(v);
+		exps += AnalitzaUtils::variantToExpression(v);
 		stack << exps.last().tree();
 	}
 	
