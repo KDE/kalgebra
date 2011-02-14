@@ -25,37 +25,12 @@
 #include <QVariant>
 #include <QScriptEngine>
 #include <KLocalizedString>
+#include <analitza/analitzautils.h>
 
 AnalitzaWrapper::AnalitzaWrapper(QScriptEngine* engine, QObject* parent)
 	: QObject(parent)
 	, m_wrapped(new Analitza::Analyzer), m_calc(false), m_engine(engine), m_varsModel(0)
 {}
-
-QVariant expressionToVariant(const Analitza::Expression& res)
-{
-	QVariant ret;
-	if(res.isVector() || res.isList()) {
-		QVariantList vals;
-		
-		QList<Analitza::Expression> expressions = res.toExpressionList();
-		foreach(const Analitza::Expression& exp, expressions) {
-			vals << expressionToVariant(exp);
-		}
-		
-		ret = vals;
-	} else if(res.isReal()) {
-		Analitza::Cn val = res.toReal();
-		if(val.isBoolean())
-			ret = val.isTrue();
-		else if(val.isInteger())
-			ret = int(val.value());
-		else
-			ret = val.value();
-	} else
-		ret = res.toString();
-	
-	return ret;
-}
 
 QVariant AnalitzaWrapper::execute(const QString& expression)
 {
@@ -78,7 +53,7 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	} else if(m_varsModel) {
 		m_varsModel->updateInformation();
 	}
-	return expressionToVariant(res);
+	return AnalitzaUtils::expressionToVariant(res);
 }
 
 Analitza::Expression variantToExpression(const QVariant& v)
@@ -119,7 +94,7 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 	m_wrapped->setStack(stack);
 	Analitza::Expression expr = m_wrapped->calculateLambda();
 	
-	return expressionToVariant(expr);
+	return AnalitzaUtils::expressionToVariant(expr);
 }
 
 QString AnalitzaWrapper::unusedVariableName() const

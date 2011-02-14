@@ -55,6 +55,8 @@ namespace AnalitzaUtils
 	/** Convenience function */
 	void ANALITZA_EXPORT objectWalker(const Analitza::Expression& o, const QByteArray& prefix=QByteArray());
 	
+	/** Creates a QVariant out of an Expression @p res */
+	QVariant ANALITZA_EXPORT expressionToVariant(const Analitza::Expression& res);
 }
 
 #endif // ANALITZAUTILS_H
