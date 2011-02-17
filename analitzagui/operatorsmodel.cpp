@@ -225,6 +225,12 @@ QString OperatorsModel::description(const Analitza::Operator& o)
 		case Operator::product:
 			s = i18n("Productory");
 			break;
+		case Operator::forall:
+			s = i18n("For all");
+			break;
+		case Operator::exists:
+			s = i18n("Exists");
+			break;
 		case Operator::diff:
 			s = i18n("Differentiation");
 			break;
@@ -432,6 +438,12 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			break;
 		case Operator::product:
 			s="product(t+t:t=1..3)";
+			break;
+		case Operator::forall:
+			s="forall(t:t@list { true, false, false })";
+			break;
+		case Operator::exists:
+			s="exists(t:t@list { true, false, false })";
 			break;
 		case Operator::card:
 			s="card(vector { x, 1, 2 })";
