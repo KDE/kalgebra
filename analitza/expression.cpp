@@ -165,7 +165,7 @@ bool Expression::ExpressionPrivate::check(const Apply* c)
 		m_err << i18n("Unexpected bounding for '%1'", op.toString());
 	}
 	
-	if(op.operatorType()==Operator::sum || op.operatorType()==Operator::product) {
+	if(op.isBounded() && op!=Operator::diff) {
 		if(!(c->ulimit() && c->dlimit()) && !c->domain()) {
 			m_err << i18n("<em>%1</em> missing bounds on '%2'", c->bvarStrings().join(" "), op.toString());
 		}

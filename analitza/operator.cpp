@@ -43,6 +43,7 @@ const char Operator::words[nOfOps][14] = {
 	"sum", "product", "diff",
 	//Vector operations
 	"card", "scalarproduct", "selector", "union",
+	"forall", "exists",
 	"function"
 };
 
@@ -157,6 +158,8 @@ int Operator::nparams(Operator::OperatorType t)
 		case ceiling:
 		case sum:
 		case product:
+		case forall:
+		case exists:
 		case diff:
 		case card:
 			return 1;
@@ -177,6 +180,8 @@ bool Operator::isBounded() const
 	switch(m_optype) {
 		case sum:
 		case product:
+		case forall:
+		case exists:
 // 		case function:
 		case diff:
 			return true;

@@ -449,13 +449,14 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				
 				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
 				tt=anyItem;
-			} else
+			} else {
 				tt=current.contained(); //FIXME: should remove when done
+				tt.addAssumptions(current.assumptions());
+			}
 		}
 		
 		foreach(const QString& s, c->bvarStrings())
 			m_typeForBVar[s]=ExpressionType(tt);
-// 		TODO: Add assumptions for types deducted in boundings
 	}
 	
 	switch(o.operatorType()) {
@@ -516,7 +517,6 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				
 				bool countError=false;
 				foreach(const ExpressionType& opt, alts) {
-					qDebug() << "ooooopt" << opt << opt.type() << signature.type();
 					if(opt.type()!=ExpressionType::Lambda) {
 // 								addError(i18n("We can only call functions."));
 						continue;
@@ -530,7 +530,6 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						continue;
 					}
 					
-					qDebug() << "sss" << opt.parameters().size();
 					bool valid=true;
 					QMap<QString, ExpressionType> assumptions;
 					QMap<int, ExpressionType> starToType;

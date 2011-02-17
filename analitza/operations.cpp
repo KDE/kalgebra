@@ -564,6 +564,11 @@ QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
 			ret << TypePair(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1), ExpressionType(ExpressionType::Value));
 			ret << TypePair(ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)), ExpressionType(ExpressionType::Value));
 			break;
+		case Operator::sum:
+		case Operator::product:
+			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypePair(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1), ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Any, 1), -1));
+			break;
 		case Operator::factorial:
 		case Operator::sin:
 		case Operator::cos:
@@ -599,6 +604,8 @@ QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
 		case Operator::floor:
 		case Operator::ceiling:
 		case Operator::_not:
+		case Operator::exists: //bool?
+		case Operator::forall:
 			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
 			break;
 		default:

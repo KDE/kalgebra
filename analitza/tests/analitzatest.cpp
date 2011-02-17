@@ -94,6 +94,9 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("sum.list") << "sum(x : x@list{1,5,44})" << 50.;
 	
 	QTest::newRow("sum.sum") << "sum(sum(x : x=0..i) : i=0..10)" << 220.;
+	
+	QTest::newRow("exists") << "exists(x : x@{1,1,0})" << 1.;
+	QTest::newRow("forall") << "forall(x : x@{1,1,0})" << 0.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
@@ -183,6 +186,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("sum.2bvars") << "sum(x*w : (x, y)=1..3)" << "18*w";
 	QTest::newRow("sum.list") << "sum(x+y : x@list{x,y,z})" << "x+4*y+z";
+	
+	QTest::newRow("forall") << "forall(x : x@list{x,1,1})" << "forall(x : x@list{x,0,0})";
+	QTest::newRow("exists") << "exists(x : x@list{x,0,0})" << "exists(x : x@list{x,0,0})";
 }
 
 void AnalitzaTest::testTrivialEvaluate()

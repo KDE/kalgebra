@@ -159,6 +159,8 @@ class ANALITZA_EXPORT Analyzer
 		
 		Object* sum(const Apply& c);
 		Object* product(const Apply& c);
+		Object* exists(const Apply& c);
+		Object* forall(const Apply& c);
 		Object* func(const Apply& c);
 		
 		Object* calcPiecewise(const Container* c);

@@ -32,6 +32,9 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	: QObject(parent)
 	, v(new Analitza::Variables)
 {
+	v->modify("true", Expression("1"));
+	v->modify("false", Expression("0"));
+	
 	v->modify("fnum", Expression("x->3"));
 	v->modify("fplus", Expression("x->x+x"));
 	v->modify("tovector", Expression("x->vector{x,x}"));
@@ -123,6 +126,9 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("unknown") << "w" << "*";
 	QTest::newRow("gonum") << "gonum((x,y)->x*y)" << "num";
+	
+	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "num";
+	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "num -> num";
 }
 
 void TypeCheckTest::testConstruction()

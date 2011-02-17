@@ -93,7 +93,6 @@ void Analyzer::setExpression(const Expression & e)
 	
 	if(m_exp.isCorrect()) {
 		ExpressionTypeChecker check(m_vars);
-		qDebug() << "tttt" << m_builtin.varTypes();
 		check.initializeVars(m_builtin.varTypes());
 		m_currentType=check.check(m_exp);
 		
@@ -333,6 +332,8 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				
 				delete body;
 			}	break;
+			case Operator::forall:
+			case Operator::exists:
 			case Operator::sum:
 			case Operator::product: {
 				Apply *r = c->copy();
@@ -380,7 +381,15 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 							r->domain()=0;
 							
 							Apply *newC = new Apply;
-							newC->appendBranch(new Operator(op==Operator::product ? Operator::times : Operator::plus));
+							Operator::OperatorType t;
+							switch(op.operatorType()) {
+								case Operator::product: t = Operator::times; break;
+								case Operator::sum:		t = Operator::plus; break;
+								case Operator::forall:	t = Operator::_and; break;
+								default: /*exists*/		t = Operator::_or; break;
+							}
+							
+							newC->appendBranch(new Operator(t));
 							newC->m_params = values;
 							ret = newC;
 						}
@@ -552,6 +561,12 @@ Object* Analyzer::operate(const Apply* c)
 			ret = sum(*c);
 			break;
 		case Operator::product:
+			ret = product(*c);
+			break;
+		case Operator::forall:
+			ret = sum(*c);
+			break;
+		case Operator::exists:
 			ret = product(*c);
 			break;
 		case Operator::function:
@@ -831,7 +846,6 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	return ret;
 }
 
-//TODO: warning memory leak on third parameter?
 Object* Analyzer::product(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::times), new Cn(1.));
@@ -840,6 +854,16 @@ Object* Analyzer::product(const Apply& n)
 Object* Analyzer::sum(const Apply& n)
 {
 	return boundedOperation(n, Operator(Operator::plus), new Cn(0.));
+}
+
+Object* Analyzer::forall(const Apply& n)
+{
+	return boundedOperation(n, Operator(Operator::_and), new Cn(1.));
+}
+
+Object* Analyzer::exists(const Apply& n)
+{
+	return boundedOperation(n, Operator(Operator::_or), new Cn(0.));
 }
 
 Object* Analyzer::func(const Apply& n)
