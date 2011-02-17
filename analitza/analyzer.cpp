@@ -93,6 +93,8 @@ void Analyzer::setExpression(const Expression & e)
 	
 	if(m_exp.isCorrect()) {
 		ExpressionTypeChecker check(m_vars);
+		qDebug() << "tttt" << m_builtin.varTypes();
+		check.initializeVars(m_builtin.varTypes());
 		m_currentType=check.check(m_exp);
 		
 		m_err += check.errors();
@@ -523,6 +525,7 @@ Object* Analyzer::calc(const Object* root)
 			ret = nv;
 		}	break;
 		case Object::value:
+		case Object::custom:
 			ret=root->copy();
 			break;
 		case Object::variable: {
@@ -843,34 +846,55 @@ Object* Analyzer::func(const Apply& n)
 {
 // 	qDebug() << "calling" << n.toString();
 	bool borrowed = n.m_params[0]->type()==Object::variable;
-	Container *function;
+	Container *function=0;
 	if(borrowed)
 		function = (Container*) variableValue((Ci*) n.m_params[0]);
 	else
 		function = (Container*) calc(n.m_params[0]);
 	
-	int bvarsize = function->bvarCount();
-	
-	int top = m_runStack.size(), aux=m_runStackTop;
-	m_runStack.resize(top+bvarsize);
-	
-	for(int i=0; i<bvarsize; i++) {
-// 		qDebug() << "cp" << n.m_params[i+1]->toString();
-		Object* val=calc(n.m_params[i+1]);
-		m_runStack[top+i] = val;
-// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
+	int bvarsize = n.m_params.size()-1;
+	Object* ret=0;
+	if(function) {
+		int top = m_runStack.size(), aux=m_runStackTop;
+		m_runStack.resize(top+bvarsize);
+		
+		for(int i=0; i<bvarsize; i++) {
+	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
+			Object* val=calc(n.m_params[i+1]);
+			m_runStack[top+i] = val;
+	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
+		}
+		m_runStackTop = top;
+		
+	// 	qDebug() << "diiiiiiiii" << m_runStack.size() << vars.size() << m_runStackTop;
+		ret=calc(function->m_params.last());
+		
+		qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+		if(!borrowed)
+			delete function;
+		
+		m_runStackTop = aux;
+		m_runStack.resize(top);
+	} else {
+		Q_ASSERT(n.m_params[0]->type()==Object::variable);
+		QString id=static_cast<const Ci*>(n.m_params[0])->name();
+		FunctionDefinition* func=m_builtin.function(id);
+		QList<Expression> args;
+		
+		for(int i=1; i<bvarsize+1; i++) {
+	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
+			Object* val=calc(n.m_params[i]);
+			args += Expression(val);
+	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
+		}
+		Expression exp=(*func)(args);
+		if(exp.isCorrect())
+			ret=exp.tree()->copy();
+		else {
+			m_err += exp.error();
+			ret = new Cn;
+		}
 	}
-	m_runStackTop = top;
-	
-// 	qDebug() << "diiiiiiiii" << m_runStack.size() << vars.size() << m_runStackTop;
-	Object* ret=calc(function->m_params.last());
-	
-	qDeleteAll(m_runStack.begin()+top, m_runStack.end());
-	if(!borrowed)
-		delete function;
-	
-	m_runStackTop = aux;
-	m_runStack.resize(top);
 	
 	return ret;
 }
@@ -1826,4 +1850,9 @@ void Analyzer::alphaConversion(Apply* o, int min)
 	Apply::iterator it=o->firstValue(), itEnd=o->end();
 	for(; it!=itEnd; ++it)
 		*it = applyAlpha(*it, min);
+}
+
+BuiltinMethods* Analyzer::builtinMethods()
+{
+	return &m_builtin;
 }

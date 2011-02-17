@@ -47,7 +47,8 @@ public:
 		list,		/**< Describes an object as a list. */
 		apply,		/**< Describes an object as an application. */
 		oper,		/**< Describes an object as an operator. */
-		container	/**< Describes an object as a container. */
+		container,	/**< Describes an object as a container. */
+		custom		/**< Describes a custom object */
 	};
 	
 	/** Object destructor. Does nothing. */

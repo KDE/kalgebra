@@ -113,3 +113,8 @@ QString MathMLExpressionWriter::accept(const Apply* a)
 	
 	return QString("<apply>%1</apply>").arg(ret);
 }
+
+QString MathMLExpressionWriter::accept(const Analitza::CustomObject*)
+{
+	return "<!-- custom object -->";
+}

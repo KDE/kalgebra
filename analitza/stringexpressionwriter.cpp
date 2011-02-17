@@ -233,3 +233,8 @@ QString StringExpressionWriter::accept(const Container* var)
 	}
 	return toret;
 }
+
+QString StringExpressionWriter::accept(const CustomObject*)
+{
+	return "CustomObject";
+}

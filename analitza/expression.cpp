@@ -34,6 +34,7 @@
 #include "list.h"
 #include "analitzautils.h"
 #include "apply.h"
+#include "customobject.h"
 
 static void print_dom(const QDomNode& in, int ind);
 
@@ -336,6 +337,7 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 		}	break;
 		case Object::none:
 		case Object::value:
+		case Object::custom:
 		case Object::oper:
 			break;
 	}
@@ -432,6 +434,7 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 			ret=a;
 		}	break;
 		case Object::none:
+		case Object::custom:
 			m_err << i18nc("Error message due to an unrecognized input",
 							  "Not supported/unknown: %1", elem.tagName());
 			break;
@@ -655,6 +658,11 @@ QStringList Expression::error() const
 	return d->m_err;
 }
 
+void Expression::addError(const QString& error)
+{
+	d->m_err += error;
+}
+
 const Object* Expression::tree() const
 {
 	return d->m_tree;
@@ -717,6 +725,7 @@ static void renameTree(Object* o, int depth, const QString& newName)
 		case Object::none:
 		case Object::value:
 		case Object::oper:
+		case Object::custom:
 			break;
 	}
 }
@@ -725,6 +734,23 @@ void Expression::renameArgument(int depth, const QString& newName)
 {
 	renameTree(d->m_tree, depth, newName);
 	computeDepth(d->m_tree);
+}
+
+Expression Expression::constructCustomObject(const QVariant& custom)
+{
+	Object* obj = new CustomObject(custom);
+	return Expression(obj);
+}
+
+QVariant Expression::customObjectValue() const
+{
+	Object* tree=d->m_tree;
+	if(KDE_ISLIKELY(tree && tree->type()==Object::custom))
+		return static_cast<const CustomObject*>(tree)->value();
+	else {
+		qDebug() << "trying to return an invalid value:" << (tree ? tree->toString() : "null");
+		return QVariant();
+	}
 }
 
 static void print_dom(const QDomNode& in, int ind)

@@ -25,14 +25,15 @@
 #include "expression.h"
 #include "analitzaexport.h"
 #include "expressiontype.h"
+#include "builtinmethods.h"
 #include <QStack>
 
 namespace Analitza
 {
 
 class Apply;
-
 class BoundingIterator;
+class BuiltinMethods;
 class Object;
 class Variables;
 class Container;
@@ -137,12 +138,15 @@ class ANALITZA_EXPORT Analyzer
 		ExpressionType type() const { return m_currentType; }
 		
 		void setStack(const QVector<Object*>& stack) { m_runStack = stack; }
+		
+		BuiltinMethods* builtinMethods();
 	private:
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;
 		QVector<Object*> m_runStack;
 		int m_runStackTop;
+		BuiltinMethods m_builtin;
 		
 		const bool m_varsOwned;
 		bool m_hasdeps;

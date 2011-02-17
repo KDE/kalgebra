@@ -41,7 +41,8 @@ QDebug operator<<(QDebug dbg, const ExpressionType &c)
 }
 
 ExpressionType::ExpressionType(const ExpressionType& t)
-    : m_type(t.m_type), m_contained(t.m_contained), m_assumptions(t.m_assumptions), m_size(t.m_size)
+    : m_type(t.m_type), m_contained(t.m_contained)
+	, m_assumptions(t.m_assumptions), m_size(t.m_size), m_objectName(t.m_objectName)
 {}
 
 ExpressionType::ExpressionType(ExpressionType::Type t, int any)
@@ -51,6 +52,10 @@ ExpressionType::ExpressionType(ExpressionType::Type t, int any)
 ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& contained, int s)
     : m_type(t), m_contained(QList<ExpressionType>() << contained), m_size(s)
 { Q_ASSERT(m_type==List || m_type==Vector);  Q_ASSERT(m_type!=Vector || m_size!=0); }
+
+ExpressionType::ExpressionType(const QString& objectName)
+	: m_type(Object), m_objectName(objectName)
+{}
 
 QStringList typesToString(const QList<ExpressionType>& types)
 {
@@ -93,6 +98,9 @@ QString ExpressionType::toString() const
         case ExpressionType::Many:
             ret=/*"{"+*/typesToString(m_contained).join(" | ")/*+"}"*/;
 			break;
+		case ExpressionType::Object:
+			ret="obj:m_objectName";
+			break;
     }
     
     return ret;
@@ -116,6 +124,7 @@ ExpressionType ExpressionType::operator=(const ExpressionType& et)
         m_contained=et.m_contained;
         m_size=et.m_size;
         m_assumptions=et.m_assumptions;
+		m_objectName=et.m_objectName;
     }
     
     return *this;
@@ -134,6 +143,7 @@ bool ExpressionType::operator==(const ExpressionType& t) const
 	if(!ret &&   type()==ExpressionType::Many &&   alternatives().size()==1)
 		ret=t==alternatives().first();
 	
+	ret &= m_objectName==t.m_objectName;
 // 	qDebug() << "++++++++" << t << *this << ret;
 	return ret;
 }
@@ -267,6 +277,7 @@ int ExpressionType::increaseStars(int stars, QMap<int, int>* values)
 				ret=qMax(it->increaseStars(stars), stars);
 			}
 		}	break;
+		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Error:
 		case ExpressionType::Undefined:
@@ -290,6 +301,7 @@ void ExpressionType::starsSimplification(ExpressionType& t, QMap<int, int>& redu
 		case ExpressionType::Many:
 		case ExpressionType::Vector:
 		case ExpressionType::List:
+		case ExpressionType::Object:
 		case ExpressionType::Lambda: {
 			QList<ExpressionType>::iterator it=t.m_contained.begin(), itEnd=t.m_contained.end();
 			for(; it!=itEnd; ++it) {

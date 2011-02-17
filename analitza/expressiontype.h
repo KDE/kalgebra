@@ -31,11 +31,14 @@ class ANALITZA_EXPORT ExpressionType
 {
 	public:
 		///Just use undefined type when returning from a recursion
-		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Undefined };
+		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Object, Undefined };
 		QString toString() const;
 		
 		ExpressionType(Type t=Error, int any=-1);
 		ExpressionType(Type t, const ExpressionType& contained, int s=0);
+		
+		/** Constructs a type that identifies a custom Object */
+		ExpressionType(const QString& objectName);
 		ExpressionType(const ExpressionType& t);
 		
 		~ExpressionType() {/* delete contained; */}
@@ -84,6 +87,7 @@ class ANALITZA_EXPORT ExpressionType
 		QList<ExpressionType> m_contained;
 		QMap<QString, ExpressionType> m_assumptions;
 		union { int m_size; int m_any; };
+        QString m_objectName;
 };
 
 }

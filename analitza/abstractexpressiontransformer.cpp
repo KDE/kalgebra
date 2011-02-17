@@ -47,6 +47,7 @@ Object* AbstractExpressionTransformer::walk(const Object* pattern)
 			return walkVector(static_cast<const Vector*>(pattern));
 		case Object::oper:
 		case Object::value:
+		case Object::custom:
 			return pattern->copy();
 		case Object::none:
 			break;

@@ -3,6 +3,7 @@ project(analitza)
 add_subdirectory(tests)
 
 set(analitza_SRCS
+	builtinmethods.cpp
 	providederivative.cpp
 	abstractexpressiontransformer.cpp
 	expression.cpp
@@ -22,6 +23,7 @@ set(analitza_SRCS
 	vector.cpp
 	list.cpp
 	apply.cpp
+	customobject.cpp
 	
 	expressiontype.cpp
 	expressiontypechecker.cpp

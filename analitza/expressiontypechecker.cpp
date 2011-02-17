@@ -117,6 +117,7 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 				ret=computeStars(ret, candidate.parameters()[i], type.parameters()[i]);
 			}
 			break;
+		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Many:
 		case ExpressionType::Error:
@@ -169,6 +170,7 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 			exp->visit(this);
 			ret=current.canReduceTo(targetType) && merge(*assumptions, current.assumptions());
 			break;
+		case Object::custom:
 		case Object::oper:
 		case Object::none:
 			Q_ASSERT(false && "wtf!");
@@ -335,17 +337,22 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 {
 	if(m_typeForBVar.contains(var->name())) {
 		current=m_typeForBVar.value(var->name());
-	} else if(!m_lambdascope.contains(var->name()) && m_v->contains(var->name())) {
+	} else if(!m_lambdascope.contains(var->name()) && isVariableDefined(var->name())) {
 		current=typeForVar(var->name());
 	} else {
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
 		current.addAssumption(var->name(), current);
 		
-		if(var->depth()<0 && !m_v->contains(var->name()))
+		if(var->depth()<0 && !isVariableDefined(var->name()))
 			m_deps += var->name();
 	}
 	
 	return QString();
+}
+
+bool ExpressionTypeChecker::isVariableDefined(const QString& id) const
+{
+	return m_v->contains(id) || m_vars.contains(id);
 }
 
 QString ExpressionTypeChecker::accept(const Cn*)
@@ -509,7 +516,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				
 				bool countError=false;
 				foreach(const ExpressionType& opt, alts) {
-// 							qDebug() << "ooooopt" << opt;
+					qDebug() << "ooooopt" << opt << opt.type() << signature.type();
 					if(opt.type()!=ExpressionType::Lambda) {
 // 								addError(i18n("We can only call functions."));
 						continue;
@@ -518,11 +525,12 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					if(opt.parameters().size()!=c->m_params.size()) {
 						if(!countError) addError(i18np("Invalid parameter count for '%2'. Should have 1 parameter.",
 						                               "Invalid parameter count for '%2'. Should have %1 parameters.",
-						                               c->m_params.size(), c->toString()));
+						                               opt.parameters().size(), c->toString()));
 						countError=true;
 						continue;
 					}
 					
+					qDebug() << "sss" << opt.parameters().size();
 					bool valid=true;
 					QMap<QString, ExpressionType> assumptions;
 					QMap<int, ExpressionType> starToType;
@@ -571,6 +579,12 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 	m_typeForBVar=ctx;
 	
 	return QString();
+}
+
+QString ExpressionTypeChecker::accept(const CustomObject*)
+{
+	Q_ASSERT(false && "we shouldn't have to construct any custom object");
+	return "";
 }
 
 //1. Check if parameters are applied correctly

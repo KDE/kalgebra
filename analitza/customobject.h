@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2008 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2011 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,43 +16,41 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef MATHMLPRESENTATIONEXPRESSIONWRITER_H
-#define MATHMLPRESENTATIONEXPRESSIONWRITER_H
+#ifndef CUSTOMOBJECT_H
+#define CUSTOMOBJECT_H
 
-#include "expressionwriter.h"
-#include <QMap>
-#include "operator.h"
+#include "object.h"
+#include "analitzaexport.h"
+
+#include <cmath>
+#include <QVariant>
+
+class QDomElement;
 
 namespace Analitza
 {
 
 /**
- *	This class represents the mathml expression writer.
- *
- *	@author Aleix Pol <aleixpol@kde.org>  
- */
+*	The CustomObject class is the one that represents a value in the expression trees.
+*	@author Aleix Pol <aleixpol@kde.org>  
+*/
 
-class MathMLPresentationExpressionWriter : public ExpressionWriter
+class ANALITZA_EXPORT CustomObject : public Object
 {
 	public:
-		typedef QString (*operatorToString)(const Apply* o, MathMLPresentationExpressionWriter* w);
-		MathMLPresentationExpressionWriter(const Object* o);
+		explicit CustomObject(const QVariant& v) : Object(Object::custom), m_value(v) {}
+		virtual Object* copy() const;
+		virtual bool matches(const Analitza::Object* exp, QMap< QString, const Analitza::Object* >* found) const;
+		virtual QString visit(ExpressionWriter* exp) const;
 		
-		virtual QString accept(const Ci* var);
-		virtual QString accept(const Cn* var);
-		virtual QString accept(const Container* var);
-		virtual QString accept(const Operator* var);
-		virtual QString accept(const Vector* var);
-		virtual QString accept(const List* l);
-		virtual QString accept(const Apply* a);
-		virtual QString accept(const CustomObject* c);
-		
-		QString result() const { return m_result; }
+		bool operator==(const CustomObject& obj) const;
+		QVariant value() const { return m_value; }
 		
 	private:
-		QString m_result;
-		static operatorToString m_operatorToPresentation[Operator::nOfOps];
+		QVariant m_value;
+		
 };
 
 }
+
 #endif

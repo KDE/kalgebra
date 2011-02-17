@@ -86,6 +86,9 @@ class ANALITZA_EXPORT Expression
 		 */
 		QStringList error() const;
 		
+		/** Adds a new error @p error to the expression, to be reported afterwards. */
+		void addError(const QString& error);
+		
 		/**
 		 *	Returns whether this is a correct expression.
 		 */
@@ -180,6 +183,9 @@ class ANALITZA_EXPORT Expression
 		/** In case it was a vector or list, it returns a list of each expression on the vector. */
 		QList<Expression> toExpressionList() const;
 		
+		/** In case it contains a custom object it returns its value. */
+		QVariant customObjectValue() const;
+		
 		/** renames the @p depth -th variable into @p newName */
 		void renameArgument(int depth, const QString& newName);
 		
@@ -200,6 +206,10 @@ class ANALITZA_EXPORT Expression
 		 *    list { exps[0], exps[1], ... }
 		 */
 		static Expression constructList(const QList<Expression> & exps);
+		
+		
+		/** creates an expression filled with just a custom object */
+		static Expression constructCustomObject(const QVariant& custom);
 	private:
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;

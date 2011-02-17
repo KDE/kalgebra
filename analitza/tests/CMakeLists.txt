@@ -26,3 +26,6 @@ target_link_libraries(mathmlpresentationtest ${testLibs})
 
 kde4_add_unit_test(typechecktest typechecktest.cpp )
 target_link_libraries(typechecktest ${testLibs})
+
+kde4_add_unit_test(builtintest builtintest.cpp )
+target_link_libraries(builtintest ${testLibs})

@@ -154,6 +154,7 @@ bool Container::isNumber() const
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
+#warning this should go in favour of the typesystem, if possible
 bool isValue(Object* o)
 {
 	bool ret=false;
@@ -163,6 +164,7 @@ bool isValue(Object* o)
 		case Object::vector:
 		case Object::list:
 		case Object::apply:
+		case Object::custom:
 			ret=true;
 			break;
 		case Object::container:

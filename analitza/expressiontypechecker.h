@@ -47,6 +47,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		virtual QString accept(const Vector* var);
 		virtual QString accept(const List* l);
 		virtual QString accept(const Apply* a);
+		virtual QString accept(const CustomObject* c);
 		
 		virtual QString result() const { return QString(); }
 		
@@ -54,6 +55,8 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		bool hasDependencies() const { return !m_deps.isEmpty(); }
 		bool isCorrect() const { return m_err.isEmpty(); }
 		QStringList errors() const;
+		
+		void initializeVars(const QMap<QString, ExpressionType>& types) { m_vars=types; }
 		
 	private:
 		ExpressionType solve(const Operator* o, const QList<Object*>& parameters);
@@ -72,6 +75,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		
 		void addError(const QString& err);
 		ExpressionType commonType(const QList<Object*>& values);
+		bool isVariableDefined(const QString& id) const;
 		
 		uint m_stars;
 		QList<QStringList> m_err;

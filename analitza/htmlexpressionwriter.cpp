@@ -214,3 +214,7 @@ QString HtmlExpressionWriter::accept(const Container* var)
 	return toret;
 }
 
+QString HtmlExpressionWriter::accept(const CustomObject*)
+{
+	return "Custom Object";
+}

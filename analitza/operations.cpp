@@ -320,6 +320,7 @@ Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QStrin
 		case Object::oper:
 		case Object::container:
 		case Object::apply:
+		case Object::custom:
 			//This should never happen
 			break;
 	}

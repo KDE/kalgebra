@@ -328,3 +328,8 @@ QString Analitza::MathMLPresentationExpressionWriter::accept ( const Analitza::A
 	}
 	return ret;
 }
+
+QString MathMLPresentationExpressionWriter::accept(const CustomObject*)
+{
+	return "<!-- custom object -->";
+}

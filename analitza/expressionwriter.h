@@ -30,6 +30,7 @@ class Object;
 class Apply;
 class Ci;
 class Cn;
+class CustomObject;
 class Container;
 class Operator;
 class Vector;
@@ -53,6 +54,7 @@ class ExpressionWriter
 		virtual QString accept(const Vector* var) = 0;
 		virtual QString accept(const List* l) = 0;
 		virtual QString accept(const Apply* a) = 0;
+		virtual QString accept(const CustomObject* c) = 0;
 		
 		virtual QString result() const=0;
 };

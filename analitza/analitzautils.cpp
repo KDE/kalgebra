@@ -28,6 +28,7 @@
 #include "expression.h"
 #include "apply.h"
 #include <QVariant>
+#include "customobject.h"
 
 using namespace Analitza;
 namespace AnalitzaUtils
@@ -78,6 +79,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			}
 		}	break;
 		case Object::none:
+		case Object::custom:
 		case Object::value:
 		case Object::oper:
 			break;
@@ -129,6 +131,7 @@ bool hasTheVar(const QSet<QString> & vars, const Object * o)
 			found=vars.contains(cand->name());
 			break;
 		case Object::value:
+		case Object::custom:
 		case Object::oper:
 		case Object::none:
 			found=false;
@@ -220,6 +223,7 @@ bool hasVars(const Analitza::Object* o, const QStringList& bvars)
 		case Object::none:
 		case Object::value:
 		case Object::oper:
+		case Object::custom:
 			r=false;
 	}
 	return r;
@@ -246,6 +250,10 @@ struct ObjectWalker : public ExpressionWriter
 	
 	virtual QString accept(const Cn* num)
 	{ qDebug() << prefix().constData() << "| num: " << num->value() << " format: " << num->format(); return QString(); }
+	
+	virtual QString accept(const CustomObject* c)
+	{ qDebug() << prefix().constData() << "| custom " << c; return QString(); }
+	
 	
 	virtual QString accept(const Container* c)
 	{
@@ -350,6 +358,9 @@ bool equalTree(const Object * o1, const Object * o2)
 			break;
 		case Object::apply:
 			eq = *static_cast<const Apply*>(o1)==*static_cast<const Apply*>(o2);
+			break;
+		case Object::custom:
+			eq = *static_cast<const CustomObject*>(o1)==*static_cast<const CustomObject*>(o2);
 			break;
 		case Object::none:
 			eq=false;

@@ -113,6 +113,7 @@ Cn Cn::euler() { return Cn(0.5772156649); }
 
 bool Cn::matches(const Object* exp, QMap< QString, const Object* >*) const
 {
+#warning fixme: second condition is just wrong
 	return exp->type()==type() && Cn(exp)==*this;
 }
 
