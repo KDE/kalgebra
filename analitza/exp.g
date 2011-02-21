@@ -20,6 +20,8 @@
 %token tRpr		")"
 %token tLcb		"{"
 %token tRcb		"}"
+%token tLsp		"["
+%token tRsp		"]"
 %token tVal		"value"
 %token tEq		"="
 %token tLt		"<"
@@ -214,6 +216,13 @@ Value ::= Id;
 /.
 case $rule_number:
 	sym(1) = "<ci>"+sym(1)+"</ci>";
+	break;
+./
+
+Value ::= Id tLsp Expression tRsp; --vect[2+2]
+/.
+case $rule_number:
+	sym(1) = "<apply><selector />"+sym(3)+"<ci>"+sym(1)+"</ci>"+"</apply>";
 	break;
 ./
 

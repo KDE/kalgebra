@@ -177,7 +177,10 @@ QString StringExpressionWriter::accept ( const Analitza::Apply* a )
 		toret += ret.join(s_operators.value(op.operatorType()));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
 		toret += '-'+ret[0];
-	else {
+	else if(op.operatorType()==Operator::selector) {
+		QString value = ret.takeLast();
+		toret += QString("%1[%2]").arg(value).arg(ret.join(", "));
+	} else {
 		QString bounding;
 		if(!bounds.isEmpty() || !bvars.isEmpty()) {
 			if(bvars.count()!=1) bounding +='(';

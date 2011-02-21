@@ -149,7 +149,10 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		toret += ret.join(oper(s_operators.value(op.operatorType())));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
 		toret += oper('-')+ret[0];
-	else {
+	else if(op.operatorType()==Operator::selector) {
+		QString value = ret.takeLast();
+		toret += value + oper('[')+ret.join(oper(", "))+oper(']');
+	}else {
 		QString bounding;
 		QStringList bvars;
 		foreach(const Ci* bvar, a->bvarCi())
