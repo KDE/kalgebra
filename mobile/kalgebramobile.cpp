@@ -20,7 +20,6 @@
 #include <QFile>
 #include <QScriptEngine>
 #include <QLineEdit>
-#include <QScriptEngineDebugger>
 #include <QToolBar>
 #include <KDialog>
 #include <KLocalizedString>
@@ -37,11 +36,15 @@
 #include "analitzawrapper.h"
 #include "uiconfig.h"
 
-#include <KServiceTypeTrader>
 #include <KPluginInfo>
 #include <KStandardDirs>
+#include <QDir>
 
-#define DEBUG
+// #define DEBUG
+
+#ifdef DEBUG
+#include <QScriptEngineDebugger>
+#endif
 
 class PluginsModel : public QStandardItemModel
 {
@@ -51,7 +54,27 @@ class PluginsModel : public QStandardItemModel
 		explicit PluginsModel(QObject* parent = 0)
 			:QStandardItemModel(parent)
 		{
-			m_plugins = KPluginInfo::fromServices( KServiceTypeTrader::self()->query( "KAlgebra/Script" ) );
+			KStandardDirs d;
+			QStringList basedirs = d.findDirs("data", "kalgebra/scripts");
+			QStringList foundPlugins;
+			foreach(const QString& dir, basedirs) {
+				//we list <dir>/*/*.desktop
+				
+				QDir d(dir);
+				QStringList dirs = d.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+				
+				foreach(const QString& plugindir, dirs) {
+					QDir pd(d.filePath(plugindir));
+					QStringList files = pd.entryList(QStringList("*.desktop"));
+					
+					foreach(const QString& plugin, files) {
+						foundPlugins += pd.absoluteFilePath(plugin);
+					}
+				}
+			}
+			
+			qDebug() << "Plugins found:" << foundPlugins;
+			m_plugins = KPluginInfo::fromFiles(foundPlugins);
 			setSortRole(PriorityRole);
 			
 			foreach(const KPluginInfo& info, m_plugins) {
