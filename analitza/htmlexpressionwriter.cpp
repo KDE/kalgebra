@@ -151,6 +151,8 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		toret += oper('-')+ret[0];
 	else if(op.operatorType()==Operator::selector) {
 		QString value = ret.takeLast();
+		if(a->m_params.last()->isApply())
+			value = oper('(')+value+oper(')');
 		toret += value + oper('[')+ret.join(oper(", "))+oper(']');
 	}else {
 		QString bounding;

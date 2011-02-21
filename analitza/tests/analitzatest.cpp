@@ -178,7 +178,7 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	QTest::newRow("card+var") << "card(x)" << "card(x)";
 	
 	QTest::newRow("selector+idx") << "selector(1, vector{x,y,z})" << "x";
-	QTest::newRow("selector+var") << "selector(x, vector{x,y,z})" << "(vector { x, y, z })[x]";
+	QTest::newRow("selector+var") << "(vector { x, y, z })[x]" << "vector { x, y, z }[x]";
 	QTest::newRow("selector+impossible") << "v[1]" << "v[1]";
 	
 	QTest::newRow("in lists") << "list{w+w}" << "list { 2*w }";

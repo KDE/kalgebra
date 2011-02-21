@@ -219,18 +219,19 @@ case $rule_number:
 	break;
 ./
 
-Value ::= Id tLsp Expression tRsp; --vect[2+2]
-/.
-case $rule_number:
-	sym(1) = "<apply><selector />"+sym(3)+"<ci>"+sym(1)+"</ci>"+"</apply>";
-	break;
-./
-
 PrimaryExpression ::= Value;
 PrimaryExpressionExt ::= tLpr Expression tRpr;
 /.
 case $rule_number:
 	sym(1) = sym(2);
+	break;
+./
+
+
+PrimaryExpressionExt ::= PrimaryExpressionExt tLsp Expression tRsp; --vect[2+2]
+/.
+case $rule_number:
+	sym(1) = "<apply><selector />"+sym(3)+sym(1)+"</apply>";
 	break;
 ./
 
