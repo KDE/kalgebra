@@ -23,8 +23,6 @@
 #include <KLocale>
 
 #include "analitza/value.h"
-#include "analitza/vector.h"
-#include "analitza/container.h"
 #include "analitza/expressiontype.h"
 #include "analitza/variable.h"
 #include "analitza/variables.h"
@@ -34,48 +32,8 @@
 using Analitza::Expression;
 using Analitza::ExpressionType;
 using Analitza::Variables;
-using Analitza::Vector;
 using Analitza::Object;
 using Analitza::Cn;
-
-namespace
-{
-    /// The @p p1 and @p p2 parameters are the last 2 values found
-    /// @p next is the next value found
-    ///	@returns whether we've found the gap
-
-    bool traverse(double p1, double p2, double next)
-    {
-        static const double delta=3;
-        double diff=p2-p1, diff2=next-p2;
-        bool ret=false;
-
-        if(diff>0 && diff2<-delta)
-            ret=true;
-        else if(diff<0 && diff2>delta)
-            ret=true;
-
-        return ret;
-    }
-
-    QLineF slopeToLine(const double &der)
-    {
-        double arcder = atan(der);
-        const double len=7.*der;
-        QPointF from, to;
-        from.setX(len*cos(arcder));
-        from.setY(len*sin(arcder));
-
-        to.setX(-len*cos(arcder));
-        to.setY(-len*sin(arcder));
-        return QLineF(from, to);
-    }
-
-    QLineF mirrorXY(const QLineF& l)
-    {
-        return QLineF(l.y1(), l.x1(), l.y2(), l.x2());
-    }
-}
 
 //BEGIN Box class
 

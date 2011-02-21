@@ -27,6 +27,7 @@
 
 #include <KDebug>
 #include <KLocale>
+#include "functionutils.h"
 
 using Analitza::Expression;
 using Analitza::ExpressionType;
@@ -54,24 +55,6 @@ namespace
             ret=true;
 
         return ret;
-    }
-
-    QLineF slopeToLine(const double &der)
-    {
-        double arcder = atan(der);
-        const double len=6.*der;
-        QPointF from, to;
-        from.setX(len*cos(arcder));
-        from.setY(len*sin(arcder));
-
-        to.setX(-len*cos(arcder));
-        to.setY(-len*sin(arcder));
-        return QLineF(from, to);
-    }
-
-    QLineF mirrorXY(const QLineF& l)
-    {
-        return QLineF(l.y1(), l.x1(), l.y2(), l.x2());
     }
 }
 
@@ -361,7 +344,7 @@ QLineF FunctionParametric::derivative(const QPointF& point)
 
         double m = comp2->value()/comp1->value();
 
-        return slopeToLine(m);
+        return FunctionUtils::slopeToLine(m);
     }
     else
         return QLineF();

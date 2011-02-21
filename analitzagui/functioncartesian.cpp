@@ -26,6 +26,7 @@
 
 #include <KDebug>
 #include <KLocale>
+#include "functionutils.h"
 
 using std::sin;
 using std::cos;
@@ -96,45 +97,6 @@ struct FunctionX : public FunctionY
 REGISTER_FUNCTION(FunctionY)
 REGISTER_FUNCTION(FunctionX)
 
-namespace
-{
-	/// The @p p1 and @p p2 parameters are the last 2 values found
-	/// @p next is the next value found
-	///	@returns whether we've found the gap
-	
-	bool traverse(double p1, double p2, double next)
-	{
-		static const double delta=3;
-		double diff=p2-p1, diff2=next-p2;
-		bool ret=false;
-		
-		if(diff>0 && diff2<-delta)
-			ret=true;
-		else if(diff<0 && diff2>delta)
-			ret=true;
-		
-		return ret;
-	}
-
-	QLineF slopeToLine(const double &der)
-	{
-		double arcder = atan(der);
-		const double len=3.*der;
-		QPointF from, to;
-		from.setX(len*cos(arcder));
-		from.setY(len*sin(arcder));
-
-		to.setX(-len*cos(arcder));
-		to.setY(-len*sin(arcder));
-		return QLineF(from, to);
-	}
-
-	QLineF mirrorXY(const QLineF& l)
-	{
-		return QLineF(l.y1(), l.x1(), l.y2(), l.x2());
-	}
-}
-
 void FunctionY::calculateValues(double l_lim, double r_lim)
 {
 	m_jumps.clear();
@@ -158,7 +120,7 @@ void FunctionY::calculateValues(double l_lim, double r_lim)
 			if(y.format()!=Cn::Real && prevY!=y.value()) {
 				m_jumps.append(points.count()-1);
 				jumping=true;
-			} else if(points.count()>3 && traverse(points[points.count()-3].y(), prevY, y.value())) {
+			} else if(points.count()>3 && FunctionUtils::traverse(points[points.count()-3].y(), prevY, y.value())) {
 				m_jumps.append(points.count()-1);
 				jumping=true;
 			}
@@ -234,7 +196,7 @@ QLineF FunctionY::derivative(const QPointF& p)
 		qDeleteAll(vars);
 	}
 	
-	return slopeToLine(ret);
+	return FunctionUtils::slopeToLine(ret);
 }
 
 void FunctionX::updatePoints(const QRect& viewport)
@@ -251,5 +213,5 @@ QLineF FunctionX::derivative(const QPointF& p)
 {
 	QPointF p1(p.y(), p.x());
 	QLineF ret=FunctionY::derivative(p1);
-	return mirrorXY(ret);
+	return FunctionUtils::mirrorXY(ret);
 }
