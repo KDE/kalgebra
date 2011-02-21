@@ -27,6 +27,7 @@
 #include "variables.h"
 #include "expression.h"
 #include "apply.h"
+#include <QVariant>
 
 using namespace Analitza;
 namespace AnalitzaUtils
@@ -356,6 +357,52 @@ bool equalTree(const Object * o1, const Object * o2)
 			break;
 	}
 	return eq;
+}
+
+QVariant expressionToVariant(const Analitza::Expression& res)
+{
+	QVariant ret;
+	if(res.isVector() || res.isList()) {
+		QVariantList vals;
+		
+		QList<Analitza::Expression> expressions = res.toExpressionList();
+		foreach(const Analitza::Expression& exp, expressions) {
+			vals << expressionToVariant(exp);
+		}
+		
+		ret = vals;
+	} else if(res.isReal()) {
+		Analitza::Cn val = res.toReal();
+		if(val.isBoolean())
+			ret = val.isTrue();
+		else if(val.isInteger())
+			ret = int(val.value());
+		else
+			ret = val.value();
+	} else
+		ret = res.toString();
+	
+	return ret;
+}
+
+Analitza::Expression variantToExpression(const QVariant& v)
+{
+	if(v.canConvert(QVariant::Double))
+		return Analitza::Expression(Analitza::Cn(v.toReal()));
+	else if(v.canConvert(QVariant::List)) {
+		QVariantList list = v.toList();
+		QList<Analitza::Expression> expressionList;
+		
+		foreach(const QVariant& elem, list) {
+			expressionList << variantToExpression(elem);
+		}
+		
+		return Analitza::Expression::constructList(expressionList);
+	} else if(v.canConvert(QVariant::String))
+		return Analitza::Expression(v.toString());
+	
+	Q_ASSERT(false && "couldn't figure out the type");
+	return Analitza::Expression();
 }
 
 }

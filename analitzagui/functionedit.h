@@ -29,6 +29,7 @@
 
 #include "analitzaguiexport.h"
 
+class KTabWidget;
 class Function;
 class Graph2D;
 class FunctionsModel;
@@ -88,6 +89,8 @@ public:
 	
 	Analitza::Variables* variables() const { return m_vars; }
 	
+	void setOptionsShown(bool shown);
+	
 public slots:
 	/** Clears the dialog. */
 	void clear();
@@ -105,6 +108,7 @@ private slots:
 	
 private:
 	void setState(const QString& text, bool negative);
+	void focusInEvent(QFocusEvent*);
 	
 	ExpressionEdit *m_func;
 	ExpressionEdit *m_uplimit, *m_downlimit;
@@ -119,8 +123,7 @@ private:
 	Analitza::Variables* m_vars;
 	
 	bool m_modmode;
-	
-	void focusInEvent(QFocusEvent*);
+	KTabWidget* m_viewTabs;
 };
 
 #endif

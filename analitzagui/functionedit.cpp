@@ -80,9 +80,9 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_funcsModel->setResolution(resolution);
 //	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
 	
-	KTabWidget* viewTabs=new KTabWidget(this);
+	m_viewTabs=new KTabWidget(this);
 	
-	m_graph = new Graph2D(m_funcsModel, viewTabs);
+	m_graph = new Graph2D(m_funcsModel, m_viewTabs);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);
@@ -90,8 +90,8 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
 	
-	viewTabs->addTab(m_graph, KIcon("document-preview"), i18n("Preview"));
-	QWidget *options=new QWidget(viewTabs);
+	m_viewTabs->addTab(m_graph, KIcon("document-preview"), i18n("Preview"));
+	QWidget *options=new QWidget(m_viewTabs);
 	options->setLayout(new QVBoxLayout);
 	m_uplimit=new ExpressionEdit(options);
 	m_downlimit=new ExpressionEdit(options);
@@ -102,7 +102,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	options->layout()->addWidget(new QLabel(i18n("To:"), options));
 	options->layout()->addWidget(m_uplimit);
 	options->layout()->addItem(new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-	viewTabs->addTab(options, KIcon("configure"), i18n("Options"));
+	m_viewTabs->addTab(options, KIcon("configure"), i18n("Options"));
 	connect(m_uplimit, SIGNAL(textChanged()), this, SLOT(updateUplimit()));
 	connect(m_downlimit, SIGNAL(textChanged()), this, SLOT(updateDownlimit()));
 	
@@ -118,7 +118,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	topLayout->addWidget(m_func);
 	topLayout->addWidget(m_color);
 	topLayout->addLayout(validLayout);
-	topLayout->addWidget(viewTabs);
+	topLayout->addWidget(m_viewTabs);
 	topLayout->addLayout(m_butts);
 	
 	m_name->hide(); //FIXME: Remove this when the name has any sense
@@ -312,6 +312,11 @@ Analitza::Expression FunctionEdit::expression() const
 bool FunctionEdit::isMathML() const
 {
     return m_func->isMathML();
+}
+
+void FunctionEdit::setOptionsShown(bool shown)
+{
+	m_viewTabs->setVisible(shown);
 }
 
 #include "functionedit.moc"
