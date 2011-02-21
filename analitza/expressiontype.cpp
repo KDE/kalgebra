@@ -33,13 +33,6 @@ bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionTy
 	return ret;
 }
 
-QDebug operator<<(QDebug dbg, const ExpressionType &c)
-{
-	dbg.nospace() << "("<< qPrintable(c.toString()) <<")";
-	
-	return dbg.space();
-}
-
 ExpressionType::ExpressionType(const ExpressionType& t)
     : m_type(t.m_type), m_contained(t.m_contained), m_assumptions(t.m_assumptions), m_size(t.m_size)
 {}
@@ -222,15 +215,15 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 	return ret;
 }
 
-void ExpressionType::printAssumptions(const ExpressionType& t, int ind) const
-{
-	if(ind>10) return;
-	
-	qDebug()<< QString(ind, ':') << t.m_assumptions;
-	foreach(const ExpressionType& ass, t.m_assumptions) {
-		printAssumptions(ass, ind+1);
-	}
-}
+// void ExpressionType::printAssumptions(const ExpressionType& t, int ind) const
+// {
+// 	if(ind>10) return;
+// 	
+// 	qDebug()<< QString(ind, ':') << t.m_assumptions;
+// 	foreach(const ExpressionType& ass, t.m_assumptions) {
+// 		printAssumptions(ass, ind+1);
+// 	}
+// }
 
 QMap<QString, ExpressionType> ExpressionType::assumptions() const
 {
