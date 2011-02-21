@@ -26,6 +26,8 @@
 
 FunctionsView::FunctionsView(QWidget * parent) : QTreeView(parent)
 {
+	setRootIsDecorated(false);
+	setSortingEnabled(false);
 }
 
 void FunctionsView::selectionChanged(const QItemSelection & selected, const QItemSelection &)

@@ -32,12 +32,21 @@ FunctionsDialog::FunctionsDialog(FunctionsModel* model, Analitza::Variables* var
 	setLayout(new QVBoxLayout);
 	
 	m_view = new FunctionsView(this);
+	m_view->setSelectionMode(QAbstractItemView::SingleSelection);
 	m_view->setModel(m_model);
 	layout()->addWidget(m_view);
 	
+	QHBoxLayout* actionsLayout = new QHBoxLayout;
 	QPushButton* add = new QPushButton(KIcon("list-add"), i18n("Add"), this);
 	connect(add, SIGNAL(clicked(bool)), SLOT(addFunction()));
-	layout()->addWidget(add);
+	actionsLayout->addWidget(add);
+	QPushButton* remove = new QPushButton(KIcon("list-remove"), i18n("Remove"), this);
+	connect(remove, SIGNAL(clicked(bool)), SLOT(removeFunction()));
+	actionsLayout->addWidget(remove);
+	QPushButton* clear = new QPushButton(KIcon("edit-clear-list"), i18n("Clear"), this);
+	connect(clear, SIGNAL(clicked(bool)), SLOT(clearFunctions()));
+	actionsLayout->addWidget(clear);
+	layout()->addItem(actionsLayout);
 	
 	QDialogButtonBox* box = new QDialogButtonBox(QDialogButtonBox::Close);
 	layout()->addWidget(box);
@@ -49,6 +58,7 @@ FunctionsDialog::FunctionsDialog(FunctionsModel* model, Analitza::Variables* var
 	m_editDialog->setLayout(new QVBoxLayout);
 	
 	m_edit = new FunctionEdit(m_editDialog);
+	m_edit->setOptionsShown(false);
 	m_edit->setVariables(m_vars);
 	m_editDialog->layout()->addWidget(m_edit);
 	connect(m_edit, SIGNAL(accept()), m_editDialog, SLOT(accept()));
@@ -64,4 +74,16 @@ void FunctionsDialog::addFunction()
 void FunctionsDialog::addEditedFunction()
 {
 	m_model->addFunction(m_edit->createFunction());
+	m_view->setCurrentIndex(m_model->index(m_model->rowCount()-1, 0));
+}
+
+void FunctionsDialog::clearFunctions()
+{
+	m_model->clear();
+}
+
+void FunctionsDialog::removeFunction()
+{
+	if(m_model->rowCount()>0)
+		m_model->removeRow(m_view->selectionModel()->currentIndex().row());
 }

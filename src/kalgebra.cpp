@@ -198,8 +198,6 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
-	b_funcs->setRootIsDecorated(false);
-	b_funcs->setSortingEnabled(false);
 	
 	b_tools->addTab(b_funcs, i18n("List"));
 	

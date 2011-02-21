@@ -38,6 +38,8 @@ class FunctionsDialog : public QDialog
 	public slots:
 		void addFunction();
 		void addEditedFunction();
+		void removeFunction();
+		void clearFunctions();
 		
 	private:
 		QTreeView* m_view;
