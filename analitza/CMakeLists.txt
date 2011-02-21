@@ -48,27 +48,14 @@ if(INSTALL_ANALITZA_HEADERS)
 	install(FILES 
 		abstractlexer.h
 		analitzaexport.h
-		analitza.h
+		analyzer.h
 		analitzautils.h
-		container.h
-		explexer.h
 		expression.h
-		expressionparser.h
-		expressiontable_p.h
-		expressionwriter.h
-		htmlexpressionwriter.h
-		list.h
-		mathmlexpressionwriter.h
-		mathmlpresentationexpressionwriter.h
-		mathmlpresentationlexer.h
 		object.h
 		operations.h
 		operator.h
-		stringexpressionwriter.h
 		value.h
-		variable.h
 		variables.h
-		vector.h
 		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)
 endif(INSTALL_ANALITZA_HEADERS)
 

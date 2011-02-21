@@ -77,7 +77,6 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("plus") << "fplus" << "(num -> num) | (<num,-1> -> <num,-1>)";
 	QTest::newRow("call plus") << "fplus(3)" << "num";
 	QTest::newRow("call plus vect") << "fplus(vector{3})" << "<num,1>";
-	QTest::newRow("num to vec") << "tovector(3)" << "<num,2>";
 	QTest::newRow("vec to vec") << "tovector(vector{3})" << "<<num,1>,2>";
 	QTest::newRow("piecewise") << "piecewise { number=3? 3, ?2 }" << "num";
 	QTest::newRow("selector") << "selector(2, vector{3, 3})" << "num";
