@@ -564,10 +564,10 @@ Object* Analyzer::operate(const Apply* c)
 			ret = product(*c);
 			break;
 		case Operator::forall:
-			ret = sum(*c);
+			ret = forall(*c);
 			break;
 		case Operator::exists:
-			ret = product(*c);
+			ret = exists(*c);
 			break;
 		case Operator::function:
 			ret = func(*c);
