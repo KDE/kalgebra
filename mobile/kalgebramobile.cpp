@@ -39,6 +39,8 @@
 #include <KPluginInfo>
 #include <KStandardDirs>
 #include <QDir>
+#include <QDesktopServices>
+#include <QtGui/QMenuBar>
 
 // #define DEBUG
 
@@ -104,17 +106,18 @@ class PluginsModel : public QStandardItemModel
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	: QMainWindow(parent, flags), m_functionsModel(0)
 {
+	setWindowTitle(i18n("KAlgebra Mobile"));
+	
 	m_engine = new QScriptEngine(this);
 	connect(m_engine, SIGNAL(signalHandlerException(QScriptValue)), SLOT(handleException(QScriptValue)));
 	
 	m_wrapper = new AnalitzaWrapper(m_engine, this);
 	
-	QToolBar* toolbar = addToolBar(i18n("Main Toolbar"));
-	toolbar->addAction(KIcon("view-choose"), i18n("Select..."), this, SLOT(selectPlugin()));
+	menuBar()->addAction(i18n("Select..."), this, SLOT(selectPlugin()));
 	
 #ifdef DEBUG
-	toolbar->addSeparator();
-	toolbar->addAction(KIcon("debug-run"), i18n("Debug"), this, SLOT(debug()));
+	menuBar()->addSeparator();
+	menuBar()->addAction(KIcon("debug-run"), i18n("Debug"), this, SLOT(debug()));
 #endif
 	m_pluginsModel = new PluginsModel(this);
 	m_uiconfig = new UiConfig(this);
@@ -154,7 +157,7 @@ void KAlgebraMobile::selectPlugin()
 	d->setLayout(new QVBoxLayout);
 	
 	QListView* combo = new QListView(d.data());
-	combo->setViewMode(QListView::IconMode);
+// 	combo->setViewMode(QListView::IconMode);
 	combo->setModel(m_pluginsModel);
 	combo->setFrameStyle(QFrame::NoFrame);
 	combo->setBackgroundRole(QPalette::NoRole);

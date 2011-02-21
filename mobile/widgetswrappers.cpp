@@ -18,6 +18,7 @@
 
 #include "widgetswrappers.h"
 #include <QVBoxLayout>
+#include <QScrollBar>
 
 VerticalLayout::VerticalLayout(const QWidget* w) { setLayout(new QVBoxLayout); }
 void VerticalLayout::addWidget(QWidget* w) { layout()->addWidget(w); }
@@ -30,6 +31,7 @@ ListWidget::ListWidget(QWidget* parent)
 
 void ListWidget::addItem(const QString& item) { QListWidget::addItem(item); }
 void ListWidget::clear() { QListWidget::clear(); }
+void ListWidget::scrollDown() { verticalScrollBar()->setValue(verticalScrollBar()->maximum()); }
 
 ////////////////////////////////////
 

@@ -41,6 +41,7 @@ class ListWidget : public QListWidget
 	public slots:
 		void addItem(const QString& item);
 		void clear();
+		void scrollDown();
 };
 
 class TreeView : public QTreeView
