@@ -15,6 +15,7 @@ set(analitzagui_SRCS
 	expressionedit.cpp
 
 	function.cpp
+	functionutils.cpp
 	functionimpl.cpp
 	functionfactory.cpp
 	functionpolar.cpp

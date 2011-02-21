@@ -35,6 +35,7 @@
 
 #include <analitza/analyzer.h>
 #include "functionsmodel.h"
+#include "functionutils.h"
 
 #if defined(HAVE_IEEEFP_H)
 #include <ieeefp.h>
@@ -486,19 +487,6 @@ QPointF Graph2D::calcImage(const QPointF& ndp) const
 	return m_model->calcImage(ndp).first;
 }
 
-QLineF slopeToLine(const double &der)
-{
-	double arcder = atan(der);
-	const double len=3.*der;
-	QPointF from, to;
-	from.setX(len*cos(arcder));
-	from.setY(len*sin(arcder));
-
-	to.setX(-len*cos(arcder));
-	to.setY(-len*sin(arcder));
-	return QLineF(from, to);
-}
-
 QLineF Graph2D::slope(const QPointF & dp) const
 {
 	QLineF ret = m_model->slope(dp);
@@ -506,7 +494,7 @@ QLineF Graph2D::slope(const QPointF & dp) const
 		QPointF a = calcImage(dp-QPointF(.1,.1));
 		QPointF b = calcImage(dp+QPointF(.1,.1));
 		
-		ret = slopeToLine((a.y()-b.y())/(a.x()-b.x()));
+		ret = FunctionUtils::slopeToLine((a.y()-b.y())/(a.x()-b.x()));
 	}
 	
 	return ret;
