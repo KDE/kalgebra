@@ -74,7 +74,13 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 	m_wrapped->setStack(stack);
 	Analitza::Expression expr = m_wrapped->calculateLambda();
 	
-	return AnalitzaUtils::expressionToVariant(expr);
+	QVariant ret;
+	if(!m_wrapped->isCorrect())
+		m_engine->currentContext()->throwError(m_wrapped->errors().join(", "));
+	else
+		ret = AnalitzaUtils::expressionToVariant(expr);
+	
+	return ret;
 }
 
 QString AnalitzaWrapper::unusedVariableName() const
