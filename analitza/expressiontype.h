@@ -80,7 +80,6 @@ class ANALITZA_EXPORT ExpressionType
 		void reduce(const ExpressionType& type);
 	private:
 		static void starsSimplification(ExpressionType& t, QMap<int, int>& reductions, int& next);
-		void printAssumptions(const ExpressionType& t, int ind=0) const;
 		
 		Type m_type;
 		///In case of list and vector the inside type

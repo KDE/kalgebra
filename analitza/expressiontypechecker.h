@@ -89,8 +89,6 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QStringList m_deps;
 };
 
-QDebug operator<<(QDebug dbg, const ExpressionType &c);
-
 }
 
 #endif // EXPRESSIONTYPECHECKER_H
