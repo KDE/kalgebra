@@ -56,6 +56,11 @@ if(INSTALL_ANALITZA_HEADERS)
 		operator.h
 		value.h
 		variables.h
+		expressiontype.h
+		builtinmethods.h
 		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)
+	
+	install(FILES
+			../FindAnalitza.cmake
+			DESTINATION ${DATA_INSTALL_DIR}/cmake/modules)
 endif(INSTALL_ANALITZA_HEADERS)
-
