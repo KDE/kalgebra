@@ -27,7 +27,7 @@ void VerticalLayout::addWidget(QWidget* w) { layout()->addWidget(w); }
 
 ListWidget::ListWidget(QWidget* parent)
 	: QListWidget(parent)
-{}
+{setInputMethodHints(Qt::ImhNoAutoUppercase);}
 
 void ListWidget::addItem(const QString& item) { QListWidget::addItem(item); }
 void ListWidget::clear() { QListWidget::clear(); }
