@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QTimer>
 #include <QPropertyAnimation>
+#include <QInputContext>
 
 #include <KLocale>
 
@@ -103,6 +104,8 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	setMode(inimode);
 	m_lineHeight = QFontMetrics(currentCharFormat().font()).height();
 	setFixedHeight(m_lineHeight+15);
+	
+	setInputMethodHints(Qt::ImhNoAutoUppercase);
 }
 
 ExpressionEdit::~ExpressionEdit()
