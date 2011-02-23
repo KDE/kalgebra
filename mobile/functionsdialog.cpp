@@ -40,6 +40,12 @@ FunctionsDialog::FunctionsDialog(FunctionsModel* model, Analitza::Variables* var
 	QPushButton* add = new QPushButton(KIcon("list-add"), i18n("Add"), this);
 	connect(add, SIGNAL(clicked(bool)), SLOT(addFunction()));
 	actionsLayout->addWidget(add);
+	QPushButton* remove = new QPushButton(KIcon("list-remove"), i18n("Remove"), this);
+	connect(remove, SIGNAL(clicked(bool)), SLOT(removeFunction()));
+	actionsLayout->addWidget(remove);
+	QPushButton* clear = new QPushButton(KIcon("edit-clear-list"), i18n("Clear"), this);
+	connect(clear, SIGNAL(clicked(bool)), SLOT(clearFunctions()));
+	actionsLayout->addWidget(clear);
 	layout()->addItem(actionsLayout);
 	
 	QDialogButtonBox* box = new QDialogButtonBox(QDialogButtonBox::Close);
