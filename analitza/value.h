@@ -47,6 +47,9 @@ class ANALITZA_EXPORT Cn : public Object
 		/** Constructor. Creates an integer value with @p i. */
 		explicit Cn(int i) : Object(Object::value), m_value(i), m_format(Integer) {}
 		
+		/** @copydoc */
+		explicit Cn(uint i) : Object(Object::value), m_value(i), m_format(Integer) {}
+		
 		/** Constructor. Creates a boolean value with value @p b. */
 		explicit Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Boolean) {}
 		
