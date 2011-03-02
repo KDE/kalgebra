@@ -60,8 +60,8 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 		case Object::container: {
 			Container *c = (Container*) o;
 			
-			foreach(const Object* o, c->m_params) {
-				ret += dependencies(o, scope).toSet();
+			for(Container::const_iterator it=c->constBegin()+c->bvarCount(), itEnd=c->constEnd(); it!=itEnd; ++it) {
+				ret += dependencies(*it, scope).toSet();
 			}
 		} break;
 		case Object::apply: {
