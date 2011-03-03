@@ -130,7 +130,7 @@ Expression Analyzer::calculate()
 	} else {
 		if(m_exp.isCorrect() && m_hasdeps)
 			m_err << i18n("Unknown identifier: '%1'",
-							dependencies(m_exp.tree(), m_vars->keys()).join(
+							dependencies(m_exp.tree(), m_vars->keys()+m_builtin.identifiers()).join(
 								i18nc("identifier separator in error message", "', '")));
 		else
 			m_err << i18n("Must specify a correct operation");

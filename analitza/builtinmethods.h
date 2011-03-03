@@ -21,6 +21,7 @@
 #include <QVariant>
 #include "analitzaexport.h"
 #include "expressiontype.h"
+#include <QStringList>
 
 namespace Analitza
 {
@@ -70,6 +71,9 @@ class ANALITZA_EXPORT BuiltinMethods
 		
 		/** @returns the builtin function identified by @p id to be called. */
 		FunctionDefinition* function(const QString& id) const { return m_functions.value(id); }
+		
+		/** @returns a list with the name of all registered identifiers. */
+		QStringList identifiers() const { return m_functions.keys(); }
 	private:
 		QMap<QString, ExpressionType> m_types;
 		QHash<QString, FunctionDefinition*> m_functions;

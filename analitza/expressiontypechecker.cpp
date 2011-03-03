@@ -513,7 +513,6 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				ExpressionType ret(ExpressionType::Many), signature(current);
 				
 				QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
-// 						qDebug() << "SSSSSSSSSSSSSSSSSSSSS" << alts;
 				
 				bool countError=false;
 				foreach(const ExpressionType& opt, alts) {
@@ -551,7 +550,8 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					for(int i=0; valid && i<opt.parameters().size()-1; i++) {
 						ExpressionType t=opt.parameters()[i].starsToType(starToType);
 						valid=t.isError() ? false : inferType(c->m_params[i+1], t, &assumptions);
-// 								qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
+						
+// 						qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
 					}
 					
 					if(valid) {
