@@ -61,7 +61,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			Container *c = (Container*) o;
 			
 			for(Container::const_iterator it=c->constBegin()+c->bvarCount(), itEnd=c->constEnd(); it!=itEnd; ++it) {
-				ret += dependencies(*it, scope).toSet();
+				ret += dependencies(*it, scope+c->bvarStrings()).toSet();
 			}
 		} break;
 		case Object::apply: {
