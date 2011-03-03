@@ -92,7 +92,7 @@ QString ExpressionType::toString() const
             ret=/*"{"+*/typesToString(m_contained).join(" | ")/*+"}"*/;
 			break;
 		case ExpressionType::Object:
-			ret="obj:m_objectName";
+			ret="obj:"+m_objectName;
 			break;
     }
     
