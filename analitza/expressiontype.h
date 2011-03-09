@@ -51,7 +51,7 @@ class ANALITZA_EXPORT ExpressionType
 		bool isError() const;
 		
 		Type type() const { return m_type; }
-		ExpressionType contained() const { return m_contained.first(); }
+		ExpressionType contained() const { Q_ASSERT(m_type==Vector || m_type==List); return m_contained.first(); }
 		QList<ExpressionType> alternatives() const { Q_ASSERT(m_type==Many); return m_contained; }
 		void addAlternative(const ExpressionType& t) { Q_ASSERT(m_type==Many); m_contained.append(t); }
 		int size() const { return m_size; }
