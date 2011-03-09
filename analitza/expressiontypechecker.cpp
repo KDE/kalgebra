@@ -450,11 +450,13 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
 				tt=anyItem;
 			} else {
-				tt=current.contained(); //FIXME: should remove when done
+				tt=current.contained();
 				tt.addAssumptions(current.assumptions());
 			}
+			//TODO: should control the many case
 		}
 		
+		//FIXME: should remove when done
 		foreach(const QString& s, c->bvarStrings())
 			m_typeForBVar[s]=ExpressionType(tt);
 	}
@@ -551,7 +553,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						ExpressionType t=opt.parameters()[i].starsToType(starToType);
 						valid=t.isError() ? false : inferType(c->m_params[i+1], t, &assumptions);
 						
-// 						qDebug() << "pepeluis" << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
+// 						qDebug() << "pepeluis" << c->toString() << c->m_params[i+1]->toString() << opt.parameters()[i].starsToType(starToType) << valid;
 					}
 					
 					if(valid) {
@@ -577,13 +579,17 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 	}
 	m_typeForBVar=ctx;
 	
+	if(current.type()==ExpressionType::Many && current.alternatives().size()==1) {
+		current=current.alternatives().first();
+	}
+	
 	return QString();
 }
 
 QString ExpressionTypeChecker::accept(const CustomObject*)
 {
 	Q_ASSERT(false && "we shouldn't have to construct any custom object");
-	return "";
+	return QString();
 }
 
 //1. Check if parameters are applied correctly
