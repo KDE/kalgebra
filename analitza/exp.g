@@ -31,6 +31,7 @@
 %token tNeq		"!="
 %token tColon	":"
 %token tAt		"@"
+%token tComment	"//Comment//"
 
 
 %left tComa
@@ -171,6 +172,11 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
       const int state = m_stateStack.at(m_tos);
       if (yytoken == -1 && - TERMINAL_COUNT != action_index [state]) {
         yytoken = lexer->lex();
+		while(yytoken==tComment) {
+			//TODO: Add mathml comment
+			yytoken = lexer->lex();
+		}
+		
 		if(!lexer->error().isEmpty()) {
 			m_err += lexer->error();
 			return false;

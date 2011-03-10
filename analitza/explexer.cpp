@@ -19,6 +19,7 @@
 #include "explexer.h"
 #include "expressionparser.h"
 #include <KLocalizedString>
+#include <QDebug>
 
 ExpLexer::ExpLexer(const QString &source)
 	: AbstractLexer(source), m_pos(0)
@@ -36,8 +37,18 @@ void ExpLexer::getToken()
 	
 	if(pos>=a.length()) {
 		ret.type = ExpressionTable::EOF_SYMBOL;
-	} else if(a.length()>pos+1 && m_longOperators.contains(QString(a[pos])+a[pos+1])) {
-		ret.type=m_longOperators[QString(a[pos])+a[pos+1]];
+	} else if(a.length()>pos+1 && a[pos]=='/' && a[pos+1]=='/') {
+		ret.type=ExpressionTable::tComment;
+		pos+=2;
+		for(; a.length()>pos+1; pos++) {
+			if((a[pos]=='/' && a[pos+1]=='/') || a[pos]=='\n') {
+				pos+= a[pos]=='\n' ? 1 : 2;
+				break;
+			}
+		}
+		
+	} else if(a.length()>pos+1 && m_longOperators.contains(a.mid(pos, 2))) {
+		ret.type=m_longOperators[a.mid(pos, 2)];
 		pos+=2;
 	} else if(m_operators.contains(a[pos])) {
 		ret.type=m_operators[a[pos]];

@@ -116,13 +116,16 @@
         strings can be also with ", and accept the respective delimiter in them either
         by doubling it ('', "") or by escaping it (\', \") -->
 
-        <!-- Handling of keywords, comments, functions, identifiers, numbers and braces -->
+        <!-- Handling of keywords, functions, identifiers, numbers and braces -->
         <keyword context="#stay" attribute="Keyword" String="keywords" />
         <keyword context="#stay" attribute="Operations" String="operations" />
         <keyword context="#stay" attribute="Builtin" String="builtin"/>
         <RegExpr context="#stay" attribute="Variable" String="[a-zA-Z]\w*" />
         <RegExpr context="#stay" attribute="Number" String="(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?[ij]?" />
         <AnyChar context="#stay" attribute="Delimiter" String="(){}"/>
+        
+        <!-- Comments-->
+        <Detect2Chars context="Commentar" attribute="Comment" char="/" char1="/"/>
 
         <!-- operators -->
         <StringDetect context="#stay" attribute="Operator" String="+"/>
@@ -137,14 +140,15 @@
         <StringDetect context="#stay" attribute="Operator" String="="/>
 
       </context>
+      
+      <context attribute="Comment" lineEndContext="#pop" name="Commentar">
+        <Detect2Chars attribute="Comment" context="#pop" char="/" char1="/" endRegion="Comment"/>
+      </context>
 
    <!--Context entered after encountering an ' adjoint operator -->
       <context name="_adjoint" attribute="Operator" lineEndContext="#pop">
         <RegExpr context="#pop" attribute="Operator" String="'+" />
       </context>
-
-
-
     </contexts>
 
     <itemDatas>
@@ -158,7 +162,7 @@
       <itemData name="Comment" defStyleNum="dsComment" color="#009900"/>
       <itemData name="Operations" defStyleNum="dsFunction" color="#AC0008" selColor="#00ff00"/>
       <itemData name="Builtin" defStyleNum="dsBaseN" color="#b28c00" />
-      </itemDatas>
+    </itemDatas>
 
   </highlighting>
 

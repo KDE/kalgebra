@@ -102,6 +102,12 @@ void ExpTest::testSimple_data()
 	QTest::newRow("list") << "list{}" << "<math><list /></math>";
 	QTest::newRow("minus order") << "-3^2" << "<math><apply><minus /><apply><power /><cn>3</cn><cn>2</cn></apply></apply></math>";
 	QTest::newRow("minus order") << "v[3]" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	
+	QTest::newRow("comment1") << "//a\nv[3]" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	QTest::newRow("comment2") << "//a//v[3]" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	QTest::newRow("comment3") << "v//a//[3]" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	QTest::newRow("comment4") << "v[3]//a//" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	QTest::newRow("comment5") << "v[3]//a\n" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
 }
 
 void ExpTest::testSimple()
