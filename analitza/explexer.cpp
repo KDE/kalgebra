@@ -58,27 +58,22 @@ void ExpLexer::getToken()
 		}
 		ret.type= ExpressionTable::tId;
 		Q_ASSERT(!ret.val.isEmpty());
-	} else {
-		int l = m_realRx.indexIn(a, pos, QRegExp::CaretAtOffset);
-		Q_ASSERT(l==pos || l==-1);
+	} else if(m_realRx.indexIn(a, pos, QRegExp::CaretAtOffset)==pos) {
+		ret.val = m_realRx.cap();
 		
-		if(l==pos) {
-			ret.val = m_realRx.cap();
-			
-			QString attrib;
-			if(!m_realRx.cap(2).isEmpty() || !m_realRx.cap(3).isEmpty() || !m_realRx.cap(4).isEmpty())
-				attrib+=" type='real'";
-			
-			Q_ASSERT(!ret.val.isEmpty());
-			
-			ret.val = QString("<cn%1>%2</cn>").arg(attrib).arg(ret.val);
-			ret.type= ExpressionTable::tVal;
-			
-			pos += m_realRx.matchedLength();
-		} else {
-			ret.val=-1;
-			m_err=i18n("Unknown token %1", a[pos]);
-		}
+		QString attrib;
+		if(!m_realRx.cap(2).isEmpty() || !m_realRx.cap(3).isEmpty() || !m_realRx.cap(4).isEmpty())
+			attrib+=" type='real'";
+		
+		Q_ASSERT(!ret.val.isEmpty());
+		
+		ret.val = QString("<cn%1>%2</cn>").arg(attrib).arg(ret.val);
+		ret.type= ExpressionTable::tVal;
+		
+		pos += m_realRx.matchedLength();
+	} else {
+		ret.val=-1;
+		m_err=i18n("Unknown token %1", a[pos]);
 	}
 	ret.len = pos-oldpos;
 	m_tokens.append(ret);
