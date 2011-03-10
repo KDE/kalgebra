@@ -36,8 +36,6 @@
 #include <kio/netaccess.h>
 #include <kio/job.h>
 
-#include <analitza/explexer.h>
-#include <analitza/expressionparser.h>
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
@@ -190,21 +188,9 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 	
 	if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 		QTextStream stream(&file);
-		correct=true;
 		
-		QString line;
-		while (correct && !stream.atEnd()) {
-			line += stream.readLine(); // line of text excluding '\n'
-			
-			ExpLexer lex(line);
-			ExpressionParser parser;
-			parser.parse(&lex);
-			
-			if(!line.isEmpty() && lex.isCompletelyRead()) {
-				correct &= addOperation(Analitza::Expression(line, Analitza::Expression::isMathML(line)), line);
-				line.clear();
-			}
-		}
+		a.importScript(&stream);
+		correct=a.isCorrect();
 	}
 	
 	if(!correct) {

@@ -775,3 +775,11 @@ static void print_dom(const QDomNode& in, int ind)
 			print_dom(in.childNodes().item(i), ind+1);
 	}
 }
+
+bool Expression::isCompleteExpression(const QString& exp)
+{
+	ExpLexer lex(exp);
+	while(lex.lex()!=0) {}
+	
+	return lex.isCompletelyRead();
+}

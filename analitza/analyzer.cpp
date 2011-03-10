@@ -101,6 +101,27 @@ void Analyzer::setExpression(const Expression & e)
 	}
 }
 
+void Analyzer::importScript(QTextStream* stream)
+{
+	QString line;
+	while (isCorrect() && !stream->atEnd()) {
+		line += stream->readLine(); // line of text excluding '\n'
+		
+		if(!line.isEmpty() && Expression::isCompleteExpression(line)) {
+			setExpression(Expression(line, Expression::isMathML(line)));
+			
+			calculate();
+			line.clear();
+		}
+	}
+	
+	if(!line.isEmpty()) {
+		setExpression(Expression(line, Expression::isMathML(line)));
+		
+		calculate();
+	}
+}
+
 Expression Analyzer::evaluate()
 {
 	m_err.clear();

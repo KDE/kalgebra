@@ -210,6 +210,9 @@ class ANALITZA_EXPORT Expression
 		
 		/** creates an expression filled with just a custom object */
 		static Expression constructCustomObject(const QVariant& custom);
+		
+		/** @returns if a non-mathml expression is fully introduced (e.g. has closed all parentheses) */
+		static bool isCompleteExpression(const QString& exp);
 	private:
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;

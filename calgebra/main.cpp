@@ -18,8 +18,6 @@
 
 #include <analitza/expression.h>
 #include <analitza/analyzer.h>
-#include <analitza/explexer.h>
-#include <analitza/expressionparser.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -117,11 +115,8 @@ int main(int argc, char *argv[])
 			add_history(expr);
 			entry+=QString(expr);
 			
-			ExpLexer lex(entry);
-			ExpressionParser ex;
-			ex.parse(&lex);
-			if(lex.isCompletelyRead()) {
-				Expression e(ex.mathML(), true);
+			if(Expression::isCompleteExpression(entry)) {
+				Expression e(entry, Expression::isMathML(entry));
 // 				qDebug() << entry << e.toString();
 				calculate(e, configuration.calcType);
 				inside =false;
