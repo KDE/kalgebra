@@ -26,8 +26,6 @@
 #include "analitzaexport.h"
 #include "expressiontype.h"
 #include "builtinmethods.h"
-#include <analitza/explexer.h>
-#include <analitza/expressionparser.h>
 #include <QStack>
 
 namespace Analitza
@@ -143,7 +141,7 @@ class ANALITZA_EXPORT Analyzer
 		
 		BuiltinMethods* builtinMethods();
 		
-		/** Makes it possible to easily enter a bunch of data to execute it */
+		/** Makes it possible to easily enter a bunch of code to execute it */
 		void importScript(QTextStream* stream);
 	private:
 		Expression m_exp;
