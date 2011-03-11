@@ -138,6 +138,7 @@ ExpressionType ExpressionTypeChecker::check(const Expression& exp)
 	
 	exp.tree()->visit(this);
 	
+// 	qDebug() << "cheeeeeeck" << m_vars;
 	return current;
 }
 
@@ -277,6 +278,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 						QMap<int, ExpressionType> starToType, starToParam;
 						
 						bool valid=matchAssumptions(&starToType, _first.assumptions(), _second.assumptions()); //match assumptions
+						if(!valid) continue;
 						
 						ExpressionType first =_first .starsToType(starToType);
 						ExpressionType second=_second.starsToType(starToType);
@@ -375,7 +377,7 @@ ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2)
 	if(t1.type()==ExpressionType::Many && t2.type()==ExpressionType::Many) {
 		ExpressionType t(ExpressionType::Many);
 		foreach(const ExpressionType& alt1, t1.alternatives()) {
-			foreach(const ExpressionType& alt2, t1.alternatives()) {
+			foreach(const ExpressionType& alt2, t2.alternatives()) {
 				if(alt1==alt2)
 					t.addAlternative(alt1);
 			}
@@ -565,6 +567,8 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				}
 					
 				if(ret.alternatives().isEmpty()) {
+// 					qDebug() << "peee" << signature;
+					
 					current=ExpressionType(ExpressionType::Error);
 					addError(i18n("Could not call '%1'", c->toString()));
 				} else
@@ -666,7 +670,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 									newsignature.addParameter(t);
 									options += newsignature;
 								}
-							}
+							};
 							alts=options;
 						}
 						
@@ -705,11 +709,25 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 {
 	ExpressionType cont=commonType(v->values());
 	
-	QMap< QString, ExpressionType > assumptions;
-	if(!cont.isError())
-		assumptions=typeIs(v->constBegin(), v->constEnd(), cont);
-	current=ExpressionType(ExpressionType::Vector, cont, v->size());
-	current.addAssumptions(assumptions);
+	if(cont.type()==ExpressionType::Many) {
+		ExpressionType toret(ExpressionType::Many);
+		foreach(const ExpressionType& contalt, cont.alternatives()) {
+			QMap< QString, ExpressionType > assumptions;
+			if(!contalt.isError())
+				assumptions=typeIs(v->constBegin(), v->constEnd(), contalt);
+			ExpressionType cc(ExpressionType::Vector, contalt, v->size());
+			cc.addAssumptions(assumptions);
+			toret.addAlternative(cc);
+		}
+		
+		current=toret;
+	} else {
+		QMap< QString, ExpressionType > assumptions;
+		if(!cont.isError())
+			assumptions=typeIs(v->constBegin(), v->constEnd(), cont);
+		current=ExpressionType(ExpressionType::Vector, cont, v->size());
+		current.addAssumptions(assumptions);
+	}
 	
 	return QString();
 }
@@ -718,11 +736,26 @@ QString ExpressionTypeChecker::accept(const List* l)
 {
 	ExpressionType cont=commonType(l->values());
 	
-	QMap< QString, ExpressionType > assumptions;
-	if(!cont.isError())
-		assumptions=typeIs(l->constBegin(), l->constEnd(), cont);
-	current=ExpressionType(ExpressionType::List, cont);
-	current.addAssumptions(assumptions);
+	if(cont.type()==ExpressionType::Many) {
+		ExpressionType toret(ExpressionType::Many);
+		
+		foreach(const ExpressionType& contalt, cont.alternatives()) {
+			QMap< QString, ExpressionType > assumptions;
+			if(!contalt.isError())
+				assumptions=typeIs(l->constBegin(), l->constEnd(), contalt);
+			ExpressionType cc(ExpressionType::List, contalt);
+			cc.addAssumptions(assumptions);
+			toret.addAlternative(cc);
+		}
+		
+		current=toret;
+	} else {
+		QMap< QString, ExpressionType > assumptions;
+		if(!cont.isError())
+			assumptions=typeIs(l->constBegin(), l->constEnd(), cont);
+		current=ExpressionType(ExpressionType::List, cont);
+		current.addAssumptions(assumptions);
+	}
 	
 	return QString();
 }

@@ -44,7 +44,10 @@ ExpressionType::ExpressionType(ExpressionType::Type t, int any)
 
 ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& contained, int s)
     : m_type(t), m_contained(QList<ExpressionType>() << contained), m_size(s)
-{ Q_ASSERT(m_type==List || m_type==Vector);  Q_ASSERT(m_type!=Vector || m_size!=0); }
+{
+	Q_ASSERT(m_type==List || m_type==Vector);  Q_ASSERT(m_type!=Vector || m_size!=0);
+	m_assumptions=contained.assumptions();
+}
 
 ExpressionType::ExpressionType(const QString& objectName)
 	: m_type(Object), m_objectName(objectName)

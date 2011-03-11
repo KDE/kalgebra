@@ -128,6 +128,10 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "num";
 	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "num -> num";
+	
+	QTest::newRow("tail") << "(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, ptail(elems, i+1)), ? list{} }" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tailr") << "(elems,i)->list{elems[i]}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tailp") << "(elems,i)->piecewise{ 1=2? list{elems[i]}, ? list{}}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
 }
 
 void TypeCheckTest::testConstruction()
@@ -140,8 +144,10 @@ void TypeCheckTest::testConstruction()
 	QVERIFY(e.isCorrect());
 	ExpressionTypeChecker t(v);
 	
-	QCOMPARE(t.check(e).simplifyStars().toString(), output);
+	ExpressionType type=t.check(e);
 	if(!t.isCorrect()) qDebug() << "errors: " << t.errors();
+	
+	QCOMPARE(type.simplifyStars().toString(), output);
 	QVERIFY(t.isCorrect());
 }
 
