@@ -194,9 +194,11 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 	}
 	
 	if(!correct) {
-		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1</ul>", path.prettyUrl());
+		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.pathOrUrl(), a.errors().join("<br/>"));
 		updateView(QString(), QString());
 	}
+	else
+		updateView(i18n("Imported: %1", path.pathOrUrl()), QString());
 	
 	return correct;
 }
