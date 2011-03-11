@@ -104,7 +104,7 @@ void Analyzer::setExpression(const Expression & e)
 void Analyzer::importScript(QTextStream* stream)
 {
 	QString line;
-	for(bool done=!stream->atEnd(); done; done=!stream->atEnd() && !line.isEmpty()) {
+	for(bool done=!stream->atEnd(); done; done=!stream->atEnd() || !line.isEmpty()) {
 		line += stream->readLine(); // line of text excluding '\n'
 		
 		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
