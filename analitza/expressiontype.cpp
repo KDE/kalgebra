@@ -27,7 +27,13 @@ bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionTy
 	bool ret=true;
 	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
 	for(; it!=itEnd; ++it) {
-		data.insert(it.key(), it.value());
+		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
+		
+		if(current!=data.end()) {
+// 			qDebug() << "lelelelel" << it.key() << current.value() << it.value();
+			data.insert(it.key(), ExpressionType::minimumType(*it, *current));
+		} else
+			data.insert(it.key(), it.value());
 	}
 	
 	return ret;
@@ -350,3 +356,42 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 	else
 		m_contained = newcontained;
 }
+
+ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const ExpressionType& t2)
+{
+// 	qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << t1 << t2;
+	if(t1.type()==ExpressionType::Many && t2.type()==ExpressionType::Many) {
+		ExpressionType t(ExpressionType::Many);
+		foreach(const ExpressionType& alt1, t1.alternatives()) {
+			foreach(const ExpressionType& alt2, t2.alternatives()) {
+				if(alt1==alt2)
+					t.addAlternative(alt1);
+			}
+		}
+		return t;
+	}
+	else if(t2.isUndefined() || t2.isError())
+		return t1;
+	else if(t1.isUndefined() || t1.isError())
+		return t2;
+	else if(t1.type()==ExpressionType::Many && t1.alternatives().contains(t2))
+		return t2;
+	else if(t2.type()==ExpressionType::Many && t2.alternatives().contains(t1))
+		return t1;
+	else if(t2.type()==ExpressionType::Any)
+		return t1;
+	else if(t1.type()==ExpressionType::Any)
+		return t2;
+	else if(t1.canReduceTo(t2)) {
+		ExpressionType t(t2);
+		QMap< QString, ExpressionType > ass = t2.assumptions();
+		bool b = merge(ass, t1.assumptions());
+		Q_ASSERT(b);
+		t.addAssumptions(ass);
+		return t;
+	} else if(t2.canReduceTo(t1))
+		return t1;
+	
+	return t1;
+}
+

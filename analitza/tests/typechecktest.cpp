@@ -129,9 +129,14 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "num";
 	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "num -> num";
 	
-	QTest::newRow("tail") << "(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, ptail(elems, i+1)), ? list{} }" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tail") << "ptail:=(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, ptail(elems, i+1)), ? list{} }" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
 	QTest::newRow("tailr") << "(elems,i)->list{elems[i]}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
-	QTest::newRow("tailp") << "(elems,i)->piecewise{ 1=2? list{elems[i]}, ? list{}}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tailp") << "(elems,i)->piecewise{ card(elems)>=i ? list{elems[i]}, ? list{}}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tail3") << "(elems,i)->union(list{elems[i]}, list{})" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tail4") << "ptail:=(elems,i)->union(list{elems[i]}, ptail(elems, i))" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+// 	QTest::newRow("tail5") << "(elems,i)->list{list{elems[i]}, ptail(elems, i)}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	
+	QTest::newRow("pe") << "vector{x->x, x->x+2}" << "<(num -> num),2>";
 }
 
 void TypeCheckTest::testConstruction()

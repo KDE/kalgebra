@@ -258,6 +258,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 		
 		parameters.first()->visit(this);
 		ExpressionType firstType=current;
+		QList<ExpressionType> firstTypes= firstType.type()==ExpressionType::Many ?  firstType.alternatives() : QList<ExpressionType>() << firstType;
 		
 		QList<Object*>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
 		for(; it!=itEnd; ++it)
@@ -265,7 +266,6 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 			(*it)->visit(this);
 			ExpressionType secondType=current;
 			
-			QList<ExpressionType> firstTypes= firstType.type()==ExpressionType::Many ?  firstType.alternatives() : QList<ExpressionType>() << firstType;
 			QList<ExpressionType> secndTypes=secondType.type()==ExpressionType::Many ? secondType.alternatives() : QList<ExpressionType>() << secondType;
 			
 // 			static int ind=3;
@@ -371,43 +371,16 @@ QStringList objectsToString(const QList<Object*>& objs) {
 	return ret;
 }
 
-ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2)
-{
-// 	qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << t1 << t2;
-	if(t1.type()==ExpressionType::Many && t2.type()==ExpressionType::Many) {
-		ExpressionType t(ExpressionType::Many);
-		foreach(const ExpressionType& alt1, t1.alternatives()) {
-			foreach(const ExpressionType& alt2, t2.alternatives()) {
-				if(alt1==alt2)
-					t.addAlternative(alt1);
-			}
-		}
-		return t;
-	}
-	else if(t2.isUndefined() || t2.isError())
-		return t1;
-	else if(t1.isUndefined() || t1.isError())
-		return t2;
-	else if(t1.type()==ExpressionType::Many && t1.alternatives().contains(t2))
-		return t2;
-	else if(t2.type()==ExpressionType::Many && t2.alternatives().contains(t1))
-		return t1;
-	else if(t2.type()==ExpressionType::Any)
-		return t1;
-	else if(t1.type()==ExpressionType::Any)
-		return t2;
-	
-	return t1;
-}
-
 ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 {
 	ExpressionType ret;
 	
-	foreach(const Object* o, values) {
+	if(values.isEmpty()) {
+		ret=ExpressionType(ExpressionType::Any, m_stars++);
+	} else foreach(const Object* o, values) {
 		o->visit(this);
 		
-		ret=minimumType(current, ret);
+		ret=ExpressionType::minimumType(current, ret);
 	}
 	
 	return ret;
@@ -619,11 +592,14 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			current.addAssumptions(assumptions);
 		}	break;
 		case Container::declare:{
-			c->m_params.last()->visit(this);
-			
-			//We don't want to mark what we're defining a dependency
 			Q_ASSERT(c->m_params.first()->type()==Object::variable);
 			Ci* var = static_cast<Ci*>(c->m_params.first());
+			
+			m_calculating.append(var->name());
+			c->m_params.last()->visit(this);
+			m_calculating.removeLast();
+			
+			//We don't want to mark what we're defining a dependency
 			m_deps.removeAll(var->name());
 		}	break;
 		case Container::lambda: {
@@ -655,6 +631,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 						containsManyParameter |= toadd.type()==ExpressionType::Many;
 						option.addParameter(toadd);
 					}
+// 					qDebug() << "peu" << option << alt << alt.assumptions();
 					option.addParameter(alt); //Return value
 					
 					if(containsManyParameter) {
@@ -793,7 +770,7 @@ ExpressionType ExpressionTypeChecker::typeForVar(const QString& var)
 		Q_ASSERT(m_v->contains(var));
 		m_calculating += var;
 		m_v->value(var)->visit(this);
-		m_calculating.removeOne(var);
+		m_calculating.removeLast();
 		m_vars[var]=current;
 // 		qDebug() << "checked type" << var << "=" << current;
 	}

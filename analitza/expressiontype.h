@@ -78,6 +78,8 @@ class ANALITZA_EXPORT ExpressionType
 		
 		/** when it's a many type, reduce to the one(s) that can be reduced to */
 		void reduce(const ExpressionType& type);
+		
+		static ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2);
 	private:
 		static void starsSimplification(ExpressionType& t, QMap<int, int>& reductions, int& next);
 		
