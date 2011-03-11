@@ -71,6 +71,7 @@ void ExpressionTest::testConversion_data()
 {
 	QTest::addColumn<QString>("input");
 	
+	QTest::newRow("empty") << "";
 	QTest::newRow("value") << "2.323232";
 	QTest::newRow("addition") << "2+4";
 	QTest::newRow("addition with var") << "2+x";

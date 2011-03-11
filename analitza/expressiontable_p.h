@@ -38,7 +38,7 @@ public:
     uminus_prec = 29,
 
     ACCEPT_STATE = 86,
-    RULE_COUNT = 48,
+    RULE_COUNT = 49,
     STATE_COUNT = 93,
     TERMINAL_COUNT = 30,
     NON_TERMINAL_COUNT = 16,

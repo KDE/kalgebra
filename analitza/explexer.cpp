@@ -40,13 +40,13 @@ void ExpLexer::getToken()
 	} else if(a.length()>pos+1 && a[pos]=='/' && a[pos+1]=='/') {
 		ret.type=ExpressionTable::tComment;
 		pos+=2;
-		for(; a.length()>pos+1; pos++) {
-			if((a[pos]=='/' && a[pos+1]=='/') || a[pos]=='\n') {
+		for(; a.length()>pos; pos++) {
+			if((a.length()>pos+1 && a[pos]=='/' && a[pos+1]=='/') || a[pos]=='\n') {
 				pos+= a[pos]=='\n' ? 1 : 2;
 				break;
 			}
 		}
-		
+		ret.val=a.mid(oldpos, pos-oldpos);
 	} else if(a.length()>pos+1 && m_longOperators.contains(a.mid(pos, 2))) {
 		ret.type=m_longOperators[a.mid(pos, 2)];
 		pos+=2;

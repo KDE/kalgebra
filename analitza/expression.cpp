@@ -190,7 +190,7 @@ bool Expression::ExpressionPrivate::check(const Container* c)
 			break;
 	}
 	
-	if(c->isEmpty()) {
+	if(c->isEmpty() && c->containerType()!=Container::math) {
 		m_err << i18n("Empty container: %1", c->tagName());
 		ret=false;
 	}

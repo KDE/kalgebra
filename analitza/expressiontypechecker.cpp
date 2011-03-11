@@ -685,7 +685,8 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		case Container::uplimit:
 		case Container::bvar:
 		case Container::domainofapplication:
-			(*c->constBegin())->visit(this);
+			for(Container::const_iterator it=c->constBegin(); it!=c->constEnd(); ++it)
+				(*it)->visit(this);
 			break;
 	}
 	

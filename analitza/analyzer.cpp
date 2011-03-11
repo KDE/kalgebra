@@ -104,21 +104,18 @@ void Analyzer::setExpression(const Expression & e)
 void Analyzer::importScript(QTextStream* stream)
 {
 	QString line;
-	while (isCorrect() && !stream->atEnd()) {
+	for(bool done=!stream->atEnd(); done; done=!stream->atEnd() && !line.isEmpty()) {
 		line += stream->readLine(); // line of text excluding '\n'
 		
-		if(!line.isEmpty() && Expression::isCompleteExpression(line)) {
+		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
 			setExpression(Expression(line, Expression::isMathML(line)));
 			
 			calculate();
 			line.clear();
+			
+			if(!isCorrect())
+				break;
 		}
-	}
-	
-	if(!line.isEmpty()) {
-		setExpression(Expression(line, Expression::isMathML(line)));
-		
-		calculate();
 	}
 }
 
@@ -653,12 +650,15 @@ Object* Analyzer::operate(const Apply* c)
 Object* Analyzer::operate(const Container* c)
 {
 	Q_ASSERT(c);
-	Q_ASSERT(!c->isEmpty());
+// 	Q_ASSERT(!c->isEmpty()); //Not valid anymore since we can have empty <math/>
 	Object* ret=0;
 	
 	switch(c->containerType()) {
 		case Container::math:
-			ret=calc(*c->constBegin());
+			if(c->isEmpty())
+				ret=new Cn(0.);
+			else
+				ret=calc(*c->constBegin());
 			break;
 		case Container::declare:
 			ret=calcDeclare(c);

@@ -198,6 +198,7 @@ bool ExpressionParser::parse(AbstractLexer *lexer)
           switch (r) {
 ./
 
+Program ::= ;/. case $rule_number: ./
 Program ::= Declaration ;/. case $rule_number: ./
 Program ::= Expression ;
 /.

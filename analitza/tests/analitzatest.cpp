@@ -97,6 +97,8 @@ void AnalitzaTest::testTrivialCalculate_data()
 	
 	QTest::newRow("exists") << "exists(x : x@list{1,1,0})" << 1.;
 	QTest::newRow("forall") << "forall(x : x@list{1,1,0})" << 0.;
+	
+	QTest::newRow("empty") << "" << 0.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
@@ -190,6 +192,8 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("forall") << "forall(x : x@list{x,1,1})" << "forall(x:x@list { x, 1, 1 })";
 	QTest::newRow("exists") << "exists(x : x@list{x,0,0})" << "exists(x:x@list { x, 0, 0 })";
+	
+	QTest::newRow("empty") << "" << "";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
