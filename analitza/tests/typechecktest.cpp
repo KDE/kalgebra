@@ -137,6 +137,11 @@ void TypeCheckTest::testConstruction_data()
 // 	QTest::newRow("tail5") << "(elems,i)->list{list{elems[i]}, ptail(elems, i)}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
 	
 	QTest::newRow("pe") << "vector{x->x, x->x+2}" << "<(num -> num),2>";
+	QTest::newRow("foldr") << "foldr:=(f,elems)->piecewise {card(elems)=1 ? elems[1], ? f(elems[1], foldr(f, tail(elems))) }" << "(* -> ** -> **) -> ** -> [*] -> **";
+	QTest::newRow("foldr1") << "foldr:=(f,elems)->f(elems[1], foldr(f, tail(elems)))" << "";
+	QTest::newRow("foldr2") << "foldr:=(f,elems)->f(cos(elems[1]), cos(elems[2]))" << "((* -> * -> **) -> <*,-1> -> **) | ((* -> * -> **) -> [*] -> **)";
+	QTest::newRow("foldr3") << "foldr:=(f,elems)->f(elems[1])" << "((* -> **) -> <*,-1> -> **) | ((* -> **) -> [*] -> **)";
+	QTest::newRow("foldr4") << "foldr:=(f,elems)->f(cos(elems[1]))" << "((num -> *) -> <num,-1> -> *) | ((num -> *) -> [num] -> *)";
 }
 
 void TypeCheckTest::testConstruction()
