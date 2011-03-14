@@ -36,6 +36,7 @@ class ANALITZA_EXPORT ExpressionType
 		
 		ExpressionType(Type t=Error, int any=-1);
 		ExpressionType(Type t, const ExpressionType& contained, int s=0);
+		explicit ExpressionType(const QList<ExpressionType>& alternatives);
 		
 		/** Constructs a type that identifies a custom Object */
 		ExpressionType(const QString& objectName);
@@ -53,16 +54,19 @@ class ANALITZA_EXPORT ExpressionType
 		Type type() const { return m_type; }
 		ExpressionType contained() const { Q_ASSERT(m_type==Vector || m_type==List); return m_contained.first(); }
 		QList<ExpressionType> alternatives() const { Q_ASSERT(m_type==Many); return m_contained; }
-		void addAlternative(const ExpressionType& t) { Q_ASSERT(m_type==Many); m_contained.append(t); }
+		
+		/** In case it's a Many type, it adds @p t as an alternative. If @p t is a Many type too, they will be merged */
+		void addAlternative(const ExpressionType& t);
 		int size() const { return m_size; }
 		int anyValue() const { return m_any; }
 		
-		ExpressionType& addParameter(const ExpressionType& t) { Q_ASSERT(m_type==Lambda); m_contained.append(t); return *this; }
+		ExpressionType& addParameter(const ExpressionType& t);
 		QList<ExpressionType> parameters() const { Q_ASSERT(m_type==Lambda); return m_contained; }
 		ExpressionType returnValue() const;
 		
 		void addAssumption(const QString& bvar, const ExpressionType& t);
 		QMap<QString, ExpressionType> assumptions() const;
+		QMap<QString, ExpressionType>& assumptions();
 		ExpressionType assumptionFor(const QString& bvar) const { return m_assumptions.value(bvar); }
 		void addAssumptions(const QMap< QString, ExpressionType >& a);
 		void clearAssumptions() { m_assumptions.clear(); }

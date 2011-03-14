@@ -22,6 +22,8 @@
 
 using namespace Analitza;
 
+QDebug operator<<(QDebug dbg, const ExpressionType &c);
+
 bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
 {
 	bool ret=true;
@@ -32,6 +34,7 @@ bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionTy
 		if(current!=data.end()) {
 // 			qDebug() << "lelelelel" << it.key() << current.value() << it.value();
 			data.insert(it.key(), ExpressionType::minimumType(*it, *current));
+// 			qDebug() << "." << data.value(it.key());
 		} else
 			data.insert(it.key(), it.value());
 	}
@@ -58,6 +61,13 @@ ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& con
 ExpressionType::ExpressionType(const QString& objectName)
 	: m_type(Object), m_objectName(objectName)
 {}
+
+ExpressionType::ExpressionType(const QList< ExpressionType >& alternatives)
+	: m_type(Many)
+{
+	foreach(const ExpressionType& t, alternatives)
+		addAlternative(t);
+}
 
 QStringList typesToString(const QList<ExpressionType>& types)
 {
@@ -161,7 +171,8 @@ void ExpressionType::addAssumption(const QString& bvar, const Analitza::Expressi
 
 void ExpressionType::addAssumptions(const QMap<QString, ExpressionType>& a)
 {
-	/*valid=*/merge(m_assumptions, a);
+	bool valid=merge(m_assumptions, a);
+	Q_ASSERT(valid);
 }
 
 ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& info) const
@@ -254,6 +265,11 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 QMap<QString, ExpressionType> ExpressionType::assumptions() const
 {
 // 	printAssumptions(*this);
+	return m_assumptions;
+}
+
+QMap< QString, ExpressionType >& ExpressionType::assumptions()
+{
 	return m_assumptions;
 }
 
@@ -395,3 +411,19 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 	return t1;
 }
 
+ExpressionType& ExpressionType::addParameter(const ExpressionType& t)
+{
+	Q_ASSERT(m_type==Lambda);
+	m_contained.append(t);
+	return *this;
+}
+
+void ExpressionType::addAlternative(const ExpressionType& t)
+{
+	Q_ASSERT(m_type==Many);
+	if(t.m_type==Many) {
+		addAssumptions(t.m_assumptions);
+		m_contained += t.m_contained;
+	} else
+		m_contained.append(t);
+}
