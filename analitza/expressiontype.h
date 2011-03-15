@@ -36,7 +36,7 @@ class ANALITZA_EXPORT ExpressionType
 		
 		ExpressionType(Type t=Error, int any=-1);
 		ExpressionType(Type t, const ExpressionType& contained, int s=0);
-		explicit ExpressionType(const QList<ExpressionType>& alternatives);
+		ExpressionType(Type t, const QList<ExpressionType>& alternatives);
 		
 		/** Constructs a type that identifies a custom Object */
 		ExpressionType(const QString& objectName);
@@ -69,7 +69,7 @@ class ANALITZA_EXPORT ExpressionType
 		QMap<QString, ExpressionType>& assumptions();
 		ExpressionType assumptionFor(const QString& bvar) const { return m_assumptions.value(bvar); }
 		void addAssumptions(const QMap< QString, ExpressionType >& a);
-		void clearAssumptions() { m_assumptions.clear(); }
+		void clearAssumptions();
 		
 		/** Returns a new type with the stars solved according t @p info */
 		ExpressionType starsToType(const QMap<int, ExpressionType>& info) const;

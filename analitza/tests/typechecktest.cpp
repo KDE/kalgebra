@@ -49,6 +49,8 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	
 	v->modify("fib", Expression("n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
 	v->modify("fv", Expression("vector{x->sin(x), x->cos(x)}"));
+	v->modify("rtail", Expression("(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, rtail(elems, i+1)), ? list{} }"));
+	v->modify("tail", Expression("elems->rtail(elems,1)"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -135,13 +137,17 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("tail3") << "(elems,i)->union(list{elems[i]}, list{})" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
 	QTest::newRow("tail4") << "ptail:=(elems,i)->union(list{elems[i]}, ptail(elems, i))" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
 // 	QTest::newRow("tail5") << "(elems,i)->list{list{elems[i]}, ptail(elems, i)}" << "(<*,-1> -> num -> [*]) | ([*] -> num -> [*])";
+	QTest::newRow("tail6") << "tail" << "(<*,-1> -> [*]) | ([*] -> [*])";
 	
 	QTest::newRow("pe") << "vector{x->x, x->x+2}" << "<(num -> num),2>";
 	QTest::newRow("foldr") << "foldr:=(f,elems)->piecewise {card(elems)=1 ? elems[1], ? f(elems[1], foldr(f, tail(elems))) }" << "(* -> ** -> **) -> ** -> [*] -> **";
-	QTest::newRow("foldr1") << "foldr:=(f,elems)->f(elems[1], foldr(f, tail(elems)))" << "";
-	QTest::newRow("foldr2") << "foldr:=(f,elems)->f(cos(elems[1]), cos(elems[2]))" << "((* -> * -> **) -> <*,-1> -> **) | ((* -> * -> **) -> [*] -> **)";
-	QTest::newRow("foldr3") << "foldr:=(f,elems)->f(elems[1])" << "((* -> **) -> <*,-1> -> **) | ((* -> **) -> [*] -> **)";
-	QTest::newRow("foldr4") << "foldr:=(f,elems)->f(cos(elems[1]))" << "((num -> *) -> <num,-1> -> *) | ((num -> *) -> [num] -> *)";
+	QTest::newRow("foldr1") << "(f,elems)->f(elems[1], f(elems[2], elems[3]))" << "(* -> * -> *) -> [*] -> *";
+	QTest::newRow("foldr2") << "(f,elems)->f(elems[1], elems[2])" << "((* -> * -> **) -> <*,-1> -> **) | ((* -> * -> **) -> [*] -> **)";
+	QTest::newRow("foldr3") << "(f,elems)->f(elems[1])" << "((* -> **) -> <*,-1> -> **) | ((* -> **) -> [*] -> **)";
+	QTest::newRow("foldr4") << "(f,elems)->f(cos(elems[1]))" << "((num -> *) -> <num,-1> -> *) | ((num -> *) -> [num] -> *)";
+	QTest::newRow("foldr5") << "(f,elems)->f(f(elems[1]))" << "(* -> *) -> [*] -> *";
+	
+	QTest::newRow("justlambda") << "(f,e)->f(f(e))" << "(* -> *) -> * -> *";
 }
 
 void TypeCheckTest::testConstruction()
