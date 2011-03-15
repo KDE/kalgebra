@@ -53,7 +53,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		
 		QStringList dependencies() const { return m_deps; }
 		bool hasDependencies() const { return !m_deps.isEmpty(); }
-		bool isCorrect() const { return m_err.isEmpty(); }
+		bool isCorrect() const { return m_err.isEmpty() && !current.isError(); }
 		QStringList errors() const;
 		
 		void initializeVars(const QMap<QString, ExpressionType>& types) { m_vars=types; }
