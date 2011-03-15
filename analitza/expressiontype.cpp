@@ -110,12 +110,12 @@ QString ExpressionType::toString() const
             ret=typesToString(m_contained).join(" -> ");
 			break;
         case ExpressionType::Any: {
-            ret=QString(m_any, '*');
-// 			QString id;
-// 			for(int i=m_any, j=0; i>0; i/='z'-'a') {
-// 				id += QChar('a'+(i%('z'-'a')));
-// 			}
-// 			ret=id;
+//             ret=QString(m_any, '*');
+			QString id;
+			for(int i=m_any, j=0; i>0; i/='z'-'a') {
+				id.prepend(QChar('a'-1+(i%('z'-'a'))));
+			}
+			ret=id;
 		}	break;
         case ExpressionType::Many:
             ret=/*"{"+*/typesToString(m_contained).join(" | ")/*+"}"*/;
@@ -396,7 +396,6 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 
 ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const ExpressionType& t2)
 {
-// 	qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << t1 << t2;
 	if(t1.type()==ExpressionType::Many && t2.type()==ExpressionType::Many) {
 		ExpressionType t(ExpressionType::Many);
 		foreach(const ExpressionType& alt1, t1.alternatives()) {
@@ -418,10 +417,6 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 		return t2;
 	else if(t1.type()==ExpressionType::Any && t2.type()==ExpressionType::Any)
 		return t1.anyValue()<t2.anyValue() ? t1 : t2;
-	else if(t2.type()==ExpressionType::Any)
-		return t1;
-	else if(t1.type()==ExpressionType::Any)
-		return t2;
 	else if(t1.canReduceTo(t2)) {
 		ExpressionType t(t2);
 		t.reduce(t1);
