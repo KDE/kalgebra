@@ -527,7 +527,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						
 						if(returntype.assumptions().contains(name)) {
 							ExpressionType oldt=returntype.assumptionFor(name);
-							qDebug() << "gaaaaah" << oldt;
+// 							qDebug() << "gaaaaah" << oldt;
 							
 							oldt=ExpressionType::minimumType(oldt, type);
 							oldt.addAssumption(name, oldt);
@@ -537,7 +537,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							Q_ASSERT(b);
 							
 							oldt=oldt.starsToType(stars);
-							qDebug() << "hmmm..." << oldt << stars << "::::::" << oldt.assumptions() << type.assumptions();
+// 							qDebug() << "hmmm..." << oldt << stars << "::::::" << oldt.assumptions() << type.assumptions();
 							returntype=oldt.parameters().last();
 							
 							returntype.addAssumption(name, oldt);
