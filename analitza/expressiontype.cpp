@@ -401,8 +401,13 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 		ExpressionType t(ExpressionType::Many);
 		foreach(const ExpressionType& alt1, t1.alternatives()) {
 			foreach(const ExpressionType& alt2, t2.alternatives()) {
-				if(alt1==alt2)
-					t.addAlternative(alt1);
+				if(alt1==alt2) {
+					ExpressionType alt(alt1);
+					bool b=merge(alt.assumptions(), alt2.assumptions());
+					
+					if(b)
+						t.addAlternative(alt);
+				}
 			}
 		}
 		return t;
