@@ -26,7 +26,6 @@ QDebug operator<<(QDebug dbg, const ExpressionType &c);
 
 bool ExpressionType::assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
 {
-	bool ret=true;
 	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
 	for(; it!=itEnd; ++it) {
 		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
@@ -43,21 +42,20 @@ bool ExpressionType::assumptionsMerge(QMap<QString, ExpressionType>& data, const
 			data.insert(it.key(), it.value());
 	}
 	
-	return ret;
+	return true;
 }
 
-bool ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
+void ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
 {
-	bool ret=true;
 // 	qDebug() << "-----------" << data << newmap;
 	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
 	for(; it!=itEnd; ++it) {
 		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
 		
 		if(current!=data.end()) {
-			if(current->canReduceTo(*it)) {
+			/*if(current->canReduceTo(*it)) {
 				data.insert(it.key(), minimumType(*current, *it));
-			} else {
+			} else */{
 				ExpressionType t(Many);
 				ExpressionType t1(*it);			t1.addAssumption(it.key(), *it);
 				ExpressionType t2(*current);	t2.addAssumption(it.key(), *current);
@@ -72,7 +70,6 @@ bool ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const
 	}
 	
 // 	qDebug() << "leeeeee" << ret << data;
-	return ret;
 }
 
 ExpressionType::ExpressionType(const ExpressionType& t)

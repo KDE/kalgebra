@@ -184,9 +184,9 @@ bool ExpressionTypeChecker::inferType(const Object* exp, const ExpressionType& t
 			exp->visit(this);
 			
 			ret=current.canReduceTo(targetType) && ExpressionType::assumptionsMerge(*assumptions, current.assumptions());
-			if(current.type()==ExpressionType::Many) {
+			if(ret && current.type()==ExpressionType::Many) {
 				foreach(const ExpressionType& t, current.alternatives()) {
-					ret |= ExpressionType::assumptionsUnion(*assumptions, t.assumptions());
+					ExpressionType::assumptionsUnion(*assumptions, t.assumptions());
 				}
 			}
 			
@@ -777,8 +777,10 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 			if(!contalt.isError())
 				assumptions=typeIs(v->constBegin(), v->constEnd(), contalt);
 			ExpressionType cc(ExpressionType::Vector, contalt, v->size());
-			cc.addAssumptions(assumptions);
-			toret.addAlternative(cc);
+			
+			bool b=ExpressionType::assumptionsMerge(cc.assumptions(), assumptions);
+			if(b)
+				toret.addAlternative(cc);
 		}
 		
 		current=toret;
@@ -824,15 +826,15 @@ QString ExpressionTypeChecker::accept(const List* l)
 template <class T>
 QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(T it, const T& itEnd, const ExpressionType& type)
 {
-	ExpressionType cosa(type); //FIXME
-	
 	QMap<QString, ExpressionType> ret;
 	for(; it!=itEnd; ++it) {
-// 		qDebug() << "_____1" << (*it)->toString() << ret;
-		bool valid=ExpressionType::assumptionsMerge(ret, typeIs(*it, ExpressionType(cosa))); //FIXME: merge assumptions, if can't merge, fail
-// 		qDebug() << "_____2" << ret << valid;
+// 		qDebug() << "_____1" << (*it)->toString() << ret << type;
+		QMap< QString, ExpressionType > t=typeIs(*it, type);
+// 		qDebug() << "_____2" << t;
+		bool valid=ExpressionType::assumptionsMerge(ret, t); //FIXME: merge assumptions, if can't merge, fail
+// 		qDebug() << "_____3" << ret << valid;
 	}
-// 	qDebug() << "_____3" << ret;
+// 	qDebug() << "_____4" << ret;
 	
 	return ret;
 }

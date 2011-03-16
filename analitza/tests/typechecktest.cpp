@@ -142,6 +142,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("tail6") << "tail" << "(<a,-1> -> [a]) | ([a] -> [a])";
 	
 	QTest::newRow("pe") << "vector{x->x, x->x+2}" << "<(num -> num),2>";
+	QTest::newRow("ana") << "f:=o->vector { x->x+o, x->x*o }" << "(num -> <(num -> num),2>) | (<num,-1> -> <(<num,-1> -> <num,-1>),2>)";
 	
 // 	QTest::newRow("foldl") << "foldl:=(f,z,xs)->piecewise{ card(xs)<=0? z, ? foldl(f, f(z, xs[1]), tail(xs)) }" << "";
 // 	QTest::newRow("foldl1") << "foldl1:=(f,z,xs)->piecewise{ card(xs)>0? foldl1(f, f(z, xs[1]), tail(xs)), ? z }" << "";
