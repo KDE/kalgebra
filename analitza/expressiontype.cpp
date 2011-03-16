@@ -24,7 +24,7 @@ using namespace Analitza;
 
 QDebug operator<<(QDebug dbg, const ExpressionType &c);
 
-bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
+bool ExpressionType::assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
 {
 	bool ret=true;
 	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
@@ -43,6 +43,35 @@ bool merge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionTy
 			data.insert(it.key(), it.value());
 	}
 	
+	return ret;
+}
+
+bool ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
+{
+	bool ret=true;
+// 	qDebug() << "-----------" << data << newmap;
+	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
+	for(; it!=itEnd; ++it) {
+		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
+		
+		if(current!=data.end()) {
+			if(current->canReduceTo(*it)) {
+				data.insert(it.key(), minimumType(*current, *it));
+			} else {
+				ExpressionType t(Many);
+				ExpressionType t1(*it);			t1.addAssumption(it.key(), *it);
+				ExpressionType t2(*current);	t2.addAssumption(it.key(), *current);
+				
+				t.addAlternative(t1);
+				t.addAlternative(t2);
+				
+				data.insert(it.key(), t);
+			}
+		} else
+			data.insert(it.key(), it.value());
+	}
+	
+// 	qDebug() << "leeeeee" << ret << data;
 	return ret;
 }
 
@@ -112,10 +141,11 @@ QString ExpressionType::toString() const
         case ExpressionType::Any: {
 //             ret=QString(m_any, '*');
 			QString id;
-			for(int i=m_any, j=0; i>0; i/='z'-'a') {
+			for(int i=m_any; i>0; i/='z'-'a') {
 				id.prepend(QChar('a'-1+(i%('z'-'a'))));
 			}
 			ret=id;
+// 			ret+=QString::number(m_any);
 		}	break;
         case ExpressionType::Many:
             ret=/*"{"+*/typesToString(m_contained).join(" | ")/*+"}"*/;
@@ -188,7 +218,9 @@ void ExpressionType::addAssumption(const QString& bvar, const Analitza::Expressi
 
 void ExpressionType::addAssumptions(const QMap<QString, ExpressionType>& a)
 {
-	bool valid=merge(m_assumptions, a);
+// 	qDebug() << "=====1" << m_assumptions << a;
+	bool valid=assumptionsMerge(m_assumptions, a);
+// 	qDebug() << "=====2" << m_assumptions;
 	Q_ASSERT(valid);
 }
 
@@ -295,24 +327,29 @@ int ExpressionType::increaseStars(int stars, QMap<int, int>* values)
 			if(m_any>stars)
 				stars=m_any+1;
 			
-			if(values)
+			if(values) {
 				values->insert(old, m_any);
+			}
 		}	break;
 		case ExpressionType::Many:
 		case ExpressionType::Vector:
 		case ExpressionType::List:
-		case ExpressionType::Lambda: {
-			QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end();
-			for(; it!=itEnd; ++it) {
-				ret=qMax(it->increaseStars(stars), stars);
-			}
-		}	break;
+		case ExpressionType::Lambda:
 		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Error:
 		case ExpressionType::Undefined:
 			break;
 	}
+	
+	for(QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end(); it!=itEnd; ++it) {
+		ret=qMax(it->increaseStars(stars/*, values*/), stars);
+	}
+	
+	for(QMap<QString,ExpressionType>::iterator it=m_assumptions.begin(), itEnd=m_assumptions.end(); it!=itEnd; ++it) {
+		ret=qMax(it->increaseStars(stars/*, values*/), stars);
+	}
+	
 	return ret;
 }
 
@@ -381,7 +418,9 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 			*this = newcontained.first();
 		else
 			m_contained = newcontained;
-	} else if(m_type==Lambda && type.m_type==Lambda && canReduceTo(type)) {
+	}
+	
+	if(m_type==Lambda && type.m_type==Lambda && canReduceTo(type)) {
 		QList< ExpressionType >::iterator it1=m_contained.begin();
 		QList< ExpressionType >::const_iterator it2=type.m_contained.constBegin();
 		
@@ -390,8 +429,10 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 		}
 	}
 	
-	bool b = merge(m_assumptions, type.assumptions());
-	Q_ASSERT(b);
+	bool b = assumptionsMerge(m_assumptions, type.assumptions());
+	if(!b)
+		*this = ExpressionType(Error);
+// 	qDebug() << "done..." << *this;
 }
 
 ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const ExpressionType& t2)
@@ -400,15 +441,16 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 		ExpressionType t(ExpressionType::Many);
 		foreach(const ExpressionType& alt1, t1.alternatives()) {
 			foreach(const ExpressionType& alt2, t2.alternatives()) {
-				if(alt1==alt2) {
+				if(alt1.canReduceTo(alt2)) {
 					ExpressionType alt(alt1);
-					bool b=merge(alt.assumptions(), alt2.assumptions());
+					alt.reduce(alt2);
 					
-					if(b)
+					if(!alt.isError())
 						t.addAlternative(alt);
 				}
 			}
 		}
+// 		qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << t << "\n\t --- " << t.alternatives().first().assumptions() << "\n\t --- " << t.alternatives().last().assumptions();
 		return t;
 	}
 	else if(t2.isUndefined() || t2.isError())
@@ -418,8 +460,10 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 	else if(t1.type()==ExpressionType::Any && t2.type()==ExpressionType::Any)
 		return t1.anyValue()<t2.anyValue() ? t1 : t2;
 	else if(t1.canReduceTo(t2)) {
+// 		qDebug() << "zas" << t1 << t2;
 		ExpressionType t(t2);
 		t.reduce(t1);
+// 		qDebug() << "zas" << t;
 		return t;
 	} else if(t2.canReduceTo(t1)) {
 		ExpressionType t(t1);
@@ -440,9 +484,16 @@ ExpressionType& ExpressionType::addParameter(const ExpressionType& t)
 void ExpressionType::addAlternative(const ExpressionType& t)
 {
 	Q_ASSERT(m_type==Many);
+	/*int i=m_contained.indexOf(t);
+	if(i>=0) {
+		m_contained[i].addAssumptions(t.assumptions());//TODO??
+	} else */
 	if(t.m_type==Many) {
+		foreach(const ExpressionType& tt, t.alternatives()) 
+			addAlternative(tt);
+		
 		addAssumptions(t.m_assumptions);
-		m_contained += t.m_contained;
+// 		m_contained=t.m_contained;
 	} else
 		m_contained.append(t);
 }

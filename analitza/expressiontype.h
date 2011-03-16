@@ -84,6 +84,8 @@ class ANALITZA_EXPORT ExpressionType
 		void reduce(const ExpressionType& type);
 		
 		static ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2);
+		static bool assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap);
+		static bool assumptionsUnion(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap);
 	private:
 		static void starsSimplification(ExpressionType& t, QMap<int, int>& reductions, int& next);
 		
