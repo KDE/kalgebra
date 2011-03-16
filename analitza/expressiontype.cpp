@@ -26,6 +26,7 @@ QDebug operator<<(QDebug dbg, const ExpressionType &c);
 
 bool ExpressionType::assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap)
 {
+// 	qDebug() << "merging!" << data << newmap;
 	QMap<QString, ExpressionType>::const_iterator it=newmap.constBegin(), itEnd=newmap.constEnd();
 	for(; it!=itEnd; ++it) {
 		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
@@ -33,14 +34,15 @@ bool ExpressionType::assumptionsMerge(QMap<QString, ExpressionType>& data, const
 		if(current!=data.end()) {
 			if(!current->isError()) {
 				ExpressionType t=ExpressionType::minimumType(*it, *current);
-				if(t.isError()) {
+				if(t.isError())
 					return false;
-				}
-				data.insert(it.key(), t);
+				
+				*current = t;
 			}
 		} else
 			data.insert(it.key(), it.value());
 	}
+// 	qDebug() << "merging_" << data;
 	
 	return true;
 }
@@ -407,14 +409,17 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 		QList<ExpressionType> newcontained;
 		
 		foreach(const ExpressionType& t, m_contained) {
-			if(type.canReduceTo(t))
+			if(t.canReduceTo(type))
 				newcontained.append(t);
 		}
 		
 		if(newcontained.size()==1)
 			*this = newcontained.first();
+		else if(newcontained.isEmpty())
+			*this = ExpressionType(Error);
 		else
 			m_contained = newcontained;
+		
 	}
 	
 	if(m_type==Lambda && type.m_type==Lambda && canReduceTo(type)) {

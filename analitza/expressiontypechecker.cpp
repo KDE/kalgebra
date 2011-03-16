@@ -139,6 +139,8 @@ QMap<int, ExpressionType> ExpressionTypeChecker::computeStars(const QMap<int, Ex
 			break;
 	}
 // 	qDebug() << ";;;;;;;" << candidate << type << ret;
+// 	bool b = matchAssumptions(&ret, type.assumptions(), candidate.assumptions());
+// 	qDebug() << "feeeee" << b << ret;
 	
 	return ret;
 }
@@ -239,8 +241,8 @@ bool ExpressionTypeChecker::matchAssumptions(QMap< int, ExpressionType >* stars,
 	for(; ret && it!=itEnd; ++it) {
 		itFind=assum2.find(it.key());
 		
-// 		qDebug() << it.key() << *it << *itFind << (itFind.value()!=it.value());
 		if(itFind!=itFindEnd && *itFind!=*it) {
+// 			qDebug() << "sih" << it.key() << *it << *itFind << (itFind.value()!=it.value());
 			if(itFind->canReduceTo(*it) || it->canReduceTo(*itFind))
 				*stars=computeStars(*stars, *itFind, *it);
 			else
@@ -287,6 +289,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 // 			static int ind=3;
 // 			qDebug() << qPrintable("+" +QString(ind++, '-')) << o->toString() << firstType << secondType;
 			const QList<TypeTriplet> res=Operations::infer(o->operatorType());
+			//TODO: call increaseStars on the triplets, will save quite some complexity
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
 					foreach(const TypeTriplet& opt, res) {
@@ -396,11 +399,17 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 	} else foreach(const Object* o, values) {
 		o->visit(this);
 		
-		//qDebug()<< "sususu" << current << ret;
+// 		qDebug()<< "sususu" << current << ret << "||" << current.assumptions() << ret.assumptions();
+		
+		QMap<int, ExpressionType> stars;
+		bool b=matchAssumptions(&stars, current.assumptions(), ret.assumptions());
+		if(!b)
+			current=ExpressionType(ExpressionType::Error);
+		
+		stars=computeStars(stars, ret, current);
 		ret=ExpressionType::minimumType(current, ret);
-		//qDebug() << "dududu" << ret << ret.assumptions();
-// 		if(ret.isError())
-// 			break;
+		ret=ret.starsToType(stars);
+// 		qDebug() << "dududu" << ret << ret.assumptions() << stars;
 	}
 	
 	return ret;
