@@ -123,18 +123,18 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("bounded sum_up") << "n->sum(x : x=n..0)" << "num -> num";
 	QTest::newRow("bounded sum_down") << "n->sum(x : x=0..n)" << "num -> num";
-	
-	QTest::newRow("unknown") << "w" << "a";
-	QTest::newRow("gonum") << "gonum((x,y)->x*y)" << "num";
-	
 	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "num";
 	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "num -> num";
+	
+	QTest::newRow("unknown") << "w" << "a";
+	
+	QTest::newRow("gonum") << "gonum((x,y)->x*y)" << "num";
 	
 	QTest::newRow("selec_cond") << "xs->piecewise {card(xs)=0? xs}" << "([a] -> [a]) | (<a,-1> -> <a,-1>)";
 	QTest::newRow("justlambda") << "(f,e)->f(f(e))" << "(a -> a) -> a -> a";
 	
 	QTest::newRow("tail") << "ptail:=(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, ptail(elems, i+1)), ? list{} }" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
-	QTest::newRow("tailr") << "(elems,i)->list{elems[i]}" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
+	QTest::newRow("tail1") << "(elems,i)->list{elems[i]}" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
 	QTest::newRow("tailp") << "(elems,i)->piecewise{ card(elems)>=i ? list{elems[i]}, ? list{}}" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
 	QTest::newRow("tail3") << "(elems,i)->union(list{elems[i]}, list{})" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
 	QTest::newRow("tail4") << "ptail:=(elems,i)->union(list{elems[i]}, ptail(elems, i))" << "(<a,-1> -> num -> [a]) | ([a] -> num -> [a])";
@@ -235,6 +235,11 @@ void TypeCheckTest::testReduction()
 	QCOMPARE(type.canReduceTo(reduced), correct);
 }
 
+ExpressionType s(int stars) { return ExpressionType(ExpressionType::Any, stars); }
+ExpressionType vec(const ExpressionType& c, int size) { return ExpressionType(ExpressionType::Vector, c, size); }
+ExpressionType list(const ExpressionType& c) { return ExpressionType(ExpressionType::List, c); }
+ExpressionType val=ExpressionType(ExpressionType::Value);
+
 void TypeCheckTest::testReduction_data()
 {
 	QTest::addColumn<ExpressionType>("type");
@@ -242,12 +247,10 @@ void TypeCheckTest::testReduction_data()
 	QTest::addColumn<bool>("correct");
 	
 	ExpressionType lambdaStarStar(ExpressionType::Lambda); // a -> a
-	lambdaStarStar.addParameter(ExpressionType(ExpressionType::Any, 1));
-	lambdaStarStar.addParameter(ExpressionType(ExpressionType::Any, 1));
+	lambdaStarStar.addParameter(s(1)).addParameter(s(1));
 	
 	ExpressionType lambdaNumVector2(ExpressionType::Lambda); // num -> <num, 2>
-	lambdaNumVector2.addParameter(ExpressionType(ExpressionType::Value));
-	lambdaNumVector2.addParameter(ExpressionType(ExpressionType::Vector, ExpressionType(ExpressionType::Value), 2));
+	lambdaNumVector2.addParameter(val).addParameter(vec(val, 2));
 	
 	QTest::newRow("sss") << lambdaStarStar << lambdaNumVector2 << false;
 }
