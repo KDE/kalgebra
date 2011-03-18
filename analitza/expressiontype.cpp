@@ -319,12 +319,13 @@ QMap< QString, ExpressionType >& ExpressionType::assumptions()
 int ExpressionType::increaseStars(int stars, QMap<int, int>* values)
 {
 	int ret=stars;
+	
 	switch(m_type) {
 		case ExpressionType::Any: {
 			int old=m_any;
 			m_any=stars+m_any;
-			if(m_any>stars)
-				stars=m_any+1;
+			if(m_any>ret) 
+				ret=m_any+1;
 			
 			if(values) {
 				values->insert(old, m_any);
@@ -342,11 +343,11 @@ int ExpressionType::increaseStars(int stars, QMap<int, int>* values)
 	}
 	
 	for(QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end(); it!=itEnd; ++it) {
-		ret=qMax(it->increaseStars(stars/*, values*/), stars);
+		ret=qMax(it->increaseStars(stars/*, values*/), ret);
 	}
 	
 	for(QMap<QString,ExpressionType>::iterator it=m_assumptions.begin(), itEnd=m_assumptions.end(); it!=itEnd; ++it) {
-		ret=qMax(it->increaseStars(stars/*, values*/), stars);
+		ret=qMax(it->increaseStars(stars/*, values*/), ret);
 	}
 	
 	return ret;

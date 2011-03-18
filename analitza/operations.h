@@ -36,6 +36,15 @@ struct TypeTriplet
 	ExpressionType param1, param2, returnValue;
 	TypeTriplet(const ExpressionType& param1, const ExpressionType& param2, const ExpressionType& returnValue)
 		: param1(param1), param2(param2), returnValue(returnValue) {}
+		
+	
+	int increaseStars(int stars) {
+		int s1=param1.increaseStars(stars);
+		int s2=param2.increaseStars(stars);
+		int sr=returnValue.increaseStars(stars);
+		
+		return qMax(s1, qMax(s2,sr));
+	}
 };
 
 struct TypePair
@@ -44,6 +53,13 @@ struct TypePair
 	
 	TypePair(const ExpressionType& param, const ExpressionType& returnValue)
 		: param(param), returnValue(returnValue) {}
+	
+	int increaseStars(int stars) {
+		int sp=param.increaseStars(stars);
+		int sr=returnValue.increaseStars(stars);
+		
+		return qMax(sp, sr);
+	}
 };
 
 class Operations
