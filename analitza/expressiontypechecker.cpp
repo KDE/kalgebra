@@ -221,12 +221,11 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 						m_stars=qMax<int>(m_stars, opt.increaseStars(starsbase));
 						
 						Q_ASSERT(!opt.returnValue.isError());
-						QMap<int, ExpressionType> starToType(_starToType), starToParam;
+						QMap<int, ExpressionType> starToType, starToParam;
 						
-						ExpressionType first =_first .starsToType(starToType);
-						ExpressionType second=_second.starsToType(starToType);
+						ExpressionType first =_first .starsToType(_starToType);
+						ExpressionType second=_second.starsToType(_starToType);
 // 						qDebug() << "9999999" << _second.assumptions() << second.assumptions() << starToType;
-						starToType.clear();
 						
 						starToType=ExpressionType::computeStars(starToType, first,  opt.param1);
 						starToType=ExpressionType::computeStars(starToType, second, opt.param2);
@@ -239,11 +238,11 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 // 						qDebug() << "XXXXXX" << starToParam;
 // 						qDebug() << "PPPPPP" << opt << first << second << "|||||" << first.assumptions() << second.assumptions();
 						
-						starToType=ExpressionType::computeStars(starToType, first,  opt.param1.starsToType(starToParam));
-						starToType=ExpressionType::computeStars(starToType, second, opt.param2.starsToType(starToParam));
+// 						starToType=ExpressionType::computeStars(starToType, first,  opt.param1.starsToType(starToParam));
+// 						starToType=ExpressionType::computeStars(starToType, second, opt.param2.starsToType(starToParam));
 						
-						first =first .starsToType(starToType);
-						second=second.starsToType(starToType);
+// 						first =first .starsToType(starToType);
+// 						second=second.starsToType(starToType);
 						
 						QMap<QString, ExpressionType> assumptions=first.assumptions();
 						bool valid=ExpressionType::assumptionsMerge(assumptions, second.assumptions());
