@@ -76,7 +76,7 @@ class ANALITZA_EXPORT ExpressionType
 		
 		bool isUndefined() const { return m_type==Undefined; }
 		bool canReduceTo(const ExpressionType& type) const;
-		int increaseStars(int stars, QMap<int, int>* values=0);
+		int increaseStars(int stars);
 		
 		ExpressionType& simplifyStars();
 		
@@ -86,6 +86,7 @@ class ANALITZA_EXPORT ExpressionType
 		static ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2);
 		static bool assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap);
 		static void assumptionsUnion(QMap< QString, Analitza::ExpressionType >& data, const QMap< QString, Analitza::ExpressionType >& newmap);
+		static QMap<int, ExpressionType> computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type);
 	private:
 		static void starsSimplification(ExpressionType& t, QMap<int, int>& reductions, int& next);
 		
