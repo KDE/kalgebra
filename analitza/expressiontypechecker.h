@@ -62,8 +62,6 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		ExpressionType solve(const Operator* o, const QList<Object*>& parameters);
 		bool inferType(const ExpressionType& c, const ExpressionType& targetType, QMap<QString, ExpressionType>* assumptions);
 		QList<TypePair> computePairs(const QList<TypePair>& options, const ExpressionType& param);
-		bool matchAssumptions(QMap<int, ExpressionType>* stars, const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
-		QList<ExpressionType> lambdaFromArgs(const QList<ExpressionType>& args);
 		
 		QMap<QString, ExpressionType> typeIs(const Object* o, const ExpressionType& type);
 		template <class T>

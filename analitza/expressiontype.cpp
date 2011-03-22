@@ -256,8 +256,24 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 	} else {
 		ret=*this;
 		
+		bool hasMany=false;
 		for(QList<ExpressionType>::iterator it=ret.m_contained.begin(), itEnd=ret.m_contained.end(); it!=itEnd; ++it) {
 			*it=it->starsToType(info);
+			hasMany|=(it->type()==ExpressionType::Many);
+		}
+		
+		if(hasMany) {
+			QList< ExpressionType > args=manyFromArgs(ret.m_contained);
+			QList<ExpressionType> alts;
+			foreach(const ExpressionType& t, args) {
+				ExpressionType tt=ret;
+				tt.m_contained=t.m_contained;
+				
+				bool b=assumptionsMerge(tt.m_assumptions, t.m_assumptions);
+				if(b)
+					alts += tt;
+			}
+			ret=ExpressionType(ExpressionType::Many, alts);
 		}
 	}
 	
@@ -332,21 +348,10 @@ int ExpressionType::increaseStars(int stars)
 {
 	int ret=stars;
 	
-	switch(m_type) {
-		case ExpressionType::Any:
-			m_any=stars+m_any;
-			if(m_any>ret) 
-				ret=m_any+1;
-			break;
-		case ExpressionType::Many:
-		case ExpressionType::Vector:
-		case ExpressionType::List:
-		case ExpressionType::Lambda:
-		case ExpressionType::Object:
-		case ExpressionType::Value:
-		case ExpressionType::Error:
-		case ExpressionType::Undefined:
-			break;
+	if(m_type==ExpressionType::Any) {
+		m_any=stars+m_any;
+		if(m_any>ret) 
+			ret=m_any+1;
 	}
 	
 	for(QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end(); it!=itEnd; ++it) {
@@ -375,12 +380,11 @@ void ExpressionType::starsSimplification(ExpressionType& t, QMap<int, int>& redu
 		case ExpressionType::Many:
 		case ExpressionType::Vector:
 		case ExpressionType::List:
-		case ExpressionType::Lambda: {
-			QList<ExpressionType>::iterator it=t.m_contained.begin(), itEnd=t.m_contained.end();
-			for(; it!=itEnd; ++it) {
+		case ExpressionType::Lambda:
+			for(QList<ExpressionType>::iterator it=t.m_contained.begin(), itEnd=t.m_contained.end(); it!=itEnd; ++it) {
 				starsSimplification(*it, reductions, next);
 			}
-		}	break;
+			break;
 		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Error:
@@ -421,9 +425,11 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 				newcontained.append(t);
 		}
 		
-		if(newcontained.size()==1)
+		if(newcontained.size()==1) {
+			bool b=assumptionsMerge(newcontained.first().assumptions(), m_assumptions);
+			Q_ASSERT(b);
 			*this = newcontained.first();
-		else if(newcontained.isEmpty())
+		} else if(newcontained.isEmpty())
 			;
 		else
 			m_contained = newcontained;
@@ -449,7 +455,9 @@ void ExpressionType::reduce(const Analitza::ExpressionType& type)
 			QMap<int, ExpressionType> t;
 			t.insert(m_any, type);
 			
+			QMap<QString, ExpressionType> resassumptions=assumptions();
 			*this = type.starsToType(t);
+			addAssumptions(resassumptions);
 		}
 	}
 	
@@ -484,8 +492,12 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 		if(alts.isEmpty())
 			return ExpressionType(ExpressionType::Error);
 		else {
-// 			qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << alts << "\n\t --- " << alts.first().assumptions() << "\n\t --- " << alts.last().assumptions();
-			return ExpressionType(ExpressionType::Many, alts);
+// 			qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << alts << "\n\t --- " << alts.first().assumptions() << "\n\t --- " << alts.last().assumptions()
+// 						<< "\n\t --- " << t1.assumptions() << t2.assumptions();
+			ExpressionType ret=ExpressionType(ExpressionType::Many, alts);
+			ret.addAssumptions(t1.assumptions());
+			ret.addAssumptions(t2.assumptions());
+			return ret;
 		}
 	}
 	else if(t2.isUndefined() || t2.isError())
@@ -633,4 +645,88 @@ QMap<int, ExpressionType> ExpressionType::computeStars(const QMap<int, Expressio
 // 	qDebug() << "feeeee" << ret;
 	
 	return ret;
+}
+
+bool ExpressionType::matchAssumptions(QMap< int, ExpressionType >* stars,
+												const QMap< QString, ExpressionType >& assum1,
+												const QMap< QString, ExpressionType >& assum2)
+{
+	bool ret=true;
+	QMap<QString, ExpressionType>::const_iterator it=assum1.constBegin(), itEnd=assum1.constEnd();
+	QMap<QString, ExpressionType>::const_iterator itFind, itFindEnd=assum2.constEnd();
+	
+	for(; ret && it!=itEnd; ++it) {
+		itFind=assum2.find(it.key());
+		
+		if(itFind!=itFindEnd && *itFind!=*it) {
+// 			qDebug() << "sih" << it.key() << *it << *itFind << (itFind.value()!=it.value());
+			if(itFind->canReduceTo(*it) || it->canReduceTo(*itFind))
+				*stars=ExpressionType::computeStars(*stars, *itFind, *it);
+			else
+				ret=false;
+// 			qDebug() << "seh" << *stars << ret;
+		}
+	}
+	
+	return ret;
+}
+
+QList<ExpressionType> ExpressionType::manyFromArgs(const QList<ExpressionType>& args)
+{
+	QList<ExpressionType> funcs = QList<ExpressionType>() << ExpressionType(ExpressionType::Many);
+	
+	foreach(const ExpressionType& e, args) {
+		QList<ExpressionType> alts = e.type()==ExpressionType::Many ? e.alternatives() : QList<ExpressionType>() << e;
+		QList<ExpressionType> newfuncs;
+		foreach(const ExpressionType& rr, alts) {
+			foreach(const ExpressionType& f, funcs) {
+				newfuncs += f;
+				
+				QMap<int, ExpressionType> stars;
+// 				qDebug() << "&&&&&&&" << rr << newfuncs.last().assumptions() << rr.assumptions();
+				bool m=ExpressionType::assumptionsMerge(newfuncs.last().assumptions(), rr.assumptions());
+				m|=ExpressionType::matchAssumptions(&stars, newfuncs.last().assumptions(), rr.assumptions());
+// 				qDebug() << "falala" << m;
+				
+				if(m)
+					newfuncs.last().addAlternative(rr.starsToType(stars));
+				else
+					newfuncs.removeLast();
+			}
+		}
+		
+		funcs = newfuncs;
+	}
+	
+	return funcs;
+}
+
+QList<ExpressionType> ExpressionType::lambdaFromArgs(const QList<ExpressionType>& args)
+{
+	QList<ExpressionType> funcs = QList<ExpressionType>() << ExpressionType(ExpressionType::Lambda);
+	
+	foreach(const ExpressionType& e, args) {
+		QList<ExpressionType> alts = e.type()==ExpressionType::Many ? e.alternatives() : QList<ExpressionType>() << e;
+		QList<ExpressionType> newfuncs;
+		foreach(const ExpressionType& rr, alts) {
+			foreach(const ExpressionType& f, funcs) {
+				newfuncs += f;
+				
+				QMap<int, ExpressionType> stars;
+// 				qDebug() << "&&&&&&&" << rr << newfuncs.last().assumptions() << rr.assumptions();
+				bool m=ExpressionType::assumptionsMerge(newfuncs.last().assumptions(), rr.assumptions());
+				m|=matchAssumptions(&stars, newfuncs.last().assumptions(), rr.assumptions());
+// 				qDebug() << "falala" << m;
+				
+				if(m)
+					newfuncs.last().addParameter(rr.starsToType(stars));
+				else
+					newfuncs.removeLast();
+			}
+		}
+		
+		funcs = newfuncs;
+	}
+	
+	return funcs;
 }

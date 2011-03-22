@@ -152,30 +152,6 @@ QList<TypePair> ExpressionTypeChecker::computePairs(const QList<TypePair>& optio
 	return ret;
 }
 
-bool ExpressionTypeChecker::matchAssumptions(QMap< int, ExpressionType >* stars,
-												const QMap< QString, ExpressionType >& assum1,
-												const QMap< QString, ExpressionType >& assum2)
-{
-	bool ret=true;
-	QMap<QString, ExpressionType>::const_iterator it=assum1.constBegin(), itEnd=assum1.constEnd();
-	QMap<QString, ExpressionType>::const_iterator itFind, itFindEnd=assum2.constEnd();
-	
-	for(; ret && it!=itEnd; ++it) {
-		itFind=assum2.find(it.key());
-		
-		if(itFind!=itFindEnd && *itFind!=*it) {
-// 			qDebug() << "sih" << it.key() << *it << *itFind << (itFind.value()!=it.value());
-			if(itFind->canReduceTo(*it) || it->canReduceTo(*itFind))
-				*stars=ExpressionType::computeStars(*stars, *itFind, *it);
-			else
-				ret=false;
-// 			qDebug() << "seh" << *stars << ret;
-		}
-	}
-	
-	return ret;
-}
-
 ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Object* >& parameters)
 {
 	Q_ASSERT(o->operatorType()!=Operator::function);
@@ -214,7 +190,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
 					QMap<int, ExpressionType> _starToType;
-					if(!matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions()))
+					if(!ExpressionType::matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions()))
 						continue;
 					foreach(const TypeTriplet& _opt, res) {
 						TypeTriplet opt(_opt);
@@ -324,7 +300,7 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 // 		qDebug()<< "sususu" << current << ret << "||" << current.assumptions() << ret.assumptions();
 		
 		QMap<int, ExpressionType> stars;
-		bool b=matchAssumptions(&stars, current.assumptions(), ret.assumptions());
+		bool b=ExpressionType::matchAssumptions(&stars, current.assumptions(), ret.assumptions());
 		if(!b) {
 			current=ExpressionType(ExpressionType::Error);
 			break;
@@ -337,42 +313,9 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 		ret=ExpressionType::minimumType(current, ret);
 		stars=ExpressionType::computeStars(stars, current, ret);
 		ret=ret.starsToType(stars);
-		
-// 		qDebug() << "commonnnnZZ" << stars;
-// 		printAssumptions("zzzZZzzZzzz", ret);
 	}
 	
 	return ret;
-}
-
-QList<ExpressionType> ExpressionTypeChecker::lambdaFromArgs(const QList<ExpressionType>& args)
-{
-	QList<ExpressionType> funcs = QList<ExpressionType>() << ExpressionType(ExpressionType::Lambda);
-	
-	foreach(const ExpressionType& e, args) {
-		QList<ExpressionType> alts = e.type()==ExpressionType::Many ? e.alternatives() : QList<ExpressionType>() << e;
-		QList<ExpressionType> newfuncs;
-		foreach(const ExpressionType& rr, alts) {
-			foreach(const ExpressionType& f, funcs) {
-				newfuncs += f;
-				
-				QMap<int, ExpressionType> stars;
-// 				qDebug() << "&&&&&&&" << rr << newfuncs.last().assumptions() << rr.assumptions();
-				bool m=ExpressionType::assumptionsMerge(newfuncs.last().assumptions(), rr.assumptions());
-				m|=matchAssumptions(&stars, newfuncs.last().assumptions(), rr.assumptions());
-// 				qDebug() << "falala" << m;
-				
-				if(m)
-					newfuncs.last().addParameter(rr.starsToType(stars));
-				else
-					newfuncs.removeLast();
-			}
-		}
-		
-		funcs = newfuncs;
-	}
-	
-	return funcs;
 }
 
 QString ExpressionTypeChecker::accept(const Apply* c)
@@ -465,7 +408,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				ret.addAssumptions(assumptions);
 				
 				exps += ret;
-				QList<ExpressionType> t=lambdaFromArgs(exps);
+				QList<ExpressionType> t=ExpressionType::lambdaFromArgs(exps);
 // 				qDebug() << "OOOOOOOOOOOOOOOOOOOOOOO" << c->toString() << ret /*<< stars*/ << ret.assumptions() << "||||" << t << exps;
 				
 				ExpressionType ret2(ExpressionType::Many);
@@ -484,7 +427,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							oldt.addAssumption(name, oldt);
 							QMap<int,ExpressionType> stars;
 							stars=ExpressionType::computeStars(stars, type, oldt);
-							bool b=matchAssumptions(&stars, oldt.assumptions(), type.assumptions());
+							bool b=ExpressionType::matchAssumptions(&stars, oldt.assumptions(), type.assumptions());
 							Q_ASSERT(b);
 							
 							oldt=oldt.starsToType(stars);
@@ -494,6 +437,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							returntype.addAssumption(name, oldt);
 						} else
 							returntype.addAssumption(name, type);
+						
 					}
 					returntype.addAssumptions(type.assumptions());
 					
@@ -505,7 +449,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				ExpressionType ret(ExpressionType::Many), signature(returned);
 				
 				QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
-				QList<ExpressionType> args=lambdaFromArgs(exps);
+				QList<ExpressionType> args=ExpressionType::lambdaFromArgs(exps);
 				foreach(const ExpressionType& opt, alts) {
 					if(opt.type()!=ExpressionType::Lambda) {
 // 								addError(i18n("We can only call functions."));
@@ -589,7 +533,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				QMap<QString, ExpressionType> assumptions=typeIs(c->constBegin(), c->constEnd(), type);
 				
 // 				QMap<int, ExpressionType> stars;
-// 				bool b=matchAssumptions(&stars, assumptions, type.assumptions());
+// 				bool b=ExpressionType::matchAssumptions(&stars, assumptions, type.assumptions());
 // 				Q_ASSERT(b);
 // 				type=type.starsToType(stars);
 				
@@ -603,7 +547,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			c->m_params.first()->visit(this); //we return the body
 			
 			QMap<int, ExpressionType> stars;
-			bool b=matchAssumptions(&stars, assumptions, current.assumptions());
+			bool b=ExpressionType::matchAssumptions(&stars, assumptions, current.assumptions());
 			
 			Q_ASSERT(b);
 			current=current.starsToType(stars);
@@ -645,7 +589,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 						args += toadd;
 					}
 					args += alt;
-					args=lambdaFromArgs(args);
+					args=ExpressionType::lambdaFromArgs(args);
 					
 					res.addAlternative(ExpressionType(ExpressionType::Many, args));
 				}
