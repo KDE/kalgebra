@@ -94,7 +94,7 @@ ExpressionType::ExpressionType(const ExpressionType& t)
 
 ExpressionType::ExpressionType(ExpressionType::Type t, int any)
     : m_type(t), m_any(any)
-{Q_ASSERT(m_type==Any || m_type==Error || m_type==Value || m_type==Undefined || m_type==Many || m_type==Lambda); }
+{Q_ASSERT(m_type==Any || m_type==Error || m_type==Value || m_type==Many || m_type==Lambda); }
 
 ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& contained, int s)
     : m_type(t), m_contained(QList<ExpressionType>() << contained), m_size(s)
@@ -143,9 +143,6 @@ QString ExpressionType::toString() const
             break;
         case ExpressionType::Error:
             ret="err";
-            break;
-        case ExpressionType::Undefined:
-            ret="undef";
             break;
         case ExpressionType::Lambda:
             ret=typesToString(m_contained).join(" -> ");
@@ -293,7 +290,7 @@ bool ExpressionType::canReduceTo(const ExpressionType& type) const
 {
 	bool ret=false;
 	
-	if(type==*this || m_type==Undefined || m_type==Any || isError())
+	if(type==*this || m_type==Any || isError())
 		ret=true;
 	else if(m_type==Many) {
 		foreach(const ExpressionType& t, m_contained) {
@@ -388,7 +385,6 @@ void ExpressionType::starsSimplification(ExpressionType& t, QMap<int, int>& redu
 		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Error:
-		case ExpressionType::Undefined:
 			break;
 	}
 }
@@ -500,9 +496,9 @@ ExpressionType ExpressionType::minimumType(const ExpressionType& t1, const Expre
 			return ret;
 		}
 	}
-	else if(t2.isUndefined() || t2.isError())
+	else if(t2.isError())
 		return t1;
-	else if(t1.isUndefined() || t1.isError())
+	else if(t1.isError())
 		return t2;
 	else if(t1.type()==ExpressionType::Any && t2.type()==ExpressionType::Any)
 		return t1.anyValue()>t2.anyValue() ? t1 : t2;
@@ -631,7 +627,6 @@ QMap<int, ExpressionType> ExpressionType::computeStars(const QMap<int, Expressio
 		case ExpressionType::Object:
 		case ExpressionType::Value:
 		case ExpressionType::Error:
-		case ExpressionType::Undefined:
 // 			Q_ASSERT(false && "bffff");
 			break;
 	}

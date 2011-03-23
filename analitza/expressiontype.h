@@ -31,7 +31,7 @@ class ANALITZA_EXPORT ExpressionType
 {
 	public:
 		///Just use undefined type when returning from a recursion
-		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Object, Undefined };
+		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Object };
 		QString toString() const;
 		
 		ExpressionType(Type t=Error, int any=-1);
@@ -74,7 +74,6 @@ class ANALITZA_EXPORT ExpressionType
 		/** Returns a new type with the stars solved according t @p info */
 		ExpressionType starsToType(const QMap<int, ExpressionType>& info) const;
 		
-		bool isUndefined() const { return m_type==Undefined; }
 		bool canReduceTo(const ExpressionType& type) const;
 		int increaseStars(int stars);
 		

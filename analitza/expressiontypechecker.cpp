@@ -571,25 +571,21 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
 			ExpressionType res=ExpressionType(ExpressionType::Many);
 			foreach(const ExpressionType& alt, alts) {
-				if(alt.isUndefined()) {
-					addError("Could not make up the return value of the lambda definition");
-				} else {
-					QList<ExpressionType> args;
+				QList<ExpressionType> args;
+				
+				foreach(const QString& bvar, c->bvarStrings()) {
+					ExpressionType toadd;
+					if(alt.assumptions().contains(bvar))
+						toadd=alt.assumptionFor(bvar);
+					else
+						toadd=ExpressionType(ExpressionType::Any, m_stars++);
 					
-					foreach(const QString& bvar, c->bvarStrings()) {
-						ExpressionType toadd;
-						if(alt.assumptions().contains(bvar))
-							toadd=alt.assumptionFor(bvar);
-						else
-							toadd=ExpressionType(ExpressionType::Any, m_stars++);
-						
-						args += toadd;
-					}
-					args += alt;
-					args=ExpressionType::lambdaFromArgs(args);
-					
-					res.addAlternative(ExpressionType(ExpressionType::Many, args));
+					args += toadd;
 				}
+				args += alt;
+				args=ExpressionType::lambdaFromArgs(args);
+				
+				res.addAlternative(ExpressionType(ExpressionType::Many, args));
 			}
 			current=res;
 		}	break;
