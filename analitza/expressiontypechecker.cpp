@@ -262,7 +262,7 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
 		current.addAssumption(var->name(), current);
 		
-		if(var->depth()<0 && !isVariableDefined(var->name()))
+		if(var->depth()<0 && !isVariableDefined(var->name()) && !m_calculating.contains(var->name()))
 			m_deps += var->name();
 	}
 	
@@ -560,9 +560,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			m_calculating.append(var->name());
 			c->m_params.last()->visit(this);
 			m_calculating.removeLast();
-			
-			//We don't want to mark what we're defining a dependency
-			m_deps.removeAll(var->name()); //TODO: shouldn't be needed
 		}	break;
 		case Container::lambda: {
 			QSet<QString> aux=m_lambdascope;
