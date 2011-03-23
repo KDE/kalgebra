@@ -66,6 +66,9 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QMap<QString, ExpressionType> typeIs(const Object* o, const ExpressionType& type);
 		template <class T>
 			QMap<QString, ExpressionType> typeIs(T it, const T& itEnd, const ExpressionType& type);
+			
+		template <class T>
+			QString acceptListOrVector(const T* v, ExpressionType::Type t, int size);
 		
 		ExpressionType typeForVar(const QString& var);
 		

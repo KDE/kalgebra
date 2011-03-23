@@ -105,15 +105,15 @@ bool ExpressionTypeChecker::inferType(const ExpressionType& found, const Express
 	
 	QMap<int, ExpressionType> stars;
 	stars=ExpressionType::computeStars(stars, found, targetType);
-	
 	bool ret=found.canReduceTo(targetType);
 	ret&=ExpressionType::assumptionsMerge(*assumptions, found.assumptions());
 	
-	if(ret && found.type()==ExpressionType::Many) {
-		foreach(const ExpressionType& t, found.alternatives()) {
-			ExpressionType::assumptionsUnion(*assumptions, t.assumptions());
-		}
-	}
+	Q_ASSERT(found.type()!=ExpressionType::Many);
+// 	if(ret && found.type()==ExpressionType::Many) {
+// 		foreach(const ExpressionType& t, found.alternatives()) {
+// 			ExpressionType::assumptionsUnion(*assumptions, t.assumptions());
+// 		}
+// 	}
 	
 	for(QMap<QString, ExpressionType>::iterator it=assumptions->begin(), itEnd=assumptions->end(); it!=itEnd; ++it) {
 		*it=it->starsToType(stars);
@@ -527,20 +527,34 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		case Container::piecewise: {
 			ExpressionType type=commonType(c->m_params);
 			
-			if(type.isError())
+			if(type.isError()) {
 				addError(i18n("Could not determine the type for piecewise"));
-			else {
-				QMap<QString, ExpressionType> assumptions=typeIs(c->constBegin(), c->constEnd(), type);
+				current=type;
+			} else {
+				QList<ExpressionType> alts=type.type()==ExpressionType::Many ? type.alternatives() : QList<ExpressionType>() << type, alts2;
 				
-// 				QMap<int, ExpressionType> stars;
-// 				bool b=ExpressionType::matchAssumptions(&stars, assumptions, type.assumptions());
-// 				Q_ASSERT(b);
-// 				type=type.starsToType(stars);
-				
-				type.addAssumptions(assumptions); //branches
+				for(QList< ExpressionType >::iterator it=alts.begin(), itEnd=alts.end(); it!=itEnd; ++it) {
+					QMap<QString, ExpressionType> assumptions=typeIs(c->constBegin(), c->constEnd(), *it);
+					
+	// 				QMap<int, ExpressionType> stars;
+	// 				bool b=ExpressionType::matchAssumptions(&stars, assumptions, type.assumptions());
+	// 				Q_ASSERT(b);
+	// 				type=type.starsToType(stars);
+					
+// 					qDebug() << "suuuuu\n\t" << it->assumptions() << "\n\t" << assumptions;
+					QMap<int, ExpressionType> stars;
+					bool b=ExpressionType::matchAssumptions(&stars, it->assumptions(), assumptions);
+					b&=ExpressionType::assumptionsMerge(it->assumptions(), assumptions);
+// 					qDebug() << "fefefe" << b << it->assumptions();
+					
+					if(b) {
+						alts2 += *it;
+// 						qDebug() << "!!!" << it->assumptions() << b;
+					}
+				}
+				current=ExpressionType(ExpressionType::Many, alts2);
 			}
 			
-			current=type;
 		}	break;
 		case Container::piece: {
 			QMap<QString, ExpressionType> assumptions=typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
@@ -566,10 +580,13 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			for(QList< ExpressionType >::iterator it=opts.begin(), itEnd=opts.end(); it!=itEnd; ++it) {
 				QMap< QString, ExpressionType >::const_iterator itFound=it->assumptions().constFind(var->name());
 				if(itFound!=it->assumptions().constEnd()) {
-					QMap<int, ExpressionType> stars;
-					stars=ExpressionType::computeStars(stars, *itFound, *it);
-// 					qDebug() << "fiiiiiiiii" << stars << *it << *itFound;
-					*it=it->starsToType(stars);
+					QList<ExpressionType> optsFound=itFound->type()==ExpressionType::Many ? itFound->alternatives() : QList<ExpressionType>() << *itFound;
+					for(QList< ExpressionType >::iterator itf=optsFound.begin(), itfEnd=optsFound.end(); itf!=itfEnd; ++itf) {
+						QMap<int, ExpressionType> stars;
+						stars=ExpressionType::computeStars(stars, *itf, *it);
+// 						qDebug() << "fiiiiiiiii" << stars  << "\n\t" << *it << "\n\t" << *itFound;
+						*it=it->starsToType(stars);
+					}
 				}
 // 				printAssumptions("fefefe", current);
 			}
@@ -594,6 +611,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					else
 						toadd=ExpressionType(ExpressionType::Any, m_stars++);
 					
+// 					qDebug() << "valueee" << bvar << toadd;
 					args += toadd;
 				}
 				args += alt;
@@ -625,7 +643,8 @@ QString ExpressionTypeChecker::accept(const Container* c)
 	return QString();
 }
 
-QString ExpressionTypeChecker::accept(const Vector* v)
+template <class T>
+QString ExpressionTypeChecker::acceptListOrVector(const T* v, ExpressionType::Type t, int size)
 {
 	ExpressionType cont=commonType(v->values());
 	
@@ -634,7 +653,7 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 		foreach(const ExpressionType& contalt, cont.alternatives()) {
 			QMap< QString, ExpressionType > assumptions;
 			assumptions=typeIs(v->constBegin(), v->constEnd(), contalt);
-			ExpressionType cc(ExpressionType::Vector, contalt, v->size());
+			ExpressionType cc(t, contalt, size);
 			
 			bool b=ExpressionType::assumptionsMerge(cc.assumptions(), assumptions);
 			if(b)
@@ -644,7 +663,7 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 		current=toret;
 	} else if(!cont.isError()) {
 		QMap< QString, ExpressionType > assumptions=typeIs(v->constBegin(), v->constEnd(), cont);
-		current=ExpressionType(ExpressionType::Vector, cont, v->size());
+		current=ExpressionType(t, cont, size);
 		current.addAssumptions(assumptions);
 	} else
 		current=ExpressionType(ExpressionType::Error);
@@ -654,61 +673,64 @@ QString ExpressionTypeChecker::accept(const Vector* v)
 
 QString ExpressionTypeChecker::accept(const List* l)
 {
-	ExpressionType cont;
-	if(l->size()==0)
-		cont=ExpressionType::Error;
-	else
-		cont=commonType(l->values());
-// 	qDebug() << "-------" << cont;
-	
-	if(cont.type()==ExpressionType::Many) {
-		ExpressionType toret(ExpressionType::Many);
-		
-		foreach(const ExpressionType& contalt, cont.alternatives()) {
-			QMap< QString, ExpressionType > assumptions;
-			assumptions=typeIs(l->constBegin(), l->constEnd(), contalt);
-			ExpressionType cc(ExpressionType::List, contalt);
-			cc.addAssumptions(assumptions);
-			toret.addAlternative(cc);
-		}
-		
-		current=toret;
-	} else if(!cont.isError()) {
-		QMap< QString, ExpressionType > assumptions=typeIs(l->constBegin(), l->constEnd(), cont);
-		current=ExpressionType(ExpressionType::List, cont);
-		bool b = ExpressionType::assumptionsMerge(current.assumptions(), assumptions);
-// 		qDebug() << "mergeeeeeeh" << current << b << current.assumptions() << assumptions;
-		if(!b)
-			current=ExpressionType(ExpressionType::Error);
-	} else
-		current=ExpressionType(ExpressionType::Error);
-	
-// 	printAssumptions("dududu", current);
+	acceptListOrVector(l, ExpressionType::List, 0);
+	return QString();
+}
+
+QString ExpressionTypeChecker::accept(const Vector* l)
+{
+	acceptListOrVector(l, ExpressionType::Vector, l->size());
 	return QString();
 }
 
 template <class T>
 QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(T it, const T& itEnd, const ExpressionType& type)
 {
-	QMap<QString, ExpressionType> ret;
+	QList<ExpressionType> types;
 	for(; it!=itEnd; ++it) {
 		(*it)->visit(this);
-		bool valid=inferType(current, type, &ret);
+		types+=current;
+	}
+	types=ExpressionType::manyFromArgs(types);
+	
+	bool valid=false;
+	QMap<QString, ExpressionType> ret;
+	
+	foreach(const ExpressionType& tmany, types) {
+		bool v=true;
+		QMap<QString, ExpressionType> ret2;
+		foreach(const ExpressionType& t, tmany.alternatives()) {
+			v&=inferType(t, type, &ret2);
+		}
 		
-		if(!valid)
-			addError(i18n("Unexpected type for '%1'", (*it)->toString()));
+		if(v) {
+			valid=true;
+			ExpressionType::assumptionsUnion(ret, ret2);
+		}
 	}
 	
+	if(!valid)
+		addError(i18n("Unexpected type"));
 	return ret;
 }
 
 QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(const Object* o, const ExpressionType& type)
 {
 	o->visit(this);
+// 	qDebug() << "fluuuu" << current << type;
 	
-	QMap<QString, ExpressionType> assumptions;
-	bool corr=inferType(current, type, &assumptions);
-	corr &= ExpressionType::assumptionsMerge(assumptions, m_typeForBVar);
+	bool corr=false;
+	QList<ExpressionType> alts = current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+	
+	QMap<QString, ExpressionType> assumptions(m_typeForBVar);
+	foreach(const ExpressionType& t, alts) {
+		QMap<QString, ExpressionType> ass;
+		bool correct = inferType(t, type, &ass);
+		if(correct) {
+			ExpressionType::assumptionsUnion(assumptions, ass);
+		}
+		corr|=correct;
+	}
 	
 	if(!corr)
 		addError(i18n("Cannot convert '%1' to '%2'", o->toString(), type.toString()));

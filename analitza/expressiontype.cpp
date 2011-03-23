@@ -68,9 +68,9 @@ void ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const
 		QMap<QString, ExpressionType>::iterator current = data.find(it.key());
 		
 		if(current!=data.end()) {
-			/*if(current->canReduceTo(*it)) {
+			if(current->canReduceTo(*it)) {
 				data.insert(it.key(), minimumType(*current, *it));
-			} else */{
+			} else {
 				ExpressionType t(Many);
 				ExpressionType t1(*it);			t1.addAssumption(it.key(), *it);
 				ExpressionType t2(*current);	t2.addAssumption(it.key(), *current);
