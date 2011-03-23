@@ -560,6 +560,20 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			m_calculating.append(var->name());
 			c->m_params.last()->visit(this);
 			m_calculating.removeLast();
+			
+			QList<ExpressionType> opts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+			
+			for(QList< ExpressionType >::iterator it=opts.begin(), itEnd=opts.end(); it!=itEnd; ++it) {
+				QMap< QString, ExpressionType >::const_iterator itFound=it->assumptions().constFind(var->name());
+				if(itFound!=it->assumptions().constEnd()) {
+					QMap<int, ExpressionType> stars;
+					stars=ExpressionType::computeStars(stars, *itFound, *it);
+// 					qDebug() << "fiiiiiiiii" << stars << *it << *itFound;
+					*it=it->starsToType(stars);
+				}
+// 				printAssumptions("fefefe", current);
+			}
+			current=ExpressionType(ExpressionType::Many, opts);
 		}	break;
 		case Container::lambda: {
 			QSet<QString> aux=m_lambdascope;
