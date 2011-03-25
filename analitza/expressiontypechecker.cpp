@@ -317,10 +317,12 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 				ExpressionType rr=ExpressionType::minimumType(t1, t2);
 				if(!rr.isError() && ExpressionType::matchAssumptions(&stars, t2.assumptions(), t1.assumptions())) {
 					stars=ExpressionType::computeStars(stars, t2, t1);
-					rr.addAssumptions(assumptions);
+					bool b=ExpressionType::assumptionsMerge(rr.assumptions(), assumptions);
+// 					Q_ASSERT(b);
 // 					qDebug() << "*************" << o->toString() << rr << "||||||" << stars;
 // 					printAssumptions("commonnnnWW", rr);
-					retalts += rr.starsToType(stars);
+					if(b)
+						retalts += rr.starsToType(stars);
 // 					printAssumptions("commonnnnZZ", retalts.last());
 				}
 			}
@@ -612,7 +614,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					}
 				}
 			}
-// 			printAssumptions("fefefe", current);
 			current=ExpressionType(ExpressionType::Many, opts);
 		}	break;
 		case Container::lambda: {
@@ -653,8 +654,9 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		case Container::bvar:
 		case Container::domainofapplication:
 // 			for(Container::const_iterator it=c->constBegin(); it!=c->constEnd(); ++it)
-			Q_ASSERT(c->constBegin()+1==c->constEnd());
-			(*c->constBegin())->visit(this);
+// 			Q_ASSERT(c->constBegin()+1==c->constEnd());
+			if(c->constBegin()+1==c->constEnd())
+				(*c->constBegin())->visit(this);
 			break;
 	}
 	
