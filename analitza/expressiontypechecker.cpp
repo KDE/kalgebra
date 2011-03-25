@@ -319,7 +319,7 @@ ExpressionType ExpressionTypeChecker::commonType(const QList<Object*>& values)
 					stars=ExpressionType::computeStars(stars, t2, t1);
 					bool b=ExpressionType::assumptionsMerge(rr.assumptions(), assumptions);
 // 					Q_ASSERT(b);
-// 					qDebug() << "*************" << o->toString() << rr << "||||||" << stars;
+// 					qDebug() << "*************" << o->toString() << rr << b << "||||||" << stars;
 // 					printAssumptions("commonnnnWW", rr);
 					if(b)
 						retalts += rr.starsToType(stars);
@@ -584,13 +584,21 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		case Container::piece: {
 			QMap<QString, ExpressionType> assumptions=typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
 			c->m_params.first()->visit(this); //we return the body
-			
-			QMap<int, ExpressionType> stars;
-			bool b=ExpressionType::matchAssumptions(&stars, assumptions, current.assumptions());
-			
-			Q_ASSERT(b);
-			current=current.starsToType(stars);
-			current.addAssumptions(assumptions);
+			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current, rets;
+			foreach(const ExpressionType& t, alts) {
+				QMap<int, ExpressionType> stars;
+				ExpressionType toadd=t;
+				bool b=ExpressionType::assumptionsMerge(toadd.assumptions(), assumptions);
+				
+				b&=ExpressionType::matchAssumptions(&stars, assumptions, t.assumptions());
+				
+				if(b) {
+					toadd=toadd.starsToType(stars);
+					
+					rets += toadd;
+				}
+			}
+			current=ExpressionType(ExpressionType::Many, rets);
 		}	break;
 		case Container::declare:{
 			Q_ASSERT(c->m_params.first()->type()==Object::variable);
