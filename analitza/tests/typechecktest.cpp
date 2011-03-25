@@ -154,8 +154,8 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("foldl4") << "foldl4:=(f,z,xs)->list{ foldl4(f, f(z, xs[1]), tail(xs)), cos(z) }"
 						<< "";
 	
-	QTest::newRow("foldr") << "foldr1:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"
-								<< "(a -> b -> b) -> b -> [a] -> b";
+	QTest::newRow("foldr") << "foldr1:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr1(f, z, tail(elems))) }"
+								<< "((a -> b -> b) -> b -> <a,-1> -> b) | ((a -> b -> b) -> b -> [a] -> b)";
 	QTest::newRow("foldr1") << "foldr1:=(f,elems)->piecewise {card(elems)=1 ? elems[1], ? f(elems[1], foldr1(f, elems)) }"
 								<< "((a -> a -> a) -> <a,-1> -> a) | ((a -> a -> a) -> [a] -> a)";
 	QTest::newRow("foldr11") << "(f,elems)->f(elems[1], f(elems[2], elems[3]))" << "((a -> a -> a) -> <a,-1> -> a) | ((a -> a -> a) -> [a] -> a)";
