@@ -225,7 +225,6 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("wrong call") << "(x->x+x)(list{3})";
 	QTest::newRow("wrong call2") << "fplus(list{3})";
 	QTest::newRow("wrong bounds") << "sum(x : x=1..vector{3,3})";
-	QTest::newRow("infinite_2") << "fwrong";
 	QTest::newRow("number call") << "number(3)";
 	QTest::newRow("wrong param count") << "golambda(2)";
 	QTest::newRow("unresolved operation") << "selector(2,2)";
