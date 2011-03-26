@@ -51,6 +51,7 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("fv", Expression("vector{x->sin(x), x->cos(x)}"));
 	v->modify("rtail", Expression("(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, rtail(elems, i+1)), ? list{} }"));
 	v->modify("tail", Expression("elems->rtail(elems,1)"));
+	v->modify("foldr", Expression("(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -155,7 +156,9 @@ void TypeCheckTest::testConstruction_data()
 						<< "((num -> a -> num) -> num -> <a,-1> -> num) | ((num -> a -> num) -> num -> [a] -> num)";
 	QTest::newRow("foldl3") << "foldl3:=(f,z,xs)->foldl3(f, f(z, xs[1]), tail(xs))" << "((a -> b -> a) -> a -> <b,-1> -> c) | ((a -> b -> a) -> a -> [b] -> c)";
 	
-	QTest::newRow("foldr") << "foldr1:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr1(f, z, tail(elems))) }"
+	QTest::newRow("foldr") << "(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"
+								<< "((a -> b -> b) -> b -> <a,-1> -> b) | ((a -> b -> b) -> b -> [a] -> b)";
+	QTest::newRow("foldr_call") << "foldr"
 								<< "((a -> b -> b) -> b -> <a,-1> -> b) | ((a -> b -> b) -> b -> [a] -> b)";
 	QTest::newRow("foldr1") << "foldr1:=(f,elems)->piecewise {card(elems)=1 ? elems[1], ? f(elems[1], foldr1(f, elems)) }"
 								<< "((a -> a -> a) -> <a,-1> -> a) | ((a -> a -> a) -> [a] -> a)";
@@ -166,6 +169,9 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("foldr5") << "(f,elems)->f(f(elems[1]))" << "((a -> a) -> <a,-1> -> a) | ((a -> a) -> [a] -> a)";
 	QTest::newRow("foldr6") << "(f,elems)->piecewise {card(elems)=1 ? cos(elems[1]), ? f(elems) }"
 								<< "((<num,-1> -> num) -> <num,-1> -> num) | (([num] -> num) -> [num] -> num)";
+	
+// 	QTest::newRow("foldr6") << "(f,elems)->piecewise {card(elems)=1 ? cos(elems[1]), ? f(elems) }" << "";
+	
 }
 
 void TypeCheckTest::testConstruction()

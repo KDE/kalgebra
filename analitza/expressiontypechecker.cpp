@@ -441,12 +441,10 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					returntype.addAssumptions(type.assumptions());
 					if(c->m_params.first()->type()==Object::variable) {
 						QString name=static_cast<Ci*>(c->m_params.first())->name();
-// 						assumptions[name] = type;
+						QMap<QString, ExpressionType>::const_iterator itf=returntype.assumptions().constFind(name);
 						
-						if(returntype.assumptions().contains(name)) {
-							ExpressionType oldt=returntype.assumptionFor(name);
-							
-							oldt=ExpressionType::minimumType(oldt, type);
+						if(itf!=returntype.assumptions().constEnd() && itf->type()==ExpressionType::Lambda) {
+							ExpressionType oldt=ExpressionType::minimumType(*itf, type);
 							oldt.addAssumption(name, oldt);
 							QMap<int,ExpressionType> stars;
 							stars=ExpressionType::computeStars(stars, type, oldt);
@@ -454,7 +452,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							Q_ASSERT(b);
 							
 							oldt=oldt.starsToType(stars);
-// 							qDebug() << "hmmm..." << oldt << stars << "::::::\n\t" << oldt.assumptions() << "\n\t" << type.assumptions();
+// 							qDebug() << "hmmm..." << oldt << stars << type << "::::::\n\t" << oldt.assumptions() << "\n\t" << type.assumptions();
 							returntype=oldt.parameters().last();
 // 							printAssumptions("reeeeet", returntype);
 							
@@ -647,6 +645,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 					args += toadd;
 				}
 				args += alt;
+				
 				args=ExpressionType::lambdaFromArgs(args);
 // 				qDebug() << "fifififi" << args;
 				
@@ -786,7 +785,7 @@ ExpressionType ExpressionTypeChecker::typeForVar(const QString& var)
 		current.clearAssumptions();
 // 		current.simplifyStars();
 		m_vars[var]=current;
-// 		qDebug() << "checked type" << var << "=" << current;
+		qDebug() << "checked type" << var << "=" << current;
 	}
 	
 	ExpressionType ret=m_vars.value(var);
