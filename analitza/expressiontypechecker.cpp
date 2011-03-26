@@ -541,6 +541,26 @@ QString ExpressionTypeChecker::accept(const CustomObject*)
 	return QString();
 }
 
+ExpressionType tellTypeIdentity(const QString& name, const ExpressionType& type)
+{
+	QList<ExpressionType> opts=type.type()==ExpressionType::Many ? type.alternatives() : QList<ExpressionType>() << type;
+	
+	for(QList< ExpressionType >::iterator it=opts.begin(), itEnd=opts.end(); it!=itEnd; ++it) {
+		QMap< QString, ExpressionType >::const_iterator itFound=it->assumptions().constFind(name);
+		
+		if(itFound!=it->assumptions().constEnd()) {
+			QList<ExpressionType> optsFound=itFound->type()==ExpressionType::Many ? itFound->alternatives() : QList<ExpressionType>() << *itFound;
+			for(QList< ExpressionType >::iterator itf=optsFound.begin(), itfEnd=optsFound.end(); itf!=itfEnd; ++itf) {
+				QMap<int, ExpressionType> stars;
+				stars=ExpressionType::computeStars(stars, *itf, *it);
+// 				qDebug() << "fiiiiiiiii" << stars  << "\n\t" << *it << "\n\t" << *itFound;
+				*it=it->starsToType(stars);
+			}
+		}
+	}
+	return ExpressionType(ExpressionType::Many, opts);
+}
+
 //1. Check if parameters are applied correctly
 //2. Return the operator result type
 QString ExpressionTypeChecker::accept(const Container* c)
@@ -606,21 +626,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			c->m_params.last()->visit(this);
 			m_calculating.removeLast();
 			
-			QList<ExpressionType> opts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
-			
-			for(QList< ExpressionType >::iterator it=opts.begin(), itEnd=opts.end(); it!=itEnd; ++it) {
-				QMap< QString, ExpressionType >::const_iterator itFound=it->assumptions().constFind(var->name());
-				if(itFound!=it->assumptions().constEnd()) {
-					QList<ExpressionType> optsFound=itFound->type()==ExpressionType::Many ? itFound->alternatives() : QList<ExpressionType>() << *itFound;
-					for(QList< ExpressionType >::iterator itf=optsFound.begin(), itfEnd=optsFound.end(); itf!=itfEnd; ++itf) {
-						QMap<int, ExpressionType> stars;
-						stars=ExpressionType::computeStars(stars, *itf, *it);
-// 						qDebug() << "fiiiiiiiii" << stars  << "\n\t" << *it << "\n\t" << *itFound;
-						*it=it->starsToType(stars);
-					}
-				}
-			}
-			current=ExpressionType(ExpressionType::Many, opts);
+			current=tellTypeIdentity(var->name(), current);
 		}	break;
 		case Container::lambda: {
 			QSet<QString> aux=m_lambdascope;
@@ -775,17 +781,18 @@ QMap<QString, ExpressionType> ExpressionTypeChecker::typeIs(const Object* o, con
 ExpressionType ExpressionTypeChecker::typeForVar(const QString& var)
 {
 	if(m_calculating.contains(var))
-		return ExpressionType(ExpressionType::Error);
+		return ExpressionType(ExpressionType::Any, m_stars++);
 	else if(!m_vars.contains(var)) {
 // 		qDebug() << "checking..." << var;
 		Q_ASSERT(m_v->contains(var));
 		m_calculating += var;
 		m_v->value(var)->visit(this);
 		m_calculating.removeLast();
+		current=tellTypeIdentity(var, current);
 		current.clearAssumptions();
-// 		current.simplifyStars();
+		current.simplifyStars();
 		m_vars[var]=current;
-		qDebug() << "checked type" << var << "=" << current;
+// 		qDebug() << "checked type" << var << "=" << current;
 	}
 	
 	ExpressionType ret=m_vars.value(var);
