@@ -423,6 +423,7 @@ void KAlgebra::functools(int i)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
 		b_funced->setName(b_funcsModel->freeId());
+		b_funced->setColor(QColor::fromHsv(qrand()%255, 255, 255));
 		b_funced->setEditing(false);
 		b_funced->setFocus();
 	}
