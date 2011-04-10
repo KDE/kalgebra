@@ -388,6 +388,25 @@ void AnalitzaTest::testCorrection_data()
 		   << "sum(probability(5, t, 6, 1, 5):t=0..5)";
 	
 	QTest::newRow("probabilities") << script << "1";
+	
+	script.clear();
+	script
+			<< "rtail:=(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, rtail(elems, i+1)), ? list{} }"
+			<< "tail:=elems->rtail(elems,2)"
+			<< "foldr:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"
+			<< "sumsum:=elems->foldr((x,y)->x+y, 0, elems)"
+			<< "sumsum(list{1,2,3})";
+	QTest::newRow("sumsum") << script << "6";
+	
+	script.clear();
+	script
+			<< "rtail:=(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, rtail(elems, i+1)), ? list{} }"
+			<< "tail:=elems->rtail(elems,2)"
+			<< "foldr:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"
+			<< "filter:=(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
+			
+			<< "filter(x->x>3, list{1,2,3,4,5})";
+	QTest::newRow("filter") << script << "list { 4, 5 }";
 }
 
 //testCalculate
