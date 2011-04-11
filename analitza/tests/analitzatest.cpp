@@ -30,6 +30,7 @@
 #include <analitzautils.h>
 //#include <operations.h>
 
+
 using namespace std;
 using Analitza::Cn;
 using Analitza::Ci;
@@ -99,6 +100,7 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("forall") << "forall(x : x@list{1,1,0})" << 0.;
 	
 	QTest::newRow("empty") << "" << 0.;
+	QTest::newRow("lambda") << "f:=x->f(x)" << 0.;
 }
 
 void AnalitzaTest::testTrivialCalculate()
