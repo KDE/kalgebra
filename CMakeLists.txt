@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 find_package(LibKdeEdu REQUIRED)
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml)
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${CMAKE_SOURCE_DIR}/qtmml)
 
 #Checking whether we can compile calgebra
 include(CheckIncludeFiles)
@@ -26,6 +26,7 @@ include_directories(.)
 add_subdirectory(doc)
 add_subdirectory(analitza)
 add_subdirectory(analitzagui)
+add_subdirectory(qtmml)
 add_subdirectory(src)
 add_subdirectory(icons)
 add_subdirectory(plasmoid)
