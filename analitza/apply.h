@@ -48,6 +48,7 @@ class ANALITZA_EXPORT Apply : public Object
 		Operator firstOperator() const { if(m_op) return *m_op; else return Operator(Operator::function); }
 		int countValues() const { return m_params.size(); }
 		
+		void prependBranch(Object* o);
 		void appendBranch(Object* o);
 		
 		/** Adds @p bvar into the list of bvars */
@@ -87,6 +88,7 @@ class ANALITZA_EXPORT Apply : public Object
 		QList<Object*> m_params;
 	private:
 		Apply(const Apply& );
+		bool addBranch(Object* o);
 		
 		Object* m_ulimit, *m_dlimit, *m_domain;
 		QList<Ci*> m_bvars;

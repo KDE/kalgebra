@@ -1460,6 +1460,10 @@ Object* createMono(const Operator& o, const Monomial& p)
 		cint->appendBranch(new Operator(Operator::minus));
 		cint->appendBranch(p.second);
 		toAdd=cint;
+	} else if(mult==Operator::times && p.second->isApply() && static_cast<Apply*>(p.second)->firstOperator()==Operator::times) {
+		Apply* res = static_cast<Apply*>(p.second);
+		res->prependBranch(new Cn(p.first));
+		toAdd=res;
 	} else {
 		Apply *cint = new Apply;
 		cint->appendBranch(new Operator(mult));
@@ -1480,26 +1484,46 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 	
 	if(o2->isApply()) {
 		Apply *cx = (Apply*) o2;
-		if(cx->firstOperator()==mult && cx->m_params.count()==2) {
-			bool valid=false;
-			int scalar, var;
-			
-			if(mult!=Operator::power && cx->m_params[0]->type()==Object::value) {
-				scalar=0;
-				var=1;
-				valid=true;
-			} else if(cx->m_params[1]->type()==Object::value) {
-				scalar=1;
-				var=0;
-				valid=true;
-			}
-			
-			if(valid) {
-				Cn* sc= (Cn*) cx->m_params[scalar];
-				imono.first = sc->value();
-				imono.second = cx->m_params[var];
+		if(cx->firstOperator()==mult) {
+			if(cx->m_params.count()==2) {
+				bool valid=false;
+				int scalar, var;
 				
-				ismono=true;
+				if(mult!=Operator::power && cx->m_params[0]->type()==Object::value) {
+					scalar=0;
+					var=1;
+					valid=true;
+				} else if(cx->m_params[1]->type()==Object::value) {
+					scalar=1;
+					var=0;
+					valid=true;
+				}
+				
+				if(valid) {
+					Cn* sc= (Cn*) cx->m_params[scalar];
+					imono.first = sc->value();
+					imono.second = cx->m_params[var];
+					
+					ismono=true;
+				}
+			} else if(mult==Operator::times) {
+				imono.first=1;
+				Apply::iterator it=cx->firstValue(), itEnd=cx->end();
+				QList<Object*> vars;
+				
+				for(; it!=itEnd; ++it) {
+					if((*it)->type()==Object::value) {
+						imono.first *= static_cast<Cn*>(*it)->value();
+						ismono=true;
+					} else {
+						vars += *it;
+					}
+				}
+				
+				if(ismono) {
+					cx->m_params = vars;
+					imono.second = cx;
+				}
 			}
 		} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
 			imono = constructMonomial(o, *cx->firstValue(), sign);

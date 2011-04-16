@@ -566,6 +566,8 @@ void AnalitzaTest::testSimplify_data()
 	
 	QTest::newRow("sum.dlul") << "w->sum(x : x=(floor(2.5)+w)..(ceiling(2.5)))" << "w->sum(x:x=w+2..3)";
 	QTest::newRow("trig") << "sin(x)/cos(x)" << "sin(x)/cos(x)";
+	
+	QTest::newRow("mono") << "2*x*y+3*x*y" << "5*x*y";
 }
 
 void AnalitzaTest::testSimplify()

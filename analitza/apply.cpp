@@ -39,8 +39,7 @@ Apply::~Apply()
 	qDeleteAll(m_params);
 }
 
-//TODO: Improve this
-void Apply::appendBranch(Object *o)
+bool Apply::addBranch(Object* o)
 {
 	if(o->type()==Object::oper) {
 		m_op = static_cast<Operator*>(o);
@@ -72,11 +71,24 @@ void Apply::appendBranch(Object *o)
 				delete c;
 				break;
 			default:
-				m_params.append(o);
-				break;
+				return false;
 		}
 	} else
+		return false;
+	
+	return true;
+}
+
+void Apply::appendBranch(Object *o)
+{
+	if(!addBranch(o))
 		m_params.append(o);
+}
+
+void Apply::prependBranch(Object* o)
+{
+	if(!addBranch(o))
+		m_params.prepend(o);
 }
 
 QString Apply::visit(ExpressionWriter* exp) const
