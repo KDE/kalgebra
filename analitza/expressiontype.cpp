@@ -105,7 +105,7 @@ ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& con
 }
 
 ExpressionType::ExpressionType(const QString& objectName)
-	: m_type(Object), m_objectName(objectName)
+	: m_type(Object), m_size(-1), m_objectName(objectName)
 {}
 
 ExpressionType::ExpressionType(ExpressionType::Type t, const QList< ExpressionType >& alternatives)
