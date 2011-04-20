@@ -736,9 +736,9 @@ void Expression::renameArgument(int depth, const QString& newName)
 	computeDepth(d->m_tree);
 }
 
-Expression Expression::constructCustomObject(const QVariant& custom)
+Expression Expression::constructCustomObject(const QVariant& custom, CustomObjectDestructor d)
 {
-	Object* obj = new CustomObject(custom);
+	Object* obj = new CustomObject(custom, d);
 	return Expression(obj);
 }
 

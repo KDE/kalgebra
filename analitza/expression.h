@@ -43,7 +43,7 @@ class Cn;
 class ANALITZA_EXPORT Expression
 {
 	public:
-		
+		typedef void (*CustomObjectDestructor)(const QVariant&);
 		/**
 		 *	Constructs an empty Expression.
 		 */
@@ -209,7 +209,7 @@ class ANALITZA_EXPORT Expression
 		
 		
 		/** creates an expression filled with just a custom object */
-		static Expression constructCustomObject(const QVariant& custom);
+		static Expression constructCustomObject(const QVariant& custom, Analitza::Expression::CustomObjectDestructor d);
 		
 		/** @returns if a non-mathml expression is fully introduced (e.g. has closed all parentheses) */
 		static bool isCompleteExpression(const QString& exp);

@@ -28,6 +28,8 @@
 
 QTEST_KDEMAIN_CORE( BuiltInTest )
 
+Q_DECLARE_METATYPE(int*);
+
 using namespace Analitza;
 
 class CFib : public Analitza::FunctionDefinition
@@ -60,7 +62,7 @@ class VehicleConstructor : public Analitza::FunctionDefinition
 {
 	virtual Expression operator()(const QList< Expression >& args)
 	{
-		return Expression::constructCustomObject(QVariant(args.first().toReal().intValue()));
+		return Expression::constructCustomObject(QVariant(args.first().toReal().intValue()),0);
 	}
 };
 
@@ -73,6 +75,29 @@ class Tires : public Analitza::FunctionDefinition
 	}
 };
 
+class NewIntConstructor : public Analitza::FunctionDefinition
+{
+	static void destroy(const QVariant& v)
+	{
+		int* vv=v.value<int*>();
+		delete vv;
+	}
+	
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		int* pi=new int(args.first().toReal().intValue());
+		return Expression::constructCustomObject(QVariant::fromValue<int*>(pi), destroy);
+	}
+};
+
+class ReadInt : public Analitza::FunctionDefinition
+{
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		Cn n(*args.first().customObjectValue().value<int*>());
+		return Expression(n);
+	}
+};
 
 BuiltInTest::BuiltInTest(QObject* parent)
 	: QObject(parent)
@@ -95,7 +120,17 @@ BuiltInTest::BuiltInTest(QObject* parent)
 	vehicleType.addParameter(ExpressionType("Vehicle"));
 	a.builtinMethods()->insertFunction("vehicle", vehicleType, new VehicleConstructor);
 	
+	//object tests: newint
+	ExpressionType refintType(ExpressionType::Lambda);
+	refintType.addParameter(ExpressionType(ExpressionType::Value));
+	refintType.addParameter(ExpressionType("RefInt"));
+	a.builtinMethods()->insertFunction("refint", refintType, new NewIntConstructor);
 	
+	//object tests: readint
+	ExpressionType readintType(ExpressionType::Lambda);
+	readintType.addParameter(ExpressionType("RefInt"));
+	readintType.addParameter(ExpressionType(ExpressionType::Value));
+	a.builtinMethods()->insertFunction("readint", readintType, new ReadInt);
 }
 
 BuiltInTest::~BuiltInTest()
@@ -115,6 +150,7 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("vechicle") << (IN "tires(vehicle(2))") << "2";
 	QTest::newRow("varcar") << (IN "car:=vehicle(4)" << "tires(car)") << "4";
 	
+	QTest::newRow("ref") << (IN "sum(readint(refint(x)) : x=1..10)") << "55";
 }
 
 void BuiltInTest::testCall()
@@ -128,7 +164,7 @@ void BuiltInTest::testCall()
 		QVERIFY(ei.isCorrect());
 		
 		a.setExpression(ei);
-		qDebug() << "peee" << a.errors() << input;
+// 		qDebug() << "peee" << a.errors() << input;
 		calc = a.calculate();
 	}
 	if(a.isCorrect())

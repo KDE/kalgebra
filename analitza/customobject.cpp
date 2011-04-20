@@ -21,9 +21,21 @@
 
 using namespace Analitza;
 
+CustomObject::~CustomObject()
+{
+	(*m_refcount)--;
+	if(*m_refcount==0) {
+		delete m_refcount;
+		
+		if(m_destructor)
+			m_destructor(m_value);
+	}
+}
+
 Object* CustomObject::copy() const
 {
-	return new CustomObject(m_value);
+	(*m_refcount)++;
+	return new CustomObject(m_value, m_destructor, m_refcount);
 }
 
 bool CustomObject::matches(const Analitza::Object* exp, QMap< QString, const Analitza::Object* >* ) const

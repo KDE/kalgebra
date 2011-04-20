@@ -857,13 +857,13 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	Operator::OperatorType type=t.operatorType();
 	do {
 		Object *val=calc(n.m_params.last());
-		
 		ret=Operations::reduce(type, ret, val, correct);
 	} while(KDE_ISLIKELY(it->hasNext() && correct.isEmpty()));
 	
 	m_runStack.resize(top);
 	
 	delete it;
+	Q_ASSERT(ret);
 	return ret;
 }
 
