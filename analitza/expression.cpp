@@ -513,7 +513,8 @@ QStringList Expression::bvarList() const
 	const Object *o = d->m_tree;
 	
 	if(o->isContainer() && static_cast<const Container*>(o)->containerType()==Container::math) {
-		o = (Container*) static_cast<const Container*>(o)->m_params[0];
+		if(!static_cast<const Container*>(o)->m_params.isEmpty())
+			o = (Container*) static_cast<const Container*>(o)->m_params[0];
 	}
 	
 	if(o->isApply())
