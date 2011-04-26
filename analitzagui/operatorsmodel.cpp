@@ -431,7 +431,7 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			s="root(x, 2)";
 			break;
 		case Operator::selector:
-			s="selector(piecewise { x>0 ? 1, ? 2 }, vector { x, 1/x })";
+			s="(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]";
 			break;
 		case Operator::sum:
 			s="x*sum(t*t:t=0..3)";
@@ -449,13 +449,13 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			s="card(vector { x, 1, 2 })";
 			break;
 		case Operator::scalarproduct:
-			s="selector(1, scalarproduct(vector { 0, x }, vector { x, 0 }))";
+			s="(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]";
 			break;
 		case Operator::diff:
 			s="(diff(x^2:x))(x)";
 			break;
 		case Operator::_union:
-			s="selector(rem(floor(x), 5)+3, union(list { 1, 2, 3 }, list { 4, 5, 6 }))";
+			s="(union(list { 1, 2, 3 }, list { 4, 5, 6 }))[rem(floor(x), 5)+3]";
 			break;
 		case Operator::factorial:
 		case Operator::arcsech:
