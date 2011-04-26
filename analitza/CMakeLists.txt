@@ -61,6 +61,6 @@ if(INSTALL_ANALITZA_HEADERS)
 		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)
 	
 	install(FILES
-			../FindAnalitza.cmake
+	#		../FindAnalitza.cmake
 			DESTINATION ${DATA_INSTALL_DIR}/cmake/modules)
 endif(INSTALL_ANALITZA_HEADERS)
