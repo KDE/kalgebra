@@ -799,21 +799,21 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 BoundingIterator* Analyzer::initBVarsContainer(const Analitza::Apply* n, int base, Object* domain)
 {
 	BoundingIterator* ret = 0;
-	if(isCorrect()) { //FIXME: delete? should not be handled here
-		QList<Ci*> bvars=n->bvarCi();
-		switch(domain->type()) {
-			case Object::list:
+	QList<Ci*> bvars=n->bvarCi();
+	
+	switch(domain->type()) {
+		case Object::list:
+			if(static_cast<List*>(domain)->size()>0)
 				ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<List*>(domain));
-				break;
-			case Object::vector:
+			break;
+		case Object::vector:
+			if(static_cast<Vector*>(domain)->size()>0)
 				ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
-				break;
-			default:
-				Q_ASSERT(false && "Type not supported for bounding.");
-				m_err.append(i18n("Type not supported for bounding."));
-		}
-	} else
-		m_err.append(i18n("Incorrect domain."));
+			break;
+		default:
+			Q_ASSERT(false && "Type not supported for bounding.");
+			m_err.append(i18n("Type not supported for bounding."));
+	}
 	return ret;
 }
 
