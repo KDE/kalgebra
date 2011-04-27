@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007-2008 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2007-2011 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -98,6 +98,7 @@ void AnalitzaTest::testTrivialCalculate_data()
 	
 	QTest::newRow("exists") << "exists(x : x@list{1,1,0})" << 1.;
 	QTest::newRow("forall") << "forall(x : x@list{1,1,0})" << 0.;
+// 	QTest::newRow("emptysum") << "sum(x : x@list{})" << 0.;
 	
 	QTest::newRow("empty") << "" << 0.;
 	QTest::newRow("lambda") << "f:=x->f(x)" << 0.;
@@ -409,6 +410,26 @@ void AnalitzaTest::testCorrection_data()
 			
 			<< "filter(x->x>3, list{1,2,3,4,5})";
 	QTest::newRow("filter") << script << "list { 4, 5 }";
+	
+	script.clear();
+	script
+			<< "pmap:=(func, list, i)->piecewise { i>=card(list)+1 ? list {}, ? union(list { func(selector(i, list)) }, pmap(func, list, i+1)) }"
+			<< "map:=(func, list)->pmap(func, list, 1)"
+			<< "refImport:=x->x>3"
+			<< "importedRef:=imports->map(refImport, imports)"
+			
+			<< "importedRef(list{1,2,3,4,5})";
+	QTest::newRow("map") << script << "list { false, false, false, true, true }";
+	
+	script.clear();
+	script
+			<< "f:=x->list{1+x,2+x,3+x}"
+			<< "fuuu:=x->x+2"
+			<< "imports:=(x,y)->x>y"
+			<< "randomfunc:=(data,inc)->exists(imports(fuuu(use), fuuu(inc)) : use@f(fuuu(data)))"
+			
+			<< "randomfunc(1,5)";
+	QTest::newRow("aaa") << script << "";
 }
 
 //testCalculate

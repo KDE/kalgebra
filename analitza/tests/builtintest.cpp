@@ -99,6 +99,18 @@ class ReadInt : public Analitza::FunctionDefinition
 	}
 };
 
+class CreateList : public Analitza::FunctionDefinition
+{
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		QList<Expression> exps;
+		for(int i=0; i<10; i++)
+			exps += Expression(Cn(i+args.first().toReal().value()));
+		
+		return Expression::constructList(exps);
+	}
+};
+
 BuiltInTest::BuiltInTest(QObject* parent)
 	: QObject(parent)
 {
@@ -131,6 +143,12 @@ BuiltInTest::BuiltInTest(QObject* parent)
 	readintType.addParameter(ExpressionType("RefInt"));
 	readintType.addParameter(ExpressionType(ExpressionType::Value));
 	a.builtinMethods()->insertFunction("readint", readintType, new ReadInt);
+	
+	//Returns a list
+	ExpressionType createlistType(ExpressionType::Lambda);
+	createlistType.addParameter(ExpressionType(ExpressionType::Value));
+	createlistType.addParameter(ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Value)));
+	a.builtinMethods()->insertFunction("createlist", createlistType, new CreateList);
 }
 
 BuiltInTest::~BuiltInTest()
@@ -150,7 +168,11 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("vechicle") << (IN "tires(vehicle(2))") << "2";
 	QTest::newRow("varcar") << (IN "car:=vehicle(4)" << "tires(car)") << "4";
 	
+	QTest::newRow("lambdaarg") << (IN "call:=(x,y)->x(y)" << "car:=call(vehicle,4)" << "tires(car)") << "4";
+	
 	QTest::newRow("ref") << (IN "sum(readint(refint(x)) : x=1..10)") << "55";
+	
+	QTest::newRow("sum") << (IN "sum(x : x@createlist(3))") << "75";
 }
 
 void BuiltInTest::testCall()
@@ -161,6 +183,7 @@ void BuiltInTest::testCall()
 	Expression calc;
 	foreach(const QString& input, inputs) {
 		Expression ei(input);
+		if(!ei.isCorrect()) qDebug() << "error:" << ei.error();
 		QVERIFY(ei.isCorrect());
 		
 		a.setExpression(ei);
