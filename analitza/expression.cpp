@@ -531,7 +531,7 @@ Cn Expression::toReal() const
 	if(KDE_ISLIKELY(tree && tree->type()==Object::value))
 		return *static_cast<Cn*>(tree);
 	else {
-		qDebug() << "trying to return an invalid value:" << (tree ? tree->toString() : "null");
+		qDebug() << "trying to return not a real value as real:" << (tree ? tree->toString() : "null");
 		return Cn(0.);
 	}
 }
@@ -749,7 +749,7 @@ QVariant Expression::customObjectValue() const
 	if(KDE_ISLIKELY(tree && tree->type()==Object::custom))
 		return static_cast<const CustomObject*>(tree)->value();
 	else {
-		qDebug() << "trying to return an invalid value:" << (tree ? tree->toString() : "null");
+		qDebug() << "trying to return as a custom object something that it is not:" << (tree ? tree->toString() : "null");
 		return QVariant();
 	}
 }
