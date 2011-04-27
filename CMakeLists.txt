@@ -12,11 +12,11 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${L
 include(CheckIncludeFiles)
 macro_optional_find_package(Readline)
 macro_bool_to_01(READLINE_FOUND HAVE_READLINE)
-macro_log_feature(READLINE_FOUND "GNU Readline" "A library for editing typed command lines" "http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html" FALSE "" "Gives KAlgebra a console interface.")
+macro_log_feature(READLINE_FOUND "GNU Readline" "Allows KAlgebra to provide a console interface." "http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html" FALSE "" "")
 
 macro_optional_find_package(OpenGL)
 macro_bool_to_01(OPENGL_FOUND HAVE_OPENGL)
-macro_log_feature(OPENGL_FOUND "OpenGL" "API for developing portable, interactive 2D and 3D graphics applications" "http://mesa3d.sourceforge.net" FALSE "" "Provides 3D graphs in KAlgebra.")
+macro_log_feature(OPENGL_FOUND "OpenGL" "Support for 3D graphs in KAlgebra" "http://mesa3d.sourceforge.net" FALSE "" "")
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI compatibility is going to happen for now" OFF)
@@ -43,4 +43,8 @@ add_custom_target(commandsdoc
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc/kalgebra/
 	COMMENT "Generating commands docbook information"
 )
+
+if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
+   macro_display_feature_log()
+endif (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
 
