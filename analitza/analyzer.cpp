@@ -557,7 +557,15 @@ Object* Analyzer::calc(const Object* root)
 			break;
 		case Object::variable: {
 			Ci* a=(Ci*) root;
-			ret = calc(variableValue(a));
+			
+			ret=variableValue(a);
+			if(ret)
+				ret = calc(ret);
+			else {
+				Container* c= new Container(Container::lambda);
+				c->appendBranch(a->copy());
+				ret=c;
+			}
 		}	break;
 		case Object::oper:
 		case Object::none:
@@ -669,7 +677,8 @@ Object* Analyzer::operate(const Container* c)
 		case Container::lambda: {
 			Container * cc=c->copy();
 // 			AnalitzaUtils::objectWalker(cc, "aa");
-			alphaConversion(cc, cc->bvarCi().first()->depth());
+			if(cc->bvarCount()>0)
+				alphaConversion(cc, cc->bvarCi().first()->depth());
 // 			AnalitzaUtils::objectWalker(cc, "bb");
 			Expression::computeDepth(cc);
 // 			AnalitzaUtils::objectWalker(cc, "cc");
@@ -899,7 +908,7 @@ Object* Analyzer::func(const Apply& n)
 	
 	int bvarsize = n.m_params.size()-1;
 	Object* ret=0;
-	if(function) {
+	if(function && function->m_params.size()>1) {
 		int top = m_runStack.size(), aux=m_runStackTop;
 		m_runStack.resize(top+bvarsize);
 		
@@ -921,8 +930,8 @@ Object* Analyzer::func(const Apply& n)
 		m_runStackTop = aux;
 		m_runStack.resize(top);
 	} else {
-		Q_ASSERT(n.m_params[0]->type()==Object::variable);
-		QString id=static_cast<const Ci*>(n.m_params[0])->name();
+		Q_ASSERT(function ? (function->m_params[0]->type()==Object::variable && function->m_params.size()==1) : n.m_params[0]->type()==Object::variable);
+		QString id=static_cast<const Ci*>(function ? function->m_params[0] : n.m_params[0])->name();
 		FunctionDefinition* func=m_builtin.function(id);
 		QList<Expression> args;
 		
