@@ -95,7 +95,7 @@ ExpressionType::ExpressionType(const ExpressionType& t)
 
 ExpressionType::ExpressionType(ExpressionType::Type t, int any)
     : m_type(t), m_any(any)
-{Q_ASSERT(m_type==Any || m_type==Error || m_type==Value || m_type==Many || m_type==Lambda); }
+{Q_ASSERT(m_type==Any || m_type==Error || m_type==Value || m_type==Bool || m_type==Char || m_type==Many || m_type==Lambda); }
 
 ExpressionType::ExpressionType(ExpressionType::Type t, const ExpressionType& contained, int s)
     : m_type(t), m_contained(QList<ExpressionType>() << contained), m_size(s)
@@ -133,9 +133,9 @@ QString ExpressionType::toString() const
 {
     QString ret;
     switch(m_type) {
-        case ExpressionType::Value:
-            ret="num";
-            break;
+        case ExpressionType::Value:ret="num";  break;
+        case ExpressionType::Char: ret="char"; break;
+        case ExpressionType::Bool: ret="bool"; break;
         case ExpressionType::List:
             ret='['+typesToString(m_contained).join("$")+']';
             break;
@@ -393,6 +393,8 @@ void ExpressionType::starsSimplification(ExpressionType& t, QMap<int, int>& redu
 			break;
 		case ExpressionType::Object:
 		case ExpressionType::Value:
+		case ExpressionType::Char:
+		case ExpressionType::Bool:
 		case ExpressionType::Error:
 			break;
 	}
@@ -616,6 +618,8 @@ QMap<int, ExpressionType> ExpressionType::computeStars(const QMap<int, Expressio
 		case ExpressionType::Many:
 		case ExpressionType::Object:
 		case ExpressionType::Value:
+		case ExpressionType::Bool:
+		case ExpressionType::Char:
 		case ExpressionType::Error:
 // 			Q_ASSERT(false && "bffff");
 			break;

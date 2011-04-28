@@ -31,7 +31,7 @@ class ANALITZA_EXPORT ExpressionType
 {
 	public:
 		///Just use undefined type when returning from a recursion
-		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Object };
+		enum Type { Error=0, Value, Vector, List, Lambda, Any, Many, Object, Char, Bool };
 		QString toString() const;
 		
 		ExpressionType(Type t=Error, int any=-1);

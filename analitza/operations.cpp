@@ -505,7 +505,7 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 		case Operator::neq:
 			ret << TypeTriplet(ExpressionType(ExpressionType::Any, 1),
 							   ExpressionType(ExpressionType::Any, 1),
-							   ExpressionType(ExpressionType::Value));
+							   ExpressionType(ExpressionType::Bool));
 			break;
 		case Operator::scalarproduct:
 			ret << TypeTriplet(
@@ -519,19 +519,23 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 		case Operator::factorof:
 		case Operator::min:
 		case Operator::max:
+		case Operator::gcd:
+		case Operator::lcm:
+		case Operator::root:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			break;
 		case Operator::gt:
 		case Operator::lt:
 		case Operator::approx:
 		case Operator::geq:
 		case Operator::leq:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Bool));
+			break;
 		case Operator::_and:
 		case Operator::_or:
 		case Operator::_xor:
 		case Operator::implies:
-		case Operator::gcd:
-		case Operator::lcm:
-		case Operator::root:
-			ret << TypeTriplet(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			ret << TypeTriplet(ExpressionType(ExpressionType::Bool), ExpressionType(ExpressionType::Bool), ExpressionType(ExpressionType::Bool));
 			break;
 		case Operator::selector:
 			ret << TypeTriplet(ExpressionType(ExpressionType::Value),
@@ -603,10 +607,12 @@ QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
 		//case Object::imaginary:
 		case Operator::floor:
 		case Operator::ceiling:
-		case Operator::_not:
-		case Operator::exists: //bool?
-		case Operator::forall:
 			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));
+			break;
+		case Operator::_not:
+		case Operator::exists:
+		case Operator::forall:
+			ret << TypePair(ExpressionType(ExpressionType::Bool), ExpressionType(ExpressionType::Bool));
 			break;
 		default:
 			break;

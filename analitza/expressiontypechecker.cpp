@@ -27,6 +27,7 @@
 #include "operations.h"
 #include <klocalizedstring.h>
 #include "apply.h"
+#include "value.h"
 
 QDebug operator<<(QDebug dbg, const Analitza::ExpressionType &c)
 {
@@ -269,9 +270,23 @@ bool ExpressionTypeChecker::isVariableDefined(const QString& id) const
 	return m_v->contains(id) || m_vars.contains(id);
 }
 
-QString ExpressionTypeChecker::accept(const Cn*)
+QString ExpressionTypeChecker::accept(const Cn* c)
 {
-	current=ExpressionType(ExpressionType::Value);
+	ExpressionType::Type type;
+	
+	switch(c->format()) {
+		case Cn::Boolean:
+			type=ExpressionType::Bool;
+			break;
+		case Cn::Char:
+			type=ExpressionType::Char;
+			break;
+		default:
+			type=ExpressionType::Value;
+			break;
+	}
+	
+	current=ExpressionType(type);
 	return QString();
 }
 
@@ -512,7 +527,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				}
 					
 				if(ret.alternatives().isEmpty()) {
-					qDebug() << "peee" << signature << exps;
+// 					qDebug() << "peee" << signature << exps;
 					
 					current=ExpressionType(ExpressionType::Error);
 					addError(i18n("Could not call '%1'", c->toString()));
@@ -600,7 +615,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			
 		}	break;
 		case Container::piece: {
-			QMap<QString, ExpressionType> assumptions=typeIs(c->m_params.last(), ExpressionType(ExpressionType::Value)); //condition check
+			QMap<QString, ExpressionType> assumptions=typeIs(c->m_params.last(), ExpressionType(ExpressionType::Bool)); //condition check
 			c->m_params.first()->visit(this); //we return the body
 			QList<ExpressionType> alts=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current, rets;
 			foreach(const ExpressionType& t, alts) {

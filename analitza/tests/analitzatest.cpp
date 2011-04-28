@@ -81,11 +81,11 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("product") << "product(n : n=1..5)" << 120.;
 	QTest::newRow("factorial") << "factorial(5)" << 120.;
 	
-	QTest::newRow("simple piecewise") << "piecewise { eq(pi,0)? 3, eq(pi, pi)?33 }" << 33.;
-	QTest::newRow("simple piecewise with otherwise") << "piecewise { eq(pi,0)? 3, ?33 }" << 33.;
-	QTest::newRow("boolean and") << "and(1,0)" << 0.;
-	QTest::newRow("boolean or") << "or(0,1)" << 1.;
-	QTest::newRow("boolean not") << "not(0)" << 1.;
+	QTest::newRow("simple piecewise") << "piecewise { pi=0? 3, pi=pi?33 }" << 33.;
+	QTest::newRow("simple piecewise with otherwise") << "piecewise { pi=0? 3, ?33 }" << 33.;
+	QTest::newRow("boolean and") << "and(true,false)" << 0.;
+	QTest::newRow("boolean or") << "or(false,true)" << 1.;
+	QTest::newRow("boolean not") << "not(false)" << 1.;
 	QTest::newRow("lambda")  << "(x->x+2)(2)" << 4.;
 	QTest::newRow("lambda2") << "(x->3*x^2)(1)" << 3.;
 	QTest::newRow("lambda3") << "(x->x*sum(t:t=0..3))(2)" << 12.;

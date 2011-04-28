@@ -96,7 +96,7 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("derivdiff") << "diff(x:x)" << "num -> num";
 	
 	QTest::newRow("infer_unary") << "n->cos(n)" << "num -> num";
-	QTest::newRow("infer") << "n->n=1" << "num -> num";
+	QTest::newRow("infer") << "n->n=1" << "num -> bool";
 	QTest::newRow("siplambda") << "func->func(2)" << "(num -> a) -> a";
 	QTest::newRow("numlambda") << "(func, x)->cos(func(x))" << "(a -> num) -> a -> num";
 	QTest::newRow("golambda")  << "golambda" << "(a -> b) -> a -> b";
@@ -120,7 +120,7 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("selec_cos") << "v->cos(selector(1, v))" << "(<num,-1> -> num) | ([num] -> num)";
 	QTest::newRow("shadowed_param") << "fv->cos(fv)" << "num -> num";
-	QTest::newRow("eq") << "x->eq(1,x)" << "num -> num";
+	QTest::newRow("eq") << "x->eq(1,x)" << "num -> bool";
 	QTest::newRow("list@sum") << "v->sum(i^2 : i@v)" << "([num] -> num) | (<num,-1> -> num)";
 	
 	QTest::newRow("bounded sum_up") << "n->sum(x : x=n..0)" << "num -> num";
@@ -172,7 +172,7 @@ void TypeCheckTest::testConstruction_data()
 								<< "((<num,-1> -> num) -> <num,-1> -> num) | (([num] -> num) -> [num] -> num)";
 	
 	QTest::newRow("filter")  << "(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
-								<< "((a -> num) -> <a,-1> -> [a]) | ((a -> num) -> [a] -> [a])";
+								<< "((a -> bool) -> <a,-1> -> [a]) | ((a -> bool) -> [a] -> [a])";
 }
 
 void TypeCheckTest::testConstruction()
@@ -229,6 +229,9 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("number call") << "number(3)";
 	QTest::newRow("wrong param count") << "golambda(2)";
 	QTest::newRow("unresolved operation") << "selector(2,2)";
+	
+	QTest::newRow("charvsreal") << "union(\"lalala\", list{1,2,3})";
+	QTest::newRow("boolvsreal") << "or(true, false)+2";
 // 	QTest::newRow("lambda param count") << "(x->x)(x,x)";
 	
 	//TODO: Add invalid recursive call
