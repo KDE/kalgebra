@@ -53,7 +53,7 @@ void FunctionTest::testCopy_data()
 	
 	QTest::newRow("x->flat") << "x->1";
 	QTest::newRow("x->x") << "x->x";
-	QTest::newRow("x->and") << "x->and(gt(x,-1), lt(x,1))";
+	QTest::newRow("x->and") << "x->piecewise { and(gt(x,-1), lt(x,1)) ? 1, ?0 }";
 	QTest::newRow("x->abs") << "x->abs(x)";
 	QTest::newRow("x->addition") << "x->2+x";
 	QTest::newRow("x->minus") << "x->x-2";
