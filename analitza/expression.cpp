@@ -376,7 +376,13 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 	Cn *num; Operator *op;
 	Object* ret=0;
 	
-	switch(whatType(elem.tagName())) {
+	if(elem.tagName()=="cs") {
+		List* l = new List;
+		QString text=elem.text();
+		for(int i=0; i<text.size(); ++i)
+			l->appendBranch(new Cn(text[i]));
+		ret=l;
+	} else switch(whatType(elem.tagName())) {
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			

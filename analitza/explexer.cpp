@@ -26,6 +26,17 @@ ExpLexer::ExpLexer(const QString &source)
 	, m_realRx("^-?((\\.[0-9]+)|[0-9]+(\\.[0-9]+)?)(e-?[0-9]+)?", Qt::CaseSensitive, QRegExp::RegExp2)
 {}
 
+QString ExpLexer::escape(const QString& str)
+{
+	QString ret=str;
+	ret.replace('&', "&amp;");
+	ret.replace('<', "&lt;");
+	ret.replace('>', "&gt;");
+	ret.replace('\'', "&apos;");
+	ret.replace('"', "&quot;");
+	return ret;
+}
+
 void ExpLexer::getToken()
 {
 	int& pos=m_pos;
@@ -52,6 +63,20 @@ void ExpLexer::getToken()
 		pos+=2;
 	} else if(m_operators.contains(a[pos])) {
 		ret.type=m_operators[a[pos]];
+		pos++;
+	} else if(a[pos]=='"') {
+		bool escaping=false;
+		pos++;
+		int posini=pos;
+		
+		for(; pos<a.size() && (a[pos]!='"' || escaping); pos++)
+			escaping=a[pos]=='\\';
+		
+		if(pos>=a.size())
+			m_err += i18n("Unexpectendly arrived to the end of the input");
+		
+		ret.type=ExpressionTable::tString;
+		ret.val="<cs>"+escape(a.mid(posini, pos-posini))+"</cs>";
 		pos++;
     } else if(a[pos].decompositionTag()==QChar::Super) {
 		QString super;

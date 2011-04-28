@@ -81,6 +81,7 @@ void ConsoleHtml::initialize()
 	m_css +="\t.func { color: #008600; }\n";
 	m_css +="\t.result { padding-left: 10%; }\n";
 	m_css +="\t.options { font-size: small; text-align:right }\n";
+	m_css +="\t.string { color: #bb0000 }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
 	

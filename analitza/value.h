@@ -37,7 +37,7 @@ namespace Analitza
 class ANALITZA_EXPORT Cn : public Object
 {
 	public:
-		enum ValueFormat { Real=7, Integer=3, Boolean=1 };
+		enum ValueFormat { Char=8, Real=7, Integer=3, Boolean=1 };
 		/** Copy constructor. Creates a Cn from another one. */
 		Cn(const Cn& v) : Object(v), m_value(v.value()), m_format(v.m_format) { Q_ASSERT(m_type==Object::value); }
 		
@@ -52,6 +52,9 @@ class ANALITZA_EXPORT Cn : public Object
 		
 		/** Constructor. Creates a boolean value with value @p b. */
 		explicit Cn(bool b) : Object(Object::value), m_value(b?1.:0.), m_format(Boolean) {}
+		
+		/** Constructor. Creates a value that represents a character. */
+		explicit Cn(const QChar& c) : Object(Object::value), m_char(c.unicode()), m_format(Char) {}
 		
 		virtual ~Cn() {}
 		
@@ -142,6 +145,8 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		Cn operator++(int) { m_value++; return *this; }
 		
+		QChar character() const { Q_ASSERT(m_format==Char); return QChar(m_char); }
+		
 		virtual QString visit(ExpressionWriter*) const;
 		virtual bool isZero() const { return m_value==0.; }
 		
@@ -156,7 +161,7 @@ class ANALITZA_EXPORT Cn : public Object
 		static Cn e();
 		static Cn euler();
 	private:
-		double m_value;
+		union { double m_value; ushort m_char; };
 		enum ValueFormat m_format;
 };
 

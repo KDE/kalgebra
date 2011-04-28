@@ -32,6 +32,7 @@
 %token tColon	":"
 %token tAt		"@"
 %token tComment	"//Comment//"
+%token tString	"abc"
 
 
 %left tComa
@@ -211,6 +212,7 @@ Declaration ::= Id tAssig Expression ;       /. case $rule_number: sym(1) = "<de
 
 -- primary
 Id ::=  tId; /. case $rule_number: ./
+String ::=  tString; /. case $rule_number: ./
 Number ::= tVal;
 /.
 case $rule_number:
@@ -219,6 +221,7 @@ case $rule_number:
 ./
 
 Value ::= Number;
+Value ::= String;
 Value ::= Id;
 /.
 case $rule_number:

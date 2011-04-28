@@ -421,15 +421,15 @@ void AnalitzaTest::testCorrection_data()
 			<< "importedRef(list{1,2,3,4,5})";
 	QTest::newRow("map") << script << "list { false, false, false, true, true }";
 	
-	script.clear();
-	script
-			<< "f:=x->list{1+x,2+x,3+x}"
-			<< "fuuu:=x->x+2"
-			<< "imports:=(x,y)->x>y"
-			<< "randomfunc:=(data,inc)->exists(imports(fuuu(use), fuuu(inc)) : use@f(fuuu(data)))"
-			
-			<< "randomfunc(1,5)";
-	QTest::newRow("aaa") << script << "";
+// 	script.clear();
+// 	script
+// 			<< "f:=x->list{1+x,2+x,3+x}"
+// 			<< "fuuu:=x->x+2"
+// 			<< "imports:=(x,y)->x>y"
+// 			<< "randomfunc:=(data,inc)->exists(imports(fuuu(use), fuuu(inc)) : use@f(fuuu(data)))"
+// 			
+// 			<< "randomfunc(1,5)";
+// 	QTest::newRow("aaa") << script << "";
 }
 
 //testCalculate

@@ -30,6 +30,8 @@ class ANALITZA_EXPORT ExpLexer : public AbstractLexer
 		
 		ExpLexer(const QString &source);
 		
+		static QString escape(const QString& str);
+		
 	private:
 		int m_pos;
 		void getToken();

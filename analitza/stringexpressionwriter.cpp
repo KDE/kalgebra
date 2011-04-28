@@ -81,7 +81,14 @@ QString StringExpressionWriter::accept(const Vector* vec)
 
 QString StringExpressionWriter::accept(const List* vec)
 {
-	return QString("list { %1 }").arg(allValues<List::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(", ")));
+	if(!vec->isEmpty() && vec->at(0)->type()==Object::value && static_cast<Cn*>(vec->at(0))->format()==Cn::Char) {
+		QString ret="\"";
+		for(List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd(); it!=itEnd; ++it)
+			ret += static_cast<const Cn*>(*it)->character();
+		ret += "\"";
+		return ret;
+	} else
+		return QString("list { %1 }").arg(allValues<List::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(", ")));
 }
 
 QString StringExpressionWriter::accept(const Cn* var)

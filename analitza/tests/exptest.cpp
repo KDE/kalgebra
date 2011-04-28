@@ -108,6 +108,10 @@ void ExpTest::testSimple_data()
 	QTest::newRow("comment3") << "v//a//[3]" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
 	QTest::newRow("comment4") << "v[3]//a//" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
 	QTest::newRow("comment5") << "v[3]//a\n" << "<math><apply><selector /><cn>3</cn><ci>v</ci></apply></math>";
+	
+	QTest::newRow("string1") << "\"hola\"" << "<math><cs>hola</cs></math>";
+	QTest::newRow("string2") << "\"a<b\"" << "<math><cs>a&lt;b</cs></math>";
+// 	QTest::newRow("string3") << "\"a\\nb\"" << "<math><cs>a\nb</cs></math>";
 }
 
 void ExpTest::testSimple()

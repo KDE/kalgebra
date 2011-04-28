@@ -66,7 +66,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 		} break;
 		case Object::apply: {
 			Apply* c = (Apply*) o;
-			Apply::iterator it = c->firstValue(), first = c->firstValue();
+			Apply::iterator it = c->firstValue()/*, first = c->firstValue()*/;
 			
 			QStringList newScope=scope+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();

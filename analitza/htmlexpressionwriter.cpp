@@ -57,22 +57,19 @@ HtmlExpressionWriter::HtmlExpressionWriter(const Object* o)
 
 QString HtmlExpressionWriter::accept(const Vector* vec)
 {
-	QStringList elements;
-	for(Vector::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
-	{
-		elements += (*it)->visit(this);
-	}
-	return keyword("vector ")+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
+	return keyword("vector ")+oper("{ ")+allValues<Vector::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const List* vec)
 {
-	QStringList elements;
-	for(List::const_iterator it=vec->constBegin(); it!=vec->constEnd(); ++it)
-	{
-		elements += (*it)->visit(this);
-	}
-	return keyword("list ")+oper("{ ")+elements.join(QString(oper(", ")))+oper(" }");
+	if(!vec->isEmpty() && vec->at(0)->type()==Object::value && static_cast<Cn*>(vec->at(0))->format()==Cn::Char) {
+		QString ret="<span class='string'>\"";
+		for(List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd(); it!=itEnd; ++it)
+			ret += static_cast<const Cn*>(*it)->character();
+		ret += "\"</span>";
+		return ret;
+	} else
+		return keyword("list ")+oper("{ ")+allValues<List::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(oper(", ")))+oper(" }");
 }
 
 QString HtmlExpressionWriter::accept(const Cn* var)

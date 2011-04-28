@@ -75,6 +75,7 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 	QColor variable(pal.color(QPalette::Active, QPalette::LinkVisited));
 	QColor comment(pal.color(QPalette::Active, QPalette::Background));
 	QColor id(150,0,50);
+	QColor string(0xbb,0,0);
 	QColor uncorrect(Qt::red);
 	m_editingParameter=0;
 	m_editingName.clear();
@@ -141,6 +142,9 @@ void AlgebraHighlighter::highlightBlock(const QString &text)
 				case ExpressionTable::tId:
 					f=id;
 					m_aName=lex.current.val;
+					break;
+				case ExpressionTable::tString:
+					f=string;
 					break;
 				case ExpressionTable::tComment:
 					f=comment;
