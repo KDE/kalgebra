@@ -27,6 +27,7 @@
 #include "variable.h"
 #include "stringexpressionwriter.h"
 #include "apply.h"
+#include "analitzautils.h"
 
 using namespace Analitza;
 
@@ -63,11 +64,7 @@ QString HtmlExpressionWriter::accept(const Vector* vec)
 QString HtmlExpressionWriter::accept(const List* vec)
 {
 	if(!vec->isEmpty() && vec->at(0)->type()==Object::value && static_cast<Cn*>(vec->at(0))->format()==Cn::Char) {
-		QString ret="<span class='string'>\"";
-		for(List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd(); it!=itEnd; ++it)
-			ret += static_cast<const Cn*>(*it)->character();
-		ret += "\"</span>";
-		return ret;
+		return "<span class='string'>&quot;"+AnalitzaUtils::listToString(vec)+ "&quot;</span>";
 	} else
 		return keyword("list ")+oper("{ ")+allValues<List::const_iterator>(vec->constBegin(), vec->constEnd(), this).join(QString(oper(", ")))+oper(" }");
 }

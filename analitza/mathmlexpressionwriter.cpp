@@ -26,6 +26,7 @@
 #include "variable.h"
 #include "apply.h"
 #include "explexer.h"
+#include "analitzautils.h"
 
 using namespace Analitza;
 
@@ -82,9 +83,7 @@ QString MathMLExpressionWriter::accept(const List* vec)
 	if(vec->size()==0)
 		return "<list />";
 	else if(vec->at(0)->type()==Object::value && static_cast<const Cn*>(vec->at(0))->format()==Cn::Char) {
-		QString ret;
-		for(List::const_iterator it=vec->constBegin(), itEnd=vec->constEnd(); it!=itEnd; ++it)
-			ret += static_cast<const Cn*>(*it)->character();
+		QString ret=AnalitzaUtils::listToString(vec);
 		ret = ExpLexer::escape(ret);
 		ret = "<cs>"+ret+"</cs>";
 		return ret;

@@ -71,6 +71,7 @@ public:
 		}
 		return v;
 	}
+	static List* listFromString(const QString& text);
 	
 	Object* m_tree;
 	QStringList m_err;
@@ -172,6 +173,14 @@ bool Expression::ExpressionPrivate::check(const Apply* c)
 	}
 	
 	return ret;
+}
+
+List* Expression::ExpressionPrivate::listFromString(const QString& text)
+{
+	List* l = new List;
+	for(int i=0; i<text.size(); ++i)
+		l->appendBranch(new Cn(text[i]));
+	return l;
 }
 
 bool Expression::ExpressionPrivate::check(const Container* c)
@@ -376,13 +385,9 @@ Object* Expression::ExpressionPrivate::branch(const QDomElement& elem)
 	Cn *num; Operator *op;
 	Object* ret=0;
 	
-	if(elem.tagName()=="cs") {
-		List* l = new List;
-		QString text=elem.text();
-		for(int i=0; i<text.size(); ++i)
-			l->appendBranch(new Cn(text[i]));
-		ret=l;
-	} else switch(whatType(elem.tagName())) {
+	if(elem.tagName()=="cs")
+		ret=listFromString(elem.text());
+	else switch(whatType(elem.tagName())) {
 		case Object::container: {
 			Container::ContainerType t = Container::toContainerType(elem.tagName());
 			
@@ -542,6 +547,17 @@ Cn Expression::toReal() const
 	}
 }
 
+QString Expression::stringValue() const
+{
+	Object* tree=d->m_tree;
+	if(KDE_ISLIKELY(tree && tree->type()==Object::list))
+		return AnalitzaUtils::listToString(static_cast<const List*>(tree));
+	else {
+		qDebug() << "trying to return not a real value as real:" << (tree ? tree->toString() : "null");
+		return QString();
+	}
+}
+
 bool Expression::isLambda() const
 {
 	if(d->m_tree && d->m_tree->type()==Object::container) {
@@ -688,6 +704,11 @@ void Expression::setTree(Object* o)
 bool Expression::isReal() const
 {
 	return d->m_tree && d->m_tree->type()==Object::value;
+}
+
+Expression Expression::constructString(const QString& str)
+{
+	return Expression(ExpressionPrivate::listFromString(str));
 }
 
 Expression Expression::constructList(const QList< Expression >& exps)

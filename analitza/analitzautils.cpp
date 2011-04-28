@@ -416,4 +416,12 @@ Analitza::Expression variantToExpression(const QVariant& v)
 	return Analitza::Expression();
 }
 
+QString listToString(const List* list)
+{
+	QString ret;
+	for(List::const_iterator it=list->constBegin(), itEnd=list->constEnd(); it!=itEnd; ++it)
+		ret += static_cast<const Cn*>(*it)->character();
+	return ret;
+}
+
 }

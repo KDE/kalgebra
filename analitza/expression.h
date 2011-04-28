@@ -160,6 +160,9 @@ class ANALITZA_EXPORT Expression
 		 */
 		QString toMathMLPresentation() const;
 		
+		/** @returns the contained string value */
+		QString stringValue() const;
+		
 		/**
 		 * Invalidates the data of the expression.
 		 */
@@ -207,9 +210,11 @@ class ANALITZA_EXPORT Expression
 		 */
 		static Expression constructList(const QList<Expression> & exps);
 		
-		
 		/** creates an expression filled with just a custom object */
 		static Expression constructCustomObject(const QVariant& custom, Analitza::Expression::CustomObjectDestructor d);
+		
+		/** creates an expression filled with just a string */
+		static Expression constructString(const QString& str);
 		
 		/** @returns if a non-mathml expression is fully introduced (e.g. has closed all parentheses) */
 		static bool isCompleteExpression(const QString& exp);

@@ -30,6 +30,7 @@ class Container;
 class Variables;
 class Expression;
 class Apply;
+class List;
 }
 
 namespace AnalitzaUtils
@@ -60,6 +61,8 @@ namespace AnalitzaUtils
 	
 	/** Creates an expression out of a QVariant @p v, it will assert if it's not the correct type. */
 	Analitza::Expression ANALITZA_EXPORT variantToExpression(const QVariant& v);
+	
+	QString listToString(const Analitza::List* list);
 }
 
 #endif // ANALITZAUTILS_H
