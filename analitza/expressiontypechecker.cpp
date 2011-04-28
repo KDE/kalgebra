@@ -382,7 +382,6 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 		} else if(c->domain()) {
 			c->domain()->visit(this);
 			
-// 			qDebug() << "fuuuuu" << current;
 			if(current.type()==ExpressionType::Any) {
 				ExpressionType anyItem(ExpressionType::Any, m_stars++);
 				

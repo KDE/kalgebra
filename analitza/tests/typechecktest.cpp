@@ -32,9 +32,6 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	: QObject(parent)
 	, v(new Analitza::Variables)
 {
-	v->modify("true", Expression("1"));
-	v->modify("false", Expression("0"));
-	
 	v->modify("fnum", Expression("x->3"));
 	v->modify("fplus", Expression("x->x+x"));
 	v->modify("tovector", Expression("x->vector{x,x}"));
@@ -125,8 +122,8 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("bounded sum_up") << "n->sum(x : x=n..0)" << "num -> num";
 	QTest::newRow("bounded sum_down") << "n->sum(x : x=0..n)" << "num -> num";
-	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "num";
-	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "num -> num";
+	QTest::newRow("exists") << "exists(l : l@list{true,false,false})" << "bool";
+	QTest::newRow("existslambda") << "x->sum(l : l@list{true,x,false})" << "bool -> bool";
 	
 	QTest::newRow("unknown") << "w" << "a";
 	
