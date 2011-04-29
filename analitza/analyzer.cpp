@@ -888,12 +888,12 @@ Object* Analyzer::sum(const Apply& n)
 
 Object* Analyzer::forall(const Apply& n)
 {
-	return boundedOperation(n, Operator(Operator::_and), new Cn(1.));
+	return boundedOperation(n, Operator(Operator::_and), new Cn(true));
 }
 
 Object* Analyzer::exists(const Apply& n)
 {
-	return boundedOperation(n, Operator(Operator::_or), new Cn(0.));
+	return boundedOperation(n, Operator(Operator::_or), new Cn(false));
 }
 
 Object* Analyzer::func(const Apply& n)
