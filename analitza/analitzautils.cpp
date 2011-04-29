@@ -244,7 +244,7 @@ struct ObjectWalker : public ExpressionWriter
 		else
 			value="symbols";
 		
-		qDebug() << prefix().constData() << "| variable: " << var->name() << var->depth() << "Val:" << value;
+		qDebug() << prefix().constData() << "| variable: " << var->name() << "depth:" << var->depth() << "Val:" << value;
 		return QString();
 	}
 	

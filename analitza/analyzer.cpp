@@ -367,7 +367,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				if(r->domain()) {
 					QScopedPointer<Object> o(r->domain());
 					r->domain()=eval(r->domain(), resolve, unscoped);
-					resolved=r->domain()->type()==Object::list;
+					resolved=r->domain()->type()==Object::list || r->domain()->type()==Object::vector;
 				} else {
 					if(r->dlimit()) {
 						QScopedPointer<Object> o(r->dlimit());
