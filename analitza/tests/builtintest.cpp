@@ -173,6 +173,8 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("ref") << (IN "sum(readint(refint(x)) : x=1..10)") << "55";
 	
 	QTest::newRow("sum") << (IN "sum(x : x@createlist(3))") << "75";
+	
+	QTest::newRow("sum") << (IN "f:=w->sum(x : x@w)" << "f(createlist(3))") << "75";
 }
 
 void BuiltInTest::testCall()

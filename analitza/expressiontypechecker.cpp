@@ -394,10 +394,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				
 				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
 				tt=anyItem;
-			} else {
+			} else if(current.type()==ExpressionType::Vector || current.type()==ExpressionType::List) {
 				tt=current.contained();
 				tt.addAssumptions(current.assumptions());
-			}
+			} else
+				addError(i18n("The domain should be either a vector or a list."));
 			//TODO: should control the many case
 		}
 		

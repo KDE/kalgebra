@@ -223,13 +223,13 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("wrong call") << "(x->x+x)(list{3})";
 	QTest::newRow("wrong call2") << "fplus(list{3})";
 	QTest::newRow("wrong bounds") << "sum(x : x=1..vector{3,3})";
+	QTest::newRow("bounds2") << "sum(x:x@2)";
 	QTest::newRow("number call") << "number(3)";
 	QTest::newRow("wrong param count") << "golambda(2)";
 	QTest::newRow("unresolved operation") << "selector(2,2)";
 	
 	QTest::newRow("charvsreal") << "union(\"lalala\", list{1,2,3})";
 	QTest::newRow("boolvsreal") << "or(true, false)+2";
-// 	QTest::newRow("lambda param count") << "(x->x)(x,x)";
 	
 	//TODO: Add invalid recursive call
 }
