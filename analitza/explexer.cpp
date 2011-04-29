@@ -73,7 +73,7 @@ void ExpLexer::getToken()
 			escaping=a[pos]=='\\';
 		
 		if(pos>=a.size())
-			m_err += i18n("Unexpectendly arrived to the end of the input");
+			m_err += i18n("Unexpectedly arrived to the end of the input");
 		
 		ret.type=ExpressionTable::tString;
 		ret.val="<cs>"+escape(a.mid(posini, pos-posini))+"</cs>";
