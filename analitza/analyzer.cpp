@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2007-2009 by Aleix Pol <aleixpol@kde.org>                          *
+ *  Copyright (C) 2007-2011 by Aleix Pol <aleixpol@kde.org>                          *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -935,11 +935,12 @@ Object* Analyzer::func(const Apply& n)
 		FunctionDefinition* func=m_builtin.function(id);
 		QList<Expression> args;
 		
+// 		qDebug() << "calling..." << id << n.m_params.size() << n.toString();
 		for(int i=1; i<bvarsize+1; i++) {
-	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
+	// 		qDebug() << "cp" << n.m_params[i]->toString();
 			Object* val=calc(n.m_params[i]);
 			args += Expression(val);
-	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
+// 			qDebug() << "parm" << i << n.m_params[i]->toString() << args.last().toString();
 		}
 		Expression exp=(*func)(args);
 		if(exp.isCorrect())
@@ -948,6 +949,7 @@ Object* Analyzer::func(const Apply& n)
 			m_err += exp.error();
 			ret = new Cn;
 		}
+// 		qDebug() << "called" << ret->toString();
 	}
 	
 	return ret;

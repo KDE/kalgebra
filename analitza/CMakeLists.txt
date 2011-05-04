@@ -3,6 +3,7 @@ project(analitza)
 add_subdirectory(tests)
 
 set(analitza_SRCS
+	importqobjectmetatype.cpp
 	builtinmethods.cpp
 	providederivative.cpp
 	abstractexpressiontransformer.cpp

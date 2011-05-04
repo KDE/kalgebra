@@ -111,6 +111,14 @@ class CreateList : public Analitza::FunctionDefinition
 	}
 };
 
+class Wrong : public Analitza::FunctionDefinition
+{
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		return args.first();
+	}
+};
+
 BuiltInTest::BuiltInTest(QObject* parent)
 	: QObject(parent)
 {
@@ -149,6 +157,11 @@ BuiltInTest::BuiltInTest(QObject* parent)
 	createlistType.addParameter(ExpressionType(ExpressionType::Value));
 	createlistType.addParameter(ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Value)));
 	a.builtinMethods()->insertFunction("createlist", createlistType, new CreateList);
+	
+	ExpressionType wrongType(ExpressionType::Lambda);
+	wrongType.addParameter(ExpressionType(ExpressionType::Value));
+	wrongType.addParameter(ExpressionType("Wrong"));
+	a.builtinMethods()->insertFunction("wrong", refintType, new Wrong);
 }
 
 BuiltInTest::~BuiltInTest()
@@ -173,8 +186,11 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("ref") << (IN "sum(readint(refint(x)) : x=1..10)") << "55";
 	
 	QTest::newRow("sum") << (IN "sum(x : x@createlist(3))") << "75";
+	QTest::newRow("sum2") << (IN "f:=w->sum(x : x@w)" << "f(createlist(3))") << "75";
 	
-	QTest::newRow("sum") << (IN "f:=w->sum(x : x@w)" << "f(createlist(3))") << "75";
+	QTest::newRow("error1") << (IN "tires(2)") << "err";
+	QTest::newRow("error2") << (IN "tires(createlist(3))") << "err";
+	QTest::newRow("error3") << (IN "tires(wrong(3))") << "err";
 }
 
 void BuiltInTest::testCall()
@@ -189,9 +205,10 @@ void BuiltInTest::testCall()
 		QVERIFY(ei.isCorrect());
 		
 		a.setExpression(ei);
-// 		qDebug() << "peee" << a.errors() << input;
+		qDebug() << "peee" << a.errors() << input;
 		calc = a.calculate();
 	}
+	
 	if(a.isCorrect())
 		QCOMPARE(calc.toString(), output);
 	else

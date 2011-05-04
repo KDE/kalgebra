@@ -37,6 +37,9 @@ BuiltinMethods::~BuiltinMethods()
 
 void BuiltinMethods::insertFunction(const QString& id, const ExpressionType& type, FunctionDefinition* f)
 {
+	if(m_types.contains(id))
+		qDebug() << "Replacing a builtin function called: " << id;
+	
 	m_types.insert(id, type);
 	m_functions.insert(id, f);
 }
