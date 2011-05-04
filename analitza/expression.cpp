@@ -631,7 +631,7 @@ bool Expression::isList() const
 QList<Expression> Expression::toExpressionList() const
 {
 	bool isvector = isVector();
-	if(!isvector || !isList() || !d->m_tree)
+	if((!isvector && !isList()) || !d->m_tree)
 		return QList<Expression>();
 	
 	QList<Expression> ret;
