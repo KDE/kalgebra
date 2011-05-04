@@ -336,7 +336,7 @@ bool equalTree(const Object * o1, const Object * o2)
 	else if(o1->type()!=o2->type())
 		return false;
 	
-	bool eq;
+	bool eq = false;
 	switch(o2->type()) {
 		case Object::variable:
 			eq = *static_cast<const Ci*>(o1)==*static_cast<const Ci*>(o2);
