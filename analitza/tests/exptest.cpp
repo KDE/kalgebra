@@ -48,7 +48,7 @@ void ExpTest::testSimple_data()
 	
 	QTest::newRow("addition") << "1+2" << "<math><apply><plus /><cn>1</cn><cn>2</cn></apply></math>";
 	QTest::newRow("equality") << "1=2" << "<math><apply><eq /><cn>1</cn><cn>2</cn></apply></math>";
-	QTest::newRow("substraction") << "2-3" << "<math><apply><minus /><cn>2</cn><cn>3</cn></apply></math>";
+	QTest::newRow("subtraction") << "2-3" << "<math><apply><minus /><cn>2</cn><cn>3</cn></apply></math>";
 	QTest::newRow("unary minus alone") << "-3" << "<math><apply><minus /><cn>3</cn></apply></math>";
 	QTest::newRow("x*unary minus") << "x*(-3)" << "<math><apply><times /><ci>x</ci>"
 											  "<apply><minus /><cn>3</cn></apply></apply></math>";

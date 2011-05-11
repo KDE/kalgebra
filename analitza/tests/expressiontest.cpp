@@ -140,7 +140,7 @@ void ExpressionTest::testCopy_data()
 	
 	QTest::newRow("simple addition") << "2+4";
 	QTest::newRow("simple addition with var") << "2+x";
-	QTest::newRow("functin definition") << "f:=x->x+1";
+	QTest::newRow("function definition") << "f:=x->x+1";
 	QTest::newRow("summatory") << "sum(x:x=1..10)";
 	QTest::newRow("conditional") << "piecewise { x ? y, ? 33 }";
 }

@@ -806,7 +806,7 @@ void AnalitzaTest::testOperators()
 	qDeleteAll(values);
 	
 	QList<double> diffValues = QList<double>() << 0. << 0.5 << -0.5 << 1. << -1.;
-	QString bvar="x";
+	QString bvar('x');
 	foreach(double v, diffValues) {
 		foreach(int paramCnt, params) {
 			Analitza::Apply *diffApply=new Analitza::Apply;
