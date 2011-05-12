@@ -568,9 +568,8 @@ void KAlgebra::saveGraph()
 		QString filter = dialog->fileWidget()->currentFilter();
 		QString filename = dialog->selectedFile();
 		
-		Graph2D::Format f=Graph2D::PNG;
-		if(filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg"))
-			f=Graph2D::SVG;
+		bool isSvg = filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg");
+		Graph2D::Format f = isSvg ? Graph2D::PNG : Graph2D::SVG;
 		m_graph2d->toImage(filename, f);
 	}
 	delete dialog;
