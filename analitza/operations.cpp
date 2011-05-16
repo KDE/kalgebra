@@ -29,6 +29,7 @@
 #include "expression.h"
 #include "list.h"
 #include "expressiontypechecker.h"
+#include "customobject.h"
 
 using namespace std;
 using namespace Analitza;
@@ -301,7 +302,9 @@ Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * v
 	if(t1==Object::vector && t2==Object::vector) return reduceVectorVector(op, (Vector*) val1, (Vector*) val2, correct);
 	if(t1==Object::list && t2==Object::list) return reduceListList(op, (List*) val1, (List*) val2, correct);
 	if(t1==Object::value && t2==Object::list) return reduceRealList(op, (Cn*) val1, (List*) val2, correct);
+	if(t1==Object::custom && t2==Object::custom) return reduceCustomCustom(op, (CustomObject*) val1, (CustomObject*) val2, correct);
 	
+	Q_ASSERT(false);
 	correct = i18n("Could not reduce '%1' and '%2'.", val1->toString(), val2->toString());
 	return 0;
 }
@@ -618,4 +621,19 @@ QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
 			break;
 	}
 	return ret;
+}
+
+Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* v1, CustomObject* v2, QString& correct)
+{
+	switch(op) {
+		case Operator::neq:
+			return new Cn(v1->value()!=v2->value());
+		case Operator::eq:
+			return new Cn(v1->value()==v2->value());
+		default:
+			break;
+	}
+	
+	Q_ASSERT(false && "not implemented, please report");
+	return 0;
 }

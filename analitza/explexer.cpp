@@ -89,7 +89,7 @@ void ExpLexer::getToken()
 		m_tokens.append(TOKEN(ExpressionTable::tPow, pos, QString(), 0));
 		ret=TOKEN(ExpressionTable::tVal, oldpos, "<cn>"+super+"</cn>", pos-oldpos);
 	} else if(a[pos].isLetter()) {
-		for(; pos<a.length() && a[pos].isLetterOrNumber() && (a[pos].isLetter() || a[pos].decompositionTag()==QChar::NoDecomposition); pos++){
+		for(; pos<a.length() && (a[pos]=='_' || a[pos].isLetter() || (a[pos].isNumber() && a[pos].decompositionTag()==QChar::NoDecomposition)); pos++){
 			ret.val += a[pos];
 		}
 		ret.type= ExpressionTable::tId;

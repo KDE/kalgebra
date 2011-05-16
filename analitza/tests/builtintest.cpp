@@ -187,10 +187,12 @@ void BuiltInTest::testCall_data()
 	
 	QTest::newRow("sum") << (IN "sum(x : x@createlist(3))") << "75";
 	QTest::newRow("sum2") << (IN "f:=w->sum(x : x@w)" << "f(createlist(3))") << "75";
+	QTest::newRow("comparison") << (IN "vehicle(2)!=vehicle(3)") << "true";
+	QTest::newRow("comparison2") << (IN "vehicle(2)!=vehicle(2)") << "false";
 	
-	QTest::newRow("error1") << (IN "tires(2)") << "err";
-	QTest::newRow("error2") << (IN "tires(createlist(3))") << "err";
-	QTest::newRow("error3") << (IN "tires(wrong(3))") << "err";
+	QTest::newRow("error1") << (IN "tires(2)") << "errcomp";
+	QTest::newRow("error2") << (IN "tires(createlist(3))") << "errcomp";
+	QTest::newRow("error3") << (IN "tires(wrong(3))") << "errcomp";
 }
 
 void BuiltInTest::testCall()
@@ -205,7 +207,12 @@ void BuiltInTest::testCall()
 		QVERIFY(ei.isCorrect());
 		
 		a.setExpression(ei);
-		qDebug() << "peee" << a.errors() << input;
+		if(!a.isCorrect()) {
+			QCOMPARE(QString("errcomp"), output);
+			return;
+		}
+		
+		qDebug() << "peee" << a.type().toString() << input;
 		calc = a.calculate();
 	}
 	
