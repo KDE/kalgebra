@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Console
+Name[bs]=Konzola
 Name[ca]=Consola
 Name[ca@valencia]=Consola
 Name[da]=Konsol

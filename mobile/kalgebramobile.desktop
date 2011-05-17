@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KAlgebra Mobile
 Name[ast]=KAlgebra Mobile
+Name[bs]=KAlgebra Mobile
 Name[ca]=KAlgebra mòbil
 Name[ca@valencia]=KAlgebra mòbil
 Name[da]=KAlgebra Mobile
@@ -24,6 +25,7 @@ Name[x-test]=xxKAlgebra Mobilexx
 Name[zh_TW]=KAlgebra 行動版
 GenericName=Pocket Graph Calculator
 GenericName[ast]=Calculadora gráfica de bolsiellu
+GenericName[bs]=Džepni graf kalkulator
 GenericName[ca]=Calculadora gràfica de butxaca
 GenericName[ca@valencia]=Calculadora gràfica de butxaca
 GenericName[da]=Graflommeregner
@@ -46,6 +48,7 @@ GenericName[uk]=Кишеньковий графічний калькулятор
 GenericName[x-test]=xxPocket Graph Calculatorxx
 GenericName[zh_TW]=行動版圖形計算器
 Comment=Pocket Math Expression Solver and Plotter
+Comment[bs]=Matematski sistem za rješavanje i crtač
 Comment[ca]=Solucionador i representador gràfic de butxaca d'expressions matemàtiques
 Comment[ca@valencia]=Solucionador i representador gràfic de butxaca d'expressions matemàtiques
 Comment[da]=Lommeregner til at løse og plotte matematiske udtryk
