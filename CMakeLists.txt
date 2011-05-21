@@ -4,8 +4,6 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
-find_package(LibKdeEdu REQUIRED)
-
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${CMAKE_SOURCE_DIR}/qtmml)
 
 #Checking whether we can compile calgebra
