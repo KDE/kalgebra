@@ -238,14 +238,14 @@ case $rule_number:
 ./
 
 
-PrimaryExpressionExt ::= PrimaryExpressionExt tLsp Expression tRsp; --vect[2+2]
+SubscriptExpression ::= PrimaryExpressionExt tLsp Expression tRsp; --vect[2+2]
 /.
 case $rule_number:
 	sym(1) = "<apply><selector />"+sym(3)+sym(1)+"</apply>";
 	break;
 ./
 
-PrimaryExpressionExt ::= PrimaryExpression;
+PrimaryExpressionExt ::= PrimaryExpression | SubscriptExpression;
 Expression ::= PrimaryExpressionExt;
 
 -- function
@@ -253,8 +253,8 @@ FunctionId ::= tLpr Expression tRpr; /. case $rule_number: sym(1)=sym(2); break;
 FunctionId ::= Id; /. case $rule_number: sym(1)=funcToTag(sym(1)); break; ./
 
 Expression ::= FunctionId PrimaryExpression ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; ./
-Expression ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
-Expression ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
+PrimaryExpressionExt ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
+PrimaryExpressionExt ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
 
 -- function's body
 FBody ::= Parameters ;

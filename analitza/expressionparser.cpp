@@ -134,122 +134,122 @@ case 12:
 	break;
 
 #line 252 "exp.g"
- case 15: sym(1)=sym(2); break; 
+ case 16: sym(1)=sym(2); break; 
 #line 253 "exp.g"
- case 16: sym(1)=funcToTag(sym(1)); break; 
+ case 17: sym(1)=funcToTag(sym(1)); break; 
 #line 255 "exp.g"
- case 17: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; 
+ case 18: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; 
 #line 256 "exp.g"
- case 18: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; 
+ case 19: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; 
 #line 257 "exp.g"
- case 19: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; 
+ case 20: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; 
 #line 263 "exp.g"
 
-case 21:
+case 22:
 	sym(1).prepend(sym(3));
 	break;
 
 #line 270 "exp.g"
 
-case 22:
+case 23:
 	sym(1)=sym(3)+sym(5)+sym(1);
 	break;
 
 #line 277 "exp.g"
 
-case 23:
+case 24:
 	sym(1)=sym(3)+"<domainofapplication>"+sym(5)+"</domainofapplication>"+sym(1);
 	break;
 
 #line 285 "exp.g"
 
-case 24:
+case 25:
 	sym(1) = '<'+sym(1)+" />";
 	break;
 
 #line 292 "exp.g"
 
-case 25:
+case 26:
 	sym(1) = '<'+sym(1)+'>'+sym(3)+"</"+sym(1)+'>';
 	break;
 
 #line 300 "exp.g"
 
-case 26:
+case 27:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
 	break;
 
 #line 308 "exp.g"
 
-case 27:
+case 28:
 	sym(1) = "<apply><minus />"+sym(2)+"</apply>";
 	break;
 
 #line 315 "exp.g"
 
-case 28:
+case 29:
 	sym(1) = "<otherwise>"+sym(2)+"</otherwise>";
 	break;
 
 #line 322 "exp.g"
- case 29: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
+ case 30: sym(1) = "<apply><plus />"  +sym(1)+sym(3)+"</apply>"; break; 
 #line 323 "exp.g"
- case 30: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 31: sym(1) = "<apply><minus />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 324 "exp.g"
- case 31: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 32: sym(1) = "<apply><times />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 325 "exp.g"
- case 32: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
+ case 33: sym(1) = "<apply><times />" +sym(1)+sym(2)+"</apply>"; break; 
 #line 326 "exp.g"
- case 33: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
+ case 34: sym(1) = "<apply><divide />"+sym(1)+sym(3)+"</apply>"; break; 
 #line 327 "exp.g"
- case 34: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
+ case 35: sym(1) = "<apply><power />" +sym(1)+sym(3)+"</apply>"; break; 
 #line 328 "exp.g"
- case 35: sym(1) = "<apply><eq />"    +sym(1)+sym(3)+"</apply>"; break; 
+ case 36: sym(1) = "<apply><eq />"    +sym(1)+sym(3)+"</apply>"; break; 
 #line 329 "exp.g"
- case 36: sym(1) = "<apply><leq />"   +sym(1)+sym(3)+"</apply>"; break; 
+ case 37: sym(1) = "<apply><leq />"   +sym(1)+sym(3)+"</apply>"; break; 
 #line 330 "exp.g"
- case 37: sym(1) = "<apply><geq />"   +sym(1)+sym(3)+"</apply>"; break; 
+ case 38: sym(1) = "<apply><geq />"   +sym(1)+sym(3)+"</apply>"; break; 
 #line 331 "exp.g"
- case 38: sym(1) = "<apply><lt />"    +sym(1)+sym(3)+"</apply>"; break; 
+ case 39: sym(1) = "<apply><lt />"    +sym(1)+sym(3)+"</apply>"; break; 
 #line 332 "exp.g"
- case 39: sym(1) = "<apply><gt />"    +sym(1)+sym(3)+"</apply>"; break; 
+ case 40: sym(1) = "<apply><gt />"    +sym(1)+sym(3)+"</apply>"; break; 
 #line 333 "exp.g"
- case 40: sym(1) = "<apply><neq />"   +sym(1)+sym(3)+"</apply>"; break; 
+ case 41: sym(1) = "<apply><neq />"   +sym(1)+sym(3)+"</apply>"; break; 
 #line 335 "exp.g"
- case 41: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
+ case 42: sym(1) = "<piece>"+sym(3)+sym(1)+"</piece>"; break; 
 #line 340 "exp.g"
 
-case 43:
+case 44:
 	sym(1) += sym(3);
 	break;
 
 #line 349 "exp.g"
 
-case 45:
+case 46:
 	sym(1) = sym(2);
 	break;
 
 #line 356 "exp.g"
 
-case 46:
+case 47:
 	sym(1) = "<bvar><ci>"+sym(1)+"</ci></bvar>";
 	break;
 
 #line 363 "exp.g"
 
-case 47:
+case 48:
 	sym(1) += sym(3);
 	break;
 
 #line 370 "exp.g"
 
-case 48:
+case 49:
 	sym(1) += sym(3);
 	break;
 
 #line 377 "exp.g"
 
-case 49:
+case 50:
 	sym(1) = "<uplimit>"+sym(3)+"</uplimit><downlimit>"+sym(1)+"</downlimit>";
 	break;
 
