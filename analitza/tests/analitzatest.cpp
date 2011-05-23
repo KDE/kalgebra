@@ -614,7 +614,7 @@ void AnalitzaTest::testEvaluate_data()
 	QTest::newRow("function parameter") << script << "x";
 	
 	script.clear();
-	script << "pu:=n->sum(p**i:i=0..(floor(n)))";
+	script << "pu:=n->sum(p**i:i=0..floor(n))";
 	script << "pu(3)";
 	QTest::newRow("calls") << script << "sum(p^i:i=0..3)";
 }
