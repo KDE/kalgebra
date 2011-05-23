@@ -105,7 +105,7 @@ bool FunctionsModel::addFunction(const Function& func)
 	Q_ASSERT(func.isCorrect());
 	bool exists=false;
 	
-	for (QList<Function>::iterator it = funclist.begin(); !exists && it!=funclist.end(); ++it)
+	for (QList<Function>::const_iterator it = funclist.constBegin(); !exists && it!=funclist.constEnd(); ++it)
 		exists = (it->name() == func.name());
 	
 	if(!exists) {
