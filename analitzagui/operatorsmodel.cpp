@@ -457,6 +457,9 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 		case Operator::_union:
 			s="(union(list { 1, 2, 3 }, list { 4, 5, 6 }))[rem(floor(x), 5)+3]";
 			break;
+		case Operator::_not:
+			s="not(x>0)";
+			break;
 		case Operator::factorial:
 		case Operator::arcsech:
 		case Operator::arcsec:
@@ -496,7 +499,6 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 		//case Object::imaginary:
 		case Operator::floor:
 		case Operator::ceiling:
-		case Operator::_not:
 			s=QString("%1(x)").arg(o.toString());
 			break;
 		case Operator::nOfOps:
