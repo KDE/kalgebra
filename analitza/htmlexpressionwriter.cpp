@@ -121,7 +121,7 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 					Operator child_op = c->firstOperator();
 					
 					if(child_op.operatorType() && 
-							StringExpressionWriter::weight(&op, c->countValues())>=StringExpressionWriter::weight(&child_op, c->countValues()))
+							StringExpressionWriter::weight(&op, c->countValues())>StringExpressionWriter::weight(&child_op, c->countValues()))
 						s=oper('(')+s+oper(')');
 				}
 				ret << s;

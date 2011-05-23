@@ -158,7 +158,7 @@ QString StringExpressionWriter::accept ( const Analitza::Apply* a )
 				if(s_operators.contains(op.operatorType()) && !c->isUnary()) {
 					Operator child_op = c->firstOperator();
 					
-					if(child_op.operatorType() && weight(&op, c->countValues())>=weight(&child_op, c->countValues()))
+					if(child_op.operatorType() && weight(&op, c->countValues())>weight(&child_op, c->countValues()))
 						s=QString("(%1)").arg(s);
 				}
 				ret << s;
