@@ -102,7 +102,7 @@ ServiceTypes=Plasma/Applet
 
 X-KDE-Library=plasma_applet_kalgebra
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
-X-KDE-PluginInfo-Email=aleixpol@gmail.com
+X-KDE-PluginInfo-Email=aleixpol@kde.org
 X-KDE-PluginInfo-Name=kalgebraplasmoid
 X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://edu.kde.org/
