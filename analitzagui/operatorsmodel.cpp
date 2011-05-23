@@ -389,37 +389,46 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			s="max(x, 4)";
 			break;
 		case Operator::gt:
-			s="x>4";
+			s="piecewise { x>4 ? 1, ? 0 }";
 			break;
 		case Operator::lt:
-			s="x<4";
+			s="piecewise { x<4 ? 1, ? 0 }";
 			break;
 		case Operator::eq:
-			s="x=4";
+			s="piecewise { x=4 ? 1, ? 0 }";
 			break;
 		case Operator::approx:
-			s="approx(x, 4)";
+			s="piecewise { approx(x, 4) ? 1, ? 0 }";
 			break;
 		case Operator::neq:
-			s="x!=4";
+			s="piecewise { x!=4 ? 1, ? 0 }";
 			break;
 		case Operator::geq:
-			s="x>=4";
+			s="piecewise { x>=4 ? 1, ? 0 }";
 			break;
 		case Operator::leq:
-			s="x<=4";
+			s="piecewise { x<=4 ? 1, ? 0 }";
 			break;
 		case Operator::_and:
-			s="and(x>-2, x<2)";
+			s="piecewise { and(x>-2, x<2) ? 1, ? 0 }";
 			break;
 		case Operator::_or:
-			s="or(x>2, x>-2)";
+			s="piecewise { or(x>2, x>-2) ? 1, ? 0 }";
 			break;
 		case Operator::_xor:
-			s="xor(x>0, x<3)";
+			s="piecewise { xor(x>0, x<3) ? 1, ? 0 }";
 			break;
 		case Operator::implies:
-			s="implies(x<0, x<3)";
+			s="piecewise { implies(x<0, x<3) ? 1, ? 0 }";
+			break;
+		case Operator::forall:
+			s="piecewise { forall(t:t@list { true, false, false }) ? 1, ? 0 }";
+			break;
+		case Operator::exists:
+			s="piecewise { exists(t:t@list { true, false, false }) ? 1, ? 0 }";
+			break;
+		case Operator::_not:
+			s="piecewise { not(x>0) ? 1, ? 0 }";
 			break;
 		case Operator::gcd:
 			s="gcd(x, 3)";
@@ -439,12 +448,6 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 		case Operator::product:
 			s="product(t+t:t=1..3)";
 			break;
-		case Operator::forall:
-			s="forall(t:t@list { true, false, false })";
-			break;
-		case Operator::exists:
-			s="exists(t:t@list { true, false, false })";
-			break;
 		case Operator::card:
 			s="card(vector { x, 1, 2 })";
 			break;
@@ -456,9 +459,6 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			break;
 		case Operator::_union:
 			s="(union(list { 1, 2, 3 }, list { 4, 5, 6 }))[rem(floor(x), 5)+3]";
-			break;
-		case Operator::_not:
-			s="not(x>0)";
 			break;
 		case Operator::factorial:
 		case Operator::arcsech:
