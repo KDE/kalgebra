@@ -4,6 +4,7 @@ X-KDE-ServiceType=KAlgebra/Script
 X-KDE-Derived=KPluginInfo
 Name=KAlgebra Script
 Name[ast]=KAlgebra Script
+Name[bs]=Kalgebra Skripta
 Name[ca]=KAlgebra script
 Name[ca@valencia]=KAlgebra script
 Name[cs]=Skript KAlgebra

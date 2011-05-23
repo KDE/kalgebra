@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Variables
+Name[bs]=Promjenljive
 Name[ca]=Variables
 Name[ca@valencia]=Variables
 Name[cs]=Proměnné

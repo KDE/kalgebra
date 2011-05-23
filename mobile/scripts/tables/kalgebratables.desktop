@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Value Tables
+Name[bs]=Tabele vrijednosti
 Name[ca]=Taules de valors
 Name[ca@valencia]=Taules de valors
 Name[da]=Værditabeller
