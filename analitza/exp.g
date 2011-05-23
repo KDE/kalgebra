@@ -229,14 +229,7 @@ case $rule_number:
 	break;
 ./
 
-PrimaryExpression ::= Value;
-PrimaryExpressionExt ::= tLpr Expression tRpr;
-/.
-case $rule_number:
-	sym(1) = sym(2);
-	break;
-./
-
+PrimaryExpression ::= Value | BlockExpression;
 
 SubscriptExpression ::= PrimaryExpressionExt tLsp Expression tRsp; --vect[2+2]
 /.
@@ -245,7 +238,14 @@ case $rule_number:
 	break;
 ./
 
-PrimaryExpressionExt ::= PrimaryExpression | SubscriptExpression;
+PrimaryExpressionExt ::= tLpr Expression tRpr;
+/.
+case $rule_number:
+	sym(1) = sym(2);
+	break;
+./
+
+PrimaryExpressionExt ::= PrimaryExpression | SubscriptExpression | FunctionCall;
 Expression ::= PrimaryExpressionExt;
 
 -- function
@@ -253,8 +253,8 @@ FunctionId ::= tLpr Expression tRpr; /. case $rule_number: sym(1)=sym(2); break;
 FunctionId ::= Id; /. case $rule_number: sym(1)=funcToTag(sym(1)); break; ./
 
 Expression ::= FunctionId PrimaryExpression ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; ./
-PrimaryExpressionExt ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
-PrimaryExpressionExt ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
+FunctionCall ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
+FunctionCall ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
 
 -- function's body
 FBody ::= Parameters ;
@@ -281,14 +281,14 @@ case $rule_number:
 ./
 
 -- block
-PrimaryExpression ::= Id tLcb            tRcb ;
+BlockExpression ::= Id tLcb            tRcb ;
 /.
 case $rule_number:
 	sym(1) = '<'+sym(1)+" />";
 	break;
 ./
 
-PrimaryExpression ::= Id tLcb Parameters tRcb ;
+BlockExpression ::= Id tLcb Parameters tRcb ;
 /.
 case $rule_number:
 	sym(1) = '<'+sym(1)+'>'+sym(3)+"</"+sym(1)+'>';

@@ -38,15 +38,15 @@ public:
     tVal = 18,
     uminus_prec = 30,
 
-    ACCEPT_STATE = 91,
-    RULE_COUNT = 52,
-    STATE_COUNT = 96,
+    ACCEPT_STATE = 92,
+    RULE_COUNT = 53,
+    STATE_COUNT = 97,
     TERMINAL_COUNT = 31,
-    NON_TERMINAL_COUNT = 18,
+    NON_TERMINAL_COUNT = 19,
 
-    GOTO_INDEX_OFFSET = 96,
-    GOTO_INFO_OFFSET = 300,
-    GOTO_CHECK_OFFSET = 300
+    GOTO_INDEX_OFFSET = 97,
+    GOTO_INFO_OFFSET = 301,
+    GOTO_CHECK_OFFSET = 301
   };
 
   static const char  *const spell [];
