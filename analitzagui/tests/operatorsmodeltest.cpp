@@ -82,7 +82,13 @@ void OperatorsModelTest::testExamples()
 	if(!a.isCorrect()) qDebug() << example << "2. error" << a.errors();// QVERIFY(a.isCorrect());
 	a.variables()->modify("x", 0.1);
 	a.setExpression(ex);
-    if(!a.isCorrect()) qDebug() << example << "2.1 error" << ex.toString() << a.errors();// QVERIFY(a.isCorrect());
+	if(!a.isCorrect()) qDebug() << example << "2.1 type error" << ex.toString() << a.errors();// QVERIFY(a.isCorrect());
+	
+	bool typecorr = a.type().canReduceTo(Analitza::ExpressionType::Value);
+	if(!typecorr)
+		qDebug() << example << "2.2 error" << ex.toString() << a.type().toString();
+	QVERIFY(typecorr);
+	
 	Expression e = a.calculate();
 	if(!a.isCorrect()) qDebug() << example << "3. error" << a.errors();// QVERIFY(a.isCorrect());
 	if(!e.isCorrect()) qDebug() << example << "4. error" << e.error(); // QVERIFY(e.isCorrect());
