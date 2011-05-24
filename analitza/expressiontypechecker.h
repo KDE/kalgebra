@@ -28,8 +28,6 @@
 
 namespace Analitza
 {
-struct TypePair;
-struct TypeTriplet;
 class Variables;
 class Expression;
 
@@ -61,7 +59,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 	private:
 		ExpressionType solve(const Operator* o, const QList<Object*>& parameters);
 		bool inferType(const ExpressionType& c, const ExpressionType& targetType, QMap<QString, ExpressionType>* assumptions);
-		QList<TypePair> computePairs(const QList<TypePair>& options, const ExpressionType& param);
+		QList<ExpressionType> computePairs(const QList<ExpressionType>& options, const ExpressionType& param);
 		
 		QMap<QString, ExpressionType> typeIs(const Object* o, const ExpressionType& type);
 		template <class T>

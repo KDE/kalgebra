@@ -39,20 +39,6 @@ QDebug operator<<(QDebug dbg, const Analitza::ExpressionType &c)
 	return dbg.space();
 }
 
-QDebug operator<<(QDebug dbg, const Analitza::TypePair &c)
-{
-	dbg.nospace() << "["<< c.param << ":" << c.returnValue <<"]";
-	
-	return dbg.nospace();
-}
-
-QDebug operator<<(QDebug dbg, const Analitza::TypeTriplet &c)
-{
-	dbg.nospace() << "["<< c.param1 << ", " << c.param2 << ":" << c.returnValue <<"]";
-	
-	return dbg.nospace();
-}
-
 QDebug operator<<(QDebug dbg, const QMap<int, Analitza::ExpressionType> &c)
 {
 	dbg.nospace() << "starsMap(";
@@ -119,28 +105,28 @@ bool ExpressionTypeChecker::inferType(const ExpressionType& found, const Express
 	return ret;
 }
 
-QList<TypePair> ExpressionTypeChecker::computePairs(const QList<TypePair>& options, const ExpressionType& param)
+QList<ExpressionType> ExpressionTypeChecker::computePairs(const QList<ExpressionType>& options, const ExpressionType& param)
 {
-	QList<TypePair> ret;
+	QList<ExpressionType> ret;
 	
 	if(param.type()==ExpressionType::Any) {
 		int basestars=m_stars;
-		foreach(const TypePair& opt, options) {
-			TypePair toadd=opt;
+		foreach(const ExpressionType& opt, options) {
+			ExpressionType toadd=opt;
 			m_stars=qMax<int>(m_stars, toadd.increaseStars(basestars));
 			QMap<int, ExpressionType> stars;
 			
 			//We know the parameter is any, we don't have to infer
-			stars=ExpressionType::computeStars(stars, param, toadd.param);
+			stars=ExpressionType::computeStars(stars, param, toadd.parameters().first());
 			
-			toadd.returnValue.addAssumptions(param.assumptions());
-			toadd.returnValue=toadd.returnValue.starsToType(stars);
+			toadd.parameters().last().addAssumptions(param.assumptions());
+			toadd.parameters().last()=toadd.parameters().last().starsToType(stars);
 			ret += toadd;
 		}
 	} else 
-		foreach(const TypePair& opt, options) {
+		foreach(const ExpressionType& opt, options) {
 // 			qDebug() << "TURURURU" << opt.param << param;
-			if(opt.param.canReduceTo(param)) //Infer on param!=param but canReduce?
+			if(opt.parameters().first().canReduceTo(param)) //Infer on param!=param but canReduce?
 				ret += opt;
 		}
 	
@@ -160,9 +146,9 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 		
 		foreach(const ExpressionType& t, types) {
 // 			qDebug() << "leee" << t.assumptions();
-			QList<TypePair> thing=computePairs(Operations::inferUnary(o->operatorType()), t);
-			foreach(const TypePair& opt, thing) {
-				ExpressionType tt(opt.returnValue);
+			QList<ExpressionType> thing=computePairs(Operations::inferUnary(o->operatorType()), t);
+			foreach(const ExpressionType& opt, thing) {
+				ExpressionType tt(opt.parameters().last());
 				tt.addAssumptions(t.assumptions());
 				ret.addAlternative(tt);
 			}
@@ -186,31 +172,31 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 			int starsbase=m_stars;
 // 			static int ind=3;
 // 			qDebug() << qPrintable("+" +QString(ind++, '-')) << o->toString() << firstType << secondType;
-			const QList<TypeTriplet> res=Operations::infer(o->operatorType());
+			const QList<ExpressionType> res=Operations::infer(o->operatorType());
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
 					QMap<int, ExpressionType> _starToType;
 					if(!ExpressionType::matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions()))
 						continue;
-					foreach(const TypeTriplet& _opt, res) {
-						TypeTriplet opt(_opt);
+					foreach(const ExpressionType& _opt, res) {
+						ExpressionType opt(_opt);
 						m_stars=qMax<int>(m_stars, opt.increaseStars(starsbase));
 						
-						Q_ASSERT(!opt.returnValue.isError());
+						Q_ASSERT(!opt.parameters().last().isError());
 						QMap<int, ExpressionType> starToType, starToParam;
 						
 						ExpressionType first =_first .starsToType(_starToType);
 						ExpressionType second=_second.starsToType(_starToType);
 // 						qDebug() << "9999999" << _second.assumptions() << second.assumptions() << starToType;
 						
-						starToType=ExpressionType::computeStars(starToType, first,  opt.param1);
-						starToType=ExpressionType::computeStars(starToType, second, opt.param2);
+						starToType=ExpressionType::computeStars(starToType, first,  opt.parameters()[0]);
+						starToType=ExpressionType::computeStars(starToType, second, opt.parameters()[1]);
 						
 						first =first .starsToType(starToType);
 						second=second.starsToType(starToType);
 						
-						starToParam=ExpressionType::computeStars(starToParam, opt.param1, first);
-						starToParam=ExpressionType::computeStars(starToParam, opt.param2, second);
+						starToParam=ExpressionType::computeStars(starToParam, opt.parameters()[0], first);
+						starToParam=ExpressionType::computeStars(starToParam, opt.parameters()[1], second);
 // 						qDebug() << "XXXXXX" << starToParam;
 // 						qDebug() << "PPPPPP" << opt << first << second << "|||||" << first.assumptions() << second.assumptions();
 						
@@ -226,12 +212,12 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 // 						qDebug() << "fifuuuuuuu" << first << (*(it-1))->toString() << 
 // 													second << (*it)->toString() << assumptions << valid;
 						
-						valid &= first .canReduceTo(opt.param1.starsToType(starToParam));
-						valid &= second.canReduceTo(opt.param2.starsToType(starToParam));
+						valid &= first .canReduceTo(opt.parameters()[0].starsToType(starToParam));
+						valid &= second.canReduceTo(opt.parameters()[1].starsToType(starToParam));
 						
 // 						qDebug() << "POPOPO" << (*(it-1))->toString() << (*(it))->toString() << valid << first << second << starToParam;
 						if(valid) {
-							ExpressionType toadd=opt.returnValue;
+							ExpressionType toadd=opt.parameters().last();
 							toadd.addAssumptions(assumptions);
 							toadd=toadd.starsToType(starToParam);
 							
@@ -505,7 +491,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						if(opt.parameters().size()!=altargs.size()+1) {
 							addError(i18np("Invalid parameter count for '%2'. Should have 1 parameter.",
 														"Invalid parameter count for '%2'. Should have %1 parameters.",
-														opt.parameters().size(), c->toString()));
+														opt.parameters().size()-1, c->toString()));
 							exit=true;
 							break;
 						}

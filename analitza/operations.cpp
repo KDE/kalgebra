@@ -470,10 +470,12 @@ Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1
 	return 0;
 }
 
+ExpressionType TypeTriplet(const ExpressionType& a,const ExpressionType& b,const ExpressionType& c) { return ExpressionType(ExpressionType::Lambda).addParameter(a).addParameter(b).addParameter(c); }
+
 //TODO: test that there's one output per input
-QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
+QList<ExpressionType> Operations::infer(Operator::OperatorType op)
 {
-	QList<TypeTriplet> ret;
+	QList<ExpressionType> ret;
 	
 	switch(op) {
 		case Operator::plus:
@@ -559,9 +561,11 @@ QList<TypeTriplet> Operations::infer(Operator::OperatorType op)
 	return ret;
 }
 
-QList<TypePair> Operations::inferUnary(Operator::OperatorType op)
+#define TypePair(a,b) ExpressionType(ExpressionType::Lambda).addParameter(a).addParameter(b)
+
+QList<ExpressionType> Operations::inferUnary(Operator::OperatorType op)
 {
-	QList<TypePair> ret;
+	QList<ExpressionType> ret;
 	switch(op) {
 		case Operator::minus:
 			ret << TypePair(ExpressionType(ExpressionType::Value), ExpressionType(ExpressionType::Value));

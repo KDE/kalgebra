@@ -31,46 +31,14 @@ class Vector;
 class CustomObject;
 class ExpressionType;
 
-
-struct TypeTriplet
-{
-	ExpressionType param1, param2, returnValue;
-	TypeTriplet(const ExpressionType& param1, const ExpressionType& param2, const ExpressionType& returnValue)
-		: param1(param1), param2(param2), returnValue(returnValue) {}
-		
-	
-	int increaseStars(int stars) {
-		int s1=param1.increaseStars(stars);
-		int s2=param2.increaseStars(stars);
-		int sr=returnValue.increaseStars(stars);
-		
-		return qMax(s1, qMax(s2,sr));
-	}
-};
-
-struct TypePair
-{
-	ExpressionType param, returnValue;
-	
-	TypePair(const ExpressionType& param, const ExpressionType& returnValue)
-		: param(param), returnValue(returnValue) {}
-	
-	int increaseStars(int stars) {
-		int sp=param.increaseStars(stars);
-		int sr=returnValue.increaseStars(stars);
-		
-		return qMax(sp, sr);
-	}
-};
-
 class Operations
 {
 	public:
 		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, QString &correct);
 		static Object* reduceUnary(Operator::OperatorType op, Object* oper, QString &correct);
 		
-		static QList<TypeTriplet> infer(Operator::OperatorType op);
-		static QList<TypePair> inferUnary(Operator::OperatorType op);
+		static QList<ExpressionType> infer(Analitza::Operator::OperatorType op);
+		static QList<ExpressionType> inferUnary(Operator::OperatorType op);
 	private:
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, QString &correct);
 		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper, QString &correct);
