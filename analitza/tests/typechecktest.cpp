@@ -173,6 +173,7 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("arg") << "c->arctan(c[2]/c[1])" << "(<num,-1> -> num) | ([num] -> num)";
 	QTest::newRow("rect") << "v->v[1]*cos(v[2])" << "(<num,-1> -> num) | ([num] -> num)";
+	QTest::newRow("crash") << "u->(v->vector { v[2] })((v->vector { v[2] })(u))" << "<a,-1> -> <a,1>";
 }
 
 void TypeCheckTest::testConstruction()

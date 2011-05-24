@@ -509,8 +509,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 // 							qDebug() << "pepeluis" << c->toString() << c->m_params[i+1]->toString() << altargs[i] << t << valid;
 						}
 						
+						valid &= ExpressionType::matchAssumptions(&starToType, opt.parameters().last().assumptions(), assumptions);
+						
 						if(valid) {
 							ExpressionType t=opt.parameters().last();
+							
 							t.addAssumptions(assumptions);
 							
 							ret.addAlternative(t.starsToType(starToType));
