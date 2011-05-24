@@ -170,6 +170,8 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("filter")  << "(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
 								<< "((a -> bool) -> <a,-1> -> [a]) | ((a -> bool) -> [a] -> [a])";
+	
+	QTest::newRow("arg") << "arg:=c->arctan(c[2]/c[1])" << "(<num,-1> -> num) | ([num] -> num)";
 }
 
 void TypeCheckTest::testConstruction()

@@ -159,9 +159,13 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 // 		const QMap<QString, ExpressionType> assumptions=current.assumptions();
 		
 		foreach(const ExpressionType& t, types) {
+// 			qDebug() << "leee" << t.assumptions();
 			QList<TypePair> thing=computePairs(Operations::inferUnary(o->operatorType()), t);
-			foreach(const TypePair& opt, thing)
-				ret.addAlternative(opt.returnValue);
+			foreach(const TypePair& opt, thing) {
+				ExpressionType tt(opt.returnValue);
+				tt.addAssumptions(t.assumptions());
+				ret.addAlternative(tt);
+			}
 		}
 // 		qDebug() << "bam" << ret ;
 	} else {
@@ -654,7 +658,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			ExpressionType res=ExpressionType(ExpressionType::Many);
 			foreach(const ExpressionType& alt, alts) {
 				QList<ExpressionType> args;
-				
 				foreach(const QString& bvar, c->bvarStrings()) {
 					ExpressionType toadd;
 					if(alt.assumptions().contains(bvar))
@@ -668,7 +671,6 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				args += alt;
 				
 				args=ExpressionType::lambdaFromArgs(args);
-// 				qDebug() << "fifififi" << args;
 				
 				res.addAlternative(ExpressionType(ExpressionType::Many, args));
 			}
