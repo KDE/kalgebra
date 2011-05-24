@@ -326,19 +326,22 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					
 					if(cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
 						int bvarsSize = cbody->bvarCount();
-						int top = m_runStack.size(), aux = m_runStackTop;
-						m_runStack.resize(top+bvarsSize);
+						QVector<Object*> args(bvarsSize);
 						
 						for(int i=0; i<bvarsSize; i++) {
-							Object* val=simp(eval(c->m_params[i+1], resolve, unscoped));
-							m_runStack[top+i]=val;
+							args[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
 						}
-						m_runStackTop = top;
+						int aux = m_runStackTop;
+						m_runStackTop = m_runStack.size();
+						m_runStack.resize(m_runStackTop+bvarsSize);
 						
+						int i=0;
+						foreach(Object* o, args)
+							m_runStack[m_runStackTop+i++]=o;
 						ret=eval(cbody->m_params.last(), resolve, unscoped);
 						
-						qDeleteAll(m_runStack.begin()+top, m_runStack.end());
-						m_runStack.resize(top);
+						qDeleteAll(m_runStack.begin()+m_runStackTop, m_runStack.end());
+						m_runStack.resize(m_runStackTop);
 						m_runStackTop = aux;
 						
 						Expression::computeDepth(ret);
@@ -420,7 +423,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					Apply::iterator it=r->firstValue(), itEnd=r->end();
 					for(; it!=itEnd; ++it) {
 						Object *o=*it;
-						*it= eval(*it, resolve, unscoped);
+						*it= eval(*it, resolve, newUnscoped);
 						delete o;
 					}
 					ret=r;
@@ -1018,11 +1021,13 @@ Object* Analyzer::simp(Object* root)
 				root=simpPiecewise(c);
 				break;
 			case Container::lambda: {
-				int top = m_runStack.size();
-				m_runStack.resize(top+c->bvarCount());
+				int top = m_runStackTop;
+				m_runStackTop = m_runStack.size();
+				m_runStack.resize(m_runStackTop+c->bvarCount());
 				
 				c->m_params.last()=simp(c->m_params.last());
-				m_runStack.resize(top);
+				m_runStack.resize(m_runStackTop);
+				m_runStackTop = top;
 			}	break;
 			default:
 				iterateAndSimp<Container, Container::iterator>(c);
