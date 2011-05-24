@@ -18,10 +18,13 @@
 
 #include <analitza/expression.h>
 #include <analitza/analyzer.h>
+#include <analitza/explexer.h>
+#include <analitza/expressionparser.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <QTime>
+#include <QFile>
 
 using namespace std;
 
@@ -71,6 +74,7 @@ int main(int argc, char *argv[])
 {
 	configuration.calcType=Evaluate;
 	configuration.showElapsedType=false;
+	bool hasImports = false;
 	
 	for(int i=1; i<argc; ++i) {
 		QByteArray arg=argv[i];
@@ -82,15 +86,30 @@ int main(int argc, char *argv[])
 			configuration.calcType=Evaluate;
 		else if(arg=="--help" || arg=="-h") {
 			qDebug() << "This is KAlgebra console version";
-			qDebug() << "Use: " << argv[0] << "[Options]";
+			qDebug() << "Use: " << argv[0] << "[Options] ...";
 			qDebug() << "\t--evaluate:\tTries to simplify symbolically before calculating";
 			qDebug() << "\t--calculate:\tCalculates straight away. If some symbol is missing, it will fail";
 			qDebug() << "\t--print-times:\tOutputs the ellapsed time of an operation";
 			qDebug() << "\t--help:\t\twill print this help";
+			qDebug() << "\t...\t\tfiles that will be executed first";
 			return 0;
 		} else {
-			qDebug() << "Unknown argument: " << argv[i];
-			return 1;
+// 			hasImports = true;
+			QFile f(arg);
+			if(!f.open(QIODevice::ReadOnly)) {
+				qWarning() << "File not found: " << arg;
+				return 1;
+			}
+			
+			QTextStream str(&f);
+			a.importScript(&str);
+			
+			if(!a.isCorrect()) {
+				QStringList errors = a.errors();
+				qDebug() << "Error:";
+				foreach(const QString &err, errors)
+					qDebug() << " -" << qPrintable(err);
+			}
 		}
 	}
 	
@@ -99,7 +118,7 @@ int main(int argc, char *argv[])
 	
 	using_history();
 	QString entry;
-	while(!done) {
+	while(!done && !hasImports) {
 		char * expr;
 		if(inside)
 			expr=readline(insidePrompt);
@@ -115,8 +134,11 @@ int main(int argc, char *argv[])
 			add_history(expr);
 			entry+=QString(expr);
 			
-			if(Expression::isCompleteExpression(entry)) {
-				Expression e(entry, Expression::isMathML(entry));
+			ExpLexer lex(entry);
+			ExpressionParser ex;
+			ex.parse(&lex);
+			if(lex.isCompletelyRead()) {
+				Expression e(ex.mathML(), true);
 // 				qDebug() << entry << e.toString();
 				calculate(e, configuration.calcType);
 				inside =false;
