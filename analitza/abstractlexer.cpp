@@ -43,6 +43,7 @@ QMap<QChar, int> initializeOperators()
 	operators['<']=ExpressionTable::tLt;
 	operators['>']=ExpressionTable::tGt;
 	operators['@']=ExpressionTable::tAt;
+	operators['|']=ExpressionTable::tPipe;
 	return operators;
 }
 

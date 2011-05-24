@@ -112,6 +112,11 @@ void ExpTest::testSimple_data()
 	QTest::newRow("string1") << "\"hola\"" << "<math><cs>hola</cs></math>";
 	QTest::newRow("string2") << "\"a<b\"" << "<math><cs>a&lt;b</cs></math>";
 // 	QTest::newRow("string3") << "\"a\\nb\"" << "<math><cs>a\nb</cs></math>";
+	
+	QTest::newRow("pipe1")  << "3 | sin" << "<math><apply><sin /><cn>3</cn></apply></math>";
+	QTest::newRow("pipe2") << "3|sin|cos|tan" << "<math><apply><tan /><apply><cos /><apply><sin /><cn>3</cn></apply></apply></apply></math>";
+	QTest::newRow("pipe3") << "3|f|g" << "<math><apply><ci type='function'>g</ci><apply><ci type='function'>f</ci><cn>3</cn></apply></apply></math>";
+	QTest::newRow("pipe4") << "3| (x->f(3,x)) |g" << "<math><apply><ci type='function'>g</ci><apply><lambda><bvar><ci>x</ci></bvar><apply><ci type='function'>f</ci><cn>3</cn><ci>x</ci></apply></lambda><cn>3</cn></apply></apply></math>";
 }
 
 void ExpTest::testSimple()

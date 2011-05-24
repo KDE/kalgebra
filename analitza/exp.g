@@ -22,6 +22,7 @@
 %token tRcb		"}"
 %token tLsp		"["
 %token tRsp		"]"
+%token tPipe	"|"
 %token tVal		"value"
 %token tEq		"="
 %token tLt		"<"
@@ -44,6 +45,7 @@
 %left tMul tDiv
 %left uminus_prec
 %left tPow
+%left tPipe
 
 %start Program
 
@@ -255,6 +257,9 @@ FunctionId ::= Id; /. case $rule_number: sym(1)=funcToTag(sym(1)); break; ./
 Expression ::= FunctionId PrimaryExpression ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(2)+"</apply>"; break; ./
 FunctionCall ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+sym(3)+"</apply>"; break; ./
 FunctionCall ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
+
+PipedCall ::= Expression tPipe FunctionId; /. case $rule_number: sym(1) = "<apply>"+sym(3)+sym(1)+"</apply>"; break; ./
+Expression ::= PipedCall;
 
 -- function's body
 FBody ::= Parameters ;
