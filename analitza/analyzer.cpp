@@ -1807,13 +1807,7 @@ bool Analyzer::insertVariable(const QString & name, const Expression & value)
 
 bool Analyzer::insertVariable(const QString & name, const Object * value)
 {
-	bool islambda=false;
-	if(value->isContainer()) {
-		const Container *c=static_cast<const Container*>(value);
-		islambda= c->containerType()==Container::lambda;
-	}
-	
-	bool wrong=!islambda && hasTheVar(QSet<QString>() << name, value);
+	bool wrong=!isLambda(value) && hasTheVar(QSet<QString>() << name, value);
 	if(wrong)
 		m_err << i18nc("By a cycle i mean a variable that depends on itself", "Defined a variable cycle");
 	else
