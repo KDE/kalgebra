@@ -341,7 +341,8 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 			
 			Container::const_iterator it = c->firstValue();
 			for(; it!=c->constEnd(); ++it) {
-				variableDepth(*it, next, newScope);
+				int n=next;
+				variableDepth(*it, n, newScope);
 			}
 		}	break;
 		case Object::none:
