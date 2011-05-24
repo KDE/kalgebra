@@ -652,8 +652,10 @@ bool ExpressionType::matchAssumptions(QMap< int, ExpressionType >* stars,
 		
 		if(itFind!=itFindEnd && *itFind!=*it) {
 // 			qDebug() << "sih" << it.key() << *it << *itFind << (itFind.value()!=it.value());
-			if(itFind->canReduceTo(*it) || it->canReduceTo(*itFind))
+			if(itFind->canReduceTo(*it))
 				*stars=ExpressionType::computeStars(*stars, *itFind, *it);
+			else if(it->canReduceTo(*itFind))
+				*stars=ExpressionType::computeStars(*stars, *it, *itFind);
 			else
 				ret=false;
 // 			qDebug() << "seh" << *stars << ret;
