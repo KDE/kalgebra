@@ -492,6 +492,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				
 				QList<ExpressionType> alts=signature.type()==ExpressionType::Many ? signature.alternatives() : QList<ExpressionType>() << signature;
 				QList<ExpressionType> args=ExpressionType::lambdaFromArgs(exps);
+				bool exit=false;
 				foreach(const ExpressionType& opt, alts) {
 					if(opt.type()!=ExpressionType::Lambda) {
 // 								addError(i18n("We can only call functions."));
@@ -505,6 +506,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							addError(i18np("Invalid parameter count for '%2'. Should have 1 parameter.",
 														"Invalid parameter count for '%2'. Should have %1 parameters.",
 														opt.parameters().size(), c->toString()));
+							exit=true;
 							break;
 						}
 						
@@ -528,6 +530,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							ret.addAlternative(t.starsToType(starToType));
 						}
 					}
+					
+					if(exit)
+						break;
 				}
 					
 				if(ret.alternatives().isEmpty()) {
