@@ -241,7 +241,7 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 	}
 	
 	ExpressionType ret;
-	static int deep=0;
+// 	static int deep=0;
 // 	qDebug() << qPrintable("hohohoho"+QString(++deep, '-')) << *this << info << &info;
 	
 // 	qDebug() << ".........." << *this << info.keys();
@@ -289,7 +289,7 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 	
 // 	qDebug() << qPrintable("fuuuuuuu"+QString(deep, '-')) << info << &info;
 	
-	deep--;
+// 	deep--;
 // 	qDebug() << "MMMMMMMM" << ret << ret.assumptions() << m_assumptions;
 	
 	return ret;
@@ -626,7 +626,7 @@ QMap<int, ExpressionType> ExpressionType::computeStars(const QMap<int, Expressio
 	}
 	
 	for(QMap<int, ExpressionType>::iterator it=ret.begin(), itEnd=ret.end(); it!=itEnd; ++it) {
-		ExpressionType t=it->starsToType(ret);;
+		ExpressionType t=it->starsToType(ret);
 		if(t.type()!=ExpressionType::Any || t.m_any!=it.key()) {
 			*it=t;
 		}
