@@ -110,7 +110,7 @@ void Analyzer::importScript(QTextStream* stream)
 		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
 			setExpression(Expression(line, Expression::isMathML(line)));
 			
-			calculate();
+			evaluate();
 			line.clear();
 			
 			if(!isCorrect())
@@ -321,31 +321,28 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				//it is only meant for operations with scoped variables that _change_ its value => have a value
 				Object* body=simp(eval(c->m_params[0], true, unscoped));
 				
-				if(resolve && body && body->isContainer()) {
-					const Container *cbody = (Container*) body;
+				const Container *cbody = dynamic_cast<Container*>(body);
+				if(resolve && cbody && cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
+					int bvarsSize = cbody->bvarCount();
+					QVector<Object*> args(bvarsSize);
 					
-					if(cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
-						int bvarsSize = cbody->bvarCount();
-						QVector<Object*> args(bvarsSize);
-						
-						for(int i=0; i<bvarsSize; i++) {
-							args[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
-						}
-						int aux = m_runStackTop;
-						m_runStackTop = m_runStack.size();
-						m_runStack.resize(m_runStackTop+bvarsSize);
-						
-						int i=0;
-						foreach(Object* o, args)
-							m_runStack[m_runStackTop+i++]=o;
-						ret=eval(cbody->m_params.last(), resolve, unscoped);
-						
-						qDeleteAll(m_runStack.begin()+m_runStackTop, m_runStack.end());
-						m_runStack.resize(m_runStackTop);
-						m_runStackTop = aux;
-						
-						Expression::computeDepth(ret);
+					for(int i=0; i<bvarsSize; i++) {
+						args[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
 					}
+					int aux = m_runStackTop;
+					m_runStackTop = m_runStack.size();
+					m_runStack.resize(m_runStackTop+bvarsSize);
+					
+					int i=0;
+					foreach(Object* o, args)
+						m_runStack[m_runStackTop+i++]=o;
+					ret=eval(cbody->m_params.last(), resolve, unscoped);
+					
+					qDeleteAll(m_runStack.begin()+m_runStackTop, m_runStack.end());
+					m_runStack.resize(m_runStackTop);
+					m_runStackTop = aux;
+					
+					Expression::computeDepth(ret);
 				}
 				
 				if(!ret)
@@ -1380,27 +1377,29 @@ Object* Analyzer::simpApply(Apply* c)
 			
 		}	break;
 		case Operator::function: {
-			it=c->m_params.begin();
-			Object* function=*it; ++it;
+			Object* function=c->m_params[0];
 			
-			bool allequal=false;
 			Container* cfunc=0;
-			QList<Ci*> bvars;
 			if(function->isContainer()) {
 				cfunc=(Container*) function;
-				allequal=true;
 				Q_ASSERT(cfunc->containerType()==Container::lambda);
-				
-				cfunc=(Container*) function;
-				bvars=cfunc->bvarCi();
 			}
 			
+			bool allvars=true;
+			it=c->m_params.begin()+1;
 			for(int i=0; it!=c->end(); ++it, ++i) {
 				*it = simp(*it);
-				allequal = allequal && equalTree(*it, bvars[i]);
+				allvars &= (*it)->type()==Object::variable;
 			}
 			
-			if(allequal) { //x->x = x
+			if(cfunc && allvars) {
+				QList<Ci*> bvars=cfunc->bvarCi();
+				int i=0;
+				foreach(Ci* var, bvars) {
+					replaceDepth(var->depth(), cfunc->m_params.last(), c->m_params[i+1]);
+					i++;
+				}
+				
 				root=cfunc->m_params.last();
 				cfunc->m_params.last()=0;
 				delete c;
@@ -1882,7 +1881,7 @@ Object* Analyzer::applyAlpha(Object* o, int min)
 			case Object::variable: {
 				Ci *var = static_cast<Ci*>(o);
 				int depth = var->depth();
-// 				qDebug() << "puuuu" << var->name() << depth << printAll(m_runStack);
+// 				qDebug() << "puuuu" << var->name() << depth << '<' << min << printAll(m_runStack);
 				if(depth<min && m_runStackTop+var->depth()<m_runStack.size()) {
 					Object* newvalue = variableValue(var);
 					if(newvalue) {

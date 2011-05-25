@@ -63,6 +63,8 @@ namespace AnalitzaUtils
 	Analitza::Expression ANALITZA_EXPORT variantToExpression(const QVariant& v);
 	
 	QString listToString(const Analitza::List* list);
+	
+	Analitza::Object* replaceDepth(int depth, Analitza::Object* tree, Analitza::Object* towhat);
 }
 
 #endif // ANALITZAUTILS_H

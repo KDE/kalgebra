@@ -424,4 +424,50 @@ QString listToString(const List* list)
 	return ret;
 }
 
+template<class T, class Tit>
+T* replaceDepthTemplate(int depth, T* tree, Object* towhat)
+{
+	Tit it=tree->begin(), itEnd=tree->end();
+	for(; it!=itEnd; ++it)
+		*it=replaceDepth(depth, *it, towhat);
+	return tree;
+}
+
+Object* replaceDepth(int depth, Object* tree, Object* towhat)
+{
+	if(!tree)
+		return 0;
+	
+	Q_ASSERT(depth>=0);
+	switch(tree->type()) {
+		case Object::value:
+		case Object::custom:
+		case Object::none:
+		case Object::oper:
+			break;
+		case Object::list:
+			return replaceDepthTemplate<List, List::iterator>(depth, static_cast<List*>(tree), towhat);
+		case Object::vector:
+			return replaceDepthTemplate<Vector, Vector::iterator>(depth, static_cast<Vector*>(tree), towhat);
+		case Object::container:
+			return replaceDepthTemplate<Container, Container::iterator>(depth, static_cast<Container*>(tree), towhat);
+		case Object::variable: {
+			Ci* var=(Ci*) tree;
+			return var->depth()==depth ? towhat->copy() : tree;
+		}
+		case Object::apply: {
+			Apply* a=static_cast<Apply*>(tree);
+			Apply::iterator it=a->firstValue(), itEnd=a->end();
+			for(; it!=itEnd; ++it)
+				*it=replaceDepth(depth, *it, towhat);
+			
+			a->domain()=replaceDepth(depth, a->domain(), towhat);
+			a->dlimit()=replaceDepth(depth, a->ulimit(), towhat);
+			a->ulimit()=replaceDepth(depth, a->dlimit(), towhat);
+			return a;
+		}	break;
+	}
+	return tree;
+}
+
 }
