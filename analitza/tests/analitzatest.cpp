@@ -570,6 +570,8 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("no var") << "2+2" << "4";
 	QTest::newRow("simple") << "x+x" << "2*x";
 	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
+	QTest::newRow("lambda1") << "(x->x+1)(y)" << "y+1";
+	QTest::newRow("lambda2") << "(x->x+1)(x+1)" << "(x->x+1)(x+1)";
 // 	QTest::newRow("lambda2")<< "(x->x+x)(x)" << "2*x";
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
