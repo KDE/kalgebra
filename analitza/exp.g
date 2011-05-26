@@ -259,7 +259,8 @@ FunctionCall ::= FunctionId tLpr  FBody  tRpr ; /. case $rule_number: sym(1) = "
 FunctionCall ::= FunctionId tLpr         tRpr ; /. case $rule_number: sym(1) = "<apply>"+sym(1)+       "</apply>"; break; ./
 
 PipedCall ::= Expression tPipe FunctionId; /. case $rule_number: sym(1) = "<apply>"+sym(3)+sym(1)+"</apply>"; break; ./
-Expression ::= PipedCall;
+PipedCall ::= Expression tPipe LambdaExpression; /. case $rule_number: sym(1) = "<apply>"+sym(3)+sym(1)+"</apply>"; break; ./
+Expression ::= PipedCall | LambdaExpression;
 
 -- function's body
 FBody ::= Parameters ;
@@ -301,7 +302,7 @@ case $rule_number:
 ./
 
 -- lambda
-Expression ::= BVars tLambda Expression ;
+LambdaExpression ::= BVars tLambda Expression ;
 /.
 case $rule_number:
 	sym(1) = "<lambda>"+sym(1)+sym(3)+"</lambda>";
