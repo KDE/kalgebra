@@ -151,7 +151,7 @@ bool Expression::ExpressionPrivate::check(const Apply* c)
 	Operator::OperatorType opt=op.operatorType();
 	int cnt=c->countValues();
 	
-	if(((op.nparams()<0 && cnt<=1) || (op.nparams()>-1 && cnt!=op.nparams())) && (opt!=Operator::minus || cnt==0))
+	if(((op.nparams()<0 && cnt<=1) || (op.nparams()>-1 && cnt!=op.nparams())) && (opt!=Operator::minus || cnt==0) && opt!=Operator::function)
 	{
 		if(op.nparams()<0)
 			m_err << i18n("<em>%1</em> needs at least 2 parameters", op.toString());

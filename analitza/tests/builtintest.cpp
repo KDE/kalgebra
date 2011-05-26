@@ -119,6 +119,15 @@ class Wrong : public Analitza::FunctionDefinition
 	}
 };
 
+
+class MeaningOfLife : public Analitza::FunctionDefinition
+{
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		return Expression(Cn(42.));
+	}
+};
+
 BuiltInTest::BuiltInTest(QObject* parent)
 	: QObject(parent)
 {
@@ -162,6 +171,10 @@ BuiltInTest::BuiltInTest(QObject* parent)
 	wrongType.addParameter(ExpressionType(ExpressionType::Value));
 	wrongType.addParameter(ExpressionType("Wrong"));
 	a.builtinMethods()->insertFunction("wrong", refintType, new Wrong);
+	
+	ExpressionType justReturn(ExpressionType::Lambda);
+	justReturn.addParameter(ExpressionType(ExpressionType::Value));
+	a.builtinMethods()->insertFunction("lifesmeaning", justReturn, new MeaningOfLife);
 }
 
 BuiltInTest::~BuiltInTest()
@@ -193,6 +206,8 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("error1") << (IN "tires(2)") << "errcomp";
 	QTest::newRow("error2") << (IN "tires(createlist(3))") << "errcomp";
 	QTest::newRow("error3") << (IN "tires(wrong(3))") << "errcomp";
+	
+	QTest::newRow("onearg") << (IN "lifesmeaning()") << "42";
 }
 
 void BuiltInTest::testCall()
