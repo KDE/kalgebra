@@ -110,7 +110,7 @@ void Analyzer::importScript(QTextStream* stream)
 		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
 			setExpression(Expression(line, Expression::isMathML(line)));
 			
-			evaluate();
+			calculate();
 			line.clear();
 			
 			if(!isCorrect())
