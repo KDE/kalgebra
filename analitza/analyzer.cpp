@@ -106,6 +106,7 @@ void Analyzer::importScript(QTextStream* stream)
 	QString line;
 	for(bool done=!stream->atEnd(); done; done=!stream->atEnd() || !line.isEmpty()) {
 		line += stream->readLine(); // line of text excluding '\n'
+		line += '\n'; //make sure the \n is passed so that comments work properly
 		
 		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
 			setExpression(Expression(line, Expression::isMathML(line)));
