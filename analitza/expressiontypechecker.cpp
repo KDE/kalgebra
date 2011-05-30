@@ -158,21 +158,26 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 		Q_ASSERT(parameters.size()>=2);
 // 		QMap<int, ExpressionType> stars;
 		
-		parameters.first()->visit(this);
-		ExpressionType firstType=current;
+		QList<ExpressionType> paramtypes;
+		for(QList<Object*>::const_iterator it=parameters.constBegin(), itEnd=parameters.constEnd(); it!=itEnd; ++it) {
+			(*it)->visit(this);
+			paramtypes += current;
+		}
+		
+		ExpressionType firstType=paramtypes.takeFirst();
 		QList<ExpressionType> firstTypes= firstType.type()==ExpressionType::Many ?  firstType.alternatives() : QList<ExpressionType>() << firstType;
 		
-		QList<Object*>::const_iterator it=parameters.constBegin()+1, itEnd=parameters.constEnd();
-		for(; it!=itEnd; ++it)
+		const QList<ExpressionType> res=Operations::infer(o->operatorType());
+		
+		while(!paramtypes.isEmpty())
 		{
-			(*it)->visit(this);
-			ExpressionType secondType=current;
+			ExpressionType secondType=paramtypes.takeFirst();
 			
 			QList<ExpressionType> secndTypes=secondType.type()==ExpressionType::Many ? secondType.alternatives() : QList<ExpressionType>() << secondType;
 			int starsbase=m_stars;
 // 			static int ind=3;
 // 			qDebug() << qPrintable("+" +QString(ind++, '-')) << o->toString() << firstType << secondType;
-			const QList<ExpressionType> res=Operations::infer(o->operatorType());
+			
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
 					QMap<int, ExpressionType> _starToType;
@@ -525,7 +530,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				}
 					
 				if(ret.alternatives().isEmpty()) {
-// 					qDebug() << "peee" << signature << exps;
+					qDebug() << "peee" << c->toString() << signature << exps;
 					
 					current=ExpressionType(ExpressionType::Error);
 					addError(i18n("Could not call '%1'", c->toString()));
