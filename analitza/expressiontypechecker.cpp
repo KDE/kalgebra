@@ -532,7 +532,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				}
 					
 				if(ret.alternatives().isEmpty()) {
-					qDebug() << "peee" << c->toString() << signature << exps;
+// 					qDebug() << "peee" << c->toString() << signature << exps;
 					
 					current=ExpressionType(ExpressionType::Error);
 					addError(i18n("Could not call '%1'", c->toString()));
