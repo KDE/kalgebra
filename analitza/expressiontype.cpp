@@ -172,6 +172,8 @@ bool ExpressionType::isError() const
 {
     if(m_type==Error)
         return true;
+    else if(m_type==Many && m_contained.isEmpty())
+        return true;
     foreach (const ExpressionType& t, m_contained) {
         if(t.isError())
             return true;

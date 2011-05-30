@@ -138,10 +138,15 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 {
 	Q_ASSERT(o->operatorType()!=Operator::function);
 	
+	QList<ExpressionType> paramtypes;
+	for(QList<Object*>::const_iterator it=parameters.constBegin(), itEnd=parameters.constEnd(); it!=itEnd; ++it) {
+		(*it)->visit(this);
+		paramtypes += current;
+	}
+	
 	ExpressionType ret(ExpressionType::Many);
 	if(parameters.size()==1) {
-		parameters.first()->visit(this);
-		QList<ExpressionType> types=current.type()==ExpressionType::Many ? current.alternatives() : QList<ExpressionType>() << current;
+		QList<ExpressionType> types=paramtypes.first().type()==ExpressionType::Many ? paramtypes.first().alternatives() : QList<ExpressionType>() << paramtypes.first();
 // 		const QMap<QString, ExpressionType> assumptions=current.assumptions();
 		
 		foreach(const ExpressionType& t, types) {
@@ -158,20 +163,14 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 		Q_ASSERT(parameters.size()>=2);
 // 		QMap<int, ExpressionType> stars;
 		
-		QList<ExpressionType> paramtypes;
-		for(QList<Object*>::const_iterator it=parameters.constBegin(), itEnd=parameters.constEnd(); it!=itEnd; ++it) {
-			(*it)->visit(this);
-			paramtypes += current;
-		}
-		
-		ExpressionType firstType=paramtypes.takeFirst();
+		ExpressionType firstType=paramtypes.first();
 		QList<ExpressionType> firstTypes= firstType.type()==ExpressionType::Many ?  firstType.alternatives() : QList<ExpressionType>() << firstType;
 		
 		const QList<ExpressionType> res=Operations::infer(o->operatorType());
 		
-		while(!paramtypes.isEmpty())
+		for(QList<ExpressionType>::const_iterator it=paramtypes.constBegin()+1, itEnd=paramtypes.constEnd(); it!=itEnd; ++it)
 		{
-			ExpressionType secondType=paramtypes.takeFirst();
+			ExpressionType secondType=*it;
 			
 			QList<ExpressionType> secndTypes=secondType.type()==ExpressionType::Many ? secondType.alternatives() : QList<ExpressionType>() << secondType;
 			int starsbase=m_stars;
@@ -181,7 +180,10 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 			foreach(const ExpressionType& _first, firstTypes) {
 				foreach(const ExpressionType& _second, secndTypes) {
 					QMap<int, ExpressionType> _starToType;
-					if(!ExpressionType::matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions()))
+					bool matches=ExpressionType::matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions());
+					//TODO: maybe error here
+					
+					if(!matches)
 						continue;
 					foreach(const ExpressionType& _opt, res) {
 						ExpressionType opt(_opt);
@@ -424,7 +426,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 			assumptions=current.assumptions();
 			
 			QList<ExpressionType> exps;
-			Container::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
+			Apply::const_iterator it=c->firstValue()+1, itEnd=c->constEnd();
 			for(; it!=itEnd; ++it) {
 				(*it)->visit(this);
 				
