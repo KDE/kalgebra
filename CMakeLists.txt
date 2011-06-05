@@ -40,7 +40,7 @@ endif(HAVE_READLINE)
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
 	DEPENDS docbook_analitzacommands
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc/kalgebra/
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc/
 	COMMENT "Generating commands docbook information"
 )
 
