@@ -128,19 +128,19 @@
 	</itemizedlist></sect1>
 	<sect1 id='neq'><title>neq</title><itemizedlist>
 		<listitem><para>Name: neq</para></listitem>
-		<listitem><para>Description: Not equal. neq(a,b)=aâ b</para></listitem>
+		<listitem><para>Description: Not equal. neq(a,b)=a≠b</para></listitem>
 		<listitem><para>Parameters: neq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;piecewise { x!=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='leq'><title>leq</title><itemizedlist>
 		<listitem><para>Name: leq</para></listitem>
-		<listitem><para>Description: Less or equal. leq(a,b)=aâ¤b</para></listitem>
+		<listitem><para>Description: Less or equal. leq(a,b)=a≤b</para></listitem>
 		<listitem><para>Parameters: leq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;piecewise { x&lt;=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='geq'><title>geq</title><itemizedlist>
 		<listitem><para>Name: geq</para></listitem>
-		<listitem><para>Description: Greater or equal. geq(a,b)=aâ¥b</para></listitem>
+		<listitem><para>Description: Greater or equal. geq(a,b)=a≥b</para></listitem>
 		<listitem><para>Parameters: geq(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;piecewise { x&gt;=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
@@ -152,7 +152,7 @@
 	</itemizedlist></sect1>
 	<sect1 id='approx'><title>approx</title><itemizedlist>
 		<listitem><para>Name: approx</para></listitem>
-		<listitem><para>Description: Approximation. approx(a)=aÂ±n</para></listitem>
+		<listitem><para>Description: Approximation. approx(a)=a±n</para></listitem>
 		<listitem><para>Parameters: approx(par1, par2)</para></listitem>
 		<listitem><para>Example: x-&gt;piecewise { approx(x, 4) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
@@ -164,13 +164,13 @@
 	</itemizedlist></sect1>
 	<sect1 id='floor'><title>floor</title><itemizedlist>
 		<listitem><para>Name: floor</para></listitem>
-		<listitem><para>Description: Floor value. floor(n)=ânâ</para></listitem>
+		<listitem><para>Description: Floor value. floor(n)=⌊n⌋</para></listitem>
 		<listitem><para>Parameters: floor(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;floor(x)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='ceiling'><title>ceiling</title><itemizedlist>
 		<listitem><para>Name: ceiling</para></listitem>
-		<listitem><para>Description: Ceil value. ceil(n)=ânâ</para></listitem>
+		<listitem><para>Description: Ceil value. ceil(n)=⌈n⌉</para></listitem>
 		<listitem><para>Parameters: ceiling(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;ceiling(x)</para></listitem>
 	</itemizedlist></sect1>
