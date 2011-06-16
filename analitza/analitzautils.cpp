@@ -60,11 +60,14 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 		case Object::container: {
 			const Container *c = static_cast<const Container*>(o);
 			int skip=c->bvarCount();
-			if(c->containerType()==Container::declare)
+			QStringList newScope=scope+c->bvarStrings();
+			if(c->containerType()==Container::declare) {
+				newScope.append(static_cast<const Ci*>(*c->constBegin())->name());
 				skip++;
+			}
 			
 			for(Container::const_iterator it=c->constBegin()+skip, itEnd=c->constEnd(); it!=itEnd; ++it) {
-				ret += dependencies(*it, scope+c->bvarStrings()).toSet();
+				ret += dependencies(*it, newScope).toSet();
 			}
 		} break;
 		case Object::apply: {
