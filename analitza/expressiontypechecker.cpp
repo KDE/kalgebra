@@ -561,7 +561,7 @@ QString ExpressionTypeChecker::accept(const CustomObject*)
 	return QString();
 }
 
-ExpressionType tellTypeIdentity(const QString& name, const ExpressionType& type)
+ExpressionType ExpressionTypeChecker::tellTypeIdentity(const QString& name, const ExpressionType& type)
 {
 	QList<ExpressionType> opts=type.type()==ExpressionType::Many ? type.alternatives() : QList<ExpressionType>() << type;
 	
@@ -571,6 +571,10 @@ ExpressionType tellTypeIdentity(const QString& name, const ExpressionType& type)
 		if(itFound!=it->assumptions().constEnd()) {
 			QList<ExpressionType> optsFound=itFound->type()==ExpressionType::Many ? itFound->alternatives() : QList<ExpressionType>() << *itFound;
 			for(QList< ExpressionType >::iterator itf=optsFound.begin(), itfEnd=optsFound.end(); itf!=itfEnd; ++itf) {
+				if(!itf->canReduceTo(type)) {
+					addError(i18n("Incoherent type for the variable '%1'", name));
+					break;
+				}
 				QMap<int, ExpressionType> stars;
 				stars=ExpressionType::computeStars(stars, *itf, *it);
 // 				qDebug() << "fiiiiiiiii" << stars  << "\n\t" << *it << "\n\t" << *itFound;

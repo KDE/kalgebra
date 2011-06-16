@@ -234,6 +234,7 @@ void TypeCheckTest::testUncorrection_data()
 	
 	QTest::newRow("charvsreal") << "union(\"lalala\", list{1,2,3})";
 	QTest::newRow("boolvsreal") << "or(true, false)+2";
+	QTest::newRow("argscount") << "f:=(x,y)->f(x)";
 	
 	//TODO: Add invalid recursive call
 }
