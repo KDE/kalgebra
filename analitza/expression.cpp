@@ -808,7 +808,7 @@ static void print_dom(const QDomNode& in, int ind)
 bool Expression::isCompleteExpression(const QString& exp)
 {
 	ExpLexer lex(exp);
-	while(lex.lex()!=0) {}
+	while(lex.lex()>0) {}
 	
 	return lex.isCompletelyRead();
 }
