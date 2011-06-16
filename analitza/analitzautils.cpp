@@ -46,27 +46,30 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 				ret += i->name();
 		}	break;
 		case Object::vector: {
-			Vector *v=(Vector*) o;
+			const Vector *v=(const Vector*) o;
 			for(Vector::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
 				ret += dependencies(*it, scope).toSet();
 			}
 		}	break;
 		case Object::list: {
-			List *v=(List*) o;
+			const List *v=(const List*) o;
 			for(List::const_iterator it=v->constBegin(); it!=v->constEnd(); ++it) {
 				ret += dependencies(*it, scope).toSet();
 			}
 		}	break;
 		case Object::container: {
-			Container *c = (Container*) o;
+			const Container *c = static_cast<const Container*>(o);
+			int skip=c->bvarCount();
+			if(c->containerType()==Container::declare)
+				skip++;
 			
-			for(Container::const_iterator it=c->constBegin()+c->bvarCount(), itEnd=c->constEnd(); it!=itEnd; ++it) {
+			for(Container::const_iterator it=c->constBegin()+skip, itEnd=c->constEnd(); it!=itEnd; ++it) {
 				ret += dependencies(*it, scope+c->bvarStrings()).toSet();
 			}
 		} break;
 		case Object::apply: {
-			Apply* c = (Apply*) o;
-			Apply::iterator it = c->firstValue()/*, first = c->firstValue()*/;
+			const Apply* c = static_cast<const Apply*>(o);
+			Apply::const_iterator it = c->firstValue()/*, first = c->firstValue()*/;
 			
 			QStringList newScope=scope+c->bvarStrings();
 			Object* ul=c->ulimit(), *dl=c->dlimit();
@@ -74,7 +77,7 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			//uplimit and downlimit are in the parent scope
 			if(ul) ret += dependencies(ul, scope).toSet();
 			if(dl) ret += dependencies(dl, scope).toSet();
-			for(; it!=c->m_params.end(); ++it) {
+			for(; it!=c->constEnd(); ++it) {
 				ret += dependencies(*it, newScope).toSet();
 			}
 		}	break;

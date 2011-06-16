@@ -627,7 +627,7 @@ QList<ExpressionType> Operations::inferUnary(Operator::OperatorType op)
 	return ret;
 }
 
-Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* v1, CustomObject* v2, QString& correct)
+Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* v1, CustomObject* v2, QString& )
 {
 	switch(op) {
 		case Operator::neq:
