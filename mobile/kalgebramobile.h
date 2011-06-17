@@ -39,7 +39,6 @@ class KAlgebraMobile : public QMainWindow
 		void displayPlugin(int plugin);
 		FunctionsModel* functionsModel();
 		VariablesModel* variablesModel();
-		QScriptEngine* engine() { return m_engine; }
 	public slots:
 		void selectPlugin();
 		void debug();
@@ -48,7 +47,6 @@ class KAlgebraMobile : public QMainWindow
 	private:
 		void findScripts();
 		
-		QScriptEngine* m_engine;
 		QVector<QWidget*> m_pluginUI;
 		
 		AnalitzaWrapper* m_wrapper;

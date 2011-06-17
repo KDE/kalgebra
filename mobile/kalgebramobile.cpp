@@ -40,13 +40,16 @@
 #include <KStandardDirs>
 #include <QDir>
 #include <QDesktopServices>
-#include <QtGui/QMenuBar>
+#include <QMenuBar>
+#include <QDeclarativeView>
+#include <QDeclarativeEngine>
+#include <qdeclarative.h>
 
 // #define DEBUG
 
-#ifdef DEBUG
-#include <QScriptEngineDebugger>
-#endif
+// #ifdef DEBUG
+// #include <QScriptEngineDebugger>
+// #endif
 
 class PluginsModel : public QStandardItemModel
 {
@@ -56,6 +59,7 @@ class PluginsModel : public QStandardItemModel
 		explicit PluginsModel(QObject* parent = 0)
 			:QStandardItemModel(parent)
 		{
+#if 0
 			KStandardDirs d;
 			QStringList basedirs = d.findDirs("data", "kalgebra/scripts");
 			QStringList foundPlugins;
@@ -96,6 +100,19 @@ class PluginsModel : public QStandardItemModel
 				
 				appendRow(item);
 			}
+#endif
+			QDir pd("/home/kde-devel/kalgebra/mobile/plugins/");
+			QStringList files = pd.entryList(QStringList("*.qml")), foundPlugins;
+			qDebug() << "tururuuuuu" << files;
+			
+			foreach(const QString& plugin, files) {
+				QString scriptPath = pd.absoluteFilePath(plugin);
+				QStandardItem* item = new QStandardItem(plugin);
+				item->setData(scriptPath, PathRole);
+				item->setData(0, PriorityRole);
+				appendRow(item);
+			}
+			setSortRole(PriorityRole);
 			sort(0);
 		}
 		
@@ -108,10 +125,7 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 {
 	setWindowTitle(i18n("KAlgebra Mobile"));
 	
-	m_engine = new QScriptEngine(this);
-	connect(m_engine, SIGNAL(signalHandlerException(QScriptValue)), SLOT(handleException(QScriptValue)));
-	
-	m_wrapper = new AnalitzaWrapper(m_engine, this);
+	m_wrapper = new AnalitzaWrapper(this);
 	
 	menuBar()->addAction(i18n("Select..."), this, SLOT(selectPlugin()));
 	
@@ -122,12 +136,9 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	m_pluginsModel = new PluginsModel(this);
 	m_uiconfig = new UiConfig(this);
 	
-	QScriptValue global = m_engine->globalObject();
-	QScriptValue analitza = m_engine->newQObject(m_wrapper, QScriptEngine::QtOwnership);
-	QScriptValue varsmodel= m_engine->newQObject(m_wrapper->variablesModel(), QScriptEngine::QtOwnership);
-	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
-	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
-	m_engine->setGlobalObject(global);
+	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
+// 	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
+// 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 	
 	setCentralWidget(new QWidget(this));
 	centralWidget()->setLayout(new QVBoxLayout(centralWidget()));
@@ -180,24 +191,15 @@ void KAlgebraMobile::selectPlugin()
 void KAlgebraMobile::displayPlugin(int plugin)
 {
 	Q_ASSERT(plugin < m_pluginUI.size());
+	qDebug() << "laalalala" << plugin;
 	
 	if(!m_pluginUI[plugin]) {
 		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
-		QFile scriptFile(scriptFileName);
-		scriptFile.open(QIODevice::ReadOnly);
-		m_engine->evaluate(scriptFile.readAll(), scriptFileName);
-		scriptFile.close();
-
-		QScriptValue ctor = m_engine->evaluate("KAlgebraExtension");
-		QScriptValue scriptUi = m_engine->newQObject(m_uiconfig, QScriptEngine::ScriptOwnership);
-		QScriptValue calc = ctor.construct(QScriptValueList() << scriptUi);
-		if(m_engine->hasUncaughtException())
-			qDebug() << m_engine->uncaughtException().toString();
+		QDeclarativeView* view = new QDeclarativeView(this);
+		view->engine()->setOutputWarningsToStandardError(true);
+		view->setSource(m_pluginsModel->item(plugin)->data(PluginsModel::PathRole).toUrl());
 		
-		QWidget* ui = qobject_cast<QWidget*>(calc.property("ui").toQObject());
-		Q_ASSERT(ui);
-		ui->setParent(this);
-		m_pluginUI[plugin] = ui;
+		m_pluginUI[plugin] = view;
 	}
 	
 	QLayout* layout = centralWidget()->layout();
