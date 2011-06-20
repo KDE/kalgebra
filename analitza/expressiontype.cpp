@@ -297,6 +297,39 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 	return ret;
 }
 
+bool ExpressionType::canCompareTo(const ExpressionType& type) const
+{
+	bool ret=type==*this;
+	if(!ret && type.m_type==m_type) {
+		switch(m_type) {
+			case ExpressionType::List:
+				ret=contained().canCompareTo(type.contained());
+				break;
+			case ExpressionType::Vector:
+				ret=contained().canCompareTo(type.contained());
+				if(m_size>0 && type.m_size>0)
+					ret = m_size == type.m_size;
+				break;
+			case ExpressionType::Object:
+				ret = m_objectName==type.m_objectName;
+				break;
+			case ExpressionType::Lambda:
+				ret = m_contained.size()==type.m_contained.size();
+				break;
+			case ExpressionType::Error:
+			case ExpressionType::Bool:
+			case ExpressionType::Char:
+			case ExpressionType::Value:
+			case ExpressionType::Any:
+			case ExpressionType::Many: //todo?
+				ret=true;
+				break;
+		}
+	} else if(!ret)
+		ret = (m_type==Any || m_type==Error) || (type.m_type==Any || type.m_type==Error);
+	return ret;
+}
+
 bool ExpressionType::canReduceTo(const ExpressionType& type) const
 {
 	bool ret=false;

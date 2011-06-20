@@ -75,7 +75,15 @@ class ANALITZA_EXPORT ExpressionType
 		/** Returns a new type with the stars solved according t @p info */
 		ExpressionType starsToType(const QMap<int, ExpressionType>& info) const;
 		
+		/** @returns true if the current type can be converted into @p type */
 		bool canReduceTo(const ExpressionType& type) const;
+		
+		/**
+		 * @returns false in case that just by looking at the current type we see that it won't be able to be reduced to @p type.
+		 * Useful to improve error reporting
+		 */
+		bool canCompareTo(const ExpressionType& type) const;
+		
 		int increaseStars(int stars);
 		
 		ExpressionType& simplifyStars();

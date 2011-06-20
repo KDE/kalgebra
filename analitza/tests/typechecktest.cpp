@@ -50,6 +50,7 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("tail", Expression("elems->rtail(elems,1)"));
 	v->modify("foldr", Expression("(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"));
 	v->modify("foldl", Expression("(f,z,xs)->piecewise{ card(xs)<=0? z, ? foldl(f, f(z, xs[1]), tail(xs)) }"));
+	v->modify("twoargs", Expression("(x,y)->sin(x)+y"));
 }
 
 TypeCheckTest::~TypeCheckTest()
@@ -235,6 +236,8 @@ void TypeCheckTest::testUncorrection_data()
 	QTest::newRow("charvsreal") << "union(\"lalala\", list{1,2,3})";
 	QTest::newRow("boolvsreal") << "or(true, false)+2";
 	QTest::newRow("argscount") << "f:=(x,y)->f(x)";
+	
+	QTest::newRow("twoargs") << "(x->x(3))((x,y)->x+y)";
 	
 	//TODO: Add invalid recursive call
 }

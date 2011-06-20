@@ -507,6 +507,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						QMap<QString, ExpressionType> assumptions;
 						QMap<int, ExpressionType> starToType, starToParam;
 						for(int i=0; valid && i<opt.parameters().size()-1; i++) {
+							if(!altargs[i].canCompareTo(opt.parameters()[i])) {
+								valid=false;
+								break;
+							}
+							
 							starToType=ExpressionType::computeStars(starToType, opt.parameters()[i], altargs[i]);
 							
 							ExpressionType t=opt.parameters()[i].starsToType(starToType);
@@ -572,6 +577,7 @@ ExpressionType ExpressionTypeChecker::tellTypeIdentity(const QString& name, cons
 			QList<ExpressionType> optsFound=itFound->type()==ExpressionType::Many ? itFound->alternatives() : QList<ExpressionType>() << *itFound;
 			for(QList< ExpressionType >::iterator itf=optsFound.begin(), itfEnd=optsFound.end(); itf!=itfEnd; ++itf) {
 				if(!itf->canReduceTo(type)) {
+// 					qDebug() << "incoherent type" << *itf << type;
 					addError(i18n("Incoherent type for the variable '%1'", name));
 					break;
 				}
