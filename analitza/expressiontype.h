@@ -91,6 +91,8 @@ class ANALITZA_EXPORT ExpressionType
 		/** when it's a many type, reduce to the one(s) that can be reduced to */
 		void reduce(const ExpressionType& type);
 		
+		QString objectName() const;
+		
 		static ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2);
 		static bool assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap);
 		static void assumptionsUnion(QMap< QString, Analitza::ExpressionType >& data, const QMap< QString, Analitza::ExpressionType >& newmap);

@@ -759,3 +759,8 @@ QList<ExpressionType> ExpressionType::lambdaFromArgs(const QList<ExpressionType>
 	
 	return funcs;
 }
+
+QString ExpressionType::objectName() const
+{
+	return m_objectName;
+}
