@@ -232,7 +232,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
 	connect(m_graph2d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
 	connect(m_graph2d, SIGNAL(viewportChanged(QRectF)), b_viewport, SLOT(setViewport(QRectF)));
-	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(setViewport(QRectF)));
+	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(changeViewport(QRectF)));
 	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
 	
 	////////menu
@@ -645,7 +645,7 @@ void KAlgebra::valueChanged()
 {
 	//FIXME: Should only repaint the affected ones.
 	if(b_funcsModel->rowCount()>0)
-		m_graph2d->update(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
+		m_graph2d->updateFunctions(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
 }
 
 void KAlgebra::varsContextMenu(const QPoint& p)

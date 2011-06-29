@@ -25,6 +25,7 @@ set(analitzagui_SRCS
 
 	functionsview.cpp
 	functionsmodel.cpp
+	functionspainter.cpp
 	functionedit.cpp
 	graph2d.cpp
 )

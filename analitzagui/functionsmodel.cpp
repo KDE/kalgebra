@@ -268,12 +268,6 @@ const Function & FunctionsModel::currentFunction() const
 	return funclist[m_selectedRow];
 }
 
-Function & FunctionsModel::currentFunction()
-{
-	Q_ASSERT(hasSelection());
-	return funclist[m_selectedRow];
-}
-
 QLineF FunctionsModel::slope(const QPointF & dp) const
 {
 	QLineF ret;
@@ -292,7 +286,7 @@ QPair<QPointF, QString> FunctionsModel::calcImage(const QPointF & ndp)
 	ret.first=ndp;
 	
 	if(hasSelection()){
-		Function & f = currentFunction();
+		Function & f = funclist[m_selectedRow];
 		if(f.isShown()) {
 			ret = f.calc(ndp);
 		}

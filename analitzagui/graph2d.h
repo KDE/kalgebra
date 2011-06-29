@@ -32,6 +32,7 @@
 
 #include "analitzagui/function.h"
 #include "analitzaguiexport.h"
+#include "functionspainter.h"
 
 /**
  *	This class lets you create a widget that can draw multiple 2D graphs.
@@ -40,7 +41,7 @@
 
 class FunctionsModel;
 
-class ANALITZAGUI_EXPORT Graph2D : public QWidget
+class ANALITZAGUI_EXPORT Graph2D : public QWidget, public FunctionsPainter
 {
 Q_OBJECT
 Q_PROPERTY(bool squares READ squares WRITE setSquares)
@@ -60,39 +61,10 @@ public:
 	/** Destructor. */
 	~Graph2D();
 	
-	void setModel(FunctionsModel* f);
-	
 	QSize sizeHint() const { return QSize(100, 100); }
 	
 	/** Saves the graphs to a file located at @p path. */
 	bool toImage(const QString& path, Format f);
-	
-	/** Sets whether we will see a grid or only the axes. */
-	void setSquares(bool newSquare) { m_squares=newSquare; forceRepaint(); }
-	
-	/** Returns whether we have chosen to see the grid. */
-	bool squares() const {return m_squares;}
-	
-	/** Makes that no function is selected. */
-	void unselect();
-	
-	/** Returns whether it has a little border frame. */
-	bool isFramed() const { return m_framed; }
-	
-	/** Sets whether it has a little border frame. */
-	void setFramed(bool fr) { m_framed=fr; }
-	
-	/** Returns whether it is a read-only widget. */
-	bool isReadOnly() const { return m_readonly; }
-	
-	/** Sets whether it is a read-only widget. */
-	void setReadOnly(bool ro);
-	
-	/** Sets whether it has to keep the aspect ratio (1:1 grid). */
-	void setKeepAspectRatio(bool ar);
-	
-	/** Sets whether it is keeping the aspect ratio (1:1 grid). */
-	bool keepAspectRatio() const { return m_keepRatio; }
 	
 	/** Returns the viewing port */
 	QRectF definedViewport() const;
@@ -109,12 +81,24 @@ public slots:
 	
 	/** Zooms out */
 	void zoomOut();
+		
+	/** Returns whether it has a little border frame. */
+	bool isFramed() const { return m_framed; }
 	
-	/** Force the functions from @p start to @p end to be recalculated. */
-	void update( const QModelIndex & start, const QModelIndex& end );
+	/** Sets whether it has a little border frame. */
+	void setFramed(bool fr) { m_framed=fr; }
 	
-	/** Sets the graph's viewport to @p v. */
-	void setViewport(const QRectF& v, bool repaint=true);
+	/** Returns whether it is a read-only widget. */
+	bool isReadOnly() const { return m_readonly; }
+	
+	/** Sets whether it is a read-only widget. */
+	void setReadOnly(bool ro);
+	
+private slots:
+	void updateFuncs(const QModelIndex& start, const QModelIndex& end);
+	void addFuncs(const QModelIndex & parent, int start, int end);
+	void removeFuncs(const QModelIndex & parent, int start, int end);
+	void changeViewport(const QRectF& vp) { setViewport(vp); }
 	
 signals:
 	/** Emits a status when it changes. */
@@ -122,31 +106,14 @@ signals:
 	
 	void viewportChanged(const QRectF&);
 	
-private slots:
-	void addFuncs( const QModelIndex & parent, int start, int end);
-	void removeFuncs( const QModelIndex & parent, int start, int end);
-	
 private:
-	static const QColor m_axeColor;
-	static const QColor m_axe2Color;
-	static const QColor m_derivativeColor;
+	virtual void viewportChanged();
 	
 	//painting
-	FunctionsModel* m_model;
 	QPixmap buffer;
 	bool valid;
 	QLabel *micepos;
 	QPointF mark;
-	void drawAxes(QPainter*, Function::Axe a);
-	void drawPolarAxes(QPainter*);
-	void drawCartesianAxes(QPainter*);
-	QPointF toWidget(const QPointF &) const;
-	QPointF fromWidget(const QPoint& p) const;
-	QPointF toViewport(const QPoint& mv) const;
-	QPointF calcImage(const QPointF& ndp) const;
-	QLineF slope(const QPointF& dp) const;
-	
-	QLineF toWidget(const QLineF &) const;
 	
 	//events
 	void paintEvent( QPaintEvent * );
@@ -160,21 +127,14 @@ private:
 	QPoint press; QPoint last;
 	
 	//presentation
-	bool m_squares;
-	bool m_keepRatio;
-	double rang_x, rang_y;
-    QPointF ant;
-    QRectF viewport;
-    QRectF userViewport;
+	QPointF ant;
 	QRectF defViewport;
 	void drawFunctions(QPaintDevice*);
-	void updateScale(bool repaint=true);
 		
 	void sendStatus(const QString& msg) { emit status(msg); }
 	bool m_framed;
 	bool m_readonly;
 	QString m_posText;
-	static QRect toBiggerRect(const QRectF&);
 };
 
 #endif

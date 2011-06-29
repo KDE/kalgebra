@@ -89,6 +89,9 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		/** Returns the id for the next function that's not used by any other, starting by f */
 		QString freeId();
 		
+		QPair<QPointF, QString> calcImage(const QPointF& dp);
+		QLineF slope(const QPointF& dp) const;
+		
 	public slots:
 		void setSelected(const QModelIndex& idx);
 		
@@ -106,10 +109,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		void functionRemoved(const QString& name);
 		
 	private:
-		Function& currentFunction();
-		
-		QLineF slope(const QPointF& dp) const;
-		QPair<QPointF, QString> calcImage(const QPointF& dp);
+// 		Function& currentFunction();
 		
 		QList<Function> funclist;
 		int m_selectedRow;
