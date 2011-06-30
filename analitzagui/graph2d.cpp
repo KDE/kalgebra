@@ -259,7 +259,6 @@ void Graph2D::resizeEvent(QResizeEvent *)
 {
 	buffer=QPixmap(size());
 	setPaintedSize(size());
-	updateScale(true);
 }
 
 bool Graph2D::toImage(const QString &path, Format f)

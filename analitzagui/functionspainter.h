@@ -28,7 +28,7 @@ class FunctionsModel;
 class ANALITZAGUI_EXPORT FunctionsPainter
 {
 	public:
-		FunctionsPainter(FunctionsModel* model, const QSize& size);
+		FunctionsPainter(FunctionsModel* model, const QSizeF& size);
 		virtual ~FunctionsPainter();
 		
 		virtual void drawFunctions(QPaintDevice *qpd);
@@ -72,7 +72,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		QLineF slope(const QPointF& dp) const;
 		
 		QLineF toWidget(const QLineF &) const;
-		void setPaintedSize(const QSize& size) { m_size=size; }
+		void setPaintedSize(const QSize& size);
 
 	private:
 		void drawAxes(QPainter *f, Function::Axe a);
@@ -84,7 +84,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		bool m_keepRatio;
 		QRectF viewport;
 		QRectF userViewport;
-		QSize m_size;
+		QSizeF m_size;
 		FunctionsModel* m_model;
 		
 		static const QColor m_axeColor;

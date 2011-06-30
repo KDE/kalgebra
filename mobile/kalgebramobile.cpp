@@ -44,6 +44,7 @@
 #include <QDeclarativeView>
 #include <QDeclarativeEngine>
 #include <qdeclarative.h>
+#include "graph2dmobile.h"
 
 // #define DEBUG
 
@@ -134,9 +135,11 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	menuBar()->addAction(KIcon("debug-run"), i18n("Debug"), this, SLOT(debug()));
 #endif
 	m_pluginsModel = new PluginsModel(this);
-	m_uiconfig = new UiConfig(this);
+// 	m_uiconfig = new UiConfig(this);
 	
 	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
+	qmlRegisterType<FunctionsModel>("org.kde.analitza", 1, 0, "FunctionsModel");
+	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2D");
 // 	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 	

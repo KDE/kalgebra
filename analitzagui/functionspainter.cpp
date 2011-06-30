@@ -39,7 +39,7 @@ QColor const FunctionsPainter::m_axeColor(100,100,255);
 QColor const FunctionsPainter::m_axe2Color(235,235,235);
 QColor const FunctionsPainter::m_derivativeColor(90,90,160);
 
-FunctionsPainter::FunctionsPainter(FunctionsModel* model, const QSize& size)
+FunctionsPainter::FunctionsPainter(FunctionsModel* model, const QSizeF& size)
 	: m_squares(true), m_keepRatio(true), m_size(size), m_model(model)
 {}
 
@@ -316,7 +316,7 @@ void FunctionsPainter::updateScale(bool repaint)
 	}
 	
 	if(repaint) {
-		if(m_model->rowCount())
+		if(m_model && m_model->rowCount())
 			updateFunctions(m_model->index(0,0), m_model->index(m_model->rowCount()-1,0));
 		forceRepaint();
 	}
@@ -379,4 +379,10 @@ void FunctionsPainter::setModel(FunctionsModel* f)
 {
 	m_model=f;
 	forceRepaint();
+}
+
+void FunctionsPainter::setPaintedSize(const QSize& size)
+{
+	m_size=size;
+	updateScale(true);
 }
