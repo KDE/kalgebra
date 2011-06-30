@@ -28,6 +28,7 @@
 class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 {
 	Q_OBJECT
+	Q_PROPERTY(uint resolution READ resolution WRITE setResolution);
 	public:
 		enum FunctionsModelRoles { Selection=Qt::UserRole+1, Shown=Qt::UserRole+2 };
 		typedef QList<Function>::const_iterator const_iterator;
@@ -66,6 +67,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		Function* editFunction(int num);
 		
 		void setResolution(uint res);
+		uint resolution() const { return m_resolution; }
 		
 		void unselect();
 		
@@ -109,7 +111,8 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		void functionRemoved(const QString& name);
 		
 	private:
-// 		Function& currentFunction();
+		QList<Function>::const_iterator findFunction(const QString& id) const;
+		QList<Function>::iterator findFunction(const QString& id);
 		
 		QList<Function> funclist;
 		int m_selectedRow;

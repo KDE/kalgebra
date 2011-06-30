@@ -12,13 +12,14 @@ Rectangle
 		height:parent.height-input.height
 		width: parent.width
 		squares: true
-		model: model
+		model: app.functionsModel()
 		
 		anchors.top: parent.top;
 	}
 	
-	FunctionsModel {
-		id: model
+	function addFunc() {
+		app.addFunction(input.text)
+		console.log("lalala "+input.text)
 	}
 	
 	ExpressionInput {
@@ -26,11 +27,24 @@ Rectangle
 		text: "sin x"
 		
 		Keys.onReturnPressed: {
-			
+			addFunc()
 		}
 		
 		anchors.top: view.bottom
 // 		anchors.bottom: parent.bottom
+	}
+	
+	Button {
+		id: exec
+		text: "Add"
+		
+		height: 80; width: 80
+		anchors.bottom: parent.bottom
+		anchors.right: parent.right
+		
+		onClicked: {
+			addFunc()
+		}
 	}
 	
 // 	Rectangle { color: "red"; anchors.fill: parent}

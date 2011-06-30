@@ -45,6 +45,7 @@
 #include <QDeclarativeEngine>
 #include <qdeclarative.h>
 #include "graph2dmobile.h"
+#include <qdeclarativecontext.h>
 
 // #define DEBUG
 
@@ -140,7 +141,6 @@ KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
 	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
 	qmlRegisterType<FunctionsModel>("org.kde.analitza", 1, 0, "FunctionsModel");
 	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2D");
-// 	global.setProperty("Analitza", analitza, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 	
 	setCentralWidget(new QWidget(this));
@@ -201,6 +201,7 @@ void KAlgebraMobile::displayPlugin(int plugin)
 		QDeclarativeView* view = new QDeclarativeView(this);
 		view->setResizeMode(QDeclarativeView::SizeViewToRootObject);
 		view->engine()->setOutputWarningsToStandardError(true);
+		view->engine()->rootContext()->setContextProperty("app", this);
 		view->setSource(m_pluginsModel->item(plugin)->data(PluginsModel::PathRole).toUrl());
 		
 		m_pluginUI[plugin] = view;
@@ -224,8 +225,10 @@ void KAlgebraMobile::handleException(const QScriptValue& exception)
 
 FunctionsModel* KAlgebraMobile::functionsModel()
 {
-	if(!m_functionsModel)
+	if(!m_functionsModel) {
 		m_functionsModel = new FunctionsModel(this);
+		m_functionsModel->setResolution(1000);
+	}
 	
 	return m_functionsModel;
 }
@@ -233,4 +236,27 @@ FunctionsModel* KAlgebraMobile::functionsModel()
 VariablesModel* KAlgebraMobile::variablesModel()
 {
 	return m_wrapper->variablesModel();
+}
+
+QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
+
+QStringList KAlgebraMobile::addFunction(const QString& expression, const QString& name, const QColor& color, double up, double down)
+{
+	FunctionsModel* model=functionsModel();
+	
+	Analitza::Expression e(expression, Analitza::Expression::isMathML(expression));
+	QString fname = name.isEmpty() ? model->freeId() : name;
+	QColor fcolor = color.isValid() ? color : randomFunctionColor();
+	
+	QStringList err;
+	Function f(fname, e, variablesModel()->variables(), fcolor, up,down);
+	
+	if(f.isCorrect()) {
+		bool b = model->addFunction(f);
+		Q_ASSERT(b);
+	} else
+		err = f.errors();
+	
+	qDebug() << "aaaaaaadd" << fname << expression << err;
+	return err;
 }

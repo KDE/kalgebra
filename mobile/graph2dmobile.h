@@ -36,11 +36,18 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		
 		virtual void forceRepaint();
 		virtual void viewportChanged() {}
+		virtual void modelChanged();
 		
 		virtual void paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* w);
 		
+	private slots:
+		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
+		void addFuncs(const QModelIndex& parent, int start, int end);
+		void removeFuncs(const QModelIndex& parent, int start, int end);
 		
 	private:
+		bool m_dirty;
+		
 		QPixmap m_buffer;
 		QRectF defViewport;
 		void resetViewport();

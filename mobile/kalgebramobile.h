@@ -37,9 +37,13 @@ class KAlgebraMobile : public QMainWindow
 		explicit KAlgebraMobile(QWidget* parent = 0, Qt::WindowFlags flags = 0);
 		
 		void displayPlugin(int plugin);
+	
+	public slots:
 		FunctionsModel* functionsModel();
 		VariablesModel* variablesModel();
-	public slots:
+		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
+		
+	private slots:
 		void selectPlugin();
 		void debug();
 		void handleException(const QScriptValue& exception);

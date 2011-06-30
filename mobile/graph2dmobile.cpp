@@ -20,9 +20,11 @@
 #include <QPainter>
 #include <qstyleoption.h>
 #include <KIcon>
+#include <analitzagui/functionsmodel.h>
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 	: QDeclarativeItem(parent), FunctionsPainter(0, boundingRect().size())
+	, m_dirty(true)
 {
 	setSize(QSizeF(100,100));
 	setFlag(QGraphicsItem::ItemHasNoContents, false);
@@ -33,7 +35,7 @@ Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 
 void Graph2DMobile::paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* )
 {
-	qDebug() << "hellooo" << boundingRect();
+// 	qDebug() << "hellooo" << boundingRect();
 	if(boundingRect().size().isEmpty())
 		return;
 	
@@ -44,20 +46,18 @@ void Graph2DMobile::paint(QPainter* p, const QStyleOptionGraphicsItem* options, 
 	
 	Q_ASSERT(!m_buffer.isNull());
 	
-	m_buffer.fill(options->palette.color(QPalette::Active, QPalette::Base));
-	drawFunctions(&m_buffer);
+	m_buffer.fill(Qt::transparent);
+	if(m_dirty) {
+		drawFunctions(&m_buffer);
+		m_dirty=false;
+	}
 	
-// 	p->begin();
-// 	p->setPen(Qt::red);
-// 	p->setBrush(Qt::blue);
-// 	p->drawPixmap(QPoint(-5,-5), KIcon("kalgebra").pixmap(boundingRect().size().toSize()));
 	p->drawPixmap(QPoint(0,0), m_buffer);
-	p->drawRect(0,0, m_buffer.width(), m_buffer.height());
-// 	p->end();
 }
 
 void Graph2DMobile::forceRepaint()
 {
+	m_dirty=true;
 	update();
 }
 
@@ -65,3 +65,18 @@ void Graph2DMobile::resetViewport()
 {
 	setViewport(defViewport);
 }
+
+void Graph2DMobile::modelChanged()
+{
+	connect(model(), SIGNAL(dataChanged( const QModelIndex&, const QModelIndex& )),
+		this, SLOT(updateFuncs(const QModelIndex&, const QModelIndex)));
+	connect(model(), SIGNAL( rowsInserted ( const QModelIndex &, int, int ) ),
+		this, SLOT(addFuncs(const QModelIndex&, int, int)));
+	connect(model(), SIGNAL( rowsRemoved ( const QModelIndex &, int, int ) ),
+		this, SLOT(removeFuncs(const QModelIndex&, int, int)));
+}
+
+void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFunctions(model()->index(start,0), model()->index(end,0)); forceRepaint(); }
+
+void Graph2DMobile::removeFuncs(const QModelIndex&, int, int) { forceRepaint(); }
+void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(start, end); }

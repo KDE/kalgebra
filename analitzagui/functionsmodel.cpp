@@ -103,10 +103,9 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 bool FunctionsModel::addFunction(const Function& func)
 {
 	Q_ASSERT(func.isCorrect());
-	bool exists=false;
 	
-	for (QList<Function>::const_iterator it = funclist.constBegin(); !exists && it!=funclist.constEnd(); ++it)
-		exists = (it->name() == func.name());
+	QList<Function>::const_iterator it=findFunction(func.name());
+	bool exists=it!=funclist.constEnd();
 	
 	if(!exists) {
 		beginInsertRows (QModelIndex(), rowCount(), rowCount());
@@ -119,7 +118,7 @@ bool FunctionsModel::addFunction(const Function& func)
 		emit functionModified(func.name(), func.expression());
 	}
 	
-	return exists;
+	return !exists;
 }
 
 bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
@@ -227,17 +226,18 @@ bool FunctionsModel::editFunction(const QString& toChange, const Function& func)
 {
 	bool exist=false;
 	
-	int i=0;
-	for (QList<Function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it, ++i ) {
-		if(it->name() == toChange) {
-			exist=true;
-			*it = func;
-			it->setName(toChange);
-			it->setResolution(m_resolution);
-			QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
-			emit dataChanged(idx, idxEnd);
-			emit functionModified(toChange, func.expression());
-		}
+	QList<Function>::iterator it=findFunction(toChange);
+	if(it!=funclist.end()) {
+		exist=true;
+		*it = func;
+		it->setName(toChange);
+		it->setResolution(m_resolution);
+		
+		int i = funclist.indexOf(*it);
+		
+		QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
+		emit dataChanged(idx, idxEnd);
+		emit functionModified(toChange, func.expression());
 	}
 	
 	return exist;
@@ -321,6 +321,24 @@ void FunctionsModel::setResolution(uint res)
 QString FunctionsModel::freeId()
 {
 	return QString("f%1").arg(m_fcount++);
+}
+
+QList<Function>::const_iterator FunctionsModel::findFunction(const QString& id) const
+{
+	for (QList<Function>::const_iterator it = funclist.constBegin(); it!=funclist.constEnd(); ++it)
+		if(it->name() == id)
+			return it;
+	
+	return funclist.constEnd();
+}
+
+QList<Function>::iterator FunctionsModel::findFunction(const QString& id)
+{
+	for (QList<Function>::iterator it = funclist.begin(); it!=funclist.end(); ++it)
+		if(it->name() == id)
+			return it;
+	
+	return funclist.end();
 }
 
 #include "functionsmodel.moc"

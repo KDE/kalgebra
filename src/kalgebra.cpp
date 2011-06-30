@@ -102,6 +102,8 @@ class Add3DOption : public InlineOptions
 };
 #endif
 
+QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
+
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
 	resize(900, 500);
@@ -384,7 +386,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
+	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(randomFunctionColor()), 6, 0);
 	b_funcsModel->addFunction(f);
 	
 	m_tabs->setCurrentIndex(1);
@@ -423,7 +425,7 @@ void KAlgebra::functools(int i)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
 		b_funced->setName(b_funcsModel->freeId());
-		b_funced->setColor(QColor::fromHsv(qrand()%255, 255, 255));
+		b_funced->setColor(randomFunctionColor());
 		b_funced->setEditing(false);
 		b_funced->setFocus();
 	}

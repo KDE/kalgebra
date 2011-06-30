@@ -37,36 +37,34 @@ Function::Function(const QString &name, const Analitza::Expression& newFunc, Ana
 				   const QPen& pen, double uplimit, double downlimit)
 	: m_function(0), m_expression(newFunc), m_show(true), m_pen(pen), m_name(name)
 {
-	if(newFunc.isCorrect()) {
-		Analitza::Analyzer a(v);
-		a.setExpression(newFunc);
-		
-		m_expression=a.dependenciesToLambda();
-        a.setExpression(m_expression);
-		
-		QStringList bvars=m_expression.bvarList();
-		
-		//TODO: turn into assertion
-		if(!FunctionFactory::self()->contains(bvars))                                        
-			m_err << i18n("Function type not recognized");
-		else if(!a.isCorrect())
-			m_err << a.errors();
-		else {
-			bool correct=true;
-			ExpressionType expected=FunctionFactory::self()->type(bvars);
-			ExpressionType actual=a.type();
-			
-			correct &= actual.canReduceTo(expected);
-			
-			if(correct) {
-				m_function=FunctionFactory::self()->item(bvars, m_expression, v);
-				if(downlimit!=uplimit)
-					m_function->setLimits(downlimit, uplimit);
-			} else
-				m_err << i18n("Function type not correct for functions depending on %1", bvars.join(i18n(", ")));
-		}
-	} else {
+	if(!newFunc.isCorrect()) {
 		m_err << i18n("The expression is not correct");
+		return;
+	}
+	
+	Analitza::Analyzer a(v);
+	a.setExpression(newFunc);
+	
+	m_expression=a.dependenciesToLambda();
+	a.setExpression(m_expression);
+	
+	QStringList bvars=m_expression.bvarList();
+	
+	//TODO: turn into assertion
+	if(!FunctionFactory::self()->contains(bvars))                                        
+		m_err << i18n("Function type not recognized");
+	else if(!a.isCorrect())
+		m_err << a.errors();
+	else {
+		ExpressionType expected=FunctionFactory::self()->type(bvars);
+		ExpressionType actual=a.type();
+		
+		if(actual.canReduceTo(expected)) {
+			m_function=FunctionFactory::self()->item(bvars, m_expression, v);
+			if(downlimit!=uplimit)
+				m_function->setLimits(downlimit, uplimit);
+		} else
+			m_err << i18n("Function type not correct for functions depending on %1", bvars.join(i18n(", ")));
 	}
 }
 

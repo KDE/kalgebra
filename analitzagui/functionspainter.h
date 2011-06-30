@@ -34,6 +34,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		virtual void drawFunctions(QPaintDevice *qpd);
 		virtual void forceRepaint() = 0;
 		virtual void viewportChanged() = 0;
+		virtual void modelChanged() {}
 		
 		/** Sets whether we will see a grid or only the axes. */
 		void setSquares(bool newSquare) { m_squares=newSquare; forceRepaint(); }
@@ -82,6 +83,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		double rang_x, rang_y;
 		bool m_squares;
 		bool m_keepRatio;
+		bool m_dirty;
 		QRectF viewport;
 		QRectF userViewport;
 		QSizeF m_size;

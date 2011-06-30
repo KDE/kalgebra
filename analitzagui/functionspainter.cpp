@@ -181,6 +181,7 @@ void FunctionsPainter::drawFunctions(QPaintDevice *qpd)
 	int k=0;
 	FunctionsModel::const_iterator it=m_model->constBegin(), itEnd=m_model->constEnd();
 	for (; it!=itEnd; ++it, ++k ) {
+		qDebug() << "biiiiiiiiiiiiii" << it->name();
 		if(!it->isShown())
 			continue;
 		pfunc.setColor(it->color());
@@ -378,6 +379,7 @@ void FunctionsPainter::setKeepAspectRatio(bool ar)
 void FunctionsPainter::setModel(FunctionsModel* f)
 {
 	m_model=f;
+	modelChanged();
 	forceRepaint();
 }
 
