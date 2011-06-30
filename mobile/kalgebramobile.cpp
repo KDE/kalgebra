@@ -199,6 +199,7 @@ void KAlgebraMobile::displayPlugin(int plugin)
 	if(!m_pluginUI[plugin]) {
 		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
 		QDeclarativeView* view = new QDeclarativeView(this);
+		view->setResizeMode(QDeclarativeView::SizeViewToRootObject);
 		view->engine()->setOutputWarningsToStandardError(true);
 		view->setSource(m_pluginsModel->item(plugin)->data(PluginsModel::PathRole).toUrl());
 		
