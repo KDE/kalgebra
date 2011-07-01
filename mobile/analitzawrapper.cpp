@@ -53,6 +53,7 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	} else if(m_varsModel) {
 		m_varsModel->updateInformation();
 	}
+	
 	return AnalitzaUtils::expressionToVariant(res);
 }
 
@@ -70,7 +71,8 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 		stack << exps.last().tree();
 	}
 	
-	m_wrapped->setExpression(m_wrapped->variables()->valueExpression(name));
+	m_wrapped->setExpression(Analitza::Expression(name, false));
+	m_wrapped->setExpression(m_wrapped->calculate());
 	m_wrapped->setStack(stack);
 	Analitza::Expression expr = m_wrapped->calculateLambda();
 	
@@ -117,4 +119,5 @@ VariablesModel* AnalitzaWrapper::variablesModel()
 void AnalitzaWrapper::throwError(const QString& error)
 {
 	m_error=error;
+	qDebug() << "error..." << m_error;
 }

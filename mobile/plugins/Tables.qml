@@ -1,49 +1,59 @@
 import QtQuick 1.0
+import org.kde.analitza 1.0
 import "widgets"
 
 Rectangle
 {
 	id: bg
+	height: 200
+	width: 200
 	
-	ListModel
-	{
-		id: resultsModel
+	ListModel { id: resultsModel }
+	Analitza { id: a }
+	
+	function calculateTable() {
+		resultsModel.clear();
+		
+		var tmp = a.unusedVariableName();
+		var ret = a.execute(tmp+":="+input.text, true)
+		var ffrom=parseFloat(from.text), fto=parseFloat(to.text), fstep=parseFloat(step.text);
+// 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
+		
+		for (var i=ffrom; i<=fto; i+=fstep) {
+			var args = new Array();
+			args[0]=i;
+// 			console.log("!!! " + i); 
+			resultsModel.append( { value: i, result: a.executeFunc(tmp, args) } );
+		}
+		
+		a.removeVariable(tmp);
 	}
 	
-	Column {
-		anchors.fill: parent
+	Grid {
+		id: ins
+		columns: 2
 		
-		Row { Text {text: "Input:" } ExpressionInput {} }
-		Row { Text {text: "From:" } RealInput { id: from; text: "0" } }
-		Row { Text {text: "To:" } RealInput { id: to; text: "100" } }
+		Text {text: "Input: " } ExpressionInput { id: input; text: "x->sin x"}
+		Text {text: "From:" }   RealInput { id: from; text: "0" }
+		Text {text: "To:" }     RealInput { id: to; text: "10" }
+		Text {text: "Step:" }   RealInput { id: step; text: "1" }
 		
 		Button {
-			text: "Go!" 
-			onClicked: {
-				resultsModel.clear();
-		
-// 				var tmp = a.unusedVariableName();
-				var ffrom=parseFloat(from.text), fto=parseFloat(to.text);
-				console.log("chancho " + ffrom + ", " + fto);
-				
-				for (var i=ffrom; i<=fto; i++) {
-					var args = new Array();
-					args[0]=i;
-					console.log("!!! " + i); 
-					/*+a.executeFunc(tmp, args))*/
-					resultsModel.append( { value: ": "/*; text: ":D"*/ } );
-				}
-				
-// 				a.removeVariable(tmp);
-			}
+			text: "Go!"
+			
+			onClicked: calculateTable()
 		}
+	}
+	
+	Text { text: "Results:"; id: res; anchors.top: ins.bottom }
+	
+	ListView {
+		id: view
+		anchors.bottom: parent.bottom
+		anchors.top: res.bottom
 		
-		Text { text: "Results:" }
-		ListView {
-			model: resultsModel
-			height: 100
-			width: bg.width
-			delegate: Text { text: value/*+" :: "+text */}
-		}
+		model: resultsModel
+		width: bg.width
+		delegate: Text { text: value+" -> "+result}
 	}
 }

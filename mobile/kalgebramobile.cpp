@@ -194,7 +194,7 @@ void KAlgebraMobile::selectPlugin()
 void KAlgebraMobile::displayPlugin(int plugin)
 {
 	Q_ASSERT(plugin < m_pluginUI.size());
-	qDebug() << "laalalala" << plugin;
+// 	qDebug() << "laalalala" << plugin;
 	
 	if(!m_pluginUI[plugin]) {
 		QString scriptFileName = m_pluginsModel->index(plugin, 0).data(PluginsModel::PathRole).toString();
