@@ -30,7 +30,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 	Q_OBJECT
 	Q_PROPERTY(uint resolution READ resolution WRITE setResolution);
 	public:
-		enum FunctionsModelRoles { Shown=Qt::UserRole+2 };
+		enum FunctionsModelRoles { Color=Qt::UserRole, Expression=Qt::UserRole+1 , Shown=Qt::UserRole+2 };
 		typedef QList<Function>::const_iterator const_iterator;
 		friend class Graph2D;
 		

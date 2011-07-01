@@ -29,6 +29,8 @@ FunctionsModel::FunctionsModel(QObject *parent)
 	: QAbstractTableModel(parent), m_resolution(500), m_fcount(1)
 {
 	QHash<int, QByteArray> rolenames=QAbstractTableModel::roleNames();
+	rolenames.insert(Color, "color");
+	rolenames.insert(Expression, "expression");
 	rolenames.insert(Shown, "shown");
 	
 	setRoleNames(rolenames);
@@ -62,11 +64,19 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 				ret = QIcon::fromTheme(f.icon());
 			}
 			break;
+		case Expression:
+			ret=f.expression().toString();
+			break;
 		case Shown:
-			ret=funclist[index.row()].isShown();
+			ret=f.isShown();
+			break;
+		case Color:
+			ret=f.color();
 			break;
 		
 	}
+	
+// 	qDebug() << "laaaa" << roleNames().value(role) << ret << index;
 	return ret;
 }
 

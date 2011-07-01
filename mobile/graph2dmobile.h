@@ -31,15 +31,18 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 	Q_PROPERTY(QRectF viewport READ lastViewport WRITE setViewport);
 	Q_PROPERTY(bool squares READ squares WRITE setSquares);
 	Q_PROPERTY(bool keepAspectRatio READ keepAspectRatio WRITE setKeepAspectRatio);
+	Q_PROPERTY(int currentFunction READ currentFunction WRITE setCurrentFunction)
 	public:
 		Graph2DMobile(QDeclarativeItem* parent = 0);
 		
 		virtual void forceRepaint();
 		virtual void viewportChanged() {}
 		virtual void modelChanged();
-		virtual int currentFunction() const { return -1; }
+		virtual int currentFunction() const { return m_currentFunction; }
 		
 		virtual void paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* w);
+		
+		void setCurrentFunction(int f) { m_currentFunction = f; }
 		
 	private slots:
 		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
@@ -48,6 +51,7 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		
 	private:
 		bool m_dirty;
+		int m_currentFunction;
 		
 		QPixmap m_buffer;
 		QRectF defViewport;

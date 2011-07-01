@@ -22,8 +22,11 @@ Rectangle
 	ListView {
 		id: listview
 		model: app.functionsModel()
-		delegate: Row { Text { text: ">>> "+display+" <<<"; font.bold: selection } Text { text: selection } }
+		delegate: Text { text: display + " " + expression }
+		highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
 		
+		onCurrentIndexChanged: view.currentFunction=currentIndex
+
 		height: 100
 		anchors.top: input.bottom
 		anchors.left: parent.left
