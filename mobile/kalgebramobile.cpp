@@ -31,10 +31,9 @@
 #include <QDialogButtonBox>
 #include <QListView>
 
-#include <analitzagui/variablesmodel.h>
+#include <analitza/variables.h>
 #include <analitzagui/functionsmodel.h>
 #include "analitzawrapper.h"
-#include "uiconfig.h"
 
 #include <KPluginInfo>
 #include <KStandardDirs>
@@ -122,12 +121,17 @@ class PluginsModel : public QStandardItemModel
 		KPluginInfo::List m_plugins;
 };
 
+KAlgebraMobile* KAlgebraMobile::s_self=0;
+KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
+
+
 KAlgebraMobile::KAlgebraMobile(QWidget* parent, Qt::WindowFlags flags)
-	: QMainWindow(parent, flags), m_functionsModel(0)
+	: QMainWindow(parent, flags), m_functionsModel(0), m_vars(new Analitza::Variables)
 {
-	setWindowTitle(i18n("KAlgebra Mobile"));
+	Q_ASSERT(s_self==0);
+	s_self=this;
 	
-	m_wrapper = new AnalitzaWrapper(this);
+	setWindowTitle(i18n("KAlgebra Mobile"));
 	
 	menuBar()->addAction(i18n("Select..."), this, SLOT(selectPlugin()));
 	
@@ -152,17 +156,6 @@ void KAlgebraMobile::findScripts()
 {
 	m_pluginUI.resize(m_pluginsModel->rowCount());
 	displayPlugin(0);
-}
-
-void KAlgebraMobile::debug()
-{
-#ifdef DEBUG
-	QScriptEngineDebugger* debugger = new QScriptEngineDebugger(this);
-	debugger->attachTo(m_engine);
-	QMainWindow *debugWindow = debugger->standardWindow();
-	debugWindow->resize(1024, 640);
-	debugWindow->show();
-#endif
 }
 
 void KAlgebraMobile::selectPlugin()
@@ -218,10 +211,10 @@ void KAlgebraMobile::displayPlugin(int plugin)
 	m_pluginUI[plugin]->show();
 }
 
-void KAlgebraMobile::handleException(const QScriptValue& exception)
-{
-	QMessageBox::critical(this, i18n("Exception Thrown"), exception.toString());
-}
+// void KAlgebraMobile::handleException(const QScriptValue& exception)
+// {
+// 	QMessageBox::critical(this, i18n("Exception Thrown"), exception.toString());
+// }
 
 FunctionsModel* KAlgebraMobile::functionsModel()
 {
@@ -233,10 +226,7 @@ FunctionsModel* KAlgebraMobile::functionsModel()
 	return m_functionsModel;
 }
 
-VariablesModel* KAlgebraMobile::variablesModel()
-{
-	return m_wrapper->variablesModel();
-}
+Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }
 
 QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
 
@@ -249,7 +239,7 @@ QStringList KAlgebraMobile::addFunction(const QString& expression, const QString
 	QColor fcolor = color.isValid() ? color : randomFunctionColor();
 	
 	QStringList err;
-	Function f(fname, e, variablesModel()->variables(), fcolor, up,down);
+	Function f(fname, e, variables(), fcolor, up,down);
 	
 	if(f.isCorrect()) {
 		bool b = model->addFunction(f);

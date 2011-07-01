@@ -20,15 +20,13 @@
 #define KALGEBRAMOBILE_H
 
 #include <QMainWindow>
-#include <QPointer>
+
+namespace Analitza { class Variables;}
 
 class VariablesModel;
 class PluginsModel;
 class FunctionsModel;
-class QScriptValue;
 class AnalitzaWrapper;
-class QScriptEngine;
-class UiConfig;
 
 class KAlgebraMobile : public QMainWindow
 {
@@ -37,26 +35,26 @@ class KAlgebraMobile : public QMainWindow
 		explicit KAlgebraMobile(QWidget* parent = 0, Qt::WindowFlags flags = 0);
 		
 		void displayPlugin(int plugin);
+		
+		static KAlgebraMobile* self();
 	
 	public slots:
 		FunctionsModel* functionsModel();
-		VariablesModel* variablesModel();
+		Analitza::Variables* variables() const;
 		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
 		
 	private slots:
 		void selectPlugin();
-		void debug();
-		void handleException(const QScriptValue& exception);
 		
 	private:
+		static KAlgebraMobile* s_self;
 		void findScripts();
 		
 		QVector<QWidget*> m_pluginUI;
 		
-		AnalitzaWrapper* m_wrapper;
 		FunctionsModel* m_functionsModel;
 		PluginsModel* m_pluginsModel;
-		UiConfig* m_uiconfig;
+		Analitza::Variables* m_vars;
 };
 
 #endif // KALGEBRAMOBILE_H

@@ -20,16 +20,17 @@
 #include <analitza/analyzer.h>
 #include <analitza/value.h>
 #include <analitza/variables.h>
+#include <analitza/analitzautils.h>
 #include <analitzagui/variablesmodel.h>
 
 #include <QVariant>
 #include <QScriptEngine>
 #include <KLocalizedString>
-#include <analitza/analitzautils.h>
+#include "kalgebramobile.h"
 
 AnalitzaWrapper::AnalitzaWrapper(QObject* parent)
 	: QObject(parent)
-	, m_wrapped(new Analitza::Analyzer), m_calc(false), m_varsModel(0)
+	, m_wrapped(new Analitza::Analyzer(KAlgebraMobile::self()->variables())), m_calc(false), m_varsModel(0)
 {}
 
 QVariant AnalitzaWrapper::execute(const QString& expression)
