@@ -25,7 +25,7 @@ Rectangle
 		delegate: Text { text: display + " " + expression }
 		highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
 		
-		onCurrentIndexChanged: view.currentFunction=currentIndex
+		onCurrentIndexChanged: view.currentFunction=currentIndex-1
 
 		height: 100
 		anchors.top: input.bottom
