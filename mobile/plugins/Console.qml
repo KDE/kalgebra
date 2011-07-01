@@ -92,6 +92,8 @@ Item
 		id: keyboard
 // 		visible:false
 		
+		onClear: doSelectAll();
+		
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: view.bottom
 		anchors.bottom: parent.bottom

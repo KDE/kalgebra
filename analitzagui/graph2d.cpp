@@ -36,11 +36,12 @@
 #include "functionutils.h"
 #include "functionspainter.h"
 #include <cmath>
+#include <QtGui/qitemselectionmodel.h>
 
 Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	QWidget(parent), FunctionsPainter(fm, size()),
 	valid(false), mode(None),
-	m_framed(false), m_readonly(false)
+	m_framed(false), m_readonly(false), m_selection(0)
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	this->setCursor(Qt::CrossCursor);
@@ -341,4 +342,18 @@ void Graph2D::viewportChanged()
 	emit viewportChanged(userViewport);
 }
 
-#include "graph2d.moc"
+int Graph2D::currentFunction() const
+{
+	int ret=-1;
+	if(m_selection) {
+		ret=m_selection->currentIndex().row();
+	}
+	
+	return ret;
+}
+
+void Graph2D::setSelectionModel(QItemSelectionModel* selection)
+{
+	m_selection = selection;
+	connect(m_selection,SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(forceRepaint()));
+}

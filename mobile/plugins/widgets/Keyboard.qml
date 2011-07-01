@@ -1,15 +1,18 @@
 import QtQuick 1.0
 
 Row {
+	signal clear
+	
 	Grid {
 		id:nums
 		columns: 3
 		rows: 4
 		height: 300
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
 		
 		signal newInput(string text)
 		signal deleteChar
-		signal clear
 		
 		CalcButton { text: "1" }
 		CalcButton { text: "2" }
@@ -34,7 +37,7 @@ Row {
 		CalcButton { text: "(" }
 		CalcButton { text: ")" }
 		
-		Button { text: "AC"; onClicked: doSelectAll();}
+		Button { text: "AC"; onClicked: clear();}
 		
 		anchors.bottom: nums.bottom
 		anchors.top: nums.top

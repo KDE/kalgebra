@@ -30,7 +30,7 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 	Q_OBJECT
 	Q_PROPERTY(uint resolution READ resolution WRITE setResolution);
 	public:
-		enum FunctionsModelRoles { Selection=Qt::UserRole+1, Shown=Qt::UserRole+2 };
+		enum FunctionsModelRoles { Shown=Qt::UserRole+2 };
 		typedef QList<Function>::const_iterator const_iterator;
 		friend class Graph2D;
 		
@@ -46,11 +46,6 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		
 		/** Adds another function @p f. Returns whether another function like @p f existed. */
 		bool addFunction(const Function& f);
-	
-		/** Sets the function selected to @p exp. Returns whether another function like @p exp existed. */
-		bool setSelected(const QString& name);
-		
-		inline bool isSelected(int i) const { return i==m_selectedRow; }
 	
 		/** Specifies that the @p exp function is shown.
 			@returns whether another function like @p exp existed. */
@@ -69,17 +64,11 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		void setResolution(uint res);
 		uint resolution() const { return m_resolution; }
 		
-		void unselect();
-		
 		void clear();
 		
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
 		void updatePoints(int i, const QRect& viewport);
-		
-		const Function& currentFunction() const;
-		
-		bool hasSelection() const { return m_selectedRow>=0 && !funclist.isEmpty(); }
 		
 		const_iterator constBegin() const { return funclist.constBegin(); }
 		const_iterator constEnd() const { return funclist.constEnd(); }
@@ -91,17 +80,9 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		/** Returns the id for the next function that's not used by any other, starting by f */
 		QString freeId();
 		
-		QPair<QPointF, QString> calcImage(const QPointF& dp);
-		QLineF slope(const QPointF& dp) const;
-		
-	public slots:
-		void setSelected(const QModelIndex& idx);
-		
-	protected:
-// 		const QList<function> & functionList() const { return funclist; }
-		
-		/** Returns the position in the list of the selected function */
-		int selectedRow() const { return m_selectedRow; }
+		QPair<QPointF, QString> calcImage(int row, const QPointF& ndp);
+		QLineF slope(int row, const QPointF& dp) const;
+		QModelIndex indexForId(const QString & name);
 		
 	signals:
 		/** Emits a status message when something changes. */
@@ -115,7 +96,6 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		QList<Function>::iterator findFunction(const QString& id);
 		
 		QList<Function> funclist;
-		int m_selectedRow;
 		uint m_resolution;
 		
 		uint m_fcount;

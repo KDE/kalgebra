@@ -172,9 +172,10 @@ void FunctionsPainter::drawFunctions(QPaintDevice *qpd)
 //	finestra.initFrom(this);
 	p.setPen(pfunc);
 	
+	int current=currentFunction();
 	Function::Axe t=Function::Cartesian;
-	if(m_model->hasSelection())
-		t=m_model->currentFunction().axeType();
+	if(current>=0)
+		t=m_model->editFunction(current)->axeType();
 	drawAxes(&p, t);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	
@@ -185,7 +186,7 @@ void FunctionsPainter::drawFunctions(QPaintDevice *qpd)
 		if(!it->isShown())
 			continue;
 		pfunc.setColor(it->color());
-		pfunc.setWidth(m_model->isSelected(k)+1);
+		pfunc.setWidth((k==current)+1);
 		p.setPen(pfunc);
 		
 		const QVector<QPointF> &vect=it->points();
@@ -277,7 +278,7 @@ void FunctionsPainter::updateFunctions(const QModelIndex& startIdx, const QModel
 
 QPointF FunctionsPainter::calcImage(const QPointF& ndp) const
 {
-	return m_model->calcImage(ndp).first;
+	return m_model->calcImage(currentFunction(), ndp).first;
 }
 
 QRect FunctionsPainter::toBiggerRect(const QRectF& ent)
@@ -336,8 +337,8 @@ void FunctionsPainter::setViewport(const QRectF& vp, bool repaint)
 
 QLineF FunctionsPainter::slope(const QPointF& dp) const
 {
-	QLineF ret = m_model->slope(dp);
-	if(ret.isNull() && m_model->hasSelection()) {
+	QLineF ret = m_model->slope(currentFunction(), dp);
+	if(ret.isNull() && currentFunction()>=0) {
 		QPointF a = calcImage(dp-QPointF(.1,.1));
 		QPointF b = calcImage(dp+QPointF(.1,.1));
 		

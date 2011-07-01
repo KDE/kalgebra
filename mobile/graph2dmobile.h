@@ -37,6 +37,7 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		virtual void forceRepaint();
 		virtual void viewportChanged() {}
 		virtual void modelChanged();
+		virtual int currentFunction() const { return -1; }
 		
 		virtual void paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* w);
 		

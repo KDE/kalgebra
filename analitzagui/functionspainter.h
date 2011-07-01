@@ -34,6 +34,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		virtual void drawFunctions(QPaintDevice *qpd);
 		virtual void forceRepaint() = 0;
 		virtual void viewportChanged() = 0;
+		virtual int currentFunction() const = 0;
 		virtual void modelChanged() {}
 		
 		/** Sets whether we will see a grid or only the axes. */

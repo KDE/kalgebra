@@ -200,6 +200,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
+	m_graph2d->setSelectionModel(b_funcs->selectionModel());
 	
 	b_tools->addTab(b_funcs, i18n("List"));
 	
@@ -405,7 +406,7 @@ void KAlgebra::new_func()
 	b_funced->setEditing(false);
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
-	b_funcsModel->setSelected(f.name());
+	b_funcs->setCurrentIndex(b_funcsModel->indexForId(f.name()));
 	m_graph2d->setFocus();
 }
 
@@ -624,7 +625,7 @@ void KAlgebra::tabChanged(int n)
 
 void KAlgebra::select(const QModelIndex & idx)
 {
-	b_funcsModel->setSelected(idx);
+	b_funcs->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::ClearAndSelect);
 }
 
 void KAlgebra::updateInformation()

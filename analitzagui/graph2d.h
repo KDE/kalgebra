@@ -39,6 +39,7 @@
  *	@author Aleix Pol Gonzàlez
  */
 
+class QItemSelectionModel;
 class FunctionsModel;
 
 class ANALITZAGUI_EXPORT Graph2D : public QWidget, public FunctionsPainter
@@ -68,6 +69,8 @@ public:
 	
 	/** Returns the viewing port */
 	QRectF definedViewport() const;
+	
+	void setSelectionModel(QItemSelectionModel* selection);
 	
 public slots:
 	/** Marks the image as dirty and repaints everything. */
@@ -108,6 +111,7 @@ signals:
 	
 private:
 	virtual void viewportChanged();
+	virtual int currentFunction() const;
 	
 	//painting
 	QPixmap buffer;
@@ -135,6 +139,7 @@ private:
 	bool m_framed;
 	bool m_readonly;
 	QString m_posText;
+	QItemSelectionModel* m_selection;
 };
 
 #endif

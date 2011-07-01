@@ -3,10 +3,11 @@ import "widgets"
 
 Rectangle
 {
+	id: bg
+	
 	ListModel
 	{
 		id: resultsModel
-		ListElement { expression: "cooooh"; value: "loooo" }
 	}
 	
 	Column {
@@ -16,19 +17,21 @@ Rectangle
 		Row { Text {text: "From:" } RealInput { id: from; text: "0" } }
 		Row { Text {text: "To:" } RealInput { id: to; text: "100" } }
 		
-		Button { text: "Go!" 
+		Button {
+			text: "Go!" 
 			onClicked: {
 				resultsModel.clear();
 		
 // 				var tmp = a.unusedVariableName();
-				var from=Math.parseFloat(from.value), to=parseFloat(to.value);
-				console.log("chancho " + from + ", " + to);
+				var ffrom=parseFloat(from.text), fto=parseFloat(to.text);
+				console.log("chancho " + ffrom + ", " + fto);
 				
-				for (var i=from; i<=to; i++) {
+				for (var i=ffrom; i<=fto; i++) {
 					var args = new Array();
 					args[0]=i;
 					console.log("!!! " + i); 
-					resultsModel.addItem(i+": "/*+a.executeFunc(tmp, args)*/);
+					/*+a.executeFunc(tmp, args))*/
+					resultsModel.append( { value: ": "/*; text: ":D"*/ } );
 				}
 				
 // 				a.removeVariable(tmp);
@@ -38,6 +41,9 @@ Rectangle
 		Text { text: "Results:" }
 		ListView {
 			model: resultsModel
+			height: 100
+			width: bg.width
+			delegate: Text { text: value/*+" :: "+text */}
 		}
 	}
 }
