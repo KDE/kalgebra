@@ -60,23 +60,18 @@ class PluginsModel : public QStandardItemModel
 		explicit PluginsModel(QObject* parent = 0)
 			:QStandardItemModel(parent)
 		{
-#if 0
 			KStandardDirs d;
-			QStringList basedirs = d.findDirs("data", "kalgebra/scripts");
+			QStringList basedirs = d.findDirs("data", "kalgebra/plugins");
 			QStringList foundPlugins;
 			foreach(const QString& dir, basedirs) {
 				//we list <dir>/*/*.desktop
 				
 				QDir d(dir);
-				QStringList dirs = d.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+				QStringList files = d.entryList(QStringList("*.desktop"));
 				
-				foreach(const QString& plugindir, dirs) {
-					QDir pd(d.filePath(plugindir));
-					QStringList files = pd.entryList(QStringList("*.desktop"));
-					
-					foreach(const QString& plugin, files) {
-						foundPlugins += pd.absoluteFilePath(plugin);
-					}
+				qDebug() << "lalala" << dir << files;
+				foreach(const QString& plugin, files) {
+					foundPlugins += d.absoluteFilePath(plugin);
 				}
 			}
 			
@@ -88,7 +83,7 @@ class PluginsModel : public QStandardItemModel
 // 				const KPluginInfo& info;
 				QStandardItem* item = new QStandardItem(KIcon(info.icon()), info.name());
 				
-				QString postfix = "kalgebra/scripts/"+info.pluginName();
+				QString postfix = "kalgebra/plugins/"+info.pluginName();
 				QString scriptPath = KStandardDirs::locate("data", postfix);
 				
 				Q_ASSERT(!scriptPath.isEmpty());
@@ -99,18 +94,6 @@ class PluginsModel : public QStandardItemModel
 				item->setData(scriptPath, PathRole);
 				item->setData(priority, PriorityRole);
 				
-				appendRow(item);
-			}
-#endif
-			QDir pd("/home/kde-devel/kalgebra/mobile/plugins/");
-			QStringList files = pd.entryList(QStringList("*.qml")), foundPlugins;
-			qDebug() << "tururuuuuu" << files;
-			
-			foreach(const QString& plugin, files) {
-				QString scriptPath = pd.absoluteFilePath(plugin);
-				QStandardItem* item = new QStandardItem(plugin);
-				item->setData(scriptPath, PathRole);
-				item->setData(0, PriorityRole);
 				appendRow(item);
 			}
 			setSortRole(PriorityRole);

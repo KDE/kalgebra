@@ -53,6 +53,6 @@ Comment[zh_TW]=讓您繪製平面圖形
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org
-X-KDE-PluginInfo-Name=plot2d/plot2d.js
+X-KDE-PluginInfo-Name=Plot2D.qml
 X-KDE-PluginInfo-Version=1.0
 X-KDE-PluginInfo-License=GPL
