@@ -57,6 +57,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			a = pow(a, b);
 			break;
 		case Operator::rem:
+			format=Cn::Integer;
 			if(KDE_ISLIKELY(floor(b)!=0.))
 				a = remainder(a, b);
 			else

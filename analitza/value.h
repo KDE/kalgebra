@@ -108,12 +108,12 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns whether @p d is equal than this object.
 		 */
-		bool operator==(const Cn& d) const { return m_value==d.value(); }
+		bool operator==(const Cn& d) const { return m_value==d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less than this object.
 		 */
-		bool operator<(const Cn& d) const { return m_value<d.value(); }
+		bool operator<(const Cn& d) const { return m_value<d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less than this object's value.
@@ -123,7 +123,7 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns whether @p d is less or equal than this object.
 		 */
-		bool operator<=(const Cn& d) const { return m_value<=d.value(); }
+		bool operator<=(const Cn& d) const { return m_value<=d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less or equal than this object's value.
@@ -134,16 +134,6 @@ class ANALITZA_EXPORT Cn : public Object
 		 *	Sets the new value to @p d.
 		 */
 		Cn operator=(double d) { m_value=d; return *this; }
-		
-		/**
-		 *	Increments by one the value.
-		 */
-		Cn operator++() { m_value++; return *this; }
-		
-		/**
-		 *	Increments by one the value.
-		 */
-		Cn operator++(int) { m_value++; return *this; }
 		
 		QChar character() const { Q_ASSERT(m_format==Char); return QChar(m_char); }
 		
