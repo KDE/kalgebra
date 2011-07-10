@@ -34,12 +34,19 @@ class ExpressionType;
 class Operations
 {
 	public:
+		typedef Cn* (*UnaryOp)(Operator::OperatorType, Object*, QString&);
+		typedef Object * (*BinaryOp)(Operator::OperatorType op, Object *, Object *, QString &correct);
+		
 		static Object* reduce(Operator::OperatorType op, Object* oper, Object* oper1, QString &correct);
 		static Object* reduceUnary(Operator::OperatorType op, Object* oper, QString &correct);
 		
 		static QList<ExpressionType> infer(Analitza::Operator::OperatorType op);
 		static QList<ExpressionType> inferUnary(Operator::OperatorType op);
+		
 	private:
+		static UnaryOp opsUnary[Object::custom+1];
+		static BinaryOp opsBinary[Object::custom+1][Object::custom+1];
+		
 		static Cn* reduceRealReal(Operator::OperatorType op, Cn *oper, const Cn* oper1, QString &correct);
 		static Cn* reduceUnaryReal(Operator::OperatorType op, Cn *oper, QString &correct);
 		

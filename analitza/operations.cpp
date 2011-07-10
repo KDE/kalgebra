@@ -34,9 +34,6 @@
 using namespace std;
 using namespace Analitza;
 
-typedef void (*realrealfn)(double& a, double b, QString& correct, Cn::ValueFormat& format);
-// realrealfn 
-
 Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
 {
 	int residu;
@@ -290,46 +287,6 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString
 	val->setValue(a);
 	val->setFormat(format);
 	return val;
-}
-
-Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, QString &correct)
-{
-	Object::ObjectType t1=val1->type(), t2=val2->type();
-	
-	if(t1==Object::value && t2==Object::value) return reduceRealReal(op, (Cn*) val1, (Cn*) val2, correct);
-	if(t1==Object::value && t2==Object::vector) return reduceRealVector(op, (Cn*) val1, (Vector*) val2, correct);
-	if(t1==Object::vector && t2==Object::value) return reduceVectorReal(op, (Vector*) val1, (Cn*) val2, correct);
-	if(t1==Object::vector && t2==Object::vector) return reduceVectorVector(op, (Vector*) val1, (Vector*) val2, correct);
-	if(t1==Object::list && t2==Object::list) return reduceListList(op, (List*) val1, (List*) val2, correct);
-	if(t1==Object::value && t2==Object::list) return reduceRealList(op, (Cn*) val1, (List*) val2, correct);
-	if(t1==Object::custom && t2==Object::custom) return reduceCustomCustom(op, (CustomObject*) val1, (CustomObject*) val2, correct);
-	
-	Q_ASSERT(false);
-	correct = i18n("Could not reduce '%1' and '%2'.", val1->toString(), val2->toString());
-	return 0;
-}
-
-Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QString &correct)
-{
-	switch(val->type()) {
-		case Object::value:
-			return reduceUnaryReal(op, (Cn*) val, correct);
-		case Object::vector:
-			return reduceUnaryVector(op, (Vector*) val, correct);
-		case Object::list:
-			return reduceUnaryList(op, (List*) val, correct);
-		case Object::none:
-		case Object::variable:
-		case Object::oper:
-		case Object::container:
-		case Object::apply:
-		case Object::custom:
-			//This should never happen
-			break;
-	}
-	
-	Q_ASSERT(false && "using reduceUnary in a wrong way");
-	return 0;
 }
 
 Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, QString& correct)
@@ -640,4 +597,42 @@ Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* 
 	
 	Q_ASSERT(false && "not implemented, please report");
 	return 0;
+}
+
+Operations::BinaryOp Operations::opsBinary[Object::custom+1][Object::custom+1] = {
+	{0,0,0,0,0,0,0,0,0},
+	{0, (Operations::BinaryOp) reduceRealReal, 0, (Operations::BinaryOp) reduceRealVector, (Operations::BinaryOp) reduceRealList,0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0, (Operations::BinaryOp) reduceVectorReal, 0, (Operations::BinaryOp) reduceVectorVector, 0,0,0,0},
+	{0, 0, 0,0, (Operations::BinaryOp) reduceListList, 0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0,(Operations::BinaryOp) reduceCustomCustom}
+};
+
+Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, QString &correct)
+{
+	Object::ObjectType t1=val1->type(), t2=val2->type();
+	
+	BinaryOp f=opsBinary[t1][t2];
+	Q_ASSERT(f);
+	return f(op, val1, val2, correct);
+}
+
+Operations::UnaryOp Operations::opsUnary[] = {
+	0,
+	(Operations::UnaryOp) Operations::reduceUnaryReal,
+	0, //variable
+	(Operations::UnaryOp) Operations::reduceUnaryVector,
+	(Operations::UnaryOp) Operations::reduceUnaryList,
+	0,0,0
+};
+
+Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QString &correct)
+{
+	UnaryOp f=opsUnary[val->type()];
+	
+	Q_ASSERT(f && "using reduceUnary in a wrong way");
+	return f(op, val, correct);
 }
