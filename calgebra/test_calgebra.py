@@ -12,6 +12,7 @@ output=p.communicate(input)
 for line in output[1].split('\n'):
 	theLine = line.split('time:')
 	if len(theLine)>1:
-		print str(i)+", "+theLine[1]
+		#print str(i)+", "+theLine[1]
+		print theLine[1]
 		i+=1
 

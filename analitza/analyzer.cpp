@@ -228,7 +228,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 // 						qDebug() << "%%%%%" << cond->toString() << p->m_params[1]->toString() << allfalse;
 						
 						delete cond;
-					} else if(allfalse) { //FIXME: Maybe should look for more pieces?
+					} else if(allfalse) {
 						ret=eval(p->m_params[0], resolve, unscoped);
 					}
 				}
@@ -243,8 +243,16 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				Container *r = c->copy();
 				Object* old=r->m_params.last();
 				
+				
+				int top = m_runStackTop;
+				m_runStackTop = m_runStack.size();
+				m_runStack.resize(m_runStackTop+c->bvarCount()+1);
+				
 				r->m_params.last()=eval(old, false, newUnscoped);
 				delete old;
+
+				m_runStack.resize(m_runStackTop);
+				m_runStackTop = top;
 				
 				alphaConversion(r, r->bvarCi().first()->depth());
 				Expression::computeDepth(r);
@@ -325,14 +333,15 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				const Container *cbody = dynamic_cast<Container*>(body);
 				if(resolve && cbody && cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
 					int bvarsSize = cbody->bvarCount();
-					QVector<Object*> args(bvarsSize);
+					QVector<Object*> args(bvarsSize+1);
 					
+					args[0]=cbody->copy();
 					for(int i=0; i<bvarsSize; i++) {
-						args[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
+						args[i+1]=simp(eval(c->m_params[i+1], resolve, unscoped));
 					}
 					int aux = m_runStackTop;
 					m_runStackTop = m_runStack.size();
-					m_runStack.resize(m_runStackTop+bvarsSize);
+					m_runStack.resize(m_runStackTop+bvarsSize+1);
 					
 					int i=0;
 					foreach(Object* o, args)
@@ -914,20 +923,21 @@ Object* Analyzer::func(const Apply& n)
 	Object* ret=0;
 	if(function && function->m_params.size()>1) {
 		int top = m_runStack.size(), aux=m_runStackTop;
-		m_runStack.resize(top+bvarsize);
+		m_runStack.resize(top+bvarsize+1);
 		
+		m_runStack[top] = function;
 		for(int i=0; i<bvarsize; i++) {
 	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
 			Object* val=calc(n.m_params[i+1]);
-			m_runStack[top+i] = val;
+			m_runStack[top+i+1] = val;
 	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
 		}
 		m_runStackTop = top;
 		
-	// 	qDebug() << "diiiiiiiii" << m_runStack.size() << vars.size() << m_runStackTop;
+// 		qDebug() << "diiiiiiiii" << function->toString() << m_runStack.size() << bvarsize << m_runStackTop << printAll(m_runStack);
 		ret=calc(function->m_params.last());
 		
-		qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+		qDeleteAll(m_runStack.begin()+top+1, m_runStack.end());
 		if(!borrowed)
 			delete function;
 		
@@ -947,9 +957,10 @@ Object* Analyzer::func(const Apply& n)
 // 			qDebug() << "parm" << i << n.m_params[i]->toString() << args.last().toString();
 		}
 		Expression exp=(*func)(args);
-		if(exp.isCorrect())
-			ret=exp.tree()->copy();
-		else {
+		if(exp.isCorrect()) {
+			ret=exp.tree();
+			exp.setTree(0);
+		} else {
 			m_err += exp.error();
 			ret = new Cn;
 		}
@@ -1024,7 +1035,7 @@ Object* Analyzer::simp(Object* root)
 			case Container::lambda: {
 				int top = m_runStackTop;
 				m_runStackTop = m_runStack.size();
-				m_runStack.resize(m_runStackTop+c->bvarCount());
+				m_runStack.resize(m_runStackTop+c->bvarCount()+1);
 				
 				c->m_params.last()=simp(c->m_params.last());
 				m_runStack.resize(m_runStackTop);
@@ -1871,6 +1882,9 @@ Analitza::Object* Analyzer::variableValue(Ci* var)
 	else
 		ret = m_vars->value(var->name());
 	
+// 	static int hits = 0, misses = 0;
+// 	if(var->depth()>=0) hits++; else misses++;
+// 	qDebug() << "pepepe" << hits << misses;
 	return ret;
 }
 
