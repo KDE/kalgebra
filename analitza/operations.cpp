@@ -34,7 +34,7 @@
 using namespace std;
 using namespace Analitza;
 
-Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString &correct)
+Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString** correct)
 {
 	int residu;
 	double a=oper->value(), b=oper1->value();
@@ -61,7 +61,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			if(KDE_ISLIKELY(floor(b)!=0.))
 				a = remainder(a, b);
 			else
-				correct=i18n("Cannot calculate the remainder on 0.");
+				*correct=new QString(i18n("Cannot calculate the remainder on 0."));
 			break;
 		case Operator::quotient:
 			a = floor(a / b);
@@ -71,7 +71,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 			if(KDE_ISLIKELY(floor(b)!=0.))
 				a = ((int(floor(a)) % int(floor(b)))==0) ? 1.0 : 0.0;
 			else
-				correct=i18n("Cannot calculate the factor on 0.");
+				*correct=new QString(i18n("Cannot calculate the factor on 0."));
 			
 			format=Cn::Boolean;
 			break;
@@ -139,7 +139,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 		case Operator::lcm:
 			//code by michael cane aka kiko :)
 			if(KDE_ISUNLIKELY(floor(a)==0. || floor(b)==0.))
-				correct=i18n("Cannot calculate the lcm of 0.");
+				*correct=new QString(i18n("Cannot calculate the lcm of 0."));
 			else {
 				int ia=floor(a), ib=floor(b);
 				int ic=ia*ib;
@@ -165,7 +165,7 @@ Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const C
 	return oper;
 }
 
-Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString &correct)
+Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString** correct)
 {
 	double a=val->value();
 	Cn::ValueFormat format=val->format();
@@ -281,7 +281,7 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString
 			format=Cn::Boolean;
 			break;
 		default:
-			correct=i18n("Could not calculate a value %1", Operator(op).toString());
+			*correct=new QString(i18n("Could not calculate a value %1", Operator(op).toString()));
 			break;
 	}
 	
@@ -290,14 +290,14 @@ Cn* Operations::reduceUnaryReal(enum Operator::OperatorType op, Cn *val, QString
 	return val;
 }
 
-Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, QString& correct)
+Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vector * v1, QString** correct)
 {
 	switch(op) {
 		case Operator::selector: {
 			int select=oper->intValue();
 			Object* ret=0;
 			if(select<1 || (select-1) >= v1->size()) {
-				correct=i18n("Invalid index for a container");
+				*correct=new QString(i18n("Invalid index for a container"));
 				ret=new Cn(0.);
 			} else {
 				ret=v1->at(select-1);
@@ -318,7 +318,7 @@ Object * Operations::reduceRealVector(Operator::OperatorType op, Cn * oper, Vect
 	}
 }
 
-Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, QString &correct)
+Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn * oper, QString** correct)
 {
 	for(Vector::iterator it=v1->begin(); it!=v1->end(); ++it)
 	{
@@ -328,10 +328,10 @@ Object * Operations::reduceVectorReal(Operator::OperatorType op, Vector * v1, Cn
 	return v1;
 }
 
-Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, QString &correct)
+Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, Vector * v2, QString** correct)
 {
 	if(v1->size()!=v2->size()) {
-		correct=i18n("Cannot operate on different sized vectors.");
+		*correct=new QString(i18n("Cannot operate on different sized vectors."));
 		return new Cn(0.);
 	}
 	
@@ -348,7 +348,7 @@ Object * Operations::reduceVectorVector(Operator::OperatorType op, Vector * v1, 
 	return v1;
 }
 
-Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString &correct)
+Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString** correct)
 {
 	Cn *ret=0;
 	switch(op) {
@@ -357,7 +357,7 @@ Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString
 			break;
 		default:
 			//Should be dealt by typechecker. not necessary
-			correct=i18n("Could not calculate a vector's %1", Operator(op).toString());
+			*correct=new QString(i18n("Could not calculate a vector's %1", Operator(op).toString()));
 			ret=new Cn(0.);
 			break;
 	}
@@ -365,7 +365,7 @@ Cn* Operations::reduceUnaryVector(Operator::OperatorType op, Vector * c, QString
 	return ret;
 }
 
-Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2, QString &correct)
+Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2, QString** correct)
 {
 	Object* ret=0;
 	switch(op) {
@@ -380,7 +380,7 @@ Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2
 		}	break;
 		default:
 			//Should be dealt by typechecker. not necessary
-			correct=i18n("Could not calculate a list's %1", Operator(op).toString());
+			*correct=new QString(i18n("Could not calculate a list's %1", Operator(op).toString()));
 			delete l1;
 			ret=new Cn(0.);
 			break;
@@ -389,7 +389,7 @@ Object* Operations::reduceListList(Operator::OperatorType op, List* l1, List* l2
 	return ret;
 }
 
-Cn* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &correct)
+Cn* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString** correct)
 {
 	Cn *ret=0;
 	switch(op) {
@@ -397,7 +397,7 @@ Cn* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &cor
 			ret=new Cn(l->size());
 			break;
 		default:
-			correct=i18n("Could not calculate a list's %1", Operator(op).toString());
+			*correct=new QString(i18n("Could not calculate a list's %1", Operator(op).toString()));
 			ret=new Cn(0.);
 			break;
 	}
@@ -405,14 +405,14 @@ Cn* Operations::reduceUnaryList(Operator::OperatorType op, List* l, QString &cor
 	return ret;
 }
 
-Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1, QString& correct)
+Object* Operations::reduceRealList(Operator::OperatorType op, Cn* oper, List* v1, QString** correct)
 {
 	switch(op) {
 		case Operator::selector: {
 			int select=oper->intValue();
 			Object* ret=0;
 			if(select<1 || (select-1) >= v1->size()) {
-				correct=i18n("Invalid index for a container");
+				*correct=new QString(i18n("Invalid index for a container"));
 				ret=new Cn(0.);
 			} else {
 				ret=v1->at(select-1);
@@ -585,7 +585,7 @@ QList<ExpressionType> Operations::inferUnary(Operator::OperatorType op)
 	return ret;
 }
 
-Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* v1, CustomObject* v2, QString& )
+Object* Operations::reduceCustomCustom(Operator::OperatorType op, CustomObject* v1, CustomObject* v2, QString** )
 {
 	switch(op) {
 		case Operator::neq:
@@ -612,7 +612,7 @@ Operations::BinaryOp Operations::opsBinary[Object::custom+1][Object::custom+1] =
 	{0,0,0,0,0,0,0,0,(Operations::BinaryOp) reduceCustomCustom}
 };
 
-Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, QString &correct)
+Object * Operations::reduce(Operator::OperatorType op, Object * val1, Object * val2, QString** correct)
 {
 	Object::ObjectType t1=val1->type(), t2=val2->type();
 	
@@ -630,7 +630,7 @@ Operations::UnaryOp Operations::opsUnary[] = {
 	0,0,0
 };
 
-Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QString &correct)
+Object * Operations::reduceUnary(Operator::OperatorType op, Object * val, QString** correct)
 {
 	UnaryOp f=opsUnary[val->type()];
 	

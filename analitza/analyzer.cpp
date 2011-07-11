@@ -629,25 +629,28 @@ Object* Analyzer::operate(const Apply* c)
 						(op.nparams()>-1 && count==op.nparams()) ||
 						opt==Operator::minus);
 			
-			QString correct;
+			QString* error=0;
 			if(count>=2) {
 				Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
 				
 				ret = calc(*it);
 				++it;
 				for(; it!=itEnd; ++it) {
-					ret=Operations::reduce(opt, ret, calc(*it), correct);
+					ret=Operations::reduce(opt, ret, calc(*it), &error);
 					
-					if(KDE_ISUNLIKELY(!correct.isEmpty())) {
-						m_err.append(correct);
-						correct.clear();
+					if(KDE_ISUNLIKELY(error)) {
+						m_err.append(*error);
+						delete error;
+						error=0;
 						break;
 					}
 				}
 			} else {
-				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), correct);
-				if(KDE_ISUNLIKELY(!correct.isEmpty()))
-					m_err.append(correct);
+				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), &error);
+				if(KDE_ISUNLIKELY(error)) {
+					m_err.append(*error);
+					delete error;
+				}
 			}
 		}	break;
 	}
@@ -863,12 +866,12 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	if(!it)
 		return initial;
 	
-	QString correct;
+	QString* correct=0;
 	Operator::OperatorType type=t.operatorType();
 	do {
 		Object *val=calc(n.m_params.last());
-		ret=Operations::reduce(type, ret, val, correct);
-	} while(KDE_ISLIKELY(it->hasNext() && correct.isEmpty()));
+		ret=Operations::reduce(type, ret, val, &correct);
+	} while(KDE_ISLIKELY(it->hasNext() && !correct));
 	
 	m_runStack.resize(top);
 	
@@ -1301,9 +1304,9 @@ Object* Analyzer::simpApply(Apply* c)
 			if(val->type()==Object::vector)
 			{
 				c->m_params.last()=0;
-				QString correct;
-				val=Operations::reduceUnary(Operator::card, val, correct);
-				//TODO: if(!correct) Handle me!
+				QString* err=0;
+				val=Operations::reduceUnary(Operator::card, val, &err);
+				if(KDE_ISUNLIKELY(err)) { delete err; }
 				delete c;
 				root=val;
 			}
@@ -1315,8 +1318,8 @@ Object* Analyzer::simpApply(Apply* c)
 			Object* idx=c->m_params[0];
 			Object* value=c->m_params[1];
 			if(idx->type()==Object::value && value->type()==Object::vector) {
-				QString err;
-				Object* ret=Operations::reduce(Operator::selector, idx, value, err);
+				QString* err=0;
+				Object* ret=Operations::reduce(Operator::selector, idx, value, &err);
 				
 				if(ret) {
 					root=ret;
@@ -1337,9 +1340,9 @@ Object* Analyzer::simpApply(Apply* c)
 				if(newParams.isEmpty())
 					newParams.append(*it);
 				else {
-					QString err;
+					QString* err=0;
 					if((*it)->type()==Object::list && newParams.last()->type()==Object::list) {
-						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), err);
+						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), &err);
 						newParams.last()=ret;
 						delete *it;
 					} else {
@@ -1435,8 +1438,8 @@ Object* Analyzer::simpScalar(Apply * c)
 			Object* aux = *i;
 			
 			if(value) {
-				QString correct;
-				value=Operations::reduce(o.operatorType(), value, aux, correct);
+				QString* err=0;
+				value=Operations::reduce(o.operatorType(), value, aux, &err);
 			} else
 				value=aux;
 			d=true;
