@@ -161,7 +161,7 @@ Expression Analyzer::calculateLambda()
 {
 	Expression e;
 	
-	if(!m_hasdeps && m_exp.isCorrect()) {
+	if(KDE_ISLIKELY(!m_hasdeps && m_exp.isCorrect())) {
 		Q_ASSERT(m_exp.tree()->isContainer());
 		Container* math=(Container*) m_exp.tree();
 		Q_ASSERT(math->m_params.first()->isContainer());
@@ -173,6 +173,8 @@ Expression Analyzer::calculateLambda()
 		Container* lambda=(Container*) math;
 		Q_ASSERT(lambda->containerType()==Container::lambda);
 		
+		if(KDE_ISUNLIKELY(m_runStack.first()!=lambda))
+			m_runStack.prepend(lambda);
 		m_runStackTop = 0;
 		e.setTree(calc(lambda->m_params.last()));
 	} else {
