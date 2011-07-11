@@ -4,7 +4,7 @@ import subprocess
 input="fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }\n"
 
 i=15
-for a in range(i,27):
+for a in range(i,29):
 	input += "fib(%d)\n" % (a)
 p = subprocess.Popen(["calgebra", "--calculate", "--print-time"], shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 

@@ -58,7 +58,7 @@ QStringList printAll(const QVector<T*> & p)
 	return ret;
 }
 
-const int defsize = 5000;
+const int defsize = /*500*/0;
 
 Analyzer::Analyzer()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
@@ -516,16 +516,9 @@ Object* Analyzer::calcDeclare(const Container* c)
 	const Ci *var = (const Ci*) c->m_params[0];
 	ret=simp(c->m_params[1]->copy());
 		
-	insertVariable(var->name(), ret);
+	bool corr = insertVariable(var->name(), ret);
 	
-	if(!ret || (ret->type()!=Object::vector && ret->type()!=Object::list && ret->type()!=Object::value))
-	{
-		delete ret;
-		
-		//Would be nice to return NaN
-		ret=new Cn(0.);
-	}
-	Q_ASSERT(ret);
+	Q_ASSERT(ret && corr);
 	return ret;
 }
 

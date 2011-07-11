@@ -56,8 +56,6 @@ class ANALITZA_EXPORT Cn : public Object
 		/** Constructor. Creates a value that represents a character. */
 		explicit Cn(const QChar& c) : Object(Object::value), m_char(c.unicode()), m_format(Char) {}
 		
-		virtual ~Cn() {}
-		
 		/**
 		 *	Extracts the number from the @p e Dom element and saves it.
 		 */
@@ -145,7 +143,6 @@ class ANALITZA_EXPORT Cn : public Object
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		virtual Object* copy() const;
-		virtual bool decorate(const QMap< QString, Object** >& scope);
 		
 		static Cn pi();
 		static Cn e();
