@@ -75,6 +75,8 @@ struct FunctionParametric : public FunctionImpl
 		func.setStack(m_runStack);
 	}
 	
+    virtual ~FunctionParametric() { delete vx; }
+	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
 	QLineF derivative(const QPointF& p);
