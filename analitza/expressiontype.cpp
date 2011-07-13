@@ -700,6 +700,23 @@ bool ExpressionType::matchAssumptions(QMap< int, ExpressionType >* stars,
 	return ret;
 }
 
+QStringList ExpressionType::wrongAssumptions(const QMap< QString, ExpressionType >& assum1, const QMap< QString, ExpressionType >& assum2)
+{
+	QStringList ret;
+	QMap<QString, ExpressionType>::const_iterator it=assum1.constBegin(), itEnd=assum1.constEnd();
+	QMap<QString, ExpressionType>::const_iterator itFind, itFindEnd=assum2.constEnd();
+	
+	for(; it!=itEnd; ++it) {
+		itFind=assum2.find(it.key());
+		
+		if(itFind!=itFindEnd && *itFind!=*it && !itFind->canReduceTo(*it) && !it->canReduceTo(*itFind)) {
+			ret += it.key();
+		}
+	}
+	
+	return ret;
+}
+
 QList<ExpressionType> ExpressionType::manyFromArgs(const QList<ExpressionType>& args)
 {
 	QList<ExpressionType> funcs = QList<ExpressionType>() << ExpressionType(ExpressionType::Many);

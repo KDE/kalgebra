@@ -98,6 +98,7 @@ class ANALITZA_EXPORT ExpressionType
 		static void assumptionsUnion(QMap< QString, Analitza::ExpressionType >& data, const QMap< QString, Analitza::ExpressionType >& newmap);
 		static QMap<int, ExpressionType> computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type);
 		static bool matchAssumptions(QMap<int, ExpressionType>* stars, const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
+		static QStringList wrongAssumptions(const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
 		static QList<ExpressionType> lambdaFromArgs(const QList<ExpressionType>& args);
 		static QList<ExpressionType> manyFromArgs(const QList<ExpressionType>& args);
 	private:

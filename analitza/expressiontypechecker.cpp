@@ -183,8 +183,10 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Obje
 					bool matches=ExpressionType::matchAssumptions(&_starToType, _first.assumptions(), _second.assumptions());
 					//TODO: maybe error here
 					
-					if(!matches)
+					if(!matches) {
+// 						qDebug() << "peee" << ExpressionType::wrongAssumptions(_first.assumptions(), _second.assumptions());
 						continue;
+					}
 					foreach(const ExpressionType& _opt, res) {
 						ExpressionType opt(_opt);
 						m_stars=qMax<int>(m_stars, opt.increaseStars(starsbase));
