@@ -170,6 +170,11 @@ void TypeCheckTest::testConstruction_data()
 	
 	QTest::newRow("filter")  << "(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
 								<< "((a -> bool) -> <a,-1> -> [a]) | ((a -> bool) -> [a] -> [a])";
+	QTest::newRow("arg") << "c->arctan(c[2]/c[1])" << "(<num,-1> -> num) | ([num] -> num)";
+	QTest::newRow("rect") << "v->v[1]*cos(v[2])" << "(<num,-1> -> num) | ([num] -> num)";
+	QTest::newRow("crash") << "u->(v->vector { v[2] })((v->vector { v[2] })(u))" << "(<a,1> -> <a,1>) | ([a] -> <a,1>)";
+	
+	QTest::newRow("scopes") << "or((x->list{}=x)(list{}), (x->x=0)(0))" << "bool";
 }
 
 void TypeCheckTest::testConstruction()

@@ -541,6 +541,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				addError(i18n("Could not solve '%1'", c->toString()));
 			break;
 	}
+	
+	current.removeAssumptions(c->bvarStrings());
+	
 	m_typeForBVar=ctx;
 	
 	if(current.type()==ExpressionType::Many && current.alternatives().size()==1) {
@@ -645,7 +648,8 @@ QString ExpressionTypeChecker::accept(const Container* c)
 		}	break;
 		case Container::lambda: {
 			QSet<QString> aux=m_lambdascope;
-			m_lambdascope+=c->bvarStrings().toSet();
+			QStringList bvars=c->bvarStrings();
+			m_lambdascope+=bvars.toSet();
 			c->m_params.last()->visit(this);
 			m_lambdascope=aux;
 			QMap<QString, ExpressionType> assumptions=current.assumptions();
@@ -654,8 +658,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 			ExpressionType res=ExpressionType(ExpressionType::Many);
 			foreach(const ExpressionType& alt, alts) {
 				QList<ExpressionType> args;
-				
-				foreach(const QString& bvar, c->bvarStrings()) {
+				foreach(const QString& bvar, bvars) {
 					ExpressionType toadd;
 					if(alt.assumptions().contains(bvar))
 						toadd=alt.assumptionFor(bvar);
@@ -673,6 +676,7 @@ QString ExpressionTypeChecker::accept(const Container* c)
 				res.addAlternative(ExpressionType(ExpressionType::Many, args));
 			}
 			current=res;
+			current.removeAssumptions(bvars);
 		}	break;
 		case Container::otherwise:
 		case Container::math:
