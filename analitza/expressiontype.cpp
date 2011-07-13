@@ -228,6 +228,17 @@ void ExpressionType::addAssumption(const QString& bvar, const Analitza::Expressi
 	}
 }
 
+void ExpressionType::removeAssumptions(const QStringList& bvarStrings)
+{
+	foreach(const QString& bvar, bvarStrings)
+		m_assumptions.remove(bvar);
+	
+	QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end();
+	for(; it!=itEnd; ++it) {
+		it->removeAssumptions(bvarStrings);
+	}
+}
+
 void ExpressionType::addAssumptions(const QMap<QString, ExpressionType>& a)
 {
 // 	qDebug() << "=====1" << m_assumptions << a;
