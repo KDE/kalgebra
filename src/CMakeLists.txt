@@ -1,5 +1,3 @@
-include_directories(${CMAKE_SOURCE_DIR}/libkdeedu/qtmmlwidget/ )
-
 if(OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
@@ -25,8 +23,6 @@ endif(OPENGL_FOUND)
 #uncomment this if oxygen icons for kalgebra are available
 #kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
-
-find_library(QTMML_LIBRARY qtmmlwidget)
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} analitza analitzagui ${QTMML_LIBRARY})

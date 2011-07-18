@@ -5,6 +5,7 @@ include(KDE4Defaults)
 set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 find_package(LibKdeEdu)
+find_library(QTMML_LIBRARY qtmmlwidget)
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml)
 
