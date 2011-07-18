@@ -228,6 +228,17 @@ void ExpressionType::addAssumption(const QString& bvar, const Analitza::Expressi
 	}
 }
 
+void ExpressionType::removeAssumptions(const QStringList& bvarStrings)
+{
+	foreach(const QString& bvar, bvarStrings)
+		m_assumptions.remove(bvar);
+	
+	QList<ExpressionType>::iterator it=m_contained.begin(), itEnd=m_contained.end();
+	for(; it!=itEnd; ++it) {
+		it->removeAssumptions(bvarStrings);
+	}
+}
+
 void ExpressionType::addAssumptions(const QMap<QString, ExpressionType>& a)
 {
 // 	qDebug() << "=====1" << m_assumptions << a;
@@ -294,6 +305,39 @@ ExpressionType ExpressionType::starsToType(const QMap< int, ExpressionType>& inf
 // 	deep--;
 // 	qDebug() << "MMMMMMMM" << ret << ret.assumptions() << m_assumptions;
 	
+	return ret;
+}
+
+bool ExpressionType::canCompareTo(const ExpressionType& type) const
+{
+	bool ret=type==*this;
+	if(!ret && type.m_type==m_type) {
+		switch(m_type) {
+			case ExpressionType::List:
+				ret=contained().canCompareTo(type.contained());
+				break;
+			case ExpressionType::Vector:
+				ret=contained().canCompareTo(type.contained());
+				if(m_size>0 && type.m_size>0)
+					ret = m_size == type.m_size;
+				break;
+			case ExpressionType::Object:
+				ret = m_objectName==type.m_objectName;
+				break;
+			case ExpressionType::Lambda:
+				ret = m_contained.size()==type.m_contained.size();
+				break;
+			case ExpressionType::Error:
+			case ExpressionType::Bool:
+			case ExpressionType::Char:
+			case ExpressionType::Value:
+			case ExpressionType::Any:
+			case ExpressionType::Many: //todo?
+				ret=true;
+				break;
+		}
+	} else if(!ret)
+		ret = (m_type==Any || m_type==Error) || (type.m_type==Any || type.m_type==Error);
 	return ret;
 }
 
@@ -667,6 +711,23 @@ bool ExpressionType::matchAssumptions(QMap< int, ExpressionType >* stars,
 	return ret;
 }
 
+QStringList ExpressionType::wrongAssumptions(const QMap< QString, ExpressionType >& assum1, const QMap< QString, ExpressionType >& assum2)
+{
+	QStringList ret;
+	QMap<QString, ExpressionType>::const_iterator it=assum1.constBegin(), itEnd=assum1.constEnd();
+	QMap<QString, ExpressionType>::const_iterator itFind, itFindEnd=assum2.constEnd();
+	
+	for(; it!=itEnd; ++it) {
+		itFind=assum2.find(it.key());
+		
+		if(itFind!=itFindEnd && *itFind!=*it && !itFind->canReduceTo(*it) && !it->canReduceTo(*itFind)) {
+			ret += it.key();
+		}
+	}
+	
+	return ret;
+}
+
 QList<ExpressionType> ExpressionType::manyFromArgs(const QList<ExpressionType>& args)
 {
 	QList<ExpressionType> funcs = QList<ExpressionType>() << ExpressionType(ExpressionType::Many);
@@ -725,4 +786,9 @@ QList<ExpressionType> ExpressionType::lambdaFromArgs(const QList<ExpressionType>
 	}
 	
 	return funcs;
+}
+
+QString ExpressionType::objectName() const
+{
+	return m_objectName;
 }

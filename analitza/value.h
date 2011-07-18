@@ -56,8 +56,6 @@ class ANALITZA_EXPORT Cn : public Object
 		/** Constructor. Creates a value that represents a character. */
 		explicit Cn(const QChar& c) : Object(Object::value), m_char(c.unicode()), m_format(Char) {}
 		
-		virtual ~Cn() {}
-		
 		/**
 		 *	Extracts the number from the @p e Dom element and saves it.
 		 */
@@ -108,12 +106,12 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns whether @p d is equal than this object.
 		 */
-		bool operator==(const Cn& d) const { return m_value==d.value(); }
+		bool operator==(const Cn& d) const { return m_value==d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less than this object.
 		 */
-		bool operator<(const Cn& d) const { return m_value<d.value(); }
+		bool operator<(const Cn& d) const { return m_value<d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less than this object's value.
@@ -123,7 +121,7 @@ class ANALITZA_EXPORT Cn : public Object
 		/**
 		 *	Returns whether @p d is less or equal than this object.
 		 */
-		bool operator<=(const Cn& d) const { return m_value<=d.value(); }
+		bool operator<=(const Cn& d) const { return m_value<=d.m_value; }
 		
 		/**
 		 *	Returns whether @p d is less or equal than this object's value.
@@ -135,16 +133,6 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		Cn operator=(double d) { m_value=d; return *this; }
 		
-		/**
-		 *	Increments by one the value.
-		 */
-		Cn operator++() { m_value++; return *this; }
-		
-		/**
-		 *	Increments by one the value.
-		 */
-		Cn operator++(int) { m_value++; return *this; }
-		
 		QChar character() const { Q_ASSERT(m_format==Char); return QChar(m_char); }
 		
 		virtual QString visit(ExpressionWriter*) const;
@@ -155,7 +143,6 @@ class ANALITZA_EXPORT Cn : public Object
 		void setCorrect(bool b) {m_correct = b; }*/
 		
 		virtual Object* copy() const;
-		virtual bool decorate(const QMap< QString, Object** >& scope);
 		
 		static Cn pi();
 		static Cn e();

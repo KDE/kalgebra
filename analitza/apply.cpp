@@ -153,7 +153,7 @@ bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) cons
 	bool matching=vars.size()==cvars.size();
 	matching &= bool(m_op)==bool(c->m_op) && (!m_op || m_op->matches(c->m_op, found));
 	
-	for(QList<Ci*>::const_iterator it=vars.constBegin(), cit=cvars.constBegin(), itEnd=vars.constEnd(); it!=itEnd; ++it) {
+	for(QList<Ci*>::const_iterator it=vars.constBegin(), cit=cvars.constBegin(), itEnd=vars.constEnd(); matching && it!=itEnd; ++it) {
 		matching &= (*it)->matches(*cit, found);
 	}
 	

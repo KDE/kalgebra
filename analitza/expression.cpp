@@ -280,7 +280,7 @@ bool Expression::ExpressionPrivate::canAdd(const Object* where, const Object* br
 	return correct;
 }
 
-static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
+static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope, const Object* parent=0)
 {
 	Q_ASSERT(o);
 	switch(o->type()) {
@@ -310,8 +310,18 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 			QMap<QString, int> newScope=scope;
 			
 			Container::const_iterator it=c->m_params.constBegin(), itEnd=c->m_params.constEnd();
-			if(c->containerType()==Container::declare)
+			if(c->containerType()==Container::declare) {
+				Ci* var = static_cast<Ci*>(*it);
 				++it;
+				
+				if((*it)->isContainer() && static_cast<const Container*>(*it)->containerType()==Container::lambda) {
+					newScope.insert(var->name(), next);
+					var->setBVarDepth(next++);
+				}
+			} else if(c->containerType()==Container::lambda &&
+				!(parent && parent->isContainer() && static_cast<const Container*>(parent)->containerType()==Container::declare)) {
+					++next;
+			}
 			
 			foreach(Ci* bvar, c->bvarCi()) {
 				newScope.insert(bvar->name(), next);
@@ -319,7 +329,7 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 			}
 			
 			for(; it!=itEnd; ++it)
-				variableDepth(*it, next, newScope);
+				variableDepth(*it, next, newScope, c);
 			
 		}	break;
 		case Object::apply: {
@@ -339,10 +349,10 @@ static void variableDepth(Object* o, int& next, const QMap<QString, int>& scope)
 				bvar->setBVarDepth(next++);
 			}
 			
-			Container::const_iterator it = c->firstValue();
-			for(; it!=c->constEnd(); ++it) {
+			Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
+			for(; it!=itEnd; ++it) {
 				int n=next;
-				variableDepth(*it, n, newScope);
+				variableDepth(*it, n, newScope, c);
 			}
 		}	break;
 		case Object::none:

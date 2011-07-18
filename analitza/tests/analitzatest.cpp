@@ -101,7 +101,7 @@ void AnalitzaTest::testTrivialCalculate_data()
 // 	QTest::newRow("emptysum") << "sum(x : x@list{})" << 0.;
 	
 	QTest::newRow("empty") << "" << 0.;
-	QTest::newRow("lambda") << "f:=x->f(x)" << 0.;
+	QTest::newRow("lambdacall") << "f:=x->f(x)" << 0.;
 }
 
 void AnalitzaTest::testTrivialCalculate()

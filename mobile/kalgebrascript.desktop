@@ -18,6 +18,7 @@ Name[gl]=Script de KAlgebra
 Name[it]=KAlgebra Script
 Name[ja]=KAlgebra スクリプト
 Name[km]=KAlgebra Script
+Name[ko]=KAlgebra 스크립트
 Name[nb]=KAlgebra-skript
 Name[nds]=KAlgebra-Skript
 Name[nl]=Script voor KAlgebra
@@ -28,6 +29,7 @@ Name[sl]=Skript KAlgebra
 Name[sv]=Kalgebra-skript
 Name[uk]=Скрипт KAlgebra
 Name[x-test]=xxKAlgebra Scriptxx
+Name[zh_CN]=KAlgebra 脚本
 Name[zh_TW]=KAlgebra 文稿
 
 [PropertyDef::X-KAlgebra-Priority]

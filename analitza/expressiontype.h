@@ -75,7 +75,15 @@ class ANALITZA_EXPORT ExpressionType
 		/** Returns a new type with the stars solved according t @p info */
 		ExpressionType starsToType(const QMap<int, ExpressionType>& info) const;
 		
+		/** @returns true if the current type can be converted into @p type */
 		bool canReduceTo(const ExpressionType& type) const;
+		
+		/**
+		 * @returns false in case that just by looking at the current type we see that it won't be able to be reduced to @p type.
+		 * Useful to improve error reporting
+		 */
+		bool canCompareTo(const ExpressionType& type) const;
+		
 		int increaseStars(int stars);
 		
 		ExpressionType& simplifyStars();
@@ -83,11 +91,15 @@ class ANALITZA_EXPORT ExpressionType
 		/** when it's a many type, reduce to the one(s) that can be reduced to */
 		void reduce(const ExpressionType& type);
 		
+		QString objectName() const;
+		
 		static ExpressionType minimumType(const ExpressionType& t1, const ExpressionType& t2);
 		static bool assumptionsMerge(QMap<QString, ExpressionType>& data, const QMap<QString, ExpressionType>& newmap);
 		static void assumptionsUnion(QMap< QString, Analitza::ExpressionType >& data, const QMap< QString, Analitza::ExpressionType >& newmap);
 		static QMap<int, ExpressionType> computeStars(const QMap<int, ExpressionType>& initial, const ExpressionType& candidate, const ExpressionType& type);
 		static bool matchAssumptions(QMap<int, ExpressionType>* stars, const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
+		static QStringList wrongAssumptions(const QMap<QString, ExpressionType>& assum1, const QMap<QString, ExpressionType>& assum2);
+		void removeAssumptions(const QStringList& bvarStrings);
 		static QList<ExpressionType> lambdaFromArgs(const QList<ExpressionType>& args);
 		static QList<ExpressionType> manyFromArgs(const QList<ExpressionType>& args);
 	private:

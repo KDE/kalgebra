@@ -58,7 +58,7 @@ QStringList printAll(const QVector<T*> & p)
 	return ret;
 }
 
-const int defsize = 5000;
+const int defsize = /*500*/0;
 
 Analyzer::Analyzer()
 	: m_vars(new Variables), m_varsOwned(true), m_hasdeps(true)
@@ -161,7 +161,7 @@ Expression Analyzer::calculateLambda()
 {
 	Expression e;
 	
-	if(!m_hasdeps && m_exp.isCorrect()) {
+	if(KDE_ISLIKELY(!m_hasdeps && m_exp.isCorrect())) {
 		Q_ASSERT(m_exp.tree()->isContainer());
 		Container* math=(Container*) m_exp.tree();
 		Q_ASSERT(math->m_params.first()->isContainer());
@@ -173,6 +173,8 @@ Expression Analyzer::calculateLambda()
 		Container* lambda=(Container*) math;
 		Q_ASSERT(lambda->containerType()==Container::lambda);
 		
+		if(KDE_ISUNLIKELY(m_runStack.first()!=lambda))
+			m_runStack.prepend(lambda);
 		m_runStackTop = 0;
 		e.setTree(calc(lambda->m_params.last()));
 	} else {
@@ -228,7 +230,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 // 						qDebug() << "%%%%%" << cond->toString() << p->m_params[1]->toString() << allfalse;
 						
 						delete cond;
-					} else if(allfalse) { //FIXME: Maybe should look for more pieces?
+					} else if(allfalse) {
 						ret=eval(p->m_params[0], resolve, unscoped);
 					}
 				}
@@ -243,8 +245,16 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				Container *r = c->copy();
 				Object* old=r->m_params.last();
 				
+				
+				int top = m_runStackTop;
+				m_runStackTop = m_runStack.size();
+				m_runStack.resize(m_runStackTop+c->bvarCount()+1);
+				
 				r->m_params.last()=eval(old, false, newUnscoped);
 				delete old;
+
+				m_runStack.resize(m_runStackTop);
+				m_runStackTop = top;
 				
 				alphaConversion(r, r->bvarCi().first()->depth());
 				Expression::computeDepth(r);
@@ -325,14 +335,15 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				const Container *cbody = dynamic_cast<Container*>(body);
 				if(resolve && cbody && cbody->m_params.size()==c->m_params.size() && cbody->containerType()==Container::lambda) {
 					int bvarsSize = cbody->bvarCount();
-					QVector<Object*> args(bvarsSize);
+					QVector<Object*> args(bvarsSize+1);
 					
+					args[0]=cbody->copy();
 					for(int i=0; i<bvarsSize; i++) {
-						args[i]=simp(eval(c->m_params[i+1], resolve, unscoped));
+						args[i+1]=simp(eval(c->m_params[i+1], resolve, unscoped));
 					}
 					int aux = m_runStackTop;
 					m_runStackTop = m_runStack.size();
-					m_runStack.resize(m_runStackTop+bvarsSize);
+					m_runStack.resize(m_runStackTop+bvarsSize+1);
 					
 					int i=0;
 					foreach(Object* o, args)
@@ -507,16 +518,9 @@ Object* Analyzer::calcDeclare(const Container* c)
 	const Ci *var = (const Ci*) c->m_params[0];
 	ret=simp(c->m_params[1]->copy());
 		
-	insertVariable(var->name(), ret);
+	bool corr = insertVariable(var->name(), ret);
 	
-	if(!ret || (ret->type()!=Object::vector && ret->type()!=Object::list && ret->type()!=Object::value))
-	{
-		delete ret;
-		
-		//Would be nice to return NaN
-		ret=new Cn(0.);
-	}
-	Q_ASSERT(ret);
+	Q_ASSERT(ret && corr);
 	return ret;
 }
 
@@ -629,25 +633,28 @@ Object* Analyzer::operate(const Apply* c)
 						(op.nparams()>-1 && count==op.nparams()) ||
 						opt==Operator::minus);
 			
-			QString correct;
+			QString* error=0;
 			if(count>=2) {
 				Apply::const_iterator it = c->firstValue(), itEnd=c->constEnd();
 				
 				ret = calc(*it);
 				++it;
 				for(; it!=itEnd; ++it) {
-					ret=Operations::reduce(opt, ret, calc(*it), correct);
+					ret=Operations::reduce(opt, ret, calc(*it), &error);
 					
-					if(KDE_ISUNLIKELY(!correct.isEmpty())) {
-						m_err.append(correct);
-						correct.clear();
+					if(KDE_ISUNLIKELY(error)) {
+						m_err.append(*error);
+						delete error;
+						error=0;
 						break;
 					}
 				}
 			} else {
-				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), correct);
-				if(KDE_ISUNLIKELY(!correct.isEmpty()))
-					m_err.append(correct);
+				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), &error);
+				if(KDE_ISUNLIKELY(error)) {
+					m_err.append(*error);
+					delete error;
+				}
 			}
 		}	break;
 	}
@@ -863,12 +870,12 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	if(!it)
 		return initial;
 	
-	QString correct;
+	QString* correct=0;
 	Operator::OperatorType type=t.operatorType();
 	do {
 		Object *val=calc(n.m_params.last());
-		ret=Operations::reduce(type, ret, val, correct);
-	} while(KDE_ISLIKELY(it->hasNext() && correct.isEmpty()));
+		ret=Operations::reduce(type, ret, val, &correct);
+	} while(KDE_ISLIKELY(it->hasNext() && !correct));
 	
 	m_runStack.resize(top);
 	
@@ -911,20 +918,21 @@ Object* Analyzer::func(const Apply& n)
 	Object* ret=0;
 	if(function && function->m_params.size()>1) {
 		int top = m_runStack.size(), aux=m_runStackTop;
-		m_runStack.resize(top+bvarsize);
+		m_runStack.resize(top+bvarsize+1);
 		
+		m_runStack[top] = function;
 		for(int i=0; i<bvarsize; i++) {
 	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
 			Object* val=calc(n.m_params[i+1]);
-			m_runStack[top+i] = val;
+			m_runStack[top+i+1] = val;
 	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
 		}
 		m_runStackTop = top;
 		
-	// 	qDebug() << "diiiiiiiii" << m_runStack.size() << vars.size() << m_runStackTop;
+// 		qDebug() << "diiiiiiiii" << function->toString() << m_runStack.size() << bvarsize << m_runStackTop << printAll(m_runStack);
 		ret=calc(function->m_params.last());
 		
-		qDeleteAll(m_runStack.begin()+top, m_runStack.end());
+		qDeleteAll(m_runStack.begin()+top+1, m_runStack.end());
 		if(!borrowed)
 			delete function;
 		
@@ -944,9 +952,10 @@ Object* Analyzer::func(const Apply& n)
 // 			qDebug() << "parm" << i << n.m_params[i]->toString() << args.last().toString();
 		}
 		Expression exp=(*func)(args);
-		if(exp.isCorrect())
-			ret=exp.tree()->copy();
-		else {
+		if(exp.isCorrect()) {
+			ret=exp.tree();
+			exp.setTree(0);
+		} else {
 			m_err += exp.error();
 			ret = new Cn;
 		}
@@ -1021,7 +1030,7 @@ Object* Analyzer::simp(Object* root)
 			case Container::lambda: {
 				int top = m_runStackTop;
 				m_runStackTop = m_runStack.size();
-				m_runStack.resize(m_runStackTop+c->bvarCount());
+				m_runStack.resize(m_runStackTop+c->bvarCount()+1);
 				
 				c->m_params.last()=simp(c->m_params.last());
 				m_runStack.resize(m_runStackTop);
@@ -1301,9 +1310,9 @@ Object* Analyzer::simpApply(Apply* c)
 			if(val->type()==Object::vector)
 			{
 				c->m_params.last()=0;
-				QString correct;
-				val=Operations::reduceUnary(Operator::card, val, correct);
-				//TODO: if(!correct) Handle me!
+				QString* err=0;
+				val=Operations::reduceUnary(Operator::card, val, &err);
+				if(KDE_ISUNLIKELY(err)) { delete err; }
 				delete c;
 				root=val;
 			}
@@ -1315,8 +1324,8 @@ Object* Analyzer::simpApply(Apply* c)
 			Object* idx=c->m_params[0];
 			Object* value=c->m_params[1];
 			if(idx->type()==Object::value && value->type()==Object::vector) {
-				QString err;
-				Object* ret=Operations::reduce(Operator::selector, idx, value, err);
+				QString* err=0;
+				Object* ret=Operations::reduce(Operator::selector, idx, value, &err);
 				
 				if(ret) {
 					root=ret;
@@ -1337,9 +1346,9 @@ Object* Analyzer::simpApply(Apply* c)
 				if(newParams.isEmpty())
 					newParams.append(*it);
 				else {
-					QString err;
+					QString* err=0;
 					if((*it)->type()==Object::list && newParams.last()->type()==Object::list) {
-						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), err);
+						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), &err);
 						newParams.last()=ret;
 						delete *it;
 					} else {
@@ -1435,8 +1444,8 @@ Object* Analyzer::simpScalar(Apply * c)
 			Object* aux = *i;
 			
 			if(value) {
-				QString correct;
-				value=Operations::reduce(o.operatorType(), value, aux, correct);
+				QString* err=0;
+				value=Operations::reduce(o.operatorType(), value, aux, &err);
 			} else
 				value=aux;
 			d=true;
@@ -1868,6 +1877,9 @@ Analitza::Object* Analyzer::variableValue(Ci* var)
 	else
 		ret = m_vars->value(var->name());
 	
+// 	static int hits = 0, misses = 0;
+// 	if(var->depth()>=0) hits++; else misses++;
+// 	qDebug() << "pepepe" << hits << misses;
 	return ret;
 }
 
