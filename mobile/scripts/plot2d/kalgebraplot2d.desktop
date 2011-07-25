@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=Graph 2D
+Name[bg]=Двуизмерна графика
 Name[bs]=Graf 2D
 Name[ca]=Gràfic 2D
 Name[ca@valencia]=Gràfic 2D
