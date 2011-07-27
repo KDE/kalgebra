@@ -80,7 +80,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 
 	m_funcs->clear();
 	m_formula->setContent("<math />");
-// 	connect(m_list, SIGNAL(clicked ( const QModelIndex & )), this, SLOT(activated(const QModelIndex &)));
+// 	connect(m_list, SIGNAL(clicked(QModelIndex)), this, SLOT(activated(QModelIndex)));
 }
 
 Dictionary::~Dictionary()

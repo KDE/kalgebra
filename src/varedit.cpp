@@ -43,8 +43,8 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	this->setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
 	this->setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
 	
-	connect( this, SIGNAL( applyClicked() ), this, SLOT( accept() ) );
-	connect( this, SIGNAL( okClicked() ), this, SLOT( reject() ) );
+	connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
+	connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
 	
 	m_exp = new ExpressionEdit(widget);
 	connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));

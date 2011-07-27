@@ -65,12 +65,12 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	defViewport = userViewport;
 	this->setAutoFillBackground(false);
 	
-	connect(m_model, SIGNAL(dataChanged( const QModelIndex&, const QModelIndex& )),
-		this, SLOT(update(const QModelIndex&, const QModelIndex)));
-	connect(m_model, SIGNAL( rowsInserted ( const QModelIndex &, int, int ) ),
-		this, SLOT(addFuncs(const QModelIndex&, int, int)));
-	connect(m_model, SIGNAL( rowsRemoved ( const QModelIndex &, int, int ) ),
-		this, SLOT(removeFuncs(const QModelIndex&, int, int)));
+	connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+		this, SLOT(update(QModelIndex,QModelIndex)));
+	connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+		this, SLOT(addFuncs(QModelIndex,int,int)));
+	connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+		this, SLOT(removeFuncs(QModelIndex,int,int)));
 }
 
 Graph2D::~Graph2D() {}

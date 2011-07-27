@@ -228,9 +228,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_results->addOptionsObserver(new Add2DOption(this));
 	
 	connect(b_varsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(valueChanged()));
-	connect(b_funcs, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(edit_func(const QModelIndex &)));
+	connect(b_funcs, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(edit_func(QModelIndex)));
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
-	connect(m_graph2d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(m_graph2d, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	connect(m_graph2d, SIGNAL(viewportChanged(QRectF)), b_viewport, SLOT(setViewport(QRectF)));
 	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(setViewport(QRectF)));
 	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
@@ -286,7 +286,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_layo->addWidget(t_exp);
 	
 	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(new_func3d()));
-	connect(m_graph3d, SIGNAL(status(const QString &)), this, SLOT(changeStatusBar(const QString &)));
+	connect(m_graph3d, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	c_results->addOptionsObserver(new Add3DOption(this));
 	
 	////////menu
@@ -327,8 +327,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	d_filter=new KLineEdit(w);
 	d_filter->setClearButtonShown(true);
 	d_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-	connect(d_filter, SIGNAL(textChanged(const QString&)), dic, SLOT(setFilter(const QString&)));
-	connect(d_filter, SIGNAL(textChanged(const QString&)), this, SLOT(dictionaryFilterChanged(const QString&)));
+	connect(d_filter, SIGNAL(textChanged(QString)), dic, SLOT(setFilter(QString)));
+	connect(d_filter, SIGNAL(textChanged(QString)), this, SLOT(dictionaryFilterChanged(QString)));
 	d_list = new QListView(w);
 	d_list->setModel(dic->model());
 	d_list->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
@@ -337,15 +337,15 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	leftLayo->addWidget(d_list);
 	d_dock->setWidget(w);
 	
-	connect(d_list->selectionModel(), SIGNAL(currentChanged (QModelIndex, QModelIndex)),
-		dic, SLOT(activated(QModelIndex , QModelIndex)));
+	connect(d_list->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+		dic, SLOT(activated(QModelIndex,QModelIndex)));
 	
 	//EODictionary
 	//Ego's reminder
 	menuBar()->addMenu(helpMenu());
 	
-	connect(b_funcsModel, SIGNAL(functionModified(QString, Analitza::Expression)),
-			c_results, SLOT(modifyVariable(QString, Analitza::Expression)));
+	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
+			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
 			c_results, SLOT(removeVariable(QString)));
 	

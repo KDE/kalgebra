@@ -98,9 +98,9 @@ ExpressionEdit::ExpressionEdit(QWidget *parent, AlgebraHighlighter::Mode inimode
 	
 	connect(this, SIGNAL(returnPressed()), this, SLOT(returnP()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMov()));
-	connect(this, SIGNAL(signalHelper(const QString&)), this, SLOT(helper(const QString&)));
-	connect(m_completer, SIGNAL(activated(const QString&)), this, SLOT(completed(const QString&)));
-// 	connect(m_completer, SIGNAL(activated(const QModelIndex&)), this, SLOT(completed(const QModelIndex&)));
+	connect(this, SIGNAL(signalHelper(QString)), this, SLOT(helper(QString)));
+	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(completed(QString)));
+// 	connect(m_completer, SIGNAL(activated(QModelIndex)), this, SLOT(completed(QModelIndex)));
 	
 	setMode(inimode);
 	m_lineHeight = QFontMetrics(currentCharFormat().font()).height();

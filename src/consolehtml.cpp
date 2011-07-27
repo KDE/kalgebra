@@ -49,9 +49,9 @@ ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation
 	
 	view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	
-	connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), this, SLOT(context(const QString &, const QPoint &)));
-	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl, KParts::OpenUrlArguments, KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
-	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int, int)));
+	connect(this, SIGNAL(popupMenu(QString,QPoint)), this, SLOT(context(QString,QPoint)));
+	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
+	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int,int)));
 	
 	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
