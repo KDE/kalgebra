@@ -68,9 +68,9 @@ Object* AbstractExpressionTransformer::walk##T(const T* pattern)\
 	return ret;\
 }
 
-ITERATION_WALKER(List);
-ITERATION_WALKER(Vector, pattern->size());
-ITERATION_WALKER(Container, pattern->containerType());
+ITERATION_WALKER(List)
+ITERATION_WALKER(Vector, pattern->size())
+ITERATION_WALKER(Container, pattern->containerType())
 
 Object* AbstractExpressionTransformer::walkApply(const Analitza::Apply* pattern)
 {

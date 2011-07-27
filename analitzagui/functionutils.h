@@ -31,6 +31,6 @@ namespace FunctionUtils
 	QLineF mirrorXY(const QLineF& l);
 	
 	QLineF slopeToLine(const double &der);
-};
+}
 
 #endif // FUNCTIONUTILS_H

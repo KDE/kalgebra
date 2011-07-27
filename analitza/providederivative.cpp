@@ -167,8 +167,8 @@ Object* ProvideDerivative::derivateContent##T(const T * v)\
 	return ret;\
 }
 
-ITERATE(List);
-ITERATE(Vector, v->size());
+ITERATE(List)
+ITERATE(Vector, v->size())
 
 Object* ProvideDerivative::derivativeApply(const Apply* c)
 {
