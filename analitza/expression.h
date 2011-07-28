@@ -216,8 +216,10 @@ class ANALITZA_EXPORT Expression
 		/** creates an expression filled with just a string */
 		static Expression constructString(const QString& str);
 		
-		/** @returns if a non-mathml expression is fully introduced (e.g. has closed all parentheses) */
-		static bool isCompleteExpression(const QString& exp);
+		/** @returns if a non-mathml expression is fully introduced (e.g. has closed all parentheses).
+			@param justempty tells if it's an expression with just spaces and comments
+		 */
+		static bool isCompleteExpression(const QString& exp, bool justempty=false);
 	private:
 		class ExpressionPrivate;
 		QSharedDataPointer<ExpressionPrivate> d;

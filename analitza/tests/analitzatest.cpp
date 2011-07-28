@@ -100,7 +100,6 @@ void AnalitzaTest::testTrivialCalculate_data()
 	QTest::newRow("forall") << "forall(x : x@list{true,true,false})" << 0.;
 // 	QTest::newRow("emptysum") << "sum(x : x@list{})" << 0.;
 	
-	QTest::newRow("empty") << "" << 0.;
 	QTest::newRow("lambdacall") << "f:=x->f(x)" << 0.;
 }
 
@@ -195,8 +194,6 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("forall") << "forall(x : x@list{x,true,true})" << "forall(x:x@list { x, true, true })";
 	QTest::newRow("exists") << "exists(x : x@list{x,false,false})" << "exists(x:x@list { x, false, false })";
-	
-	QTest::newRow("empty") << "" << "";
 }
 
 void AnalitzaTest::testTrivialEvaluate()

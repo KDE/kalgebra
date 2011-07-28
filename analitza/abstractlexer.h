@@ -47,6 +47,8 @@ class ANALITZA_EXPORT AbstractLexer
 		
 		TOKEN current;
 		QString error() const { return m_err; }
+		bool isCompleteExpression(bool justempty=false);
+		
 	protected:
 		QString m_err;
 		QString m_source;

@@ -109,6 +109,9 @@ void Analyzer::importScript(QTextStream* stream)
 		line += '\n'; //make sure the \n is passed so that comments work properly
 		
 		if(Expression::isCompleteExpression(line) || stream->atEnd()) {
+			if(stream->atEnd() && !Expression::isCompleteExpression(line, true))
+				break;
+			
 			setExpression(Expression(line, Expression::isMathML(line)));
 			
 			calculate();
@@ -671,10 +674,7 @@ Object* Analyzer::operate(const Container* c)
 	
 	switch(c->containerType()) {
 		case Container::math:
-			if(c->isEmpty())
-				ret=new Cn(0.);
-			else
-				ret=calc(*c->constBegin());
+			ret=calc(*c->constBegin());
 			break;
 		case Container::declare:
 			ret=calcDeclare(c);

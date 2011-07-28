@@ -110,3 +110,11 @@ int AbstractLexer::lex()
 	
 	return current.type;
 }
+
+bool AbstractLexer::isCompleteExpression(bool justempty)
+{
+	bool anycodetoken=false;
+	for(int current=lex(); current>0 && !(justempty && anycodetoken); current=lex()) { anycodetoken |= current!=ExpressionTable::tComment; }
+	
+	return anycodetoken && isCompletelyRead();
+}
