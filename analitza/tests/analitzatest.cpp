@@ -569,7 +569,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("lambda") << "(x->x+1)(2)" << "3";
 	QTest::newRow("lambda1") << "(x->x+1)(y)" << "y+1";
 	QTest::newRow("lambda2") << "(x->x+1)(x+1)" << "(x->x+1)(x+1)";
-// 	QTest::newRow("lambda2")<< "(x->x+x)(x)" << "2*x";
+// 	QTest::newRow("lambda3")<< "(x->x+x)(y)" << "2*y";
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
 	QTest::newRow("levelout") << "-y-(x+y)" << "-2*y-x";
@@ -585,6 +585,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("trig") << "sin(x)/cos(x)" << "sin(x)/cos(x)";
 	
 	QTest::newRow("mono") << "2*x*y+3*x*y" << "5*x*y";
+	QTest::newRow("mono1") << "2*y+y" << "3*y";
 }
 
 void AnalitzaTest::testSimplify()

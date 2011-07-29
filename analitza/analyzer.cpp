@@ -1513,16 +1513,21 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 					imono.first = sc->value();
 					imono.second = cx->m_params[var];
 					
+					cx->m_params[var]=0;
+					delete cx;
+					
 					ismono=true;
 				}
 			} else if(mult==Operator::times) {
 				imono.first=1;
 				Apply::iterator it=cx->firstValue(), itEnd=cx->end();
 				QList<Object*> vars;
+				QList<Object*> values;
 				
 				for(; it!=itEnd; ++it) {
 					if((*it)->type()==Object::value) {
 						imono.first *= static_cast<Cn*>(*it)->value();
+						values += *it;
 						ismono=true;
 					} else {
 						vars += *it;
@@ -1532,6 +1537,7 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 				if(ismono) {
 					cx->m_params = vars;
 					imono.second = cx;
+					qDeleteAll(values);
 				}
 			}
 		} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
@@ -1563,7 +1569,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	Operator o(c->firstOperator());
 	bool sign=true, first=true;
 	
-	for(Apply::const_iterator it=c->m_params.constBegin(), itEnd=c->constEnd(); it!=itEnd; ++it) {
+	for(Apply::const_iterator it=c->firstValue(), itEnd=c->constEnd(); it!=itEnd; ++it, first=false) {
 		Monomial imono = constructMonomial(o, *it, sign);
 		
 		if(o==Operator::minus && !first)
@@ -1581,17 +1587,17 @@ Object* Analyzer::simpPolynomials(Apply* c)
 // 		qDebug() << "->" << c->toString() << c->firstOperator().toString() << found;
 		if(found) {
 			it1->first += imono.first;
+			delete imono.second;
 			
 			if(it1->first==0.) {
 				delete it1->second;
 				monos.erase(it1);
 			}
 		} else {
-			imono.second = imono.second->copy();
 			monos.append(imono);
 		}
-		first=false;
 	}
+	c->m_params.clear();
 	
 	delete c;
 	c=0;
@@ -1600,7 +1606,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	if(monos.count()==1) {
 		root=createMono(o, monos.first());
 	} else if(monos.count()>1) {
-		c= new Apply;
+		Apply* c= new Apply;
 		c->appendBranch(new Operator(o));
 		
 		QList<Monomial>::iterator i=monos.begin();
@@ -1612,6 +1618,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 			
 			if(toAdd)
 				c->appendBranch(toAdd);
+			
 			first=false;
 		}
 		root=c;
@@ -1622,10 +1629,7 @@ Object* Analyzer::simpPolynomials(Apply* c)
 		cn->appendBranch(new Operator(Operator::minus));
 		cn->appendBranch(root);
 		root=cn;
-	}
-	
-	if(!root) {
-		delete c;
+	} else if(!root) {
 		root=new Cn(0.);
 	}
 	
