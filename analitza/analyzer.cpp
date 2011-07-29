@@ -514,6 +514,20 @@ Object* Analyzer::calcPiecewise(const Container* c)
 	return ret;
 }
 
+Object* Analyzer::calcMath(const Container* c)
+{
+	return calc(*c->constBegin());
+}
+
+Object* Analyzer::calcLambda(const Container* c)
+{
+	Container * cc=c->copy();
+	if(cc->bvarCount()>0)
+		alphaConversion(cc, cc->bvarCi().first()->depth());
+	Expression::computeDepth(cc);
+	return cc;
+}
+
 Object* Analyzer::calcDeclare(const Container* c)
 {
 	Object *ret=0;
@@ -606,9 +620,6 @@ Object* Analyzer::operate(const Apply* c)
 		case Operator::function:
 			ret = func(*c);
 			break;
-		case Operator::none:
-			ret = calc(*c->firstValue());
-			break;
 		case Operator::diff: {
 			//TODO: Make multibvar
 			QList<Ci*> bvars=c->bvarCi();
@@ -666,43 +677,16 @@ Object* Analyzer::operate(const Apply* c)
 	return ret;
 }
 
+Analyzer::funcContainer Analyzer::operateContainer[Container::domainofapplication+1] =
+	{0, &Analyzer::calcMath, &Analyzer::calcDeclare, &Analyzer::calcLambda, 0,0,0,0,&Analyzer::calcPiecewise,0,0};
+
 Object* Analyzer::operate(const Container* c)
 {
 	Q_ASSERT(c);
-// 	Q_ASSERT(!c->isEmpty()); //Not valid anymore since we can have empty <math/>
-	Object* ret=0;
+	funcContainer f=operateContainer[c->containerType()];
+	Q_ASSERT(f);
+	Object* ret=(this->*f)(c);
 	
-	switch(c->containerType()) {
-		case Container::math:
-			ret=calc(*c->constBegin());
-			break;
-		case Container::declare:
-			ret=calcDeclare(c);
-			break;
-		case Container::piecewise:
-			ret=calcPiecewise(c);
-			break;
-		case Container::lambda: {
-			Container * cc=c->copy();
-// 			AnalitzaUtils::objectWalker(cc, "aa");
-			if(cc->bvarCount()>0)
-				alphaConversion(cc, cc->bvarCi().first()->depth());
-// 			AnalitzaUtils::objectWalker(cc, "bb");
-			Expression::computeDepth(cc);
-// 			AnalitzaUtils::objectWalker(cc, "cc");
-// 			qDebug() << "PAAAAAAAAAAAAAA" << printAll(m_runStack);
-			ret=cc;
-		}	break;
-		case Container::piece:
-		case Container::otherwise:
-		case Container::bvar:
-		case Container::uplimit:
-		case Container::downlimit:
-		case Container::domainofapplication:
-		case Container::none:
-			Q_ASSERT(false && "tried to calculate a wrong item");
-			break;
-	}
 	Q_ASSERT(ret);
 	return ret;
 }

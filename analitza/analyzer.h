@@ -144,6 +144,9 @@ class ANALITZA_EXPORT Analyzer
 		/** Makes it possible to easily enter a bunch of code to execute it */
 		void importScript(QTextStream* stream);
 	private:
+		typedef Object* (Analyzer::*funcContainer)(const Container*);
+		static funcContainer operateContainer[];
+		
 		Expression m_exp;
 		Variables *m_vars;
 		QStringList m_err;
@@ -168,6 +171,8 @@ class ANALITZA_EXPORT Analyzer
 		
 		Object* calcPiecewise(const Container* c);
 		Object* calcDeclare(const Container* c);
+		Object* calcMath(const Container* c);
+		Object* calcLambda(const Container* c);
 		
 		Object* simp(Object* root);
 		Object* simpScalar(Apply* c);
