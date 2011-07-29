@@ -1544,6 +1544,8 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 			}
 		} else if(cx->firstOperator()==Operator::minus && cx->isUnary()) {
 			imono = constructMonomial(o, *cx->firstValue(), sign);
+			*cx->firstValue()=0;
+			delete cx;
 			ismono=true;
 				
 			if(o==Operator::times)
