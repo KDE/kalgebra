@@ -859,6 +859,7 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 	do {
 		Object *val=calc(n.m_params.last());
 		ret=Operations::reduce(type, ret, val, &correct);
+		delete correct;
 	} while(KDE_ISLIKELY(it->hasNext() && !correct));
 	
 	m_runStack.resize(top);
@@ -1310,6 +1311,7 @@ Object* Analyzer::simpApply(Apply* c)
 			if(idx->type()==Object::value && value->type()==Object::vector) {
 				QString* err=0;
 				Object* ret=Operations::reduce(Operator::selector, idx, value, &err);
+				delete err;
 				
 				if(ret) {
 					root=ret;
@@ -1330,9 +1332,10 @@ Object* Analyzer::simpApply(Apply* c)
 				if(newParams.isEmpty())
 					newParams.append(*it);
 				else {
-					QString* err=0;
 					if((*it)->type()==Object::list && newParams.last()->type()==Object::list) {
+						QString* err=0;
 						Object* ret=Operations::reduce(Operator::_union, newParams.last(), (*it)->copy(), &err);
+						delete err;
 						newParams.last()=ret;
 						delete *it;
 					} else {
@@ -1430,6 +1433,7 @@ Object* Analyzer::simpScalar(Apply * c)
 			if(value) {
 				QString* err=0;
 				value=Operations::reduce(o.operatorType(), value, aux, &err);
+				delete err;
 			} else
 				value=aux;
 			d=true;
