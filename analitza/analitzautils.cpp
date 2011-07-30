@@ -459,8 +459,11 @@ Object* replaceDepth(int depth, Object* tree, Object* towhat)
 			return replaceDepthTemplate<Container, Container::iterator>(depth, static_cast<Container*>(tree), towhat);
 		case Object::variable: {
 			Ci* var=(Ci*) tree;
-			return var->depth()==depth ? towhat->copy() : tree;
-		}
+			if(var->depth()==depth) {
+				delete tree;
+				tree=towhat->copy();
+			}
+		}	break;
 		case Object::apply: {
 			Apply* a=static_cast<Apply*>(tree);
 			Apply::iterator it=a->firstValue(), itEnd=a->end();
