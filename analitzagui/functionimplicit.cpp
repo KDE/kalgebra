@@ -124,18 +124,16 @@ struct FunctionImplicit : public FunctionImpl
 {
     explicit FunctionImplicit(const Expression &e, Variables* v)
         : FunctionImpl(e, v, 0,2*M_PI)
-        , dx(new Analitza::Variables)
-        , dy(new Analitza::Variables)
     {
         initImplicitFunction();
     }
 
     FunctionImplicit(const FunctionImplicit &fx) : FunctionImpl(fx)
-        , dx(new Analitza::Variables)
-        , dy(new Analitza::Variables)
     {
         initImplicitFunction();
     }
+    
+    virtual ~FunctionImplicit() { delete vx; delete vy; }
 
     void updatePoints(const QRect& viewport);
     QPair<QPointF, QString> calc(const QPointF& dp);

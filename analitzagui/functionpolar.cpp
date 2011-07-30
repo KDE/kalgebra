@@ -37,6 +37,7 @@ struct FunctionPolar : public FunctionImpl
 {
 	FunctionPolar(const Expression &e, Variables* v);
 	FunctionPolar(const FunctionPolar &fp);
+	virtual ~FunctionPolar() { delete m_th; }
 	
 	void updatePoints(const QRect& viewport);
 	QPair<QPointF, QString> calc(const QPointF& dp);
