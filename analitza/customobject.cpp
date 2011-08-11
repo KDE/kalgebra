@@ -21,6 +21,14 @@
 
 using namespace Analitza;
 
+CustomObject::CustomObject(const QVariant& v, CustomObject::destructor f, int* r)
+	: Object(Object::custom), m_destructor(f), m_refcount(r), m_value(v)
+{}
+
+CustomObject::CustomObject(const QVariant& v, CustomObject::destructor f)
+	: Object(Object::custom), m_destructor(f), m_refcount(new int(1)), m_value(v)
+{}
+
 CustomObject::~CustomObject()
 {
 	(*m_refcount)--;

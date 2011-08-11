@@ -39,7 +39,7 @@ class ANALITZA_EXPORT CustomObject : public Object
 {
 	public:
 		typedef void (*destructor)(const QVariant& v);
-		explicit CustomObject(const QVariant& v, destructor f) : Object(Object::custom), m_destructor(f), m_refcount(new int(1)), m_value(v) {}
+		explicit CustomObject(const QVariant& v, destructor f);
 		virtual ~CustomObject();
 		
 		virtual Object* copy() const;
@@ -50,7 +50,7 @@ class ANALITZA_EXPORT CustomObject : public Object
 		QVariant value() const { return m_value; }
 		
 	private:
-		explicit CustomObject(const QVariant& v, destructor f, int* r) : Object(Object::custom), m_destructor(f), m_refcount(r), m_value(v) {}
+		explicit CustomObject(const QVariant& v, destructor f, int* r);
 		destructor m_destructor;
 		int* m_refcount;
 		QVariant m_value;
