@@ -712,10 +712,8 @@ void Expression::setTree(Object* o)
 	d->m_tree=o;
 }
 
-bool Expression::isReal() const
-{
-	return d->m_tree && d->m_tree->type()==Object::value;
-}
+bool Expression::isReal() const { return d->m_tree && d->m_tree->type()==Object::value; }
+bool Expression::isCustomObject() const { return d->m_tree && d->m_tree->type()==Object::custom; }
 
 Expression Expression::constructString(const QString& str)
 {

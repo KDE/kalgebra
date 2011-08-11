@@ -179,6 +179,9 @@ class ANALITZA_EXPORT Expression
 		/** @returns true if the expression is a value, false otherwise. */
 		bool isReal() const;
 		
+		/** @returns true if the expression is a custom object, false otherwise. */
+		bool isCustomObject() const;
+		
 		/** @returns a list of the parameters in case this expression represents
 			a lambda construction. */
 		QList<Ci*> parameters() const;
