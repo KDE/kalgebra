@@ -95,7 +95,6 @@ void ConsoleHtml::openClickedUrl(const KUrl& url)
 	QString id =url.queryItem("id");
 	QString exp=url.queryItem("func");
 	
-	qDebug() << "open!!" << id;
 	foreach(InlineOptions* opt, m_options) {
 		if(opt->id() == id) {
 			opt->triggerOption(Analitza::Expression(exp, false));
