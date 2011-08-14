@@ -20,7 +20,7 @@
 #include "expressionparser.h"
 #include <QDebug>
 #include <QStringList>
-#include <KLocale>
+#include "localize.h"
 
 QMap<QChar, int> initializeOperators()
 {

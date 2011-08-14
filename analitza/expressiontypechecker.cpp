@@ -25,7 +25,7 @@
 #include "expression.h"
 #include "analitzautils.h"
 #include "operations.h"
-#include <klocalizedstring.h>
+#include <localize.h>
 #include "apply.h"
 #include "value.h"
 

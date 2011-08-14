@@ -17,7 +17,6 @@
  *************************************************************************************/
 #include "expression.h"
 
-#include <KLocale>
 #include <QDomElement>
 
 #include "explexer.h"
@@ -35,6 +34,7 @@
 #include "analitzautils.h"
 #include "apply.h"
 #include "customobject.h"
+#include "localize.h"
 
 static void print_dom(const QDomNode& in, int ind);
 

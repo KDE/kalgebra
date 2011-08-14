@@ -18,9 +18,9 @@
 
 #include "mathmlpresentationlexer.h"
 #include "expressionparser.h"
+#include "localize.h"
 #include <QDebug>
 #include <QStringList>
-#include <KLocale>
 
 MathMLPresentationLexer::MathMLPresentationLexer(const QString &source)
 	: AbstractLexer(source), m_xml(source)

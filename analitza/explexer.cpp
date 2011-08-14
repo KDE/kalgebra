@@ -18,7 +18,7 @@
 
 #include "explexer.h"
 #include "expressionparser.h"
-#include <KLocalizedString>
+#include "localize.h"
 #include <QDebug>
 
 ExpLexer::ExpLexer(const QString &source)

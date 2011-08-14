@@ -24,7 +24,7 @@
 #include "value.h"
 #include "container.h"
 #include "variable.h"
-#include <KLocalizedString>
+#include "localize.h"
 #include "list.h"
 #include "vector.h"
 #include <QtCore/qsharedpointer.h>

@@ -24,7 +24,7 @@
 #include "list.h"
 
 #include <KDebug>
-#include <KLocale>
+#include "localize.h"
 #include "variable.h"
 #include "analitzautils.h"
 

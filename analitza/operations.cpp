@@ -20,7 +20,6 @@
 
 #include <math.h>
 
-#include <KLocale>
 #include <cmath>
 #include <kdemacros.h>
 
@@ -30,6 +29,7 @@
 #include "list.h"
 #include "expressiontypechecker.h"
 #include "customobject.h"
+#include "localize.h"
 
 using namespace std;
 using namespace Analitza;

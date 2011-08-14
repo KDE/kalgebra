@@ -22,7 +22,7 @@
 #include "container.h"
 #include "vector.h"
 #include <QStringList>
-#include <KLocale>
+#include "localize.h"
 #include "list.h"
 #include "variable.h"
 #include "stringexpressionwriter.h"

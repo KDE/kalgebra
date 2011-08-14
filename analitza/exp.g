@@ -133,7 +133,7 @@ class ANALITZA_EXPORT ExpressionParser : protected $table
 #include "expressionparser.h"
 #include "abstractlexer.h"
 #include "operator.h"
-#include <KLocale>
+#include "localize.h"
 
 ExpressionParser::ExpressionParser()
 {}

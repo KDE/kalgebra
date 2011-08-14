@@ -36,6 +36,8 @@ set(analitza_SRCS
 	mathmlpresentationlexer.cpp
 	analitzautils.cpp
 	substituteexpression.cpp
+	
+	localize.cpp
 )
 
 kde4_add_library(analitza SHARED ${analitza_SRCS})

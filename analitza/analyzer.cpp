@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "analyzer.h"
-#include <KLocale>
+#include "localize.h"
 #include <kdemacros.h>
 
 #include "operations.h"
