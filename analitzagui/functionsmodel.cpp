@@ -18,7 +18,6 @@
 
 #include "functionsmodel.h"
 #include <KLocale>
-#include <KApplication>
 #include <KDebug>
 #include <QPixmap>
 #include <QFont>

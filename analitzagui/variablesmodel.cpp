@@ -21,7 +21,6 @@
 #include <analitza/expression.h>
 #include <analitza/value.h>
 #include <KLocale>
-#include <KApplication>
 #include <KDebug>
 
 using Analitza::Variables;

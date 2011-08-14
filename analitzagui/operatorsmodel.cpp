@@ -20,7 +20,6 @@
 #include <analitza/operator.h>
 #include <analitza/variables.h>
 #include <KLocale>
-#include <KApplication>
 #include <QFont>
 
 using Analitza::Operator;
@@ -63,7 +62,7 @@ QVariant OperatorsModel::data(const QModelIndex & index, int role) const
 			}
 		}
 	} else if(role==Qt::FontRole && index.column()==1) {
-		QFont f = KApplication::font();
+		QFont f;
 		f.setItalic(true);
 		ret=f;
 	}
