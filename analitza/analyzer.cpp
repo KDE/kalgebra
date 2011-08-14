@@ -653,7 +653,8 @@ Object* Analyzer::operate(const Apply* c)
 				
 				ret = calc(*it);
 				++it;
-				for(; it!=itEnd; ++it) {
+				bool stop=Operations::isNull(opt, ret);
+				for(; !stop && it!=itEnd; ++it) {
 					ret=Operations::reduce(opt, ret, calc(*it), &error);
 					
 					if(KDE_ISUNLIKELY(error)) {
@@ -662,6 +663,8 @@ Object* Analyzer::operate(const Apply* c)
 						error=0;
 						break;
 					}
+					
+					stop=Operations::isNull(opt, ret);
 				}
 			} else {
 				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), &error);

@@ -34,6 +34,12 @@
 using namespace std;
 using namespace Analitza;
 
+bool Operations::isNull(Operator::OperatorType opt, Object* ret)
+{
+	return ret->type()==Object::value &&
+		((opt==Operator::_and && static_cast<Cn*>(ret)->value()==0.) || (opt==Operator::_or && static_cast<Cn*>(ret)->value()==1.));
+}
+
 Cn* Operations::reduceRealReal(enum Operator::OperatorType op, Cn *oper, const Cn *oper1, QString** correct)
 {
 	int residu;

@@ -43,6 +43,8 @@ class Operations
 		static QList<ExpressionType> infer(Analitza::Operator::OperatorType op);
 		static QList<ExpressionType> inferUnary(Operator::OperatorType op);
 		
+		/** @returns whether no matter what value is applied to @p ret with @p opt, it will always return @p ret */
+		static bool isNull(Analitza::Operator::OperatorType opt, Object* ret);
 	private:
 		static UnaryOp opsUnary[Object::custom+1];
 		static BinaryOp opsBinary[Object::custom+1][Object::custom+1];

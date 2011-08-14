@@ -119,12 +119,21 @@ class Wrong : public Analitza::FunctionDefinition
 	}
 };
 
-
 class MeaningOfLife : public Analitza::FunctionDefinition
 {
 	virtual Expression operator()(const QList< Expression >& args)
 	{
 		return Expression(Cn(42.));
+	}
+};
+
+class JustCrash : public Analitza::FunctionDefinition
+{
+	virtual Expression operator()(const QList< Expression >& args)
+	{
+		Q_ASSERT(false);
+		operator()(args);
+		return Expression(Cn(true));
 	}
 };
 
@@ -175,6 +184,11 @@ BuiltInTest::BuiltInTest(QObject* parent)
 	ExpressionType justReturn(ExpressionType::Lambda);
 	justReturn.addParameter(ExpressionType(ExpressionType::Value));
 	a.builtinMethods()->insertFunction("lifesmeaning", justReturn, new MeaningOfLife);
+	
+	ExpressionType justCrash(ExpressionType::Lambda);
+	justCrash.addParameter(ExpressionType(ExpressionType::Value));
+	justCrash.addParameter(ExpressionType(ExpressionType::Bool));
+	a.builtinMethods()->insertFunction("justcrash", justCrash, new JustCrash);
 }
 
 BuiltInTest::~BuiltInTest()
@@ -208,6 +222,11 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("error3") << (IN "tires(wrong(3))") << "errcomp";
 	
 	QTest::newRow("onearg") << (IN "lifesmeaning()") << "42";
+	
+	QTest::newRow("and") << (IN "and(false, justcrash(33))") << "false";
+	QTest::newRow("or") << (IN "or(true, justcrash(33))") << "true";
+	QTest::newRow("and1") << (IN "and(false, true, justcrash(33))") << "false";
+	QTest::newRow("or1") << (IN "or(true, false, justcrash(33))") << "true";
 }
 
 void BuiltInTest::testCall()
