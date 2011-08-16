@@ -120,7 +120,7 @@ public:
 	
 	virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
 	
-	Container* extractType(Container::ContainerType t) const;
+	const Container* extractType(Container::ContainerType t) const;
 	
 	/** @returns how many bvars are there in the container */
 	int bvarCount() const;

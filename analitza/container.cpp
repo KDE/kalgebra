@@ -154,30 +154,6 @@ bool Container::isNumber() const
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
-#warning this should go in favour of the typesystem, if possible
-bool isValue(Object* o)
-{
-	bool ret=false;
-	switch(o->type()) {
-		case Object::value:
-		case Object::variable:
-		case Object::vector:
-		case Object::list:
-		case Object::apply:
-		case Object::custom:
-			ret=true;
-			break;
-		case Object::container:
-			if(((Container*) o)->isNumber())
-				ret=true;
-			break;
-		case Object::oper:
-		case Object::none:
-			break;
-	}
-	return ret;
-}
-
 QString Container::tagName() const
 {
 	return QString(m_typeStr[m_cont_type]);
@@ -200,10 +176,10 @@ bool Container::matches(const Object* exp, QMap<QString, const Object*>* found) 
 	return matching;
 }
 
-Container* Container::extractType(Container::ContainerType t) const
+const Container* Container::extractType(Container::ContainerType t) const
 {
-	for(Container::const_iterator it=m_params.begin(); it!=m_params.end(); ++it) {
-		Container *c = (Container*) (*it);
+	for(Container::const_iterator it=m_params.constBegin(); it!=m_params.constEnd(); ++it) {
+		const Container *c = (const Container*) (*it);
 		if(c->isContainer() && c->containerType()==t)
 			return c;
 	}
