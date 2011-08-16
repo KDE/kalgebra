@@ -577,18 +577,16 @@ Object* Analyzer::calc(const Object* root)
 		case Object::custom:
 			ret=root->copy();
 			break;
-		case Object::variable: {
-			Ci* a=(Ci*) root;
-			
-			ret=variableValue(a);
+		case Object::variable:
+			ret=variableValue((Ci*) root);
 			if(ret)
 				ret = calc(ret);
 			else {
 				Container* c= new Container(Container::lambda);
-				c->appendBranch(a->copy());
+				c->appendBranch(root->copy());
 				ret=c;
 			}
-		}	break;
+			break;
 		case Object::oper:
 		case Object::none:
 			break;
