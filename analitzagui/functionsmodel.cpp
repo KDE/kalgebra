@@ -58,7 +58,7 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 			break;
 		case Qt::FontRole:
 			if(var==m_selectedRow) {
-				QFont f(qApp->font());
+				QFont f;
 				f.setBold(true);
 				ret=f;
 			}
