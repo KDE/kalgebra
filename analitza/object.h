@@ -66,9 +66,6 @@ public:
 	/** Returns the string representation of the object. */
 	QString toString() const;
 	
-	/** Converts a @p tag to a type. */
-	static enum ObjectType whatType(const QString& tag); //FIXME: Needed?
-	
 	/** Returns some string depending on the visior */
 	virtual QString visit(ExpressionWriter* exp) const =0;
 	
