@@ -850,7 +850,7 @@ Object* Analyzer::boundedOperation(const Apply& n, const Operator& t, Object* in
 		Object *val=calc(n.m_params.last());
 		ret=Operations::reduce(type, ret, val, &correct);
 		delete correct;
-	} while(KDE_ISLIKELY(it->hasNext() && !correct));
+	} while(KDE_ISLIKELY(it->hasNext() && !correct && !isNull(type, ret)));
 	
 	m_runStack.resize(top);
 	
@@ -1922,7 +1922,7 @@ Object* Analyzer::applyAlpha(Object* o, int min)
 				Ci *var = static_cast<Ci*>(o);
 				int depth = var->depth();
 // 				qDebug() << "puuuu" << var->name() << depth << '<' << min << printAll(m_runStack);
-				if(depth<min && m_runStackTop+var->depth()<m_runStack.size()) {
+				if(depth>0 && depth<min && m_runStackTop+var->depth()<m_runStack.size()) {
 					Object* newvalue = variableValue(var);
 					if(newvalue) {
 						delete var;
