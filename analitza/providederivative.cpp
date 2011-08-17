@@ -179,7 +179,7 @@ Object* ProvideDerivative::derivativeApply(const Apply* c)
 			Apply *r= new Apply;
 			r->appendBranch(new Operator(op));
 			
-			Container::const_iterator it(c->firstValue());
+			Apply::const_iterator it(c->firstValue());
 			for(; it!=c->constEnd(); ++it) {
 				Apply* a=makeDiff(*it);
 				r->appendBranch(walk(a));

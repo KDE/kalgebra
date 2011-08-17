@@ -39,8 +39,8 @@ class ANALITZA_EXPORT Apply : public Object
 		Apply();
 		virtual ~Apply();
 		
-		typedef QList<Object*>::const_iterator const_iterator;
-		typedef QList<Object*>::iterator iterator;
+		typedef QVector<Object*>::const_iterator const_iterator;
+		typedef QVector<Object*>::iterator iterator;
 		
 		virtual Apply* copy() const;
 		virtual bool matches(const Analitza::Object* exp, QMap< QString, const Analitza::Object* >* found) const;
@@ -73,25 +73,25 @@ class ANALITZA_EXPORT Apply : public Object
 		iterator end() { return m_params.end(); }
 		const_iterator firstValue() const { return m_params.constBegin(); }
 		const_iterator constEnd() const { return m_params.constEnd(); }
-		QList<Ci*> bvarCi() const { return m_bvars; }
+		QVector<Ci*> bvarCi() const { return m_bvars; }
 		bool isUnary() const { return m_params.size()==1; }
 		bool isEmpty() const { return m_params.isEmpty(); }
 		bool operator==(const Apply& a) const;
 		
 		/** Adds a @p o branch right after @p before of the Container. */
 		void insertBranch(Apply::iterator before, Object* o) { m_params.insert(before, o); }
-		QList<Object*> values() const { return m_params; }
+		QVector<Object*> values() const { return m_params; }
 		
 		/** @returns if there's any bounding specified */
 		bool hasBoundings() const;
 		
-		QList<Object*> m_params;
+		QVector<Object*> m_params;
 	private:
 		Apply(const Apply& );
 		bool addBranch(Object* o);
 		
 		Object* m_ulimit, *m_dlimit, *m_domain;
-		QList<Ci*> m_bvars;
+		QVector<Ci*> m_bvars;
 		Operator* m_op;
 };
 

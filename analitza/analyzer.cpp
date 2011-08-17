@@ -400,7 +400,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 					BoundingIterator *it = r->domain()? initBVarsContainer(r, top, r->domain()) : initBVarsRange(r, top, r->dlimit(), r->ulimit());
 					
 					if(it) {
-						QList<Object*> values;
+						QVector<Object*> values;
 						Object* element = r->m_params.first();
 						do {
 							values += eval(element, resolve, unscoped);
@@ -620,7 +620,7 @@ Object* Analyzer::operate(const Apply* c)
 			break;
 		case Operator::diff: {
 			//TODO: Make multibvar
-			QList<Ci*> bvars=c->bvarCi();
+			QVector<Ci*> bvars=c->bvarCi();
 			
 			//We construct the lambda
 			Object* o=derivative(bvars[0]->name(), *c->firstValue());
@@ -801,16 +801,16 @@ BoundingIterator* Analyzer::initializeBVars(const Apply* n, int base)
 BoundingIterator* Analyzer::initBVarsContainer(const Analitza::Apply* n, int base, Object* domain)
 {
 	BoundingIterator* ret = 0;
-	QList<Ci*> bvars=n->bvarCi();
+	QVector<Ci*> bvars=n->bvarCi();
 	
 	switch(domain->type()) {
 		case Object::list:
 			if(static_cast<List*>(domain)->size()>0)
-				ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<List*>(domain));
+				ret=new TypeBoundingIterator<List, List::const_iterator>(m_runStack, base, bvars, static_cast<List*>(domain));
 			break;
 		case Object::vector:
 			if(static_cast<Vector*>(domain)->size()>0)
-				ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars.toVector(), static_cast<Vector*>(domain));
+				ret=new TypeBoundingIterator<Vector, Vector::const_iterator>(m_runStack, base, bvars, static_cast<Vector*>(domain));
 			break;
 		default:
 			Q_ASSERT(false && "Type not supported for bounding.");
@@ -829,7 +829,7 @@ BoundingIterator* Analyzer::initBVarsRange(const Apply* n, int base, Object* obj
 		double dl=d->value();
 		
 		if(dl<=ul) {
-			QList<Ci*> bvars=n->bvarCi();
+			QVector<Ci*> bvars=n->bvarCi();
 			QVector<Cn*> rr(bvars.size());
 			
 			for(int i=0; i<bvars.size(); ++i) {
@@ -967,7 +967,7 @@ void Analyzer::simplify()
 
 void Analyzer::levelOut(Apply *c, Apply *ob, Apply::iterator &pos)
 {
-	Container::iterator it = ob->firstValue();
+	Apply::iterator it = ob->firstValue();
 	for(; it!=ob->end(); pos++) {
 		pos=c->m_params.insert(pos, *it);
 		
@@ -1033,7 +1033,7 @@ Object* Analyzer::simp(Object* root)
 Object* Analyzer::simpApply(Apply* c)
 {
 	Object* root=c;
-	Container::iterator it;
+	Apply::iterator it;
 	Operator o = c->firstOperator();
 	bool d;
 	
@@ -1326,7 +1326,7 @@ Object* Analyzer::simpApply(Apply* c)
 		case Operator::_union: {
 			Apply::iterator it=c->firstValue(), itEnd=c->end();
 			
-			QList<Object*> newParams;
+			QVector<Object*> newParams;
 			for(; it!=itEnd; ++it) {
 				*it=simp(*it);
 				
@@ -1347,7 +1347,7 @@ Object* Analyzer::simpApply(Apply* c)
 			}
 			
 			if(newParams.last()==0)
-				newParams.removeLast();
+				newParams.resize(newParams.size()-1);
 			
 			//if only one, remove union
 			if(newParams.size()==1) {
@@ -1421,7 +1421,7 @@ Object* Analyzer::simpApply(Apply* c)
 Object* Analyzer::simpScalar(Apply * c)
 {
 	Object *value=0;
-	Container::iterator i = c->firstValue();
+	Apply::iterator i = c->firstValue();
 	Operator o = c->firstOperator();
 	bool firstvalue = i!=c->end() && ((*i)->type()==Object::value || ((*i)->type()==Object::vector && !hasVars(*i)));
 	for(; i!=c->end();) {
@@ -1481,10 +1481,13 @@ Object* createMono(const Operator& o, const Monomial& p)
 	} else {
 		Apply *cint = new Apply;
 		cint->appendBranch(new Operator(mult));
-		cint->appendBranch(p.second);
-		cint->appendBranch(new Cn(p.first));
-		if(mult==Operator::times)
-			cint->m_params.swap(0,1);
+		if(mult==Operator::times) {
+			cint->appendBranch(new Cn(p.first));
+			cint->appendBranch(p.second);
+		} else {
+			cint->appendBranch(p.second);
+			cint->appendBranch(new Cn(p.first));
+		}
 		toAdd=cint;
 	}
 	return toAdd;
@@ -1526,8 +1529,8 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 			} else if(mult==Operator::times) {
 				imono.first=1;
 				Apply::iterator it=cx->firstValue(), itEnd=cx->end();
-				QList<Object*> vars;
-				QList<Object*> values;
+				QVector<Object*> vars;
+				QVector<Object*> values;
 				
 				for(; it!=itEnd; ++it) {
 					if((*it)->type()==Object::value) {
@@ -1643,6 +1646,23 @@ Object* Analyzer::simpPolynomials(Apply* c)
 	return root;
 }
 
+int removeAll(QVector<Object*>& v, Object* o)
+{
+// 	int removed=0;
+// 	for(QVector<Object*>::iterator it=v.begin(), itEnd=v.end(); it!=itEnd;) {
+// 		if(*it==o)
+// 			it=v.erase(it);
+// 		else
+// 			++it;
+// 	}
+// 	
+// 	return removed;
+
+//TODO: remove this... -.-
+	QList<Object*> hack=v.toList();
+	return hack.removeAll(o);
+}
+
 Object* Analyzer::simpSum(Apply* c)
 {
 	Object* ret=c;
@@ -1650,7 +1670,7 @@ Object* Analyzer::simpSum(Apply* c)
 	
 	if(cval->isApply() && cval->firstOperator()==Operator::times) {
 		QSet<QString> bvars=c->bvarStrings().toSet();
-		QList<Object*> sum, out;
+		QVector<Object*> sum, out;
 		Apply::iterator it=cval->firstValue(), itEnd=cval->end();
 		for(; it!=itEnd; ++it) {
 			if(hasTheVar(bvars, *it)) {
@@ -1660,7 +1680,7 @@ Object* Analyzer::simpSum(Apply* c)
 				*it=0;
 			}
 		}
-		int removed=cval->m_params.removeAll(0);
+		int removed=removeAll(cval->m_params, 0);
 		
 		if(removed>0) {
 			Apply* nc=new Apply;

@@ -279,7 +279,7 @@ struct ObjectWalker : public ExpressionWriter
 		if(c->dlimit()) { qDebug() << prefix().constData() << "dl: "; visitNow(c->dlimit()); }
 		if(!c->bvarCi().isEmpty()) { qDebug() << prefix().constData() << "bvars: " << c->bvarStrings(); }
 		
-		for(Container::const_iterator it=c->m_params.constBegin(); it<c->constEnd(); ++it)
+		for(Apply::const_iterator it=c->m_params.constBegin(); it<c->constEnd(); ++it)
 			visitNow(*it);
 		ind--;
 		return QString();

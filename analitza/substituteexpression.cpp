@@ -46,7 +46,7 @@ Object* SubstituteExpression::walkApply(const Apply* pattern)
 	ret->domain()=walk(pattern->domain());
 	
 	PushValue<QStringList> v(m_bvars, m_bvars);
-	QList<Ci*> bvars = pattern->bvarCi();
+	QVector<Ci*> bvars = pattern->bvarCi();
 	foreach(Ci* bvar, bvars) {
 		Ci* nbvar = bvar->copy();
 		QString name = bvar->name();

@@ -149,11 +149,11 @@ bool Apply::matches(const Object* exp, QMap<QString, const Object*>* found) cons
 	if(m_params.count()!=c->m_params.count())
 		return false;
 	
-	QList<Ci*> vars=bvarCi(), cvars = c->bvarCi();
+	QVector<Ci*> vars=m_bvars, cvars = c->bvarCi();
 	bool matching=vars.size()==cvars.size();
 	matching &= bool(m_op)==bool(c->m_op) && (!m_op || m_op->matches(c->m_op, found));
 	
-	for(QList<Ci*>::const_iterator it=vars.constBegin(), cit=cvars.constBegin(), itEnd=vars.constEnd(); matching && it!=itEnd; ++it) {
+	for(QVector<Ci*>::const_iterator it=vars.constBegin(), cit=cvars.constBegin(), itEnd=vars.constEnd(); matching && it!=itEnd; ++it) {
 		matching &= (*it)->matches(*cit, found);
 	}
 	

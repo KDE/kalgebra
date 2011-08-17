@@ -134,12 +134,12 @@ QList<ExpressionType> ExpressionTypeChecker::computePairs(const QList<Expression
 	return ret;
 }
 
-ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QList< Object* >& parameters)
+ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Object* >& parameters)
 {
 	Q_ASSERT(o->operatorType()!=Operator::function);
 	
 	QList<ExpressionType> paramtypes;
-	for(QList<Object*>::const_iterator it=parameters.constBegin(), itEnd=parameters.constEnd(); it!=itEnd; ++it) {
+	for(QVector<Object*>::const_iterator it=parameters.constBegin(), itEnd=parameters.constEnd(); it!=itEnd; ++it) {
 		(*it)->visit(this);
 		paramtypes += current;
 	}
