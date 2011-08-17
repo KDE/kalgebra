@@ -168,6 +168,7 @@ class ANALITZA_EXPORT Analyzer
 		Object* exists(const Apply& c);
 		Object* forall(const Apply& c);
 		Object* func(const Apply& c);
+		Object* calcDiff(const Apply* c);
 		
 		Object* calcPiecewise(const Container* c);
 		Object* calcDeclare(const Container* c);

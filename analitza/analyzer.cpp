@@ -596,6 +596,12 @@ Object* Analyzer::calc(const Object* root)
 	return ret;
 }
 
+bool isNull(Analitza::Operator::OperatorType opt, Object* ret)
+{
+	return ret->type()==Object::value &&
+		((opt==Operator::_and && static_cast<Cn*>(ret)->value()==0.) || (opt==Operator::_or && static_cast<Cn*>(ret)->value()==1.));
+}
+
 Object* Analyzer::operate(const Apply* c)
 {
 	Object* ret=0;
@@ -618,26 +624,9 @@ Object* Analyzer::operate(const Apply* c)
 		case Operator::function:
 			ret = func(*c);
 			break;
-		case Operator::diff: {
-			//TODO: Make multibvar
-			QVector<Ci*> bvars=c->bvarCi();
-			
-			//We construct the lambda
-			Object* o=derivative(bvars[0]->name(), *c->firstValue());
-			o=simp(o);
-			
-			Container* cc=new Container(Container::lambda);
-			foreach(const Ci* v, bvars) {
-				Container* bvar=new Container(Container::bvar);
-				bvar->appendBranch(v->copy());
-				cc->appendBranch(bvar);
-			}
-			
-			cc->appendBranch(o);
-			ret=cc;
-			
-			Expression::computeDepth(ret);
-		}	break;
+		case Operator::diff:
+			ret = calcDiff(c);
+			break;
 		default: {
 			int count=c->countValues();
 			Q_ASSERT(count>0);
@@ -651,7 +640,7 @@ Object* Analyzer::operate(const Apply* c)
 				
 				ret = calc(*it);
 				++it;
-				bool stop=Operations::isNull(opt, ret);
+				bool stop=isNull(opt, ret);
 				for(; !stop && it!=itEnd; ++it) {
 					ret=Operations::reduce(opt, ret, calc(*it), &error);
 					
@@ -662,7 +651,7 @@ Object* Analyzer::operate(const Apply* c)
 						break;
 					}
 					
-					stop=Operations::isNull(opt, ret);
+					stop=isNull(opt, ret);
 				}
 			} else {
 				ret=Operations::reduceUnary(opt, calc(*c->firstValue()), &error);
@@ -948,6 +937,29 @@ Object* Analyzer::func(const Apply& n)
 // 		qDebug() << "called" << ret->toString();
 	}
 	
+	return ret;
+}
+
+Object* Analyzer::calcDiff(const Apply* c)
+{
+	//TODO: Make multibvar
+	QVector<Ci*> bvars=c->bvarCi();
+	
+	//We construct the lambda
+	Object* o=derivative(bvars[0]->name(), *c->firstValue());
+	o=simp(o);
+	
+	Container* cc=new Container(Container::lambda);
+	foreach(const Ci* v, bvars) {
+		Container* bvar=new Container(Container::bvar);
+		bvar->appendBranch(v->copy());
+		cc->appendBranch(bvar);
+	}
+	
+	cc->appendBranch(o);
+	Container* ret=cc;
+	
+	Expression::computeDepth(ret);
 	return ret;
 }
 
