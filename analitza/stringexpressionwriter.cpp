@@ -176,16 +176,19 @@ QString StringExpressionWriter::accept ( const Analitza::Apply* a )
 			n='('+n+')';
 		
 		toret += QString("%1(%2)").arg(n).arg(ret.join(", "));
+	} else if(op.operatorType()==Operator::selector) {
+		if(a->m_params.last()->isApply()) {
+			const Apply* a1=static_cast<const Apply*>(a->m_params.last());
+			if(s_operators.contains(a1->firstOperator().operatorType()))
+				ret.last()='('+ret.last()+')';
+		}
+		
+		toret += QString("%1[%2]").arg(ret.last()).arg(ret.first());
 	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
 		toret += ret.join(s_operators.value(op.operatorType()));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
 		toret += '-'+ret[0];
-	else if(op.operatorType()==Operator::selector) {
-		QString value = ret.takeLast();
-		if(a->m_params.last()->isApply())
-			value = '('+value+')';
-		toret += QString("%1[%2]").arg(value).arg(ret.join(", "));
-	} else {
+	else {
 		QString bounding;
 		if(!bounds.isEmpty() || !bvars.isEmpty()) {
 			if(bvars.count()!=1) bounding +='(';

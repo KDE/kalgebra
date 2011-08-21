@@ -204,6 +204,7 @@ void BuiltInTest::testCall_data()
 	QTest::newRow("negfib") << (IN "fib(-1)") << "err";
 	QTest::newRow("zerofib") << (IN "fib(0)") << "0";
 	QTest::newRow("fib") << (IN "fib(23)") << "28657";
+	QTest::newRow("fibmap") << (IN "map(fib, list{1,5,10})") << "list { 1, 5, 55 }";
 	
 	QTest::newRow("vechicle") << (IN "tires(vehicle(2))") << "2";
 	QTest::newRow("varcar") << (IN "car:=vehicle(4)" << "tires(car)") << "4";

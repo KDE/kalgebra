@@ -52,6 +52,9 @@ class ANALITZA_EXPORT Operator : public Object
 			sum, product, diff,
 			card, scalarproduct, selector, _union,
 			forall, exists,
+			
+			map, filter,
+			
 			function, nOfOps
 		};
 		/** Constructor. Creates an operator with @p t type .*/

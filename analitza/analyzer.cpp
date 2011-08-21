@@ -33,6 +33,62 @@
 #include "apply.h"
 #include "providederivative.h"
 
+// #define SCRIPT_PROFILER
+
+#ifdef SCRIPT_PROFILER
+#include <QTime>
+#include <QFile>
+
+class ScriptProfiler
+{
+public:
+	ScriptProfiler()
+	{
+		f=new QFile("/tmp/analitza_profile");
+		bool a=f->open(QFile::WriteOnly);
+		Q_ASSERT(a);
+		stream=new QTextStream(f);
+		
+		t.start();
+	}
+	
+	~ScriptProfiler() {
+		delete f; delete stream;
+	}
+	
+	void push(const QString& name)
+	{
+		if(times.isEmpty())
+			t.restart();
+		times.push(Node(name, t.elapsed()));
+	}
+	
+	void pop() {
+		Node n = times.pop();
+		
+		*stream << "callf" << n.name << QString::number(t.elapsed()-n.start) << endl;
+		if(times.isEmpty()) {
+			t.restart();
+			*stream << endl;
+		}
+	}
+private:
+	struct Node {
+		Node(const QString& name, int time) : name(name), start(time) {}
+		Node() : start(-1) {}
+		
+		QString name; int start;
+	};
+	
+	QTime t;
+	QStack<Node> times;
+	QTextStream* stream;
+	QFile* f;
+};
+
+ScriptProfiler profiler;
+#endif
+
 using namespace AnalitzaUtils;
 using namespace Analitza;
 
@@ -627,6 +683,12 @@ Object* Analyzer::operate(const Apply* c)
 		case Operator::diff:
 			ret = calcDiff(c);
 			break;
+		case Operator::map:
+			ret = calcMap(c);
+			break;
+		case Operator::filter:
+			ret = calcFilter(c);
+			break;
 		default: {
 			int count=c->countValues();
 			Q_ASSERT(count>0);
@@ -883,24 +945,39 @@ Object* Analyzer::func(const Apply& n)
 {
 // 	qDebug() << "calling" << n.toString();
 	bool borrowed = n.m_params[0]->type()==Object::variable;
-	Container *function=0;
-	if(borrowed)
-		function = (Container*) variableValue((Ci*) n.m_params[0]);
-	else
-		function = (Container*) calc(n.m_params[0]);
+	Container *function = static_cast<Container*>(borrowed ? variableValue((Ci*) n.m_params[0]) : calc(n.m_params[0]));
 	
 	int bvarsize = n.m_params.size()-1;
+	QVector<Object*> args(bvarsize);
+	
+	for(int i=1; i<bvarsize+1; i++) {
+		args[i-1]=calc(n.m_params[i]);
+	}
+	
+// 	qDebug() << "called" << ret->toString() << t.elapsed();
+	Object* ret = calcCallFunction(function, args, n.m_params[0]);
+	
+	if(!borrowed)
+		delete function;
+	
+	return ret;
+}
+
+Object* Analyzer::calcCallFunction(Container* function, const QVector<Object*>& args, const Object* oper)
+{
 	Object* ret=0;
+	int bvarsize = args.size();
+	
 	if(function && function->m_params.size()>1) {
+#ifdef SCRIPT_PROFILER
+		profiler.push(borrowed? static_cast<Ci*>(n.m_params[0])->name() : function->toString());
+#endif
 		int top = m_runStack.size(), aux=m_runStackTop;
 		m_runStack.resize(top+bvarsize+1);
 		
 		m_runStack[top] = function;
-		for(int i=0; i<bvarsize; i++) {
-	// 		qDebug() << "cp" << n.m_params[i+1]->toString();
-			Object* val=calc(n.m_params[i+1]);
-			m_runStack[top+i+1] = val;
-	// 		qDebug() << "parm" << i << n.m_params[i+1]->toString() << val->toString();
+		for(int i=0; i<args.size(); i++) {
+			m_runStack[top+i+1] = args[i];
 		}
 		m_runStackTop = top;
 		
@@ -908,37 +985,76 @@ Object* Analyzer::func(const Apply& n)
 		ret=calc(function->m_params.last());
 		
 		qDeleteAll(m_runStack.begin()+top+1, m_runStack.end());
-		if(!borrowed)
-			delete function;
 		
 		m_runStackTop = aux;
 		m_runStack.resize(top);
 	} else {
-		Q_ASSERT(function ? (function->m_params[0]->type()==Object::variable && function->m_params.size()==1) : n.m_params[0]->type()==Object::variable);
-		QString id=static_cast<const Ci*>(function ? function->m_params[0] : n.m_params[0])->name();
+// 		Q_ASSERT(function ? (function->m_params[0]->type()==Object::variable && function->m_params.size()==1) : n.m_params[0]->type()==Object::variable);
+		QString id=static_cast<const Ci*>(function ? function->m_params[0] : oper)->name();
 		FunctionDefinition* func=m_builtin.function(id);
-		QList<Expression> args;
+		QList<Expression> expargs;
 		
-// 		qDebug() << "calling..." << id << n.m_params.size() << n.toString();
-		for(int i=1; i<bvarsize+1; i++) {
-	// 		qDebug() << "cp" << n.m_params[i]->toString();
-			Object* val=calc(n.m_params[i]);
-			args += Expression(val);
-// 			qDebug() << "parm" << i << n.m_params[i]->toString() << args.last().toString();
+		for(int i=0; i<args.size(); i++) {
+			expargs += Expression(args[i]);
 		}
-		Expression exp=(*func)(args);
-		if(exp.isCorrect()) {
+#ifdef SCRIPT_PROFILER
+		profiler.push(id);
+#endif
+		Expression exp=(*func)(expargs);
+		if(KDE_ISUNLIKELY(exp.isCorrect())) {
 			ret=exp.tree();
 			exp.setTree(0);
 		} else {
 			m_err += exp.error();
 			ret = new Cn;
 		}
-// 		qDebug() << "called" << ret->toString();
 	}
+#ifdef SCRIPT_PROFILER
+	profiler.pop();
+#endif
 	
 	return ret;
 }
+
+Object* Analyzer::calcMap(const Apply* c)
+{
+	Container* f=static_cast<Container*>(calc(*c->firstValue()));
+	List* l=static_cast<List*>(calc(*(c->firstValue()+1)));
+	
+	List::iterator it=l->begin(), itEnd=l->end();
+	for(; it!=itEnd; ++it) {
+		QVector<Object*> args=QVector<Object*>(1, *it);
+		*it = calcCallFunction(f, args, f);
+	}
+	
+	delete f;
+	return l;
+}
+
+Object* Analyzer::calcFilter(const Apply* c)
+{
+	Container* f=static_cast<Container*>(calc(*c->firstValue()));
+	List* l=static_cast<List*>(calc(*(c->firstValue()+1)));
+	
+	List::iterator it=l->begin(), itEnd=l->end();
+	List* ret = new List;
+	for(; it!=itEnd; ++it) {
+		QVector<Object*> args(1, (*it)->copy());
+		
+		Object* ss=*it;
+		Cn* val = static_cast<Cn*>(calcCallFunction(f, args, f));
+		
+		if(val->isTrue()) {
+			ret->appendBranch(ss->copy());
+		}
+		delete val;
+	}
+	
+	delete l;
+	delete f;
+	return ret;
+}
+
 
 Object* Analyzer::calcDiff(const Apply* c)
 {

@@ -513,6 +513,16 @@ QList<ExpressionType> Operations::infer(Operator::OperatorType op)
 							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
 							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)));
 			break;
+		case Operator::map:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Any, 1)).addParameter(ExpressionType(ExpressionType::Any, 2)),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 2)));
+			break;
+		case Operator::filter:
+			ret << TypeTriplet(ExpressionType(ExpressionType::Lambda).addParameter(ExpressionType(ExpressionType::Any, 1)).addParameter(ExpressionType::Bool),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)),
+							   ExpressionType(ExpressionType::List, ExpressionType(ExpressionType::Any, 1)));
+			break;
 		default:
 			break;
 	}

@@ -53,7 +53,7 @@ class ANALITZA_EXPORT List : public Object
 		virtual bool isZero() const;
 		
 		virtual bool matches(const Object* pattern, QMap< QString, const Object* >* found) const;
-		virtual Object* copy() const;
+		virtual List* copy() const;
 		bool operator==(const List& v) const;
 		bool isEmpty() const { return m_elements.isEmpty(); }
 		

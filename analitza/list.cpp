@@ -41,7 +41,7 @@ List::~List()
 	qDeleteAll(m_elements);
 }
 
-Object* List::copy() const
+List* List::copy() const
 {
 	List *v=new List;
 	foreach(const Object* o, m_elements)

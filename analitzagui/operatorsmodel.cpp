@@ -344,6 +344,12 @@ QString OperatorsModel::description(const Analitza::Operator& o)
 		case Operator::_union:
 			s = i18n("Joins several items of the same type");
 			break;
+		case Operator::map:
+			s = i18n("Applies a function to every element in a list");
+			break;
+		case Operator::filter:
+			s = i18n("Removes all elements that don't fit a condition");
+			break;
 		case Operator::function:
 		case Operator::nOfOps:
 		case Operator::none:
@@ -439,7 +445,7 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			s="root(x, 2)";
 			break;
 		case Operator::selector:
-			s="(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]";
+			s="scalarproduct(vector { 0, x }, vector { x, 0 })[1]";
 			break;
 		case Operator::sum:
 			s="x*sum(t*t:t=0..3)";
@@ -451,13 +457,19 @@ QString OperatorsModel::example(const Analitza::Operator& o)
 			s="card(vector { x, 1, 2 })";
 			break;
 		case Operator::scalarproduct:
-			s="(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]";
+			s="scalarproduct(vector { 0, x }, vector { x, 0 })[1]";
 			break;
 		case Operator::diff:
 			s="(diff(x^2:x))(x)";
 			break;
 		case Operator::_union:
-			s="(union(list { 1, 2, 3 }, list { 4, 5, 6 }))[rem(floor(x), 5)+3]";
+			s="union(list { 1, 2, 3 }, list { 4, 5, 6 })[rem(floor(x), 5)+3]";
+			break;
+		case Operator::map:
+			s=QString("map(x->x+x, list { 1, 2, 3, 4, 5, 6 })[rem(floor(x), 5)+3]").arg(o.toString());
+			break;
+		case Operator::filter:
+			s=QString("filter(u->rem(u, 2)=0, list { 2, 4, 3, 4, 8, 6 })[rem(floor(x), 5)+3]").arg(o.toString());
 			break;
 		case Operator::factorial:
 		case Operator::arcsech:

@@ -169,11 +169,14 @@ class ANALITZA_EXPORT Analyzer
 		Object* forall(const Apply& c);
 		Object* func(const Apply& c);
 		Object* calcDiff(const Apply* c);
+		Object* calcMap(const Apply* c);
+		Object* calcFilter(const Apply* c);
 		
 		Object* calcPiecewise(const Container* c);
 		Object* calcDeclare(const Container* c);
 		Object* calcMath(const Container* c);
 		Object* calcLambda(const Container* c);
+		Object* calcCallFunction(Analitza::Container* function, const QVector<Analitza::Object* >& args, const Analitza::Object* op);
 		
 		Object* simp(Object* root);
 		Object* simpScalar(Apply* c);

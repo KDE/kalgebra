@@ -139,16 +139,16 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 			n=oper('(')+n+oper(')');
 		
 		toret += n+oper('(') + ret.join(oper(", ")) + oper(')');
+	} else if(op.operatorType()==Operator::selector) {
+		if(a->m_params.last()->isApply())
+			ret.last()=oper('(')+ret.last()+oper(')');
+		
+		toret += ret.last() + oper('[') + ret.first() + oper(']');
 	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
 		toret += ret.join(oper(s_operators.value(op.operatorType())));
 	} else if(ret.count()==1 && op.operatorType()==Operator::minus)
 		toret += oper('-')+ret[0];
-	else if(op.operatorType()==Operator::selector) {
-		QString value = ret.takeLast();
-		if(a->m_params.last()->isApply())
-			value = oper('(')+value+oper(')');
-		toret += value + oper('[')+ret.join(oper(", "))+oper(']');
-	}else {
+	else {
 		QString bounding;
 		QStringList bvars;
 		foreach(const Ci* bvar, a->bvarCi())

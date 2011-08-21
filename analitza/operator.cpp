@@ -44,6 +44,9 @@ const char Operator::words[nOfOps][14] = {
 	//Vector operations
 	"card", "scalarproduct", "selector", "union",
 	"forall", "exists",
+	
+	"map", "filter",
+	
 	"function"
 };
 
@@ -119,6 +122,8 @@ int Operator::nparams(Operator::OperatorType t)
 		case approx:
 		case root:
 		case selector: //FIXME: Should move to -1 when matrix appear
+		case map:
+		case filter:
 			return 2;
 		case abs:
 		case sin:

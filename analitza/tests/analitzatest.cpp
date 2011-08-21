@@ -194,6 +194,9 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("forall") << "forall(x : x@list{x,true,true})" << "forall(x:x@list { x, true, true })";
 	QTest::newRow("exists") << "exists(x : x@list{x,false,false})" << "exists(x:x@list { x, false, false })";
+	
+	QTest::newRow("map") << "map(x->x**2, list {1,2,3})" << "list { 1, 4, 9 }";
+	QTest::newRow("filter") << "filter(x->x>5, list {3,4,5,6,7})" << "list { 6, 7 }";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -403,20 +406,20 @@ void AnalitzaTest::testCorrection_data()
 			<< "rtail:=(elems,i)->piecewise { card(elems)>=i ? union(list{elems[i]}, rtail(elems, i+1)), ? list{} }"
 			<< "tail:=elems->rtail(elems,2)"
 			<< "foldr:=(f,z,elems)->piecewise {card(elems)=0 ? z, ? f(elems[1], foldr(f, z, tail(elems))) }"
-			<< "filter:=(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
+			<< "cfilter:=(condition,elems)->foldr((v,pred)->piecewise{ condition(v) ? union(list{v}, pred), ? pred }, list{}, elems)"
 			
-			<< "filter(x->x>3, list{1,2,3,4,5})";
-	QTest::newRow("filter") << script << "list { 4, 5 }";
+			<< "cfilter(x->x>3, list{1,2,3,4,5})";
+	QTest::newRow("custom filter") << script << "list { 4, 5 }";
 	
 	script.clear();
 	script
 			<< "pmap:=(func, list, i)->piecewise { i>=card(list)+1 ? list {}, ? union(list { func(selector(i, list)) }, pmap(func, list, i+1)) }"
-			<< "map:=(func, list)->pmap(func, list, 1)"
+			<< "cmap:=(func, list)->pmap(func, list, 1)"
 			<< "refImport:=x->x>3"
-			<< "importedRef:=imports->map(refImport, imports)"
+			<< "importedRef:=imports->cmap(refImport, imports)"
 			
 			<< "importedRef(list{1,2,3,4,5})";
-	QTest::newRow("map") << script << "list { false, false, false, true, true }";
+	QTest::newRow("custom map") << script << "list { false, false, false, true, true }";
 	
 	script.clear();
 	script
