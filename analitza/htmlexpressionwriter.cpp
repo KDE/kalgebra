@@ -140,8 +140,11 @@ QString HtmlExpressionWriter::accept ( const Analitza::Apply* a )
 		
 		toret += n+oper('(') + ret.join(oper(", ")) + oper(')');
 	} else if(op.operatorType()==Operator::selector) {
-		if(a->m_params.last()->isApply())
-			ret.last()=oper('(')+ret.last()+oper(')');
+		if(a->m_params.last()->isApply()) {
+			const Apply* a1=static_cast<const Apply*>(a->m_params.last());
+			if(s_operators.contains(a1->firstOperator().operatorType()))
+				ret.last()=oper('(')+ret.last()+oper(')');
+		}
 		
 		toret += ret.last() + oper('[') + ret.first() + oper(']');
 	} else if(ret.count()>1 && s_operators.contains(op.operatorType())) {
