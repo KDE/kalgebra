@@ -854,4 +854,9 @@ void ExpressionTypeChecker::addError(const QString& err)
 	m_err.last().append(err);
 }
 
+QMap<QString, ExpressionType> ExpressionTypeChecker::variablesTypes() const
+{
+	return m_vars;
+}
+
 }

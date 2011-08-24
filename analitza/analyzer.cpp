@@ -151,6 +151,7 @@ void Analyzer::setExpression(const Expression & e)
 		ExpressionTypeChecker check(m_vars);
 		check.initializeVars(m_builtin.varTypes());
 		m_currentType=check.check(m_exp);
+		m_variablesTypes = check.variablesTypes();
 		
 		m_err += check.errors();
 		m_hasdeps = check.hasDependencies();

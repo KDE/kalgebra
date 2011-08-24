@@ -143,6 +143,9 @@ class ANALITZA_EXPORT Analyzer
 		
 		/** Makes it possible to easily enter a bunch of code to execute it */
 		void importScript(QTextStream* stream);
+		
+		/** @returns the type for any variable that depends on the last executed procedure */
+		QMap<QString, ExpressionType> variableTypes() const { return m_variablesTypes; }
 	private:
 		typedef Object* (Analyzer::*funcContainer)(const Container*);
 		static funcContainer operateContainer[];
@@ -157,6 +160,7 @@ class ANALITZA_EXPORT Analyzer
 		const bool m_varsOwned;
 		bool m_hasdeps;
 		ExpressionType m_currentType;
+		QMap<QString, ExpressionType> m_variablesTypes;
 		
 		Object* calc(const Object* e);
 		Object* operate(const Container*);

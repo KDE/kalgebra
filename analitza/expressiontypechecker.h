@@ -55,6 +55,7 @@ class ANALITZA_EXPORT ExpressionTypeChecker : public ExpressionWriter
 		QStringList errors() const;
 		
 		void initializeVars(const QMap<QString, ExpressionType>& types) { m_vars=types; }
+		QMap<QString, ExpressionType> variablesTypes() const;
 		
 	private:
 		ExpressionType tellTypeIdentity(const QString& name, const ExpressionType& type);
