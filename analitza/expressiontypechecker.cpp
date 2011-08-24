@@ -144,7 +144,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 		paramtypes += current;
 	}
 	
-	ExpressionType ret(ExpressionType::Many);
+	QList<ExpressionType> ret;
 	if(parameters.size()==1) {
 		QList<ExpressionType> types=paramtypes.first().type()==ExpressionType::Many ? paramtypes.first().alternatives() : QList<ExpressionType>() << paramtypes.first();
 // 		const QMap<QString, ExpressionType> assumptions=current.assumptions();
@@ -155,7 +155,7 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 			foreach(const ExpressionType& opt, thing) {
 				ExpressionType tt(opt.parameters().last());
 				tt.addAssumptions(t.assumptions());
-				ret.addAlternative(tt);
+				ret+=tt;
 			}
 		}
 // 		qDebug() << "bam" << ret ;
@@ -168,7 +168,8 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 		
 		const QList<ExpressionType> res=Operations::infer(o->operatorType());
 		
-		for(QList<ExpressionType>::const_iterator it=paramtypes.constBegin()+1, itEnd=paramtypes.constEnd(); it!=itEnd; ++it)
+		bool firstPair=true;
+		for(QList<ExpressionType>::const_iterator it=paramtypes.constBegin()+1, itEnd=paramtypes.constEnd(); it!=itEnd; ++it, firstPair=false)
 		{
 			ExpressionType secondType=*it;
 			
@@ -230,7 +231,29 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 							toadd.addAssumptions(assumptions);
 							toadd=toadd.starsToType(starToParam);
 							
-							ret.addAlternative(toadd);
+							if(firstPair)
+								ret += toadd;
+							else {
+								QList<ExpressionType>::iterator it=ret.begin(), itEnd=ret.end();
+								for(; it!=itEnd; ++it) {
+									QMap<int, ExpressionType> stars;
+									if(toadd.canReduceTo(*it) && ExpressionType::matchAssumptions(&stars, it->assumptions(), toadd.assumptions())) {
+										bool b=ExpressionType::assumptionsMerge(it->assumptions(), toadd.starsToType(stars).assumptions());
+										Q_ASSERT(b);
+										break;
+									} else if(it->canReduceTo(toadd) && ExpressionType::matchAssumptions(&stars, it->assumptions(), toadd.assumptions())) {
+										toadd=toadd.starsToType(stars);
+										bool b=ExpressionType::assumptionsMerge(toadd.assumptions(), it->assumptions());
+										Q_ASSERT(b);
+										*it=toadd;
+										break;
+									}
+								}
+								
+								if(it==itEnd) {
+									addError(i18n("Could not find a type that unifies '%1'", o->toString()));
+								}
+							}
 						}
 					}
 				}
@@ -239,12 +262,16 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 		}
 	}
 	
-	if(ret.alternatives().isEmpty())
+	if(ret.isEmpty())
 		return ExpressionType(ExpressionType::Error);
-	else if(ret.alternatives().count()==1)
-		return ret.alternatives().first();
-	
-	return ret;
+	else if(ret.count()==1)
+		return ret.first();
+	else {
+		ExpressionType t(ExpressionType::Many);
+		foreach(const ExpressionType& alt, ret)
+			t.addAlternative(alt);
+		return t;
+	}
 }
 
 QString ExpressionTypeChecker::accept(const Ci* var)
@@ -397,7 +424,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				tt=current.contained();
 				tt.addAssumptions(current.assumptions());
 			} else
-				addError(i18n("The domain should be either a vector or a list."));
+				addError(i18n("The domain should be either a vector or a list"));
 			//TODO: should control the many case
 		}
 		

@@ -43,6 +43,7 @@ TypeCheckTest::TypeCheckTest(QObject* parent)
 	v->modify("fact", Expression("n->piecewise { n=1?1, ? n*fact(n-1) }"));
 	v->modify("golambda", Expression("(func, param)->func(param)"));
 	v->modify("gonum", Expression("func->func(1, 2)")); // (num -> num -> a) -> a
+	v->modify("valid", Expression("a->true")); // (num -> num -> a) -> a
 	
 	v->modify("fib", Expression("n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
 	v->modify("fv", Expression("vector{x->sin(x), x->cos(x)}"));
@@ -177,6 +178,10 @@ void TypeCheckTest::testConstruction_data()
 	QTest::newRow("crash") << "u->(v->vector { v[2] })((v->vector { v[2] })(u))" << "(<a,1> -> <a,1>) | ([a] -> <a,1>)";
 	
 	QTest::newRow("scopes") << "or((x->list{}=x)(list{}), (x->x=0)(0))" << "bool";
+	
+	QTest::newRow("nary") << "l->and(l=3, l=3, l=3)" << "num -> bool";
+	QTest::newRow("nary1") << "l->and(valid(l), l=3, l=3)" << "num -> bool";
+	QTest::newRow("nary2") << "l->and(l=3, l=3, valid(l))" << "num -> bool";
 }
 
 void TypeCheckTest::testConstruction()
