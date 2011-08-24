@@ -151,7 +151,10 @@ void Analyzer::setExpression(const Expression & e)
 		ExpressionTypeChecker check(m_vars);
 		check.initializeVars(m_builtin.varTypes());
 		m_currentType=check.check(m_exp);
-		m_variablesTypes = check.variablesTypes();
+		
+		QMap<QString, ExpressionType> types=check.variablesTypes();
+		for(QMap<QString, ExpressionType>::const_iterator it=types.constBegin(), itEnd=types.constEnd(); it!=itEnd; ++it)
+			m_variablesTypes.insert(it.key(), it.value());
 		
 		m_err += check.errors();
 		m_hasdeps = check.hasDependencies();
