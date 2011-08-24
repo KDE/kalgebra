@@ -114,4 +114,7 @@ class ANALITZA_EXPORT ExpressionType
 };
 
 }
+
+Q_DECLARE_TYPEINFO ( Analitza::ExpressionType, Q_MOVABLE_TYPE);
+
 #endif // EXPRESSIONTYPE_H
