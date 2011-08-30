@@ -57,10 +57,10 @@ Object* AbstractExpressionTransformer::walk(const Object* pattern)
 	return 0;
 }
 
-#define ITERATION_WALKER(T, args...)\
+#define ITERATION_WALKER(T, ...)\
 Object* AbstractExpressionTransformer::walk##T(const T* pattern)\
 {\
-	T* ret = new T(args);\
+	T* ret = new T(__VA_ARGS__);\
 	T ::const_iterator it=pattern->constBegin(), itEnd=pattern->constEnd();\
 	for(; it!=itEnd; ++it) {\
 		ret->appendBranch(walk(*it));\

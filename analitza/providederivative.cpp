@@ -154,10 +154,10 @@ Object* ProvideDerivative::walkApply(const Apply* a)
 		return AbstractExpressionTransformer::walkApply(a);
 }
 
-#define ITERATE(T, args...)\
+#define ITERATE(T, ...)\
 Object* ProvideDerivative::derivateContent##T(const T * v)\
 {\
-	T* ret = new T(args);\
+	T* ret = new T(__VA_ARGS__);\
 	T::const_iterator it=v->constBegin(), itEnd=v->constEnd();\
 	for(; it!=itEnd; ++it) {\
 		Apply* a=makeDiff(*it);\
