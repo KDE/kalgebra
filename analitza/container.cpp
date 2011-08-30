@@ -154,7 +154,9 @@ bool Container::isNumber() const
 		m_cont_type==piecewise || m_cont_type==piece || m_cont_type==otherwise;
 }
 
+#ifdef __GNUC__
 #warning this should go in favour of the typesystem, if possible
+#endif
 bool isValue(Object* o)
 {
 	bool ret=false;
