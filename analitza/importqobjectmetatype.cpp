@@ -110,7 +110,7 @@ void ImportQMetaObject::import(const QMetaObject& t)
 		
 		if(prop.isWritable()) {
 			QObjectSet* setter=new QObjectSet(name);
-			b->insertFunction("get_"+name, setter->type(name, prop), setter);
+			b->insertFunction(QString("set_"+name), setter->type(name, prop), setter);
 		}
 	}
 }
