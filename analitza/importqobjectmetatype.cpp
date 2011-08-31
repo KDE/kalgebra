@@ -98,19 +98,20 @@ ImportQMetaObject::ImportQMetaObject(Analitza::Analyzer* a)
 void ImportQMetaObject::import(const QMetaObject& t)
 {
 	Analitza::BuiltinMethods* b=m_a->builtinMethods();
-	
+	QByteArray classname(t.className());
+    
 	for(int p=0; p<t.propertyCount(); p++) {
 		QMetaProperty prop=t.property(p);
 		QByteArray name(prop.name());
 		
 		if(prop.isReadable()) {
 			QObjectGet* getter=new QObjectGet(name);
-			b->insertFunction(name, getter->type(name, prop), getter);
+			b->insertFunction(QString(classname+'_'+name), getter->type(name, prop), getter);
 		}
 		
 		if(prop.isWritable()) {
 			QObjectSet* setter=new QObjectSet(name);
-			b->insertFunction(QString("set_"+name), setter->type(name, prop), setter);
+			b->insertFunction(QString(classname+"_set_"+name), setter->type(name, prop), setter);
 		}
 	}
 }

@@ -20,12 +20,13 @@
 #ifndef IMPORTQMETAOBJECT_H
 #define IMPORTQMETAOBJECT_H
 #include <QMetaObject>
+#include <analitza/analitzaexport.h>
 
 namespace Analitza {
 class Analyzer;
 }
 
-class ImportQMetaObject
+class ANALITZA_EXPORT ImportQMetaObject
 {
 	public:
 		ImportQMetaObject(Analitza::Analyzer* a);
