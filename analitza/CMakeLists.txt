@@ -61,6 +61,7 @@ if(INSTALL_ANALITZA_HEADERS)
 		variables.h
 		expressiontype.h
 		builtinmethods.h
+		importqobjectmetatype.h
 		DESTINATION ${INCLUDE_INSTALL_DIR}/analitza/ COMPONENT Devel)
 	
 	install(FILES
