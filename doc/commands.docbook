@@ -14,7 +14,7 @@
 	</itemizedlist></sect1>
 	<sect1 id='minus'><title>minus</title><itemizedlist>
 		<listitem><para>Name: minus</para></listitem>
-		<listitem><para>Description: Subtraction</para></listitem>
+		<listitem><para>Description: Subtraction. Will remove all values from the first one.</para></listitem>
 		<listitem><para>Parameters: minus(... parameters, ...)</para></listitem>
 		<listitem><para>Example: x-&gt;x-2</para></listitem>
 	</itemizedlist></sect1>
@@ -52,25 +52,25 @@
 		<listitem><para>Name: and</para></listitem>
 		<listitem><para>Description: Boolean and</para></listitem>
 		<listitem><para>Parameters: and(... parameters, ...)</para></listitem>
-		<listitem><para>Example: x-&gt;and(x&gt;-2, x&lt;2)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { and(x&gt;-2, x&lt;2) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='or'><title>or</title><itemizedlist>
 		<listitem><para>Name: or</para></listitem>
 		<listitem><para>Description: Boolean or</para></listitem>
 		<listitem><para>Parameters: or(... parameters, ...)</para></listitem>
-		<listitem><para>Example: x-&gt;or(x&gt;2, x&gt;-2)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { or(x&gt;2, x&gt;-2) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='xor'><title>xor</title><itemizedlist>
 		<listitem><para>Name: xor</para></listitem>
 		<listitem><para>Description: Boolean xor</para></listitem>
 		<listitem><para>Parameters: xor(... parameters, ...)</para></listitem>
-		<listitem><para>Example: x-&gt;xor(x&gt;0, x&lt;3)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { xor(x&gt;0, x&lt;3) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='not'><title>not</title><itemizedlist>
 		<listitem><para>Name: not</para></listitem>
 		<listitem><para>Description: Boolean not</para></listitem>
 		<listitem><para>Parameters: not(par1)</para></listitem>
-		<listitem><para>Example: x-&gt;not(x)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { not(x&gt;0) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='gcd'><title>gcd</title><itemizedlist>
 		<listitem><para>Name: gcd</para></listitem>
@@ -112,49 +112,49 @@
 		<listitem><para>Name: lt</para></listitem>
 		<listitem><para>Description: Less than. lt(a,b)=a&lt;b</para></listitem>
 		<listitem><para>Parameters: lt(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x&lt;4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x&lt;4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='gt'><title>gt</title><itemizedlist>
 		<listitem><para>Name: gt</para></listitem>
 		<listitem><para>Description: Greater than. gt(a,b)=a&gt;b</para></listitem>
 		<listitem><para>Parameters: gt(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x&gt;4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x&gt;4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='eq'><title>eq</title><itemizedlist>
 		<listitem><para>Name: eq</para></listitem>
 		<listitem><para>Description: Equal. eq(a,b) = a=b</para></listitem>
 		<listitem><para>Parameters: eq(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x=4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='neq'><title>neq</title><itemizedlist>
 		<listitem><para>Name: neq</para></listitem>
-		<listitem><para>Description: Not equal. neq(a,b) = a≠b</para></listitem>
+		<listitem><para>Description: Not equal. neq(a,b)=a≠b</para></listitem>
 		<listitem><para>Parameters: neq(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x!=4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x!=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='leq'><title>leq</title><itemizedlist>
 		<listitem><para>Name: leq</para></listitem>
-		<listitem><para>Description: Less or equal. leq(a,b) = a≤b</para></listitem>
+		<listitem><para>Description: Less or equal. leq(a,b)=a≤b</para></listitem>
 		<listitem><para>Parameters: leq(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x&lt;=4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x&lt;=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='geq'><title>geq</title><itemizedlist>
 		<listitem><para>Name: geq</para></listitem>
-		<listitem><para>Description: Greater or equal. geq(a,b) = a≥b</para></listitem>
+		<listitem><para>Description: Greater or equal. geq(a,b)=a≥b</para></listitem>
 		<listitem><para>Parameters: geq(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;x&gt;=4</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { x&gt;=4 ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='implies'><title>implies</title><itemizedlist>
 		<listitem><para>Name: implies</para></listitem>
 		<listitem><para>Description: Boolean implication</para></listitem>
 		<listitem><para>Parameters: implies(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;implies(x&lt;0, x&lt;3)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { implies(x&lt;0, x&lt;3) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='approx'><title>approx</title><itemizedlist>
 		<listitem><para>Name: approx</para></listitem>
-		<listitem><para>Description: Approximation. approx(a) = a≈n</para></listitem>
+		<listitem><para>Description: Approximation. approx(a)=a±n</para></listitem>
 		<listitem><para>Parameters: approx(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;approx(x, 4)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { approx(x, 4) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='abs'><title>abs</title><itemizedlist>
 		<listitem><para>Name: abs</para></listitem>
@@ -164,13 +164,13 @@
 	</itemizedlist></sect1>
 	<sect1 id='floor'><title>floor</title><itemizedlist>
 		<listitem><para>Name: floor</para></listitem>
-		<listitem><para>Description: Floor value. floor(n) = ⌊n⌋</para></listitem>
+		<listitem><para>Description: Floor value. floor(n)=⌊n⌋</para></listitem>
 		<listitem><para>Parameters: floor(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;floor(x)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='ceiling'><title>ceiling</title><itemizedlist>
 		<listitem><para>Name: ceiling</para></listitem>
-		<listitem><para>Description: Ceil value. ceil(n) = ⌈n⌉</para></listitem>
+		<listitem><para>Description: Ceil value. ceil(n)=⌈n⌉</para></listitem>
 		<listitem><para>Parameters: ceiling(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;ceiling(x)</para></listitem>
 	</itemizedlist></sect1>
@@ -314,7 +314,7 @@
 	</itemizedlist></sect1>
 	<sect1 id='exp'><title>exp</title><itemizedlist>
 		<listitem><para>Name: exp</para></listitem>
-		<listitem><para>Description: Exponent (e<superscript>x</superscript>)</para></listitem>
+		<listitem><para>Description: Exponent (e^x)</para></listitem>
 		<listitem><para>Parameters: exp(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;exp(x)</para></listitem>
 	</itemizedlist></sect1>
@@ -332,13 +332,13 @@
 	</itemizedlist></sect1>
 	<sect1 id='sum'><title>sum</title><itemizedlist>
 		<listitem><para>Name: sum</para></listitem>
-		<listitem><para>Description: Summator</para></listitem>
+		<listitem><para>Description: Summatory</para></listitem>
 		<listitem><para>Parameters: sum(par1 : var=from..to)</para></listitem>
 		<listitem><para>Example: x-&gt;x*sum(t*t:t=0..3)</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='product'><title>product</title><itemizedlist>
 		<listitem><para>Name: product</para></listitem>
-		<listitem><para>Description: Productor</para></listitem>
+		<listitem><para>Description: Productory</para></listitem>
 		<listitem><para>Parameters: product(par1 : var=from..to)</para></listitem>
 		<listitem><para>Example: x-&gt;product(t+t:t=1..3)</para></listitem>
 	</itemizedlist></sect1>
@@ -358,18 +358,30 @@
 		<listitem><para>Name: scalarproduct</para></listitem>
 		<listitem><para>Description: Scalar product</para></listitem>
 		<listitem><para>Parameters: scalarproduct(... parameters, ...)</para></listitem>
-		<listitem><para>Example: x-&gt;selector(1, scalarproduct(vector { 0, x }, vector { x, 0 }))</para></listitem>
+		<listitem><para>Example: x-&gt;(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='selector'><title>selector</title><itemizedlist>
 		<listitem><para>Name: selector</para></listitem>
-		<listitem><para>Description: Select an element from a container</para></listitem>
+		<listitem><para>Description: Select the par1-th element of par2 list or vector</para></listitem>
 		<listitem><para>Parameters: selector(par1, par2)</para></listitem>
-		<listitem><para>Example: x-&gt;piecewise { x&gt;0 ? selector(1, vector { x, 1/x }), ? selector(2, vector { x, 1/x }) }</para></listitem>
+		<listitem><para>Example: x-&gt;(scalarproduct(vector { 0, x }, vector { x, 0 }))[1]</para></listitem>
 	</itemizedlist></sect1>
 	<sect1 id='union'><title>union</title><itemizedlist>
 		<listitem><para>Name: union</para></listitem>
 		<listitem><para>Description: Joins several items of the same type</para></listitem>
 		<listitem><para>Parameters: union(... parameters, ...)</para></listitem>
-		<listitem><para>Example: x-&gt;selector(rem(floor(x), 5)+3, union(list { 1, 2, 3 }, list { 4, 5, 6 }))</para></listitem>
+		<listitem><para>Example: x-&gt;(union(list { 1, 2, 3 }, list { 4, 5, 6 }))[rem(floor(x), 5)+3]</para></listitem>
+	</itemizedlist></sect1>
+	<sect1 id='forall'><title>forall</title><itemizedlist>
+		<listitem><para>Name: forall</para></listitem>
+		<listitem><para>Description: For all</para></listitem>
+		<listitem><para>Parameters: forall(par1 : var)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { forall(t:t@list { true, false, false }) ? 1, ? 0 }</para></listitem>
+	</itemizedlist></sect1>
+	<sect1 id='exists'><title>exists</title><itemizedlist>
+		<listitem><para>Name: exists</para></listitem>
+		<listitem><para>Description: Exists</para></listitem>
+		<listitem><para>Parameters: exists(par1 : var)</para></listitem>
+		<listitem><para>Example: x-&gt;piecewise { exists(t:t@list { true, false, false }) ? 1, ? 0 }</para></listitem>
 	</itemizedlist></sect1>
 </chapter>
