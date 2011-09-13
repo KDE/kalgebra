@@ -424,7 +424,10 @@ case $rule_number:
 		} else if(tokFoundType==tRpr || tokFoundType==tRcb) {
 			error=i18n("Unbalanced right parenthesis");
 		} else
-			error=i18n("Unexpected token %1", spell[tokFoundType]);
+			if(tokFoundType==tId)
+				error=i18n("Unexpected token identifier: %1", lexer->current.val);
+			else
+				error=i18n("Unexpected token %1", spell[tokFoundType]);
 		m_err.append(error);
 		return false;
 		}
