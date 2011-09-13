@@ -65,6 +65,9 @@ namespace AnalitzaUtils
 	QString listToString(const Analitza::List* list);
 	
 	Analitza::Object* replaceDepth(int depth, Analitza::Object* tree, Analitza::Object* towhat);
+	
+	/** tells how much @p depth is being used inside @p tree */
+	int countDepth(int depth, const Analitza::Object* tree);
 }
 
 #endif // ANALITZAUTILS_H

@@ -479,4 +479,53 @@ Object* replaceDepth(int depth, Object* tree, Object* towhat)
 	return tree;
 }
 
+template<class T, class Tit>
+int countDepthTemplate(int depth, const T* tree)
+{
+	int ret=0;
+	Tit it=tree->constBegin(), itEnd=tree->constEnd();
+	for(; it!=itEnd; ++it)
+		ret += countDepth(depth, *it);
+	return ret;
+}
+
+int countDepth(int depth, const Object* tree)
+{
+	if(!tree)
+		return 0;
+	
+	Q_ASSERT(depth>=0);
+	switch(tree->type()) {
+		case Object::value:
+		case Object::custom:
+		case Object::none:
+		case Object::oper:
+			break;
+		case Object::list:
+			return countDepthTemplate<List, List::const_iterator>(depth, static_cast<const List*>(tree));
+		case Object::vector:
+			return countDepthTemplate<Vector, Vector::const_iterator>(depth, static_cast<const Vector*>(tree));
+		case Object::container:
+			return countDepthTemplate<Container, Container::const_iterator>(depth, static_cast<const Container*>(tree));
+		case Object::variable: {
+			Ci* var=(Ci*) tree;
+			return var->depth()==depth;
+		}	break;
+		case Object::apply: {
+			const Apply* a=static_cast<const Apply*>(tree);
+			Apply::const_iterator it=a->firstValue(), itEnd=a->constEnd();
+			int ret=0;
+			for(; it!=itEnd; ++it)
+				ret+=countDepth(depth, *it);
+			
+			ret+=countDepth(depth, a->domain());
+			ret+=countDepth(depth, a->ulimit());
+			ret+=countDepth(depth, a->dlimit());
+			return ret;
+		}	break;
+	}
+	return 0;
+}
+
+
 }

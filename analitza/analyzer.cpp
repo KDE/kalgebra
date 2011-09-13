@@ -1510,27 +1510,28 @@ Object* Analyzer::simpApply(Apply* c)
 			Object* function=c->m_params[0];
 			
 			Container* cfunc=0;
+			QList<Ci*> bvars;
 			if(function->isContainer()) {
 				cfunc=(Container*) function;
 				Q_ASSERT(cfunc->containerType()==Container::lambda);
+				bvars=cfunc->bvarCi();
 			}
 			
-			bool allvars=true;
-			it=c->m_params.begin()+1;
+			bool canRemove=true;
+			it=c->begin()+1;
 			for(int i=0; it!=c->end(); ++it, ++i) {
 				*it = simp(*it);
-				allvars &= (*it)->type()==Object::variable;
+				canRemove &= (*it)->type()==Object::variable || (cfunc && countDepth(bvars[i]->depth(), cfunc->m_params.last()));
 			}
 			
-			if(cfunc && allvars) {
-				QList<Ci*> bvars=cfunc->bvarCi();
+			if(cfunc && canRemove) {
 				int i=0;
 				foreach(Ci* var, bvars) {
 					replaceDepth(var->depth(), cfunc->m_params.last(), c->m_params[i+1]);
 					i++;
 				}
 				
-				root=cfunc->m_params.last();
+				root=simp(cfunc->m_params.last());
 				cfunc->m_params.last()=0;
 				delete c;
 			}
