@@ -948,20 +948,23 @@ Object* Analyzer::exists(const Apply& n)
 
 Object* Analyzer::func(const Apply& n)
 {
-// 	qDebug() << "calling" << n.toString();
 	bool borrowed = n.m_params[0]->type()==Object::variable;
 	Container *function = static_cast<Container*>(borrowed ? variableValue((Ci*) n.m_params[0]) : calc(n.m_params[0]));
+	
+// 	static int ind=0;
+// 	qDebug() << "calling" << qPrintable(QString(++ind, '.')) << n.m_params.first()->toString() << n.toString();
 	
 	int bvarsize = n.m_params.size()-1;
 	QVector<Object*> args(bvarsize);
 	
 	for(int i=1; i<bvarsize+1; i++) {
 		args[i-1]=calc(n.m_params[i]);
+// 		qDebug() << "argumen" << qPrintable(QString(ind, '.')) << n.m_params[i]->toString() << "=" << args[i-1]->toString();
 	}
 	
-// 	qDebug() << "called" << ret->toString() << t.elapsed();
 	Object* ret = calcCallFunction(function, args, n.m_params[0]);
 	
+// 	qDebug() << "called " << qPrintable(QString(ind--, '.')) << n.m_params.first()->toString() << ret->toString();
 	if(!borrowed)
 		delete function;
 	
