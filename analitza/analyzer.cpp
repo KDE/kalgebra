@@ -1078,10 +1078,9 @@ Object* Analyzer::calcDiff(const Apply* c)
 	}
 	
 	cc->appendBranch(o);
-	Container* ret=cc;
 	
-	Expression::computeDepth(ret);
-	return ret;
+	Expression::computeDepth(cc);
+	return cc;
 }
 
 /////////////////////////////////////////////
@@ -1172,7 +1171,7 @@ Object* Analyzer::simpApply(Apply* c)
 	
 	switch(o.operatorType()) {
 		case Operator::times:
-			for(it=c->firstValue(); c->m_params.count()>1 && it!=c->end();) {
+			for(it=c->firstValue(); c->countValues()>1 && it!=c->end();) {
 				d=false;
 				*it = simp(*it);
 				if((*it)->isApply()) {
@@ -1185,7 +1184,7 @@ Object* Analyzer::simpApply(Apply* c)
 				
 				if(!d && (*it)->type() == Object::value) {
 					Cn* n = (Cn*) (*it);
-					if(n->value()==1. && c->m_params.count()>1) { //1*exp=exp
+					if(n->value()==1. && c->countValues()>1) { //1*exp=exp
 						d=true;
 					} else if(n->value()==0.) { //0*exp=0 //TODO Change to isZero and return the same type in 0
 						delete root;
@@ -1636,7 +1635,7 @@ Monomial constructMonomial(const Operator& o, Object* o2, bool& sign)
 	if(o2->isApply()) {
 		Apply *cx = (Apply*) o2;
 		if(cx->firstOperator()==mult) {
-			if(cx->m_params.count()==2) {
+			if(cx->countValues()==2) {
 				bool valid=false;
 				int scalar, var;
 				
