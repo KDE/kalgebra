@@ -268,6 +268,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				delete m_vars->take(var->name());
 				ret = eval(c->m_params[1], true, unscoped);
 				ret = simp(ret);
+				Expression::computeDepth(ret);
 				insertVariable(var->name(), ret);
 			}	break;
 			case Container::piecewise: {
@@ -594,7 +595,7 @@ Object* Analyzer::calcDeclare(const Container* c)
 	
 	const Ci *var = (const Ci*) c->m_params[0];
 	ret=simp(c->m_params[1]->copy());
-		
+	Expression::computeDepth(ret);
 	bool corr = insertVariable(var->name(), ret);
 	
 	Q_ASSERT(ret && corr);
