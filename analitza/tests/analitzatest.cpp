@@ -197,6 +197,8 @@ void AnalitzaTest::testTrivialEvaluate_data()
 	
 	QTest::newRow("map") << "map(x->x**2, list {1,2,3})" << "list { 1, 4, 9 }";
 	QTest::newRow("filter") << "filter(x->x>5, list {3,4,5,6,7})" << "list { 6, 7 }";
+	
+	QTest::newRow("forall1") << "forall(a<w:a@list { 2 })" << "2<w";
 }
 
 void AnalitzaTest::testTrivialEvaluate()
@@ -427,6 +429,11 @@ void AnalitzaTest::testCorrection_data()
 			<< "g:=(u, v)->f(u)+f(v)"
 			<< "g(vector{1,2}, vector{3,4})";
 	QTest::newRow("aaa") << script << "30";
+	
+	script.clear();
+	script << "f := (w,zz) -> list{zz} | acs->forall(a<w : a@acs)";
+	script << "f(2,3)";
+	QTest::newRow("lambda1") << script << "false";
 }
 
 //testCalculate
@@ -634,8 +641,11 @@ void AnalitzaTest::testEvaluate()
 		QVERIFY(e.isCorrect());
 		
 		b.setExpression(e);
+		if(!b.isCorrect()) qDebug() << "XXXX" << b.errors();
 		QVERIFY(b.isCorrect());
 		res=b.evaluate();
+		
+		if(!b.isCorrect()) qDebug() << "XXXX" << b.errors();
 		QVERIFY(b.isCorrect());
 // 		b.calculate(); //we can do that just if we know that all variables doesn't have dependencies
 	}
