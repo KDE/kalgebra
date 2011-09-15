@@ -458,7 +458,7 @@ Object* Analyzer::eval(const Object* branch, bool resolve, const QSet<QString>& 
 				}
 				
 				if(resolved && hasVars(*r->firstValue(), newUnscoped.toList())) {
-					BoundingIterator *it = r->domain()? initBVarsContainer(r, top, r->domain()) : initBVarsRange(r, top, r->dlimit(), r->ulimit());
+					BoundingIterator *it = r->domain()? initBVarsContainer(r, top, r->domain()->copy()) : initBVarsRange(r, top, r->dlimit(), r->ulimit());
 					
 					if(it) {
 						QVector<Object*> values;
