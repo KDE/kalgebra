@@ -1521,7 +1521,7 @@ Object* Analyzer::simpApply(Apply* c)
 			it=c->begin()+1;
 			for(int i=0; it!=c->end(); ++it, ++i) {
 				*it = simp(*it);
-				canRemove &= (*it)->type()==Object::variable || (cfunc && countDepth(bvars[i]->depth(), cfunc->m_params.last()));
+				canRemove &= (*it)->type()==Object::variable || (cfunc && countDepth(bvars[i]->depth(), cfunc->m_params.last())==1);
 			}
 			
 			if(cfunc && canRemove) {

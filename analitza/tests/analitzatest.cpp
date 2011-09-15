@@ -580,6 +580,7 @@ void AnalitzaTest::testSimplify_data()
 	QTest::newRow("lambda1") << "(x->x+1)(y)" << "y+1";
 	QTest::newRow("lambda2") << "(x->x+1)(x+1)" << "x+2";
 	QTest::newRow("lambda3") << "zz->(x->card(x)>0)(list{zz})" << "zz->card(list { zz })>0";
+	QTest::newRow("lambda4") << "f(3) | a-> (g(a) | b-> useForIndex(a, b))" << "(a->(b->useForIndex(a, b))(g(a)))(f(3))";
 // 	QTest::newRow("lambda3")<< "(x->x+x)(y)" << "2*y";
 	QTest::newRow("diff") << "diff(x^2:x)" << "x->2*x";
 	QTest::newRow("sum times") << "sum(n*x : n=0..99)" << "4950*x";
