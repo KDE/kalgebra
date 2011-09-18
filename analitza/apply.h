@@ -72,6 +72,7 @@ class ANALITZA_EXPORT Apply : public Object
 		iterator begin() { return m_params.begin(); }
 		iterator end() { return m_params.end(); }
 		const_iterator firstValue() const { return m_params.constBegin(); }
+		const_iterator constBegin() const { return m_params.constBegin(); }
 		const_iterator constEnd() const { return m_params.constEnd(); }
 		QVector<Ci*> bvarCi() const { return m_bvars; }
 		bool isUnary() const { return m_params.size()==1; }
