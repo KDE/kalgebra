@@ -19,7 +19,8 @@
 #ifndef KALGEBRAMOBILE_H
 #define KALGEBRAMOBILE_H
 
-#include <QMainWindow>
+#include <QObject>
+#include <QColor>
 
 namespace Analitza { class Variables;}
 
@@ -28,11 +29,11 @@ class PluginsModel;
 class FunctionsModel;
 class AnalitzaWrapper;
 
-class KAlgebraMobile : public QMainWindow
+class KAlgebraMobile : public QObject
 {
 	Q_OBJECT
 	public:
-		explicit KAlgebraMobile(QWidget* parent = 0, Qt::WindowFlags flags = 0);
+		explicit KAlgebraMobile(QObject* parent=0);
 		
 		void displayPlugin(int plugin);
 		
@@ -43,17 +44,10 @@ class KAlgebraMobile : public QMainWindow
 		Analitza::Variables* variables() const;
 		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
 		
-	private slots:
-		void selectPlugin();
-		
 	private:
 		static KAlgebraMobile* s_self;
-		void findScripts();
-		
-		QVector<QWidget*> m_pluginUI;
 		
 		FunctionsModel* m_functionsModel;
-		PluginsModel* m_pluginsModel;
 		Analitza::Variables* m_vars;
 };
 

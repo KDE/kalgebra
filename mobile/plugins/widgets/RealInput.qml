@@ -1,7 +1,6 @@
-import QtQuick 1.0
+import QtDesktop 0.1
 
-TextInput
+SpinBox
 {
-	validator: DoubleValidator {}
-	width: 100
+// 	validator: DoubleValidator {}
 }

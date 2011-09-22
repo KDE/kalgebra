@@ -59,7 +59,7 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 			if(index.column()==0) {
 				QPixmap ico(15, 15);
 				ico.fill(f.color());
-				ret=ico;
+				ret = QIcon(ico);
 			} else {
 				ret = QIcon::fromTheme(f.icon());
 			}

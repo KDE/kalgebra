@@ -20,6 +20,11 @@
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include "kalgebramobile.h"
+#include <QDeclarativeView>
+#include <KStandardDirs>
+#include <QDebug>
+#include <QDeclarativeEngine>
+#include <qdeclarativecontext.h>
 
 int main(int argc, char *argv[])
 {
@@ -29,12 +34,15 @@ int main(int argc, char *argv[])
 	KCmdLineArgs::init(argc, argv, &about);
 	KApplication app;
 	
-	/*if(app.isSessionRestored()) {
-		RESTORE(KAlgebra);
-	} else {*/
-		KAlgebraMobile* widget = new KAlgebraMobile;
-		widget->show();
-	//}
+	KAlgebraMobile widget;
+	
+	QDeclarativeView view;
+	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
+	view.engine()->rootContext()->setContextProperty("app", &widget);
+	
+	QString main = KStandardDirs::locate("data", "kalgebra/plugins/KAlgebraMobile.qml");
+	view.setSource(main);
+	view.show();
 	
 	return app.exec();
 }

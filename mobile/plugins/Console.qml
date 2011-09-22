@@ -1,8 +1,9 @@
 import QtQuick 1.0
+import QtDesktop 0.1
 import org.kde.analitza 1.0
 import "widgets"
 
-Item
+KAlgebraPage
 {
 // 	id: bg
 	width: 640; height: 500
@@ -31,9 +32,7 @@ Item
 		input.selectAll()
 	}
 	
-	ConsoleModel {
-		id: itemModel
-	}
+	ListModel { id: itemModel }
 	
 	ExpressionInput {
 		id: input
@@ -76,16 +75,21 @@ Item
 		anchors.right: parent.right
 	}
 	
-	ListView {
+	TableView {
 		model: itemModel
-		delegate: ConsoleDelegate {}
+// 		delegate: ConsoleDelegate {}
+// 		itemDelegate: Row { Text { text: result } }
 		id: view
 		
 		height: 200
 		
+		TableColumn {
+			property: "result"
+			caption: "Title"
+		}
+		
 		anchors.top: inputrow.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
+		width: parent.width
 	}
 	
 	Keyboard {

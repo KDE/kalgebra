@@ -1,12 +1,11 @@
 import QtQuick 1.0
+import QtDesktop 0.1
 import org.kde.analitza 1.0
 import "widgets"
 
-Rectangle
+KAlgebraPage
 {
 	id: bg
-	height: 200
-	width: 200
 	
 	ListModel { id: resultsModel }
 	Analitza { id: a }
@@ -16,7 +15,7 @@ Rectangle
 		
 		var tmp = a.unusedVariableName();
 		var ret = a.execute(tmp+":="+input.text, true)
-		var ffrom=parseFloat(from.text), fto=parseFloat(to.text), fstep=parseFloat(step.text);
+		var ffrom=from.value, fto=to.value, fstep=step.value;
 // 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
 		
 		for (var i=ffrom; i<=fto; i+=fstep) {
@@ -34,9 +33,9 @@ Rectangle
 		columns: 2
 		
 		Text {text: "Input: " } ExpressionInput { id: input; text: "x->sin x"}
-		Text {text: "From:" }   RealInput { id: from; text: "0" }
-		Text {text: "To:" }     RealInput { id: to; text: "10" }
-		Text {text: "Step:" }   RealInput { id: step; text: "1" }
+		Text {text: "From:" }   RealInput { id: from; value: 0 }
+		Text {text: "To:" }     RealInput { id: to; value: 10 }
+		Text {text: "Step:" }   RealInput { id: step; value: 1 }
 		
 		Button {
 			text: "Go!"
@@ -47,13 +46,24 @@ Rectangle
 	
 	Text { text: "Results:"; id: res; anchors.top: ins.bottom }
 	
-	ListView {
+	TableView {
 		id: view
 		anchors.bottom: parent.bottom
 		anchors.top: res.bottom
 		
 		model: resultsModel
 		width: bg.width
-		delegate: Text { text: value+" -> "+result}
+// 		delegate: Text { text: value+" -> "+result}
+
+		TableColumn {
+			property: "value"
+			caption: "Value"
+			width: 50
+		}
+		
+		TableColumn {
+			property: "result"
+			caption: "Image"
+		}
 	}
 }
