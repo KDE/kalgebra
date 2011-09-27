@@ -1,11 +1,12 @@
 import QtQuick 1.0
-import QtDesktop 0.1
 import org.kde.analitza 1.0
 import "widgets"
 
 KAlgebraPage
 {
 	id: bg
+	width: 100
+	height: 100
 	
 	ListModel { id: resultsModel }
 	Analitza { id: a }
@@ -22,7 +23,7 @@ KAlgebraPage
 			var args = new Array();
 			args[0]=i;
 // 			console.log("!!! " + i); 
-			resultsModel.append( { value: i, result: a.executeFunc(tmp, args) } );
+			resultsModel.append( { element: i +" = "+ a.executeFunc(tmp, args) } );
 		}
 		
 		a.removeVariable(tmp);
@@ -46,24 +47,13 @@ KAlgebraPage
 	
 	Text { text: "Results:"; id: res; anchors.top: ins.bottom }
 	
-	TableView {
+	SimpleListView {
 		id: view
 		anchors.bottom: parent.bottom
 		anchors.top: res.bottom
 		
 		model: resultsModel
 		width: bg.width
-// 		delegate: Text { text: value+" -> "+result}
-
-		TableColumn {
-			property: "value"
-			caption: "Value"
-			width: 50
-		}
-		
-		TableColumn {
-			property: "result"
-			caption: "Image"
-		}
+		role: "element"
 	}
 }

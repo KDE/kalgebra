@@ -1,5 +1,4 @@
 import QtQuick 1.0
-import QtDesktop 0.1
 import org.kde.analitza 1.0
 import "widgets"
 
@@ -75,7 +74,7 @@ KAlgebraPage
 		anchors.right: parent.right
 	}
 	
-	TableView {
+	SimpleListView {
 		model: itemModel
 // 		delegate: ConsoleDelegate {}
 // 		itemDelegate: Row { Text { text: result } }
@@ -83,10 +82,7 @@ KAlgebraPage
 		
 		height: 200
 		
-		TableColumn {
-			property: "result"
-			caption: "Title"
-		}
+		role: "result"
 		
 		anchors.top: inputrow.bottom
 		width: parent.width

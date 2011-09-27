@@ -1,5 +1,4 @@
 import QtQuick 1.0
-import QtDesktop 0.1
 import org.kde.analitza 1.0
 import "widgets"
 
@@ -27,7 +26,6 @@ KAlgebraPage
 	
 	Column {
 		id: controls
-		height: 200
 		anchors.bottom: parent.bottom
 		
 		Row {
@@ -47,7 +45,7 @@ KAlgebraPage
 			}
 		}
 		
-		TableView {
+		SimpleListView {
 			id: listview
 			model: app.functionsModel()
 // 			itemDelegate: Text { text: display + " " + expression }
@@ -55,17 +53,8 @@ KAlgebraPage
 			
 			onCurrentIndexChanged: view.currentFunction=currentIndex-1
 			
-			TableColumn {
-				property: "display"
-				caption: "Name"
-			}
+			role: "expression"
 			
-			TableColumn {
-				property: "expression"
-				caption: "Function"
-			}
-			
-
 			width: view.width
 			height: 100
 		}
