@@ -1,69 +1,48 @@
-import QtQuick 1.0
+import com.nokia.meego 1.0
 import org.kde.analitza 1.0
+import QtQuick 1.1
 
-Rectangle
+PageStackWindow
 {
-	SystemPalette { id:syspal }
-	color: syspal.window
 	height: 400
 	width: 300
 	
-	ToolBar{
-		id: toolbar
-		width: parent.width
-		height: 40
+	function goToPage(idx) {
+		var toOpen = plugins.pluginPath(idx)
 		
-		Row {
-			spacing: 2
-			anchors.verticalCenter: parent.verticalCenter
+		try {
+			var component = Qt.createComponent(toOpen)
+			if (component.status == Component.Ready)
+				pageStack.push(component);
+			else
+				console.log("Error loading component:", component.errorString());
+		} catch (e) {
+			console.log("error: "+e)
+		}
+	}
+	
+	Component {
+		id: del
+		
+		Label {
+			signal clicked
+			text: display
 			
-			ToolButton{
-// 				iconSource: "images/folder_new.png"
-				anchors.verticalCenter: parent.verticalCenter
-				
-				text: "Go!"
-				
+			MouseArea {
+				id: mouseArea;
+				anchors.fill: parent
 				onClicked: {
-					var idx = pluginsView.currentIndex
-					var toOpen = plugins.pluginPath(idx)
-					
-					try {
-						var component = Qt.createComponent(toOpen)
-						frame.addTab(component)
-					} catch (e) {
-						console.log("error: "+e)
-					}
-					
+					goToPage(0)
 				}
 			}
 		}
 	}
 	
-	TabFrame
-	{
-		id: frame
-		width: parent.width
-		anchors.top: toolbar.bottom
-		anchors.bottom: parent.bottom
+	initialPage: ListView {
+		id: pluginsView
 		
-		Tab {
-			title: "hola"
-			TableView {
-				id: pluginsView
-				anchors.fill: parent
-				headerVisible: false
-				
-				TableColumn {
-					role: "display"
-					caption: "Title"
-					width: 120
-				}
-				
-		// 		itemDelegate: Row { /*Image { source: 'image://desktoptheme/'+decoration-name } */Text { text: display } }
-		// 		highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-				
-				model: PluginsModel { id: plugins }
-			}
-		}
+		delegate: del
+		
+		model: PluginsModel { id: plugins }
 	}
 }

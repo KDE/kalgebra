@@ -1,5 +1,10 @@
-import QtDesktop 0.1
+import com.nokia.meego 1.0
 
-Tab {
-	title: "<unnamed>"
+Page
+{
+    tools: ToolBarLayout {
+        id: pageStackWindowTools
+        visible: true
+        ToolIcon { iconId: "toolbar-back"; onClicked: pageStack.pop(); }
+    }
 }
