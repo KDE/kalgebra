@@ -55,7 +55,7 @@ Rectangle
 				headerVisible: false
 				
 				TableColumn {
-					property: "display"
+					role: "display"
 					caption: "Title"
 					width: 120
 				}
