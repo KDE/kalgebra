@@ -30,7 +30,11 @@ Rectangle
 					
 					try {
 						var component = Qt.createComponent(toOpen)
-						frame.addTab(component)
+						
+						if (component.status == Component.Ready)
+							frame.addTab(component)
+						else
+							console.log("Error loading component:", component.errorString());
 					} catch (e) {
 						console.log("error: "+e)
 					}
