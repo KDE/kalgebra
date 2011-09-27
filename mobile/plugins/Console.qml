@@ -63,13 +63,6 @@ KAlgebraPage
 			text: "Exec"
 		}
 		
-		Button {
-			id: keyboardButton
-			text: "Keyboard"
-			
-			onClicked: keyboard.visible=!keyboard.visible
-		}
-		
 		anchors.top: input.bottom
 		anchors.right: parent.right
 	}
@@ -85,17 +78,7 @@ KAlgebraPage
 		role: "result"
 		
 		anchors.top: inputrow.bottom
-		width: parent.width
-	}
-	
-	Keyboard {
-		id: keyboard
-// 		visible:false
-		
-		onClear: doSelectAll();
-		
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: view.bottom
 		anchors.bottom: parent.bottom
+		width: parent.width
 	}
 }
