@@ -33,10 +33,10 @@ KAlgebraPage
 		id: ins
 		columns: 2
 		
-		Text {text: "Input: " } ExpressionInput { id: input; text: "x->sin x"}
-		Text {text: "From:" }   RealInput { id: from; value: 0 }
-		Text {text: "To:" }     RealInput { id: to; value: 10 }
-		Text {text: "Step:" }   RealInput { id: step; value: 1 }
+		Label {text: "Input: " } ExpressionInput { id: input; text: "x->sin x"}
+		Label {text: "From:" }   RealInput { id: from; value: 0 }
+		Label {text: "To:" }     RealInput { id: to; value: 10 }
+		Label {text: "Step:" }   RealInput { id: step; value: 1 }
 		
 		Button {
 			text: "Go!"
@@ -45,7 +45,7 @@ KAlgebraPage
 		}
 	}
 	
-	Text { text: "Results:"; id: res; anchors.top: ins.bottom }
+	Label { text: "Results:"; id: res; anchors.top: ins.bottom }
 	
 	SimpleListView {
 		id: view
