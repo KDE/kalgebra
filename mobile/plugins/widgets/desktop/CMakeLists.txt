@@ -1,5 +1,5 @@
 install( FILES
-    Button.qml CalcButton.qml CategoryDelegate.qml ExpressionInput.qml
+    Label.qml Button.qml CalcButton.qml ExpressionInput.qml
     Keyboard.qml RealInput.qml ToolTip.qml SimpleListView.qml
     
     KAlgebraPage.qml  KAlgebraMobile.qml
