@@ -40,7 +40,8 @@ int main(int argc, char *argv[])
 	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	view.engine()->rootContext()->setContextProperty("app", &widget);
 	
-	QString main = KStandardDirs::locate("data", "kalgebra/plugins/KAlgebraMobile.qml");
+	QString main = KStandardDirs::locate("data", "kalgebra/plugins/widgets/KAlgebraMobile.qml");
+//     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
 	view.setSource(main);
 	view.show();
 	
