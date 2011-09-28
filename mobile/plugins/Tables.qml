@@ -19,7 +19,7 @@ KAlgebraPage
 		var ffrom=from.value, fto=to.value, fstep=step.value;
 // 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
 		
-		for (var i=ffrom; i<=fto; i+=fstep) {
+		for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
 			var args = new Array();
 			args[0]=i;
 // 			console.log("!!! " + i); 
