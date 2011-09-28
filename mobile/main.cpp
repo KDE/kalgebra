@@ -43,7 +43,13 @@ int main(int argc, char *argv[])
 	QString main = KStandardDirs::locate("data", "kalgebra/plugins/widgets/KAlgebraMobile.qml");
 //     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
 	view.setSource(main);
-	view.show();
+	
+	#ifdef __arm__
+		view.showFullScreen();
+	#else
+		view.resize(view.initialSize().width(), view.initialSize().height());
+		view.show();
+	#endif
 	
 	return app.exec();
 }
