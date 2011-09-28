@@ -4,26 +4,10 @@ import "widgets"
 
 KAlgebraPage
 {
-// 	id: bg
-	width: 640; height: 500
-// 	color: "red"
-	anchors.fill: parent
+	width: 300; height: 500
 	
 	Analitza {
 		id: a
-	}
-	
-	function doOp(str)
-	{
-		console.log(str);
-		var start=input.selectionStart, end = input.selectionStart;
-		var text = input.text;
-		
-		console.log(":: " + start + " " + text.substr(0,start));
-// 		input.text += str;
-		
-		input.text = text.substr(0,start)+str+text.substr(end,text.size)
-		input.select(start+1,start+1);
 	}
 	
 	function doSelectAll()
@@ -45,39 +29,22 @@ KAlgebraPage
 			itemModel.append({ result: text + " = " + res });
 			input.selectAll();
 			
-			console.log(":) "+itemModel.count);
-// 			view.positionViewAtIndex(itemModel.count, ListView.End)
 			view.currentIndex = itemModel.count-1
 		}
 		
-		anchors.left: parent.left
-		anchors.right: parent.right
+		width: parent.width
 		anchors.top: parent.top
-	}
-	
-	Row {
-		id: inputrow
-		
-		Button {
-			id: executeButton
-			text: "Exec"
-		}
-		
-		anchors.top: input.bottom
-		anchors.right: parent.right
 	}
 	
 	SimpleListView {
 		model: itemModel
-// 		delegate: ConsoleDelegate {}
-// 		itemDelegate: Row { Text { text: result } }
 		id: view
 		
 		height: 200
 		
 		role: "result"
 		
-		anchors.top: inputrow.bottom
+		anchors.top: input.bottom
 		anchors.bottom: parent.bottom
 		width: parent.width
 	}
