@@ -7,11 +7,11 @@ PageStackWindow
 	height: 400
 	width: 300
 	
-	function goToPage(idx) {
-		var toOpen = plugins.pluginPath(idx)
+	function goToPage(path) {
+// 		var toOpen = plugins.pluginPath(idx)
 		
 		try {
-			var component = Qt.createComponent(toOpen)
+			var component = Qt.createComponent(path)
 			if (component.status == Component.Ready)
 				pageStack.push(component);
 			else
@@ -32,17 +32,21 @@ PageStackWindow
 				id: mouseArea;
 				anchors.fill: parent
 				onClicked: {
-					goToPage(0)
+					goToPage(model.path)
 				}
 			}
 		}
 	}
 	
-	initialPage: ListView {
-		id: pluginsView
-		
-		delegate: del
-		
-		model: PluginsModel { id: plugins }
-	}
+	initialPage: 
+		Page {
+			ListView {
+				id: pluginsView
+				anchors.fill: parent
+				
+				delegate: del
+				
+				model: PluginsModel { id: plugins }
+			}
+		}
 }
