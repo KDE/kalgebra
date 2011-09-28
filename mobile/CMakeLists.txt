@@ -1,9 +1,9 @@
-add_subdirectory(scripts)
+add_subdirectory(plugins)
 
-kde4_add_executable(kalgebramobile
-	functionsdialog.cpp widgetswrappers.cpp analitzawrapper.cpp kalgebramobile.cpp uiconfig.cpp main.cpp console.cpp)
+kde4_add_executable(kalgebramobile graph2dmobile.cpp
+	analitzawrapper.cpp kalgebramobile.cpp main.cpp console.cpp)
 
-target_link_libraries(kalgebramobile ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTSCRIPT_LIBRARY} ${KDE4_KDEUI_LIBS}
+target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTDECLARATIVE_LIBRARY}
 # 				${QT_QTSCRIPTTOOLS_LIBRARY}
 				analitza analitzagui)
 

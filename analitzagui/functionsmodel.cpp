@@ -25,8 +25,15 @@
 #include <QIcon>
 
 FunctionsModel::FunctionsModel(QObject *parent)
-	: QAbstractTableModel(parent), m_selectedRow(-1), m_resolution(500), m_fcount(1)
-{}
+	: QAbstractTableModel(parent), m_resolution(500), m_fcount(1)
+{
+	QHash<int, QByteArray> rolenames=QAbstractTableModel::roleNames();
+	rolenames.insert(Color, "color");
+	rolenames.insert(Expression, "expression");
+	rolenames.insert(Shown, "shown");
+	
+	setRoleNames(rolenames);
+}
 
 QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 {
@@ -65,12 +72,19 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 			break;
 		case Selection:
 			ret = m_selectedRow;
+		case Expression:
+			ret=f.expression().toString();
 			break;
 		case Shown:
-			ret=funclist[index.row()].isShown();
+			ret=f.isShown();
+			break;
+		case Color:
+			ret=f.color();
 			break;
 		
 	}
+	
+// 	qDebug() << "laaaa" << roleNames().value(role) << ret << index;
 	return ret;
 }
 
@@ -102,23 +116,21 @@ int FunctionsModel::rowCount(const QModelIndex &idx) const
 bool FunctionsModel::addFunction(const Function& func)
 {
 	Q_ASSERT(func.isCorrect());
-	bool exists=false;
 	
-	for (QList<Function>::const_iterator it = funclist.constBegin(); !exists && it!=funclist.constEnd(); ++it)
-		exists = (it->name() == func.name());
+	QList<Function>::const_iterator it=findFunction(func.name());
+	bool exists=it!=funclist.constEnd();
 	
 	if(!exists) {
 		beginInsertRows (QModelIndex(), rowCount(), rowCount());
 		funclist.append(func);
 		funclist.last().setResolution(m_resolution);
-		m_selectedRow=funclist.count()-1;
 		endInsertRows();
 		sendStatus(i18n("%1 function added", func.name()));
 		
 		emit functionModified(func.name(), func.expression());
 	}
 	
-	return exists;
+	return !exists;
 }
 
 bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
@@ -128,9 +140,6 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 		return false;
 	beginRemoveRows(parent, row, row+count-1);
 	
-	if(m_selectedRow>=row)
-		m_selectedRow-=count;
-	
 	QList<Function>::iterator it=funclist.begin()+row;
 	for(int i=count-1; i>=0; i--) {
 		QString name=it->name();
@@ -139,46 +148,7 @@ bool FunctionsModel::removeRows(int row, int count, const QModelIndex & parent)
 	}
 	endRemoveRows();
 	
-	Q_ASSERT(m_selectedRow>=-1 && m_selectedRow<funclist.count());
-	
 	return true;
-}
-
-void FunctionsModel::setSelected(const QModelIndex & indexSel)
-{
-	int previous=m_selectedRow;
-	m_selectedRow=indexSel.row();
-	if(previous!=m_selectedRow) {
-		QModelIndex idx=index(m_selectedRow, 0), idxEnd=index(m_selectedRow, columnCount()-1);
-		emit dataChanged(idx, idxEnd);
-		
-		idx=index(previous, 0), idxEnd=index(previous, columnCount()-1);
-		emit dataChanged(idx, idxEnd);
-	}
-}
-
-bool FunctionsModel::setSelected(const QString& exp)
-{
-	int i=0;
-	int previous=m_selectedRow;
-	bool found=false;
-	foreach(const Function& f, funclist) {
-		if(f.name() == exp) {
-			m_selectedRow=i;
-			found=true;
-		}
-		i++;
-	}
-	
-	if(found && previous!=m_selectedRow) {
-		QModelIndex idx=index(m_selectedRow, 0), idxEnd=index(m_selectedRow, columnCount()-1);
-		emit dataChanged(idx, idxEnd);
-		
-		idx=index(previous, 0);
-		idxEnd=index(previous, columnCount()-1);
-		emit dataChanged(idx, idxEnd);
-	}
-	return found;
 }
 
 void FunctionsModel::clear()
@@ -226,17 +196,18 @@ bool FunctionsModel::editFunction(const QString& toChange, const Function& func)
 {
 	bool exist=false;
 	
-	int i=0;
-	for (QList<Function>::iterator it = funclist.begin(); !exist && it != funclist.end(); ++it, ++i ) {
-		if(it->name() == toChange) {
-			exist=true;
-			*it = func;
-			it->setName(toChange);
-			it->setResolution(m_resolution);
-			QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
-			emit dataChanged(idx, idxEnd);
-			emit functionModified(toChange, func.expression());
-		}
+	QList<Function>::iterator it=findFunction(toChange);
+	if(it!=funclist.end()) {
+		exist=true;
+		*it = func;
+		it->setName(toChange);
+		it->setResolution(m_resolution);
+		
+		int i = funclist.indexOf(*it);
+		
+		QModelIndex idx=index(i, 0), idxEnd=index(i, columnCount()-1);
+		emit dataChanged(idx, idxEnd);
+		emit functionModified(toChange, func.expression());
 	}
 	
 	return exist;
@@ -244,8 +215,7 @@ bool FunctionsModel::editFunction(const QString& toChange, const Function& func)
 
 bool FunctionsModel::setData(const QModelIndex & idx, const QVariant &value, int role)
 {
-	if(role==Selection) setSelected(idx);
-	else if(role==Shown) {
+	if(role==Shown) {
 		bool isshown=value.toBool();
 		funclist[idx.row()].setShown(isshown);
 		
@@ -261,40 +231,27 @@ void FunctionsModel::updatePoints(int i, const QRect & viewport)
 	funclist[i].update_points(viewport);
 }
 
-const Function & FunctionsModel::currentFunction() const
-{
-	Q_ASSERT(hasSelection());
-	return funclist[m_selectedRow];
-}
-
-Function & FunctionsModel::currentFunction()
-{
-	Q_ASSERT(hasSelection());
-	return funclist[m_selectedRow];
-}
-
-QLineF FunctionsModel::slope(const QPointF & dp) const
+QLineF FunctionsModel::slope(int row, const QPointF & dp) const
 {
 	QLineF ret;
-	if(hasSelection()) {
-		const Function & f = currentFunction();
-		if(f.isShown()) {
-			ret = f.derivative(dp);
-		}
+	if(row<0) return ret;
+	
+	const Function & f = funclist[row];
+	if(f.isShown()) {
+		ret = f.derivative(dp);
 	}
 	return ret;
 }
 
-QPair<QPointF, QString> FunctionsModel::calcImage(const QPointF & ndp)
+QPair<QPointF, QString> FunctionsModel::calcImage(int row, const QPointF & ndp)
 {
 	QPair<QPointF, QString> ret;
-	ret.first=ndp;
+	if(row<0) return ret;
 	
-	if(hasSelection()){
-		Function & f = currentFunction();
-		if(f.isShown()) {
-			ret = f.calc(ndp);
-		}
+	ret.first=ndp;
+	Function & f = funclist[row];
+	if(f.isShown()) {
+		ret = f.calc(ndp);
 	}
 	return ret;
 }
@@ -305,11 +262,6 @@ Qt::ItemFlags FunctionsModel::flags(const QModelIndex &idx) const
 		return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsTristate;
 	else
 		return 0;
-}
-
-void FunctionsModel::unselect()
-{
-	m_selectedRow=-1;
 }
 
 void FunctionsModel::setResolution(uint res)
@@ -326,6 +278,33 @@ void FunctionsModel::setResolution(uint res)
 QString FunctionsModel::freeId()
 {
 	return QString("f%1").arg(m_fcount++);
+}
+
+QList<Function>::const_iterator FunctionsModel::findFunction(const QString& id) const
+{
+	for (QList<Function>::const_iterator it = funclist.constBegin(); it!=funclist.constEnd(); ++it)
+		if(it->name() == id)
+			return it;
+	
+	return funclist.constEnd();
+}
+
+QList<Function>::iterator FunctionsModel::findFunction(const QString& id)
+{
+	for (QList<Function>::iterator it = funclist.begin(); it!=funclist.end(); ++it)
+		if(it->name() == id)
+			return it;
+	
+	return funclist.end();
+}
+
+QModelIndex FunctionsModel::indexForId(const QString& id)
+{
+	int i=0;
+	for (QList<Function>::iterator it = funclist.begin(); it!=funclist.end(); ++it, ++i)
+		if(it->name() == id)
+			return index(i,0);
+	return QModelIndex();
 }
 
 #include "functionsmodel.moc"

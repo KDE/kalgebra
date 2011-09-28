@@ -16,45 +16,46 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRAMOBILE_H
-#define KALGEBRAMOBILE_H
 
-#include <QMainWindow>
+#ifndef GRAPH2DMOBILE_H
+#define GRAPH2DMOBILE_H
 
-namespace Analitza { class Variables;}
+#include <QDeclarativeItem>
+#include <analitzagui/functionspainter.h>
 
-class VariablesModel;
-class PluginsModel;
-class FunctionsModel;
-class AnalitzaWrapper;
 
-class KAlgebraMobile : public QMainWindow
+class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 {
 	Q_OBJECT
+	Q_PROPERTY(FunctionsModel* model READ model WRITE setModel);
+	Q_PROPERTY(QRectF viewport READ lastViewport WRITE setViewport);
+	Q_PROPERTY(bool squares READ squares WRITE setSquares);
+	Q_PROPERTY(bool keepAspectRatio READ keepAspectRatio WRITE setKeepAspectRatio);
+	Q_PROPERTY(int currentFunction READ currentFunction WRITE setCurrentFunction)
 	public:
-		explicit KAlgebraMobile(QWidget* parent = 0, Qt::WindowFlags flags = 0);
+		Graph2DMobile(QDeclarativeItem* parent = 0);
 		
-		void displayPlugin(int plugin);
+		virtual void forceRepaint();
+		virtual void viewportChanged() {}
+		virtual void modelChanged();
+		virtual int currentFunction() const { return m_currentFunction; }
 		
-		static KAlgebraMobile* self();
-	
-	public slots:
-		FunctionsModel* functionsModel();
-		Analitza::Variables* variables() const;
-		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
+		virtual void paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* w);
+		
+		void setCurrentFunction(int f) { m_currentFunction = f; }
 		
 	private slots:
-		void selectPlugin();
+		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
+		void addFuncs(const QModelIndex& parent, int start, int end);
+		void removeFuncs(const QModelIndex& parent, int start, int end);
 		
 	private:
-		static KAlgebraMobile* s_self;
-		void findScripts();
+		bool m_dirty;
+		int m_currentFunction;
 		
-		QVector<QWidget*> m_pluginUI;
-		
-		FunctionsModel* m_functionsModel;
-		PluginsModel* m_pluginsModel;
-		Analitza::Variables* m_vars;
+		QPixmap m_buffer;
+		QRectF defViewport;
+		void resetViewport();
 };
 
-#endif // KALGEBRAMOBILE_H
+#endif // GRAPH2DMOBILE_H

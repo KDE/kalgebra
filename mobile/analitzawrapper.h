@@ -32,8 +32,10 @@ class AnalitzaWrapper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool calculate READ isCalculate WRITE setCalculate)
+	Q_PROPERTY(bool isCorrect READ isCorrect)
+	Q_PROPERTY(QString error READ error)
 	public:
-		explicit AnalitzaWrapper(QScriptEngine* engine, QObject* parent = 0);
+		explicit AnalitzaWrapper(QObject* parent = 0);
 		
 		void setCalculate(bool calc) { m_calc = calc; }
 		bool isCalculate() const { return m_calc; } 
@@ -46,11 +48,14 @@ class AnalitzaWrapper : public QObject
 		Q_SCRIPTABLE void removeVariable(const QString& name);
 		VariablesModel* variablesModel();
 		
+		QString error() const { return m_error; }
+		bool isCorrect() const { return m_error.isEmpty(); }
 	private:
+		void throwError(const QString& error);
 		Analitza::Analyzer* m_wrapped;
 		bool m_calc;
-		QScriptEngine* m_engine;
 		VariablesModel* m_varsModel;
+		QString m_error;
 };
 
 #endif // ANALITZAWRAPPER_H

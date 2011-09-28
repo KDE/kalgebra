@@ -30,7 +30,6 @@ class ANALITZAGUI_EXPORT FunctionsView : public QTreeView
 	public:
 		FunctionsView(QWidget *parent=0);
 		
-		virtual void selectionChanged ( const QItemSelection & selected, const QItemSelection & deselected );
 		virtual void mousePressEvent ( QMouseEvent * event );
 };
 

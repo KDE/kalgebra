@@ -102,6 +102,8 @@ class Add3DOption : public InlineOptions
 };
 #endif
 
+QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
+
 KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
 	resize(900, 500);
@@ -198,6 +200,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
+	m_graph2d->setSelectionModel(b_funcs->selectionModel());
 	
 	b_tools->addTab(b_funcs, i18n("List"));
 	
@@ -232,7 +235,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	connect(b_tools, SIGNAL(currentChanged(int)), this, SLOT(functools(int)));
 	connect(m_graph2d, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	connect(m_graph2d, SIGNAL(viewportChanged(QRectF)), b_viewport, SLOT(setViewport(QRectF)));
-	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(setViewport(QRectF)));
+	connect(b_viewport, SIGNAL(viewportChange(QRectF)), m_graph2d, SLOT(changeViewport(QRectF)));
 	connect(b_varsView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(varsContextMenu(QPoint)));
 	
 	////////menu
@@ -384,7 +387,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(Qt::blue), 6, 0);
+	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(randomFunctionColor()), 6, 0);
 	b_funcsModel->addFunction(f);
 	
 	m_tabs->setCurrentIndex(1);
@@ -403,7 +406,7 @@ void KAlgebra::new_func()
 	b_funced->setEditing(false);
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
-	b_funcsModel->setSelected(f.name());
+	b_funcs->setCurrentIndex(b_funcsModel->indexForId(f.name()));
 	m_graph2d->setFocus();
 }
 
@@ -423,7 +426,7 @@ void KAlgebra::functools(int i)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
 		b_funced->setName(b_funcsModel->freeId());
-		b_funced->setColor(QColor::fromHsv(qrand()%255, 255, 255));
+		b_funced->setColor(randomFunctionColor());
 		b_funced->setEditing(false);
 		b_funced->setFocus();
 	}
@@ -622,7 +625,7 @@ void KAlgebra::tabChanged(int n)
 
 void KAlgebra::select(const QModelIndex & idx)
 {
-	b_funcsModel->setSelected(idx);
+	b_funcs->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::ClearAndSelect);
 }
 
 void KAlgebra::updateInformation()
@@ -645,7 +648,7 @@ void KAlgebra::valueChanged()
 {
 	//FIXME: Should only repaint the affected ones.
 	if(b_funcsModel->rowCount()>0)
-		m_graph2d->update(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
+		m_graph2d->updateFunctions(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
 }
 
 void KAlgebra::varsContextMenu(const QPoint& p)

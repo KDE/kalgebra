@@ -30,14 +30,6 @@ FunctionsView::FunctionsView(QWidget * parent) : QTreeView(parent)
 	setSortingEnabled(false);
 }
 
-void FunctionsView::selectionChanged(const QItemSelection & selected, const QItemSelection &)
-{
-	if(!selected.indexes().isEmpty()) {
-		QModelIndex idx=selected.indexes().first();
-		model()->setData(idx, QVariant(), FunctionsModel::Selection);
-	}
-}
-
 void FunctionsView::mousePressEvent(QMouseEvent * e)
 {
 	QModelIndex clickIdx(indexAt(e->pos()));
