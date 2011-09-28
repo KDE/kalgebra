@@ -6,27 +6,23 @@ KAlgebraPage
 {
 	function addFunc() { app.addFunction(input.text) }
 	
-	height: 100
-	width: 100
-	
-	Rectangle {
-		width: parent.width
-		anchors.top: parent.top
-		anchors.bottom: controls.top
-		color: 'white'
-		
-		Graph2D {
-			id: view
-			anchors.fill: parent
-			
-			squares: true
-			model: app.functionsModel()
-		}
-	}
-	
 	Column {
 		id: controls
-		anchors.bottom: parent.bottom
+		anchors.fill: parent
+		
+		Rectangle {
+			width: parent.width
+			height: 200
+			color: 'white'
+			
+			Graph2D {
+				id: view
+				anchors.fill: parent
+				
+				squares: true
+				model: app.functionsModel()
+			}
+		}
 		
 		Row {
 			width: parent.width
@@ -46,17 +42,16 @@ KAlgebraPage
 		}
 		
 		SimpleListView {
-			id: listview
 			model: app.functionsModel()
-// 			itemDelegate: Text { text: display + " " + expression }
-// 				highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
 			
 			onCurrentIndexChanged: view.currentFunction=currentIndex-1
 			
 			role: "expression"
 			
-			width: view.width
-			height: 100
+// 			anchors.bottom: parent.bottom
+			
+			width: parent.width
+			height: 200
 		}
 	}
 	
