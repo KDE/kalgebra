@@ -12,7 +12,7 @@ if(${MOBILE_BACKEND} STREQUAL "harmattan")
 endif(${MOBILE_BACKEND} STREQUAL "harmattan")
 
 install(TARGETS kalgebramobile ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS kalgebramobile.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install(PROGRAMS kalgebramobile.desktop DESTINATION ${DESKTOPFILE_INSTALL} )
 install(FILES
 	kalgebrascript.desktop
 	DESTINATION ${SERVICETYPES_INSTALL_DIR}
