@@ -27,7 +27,7 @@ class PluginsModel : public QStandardItemModel
 {
 	Q_OBJECT
 	public:
-		enum Roles { PathRole = Qt::UserRole+1, PriorityRole };
+		enum Roles { PathRole = Qt::UserRole+1, PriorityRole, TitleRole, SubtitleRole };
 		
 		explicit PluginsModel(QObject* parent = 0);
 		

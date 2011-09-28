@@ -25,47 +25,51 @@
 
 PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
-    QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
-    rolenames.insert(PathRole, "path");
-    rolenames.insert(PriorityRole, "priority");
-    setRoleNames(rolenames);
+	QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
+	rolenames.insert(PathRole, "path");
+	rolenames.insert(PriorityRole, "priority");
+	rolenames.insert(TitleRole, "title");
+	rolenames.insert(SubtitleRole, "subtitle");
+	setRoleNames(rolenames);
 
-    KStandardDirs d;
-    QStringList basedirs = d.findDirs("data", "kalgebra/plugins");
-    QStringList foundPlugins;
-    foreach(const QString& dir, basedirs) {
-        //we list <dir>/*/*.desktop
+	KStandardDirs d;
+	QStringList basedirs = d.findDirs("data", "kalgebra/plugins");
+	QStringList foundPlugins;
+	foreach(const QString& dir, basedirs) {
+		//we list <dir>/*/*.desktop
 
-        QDir d(dir);
-        QStringList files = d.entryList(QStringList("*.desktop"));
+		QDir d(dir);
+		QStringList files = d.entryList(QStringList("*.desktop"));
 
-        foreach(const QString& plugin, files) {
-            foundPlugins += d.absoluteFilePath(plugin);
-        }
-    }
+		foreach(const QString& plugin, files) {
+			foundPlugins += d.absoluteFilePath(plugin);
+		}
+	}
 
-    qDebug() << "Plugins found:" << foundPlugins;
-    m_plugins = KPluginInfo::fromFiles(foundPlugins);
-    setSortRole(PriorityRole);
+	qDebug() << "Plugins found:" << foundPlugins;
+	m_plugins = KPluginInfo::fromFiles(foundPlugins);
+	setSortRole(PriorityRole);
 
-    foreach(const KPluginInfo& info, m_plugins) {
+	Q_FOREACH(const KPluginInfo& info, m_plugins) {
 // 				const KPluginInfo& info;
-        QStandardItem* item = new QStandardItem(QIcon::fromTheme(info.icon()), info.name());
+		QStandardItem* item = new QStandardItem(QIcon::fromTheme(info.icon()), info.name());
 
-        QString postfix = "kalgebra/plugins/"+info.pluginName();
-        QString scriptPath = KStandardDirs::locate("data", postfix);
+		QString postfix = "kalgebra/plugins/"+info.pluginName();
+		QString scriptPath = KStandardDirs::locate("data", postfix);
 
-        Q_ASSERT(!scriptPath.isEmpty());
+		Q_ASSERT(!scriptPath.isEmpty());
 
-        QVariant priority = info.property("X-KAlgebra-Priority");
-        if(!priority.isValid())
-            priority = 1000;
-        item->setData(scriptPath, PathRole);
-        item->setData(priority, PriorityRole);
+		QVariant priority = info.property("X-KAlgebra-Priority");
+		if(!priority.isValid())
+			priority = 1000;
+		item->setData(scriptPath, PathRole);
+		item->setData(priority, PriorityRole);
+		item->setData(info.name(), TitleRole);
+		item->setData(info.comment(), SubtitleRole);
 
-        appendRow(item);
-    }
-    setSortRole(PriorityRole);
+		appendRow(item);
+	}
+	setSortRole(PriorityRole);
     sort(0);
 }
 
