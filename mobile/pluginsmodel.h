@@ -16,34 +16,27 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <KApplication>
-#include <KAboutData>
-#include <KCmdLineArgs>
-#include "kalgebramobile.h"
-#include <QDeclarativeView>
-#include <KStandardDirs>
-#include <QDebug>
-#include <QDeclarativeEngine>
-#include <qdeclarativecontext.h>
 
-int main(int argc, char *argv[])
+#ifndef PLUGINSMODEL_H
+#define PLUGINSMODEL_H
+
+#include <QStandardItemModel>
+#include <KPluginInfo>
+
+class PluginsModel : public QStandardItemModel
 {
-	KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
-			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
-	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
-	KCmdLineArgs::init(argc, argv, &about);
-	KApplication app;
-	
-	KAlgebraMobile widget;
-	
-	QDeclarativeView view;
-	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
-	view.engine()->rootContext()->setContextProperty("app", &widget);
-	
-	QString main = KStandardDirs::locate("data", "kalgebra/plugins/widgets/KAlgebraMobile.qml");
-//     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
-	view.setSource(main);
-	view.show();
-	
-	return app.exec();
-}
+	Q_OBJECT
+	public:
+		enum Roles { PathRole = Qt::UserRole+1, PriorityRole };
+		
+		explicit PluginsModel(QObject* parent = 0);
+		
+	public slots:
+		///qml can't access data. Yay!
+		QString pluginPath(int row);
+		
+	private:
+		KPluginInfo::List m_plugins;
+};
+
+#endif // PLUGINSMODEL_H

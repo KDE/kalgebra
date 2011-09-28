@@ -24,7 +24,7 @@
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 	: QDeclarativeItem(parent), FunctionsPainter(0, boundingRect().size())
-	, m_dirty(true)
+	, m_dirty(true), m_currentFunction(-1)
 {
 	setSize(QSizeF(100,100));
 	setFlag(QGraphicsItem::ItemHasNoContents, false);

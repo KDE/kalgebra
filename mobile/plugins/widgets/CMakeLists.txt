@@ -1,4 +1,3 @@
-install( FILES
-	Button.qml CalcButton.qml CategoryDelegate.qml ConsoleDelegate.qml ConsoleModel.qml ExpressionInput.qml Keyboard.qml RealInput.qml ToolTip.qml
-	DESTINATION ${DATA_INSTALL_DIR}/kalgebra/plugins/widgets/
-)
+set(MOBILE_BACKEND "desktop" CACHE STRING "backend to install, currently desktop and harmattan (directories in this folder)")
+
+add_subdirectory(${MOBILE_BACKEND})

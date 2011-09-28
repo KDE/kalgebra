@@ -2,7 +2,7 @@ import QtQuick 1.0
 import org.kde.analitza 1.0
 import "widgets"
 
-Item
+KAlgebraPage
 {
 // 	id: bg
 	width: 640; height: 500
@@ -31,9 +31,7 @@ Item
 		input.selectAll()
 	}
 	
-	ConsoleModel {
-		id: itemModel
-	}
+	ListModel { id: itemModel }
 	
 	ExpressionInput {
 		id: input
@@ -65,37 +63,22 @@ Item
 			text: "Exec"
 		}
 		
-		Button {
-			id: keyboardButton
-			text: "Keyboard"
-			
-			onClicked: keyboard.visible=!keyboard.visible
-		}
-		
 		anchors.top: input.bottom
 		anchors.right: parent.right
 	}
 	
-	ListView {
+	SimpleListView {
 		model: itemModel
-		delegate: ConsoleDelegate {}
+// 		delegate: ConsoleDelegate {}
+// 		itemDelegate: Row { Text { text: result } }
 		id: view
 		
 		height: 200
 		
+		role: "result"
+		
 		anchors.top: inputrow.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-	}
-	
-	Keyboard {
-		id: keyboard
-// 		visible:false
-		
-		onClear: doSelectAll();
-		
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: view.bottom
 		anchors.bottom: parent.bottom
+		width: parent.width
 	}
 }
