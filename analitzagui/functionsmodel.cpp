@@ -63,15 +63,6 @@ QVariant FunctionsModel::data(const QModelIndex & index, int role) const
 				ret = QIcon::fromTheme(f.icon());
 			}
 			break;
-		case Qt::FontRole:
-			if(var==m_selectedRow) {
-				QFont f;
-				f.setBold(true);
-				ret=f;
-			}
-			break;
-		case Selection:
-			ret = m_selectedRow;
 		case Expression:
 			ret=f.expression().toString();
 			break;
