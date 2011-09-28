@@ -4,7 +4,7 @@ import com.nokia.meego 1.0
 TextField
 {
 	property double value: parseFloat(text)
-	inputMethodHints: Qt.ImhPreferNumbers | Qt.ImhNoPredictiveText
+	inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
 	
 	text: value.toString()
 	
