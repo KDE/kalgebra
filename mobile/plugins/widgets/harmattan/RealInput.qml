@@ -3,7 +3,9 @@ import com.nokia.meego 1.0
 
 TextField
 {
-    property double value: parseFloat(text)
+	property double value: parseFloat(text)
+	inputMethodHints: Qt.ImhPreferNumbers | Qt.ImhNoPredictiveText
+	
 	text: value.toString()
 	
 	validator: DoubleValidator {}

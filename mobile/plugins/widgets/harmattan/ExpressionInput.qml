@@ -4,7 +4,8 @@ TextField
 {
 	id: input
 	
-	placeholderText: "Enter the expression to calculate..."
+	placeholderText: "Expression to calculate..."
+	inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
 	
 // 	Keys.onPressed: {
 // 		console.log("bum :: "+text);
