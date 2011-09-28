@@ -26,12 +26,11 @@ set(analitzagui_SRCS
 	functionsview.cpp
 	functionsmodel.cpp
 	functionspainter.cpp
-	functionedit.cpp
 	graph2d.cpp
 )
 
 kde4_add_library(analitzagui SHARED ${analitzagui_SRCS})
-target_link_libraries(analitzagui ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} analitza)
+target_link_libraries(analitzagui ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDECORE_LIBRARY} ${QT_QTSVG_LIBRARY} analitza)
 
 set_target_properties(analitzagui PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
 

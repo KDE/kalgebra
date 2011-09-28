@@ -48,8 +48,8 @@ void FunctionsView::mousePressEvent(QMouseEvent * e)
 		}
 		
 		QMenu menu(this);
-		QAction* actionShown=menu.addAction(KIcon(icon), actuallyShown);
-		QAction* actionRemove=menu.addAction(KIcon("list-remove"), i18n("Remove '%1'", model()->data(nameIdx).toString()));
+		QAction* actionShown=menu.addAction(QIcon::fromTheme(icon), actuallyShown);
+		QAction* actionRemove=menu.addAction(QIcon::fromTheme("list-remove"), i18n("Remove '%1'", model()->data(nameIdx).toString()));
 		QAction* result=menu.exec(e->globalPos());
 		if(result==actionShown) {
 			model()->setData(clickIdx, !shown, FunctionsModel::Shown);

@@ -24,13 +24,12 @@
 #include <QLineEdit>
 
 #include <KLocale>
-#include <KIcon>
 #include <KTabWidget>
 #include <KColorScheme>
 
-#include "graph2d.h"
-#include "functionsmodel.h"
-#include "expressionedit.h"
+#include <analitzagui/graph2d.h>
+#include <analitzagui/functionsmodel.h>
+#include <analitzagui/expressionedit.h>
 #include <analitza/analyzer.h>
 #include <analitza/expression.h>
 #include <analitza/variables.h>
@@ -90,7 +89,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
 	
-	m_viewTabs->addTab(m_graph, KIcon("document-preview"), i18n("Preview"));
+	m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
 	QWidget *options=new QWidget(m_viewTabs);
 	options->setLayout(new QVBoxLayout);
 	m_uplimit=new ExpressionEdit(options);
@@ -102,15 +101,15 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	options->layout()->addWidget(new QLabel(i18n("To:"), options));
 	options->layout()->addWidget(m_uplimit);
 	options->layout()->addItem(new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-	m_viewTabs->addTab(options, KIcon("configure"), i18n("Options"));
+	m_viewTabs->addTab(options, QIcon::fromTheme("configure"), i18n("Options"));
 	connect(m_uplimit, SIGNAL(textChanged()), this, SLOT(updateUplimit()));
 	connect(m_downlimit, SIGNAL(textChanged()), this, SLOT(updateDownlimit()));
 	
 	QHBoxLayout *m_butts = new QHBoxLayout;
 	m_ok = new QPushButton(i18n("OK"), this);
-	m_ok->setIcon(KIcon("dialog-ok"));
+	m_ok->setIcon(QIcon::fromTheme("dialog-ok"));
 	QPushButton *m_clear = new QPushButton(i18nc("@action:button", "Clear"), this);
-	m_clear->setIcon(KIcon("dialog-cancel"));
+	m_clear->setIcon(QIcon::fromTheme("dialog-cancel"));
 	connect(m_ok, SIGNAL(clicked()), this, SLOT(ok()));
 	connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
 	
@@ -229,9 +228,9 @@ void FunctionEdit::setState(const QString& text, bool negative)
 	m_valid->setPalette(p);
 	
 	if(negative)
-		m_validIcon->setPixmap(KIcon("flag-red").pixmap(QSize(16,16)));
+		m_validIcon->setPixmap(QIcon::fromTheme("flag-red").pixmap(QSize(16,16)));
 	else
-		m_validIcon->setPixmap(KIcon("flag-green").pixmap(QSize(16,16)));
+		m_validIcon->setPixmap(QIcon::fromTheme("flag-green").pixmap(QSize(16,16)));
 }
 
 ///Let's see if the exp is correct
@@ -242,7 +241,7 @@ void FunctionEdit::edit()
 		m_ok->setEnabled(false);
 		m_valid->clear();
 		m_valid->setToolTip(QString());
-		m_validIcon->setPixmap(KIcon("flag-yellow").pixmap(QSize(16,16)));
+		m_validIcon->setPixmap(QIcon::fromTheme("flag-yellow").pixmap(QSize(16,16)));
 		
 		m_funcsModel->clear();
 		m_graph->forceRepaint();

@@ -27,8 +27,6 @@
 #include <KColorCombo>
 #include <KLineEdit>
 
-#include "analitzaguiexport.h"
-
 class KTabWidget;
 class Function;
 class Graph2D;
@@ -45,7 +43,7 @@ class Expression;
  *	@author Aleix Pol i Gonzalez
  */
 
-class ANALITZAGUI_EXPORT FunctionEdit : public QWidget
+class FunctionEdit : public QWidget
 {
 Q_OBJECT
 public:

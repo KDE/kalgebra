@@ -28,11 +28,11 @@
 
 int main(int argc, char *argv[])
 {
-	KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
-			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
-	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
-	KCmdLineArgs::init(argc, argv, &about);
-	KApplication app;
+// 	KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
+// 			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
+// 	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
+// 	KCmdLineArgs::init(argc, argv, &about);
+	QApplication app(argc, argv);
 	
 	KAlgebraMobile widget;
 	

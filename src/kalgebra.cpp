@@ -23,6 +23,7 @@
 #include "askname.h"
 #include "variablesdelegate.h"
 #include "viewportwidget.h"
+#include "functionedit.h"
 #ifdef HAVE_OPENGL
 #	include "graph3d.h"
 #endif
@@ -30,7 +31,6 @@
 #include <analitzagui/operatorsmodel.h>
 #include <analitzagui/functionfactory.h>
 
-#include <analitzagui/functionedit.h>
 #include <analitzagui/functionsmodel.h>
 #include <analitzagui/functionsview.h>
 #include <analitzagui/expressionedit.h>

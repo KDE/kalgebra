@@ -11,6 +11,7 @@ set(kalgebra_SRCS
 	main.cpp
 	variablesdelegate.cpp
 	viewportwidget.cpp
+	functionedit.cpp
 )
 
 if(OPENGL_FOUND)

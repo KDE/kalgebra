@@ -19,7 +19,7 @@
 
 #include "pluginsmodel.h"
 #include <KStandardDirs>
-#include <KIcon>
+#include <QIcon>
 #include <QDir>
 #include <QDebug>
 
@@ -50,7 +50,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 
     foreach(const KPluginInfo& info, m_plugins) {
 // 				const KPluginInfo& info;
-        QStandardItem* item = new QStandardItem(KIcon(info.icon()), info.name());
+        QStandardItem* item = new QStandardItem(QIcon::fromTheme(info.icon()), info.name());
 
         QString postfix = "kalgebra/plugins/"+info.pluginName();
         QString scriptPath = KStandardDirs::locate("data", postfix);
