@@ -1,4 +1,5 @@
 import com.nokia.meego 1.0
+import com.nokia.extras 1.0
 import org.kde.analitza 1.0
 import QtQuick 1.1
 
@@ -44,7 +45,17 @@ PageStackWindow
 				id: pluginsView
 				anchors.fill: parent
 				
-				delegate: del
+				delegate:
+					ListDelegate {
+						Image {
+							source: "image://theme/icon-m-common-drilldown-arrow" + (theme.inverted ? "-inverse" : "")
+							anchors.right: parent.right;
+							anchors.verticalCenter: parent.verticalCenter
+						}
+						
+						onClicked: goToPage(model.path)
+					}
+
 				
 				model: PluginsModel { id: plugins }
 			}

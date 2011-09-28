@@ -4,7 +4,9 @@ import com.nokia.meego 1.0
 TextField
 {
     property double value: parseFloat(text)
-
+	text: value.toString()
+	
 	validator: DoubleValidator {}
-	onValueChanged: text=value.toString()
+	
+	onTextChanged: value=parseFloat(text)
 }
