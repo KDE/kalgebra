@@ -527,5 +527,23 @@ int countDepth(int depth, const Object* tree)
 	return 0;
 }
 
+QString generateDependencyGraph(const Variables* v)
+{
+	QString ret;
+	ret += "digraph G {\n";
+	
+	for(Variables::const_iterator it=v->constBegin(), itEnd=v->constEnd(); it!=itEnd; ++it) {
+		QString current = it.key();
+		QStringList deps = dependencies(it.value(), QStringList());
+		
+		foreach(const QString& d, deps) {
+			if(v->contains(d))
+				ret += "\t"+current+" -> "+d+"\n";
+		}
+	}
+	
+	ret += "}\n";
+	return ret;
+}
 
 }
