@@ -74,12 +74,18 @@ QStringList dependencies(const Object* o, const QStringList& scope)
 			const Apply* c = static_cast<const Apply*>(o);
 			Apply::const_iterator it = c->firstValue()/*, first = c->firstValue()*/;
 			
-			QStringList newScope=scope+c->bvarStrings();
-			Object* ul=c->ulimit(), *dl=c->dlimit();
+			Object* ul=c->ulimit(), *dl=c->dlimit(), *domain=c->domain();
 			
 			//uplimit and downlimit are in the parent scope
 			if(ul) ret += dependencies(ul, scope).toSet();
 			if(dl) ret += dependencies(dl, scope).toSet();
+			if(domain) ret += dependencies(domain, scope).toSet();
+			
+			if(c->firstOperator()==Operator::function) {
+				ret += dependencies(c->m_params[0], scope).toSet();
+			}
+			
+			QStringList newScope=scope+c->bvarStrings();
 			for(; it!=c->constEnd(); ++it) {
 				ret += dependencies(*it, newScope).toSet();
 			}
