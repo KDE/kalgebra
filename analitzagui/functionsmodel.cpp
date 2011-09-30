@@ -108,7 +108,7 @@ bool FunctionsModel::addFunction(const Function& func)
 {
 	Q_ASSERT(func.isCorrect());
 	
-	QList<Function>::const_iterator it=findFunction(func.name());
+	QList<Function>::const_iterator it=const_cast<const FunctionsModel*>(this)->findFunction(func.name());
 	bool exists=it!=funclist.constEnd();
 	
 	if(!exists) {
