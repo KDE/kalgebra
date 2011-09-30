@@ -77,7 +77,10 @@ class ANALITZA_EXPORT Variables : public QHash<QString, Object*>
 		 * Adds again the initial constants
 		 */
 		void initializeConstants();
+		
+		/** @returns the expression contained by the @p name identifier. */
 		Expression valueExpression(const QString& name) const;
+		 
 };
 
 }
