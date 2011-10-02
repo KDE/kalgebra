@@ -7,7 +7,6 @@ PageStackWindow
 {
 	height: 400
 	width: 300
-	anchors.margins: 15
 	
 	function goToPage(path) {
 // 		var toOpen = plugins.pluginPath(idx)
@@ -42,6 +41,8 @@ PageStackWindow
 	
 	initialPage: 
 		Page {
+			anchors.margins: UiConstants.DefaultMargin
+			
 			ListView {
 				id: pluginsView
 				anchors.fill: parent

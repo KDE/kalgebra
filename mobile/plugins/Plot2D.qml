@@ -6,6 +6,8 @@ KAlgebraPage
 {
 	function addFunc() { app.addFunction(input.text) }
 	
+	anchors.margins: 0
+	
 	Column {
 		id: controls
 		anchors.fill: parent
@@ -16,6 +18,8 @@ KAlgebraPage
 		}
 		
 		Row {
+			anchors.margins: UiConstants.DefaultMargin
+			
 			width: parent.width
 			ExpressionInput {
 				id: input
