@@ -371,6 +371,15 @@ QPointF FunctionsPainter::toViewport(const QPoint &mv) const
 	return QPointF(mv.x()/rang_x, mv.y()/rang_y);
 }
 
+void FunctionsPainter::moveViewport(const QPoint& delta)
+{
+	QPointF rel = toViewport(delta);
+	QRectF viewport = lastViewport();
+	viewport.moveLeft(viewport.left() - rel.x());
+	viewport.moveTop(viewport.top() - rel.y());
+	setViewport(viewport);
+}
+
 void FunctionsPainter::setKeepAspectRatio(bool ar)
 {
 	m_keepRatio=ar;

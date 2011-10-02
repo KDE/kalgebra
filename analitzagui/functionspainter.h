@@ -62,6 +62,10 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		
 		/** Sets the graph's viewport to @p v. */
 		void setViewport(const QRectF& vp, bool repaint=true);
+		
+		/** Moves the viewport @p delta */
+		void moveViewport(const QPoint& delta);
+		
 	protected:
 		QRectF lastViewport() const { return viewport; }
 		QRectF lastUserViewport() const { return userViewport; }

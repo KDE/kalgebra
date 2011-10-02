@@ -213,11 +213,7 @@ void Graph2D::mouseMoveEvent(QMouseEvent *e)
 	mark=calcImage(fromWidget(e->pos()));
 	
 	if(!m_readonly && mode==Pan && ant != toViewport(e->pos())){
-		QPointF rel = toViewport(e->pos() - press);
-		QRectF viewport = lastViewport();
-		viewport.moveLeft(viewport.left() - rel.x());
-		viewport.moveTop(viewport.top() - rel.y());
-		setViewport(viewport);
+		moveViewport(e->pos() - press);
 		
 		press = e->pos();
 	} else if(e->buttons()&Qt::LeftButton) {
