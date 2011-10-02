@@ -5,7 +5,7 @@ TextField
 	id: input
 	
 	placeholderText: "Expression to calculate..."
-	inputMethodHints: Qt.ImhPreferNumbers | Qt.ImhNoPredictiveText
+	inputMethodHints: Qt.ImhPreferNumbers | Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 	
 // 	Keys.onPressed: {
 // 		console.log("bum :: "+text);
