@@ -30,6 +30,7 @@ KAlgebraPage
 			Button {
 				id: exec
 				text: "Clear"
+				width: 150
 				
 				onClicked: app.functionsModel().clear()
 			}
