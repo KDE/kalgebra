@@ -21,6 +21,7 @@
 #include <qstyleoption.h>
 #include <KIcon>
 #include <analitzagui/functionsmodel.h>
+#include <QEvent>
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 	: QDeclarativeItem(parent), FunctionsPainter(0, boundingRect().size())
@@ -80,3 +81,13 @@ void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFun
 
 void Graph2DMobile::removeFuncs(const QModelIndex&, int, int) { forceRepaint(); }
 void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(start, end); }
+
+void Graph2DMobile::scale(qreal s)
+{
+
+}
+
+void Graph2DMobile::translate(qreal x, qreal y)
+{
+	moveViewport(QPoint(x,y));
+}

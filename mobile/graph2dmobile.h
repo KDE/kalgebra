@@ -44,6 +44,10 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		
 		void setCurrentFunction(int f) { m_currentFunction = f; }
 		
+	public slots:
+		void translate(qreal x, qreal y);
+		void scale(qreal s);
+		
 	private slots:
 		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
 		void addFuncs(const QModelIndex& parent, int start, int end);

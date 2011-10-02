@@ -10,18 +10,9 @@ KAlgebraPage
 		id: controls
 		anchors.fill: parent
 		
-		Rectangle {
+		Graph2D {
 			width: parent.width
 			height: 200
-			color: 'white'
-			
-			Graph2D {
-				id: view
-				anchors.fill: parent
-				
-				squares: true
-				model: app.functionsModel()
-			}
 		}
 		
 		Row {
@@ -43,8 +34,6 @@ KAlgebraPage
 		
 		SimpleListView {
 			model: app.functionsModel()
-			
-			onCurrentIndexChanged: view.currentFunction=currentIndex-1
 			
 			role: "expression"
 			
