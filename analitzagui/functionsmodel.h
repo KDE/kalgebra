@@ -64,8 +64,6 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		void setResolution(uint res);
 		uint resolution() const { return m_resolution; }
 		
-		void clear();
-		
 		void sendStatus(const QString& msg) { emit status(msg); }
 		
 		void updatePoints(int i, const QRect& viewport);
@@ -83,6 +81,9 @@ class ANALITZAGUI_EXPORT FunctionsModel : public QAbstractTableModel
 		QPair<QPointF, QString> calcImage(int row, const QPointF& ndp);
 		QLineF slope(int row, const QPointF& dp) const;
 		QModelIndex indexForId(const QString & name);
+		
+	public slots:
+		void clear();
 		
 	signals:
 		/** Emits a status message when something changes. */
