@@ -47,7 +47,7 @@ KAlgebraPage
 			onClicked: calculateTable()
 		}
 		
-		Label { text: "Results:"; id: res; anchors.top: ins.bottom }
+		Label { text: "Results:"; id: res; }
 		
 		SimpleListView {
 			width: parent.width
