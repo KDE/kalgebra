@@ -12,36 +12,37 @@ KAlgebraPage
 		
 		Graph2D {
 			width: parent.width
-			height: 200
+			height: parent.height-input.height
 		}
 		
 		Row {
 			width: parent.width
 			ExpressionInput {
 				id: input
+				width: parent.width-exec.width
 				text: "sin x"
+				focus: true
+				Component.onCompleted: selectAll()
 				
 				Keys.onReturnPressed: addFunc()
 			}
 			
 			Button {
 				id: exec
-				text: "Add"
+				text: "Clear"
 				
-				onClicked: addFunc()
+				onClicked: app.functionsModel().clear()
 			}
 		}
 		
-		SimpleListView {
+/*		SimpleListView {
+			id: view
 			model: app.functionsModel()
 			
 			role: "expression"
 			
-// 			anchors.bottom: parent.bottom
-			
 			width: parent.width
 			height: 200
-		}
+		}*/
 	}
-	
 }
