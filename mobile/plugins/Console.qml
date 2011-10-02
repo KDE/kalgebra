@@ -4,8 +4,6 @@ import "widgets"
 
 KAlgebraPage
 {
-	width: 300; height: 500
-	
 	Analitza {
 		id: a
 	}
