@@ -7,6 +7,7 @@ PageStackWindow
 {
 	height: 400
 	width: 300
+	anchors.margins: 15
 	
 	function goToPage(path) {
 // 		var toOpen = plugins.pluginPath(idx)
