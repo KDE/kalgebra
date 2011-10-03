@@ -18,8 +18,6 @@ KAlgebraPage
 		}
 		
 		Row {
-			anchors.margins: UiConstants.DefaultMargin
-			
 			width: parent.width
 			ExpressionInput {
 				id: input
