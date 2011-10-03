@@ -9,6 +9,7 @@ TableView
     TableColumn {
         id: col
         
-        caption: "Value"
+        title: "Value"
+		width: parent.width-32
     }
 }

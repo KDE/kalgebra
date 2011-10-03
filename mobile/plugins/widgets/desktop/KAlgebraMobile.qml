@@ -12,7 +12,7 @@ Rectangle
 	ToolBar{
 		id: toolbar
 		width: parent.width
-		height: 40
+		height: 30
 		
 		Row {
 			spacing: 2
@@ -22,7 +22,7 @@ Rectangle
 // 				iconSource: "images/folder_new.png"
 				anchors.verticalCenter: parent.verticalCenter
 				
-				text: "Go!"
+				text: "Open"
 				
 				onClicked: {
 					var idx = pluginsView.currentIndex
@@ -39,6 +39,7 @@ Rectangle
 						console.log("error: "+e)
 					}
 					
+					frame.current=frame.count-1
 				}
 			}
 		}
@@ -52,7 +53,7 @@ Rectangle
 		anchors.bottom: parent.bottom
 		
 		Tab {
-			title: "hola"
+			title: "menu"
 			TableView {
 				id: pluginsView
 				anchors.fill: parent
@@ -60,7 +61,7 @@ Rectangle
 				
 				TableColumn {
 					role: "display"
-					caption: "Title"
+					title: "Title"
 					width: 120
 				}
 				
