@@ -5,4 +5,8 @@ ListView
     id: view
     property string role: ""
     delegate: Label { text: model[role] }
+    
+    ScrollDecorator {
+        flickableItem: view
+    }
 }
