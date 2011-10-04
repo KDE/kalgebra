@@ -120,9 +120,14 @@ class ANALITZA_EXPORT Expression
 		bool isVector() const;
 		
 		/**
-		 *	Returns whether it is a vector expression.
+		 *	Returns whether it is a list expression.
 		 */
 		bool isList() const;
+		
+		/**
+		 *	Returns whether it is a string expression (a list of chars).
+		 */
+		bool isString() const;
 		
 		/**
 		 *	Returns the element at @p position in a vector

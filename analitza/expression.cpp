@@ -561,12 +561,20 @@ Cn Expression::toReal() const
 QString Expression::stringValue() const
 {
 	Object* tree=d->m_tree;
-	if(KDE_ISLIKELY(tree && tree->type()==Object::list))
+	if(KDE_ISLIKELY(d->m_tree && d->m_tree->type()==Object::list))
 		return AnalitzaUtils::listToString(static_cast<const List*>(tree));
 	else {
-		qDebug() << "trying to return not a real value as real:" << (tree ? tree->toString() : "null");
+		qDebug() << "trying to return not a string value as string:" << (tree ? tree->toString() : "null");
 		return QString();
 	}
+}
+
+bool Expression::isString() const
+{
+	return d->m_tree && d->m_tree->type()==Object::list
+			&& !static_cast<const List*>(d->m_tree)->isEmpty()
+			&& static_cast<const List*>(d->m_tree)->at(0)->type()==Object::value
+			&& static_cast<const Cn*>(static_cast<const List*>(d->m_tree)->at(0))->isCharacter();
 }
 
 bool Expression::isLambda() const
