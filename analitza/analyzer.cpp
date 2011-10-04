@@ -185,10 +185,9 @@ void Analyzer::importScript(QTextStream* stream)
 
 Expression Analyzer::evaluate()
 {
-	m_err.clear();
 	Expression e;
 	
-	if(m_exp.isCorrect()) {
+	if(isCorrect()) {
 		m_runStackTop = 0;
 		m_runStack.clear();
 		Object *o=eval(m_exp.tree(), true, QSet<QString>());
@@ -205,7 +204,7 @@ Expression Analyzer::calculate()
 {
 	Expression e;
 	
-	if(!m_hasdeps && m_exp.isCorrect()) {
+	if(!m_hasdeps && isCorrect()) {
 		m_runStackTop = 0;
 		m_runStack.clear();
 		e.setTree(calc(m_exp.tree()));

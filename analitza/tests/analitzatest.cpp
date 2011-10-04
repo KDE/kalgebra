@@ -706,6 +706,7 @@ void AnalitzaTest::testCrash_data()
 	QTest::newRow("vector+ovf") << "selector(2, vector{x})";
 	QTest::newRow("wrong func") << "xsin(x)";
 	QTest::newRow("scalarprod") << "scalarproduct(vector{0}, vector{x,0})";
+	QTest::newRow("power") << "list{}**2";
 }
 
 void AnalitzaTest::testCrash()
