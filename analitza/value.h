@@ -82,6 +82,11 @@ class ANALITZA_EXPORT Cn : public Object
 		 */
 		bool isBoolean() const { return m_format==Boolean; }
 		
+		/**
+		 *	Returns whether it is a character value or not.
+		 */
+		bool isCharacter() const { return m_format==Char; }
+		
 		ValueFormat format() const { return m_format; }
 		void setFormat(ValueFormat v) { m_format=v; }
 		
