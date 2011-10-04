@@ -28,6 +28,27 @@
 #include <KLocalizedString>
 #include "kalgebramobile.h"
 
+Q_DECLARE_METATYPE(ExpressionWrapper*);
+
+ExpressionWrapper::ExpressionWrapper(QObject* parent)
+	: QObject(parent)
+{}
+
+
+ExpressionWrapper::ExpressionWrapper(const Analitza::Expression& e, QObject* parent)
+	: QObject(parent)
+	, m_exp(e)
+{}
+
+void ExpressionWrapper::setText(const QString& exp) { m_exp.setText(exp); }
+
+bool ExpressionWrapper::isCorrect() const { return m_exp.isCorrect(); }
+QString ExpressionWrapper::toString() const { return m_exp.toString(); }
+QVariant ExpressionWrapper::value() const { return AnalitzaUtils::expressionToVariant(m_exp); }
+QStringList ExpressionWrapper::errors() const { return m_exp.error(); }
+
+//////////////////////////
+
 AnalitzaWrapper::AnalitzaWrapper(QObject* parent)
 	: QObject(parent)
 	, m_wrapped(new Analitza::Analyzer(KAlgebraMobile::self()->variables())), m_calc(false), m_varsModel(0)
@@ -37,8 +58,7 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 {
 	Analitza::Expression e(expression, false);
 	if(!e.isCorrect()) {
-		throwError(i18n("Error: %1", e.error().join(", ")));
-		return QVariant();
+		return e.error();
 	}
 	m_wrapped->setExpression(e);
 	
@@ -48,22 +68,18 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	else
 		res = m_wrapped->evaluate();
 	
-	if(!m_wrapped->isCorrect()) {
-		throwError(i18n("Error: %1", m_wrapped->errors().join(", ")));
+	if(!m_wrapped->isCorrect())
 		return QVariant();
-	} else if(m_varsModel) {
+	else if(m_varsModel)
 		m_varsModel->updateInformation();
-	}
 	
-	return AnalitzaUtils::expressionToVariant(res);
+	return qVariantFromValue(new ExpressionWrapper(res));
 }
 
 QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& args)
 {
-	if(!m_wrapped->variables()->contains(name)) {
-		throwError(i18n("Undefined Identifier: %1", name));
+	if(!m_wrapped->variables()->contains(name))
 		return QVariant();
-	}
 	
 	QStack<Analitza::Object*> stack;
 	QList<Analitza::Expression> exps;
@@ -77,13 +93,10 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 	m_wrapped->setStack(stack);
 	Analitza::Expression expr = m_wrapped->calculateLambda();
 	
-	QVariant ret;
 	if(!m_wrapped->isCorrect())
-		throwError(m_wrapped->errors().join(", "));
-// 	else
-		ret = AnalitzaUtils::expressionToVariant(expr);
-	
-	return ret;
+		return QVariant();
+	else
+		return qVariantFromValue(new ExpressionWrapper(expr));
 }
 
 QString AnalitzaWrapper::unusedVariableName() const
@@ -117,8 +130,6 @@ VariablesModel* AnalitzaWrapper::variablesModel()
 	return m_varsModel;
 }
 
-void AnalitzaWrapper::throwError(const QString& error)
-{
-	m_error=error;
-	qDebug() << "error..." << m_error;
-}
+bool AnalitzaWrapper::isCorrect() const { return m_wrapped->isCorrect(); }
+
+QStringList AnalitzaWrapper::errors() const { return m_wrapped->errors(); }

@@ -21,19 +21,38 @@
 
 #include <QtCore/QObject>
 #include <QVariant>
+#include <analitza/expression.h>
 
 class VariablesModel;
 class QScriptEngine;
-namespace Analitza {
-	class Analyzer;
-}
+namespace Analitza { class Analyzer; }
+
+class ExpressionWrapper : public QObject
+{
+	Q_OBJECT
+	Q_PROPERTY(QString expression READ toString WRITE setText);
+	public:
+		ExpressionWrapper(QObject* parent=0);
+		explicit ExpressionWrapper(const Analitza::Expression & e, QObject* parent = 0);
+		
+		void setText(const QString& exp);
+		
+	public slots:
+		QString toString() const;
+		bool isCorrect() const;
+		QVariant value() const;
+		QStringList errors() const;
+		
+	private:
+		Analitza::Expression m_exp;
+};
 
 class AnalitzaWrapper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool calculate READ isCalculate WRITE setCalculate)
 	Q_PROPERTY(bool isCorrect READ isCorrect)
-	Q_PROPERTY(QString error READ error)
+	Q_PROPERTY(QStringList errors READ errors)
 	public:
 		explicit AnalitzaWrapper(QObject* parent = 0);
 		
@@ -48,14 +67,12 @@ class AnalitzaWrapper : public QObject
 		Q_SCRIPTABLE void removeVariable(const QString& name);
 		VariablesModel* variablesModel();
 		
-		QString error() const { return m_error; }
-		bool isCorrect() const { return m_error.isEmpty(); }
+		QStringList errors() const;
+		bool isCorrect() const;
 	private:
-		void throwError(const QString& error);
 		Analitza::Analyzer* m_wrapped;
 		bool m_calc;
 		VariablesModel* m_varsModel;
-		QString m_error;
 };
 
 #endif // ANALITZAWRAPPER_H

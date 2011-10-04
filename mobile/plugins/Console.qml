@@ -21,10 +21,15 @@ KAlgebraPage
 		
 		Keys.onReturnPressed: {
 			var res = a.execute(text)
-			if(!res)
-				res = a.error
 			
-			itemModel.append({ result: text + " = " + res });
+			if(!a.isCorrect) {
+				if(res)
+					itemModel.append({ result: "Error: " + res })
+				else
+					itemModel.append({ result: "Error: " + a.errors })
+			} else
+				itemModel.append({ result: text + " = " + res.expression });
+			
 			input.selectAll();
 			
 			view.currentIndex = itemModel.count-1

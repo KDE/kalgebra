@@ -4,10 +4,6 @@ import "widgets"
 
 KAlgebraPage
 {
-	id: bg
-	width: 300
-	height: 300
-	
 	ListModel { id: resultsModel }
 	Analitza { id: a }
 	
@@ -19,18 +15,28 @@ KAlgebraPage
 		var ffrom=from.value, fto=to.value, fstep=step.value;
 // 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
 		
-		for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
+		if(!a.isCorrect) {
+			if(ret)
+				resultsModel.append( { element: "Errors: "+ret } );
+			else
+				resultsModel.append( { element: "Errors: "+a.errors } );
+		} else for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
 			var args = new Array();
 			args[0]=i;
 // 			console.log("!!! " + i); 
-			resultsModel.append( { element: i +" = "+ a.executeFunc(tmp, args) } );
+			var expr = a.executeFunc(tmp, args);
+			resultsModel.append( { element: i +" = "+ expr.expression } );
 		}
 		
 		a.removeVariable(tmp);
 	}
 	
 	Column {
-		anchors.fill: parent
+		id: inputcol
+		
+		anchors.top: parent.top
+		width: parent.width
+		
 		Grid {
 			id: ins
 			columns: 2
@@ -48,13 +54,15 @@ KAlgebraPage
 		}
 		
 		Label { text: "Results:"; id: res; }
+	}
+	
+	SimpleListView {
+		width: parent.width
+		height: 200
+		anchors.top: inputcol.bottom
+		anchors.bottom: parent.bottom
 		
-		SimpleListView {
-			width: parent.width
-			height: 200
-			
-			model: resultsModel
-			role: "element"
-		}
+		model: resultsModel
+		role: "element"
 	}
 }

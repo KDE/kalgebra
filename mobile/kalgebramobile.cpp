@@ -65,6 +65,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	
 	qmlRegisterType<PluginsModel>("org.kde.analitza", 1, 0, "PluginsModel");
 	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
+	qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
 	qmlRegisterType<FunctionsModel>("org.kde.analitza", 1, 0, "FunctionsModel");
 	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
