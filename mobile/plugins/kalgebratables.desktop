@@ -34,12 +34,14 @@ Name[uk]=Таблиці значень
 Name[x-test]=xxValue Tablesxx
 Name[zh_TW]=數值表
 Comment=Easily create value tables
+Comment[cs]=Jednoduše vytvářejte tabulky hodnot
 Comment[de]=Wertetabellen einfach erstellen
 Comment[es]=Proporciona una miniaplicación que le permite crear tablas de valores fácilmente
 Comment[pt]=Criar facilmente tabelas de valores
 Comment[sv]=Skapa enkelt värdetabeller
 Comment[uk]=Спрощує створення таблиць значень
 Comment[x-test]=xxEasily create value tablesxx
+Comment[zh_TW]=輕易建立數值表格
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org

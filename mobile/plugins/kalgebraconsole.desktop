@@ -38,12 +38,14 @@ Name[x-test]=xxConsolexx
 Name[zh_CN]=控制台
 Name[zh_TW]=主控台
 Comment=Scientific calculator
+Comment[cs]=Vědecká kalkulačka
 Comment[de]=Wissenschaftlicher Taschenrechner
 Comment[es]=Calculadora científica
 Comment[pt]=Calculadora científica
 Comment[sv]=Vetenskaplig miniräknare
 Comment[uk]=Калькулятор для науковців
 Comment[x-test]=xxScientific calculatorxx
+Comment[zh_TW]=科學計算機
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org
