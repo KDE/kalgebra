@@ -2,7 +2,7 @@ import com.nokia.meego 1.0
 
 Page
 {
-	anchors.margins: rootWindow.pageMargin
+	anchors.margins: rootWindow.anchors.margins
 	
 	tools: ToolBarLayout {
 		id: pageStackWindowTools
