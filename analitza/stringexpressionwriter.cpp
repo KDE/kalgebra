@@ -91,6 +91,8 @@ QString StringExpressionWriter::accept(const Cn* var)
 {
 	if(var->isBoolean())
 		return var->isTrue() ? "true" : "false";
+	else if(var->isCharacter())
+		return QString(var->character());
 	else
 		return QString::number(var->value(), 'g', 12);
 }

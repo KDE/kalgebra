@@ -385,7 +385,9 @@ bool equalTree(const Object * o1, const Object * o2)
 QVariant expressionToVariant(const Analitza::Expression& res)
 {
 	QVariant ret;
-	if(res.isVector() || res.isList()) {
+	if(res.isString()) {
+		ret = res.stringValue();
+	} else if(res.isVector() || res.isList()) {
 		QVariantList vals;
 		
 		QList<Analitza::Expression> expressions = res.toExpressionList();
@@ -396,12 +398,20 @@ QVariant expressionToVariant(const Analitza::Expression& res)
 		ret = vals;
 	} else if(res.isReal()) {
 		Analitza::Cn val = res.toReal();
-		if(val.isBoolean())
-			ret = val.isTrue();
-		else if(val.isInteger())
-			ret = int(val.value());
-		else
-			ret = val.value();
+		switch(val.format()) {
+			case Analitza::Cn::Boolean:
+				ret = val.isTrue();
+				break;
+			case Analitza::Cn::Integer:
+				ret = int(val.value());
+				break;
+			case Analitza::Cn::Char:
+				ret = val.character();
+				break;
+			case Analitza::Cn::Real:
+				ret = val.value();
+				break;
+		}
 	} else
 		ret = res.toString();
 	
@@ -535,16 +545,24 @@ int countDepth(int depth, const Object* tree)
 
 QString generateDependencyGraph(const Variables* v)
 {
+	QStringList special=QStringList() << "check";
 	QString ret;
 	ret += "digraph G {\n";
+	
+	foreach(const QString& n, special) {
+		ret += '\t'+n+" [shape=doublecircle];\n";
+	}
+	ret += '\n';
 	
 	for(Variables::const_iterator it=v->constBegin(), itEnd=v->constEnd(); it!=itEnd; ++it) {
 		QString current = it.key();
 		QStringList deps = dependencies(it.value(), QStringList());
 		
 		foreach(const QString& d, deps) {
-			if(v->contains(d))
-				ret += "\t"+current+" -> "+d+"\n";
+			const Object* o=v->value(d);
+			if(o && isLambda(o)) {
+				ret += "\t"+current+" -> "+d+";\n";
+			}
 		}
 	}
 	
