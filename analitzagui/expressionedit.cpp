@@ -49,6 +49,7 @@ class HelpTip : public QLabel
 			
 			QPalette p=palette();
 			p.setColor(backgroundRole(), p.color(QPalette::Active, QPalette::ToolTipBase));
+			p.setColor(foregroundRole(), p.color(QPalette::Active, QPalette::ToolTipText));
 			setPalette(p);
 		}
 		
