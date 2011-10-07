@@ -82,9 +82,12 @@ void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFun
 void Graph2DMobile::removeFuncs(const QModelIndex&, int, int) { forceRepaint(); }
 void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(start, end); }
 
-void Graph2DMobile::scale(qreal s)
+void Graph2DMobile::scale(qreal s, int x, int y)
 {
-
+	QRectF userViewport = lastUserViewport();
+	if(s<1 || (userViewport.height() < -3. && userViewport.width() > 3.)) {
+		scaleViewport(s, QPoint(x,y));
+	}
 }
 
 void Graph2DMobile::translate(qreal x, qreal y)

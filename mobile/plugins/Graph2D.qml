@@ -1,18 +1,11 @@
 import QtQuick 1.1
 import org.kde.analitza 1.0
+import QtDesktop 0.1
 
 Rectangle {
 	width: parent.width
 	height: 200
 	color: 'white'
-	
-	function getKeys (obj) {
-		var keys = [];
-		for(var key in obj)
-			keys.push(key);
-		
-		return keys;
-	}
 	
 	Graph2DView {
 		id: view
@@ -21,6 +14,7 @@ Rectangle {
 		squares: true
 		model: app.functionsModel()
 		
+		
 // 		PinchArea {
 // 			anchors.fill: parent
 // 			dragAxis: YAxis
@@ -28,13 +22,17 @@ Rectangle {
 // // 			onPinchFinished
 // 			onPinchStarted: 
 // 			
-// 			onPinchUpdated:
+// 			onPinchUpdated: {
+// 				var doScale = scale/previousScale;
+// 				view.scale(doScale)
+// 			}
 // 		}
 		
 		MouseArea {
 			anchors.fill: parent
 			property int lastX: 0
 			property int lastY: 0
+			acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 			
 			onPressed: { lastX=mouse.x; lastY=mouse.y }
 			

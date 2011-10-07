@@ -46,7 +46,7 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		
 	public slots:
 		void translate(qreal x, qreal y);
-		void scale(qreal s);
+		void scale(qreal s, int x, int y);
 		
 	private slots:
 		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
