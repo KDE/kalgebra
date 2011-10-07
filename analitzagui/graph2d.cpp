@@ -55,7 +55,7 @@ Graph2D::Graph2D(FunctionsModel* fm, QWidget *parent) :
 	this->setAutoFillBackground(false);
 	
 	connect(model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-		this, SLOT(update(QModelIndex,QModelIndex)));
+		this, SLOT(updateFuncs(QModelIndex,QModelIndex)));
 	connect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
 		this, SLOT(addFuncs(QModelIndex,int,int)));
 	connect(model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),
