@@ -141,20 +141,11 @@ void Graph2D::paintEvent(QPaintEvent * )
 void Graph2D::wheelEvent(QWheelEvent *e)
 {
 	QRectF viewport=lastViewport();
-	int d = e->delta()>0 ? -1 : 1;
+	int steps = e->delta()/(8*15);
+	qreal d = (-0.03*steps) + 1;
 	
 	if(d>0 || (viewport.width()+d > 2 && viewport.height()+d < 2)) {
-		QPointF p = fromWidget(e->pos());
-		QRectF nv;
-		nv.setLeft(viewport.left() - d);
-		nv.setTop(viewport.top() + d);
-		nv.setRight(viewport.right() + d);
-		nv.setBottom(viewport.bottom() - d);
-		setViewport(nv, false);
-		
-		QPointF p2 = p-fromWidget(e->pos());
-		nv.translate(p2);		
-		setViewport(nv);
+		scaleViewport(d, e->pos());
 	}
 }
 

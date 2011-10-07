@@ -379,6 +379,19 @@ void FunctionsPainter::moveViewport(const QPoint& delta)
 	setViewport(viewport);
 }
 
+void FunctionsPainter::scaleViewport(qreal s, const QPoint& center)
+{
+	QPointF p = fromWidget(center);
+	QSizeF ns = viewport.size()*s;
+	
+	QRectF nv(viewport.topLeft(), ns);
+	setViewport(nv, false);
+	
+	QPointF p2 = p-fromWidget(center);
+	nv.translate(p2);		
+	setViewport(nv);
+}
+
 void FunctionsPainter::setKeepAspectRatio(bool ar)
 {
 	m_keepRatio=ar;

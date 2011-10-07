@@ -79,6 +79,7 @@ class ANALITZAGUI_EXPORT FunctionsPainter
 		
 		QLineF toWidget(const QLineF &) const;
 		void setPaintedSize(const QSize& size);
+		void scaleViewport(qreal s, const QPoint& center);
 
 	private:
 		void drawAxes(QPainter *f, Function::Axe a);
