@@ -237,13 +237,14 @@ QLineF FunctionsModel::slope(int row, const QPointF & dp) const
 QPair<QPointF, QString> FunctionsModel::calcImage(int row, const QPointF & ndp)
 {
 	QPair<QPointF, QString> ret;
+	ret.first=ndp;
 	if(row<0) return ret;
 	
-	ret.first=ndp;
 	Function & f = funclist[row];
 	if(f.isShown()) {
 		ret = f.calc(ndp);
 	}
+	
 	return ret;
 }
 
