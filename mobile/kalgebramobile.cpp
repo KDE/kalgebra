@@ -75,7 +75,7 @@ FunctionsModel* KAlgebraMobile::functionsModel()
 {
 	if(!m_functionsModel) {
 		m_functionsModel = new FunctionsModel(this);
-		m_functionsModel->setResolution(1000);
+		m_functionsModel->setResolution(500);
 	}
 	
 	return m_functionsModel;
