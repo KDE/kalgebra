@@ -77,7 +77,7 @@ void Graph2DMobile::modelChanged()
 		this, SLOT(removeFuncs(const QModelIndex&, int, int)));
 }
 
-void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFunctions(model()->index(start,0), model()->index(end,0)); forceRepaint(); }
+void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFunctions(model()->index(start,0), model()->index(end,0)); }
 
 void Graph2DMobile::removeFuncs(const QModelIndex&, int, int) { forceRepaint(); }
 void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(start, end); }
