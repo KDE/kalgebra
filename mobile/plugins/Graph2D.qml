@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import org.kde.analitza 1.0
-import QtDesktop 0.1
 
 Rectangle {
 	width: parent.width
