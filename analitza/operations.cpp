@@ -529,7 +529,7 @@ QList<ExpressionType> Operations::infer(Operator::OperatorType op)
 	return ret;
 }
 
-#define TypePair(a,b) ExpressionType(ExpressionType::Lambda).addParameter(a).addParameter(b)
+ExpressionType TypePair(const ExpressionType& a, const ExpressionType& b) { return ExpressionType(ExpressionType::Lambda).addParameter(a).addParameter(b); }
 
 QList<ExpressionType> Operations::inferUnary(Operator::OperatorType op)
 {
