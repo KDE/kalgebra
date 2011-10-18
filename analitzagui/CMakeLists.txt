@@ -41,6 +41,7 @@ if(INSTALL_ANALITZA_HEADERS)
 		algebrahighlighter.h
 		analitzaguiexport.h
 		operatorsmodel.h
+		variablesmodel.h
 
                 DESTINATION ${INCLUDE_INSTALL_DIR}/analitzagui/ COMPONENT Devel)
 endif(INSTALL_ANALITZA_HEADERS)
