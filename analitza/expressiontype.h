@@ -65,7 +65,7 @@ class ANALITZA_EXPORT ExpressionType
 		QList<ExpressionType>& parameters() { Q_ASSERT(m_type==Lambda); return m_contained; }
 		ExpressionType returnValue() const;
 		
-		void addAssumption(const QString& bvar, const ExpressionType& t);
+		bool addAssumption(const QString& bvar, const ExpressionType& t);
 		QMap<QString, ExpressionType> assumptions() const;
 		QMap<QString, ExpressionType>& assumptions();
 		ExpressionType assumptionFor(const QString& bvar) const { return m_assumptions.value(bvar); }
