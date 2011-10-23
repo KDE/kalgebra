@@ -209,6 +209,7 @@ void TypeCheckTest::testUncorrection()
 	if(t.isCorrect())
 		qDebug() << "wrong type:" << result.toString();
 	QVERIFY(!t.isCorrect());
+// 	QVERIFY(!t.errors().isEmpty());
 }
 
 void TypeCheckTest::testUncorrection_data()
@@ -235,6 +236,10 @@ void TypeCheckTest::testUncorrection_data()
 	
 	QTest::newRow("charvsreal") << "union(\"lalala\", list{1,2,3})";
 	QTest::newRow("boolvsreal") << "or(true, false)+2";
+	QTest::newRow("argscount") << "f:=(x,y)->f(x)";
+	
+	QTest::newRow("twoargs") << "(x->x(3))((x,y)->x+y)";
+	QTest::newRow("times") << "x(x+1)";
 	
 	//TODO: Add invalid recursive call
 }

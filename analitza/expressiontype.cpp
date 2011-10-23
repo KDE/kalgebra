@@ -72,10 +72,12 @@ void ExpressionType::assumptionsUnion(QMap<QString, ExpressionType>& data, const
 			if(current->canReduceTo(*it)) {
 				data.insert(it.key(), minimumType(*current, *it));
 			} else {
+				bool correct=false;
 				ExpressionType t(Many);
-				ExpressionType t1(*it);			t1.addAssumption(it.key(), *it);
-				ExpressionType t2(*current);	t2.addAssumption(it.key(), *current);
+				ExpressionType t1(*it);			correct= t1.addAssumption(it.key(), *it);
+				ExpressionType t2(*current);	correct|=t2.addAssumption(it.key(), *current);
 				
+				Q_ASSERT(correct);
 				t.addAlternative(t1);
 				t.addAlternative(t2);
 				
@@ -210,7 +212,7 @@ bool ExpressionType::operator==(const ExpressionType& t) const
 	return ret;
 }
 
-void ExpressionType::addAssumption(const QString& bvar, const Analitza::ExpressionType& t)
+bool ExpressionType::addAssumption(const QString& bvar, const Analitza::ExpressionType& t)
 {
 	ExpressionType toadd=t;
 	addAssumptions(t.assumptions());
@@ -221,9 +223,12 @@ void ExpressionType::addAssumption(const QString& bvar, const Analitza::Expressi
 		m_assumptions.insert(bvar, toadd);
 	else {
 		toadd=minimumType(toadd,*it);
-		Q_ASSERT(!toadd.isError());
+		if(toadd.isError())
+			return false;
 		*it=toadd;
 	}
+	
+	return true;
 }
 
 void ExpressionType::removeAssumptions(const QStringList& bvarStrings)

@@ -256,7 +256,8 @@ QString ExpressionTypeChecker::accept(const Ci* var)
 		current=typeForVar(var->name());
 	} else {
 		current=ExpressionType(Analitza::ExpressionType::Any, m_stars++);
-		current.addAssumption(var->name(), current);
+		bool ret = current.addAssumption(var->name(), current);
+		Q_ASSERT(ret);
 		
 		if(var->depth()<0 && !isVariableDefined(var->name()) && !m_calculating.contains(var->name()))
 			m_deps += var->name();
@@ -392,8 +393,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 				anyContainer.addAlternative(anyList);
 				anyContainer.addAlternative(anyVector);
 				
-				anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
-				tt=anyItem;
+				bool ret = anyItem.addAssumption(static_cast<Ci*>(c->domain())->name(), anyContainer);
+				if(ret)
+					tt=anyItem;
 			} else if(current.type()==ExpressionType::Vector || current.type()==ExpressionType::List) {
 				tt=current.contained();
 				tt.addAssumptions(current.assumptions());
@@ -451,6 +453,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 // 				qDebug() << "OOOOOOOOOOOOOOOOOOOOOOO" << c->toString() << ret /*<< stars*/ << ret.assumptions() << "||||" << t << exps;
 				
 				ExpressionType ret2(ExpressionType::Many);
+				bool error=false;
 				foreach(const ExpressionType& type, t) {
 					ExpressionType returntype(type.parameters().last());
 					returntype.addAssumptions(type.assumptions());
@@ -460,7 +463,9 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 						
 						if(itf!=returntype.assumptions().constEnd() && itf->type()==ExpressionType::Lambda) {
 							ExpressionType oldt=ExpressionType::minimumType(*itf, type);
-							oldt.addAssumption(name, oldt);
+							error=!oldt.addAssumption(name, oldt);
+							if(error)
+								break;
 							QMap<int,ExpressionType> stars;
 							stars=ExpressionType::computeStars(stars, type, oldt);
 							bool b=ExpressionType::matchAssumptions(&stars, oldt.assumptions(), type.assumptions());
@@ -471,9 +476,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 							returntype=oldt.parameters().last();
 // 							printAssumptions("reeeeet", returntype);
 							
-							returntype.addAssumption(name, oldt);
+							error = !returntype.addAssumption(name, oldt); //can't happen, we already checked it's not an assumption
 						} else {
-							returntype.addAssumption(name, type);
+							error = !returntype.addAssumption(name, type);
+							if(error)
+								break;
 						}
 						
 					}
@@ -482,7 +489,11 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 					ret2.addAlternative(returntype);
 				}
 				
-				current=ret2;
+				if(error) {
+// 					addError(i18n("Cannot call '%1'", c->m_params.first()->toString()));
+					current=ExpressionType(ExpressionType::Error);
+				} else
+					current=ret2;
 			} else {
 				ExpressionType ret(ExpressionType::Many), signature(returned);
 				
