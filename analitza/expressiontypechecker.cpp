@@ -255,6 +255,10 @@ ExpressionType ExpressionTypeChecker::solve(const Operator* o, const QVector< Ob
 								}
 							}
 						}
+// 						else
+// 						{
+// 							qDebug() << "lalala" << first << second;
+// 						}
 					}
 				}
 			}
@@ -503,6 +507,7 @@ QString ExpressionTypeChecker::accept(const Apply* c)
 // 							printAssumptions("reeeeet", returntype);
 							
 							error = !returntype.addAssumption(name, oldt); //can't happen, we already checked it's not an assumption
+							Q_ASSERT(!error);
 						} else {
 							error = !returntype.addAssumption(name, type);
 							if(error)
