@@ -27,8 +27,6 @@
 namespace Analitza
 {
 
-class Operator;
-
 class Object;
 class Ci;
 class Cn;
