@@ -4,7 +4,7 @@ kde4_add_executable(kalgebramobile pluginsmodel.cpp graph2dmobile.cpp analitzawr
 	kalgebramobile.cpp main.cpp console.cpp)
 
 target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
-	${QT_QTGUI_LIBRARY} analitza analitzagui)
+	${QT_QTGUI_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY})
 
 set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR})
 if(${MOBILE_BACKEND} STREQUAL "harmattan")
