@@ -4,16 +4,11 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
+find_package(Analitza REQUIRED)
 find_package(LibKdeEdu)
 find_library(QTMML_LIBRARY qtmmlwidget)
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml)
-
-#Checking whether we can compile calgebra
-include(CheckIncludeFiles)
-macro_optional_find_package(Readline)
-macro_bool_to_01(READLINE_FOUND HAVE_READLINE)
-macro_log_feature(READLINE_FOUND "GNU Readline" "Allows KAlgebra to provide a console interface." "http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html" FALSE "" "")
 
 macro_optional_find_package(OpenGL)
 macro_bool_to_01(OPENGL_FOUND HAVE_OPENGL)
@@ -22,15 +17,11 @@ macro_log_feature(OPENGL_FOUND "OpenGL" "Support for 3D graphs in KAlgebra" "htt
 macro_log_feature(QTMML_LIBRARY "QtMathML Widget" "Supports displaying some formulas in a mathematic form" "http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html" FALSE "" "")
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
-option(INSTALL_ANALITZA_HEADERS "Analitza headers will be installed. No ABI compatibility is going to happen for now" OFF)
 
 include_directories(.)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-
 add_subdirectory(doc)
-add_subdirectory(analitza)
-add_subdirectory(analitzagui)
 if(QTMML_LIBRARY)
   add_subdirectory(src)
 endif(QTMML_LIBRARY)
