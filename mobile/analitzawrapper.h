@@ -24,7 +24,6 @@
 #include <analitza/expression.h>
 
 class VariablesModel;
-class QScriptEngine;
 namespace Analitza { class Analyzer; }
 
 class ExpressionWrapper : public QObject

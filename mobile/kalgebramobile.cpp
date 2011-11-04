@@ -28,12 +28,6 @@
 #include "graph2dmobile.h"
 #include "pluginsmodel.h"
 
-// #define DEBUG
-
-// #ifdef DEBUG
-// #include <QScriptEngineDebugger>
-// #endif
-
 KAlgebraMobile* KAlgebraMobile::s_self=0;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
 
@@ -83,6 +77,5 @@ QStringList KAlgebraMobile::addFunction(const QString& expression, const QString
 	} else
 		err = f.errors();
 	
-	qDebug() << "aaaaaaadd" << fname << expression << err;
 	return err;
 }

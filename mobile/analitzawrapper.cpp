@@ -24,7 +24,6 @@
 #include <analitzagui/variablesmodel.h>
 
 #include <QVariant>
-#include <QScriptEngine>
 #include "kalgebramobile.h"
 
 Q_DECLARE_METATYPE(ExpressionWrapper*);
