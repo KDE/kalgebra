@@ -17,34 +17,15 @@
  *************************************************************************************/
 
 #include "kalgebramobile.h"
-#include <QFile>
-#include <QScriptEngine>
-#include <QLineEdit>
-#include <QToolBar>
-#include <KDialog>
-#include <KLocalizedString>
-#include <KIcon>
-#include <QVBoxLayout>
-#include <QComboBox>
-#include <QMessageBox>
-#include <QStandardItemModel>
-#include <QDialogButtonBox>
-#include <QListView>
 
 #include <analitza/variables.h>
 #include <analitzagui/functionsmodel.h>
 #include "analitzawrapper.h"
 
-#include <KPluginInfo>
-#include <KStandardDirs>
-#include <QDir>
-#include <QDesktopServices>
-#include <QMenuBar>
 #include <QDeclarativeView>
 #include <QDeclarativeEngine>
-#include <qdeclarative.h>
+#include <QDeclarativeContext>
 #include "graph2dmobile.h"
-#include <qdeclarativecontext.h>
 #include "pluginsmodel.h"
 
 // #define DEBUG

@@ -19,7 +19,6 @@
 #include "graph2dmobile.h"
 #include <QPainter>
 #include <qstyleoption.h>
-#include <KIcon>
 #include <analitzagui/functionsmodel.h>
 #include <QEvent>
 

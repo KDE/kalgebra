@@ -25,7 +25,6 @@
 
 #include <QVariant>
 #include <QScriptEngine>
-#include <KLocalizedString>
 #include "kalgebramobile.h"
 
 Q_DECLARE_METATYPE(ExpressionWrapper*);

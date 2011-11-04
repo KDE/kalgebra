@@ -1,7 +1,7 @@
 add_subdirectory(plugins)
 
 kde4_add_executable(kalgebramobile pluginsmodel.cpp graph2dmobile.cpp analitzawrapper.cpp
-	kalgebramobile.cpp main.cpp console.cpp)
+	kalgebramobile.cpp main.cpp)
 
 target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
 	${QT_QTGUI_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY})
