@@ -32,6 +32,7 @@ Name[sl]=Razpredelnice vrednosti
 Name[sv]=Värdetabeller
 Name[uk]=Таблиці значень
 Name[x-test]=xxValue Tablesxx
+Name[zh_CN]=数值表
 Name[zh_TW]=數值表
 Comment=Easily create value tables
 Comment[cs]=Jednoduše vytvářejte tabulky hodnot
@@ -46,6 +47,7 @@ Comment[pt_BR]=Criar facilmente tabelas de valores
 Comment[sv]=Skapa enkelt värdetabeller
 Comment[uk]=Спрощує створення таблиць значень
 Comment[x-test]=xxEasily create value tablesxx
+Comment[zh_CN]=方便的创建数值表
 Comment[zh_TW]=輕易建立數值表格
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
