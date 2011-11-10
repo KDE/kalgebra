@@ -33,22 +33,11 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 	setRoleNames(rolenames);
 
 	KStandardDirs d;
-	QStringList basedirs = d.findDirs("data", "kalgebra/plugins");
-	QStringList foundPlugins;
-	foreach(const QString& dir, basedirs) {
-		//we list <dir>/*/*.desktop
-
-		QDir d(dir);
-		QStringList files = d.entryList(QStringList("*.desktop"));
-
-		foreach(const QString& plugin, files) {
-			foundPlugins += d.absoluteFilePath(plugin);
-		}
-	}
+	QStringList foundPlugins = d.findAllResources("data", "kalgebra/plugins/*.desktop");
+	foundPlugins.sort();
 
 	qDebug() << "Plugins found:" << foundPlugins;
 	m_plugins = KPluginInfo::fromFiles(foundPlugins);
-	setSortRole(PriorityRole);
 
 	Q_FOREACH(const KPluginInfo& info, m_plugins) {
 // 				const KPluginInfo& info;
@@ -62,6 +51,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		QVariant priority = info.property("X-KAlgebra-Priority");
 		if(!priority.isValid())
 			priority = 1000;
+		
 		item->setData(scriptPath, PathRole);
 		item->setData(priority, PriorityRole);
 		item->setData(info.name(), TitleRole);
@@ -70,7 +60,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		appendRow(item);
 	}
 	setSortRole(PriorityRole);
-    sort(0);
+    sort(0, Qt::AscendingOrder);
 }
 
 QString PluginsModel::pluginPath(int row)
