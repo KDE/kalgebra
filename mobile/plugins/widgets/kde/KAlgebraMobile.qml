@@ -74,6 +74,7 @@ Rectangle {
 		width: parent.width
 		anchors {
 			top: toolBar.bottom
+			bottom: parent.bottom
 		}
 		
 		initialPage: init
