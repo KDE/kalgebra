@@ -22,8 +22,6 @@
 #include <analitzagui/functionsmodel.h>
 #include "analitzawrapper.h"
 
-#include <QDeclarativeView>
-#include <QDeclarativeEngine>
 #include <QDeclarativeContext>
 #include "graph2dmobile.h"
 #include "pluginsmodel.h"

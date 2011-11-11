@@ -56,6 +56,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		item->setData(priority, PriorityRole);
 		item->setData(info.name(), TitleRole);
 		item->setData(info.comment(), SubtitleRole);
+		item->setData(info.icon(), Qt::DecorationRole);
 
 		appendRow(item);
 	}

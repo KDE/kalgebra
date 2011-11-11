@@ -19,12 +19,18 @@
 #include <KApplication>
 #include <KAboutData>
 #include <KCmdLineArgs>
-#include "kalgebramobile.h"
-#include <QDeclarativeView>
 #include <KStandardDirs>
+
+#ifdef KDECOMPONENTS
+#include <kdeclarative.h>
+#endif
+
 #include <QDebug>
+#include <QDeclarativeView>
 #include <QDeclarativeEngine>
-#include <qdeclarativecontext.h>
+#include <QDeclarativeContext>
+
+#include "kalgebramobile.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +45,14 @@ int main(int argc, char *argv[])
 	QDeclarativeView view;
 	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	view.engine()->rootContext()->setContextProperty("app", &widget);
+	
+#ifdef KDECOMPONENTS
+	KDeclarative kdeclarative;
+	kdeclarative.setDeclarativeEngine(view.engine());
+	kdeclarative.initialize();
+	//binds things like kconfig and icons
+	kdeclarative.setupBindings();
+#endif
 	
 	QString main = KStandardDirs::locate("data", "kalgebra/plugins/widgets/KAlgebraMobile.qml");
 //     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
