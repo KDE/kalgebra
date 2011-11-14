@@ -35,6 +35,7 @@ Name[x-test]=xxValue Tablesxx
 Name[zh_CN]=数值表
 Name[zh_TW]=數值表
 Comment=Easily create value tables
+Comment[ca]=Crea taules de valors de forma senzilla
 Comment[cs]=Jednoduše vytvářejte tabulky hodnot
 Comment[de]=Wertetabellen einfach erstellen
 Comment[es]=Proporciona una miniaplicación que le permite crear tablas de valores fácilmente
