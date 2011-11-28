@@ -264,7 +264,7 @@ the above example expressions:
 
 
 <para>A user can control the execution of a series of calculations
-using the Script menu options:</para>
+using the <guimenu>Console</guimenu> menu options:</para>
 
 <variablelist>
 
