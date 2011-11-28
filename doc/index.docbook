@@ -2,9 +2,9 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY kappname "&kalgebra;">
   <!ENTITY package "kdeedu">
-  
+
   <!ENTITY commands SYSTEM "commands.docbook">
-  
+
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -40,7 +40,7 @@
 <para>
 &kalgebra; is an application that can replace your graphing calculator.
 It has numerical, logical, symbolic, and analysis features that let you calculate
-mathematical expresions on the console and graphically plot the results 
+mathematical expressions on the console and graphically plot the results
 in 2D or 3D. &kalgebra; is rooted in the Mathematical Markup Language
 (MathML); however, one does not need to know MathML to use &kalgebra;.
 </para>
@@ -58,34 +58,34 @@ in 2D or 3D. &kalgebra; is rooted in the Mathematical Markup Language
 
 </bookinfo>
 
-<chapter id="introduction"> 
-<title>Introduction</title> 
+<chapter id="introduction">
+<title>Introduction</title>
 
 <para>
 &kalgebra; has numerous features that allow the user to perform all sorts
-of mathematical operations and show graphically. At one time, this 
+of mathematical operations and show graphically. At one time, this
 program was MathML oriented. Now it can be used by anyone with a little
-mathematical knowledge to solve simple and advanced problems alike. 
+mathematical knowledge to solve simple and advanced problems alike.
 </para>
 
-<para> 
+<para>
 It includes such features as:
 </para>
 
 
 <itemizedlist>
 <listitem><para>
-A user console for quick and easy evaluation of math 
+A user console for quick and easy evaluation of math
 functions.
 </para></listitem>
 <listitem><para>
 Scripting capability for advanced series of calculations
 </para></listitem>
 <listitem><para>
-Language capabilties including function defintion and syntax autocompletion.
+Language capabilities including function definition and syntax autocompletion.
 </para></listitem>
 <listitem><para>
-Calculus functions including symbolic differentiation, vector calculus, 
+Calculus functions including symbolic differentiation, vector calculus,
 and list manipulation.
 </para></listitem>
 <listitem><para>
@@ -93,7 +93,7 @@ Function plotting with live cursor for graphical root finding and other
 types of analysis.
 </para></listitem>
 <listitem><para>
-3D plotting for useful visualization of 3d functions.
+3D plotting for useful visualization of 3D functions.
 </para></listitem>
 <listitem><para>
 A built-in operator dictionary for quick reference to the many available
@@ -118,10 +118,10 @@ Below is a screenshot of the &kalgebra; application in action:
 </screenshot>
 
 <para>
-When the user begins a &kalgebra; session, they are presented with a 
-single window consisting of a <guilabel>Console</guilabel> tab, 
-a <guilabel>2D Graph</guilabel> tab, 
-a <guilabel>3D Graph</guilabel> tab and a 
+When the user begins a &kalgebra; session, they are presented with a
+single window consisting of a <guilabel>Console</guilabel> tab,
+a <guilabel>2D Graph</guilabel> tab,
+a <guilabel>3D Graph</guilabel> tab and a
 <guilabel>Dictionary</guilabel> tab. Within each tab, you will find an
 input field to enter your functions or calculations, and a display field
 which shows the results.
@@ -157,18 +157,20 @@ which shows the results.
 <chapter id="syntax">
 <title>Syntax</title>
 <para>
-&kalgebra; uses an intuitive algebraic syntax for entering user functions, 
-similar to that used on most modern graphing calculators. This section 
-lists the fundamental built-in operators available in &kalgebra;. The 
-author of &kalgebra; modeled this syntax after maxima and maple for users
-that may be familiar with these programs.   
+&kalgebra; uses an intuitive algebraic syntax for entering user functions,
+similar to that used on most modern graphing calculators. This section
+lists the fundamental built-in operators available in &kalgebra;. The
+author of &kalgebra; modeled this syntax after
+<ulink url="http://maxima.sourceforge.net/">Maxima</ulink> and
+  <ulink url="http://www.maplesoft.com/products/maple/">maple</ulink> for users
+that may be familiar with these programs.
 </para>
 
 <para>
 For users that are interested in the inner workings of &kalgebra;, user
 entered expressions are converted to MathML on the backend. A rudimentary
 understanding of the capabilities supported by MathML will go a long way
-toward revealing the inner capabilities of &kalgebra;. 
+toward revealing the inner capabilities of &kalgebra;.
 </para>
 
 <para>Here is a list of the available operators we have by now:</para>
@@ -178,10 +180,10 @@ division.</para> </listitem>
 <listitem><para>^, **: Power, you can use them both. Also it is possible to use
 the unicode ² characters. Powers are one way to make roots too, you can do it
 like: a**(1/b)</para></listitem>
-<listitem><para>-&gt; : lambda. It’s the way to specify one or more free 
+<listitem><para>-&gt; : lambda. It is the way to specify one or more free
 variables that will be  bound in a function. For example, in the expression,
-  length:=(x,y)->(x*x+y*y)^0.5, the lambda operator is used to denote
-  that x and y will be bound when the length function is used. 
+<userinput>length:=(x,y)->(x*x+y*y)^0.5</userinput>, the lambda operator is used to denote
+that x and y will be bound when the length function is used.
 </para></listitem>
 <listitem><para>x=a..b : This is used when we need to delimit a range
 (bounded variable+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
@@ -193,7 +195,7 @@ not, it will be treated as a user function.</para></listitem>
 do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
 </para></listitem>
 <listitem><para>? : Piecewise condition definition. Piecewise is the way we can define
-conditional operations in &kalgebra;. Put another way, this is a way of 
+conditional operations in &kalgebra;. Put another way, this is a way of
 specifying an if, elseif, else condition. If we introduce the condition before the '?' it will
 use this condition only if it is true, if it finds a '?' without any condition, it will
 enter in the last instance.
@@ -202,7 +204,7 @@ Example: piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }
 <listitem><para>{ } : MathML container. It can be used to define a container. Mainly
 useful for working with piecewise.
 </para></listitem>
-<listitem><para>= &gt; &gt;= &lt; &lt;= : Value comparators for equal, 
+<listitem><para>= &gt; &gt;= &lt; &lt;= : Value comparators for equal,
 greater, greater or equal, less and less or equal respectively</para></listitem>
 </itemizedlist>
 
@@ -216,25 +218,25 @@ functions are implemented as well, so we can do something like or(1,0,0,0,0).</p
 
 <chapter id="using-console">
 <title>Using the Console</title>
-<para>&kalgebra;'s console is useful as a calculator on steriods. The 
+<para>&kalgebra;'s console is useful as a calculator on steroids. The
 user may enter expressions for evaluation in <guimenu>Calculate</guimenu>
 or <guimenu>Evaluate</guimenu> mode, depending on the <guimenu>Console</guimenu>
-menu selection. 
+menu selection.
 </para>
 
 <para>
 In addition to displaying the user entered equations and results in the
-console display, all variables that are declared are displayed in a 
+console display, all variables that are declared are displayed in a
 persistent frame to the right. By double clicking on a variable you will see a
 dialog that lets you change their values (just a way to trick the log).
 </para>
 
 <para>
-The "ans" variable is special, every time you enter an expression, the 
+The "ans" variable is special, every time you enter an expression, the
 "ans" variable value will be changed to the last result.
 </para>
 
-<para>The following are example functions that can be entered in 
+<para>The following are example functions that can be entered in
 the input field of the console window:</para>
 <itemizedlist>
 <listitem><para>sin(pi)</para></listitem>
@@ -245,11 +247,11 @@ the input field of the console window:</para>
 </itemizedlist>
 
 <para>
-The following shows a screenshot of the console window after entering 
+The following shows a screenshot of the console window after entering
 the above example expressions:
 </para>
 <screenshot>
-<screeninfo>Screenshot of &kalgebra; consle window with example expressions</screeninfo>
+<screeninfo>Screenshot of &kalgebra; console window with example expressions</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
@@ -282,7 +284,7 @@ Useful if you want to define some libraries or resume some previous work.</para>
 <keycap>G</keycap></keycombo></shortcut>
 <guimenu>Console</guimenu><guimenuitem>Save Script</guimenuitem>
 </menuchoice></term>
-<listitem><para>Saves the instructions you have typed since the session began to be able to reuse. Generates text files so it should be easy to fix 
+<listitem><para>Saves the instructions you have typed since the session began to be able to reuse. Generates text files so it should be easy to fix
 using any text editor, like Kate.</para></listitem>
 </varlistentry>
 
@@ -292,7 +294,7 @@ using any text editor, like Kate.</para></listitem>
 <keycap>S</keycap></keycombo></shortcut>
 <guimenu>Console</guimenu><guimenuitem>Export Log</guimenuitem>
 </menuchoice></term>
-<listitem><para>Saves the log with all results into an HTML file to be able to print or publish.</para></listitem>
+<listitem><para>Saves the log with all results into an &HTML; file to be able to print or publish.</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -302,8 +304,8 @@ using any text editor, like Kate.</para></listitem>
 <chapter id="two-D-graphs">
 <title>2D Graphs</title>
 <para>To add a new 2D graph on &kalgebra;, select the <guilabel>2D
-Graph</guilabel> tab and click the <guilabel>Add</guilabel> tab to add 
-a new function. Your focus will go to an input text box where you can 
+Graph</guilabel> tab and click the <guilabel>Add</guilabel> tab to add
+a new function. Your focus will go to an input text box where you can
 type your function.</para>
 
 <sect1 id="two-D-syntax">
@@ -350,23 +352,23 @@ of the mouse and this area will be zoomed in. Move the view with the arrow keys.
 
 
 <para>
-   Below is a screenshot of a user who's cursor is at the rightmost root 
-   of the function, sin(1/x). The user who graphed it used very fine 
+   Below is a screenshot of a user who's cursor is at the rightmost root
+   of the function, sin(1/x). The user who graphed it used very fine
    resolution to make this graph (as it oscillates at higher and higher
-   frequency near the origin). There is also a live cursor feature 
-   where whenever you move your cursor over a spot, it shows you the x 
+   frequency near the origin). There is also a live cursor feature
+   where whenever you move your cursor over a spot, it shows you the x
    and y values in the bottom left corner of the screen. A live "tangent
-   line" is plotted on the function at the live cursor location. 
+   line" is plotted on the function at the live cursor location.
  </para>
 
 <screenshot>
-<screeninfo>Here's a screenshot of &kalgebra; 2d-graph window</screeninfo>
+<screeninfo>Here's a screenshot of &kalgebra; 2D graph window</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
 	  </imageobject>
 	    <textobject>
-	    <phrase>&kalgebra; 2-d graph window</phrase>
+	    <phrase>&kalgebra; 2D graph window</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
@@ -380,9 +382,9 @@ of the mouse and this area will be zoomed in. Move the view with the arrow keys.
 <title>3D Graphs</title>
 
 <para>To draw a 3D Graph with &kalgebra; select the <guilabel>3D Graph</guilabel> tab
-and you will see an input field at the bottom where you will type your function. 
+and you will see an input field at the bottom where you will type your function.
 Z cannot be defined yet. For the moment &kalgebra; only supports
-3D graphs explicitly dependent only on the x and y, such as (x,y)->x*y, 
+3D graphs explicitly dependent only on the x and y, such as (x,y)->x*y,
 where z=x*y.
 </para>
 
@@ -408,17 +410,17 @@ you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.<
 
 <para>
 Below is a screenshot of the so-called "sombrero" function. This particular
-graph is shown using the 3d graph line-style. 
+graph is shown using the 3D graph line-style.
 </para>
 
 <screenshot>
-<screeninfo>Here's a screenshot of &kalgebra; 3d-graph window</screeninfo>
+<screeninfo>Here's a screenshot of &kalgebra; 3D graph window</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
 	  </imageobject>
 	    <textobject>
-	    <phrase>&kalgebra; 3-d graph window</phrase>
+	    <phrase>&kalgebra; 3D graph window</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
@@ -428,9 +430,9 @@ graph is shown using the 3d graph line-style.
 <chapter id="dictionary">
 <title>Dictionary</title>
 
-<para> 
+<para>
   The dictionary provides a list of all &kalgebra; built in functions. It can be
-used to find the definition of an operation and its input parameters. It's a useful   
+used to find the definition of an operation and its input parameters. It's a useful
 place to go to find the many capabilities of &kalgebra;.
 </para>
 
@@ -492,7 +494,7 @@ Documentation copyright 2007 &Aleix.Pol; &Aleix.Pol.mail;
 </sect1>
 
 </appendix>
-&documentation.index; 
+&documentation.index;
 </book>
 
 <!--
