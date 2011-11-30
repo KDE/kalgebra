@@ -109,7 +109,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	resize(900, 500);
 	
 	m_tabs = new QTabWidget(this);
-	this->setCentralWidget(m_tabs);
+	setCentralWidget(m_tabs);
 	
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
@@ -129,7 +129,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_results->view()->setFocusPolicy(Qt::NoFocus);
 	c_dock_vars = new QDockWidget(i18n("Variables"), this);
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
-	this->addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
+	addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
 	c_varsModel=new VariablesModel(c_results->analitza()->variables());
 	c_varsModel->setEditable(false);
@@ -194,7 +194,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
 	b_tools->setTabPosition(QTabWidget::South);
-	this->addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
+	addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
 	b_funcs = new FunctionsView(b_tools);
 	b_funcs->setModel(b_funcsModel);
@@ -321,7 +321,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//Dictionary tab
 	d_dock = new QDockWidget(i18n("Operations"), this);
 	d_dock->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-	this->addDockWidget(Qt::RightDockWidgetArea, d_dock);
+	addDockWidget(Qt::RightDockWidgetArea, d_dock);
 	Dictionary *dic = new Dictionary(m_tabs);
 	m_tabs->addTab(dic, i18n("&Dictionary"));
 	

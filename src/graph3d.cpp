@@ -49,7 +49,7 @@ Graph3D::Graph3D(QWidget *parent) : QGLWidget(parent),
 		default_step(0.15f), default_size(10.0f), zoom(1.0f), points(0), alpha(60.),
 		method(Solid), trans(false), keyspressed(0), m_n(4)
 {
-	this->setFocusPolicy(Qt::ClickFocus);
+	setFocusPolicy(Qt::ClickFocus);
 	rotation[0] = 90.0;
 	rotation[1] = 0.0;
 	rotation[2] = 0.0;
@@ -128,16 +128,16 @@ void Graph3D::mouseMoveEvent(QMouseEvent *e)
 		rotation[2] -= rel.x();
 		
 		press = e->pos();
-		this->repaint();
+		repaint();
 	}
 }
 
 void Graph3D::drawAxes()
 {
 	glColor3f(0.8, 0.8, 0.4);
-	this->renderText(11.0, 0.0, 0.0, "Y");
-	this->renderText(0.0, 11.0, 0.0, "X");
-	this->renderText(0.0, 0.0,-11.0, "Z");
+	renderText(11.0, 0.0, 0.0, "Y");
+	renderText(0.0, 11.0, 0.0, "X");
+	renderText(0.0, 0.0,-11.0, "Z");
 	
 	glBegin(GL_LINES);
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -375,7 +375,7 @@ void Graph3D::keyPressEvent( QKeyEvent *e )
 			break;
 	}
 // 	sendStatus(QString("-%1-").arg(keyspressed, 16));
-	this->repaint();
+	repaint();
 }
 
 void Graph3D::keyReleaseEvent( QKeyEvent *e )
@@ -414,7 +414,7 @@ void Graph3D::keyReleaseEvent( QKeyEvent *e )
 		
 	}
 // 	sendStatus(QString(".%1.").arg(keyspressed, 16));
-	this->repaint();
+	repaint();
 }
 
 void Graph3D::timeOut()
@@ -422,7 +422,7 @@ void Graph3D::timeOut()
 	rotation[0] += 20.0;
 	rotation[1] += 20.0;
 	rotation[2] += 20.0;
-	this->repaint();
+	repaint();
 }
 
 bool Graph3D::checkExpression(const QStringList& bvars, const Analitza::ExpressionType& actual)
@@ -489,30 +489,30 @@ void Graph3D::mem()
 void Graph3D::setSize(double newSize)
 {
 	default_size = newSize;
-	this->repaint();
+	repaint();
 }
 
 void Graph3D::setStep(double newRes)
 {
 	default_step = newRes;
-	this->repaint();
+	repaint();
 }
 
 void Graph3D::setZoom(float a)
 {
 	alpha = a;
-	this->repaint();
+	repaint();
 }
 
 void Graph3D::setMethod(enum Type m)
 {
 	method = m;
-	this->repaint();
+	repaint();
 }
 
 QPixmap Graph3D::toPixmap()
 {
-	return this->renderPixmap();
+	return renderPixmap();
 }
 
 void Graph3D::resetView()

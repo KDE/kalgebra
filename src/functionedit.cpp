@@ -44,7 +44,7 @@ namespace {
 FunctionEdit::FunctionEdit(QWidget *parent)
 	: QWidget(parent), m_calcUplimit(0), m_calcDownlimit(0)
 {
-	this->setWindowTitle(i18n("Add/Edit a function"));
+	setWindowTitle(i18n("Add/Edit a function"));
 	
 	QVBoxLayout *topLayout = new QVBoxLayout(this);
 	topLayout->setMargin(2);

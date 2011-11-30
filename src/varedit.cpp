@@ -34,14 +34,14 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	KDialog(parent), vars(0), m_correct(false)
 {
 	QWidget *widget = new QWidget( this );
-	this->setCaption(i18n("Add/Edit a variable"));
-	this->setModal(modal);
-	this->setButtons(KDialog::Ok | KDialog::Cancel);
-	this->enableButtonApply( false );
-	this->setMainWidget( widget );
+	setCaption(i18n("Add/Edit a variable"));
+	setModal(modal);
+	setButtons(KDialog::Ok | KDialog::Cancel);
+	enableButtonApply( false );
+	setMainWidget( widget );
 	
-	this->setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
-	this->setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
+	setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
+	setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
 	
 	connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
 	connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
