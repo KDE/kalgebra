@@ -45,6 +45,7 @@
 #include <QTableView>
 #include <KAction>
 #include <KHTMLView>
+#include <KHelpMenu>
 #include <KFileDialog>
 #include <KMenu>
 #include <KMenuBar>
@@ -345,7 +346,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	//EODictionary
 	//Ego's reminder
-	menuBar()->addMenu(helpMenu());
+	KHelpMenu* help = new KHelpMenu(this, KGlobal::mainComponent().aboutData());
+	menuBar()->addMenu(help->menu());
 	
 	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
 			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
