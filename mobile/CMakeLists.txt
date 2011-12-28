@@ -10,6 +10,8 @@ kde4_add_executable(kalgebramobile pluginsmodel.cpp graph2dmobile.cpp analitzawr
 target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
 	${QT_QTGUI_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY})
 
+add_definitions("-DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
+
 set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR})
 if(${MOBILE_BACKEND} STREQUAL "harmattan")
 	set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR}/..)
@@ -17,8 +19,13 @@ elseif(${MOBILE_BACKEND} STREQUAL "kde")
 	target_link_libraries(kalgebramobile kdeclarative)
 endif(${MOBILE_BACKEND} STREQUAL "harmattan")
 
+set(DESKTOPFILE kalgebramobile.desktop)
+if(EXISTS kalgebramobile${MOBILE_BACKEND}.desktop)
+	set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
+endif(EXISTS kalgebramobile${MOBILE_BACKEND}.desktop)
+
 install(TARGETS kalgebramobile ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS kalgebramobile.desktop DESTINATION ${DESKTOPFILE_INSTALL} )
+install(PROGRAMS ${DESKTOPFILE} DESTINATION ${DESKTOPFILE_INSTALL} )
 install(FILES
 	kalgebrascript.desktop
 	DESTINATION ${SERVICETYPES_INSTALL_DIR}
