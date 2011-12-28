@@ -29,9 +29,6 @@ add_subdirectory(icons)
 add_subdirectory(plasmoid)
 add_subdirectory(utils)
 add_subdirectory(mobile)
-if(HAVE_READLINE)
-	add_subdirectory(calgebra)
-endif(HAVE_READLINE)
 
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
