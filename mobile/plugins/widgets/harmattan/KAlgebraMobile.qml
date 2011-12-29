@@ -15,12 +15,35 @@ PageStackWindow
 			var component = Qt.createComponent(path)
 			if (component.status == Component.Ready)
 				pageStack.push(component);
-			else
+			else {
 				console.log("Error loading component:", component.errorString());
+				errorDialog.message = component.errorString()
+				errorDialog.open()
+			}
 		} catch (e) {
 			console.log("error: "+e)
+			errorDialog.message = e
+			errorDialog.open()
 		}
 	}
+	
+	Dialog {
+		id: errorDialog
+		property alias message: text.text
+		
+		content:Item {
+			id: name
+			height: 50
+			width: parent.width
+			Label {
+				id: text
+				font.pixelSize: 22
+				anchors.fill: parent
+				wrapMode: Text.WordWrap
+				color: "white"
+			}
+		}
+   }
 	
 	initialPage: 
 		Page {
