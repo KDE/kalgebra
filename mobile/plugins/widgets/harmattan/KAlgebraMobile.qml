@@ -22,23 +22,6 @@ PageStackWindow
 		}
 	}
 	
-	Component {
-		id: del
-		
-		Label {
-			signal clicked
-			text: display
-			
-			MouseArea {
-				id: mouseArea;
-				anchors.fill: parent
-				onClicked: {
-					goToPage(model.path)
-				}
-			}
-		}
-	}
-	
 	initialPage: 
 		Page {
 			anchors.margins: UiConstants.DefaultMargin
