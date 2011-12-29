@@ -21,6 +21,8 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRE
 include_directories(.)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
+set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
+
 if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUALS "harmattan")
   add_subdirectory(doc)
   add_subdirectory(src)
