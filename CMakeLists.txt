@@ -23,11 +23,11 @@ add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
 
-if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUALS "harmattan")
+if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
   add_subdirectory(doc)
   add_subdirectory(src)
   add_subdirectory(plasmoid)
-endif(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUALS "harmattan")
+endif(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
 add_subdirectory(icons)
 add_subdirectory(utils)
 add_subdirectory(mobile)
