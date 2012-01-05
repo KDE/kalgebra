@@ -30,7 +30,8 @@ if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
 endif(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
 add_subdirectory(icons)
 add_subdirectory(utils)
-add_subdirectory(mobile)
+
+macro_optional_add_subdirectory(mobile)
 
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
