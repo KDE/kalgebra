@@ -20,9 +20,9 @@ elseif(${MOBILE_BACKEND} STREQUAL "kde")
 endif(${MOBILE_BACKEND} STREQUAL "harmattan")
 
 set(DESKTOPFILE kalgebramobile.desktop)
-if(EXISTS kalgebramobile${MOBILE_BACKEND}.desktop)
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/kalgebramobile${MOBILE_BACKEND}.desktop)
 	set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
-endif(EXISTS kalgebramobile${MOBILE_BACKEND}.desktop)
+endif()
 
 install(TARGETS kalgebramobile ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ${DESKTOPFILE} DESTINATION ${DESKTOPFILE_INSTALL} )
