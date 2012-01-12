@@ -13,11 +13,14 @@ KAlgebraPage
 		anchors.fill: parent
 		
 		Graph2D {
+			id: view
 			width: parent.width
 			height: parent.height-input.height
 		}
 		
 		Row {
+			spacing: 10
+			
 			width: parent.width
 			ExpressionInput {
 				id: input
@@ -32,20 +35,14 @@ KAlgebraPage
 			Button {
 				id: exec
 				text: "Clear"
-				width: 150
+				width: 100
 				
-				onClicked: app.functionsModel().clear()
+				onClicked: {
+					app.functionsModel().clear()
+					view.resetViewport()
+					input.focus = true
+				}
 			}
 		}
-		
-/*		SimpleListView {
-			id: view
-			model: app.functionsModel()
-			
-			role: "expression"
-			
-			width: parent.width
-			height: 200
-		}*/
 	}
 }

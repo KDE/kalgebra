@@ -47,6 +47,7 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 	public slots:
 		void translate(qreal x, qreal y);
 		void scale(qreal s, int x, int y);
+		void resetViewport();
 		
 	private slots:
 		void updateFuncs(const QModelIndex& start, const QModelIndex& end);
@@ -59,7 +60,6 @@ class Graph2DMobile : public QDeclarativeItem, public FunctionsPainter
 		
 		QPixmap m_buffer;
 		QRectF defViewport;
-		void resetViewport();
 };
 
 #endif // GRAPH2DMOBILE_H

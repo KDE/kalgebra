@@ -6,6 +6,11 @@ Rectangle {
 	height: 200
 	color: 'white'
 	
+	function resetViewport()
+	{
+		view.resetViewport()
+	}
+	
 	Graph2DView {
 		id: view
 		anchors.fill: parent
