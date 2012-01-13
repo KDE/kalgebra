@@ -63,6 +63,8 @@ class AnalitzaWrapper : public QObject
 		Q_SCRIPTABLE QVariant execute(const QString& expression);
 		Q_SCRIPTABLE QVariant executeFunc(const QString& name, const QVariantList& args);
 		Q_SCRIPTABLE QString unusedVariableName() const;
+		Q_SCRIPTABLE QString dependenciesToLambda(const QString& expression) const;
+		Q_SCRIPTABLE void insertVariable(const QString& name, const QString& expression) const;
 		Q_SCRIPTABLE void removeVariable(const QString& name);
 		VariablesModel* variablesModel();
 		

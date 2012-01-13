@@ -10,8 +10,8 @@ KAlgebraPage
 	function calculateTable() {
 		resultsModel.clear();
 		
-		var tmp = a.unusedVariableName();
-		var ret = a.execute(tmp+":="+input.text, true)
+		var tmp = a.unusedVariableName()
+		var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
 		var ffrom=from.value, fto=to.value, fstep=step.value;
 // 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
 		
@@ -41,7 +41,7 @@ KAlgebraPage
 			id: ins
 			columns: 2
 			
-			Label {text: "Input: " } ExpressionInput { id: input; text: "x->sin x"}
+			Label {text: "Input: " } ExpressionInput { id: input; text: "sin x" }
 			Label {text: "From:" }   RealInput { id: from; value: 0 }
 			Label {text: "To:" }     RealInput { id: to; value: 10 }
 			Label {text: "Step:" }   RealInput { id: step; value: 1 }

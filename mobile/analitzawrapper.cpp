@@ -97,6 +97,18 @@ QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& a
 		return qVariantFromValue(new ExpressionWrapper(expr));
 }
 
+QString AnalitzaWrapper::dependenciesToLambda(const QString& expression) const
+{
+	m_wrapped->setExpression(Analitza::Expression(expression, false));
+	return m_wrapped->dependenciesToLambda().toString();
+}
+
+void AnalitzaWrapper::insertVariable(const QString& name, const QString& expression) const
+{
+	m_wrapped->insertVariable(name, Analitza::Expression(expression, false));
+	if(m_varsModel) m_varsModel->updateInformation();
+}
+
 QString AnalitzaWrapper::unusedVariableName() const
 {
 	QString candidate;
@@ -119,6 +131,7 @@ QString AnalitzaWrapper::unusedVariableName() const
 void AnalitzaWrapper::removeVariable(const QString& name)
 {
 	m_wrapped->variables()->remove(name);
+	if(m_varsModel) m_varsModel->updateInformation();;
 }
 
 VariablesModel* AnalitzaWrapper::variablesModel()
