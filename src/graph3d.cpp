@@ -245,20 +245,22 @@ void Graph3D::paintGL()
 			glTranslatef(i*step-mida, -mida, 0);
 			glBegin(GL_TRIANGLE_STRIP);
 			
-			double red=(i*step-mida)/mida;
-			double nextRed=((i+1)*step-mida)/mida;
+			double red=fabs((i*step-mida)/mida);
+			double nextRed=fabs(((i+1)*step-mida)/mida);
 			for(uint j=0; j<bound; j++) {
 				float s=j%2 ? .0f : 1.f;
-				double green=(j*step-mida)/mida;
+				double green=fabs((j*step-mida)/mida);
 				
 				double z=points[i][j];
+				double blue=1./fabs(log10(10.+fabs(z)));
+
 				glTexCoord2f(s, 0.f);
-				glColor4d(red, green, 1./fabs(log10(5.+z)), transf);
+				glColor4d(red, green, blue, transf);
 				glVertex3d(0., j*step, z);
 				
 				z=points[i+1][j];
 				glTexCoord2f(s, 1.f);
-				glColor4d(nextRed, green, 1./fabs(log10(5.+z)), transf);
+				glColor4d(nextRed, green, blue, transf);
 				glVertex3d(step, j*step, z);
 			}
 			glEnd();
