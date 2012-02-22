@@ -256,6 +256,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
 	b_actions[4] = b_menu->addAction(i18nc("@item:inmenu", "Fine"), this, SLOT(set_res_fine()));
 	b_actions[5] = b_menu->addAction(i18nc("@item:inmenu", "Very Fine"), this, SLOT(set_res_vfine()));
+	m_graph2d->setContextMenuPolicy(Qt::ActionsContextMenu);
+	m_graph2d->addActions(b_menu->actions());
 	
 	QActionGroup *res = new QActionGroup(b_menu);
 	res->addAction(b_actions[2]);
