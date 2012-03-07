@@ -1,5 +1,6 @@
 import QtQuick 1.0
 import org.kde.plasma.components 0.1
+import org.kde.qtextracomponents 0.1
 import org.kde.analitza 1.0
 
 Rectangle {
@@ -26,18 +27,42 @@ Rectangle {
 		id: init
 		anchors.margins: 10
 		
-		ListView {
+		GridView {
 			id: pluginsView
 			anchors.fill: parent
+			cellHeight: 100
+			cellWidth: 200
 			
 			delegate:
-				ToolButton {
-					iconSource: decoration
-					text: i18n("%1 - %2", title, subtitle)
+				ListItem {
+					width: pluginsView.cellWidth
+					height: pluginsView.cellHeight
+					Column {
+						anchors.fill: parent
+						spacing: 10
+						
+						QIconItem {
+							id: icon
+							width: 50
+							height: 50
+							anchors.horizontalCenter: parent.horizontalCenter
+							icon: decoration
+						}
+						
+						Text {
+							id: description
+							anchors.left: parent.left
+							anchors.right: parent.right
+							horizontalAlignment: Text.AlignHCenter
+							text: i18n("%1<br/>\n%2", title, subtitle)
+						}
+					}
 					
-					onClicked: goToPage(model.path, decoration)
+					MouseArea {
+						anchors.fill: parent
+						onClicked: goToPage(model.path, decoration)
+					}
 				}
-
 			
 			model: PluginsModel { id: plugins }
 		}
