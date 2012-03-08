@@ -1,0 +1,9 @@
+<RCC>
+	<qresource>
+		<file alias='kde-edu-logo.png'>plugins/resources/kde-edu-logo.png</file>
+    </qresource>
+    <qresource>
+		<file alias='kalgebra.png'>../icons/hi64-app-kalgebra.png</file>
+		<file alias='kalgebra.svgz'>../icons/hisc-app-kalgebra.svgz</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=help-about
+Type=Service
+ServiceTypes=KAlgebra/Script
+
+Name=About KAlgebra
+
+X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
+X-KDE-PluginInfo-Email=aleixpol@kde.org
+X-KDE-PluginInfo-Name=About.qml
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL
+X-KAlgebra-Priority=100
