@@ -19,6 +19,8 @@
 
 #include "pluginsmodel.h"
 #include <KStandardDirs>
+#include <KDesktopFile>
+#include <KConfigGroup>
 #include <QIcon>
 #include <QDir>
 #include <QDebug>
@@ -37,31 +39,33 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 	foundPlugins.sort();
 
 	qDebug() << "Plugins found:" << foundPlugins;
-	m_plugins = KPluginInfo::fromFiles(foundPlugins);
 
-	Q_FOREACH(const KPluginInfo& info, m_plugins) {
-// 				const KPluginInfo& info;
-		QStandardItem* item = new QStandardItem(QIcon::fromTheme(info.icon()), info.name());
+	QList<QStandardItem*> items;
+	Q_FOREACH(const QString& file, foundPlugins) {
+		KDesktopFile info(file);
+		KConfigGroup cg = info.desktopGroup();
+		QStandardItem* item = new QStandardItem;
 
-		QString postfix = "kalgebra/plugins/"+info.pluginName();
+		QString postfix = "kalgebra/plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
 		QString scriptPath = KStandardDirs::locate("data", postfix);
 
 		Q_ASSERT(!scriptPath.isEmpty());
 
-		QVariant priority = info.property("X-KAlgebra-Priority");
+		QVariant priority = cg.readEntry("X-KAlgebra-Priority", QString());
 		if(!priority.isValid())
 			priority = 1000;
 		
 		item->setData(scriptPath, PathRole);
 		item->setData(priority, PriorityRole);
-		item->setData(info.name(), TitleRole);
-		item->setData(info.comment(), SubtitleRole);
-		item->setData(info.icon(), Qt::DecorationRole);
-
-		appendRow(item);
+		item->setData(info.readName(), TitleRole);
+		item->setData(cg.readEntry("Comment", QString()), SubtitleRole);
+		item->setData(cg.readEntry("Icon", QString()), Qt::DecorationRole);
+		
+		items += item;
 	}
+	invisibleRootItem()->appendRows(items);
 	setSortRole(PriorityRole);
-    sort(0, Qt::AscendingOrder);
+	sort(0, Qt::DescendingOrder);
 }
 
 QString PluginsModel::pluginPath(int row)

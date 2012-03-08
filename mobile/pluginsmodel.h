@@ -21,7 +21,6 @@
 #define PLUGINSMODEL_H
 
 #include <QStandardItemModel>
-#include <KPluginInfo>
 
 class PluginsModel : public QStandardItemModel
 {
@@ -34,9 +33,6 @@ class PluginsModel : public QStandardItemModel
 	public slots:
 		///qml can't access data. Yay!
 		QString pluginPath(int row);
-		
-	private:
-		KPluginInfo::List m_plugins;
 };
 
 #endif // PLUGINSMODEL_H

@@ -27,7 +27,3 @@ endif()
 
 install(TARGETS kalgebramobile ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ${DESKTOPFILE} DESTINATION ${DESKTOPFILE_INSTALL} )
-install(FILES
-	kalgebrascript.desktop
-	DESTINATION ${SERVICETYPES_INSTALL_DIR}
-)
