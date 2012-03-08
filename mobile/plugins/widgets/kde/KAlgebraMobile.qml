@@ -2,11 +2,25 @@ import QtQuick 1.0
 import org.kde.plasma.components 0.1
 import org.kde.qtextracomponents 0.1
 import org.kde.analitza 1.0
+import org.kde.plasma.core 0.1
 
-Rectangle {
+Item {
 	height: 400
 	width: 300
-	color: "lightgrey"
+	
+	Theme { id: theme }
+	
+	//sebas's hack :D
+	Rectangle {
+		anchors.fill: parent
+		color: theme.backgroundColor
+		opacity: .2
+		
+		Rectangle {
+			anchors.fill: parent
+			color: theme.textColor
+		}
+	}
 	
 	function goToPage(path, deco) {
 // 		var toOpen = plugins.pluginPath(idx)
