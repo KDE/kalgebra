@@ -4,6 +4,11 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=About KAlgebra
+Name[es]=Acerca de KAlgebra
+Name[pt]=Acerca do KAlgebra
+Name[sv]=Om Kalgebra
+Name[uk]=Про KAlgebra
+Name[x-test]=xxAbout KAlgebraxx
 
 X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
 X-KDE-PluginInfo-Email=aleixpol@kde.org
