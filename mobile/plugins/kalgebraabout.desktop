@@ -5,7 +5,9 @@ ServiceTypes=KAlgebra/Script
 
 Name=About KAlgebra
 Name[es]=Acerca de KAlgebra
+Name[nl]=Over KAlgebra
 Name[pt]=Acerca do KAlgebra
+Name[pt_BR]=Sobre o KAlgebra
 Name[sv]=Om Kalgebra
 Name[uk]=Про KAlgebra
 Name[x-test]=xxAbout KAlgebraxx
