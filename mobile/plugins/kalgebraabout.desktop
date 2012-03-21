@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=About KAlgebra
+Name[cs]=O aplikaci KAlgebra
 Name[es]=Acerca de KAlgebra
 Name[hu]=A KAlgebra névjegye
 Name[nl]=Over KAlgebra
