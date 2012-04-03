@@ -19,8 +19,8 @@
 
 #include "pluginsmodel.h"
 #include <KStandardDirs>
-#include <KDesktopFile>
 #include <KConfigGroup>
+#include <KConfig>
 #include <QIcon>
 #include <QDir>
 #include <QDebug>
@@ -40,8 +40,8 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 
 	QList<QStandardItem*> items;
 	Q_FOREACH(const QString& file, foundPlugins) {
-		KDesktopFile info(file);
-		KConfigGroup cg = info.desktopGroup();
+		KConfig info(file);
+		KConfigGroup cg = info.group("Desktop Entry");
 		QStandardItem* item = new QStandardItem;
 
 		QString postfix = "plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
@@ -55,7 +55,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		
 		item->setData(scriptPath, PathRole);
 		item->setData(priority, PriorityRole);
-		item->setData(info.readName(), TitleRole);
+		item->setData(cg.readEntry("Name", QString()), TitleRole);
 		item->setData(cg.readEntry("Comment", QString()), SubtitleRole);
 		item->setData(cg.readEntry("Icon", QString()), Qt::DecorationRole);
 		
