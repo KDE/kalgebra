@@ -34,7 +34,6 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 	rolenames.insert(SubtitleRole, "subtitle");
 	setRoleNames(rolenames);
 
-	qDebug() << "fuuu" << KGlobal::dirs()->findDirs("appdata", "plugins");
 	QStringList foundPlugins = KGlobal::dirs()->findAllResources("appdata", "plugins/*.desktop");
 
 	qDebug() << "Plugins found:" << foundPlugins;

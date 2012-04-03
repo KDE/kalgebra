@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 #endif
 	
 	QString main = KStandardDirs::locate("appdata", "plugins/widgets/KAlgebraMobile.qml");
-//     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
+//     QString main = KStandardDirs::locate("appdata", "plugins/Tables.qml");
 	view.setSource(main);
 	
 	#ifdef __arm__
