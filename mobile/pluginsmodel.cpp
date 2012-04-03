@@ -34,9 +34,8 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 	rolenames.insert(SubtitleRole, "subtitle");
 	setRoleNames(rolenames);
 
-	KStandardDirs d;
-	QStringList foundPlugins = d.findAllResources("data", "kalgebra/plugins/*.desktop");
-	foundPlugins.sort();
+	qDebug() << "fuuu" << KGlobal::dirs()->findDirs("appdata", "plugins");
+	QStringList foundPlugins = KGlobal::dirs()->findAllResources("appdata", "plugins/*.desktop");
 
 	qDebug() << "Plugins found:" << foundPlugins;
 
@@ -46,8 +45,8 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		KConfigGroup cg = info.desktopGroup();
 		QStandardItem* item = new QStandardItem;
 
-		QString postfix = "kalgebra/plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
-		QString scriptPath = KStandardDirs::locate("data", postfix);
+		QString postfix = "plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
+		QString scriptPath = KStandardDirs::locate("appdata", postfix);
 
 		Q_ASSERT(!scriptPath.isEmpty());
 

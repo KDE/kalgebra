@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	view.engine()->rootContext()->setContextProperty("app", &widget);
 	
-	KGlobal::dirs()->addResourceDir("appdata", PREFIX "/share/apps");
+// 	KGlobal::dirs()->addResourceDir("appdata", PREFIX "/share/apps");
 	
 #ifdef KDECOMPONENTS
 	KDeclarative kdeclarative;
