@@ -3,5 +3,5 @@ install( FILES
     Keyboard.qml RealInput.qml ToolTip.qml SimpleListView.qml
     
     KAlgebraPage.qml  KAlgebraMobile.qml
-    DESTINATION ${DATA_INSTALL_DIR}/kalgebra/plugins/widgets/
+    DESTINATION ${DATA_INSTALL_DIR}/kalgebramobile/plugins/widgets/
 )

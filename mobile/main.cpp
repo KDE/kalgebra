@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 // 	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
 // 	KCmdLineArgs::init(argc, argv, &about);
 	QApplication app(argc, argv);
+	app.setApplicationName("kalgebramobile");
 	
 	KAlgebraMobile widget;
 	
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
 	kdeclarative.setupBindings();
 #endif
 	
-	QString main = KStandardDirs::locate("data", "kalgebra/plugins/widgets/KAlgebraMobile.qml");
+	QString main = KStandardDirs::locate("appdata", "plugins/widgets/KAlgebraMobile.qml");
 //     QString main = KStandardDirs::locate("data", "kalgebra/plugins/Tables.qml");
 	view.setSource(main);
 	
