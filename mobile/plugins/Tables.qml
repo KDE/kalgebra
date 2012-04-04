@@ -1,6 +1,6 @@
 import QtQuick 1.0
 import org.kde.analitza 1.0
-import "widgets"
+import widgets 1.0
 
 KAlgebraPage
 {

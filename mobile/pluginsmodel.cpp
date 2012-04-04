@@ -40,7 +40,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 
 	QList<QStandardItem*> items;
 	Q_FOREACH(const QString& file, foundPlugins) {
-		KConfig info(file);
+		KConfig info(file, KConfig::SimpleConfig, "appdata");
 		KConfigGroup cg = info.group("Desktop Entry");
 		QStandardItem* item = new QStandardItem;
 

@@ -26,6 +26,8 @@
 #endif
 
 #include <QDebug>
+#include <QFileInfo>
+#include <QDir>
 #include <QDeclarativeView>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
@@ -59,6 +61,10 @@ int main(int argc, char *argv[])
 	
 	QString main = KStandardDirs::locate("appdata", "plugins/widgets/KAlgebraMobile.qml");
 //     QString main = KStandardDirs::locate("appdata", "plugins/Tables.qml");
+	QDir dir = QFileInfo(main).dir();
+	dir.cdUp();
+	
+	view.engine()->addImportPath(dir.path());
 	view.setSource(main);
 	
 	#ifdef __arm__
