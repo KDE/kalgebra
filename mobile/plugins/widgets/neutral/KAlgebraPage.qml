@@ -7,7 +7,7 @@ Rectangle
 	Button {
 		text: "<-"
 		anchors {
-			top: parent.top
+			bottom: parent.bottom
 			right: parent.right
 		}
 		onClicked: parent.destroy()

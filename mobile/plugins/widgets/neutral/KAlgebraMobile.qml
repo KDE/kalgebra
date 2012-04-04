@@ -27,12 +27,20 @@ Rectangle
 	ListView {
 		id: pluginsView
 		anchors.fill: parent
-		spacing: 5
-		
+		spacing: 10
+		header: Image {
+			source: "qrc:/kalgebra.svgz"
+			anchors.horizontalCenter: parent.horizontalCenter
+		}
+		footer: Image {
+			source: "qrc:/kde-edu-logo.png"
+			anchors.horizontalCenter: parent.horizontalCenter
+		}
 		delegate:
 			Button {
 				text: title
 				onClicked: goToPage(model.path)
+				anchors.horizontalCenter: parent.horizontalCenter
 			}
 
 		

@@ -1,8 +1,9 @@
 import QtQuick 1.1
 
 Rectangle {
-    height: buttonText.height+10
-    width: buttonText.width+10
+	radius: 3
+    height: buttonText.height+30
+    width: buttonText.width+30
     property alias text: buttonText.text
     color: buttonArea.containsMouse ? "red" : "blue"
     signal clicked

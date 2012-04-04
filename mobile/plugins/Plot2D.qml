@@ -12,12 +12,6 @@ KAlgebraPage
 		id: controls
 		anchors.fill: parent
 		
-		Graph2D {
-			id: view
-			width: parent.width
-			height: parent.height-input.height
-		}
-		
 		Row {
 			spacing: 10
 			
@@ -43,6 +37,12 @@ KAlgebraPage
 					input.focus = true
 				}
 			}
+		}
+		
+		Graph2D {
+			id: view
+			width: parent.width
+			height: parent.height-input.height
 		}
 	}
 }
