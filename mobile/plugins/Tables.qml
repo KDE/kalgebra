@@ -34,19 +34,23 @@ KAlgebraPage
 	Column {
 		id: inputcol
 		
-		anchors.top: parent.top
-		width: parent.width
+		anchors {
+			top: parent.top
+			left: parent.left
+			right: parent.right
+		}
 		spacing: 10
 		
 		Grid {
 			id: ins
 			columns: 2
 			spacing: 5
+			width: parent.width
 			
-			Label {text: "Input: "; anchors.verticalCenter: input.verticalCenter} ExpressionInput { id: input; text: "sin x" }
-			Label {text: "From:"; anchors.verticalCenter: from.verticalCenter }   RealInput { id: from; value: 0 }
-			Label {text: "To:";   anchors.verticalCenter: to.verticalCenter }     RealInput { id: to; value: 10 }
-			Label {text: "Step:"; anchors.verticalCenter: step.verticalCenter }   RealInput { id: step; value: 1 }
+			Label { text: "Input:" }  ExpressionInput { id: input; text: "sin x"; width: ins.width-input.x-5; onAccepted: calculateTable() }
+			Label { text: "From:" }   RealInput { id: from; value: 0; width: ins.width-from.x-5; onAccepted: calculateTable() }
+			Label { text: "To:" }     RealInput { id: to; value: 10; width: ins.width-to.x-5; onAccepted: calculateTable() }
+			Label { text: "Step:" }   RealInput { id: step; value: 1; width: ins.width-step.x-5; onAccepted: calculateTable() }
 		}
 		
 		Button {
