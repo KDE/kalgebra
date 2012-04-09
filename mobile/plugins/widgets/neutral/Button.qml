@@ -1,22 +1,24 @@
 import QtQuick 1.1
 
-Rectangle {
-	radius: 3
-    height: buttonText.height+30
-    width: buttonText.width+30
-    property alias text: buttonText.text
-    color: buttonArea.containsMouse ? "red" : "blue"
-    signal clicked
-    
-    Text {
-        id: buttonText
-        anchors.centerIn: parent
-    }
-    
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        id: buttonArea
-        onClicked: parent.clicked()
-    }
+Item {
+	property alias text: display.text
+	signal clicked
+	width: display.width+30
+	height: display.height+30
+	
+	Text { id: display; anchors.centerIn: parent }
+	
+	Rectangle {
+		radius: 5
+		opacity: 0.3
+		anchors.fill: parent
+		color: buttonArea.containsMouse ? "red" : "blue"
+	}
+	
+	MouseArea {
+		anchors.fill: parent
+		hoverEnabled: true
+		id: buttonArea
+		onClicked: parent.clicked()
+	}
 }
