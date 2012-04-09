@@ -5,6 +5,7 @@ ListView
 {
     id: view
     property string role: ""
+    property string title: ""
     header: Label { visible: ListView.view.title!=""; text: ListView.view.title }
     delegate: Label { text: model[role] }
     ScrollDecorator {
