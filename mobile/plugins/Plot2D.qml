@@ -19,6 +19,7 @@ KAlgebraPage
 			ExpressionInput {
 				id: input
 				width: parent.width-exec.width
+				anchors.verticalCenter: exec.verticalCenter
 				text: "sin x"
 				focus: true
 				Component.onCompleted: selectAll()
