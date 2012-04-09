@@ -4,7 +4,8 @@ TableView
 {
     id: view
     property alias role: col.role
-    headerVisible: false
+    property alias title: col.title
+    headerVisible: title!=""
 
     TableColumn {
         id: col

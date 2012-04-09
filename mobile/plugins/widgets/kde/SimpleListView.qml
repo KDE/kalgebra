@@ -5,7 +5,9 @@ ListView
 {
 	id: scrollList
 	property string role: ""
+	property string title: ""
 	delegate: Label { text: model[role] }
+    header: Label { visible: ListView.view.title!=""; text: ListView.view.title }
 	clip: true
 	
 	ScrollBar {

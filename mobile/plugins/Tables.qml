@@ -58,8 +58,6 @@ KAlgebraPage
 			
 			onClicked: calculateTable()
 		}
-		
-		Label { text: "Results:"; id: res; }
 	}
 	
 	SimpleListView {
@@ -70,5 +68,6 @@ KAlgebraPage
 		
 		model: resultsModel
 		role: "element"
+		title: "Results:"
 	}
 }
