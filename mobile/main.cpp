@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	view.engine()->addImportPath(dir.path());
 	view.setSource(main);
 	
-	#ifdef __arm__
+	#if defined(__arm__) && !defined(ANDROID)
 		view.showFullScreen();
 	#else
 		view.resize(view.initialSize().width(), view.initialSize().height());
