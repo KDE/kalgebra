@@ -62,9 +62,11 @@ KAlgebraPage
 	
 	SimpleListView {
 		width: parent.width
-		height: 200
-		anchors.top: inputcol.bottom
-		anchors.bottom: parent.bottom
+		anchors {
+			top: inputcol.bottom
+			bottom: parent.bottom
+			topMargin: 5
+		}
 		
 		model: resultsModel
 		role: "element"
