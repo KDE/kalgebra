@@ -4,7 +4,8 @@ import QtQuick 1.1
 Rectangle
 {
 	id: rootItem
-	color: "white"
+	SystemPalette { id: palette }
+	color: palette.window
 	height: 600
 	width: 600
 	

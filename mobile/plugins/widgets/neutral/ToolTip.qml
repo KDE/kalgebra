@@ -9,5 +9,6 @@ Rectangle {
 		anchors.fill: parent
 	}
 	
-	color: "blue"
+	SystemPalette { id: palette }
+	color: palette.light
 }

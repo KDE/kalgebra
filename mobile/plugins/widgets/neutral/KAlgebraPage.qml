@@ -2,7 +2,8 @@ import QtQuick 1.1
 
 Rectangle
 {
-	color: "white"
+	SystemPalette { id: palette }
+	color: palette.window
 	
 	Button {
 		text: "<-"
@@ -11,6 +12,6 @@ Rectangle
 			right: parent.right
 		}
 		onClicked: parent.destroy()
-		z: 5432
+		z: parent.z+1
 	}
 }

@@ -3,17 +3,21 @@ import QtQuick 1.1
 Item {
 	property alias text: display.text
 	signal clicked
-	width: display.width+30
-	height: display.height+30
+	width: display.width+15
+	height: display.height+15
 	
-	Text { id: display; anchors.centerIn: parent }
+	SystemPalette { id: palette }
 	
 	Rectangle {
 		radius: 5
 		opacity: 0.3
 		anchors.fill: parent
-		color: buttonArea.containsMouse ? "red" : "blue"
+		color: palette.button
+		border.width: buttonArea.containsMouse ? 5 : 1
+		border.color: palette.buttonText
 	}
+	
+	Text { id: display; anchors.centerIn: parent; color: palette.buttonText }
 	
 	MouseArea {
 		anchors.fill: parent
