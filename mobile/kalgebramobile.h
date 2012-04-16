@@ -32,17 +32,20 @@ class AnalitzaWrapper;
 class KAlgebraMobile : public QObject
 {
 	Q_OBJECT
+	Q_PROPERTY(Analitza::Variables* variables READ variables NOTIFY variablesChanged)
 	public:
 		explicit KAlgebraMobile(QObject* parent=0);
 		
-		void displayPlugin(int plugin);
-		
 		static KAlgebraMobile* self();
-	
+		void notifyVariablesChanged() { variablesChanged(); }
+		
 	public slots:
 		FunctionsModel* functionsModel();
 		Analitza::Variables* variables() const;
 		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
+		
+	signals:
+		void variablesChanged();
 		
 	private:
 		static KAlgebraMobile* s_self;

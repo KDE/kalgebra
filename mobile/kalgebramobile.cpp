@@ -20,6 +20,7 @@
 
 #include <analitza/variables.h>
 #include <analitzagui/functionsmodel.h>
+#include <analitzagui/variablesmodel.h>
 #include "analitzawrapper.h"
 
 #include <QDeclarativeContext>
@@ -28,7 +29,6 @@
 
 KAlgebraMobile* KAlgebraMobile::s_self=0;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
-
 
 KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	: QObject(parent), m_functionsModel(0), m_vars(new Analitza::Variables)
@@ -41,6 +41,8 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
 	qmlRegisterType<FunctionsModel>("org.kde.analitza", 1, 0, "FunctionsModel");
 	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
+	qmlRegisterType<VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
+	qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 }
 
@@ -77,3 +79,4 @@ QStringList KAlgebraMobile::addFunction(const QString& expression, const QString
 	
 	return err;
 }
+
