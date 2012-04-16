@@ -49,7 +49,7 @@ QStringList ExpressionWrapper::errors() const { return m_exp.error(); }
 
 AnalitzaWrapper::AnalitzaWrapper(QObject* parent)
 	: QObject(parent)
-	, m_wrapped(new Analitza::Analyzer(KAlgebraMobile::self()->variables())), m_calc(false), m_varsModel(0)
+	, m_wrapped(new Analitza::Analyzer(KAlgebraMobile::self()->variables())), m_calc(false)
 {}
 
 QVariant AnalitzaWrapper::execute(const QString& expression)
@@ -68,8 +68,8 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	
 	if(!m_wrapped->isCorrect())
 		return QVariant();
-	else if(m_varsModel)
-		m_varsModel->updateInformation();
+	
+	KAlgebraMobile::self()->notifyVariablesChanged();
 	
 	return qVariantFromValue(new ExpressionWrapper(res));
 }
@@ -106,7 +106,7 @@ QString AnalitzaWrapper::dependenciesToLambda(const QString& expression) const
 void AnalitzaWrapper::insertVariable(const QString& name, const QString& expression) const
 {
 	m_wrapped->insertVariable(name, Analitza::Expression(expression, false));
-	if(m_varsModel) m_varsModel->updateInformation();
+	KAlgebraMobile::self()->notifyVariablesChanged();
 }
 
 QString AnalitzaWrapper::unusedVariableName() const
@@ -131,14 +131,7 @@ QString AnalitzaWrapper::unusedVariableName() const
 void AnalitzaWrapper::removeVariable(const QString& name)
 {
 	m_wrapped->variables()->remove(name);
-	if(m_varsModel) m_varsModel->updateInformation();;
-}
-
-VariablesModel* AnalitzaWrapper::variablesModel()
-{
-	if(!m_varsModel)
-		m_varsModel = new VariablesModel(m_wrapped->variables());
-	return m_varsModel;
+	KAlgebraMobile::self()->notifyVariablesChanged();
 }
 
 bool AnalitzaWrapper::isCorrect() const { return m_wrapped->isCorrect(); }

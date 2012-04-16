@@ -66,14 +66,12 @@ class AnalitzaWrapper : public QObject
 		Q_SCRIPTABLE QString dependenciesToLambda(const QString& expression) const;
 		Q_SCRIPTABLE void insertVariable(const QString& name, const QString& expression) const;
 		Q_SCRIPTABLE void removeVariable(const QString& name);
-		VariablesModel* variablesModel();
 		
 		QStringList errors() const;
 		bool isCorrect() const;
 	private:
 		Analitza::Analyzer* m_wrapped;
 		bool m_calc;
-		VariablesModel* m_varsModel;
 };
 
 #endif // ANALITZAWRAPPER_H
