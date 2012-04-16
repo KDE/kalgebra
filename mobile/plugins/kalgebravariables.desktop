@@ -1,0 +1,14 @@
+[Desktop Entry]
+Icon=document-properties
+Type=Service
+ServiceTypes=KAlgebra/Script
+
+Name=Variables
+Comment=Displays the stored values
+
+X-KDE-PluginInfo-Author=Aleix Pol Gonzalez
+X-KDE-PluginInfo-Email=aleixpol@kde.org
+X-KDE-PluginInfo-Name=VariablesView.qml
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL
+X-KAlgebra-Priority=0
