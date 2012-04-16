@@ -13,19 +13,28 @@ KAlgebraPage
 		var tmp = a.unusedVariableName()
 		var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
 		var ffrom=from.value, fto=to.value, fstep=step.value;
-// 		console.log("chancho (" + ffrom + ", " + fto + ") " + ret);
+		console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
+		if((fto-ffrom>0)!=(fstep>0)) {
+			fstep *= -1;
+			step = fstep
+		}
+		console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 		
-		if(!a.isCorrect) {
+		if(fstep==0) {
+			resultsModel.append( { element: "Errors: The step can't be 0" } );
+		} else if(!a.isCorrect) {
 			if(ret)
 				resultsModel.append( { element: "Errors: "+ret } );
 			else
 				resultsModel.append( { element: "Errors: "+a.errors } );
-		} else for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
-			var args = new Array();
-			args[0]=i;
-// 			console.log("!!! " + i); 
-			var expr = a.executeFunc(tmp, args);
-			resultsModel.append( { element: i +" = "+ expr.expression } );
+		} else {
+			for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
+				var args = new Array();
+				args[0]=i;
+	// 			console.log("!!! " + i); 
+				var expr = a.executeFunc(tmp, args);
+				resultsModel.append( { element: i +" = "+ expr.expression } );
+			}
 		}
 		
 		a.removeVariable(tmp);
