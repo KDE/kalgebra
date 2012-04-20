@@ -37,6 +37,7 @@ Name[x-test]=xxVariablesxx
 Name[zh_CN]=变量
 Name[zh_TW]=變數
 Comment=Displays the stored values
+Comment[nl]=De opgeslagen waarden tonen
 Comment[pt]=Mostra os valores guardados
 Comment[sk]=Zobrazí uložené hodnoty
 Comment[sv]=Visar de lagrade värdena
