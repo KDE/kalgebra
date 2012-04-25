@@ -28,7 +28,7 @@ KAlgebraPage
 				else
 					itemModel.append({ result: "Error: " + a.errors })
 			} else
-				itemModel.append({ result: text + " = " + res.expression });
+				itemModel.insert(0, { result: text + " = " + res.expression });
 			
 			input.selectAll();
 			
