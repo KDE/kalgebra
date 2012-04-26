@@ -13,12 +13,12 @@ KAlgebraPage
 		var tmp = a.unusedVariableName()
 		var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
 		var ffrom=from.value, fto=to.value, fstep=step.value;
-		console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
+// 		console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 		if((fto-ffrom>0)!=(fstep>0)) {
 			fstep *= -1;
 			step = fstep
 		}
-		console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
+// 		console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 		
 		if(fstep==0) {
 			resultsModel.append( { element: "Errors: The step can't be 0" } );
@@ -76,6 +76,7 @@ KAlgebraPage
 			bottom: parent.bottom
 			topMargin: 5
 		}
+		currentIndex: -1
 		
 		model: resultsModel
 		role: "element"
