@@ -5,6 +5,7 @@ TableView
     id: view
     property alias role: col.role
     property alias title: col.title
+    property alias delegate: view.itemDelegate
     headerVisible: title!=""
 
     TableColumn {
