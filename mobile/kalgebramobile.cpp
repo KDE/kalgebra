@@ -58,7 +58,7 @@ FunctionsModel* KAlgebraMobile::functionsModel()
 
 Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }
 
-QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
+QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 225); }
 
 QStringList KAlgebraMobile::addFunction(const QString& expression, const QString& name, const QColor& color, double up, double down)
 {
