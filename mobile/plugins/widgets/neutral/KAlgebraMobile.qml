@@ -32,10 +32,20 @@ Rectangle
 		header: Image {
 			source: "qrc:/kalgebra.svgz"
 			anchors.horizontalCenter: parent.horizontalCenter
+			
+			MouseArea {
+				anchors.fill: parent
+				onClicked: Qt.openUrlExternally("http://edu.kde.org/applications/mathematics/kalgebra/")
+			}
 		}
 		footer: Image {
 			source: "qrc:/kde-edu-logo.png"
 			anchors.horizontalCenter: parent.horizontalCenter
+			
+			MouseArea {
+				anchors.fill: parent
+				onClicked: Qt.openUrlExternally("http://edu.kde.org")
+			}
 		}
 		delegate:
 			Button {
