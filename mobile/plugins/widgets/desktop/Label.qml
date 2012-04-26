@@ -1,3 +1,6 @@
+import QtDesktop 0.1
 import QtQuick 1.1
 
-Text {}
+Label {
+	onLinkActivated: Qt.openUrlExternally(link)
+}
