@@ -7,7 +7,12 @@ ListView
 	property string title
 	
 	clip: true
-	header: Label { visible: ListView.view.title!=""; text: ListView.view.title }
+	header: Label {
+		height: ListView.view.title=="" ? 0 : 1.5*implicitHeight
+		text: ListView.view.title
+		font.weight: Font.Bold
+		verticalAlignment: Text.AlignVCenter
+	}
 	delegate: Label { text: model[role] }
 	
 	ScrollDecorator {
