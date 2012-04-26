@@ -51,25 +51,41 @@ FunctionsModel* KAlgebraMobile::functionsModel()
 	if(!m_functionsModel) {
 		m_functionsModel = new FunctionsModel(this);
 		m_functionsModel->setResolution(500);
+		connect(m_functionsModel, SIGNAL(functionRemoved(QString)), SLOT(functionRemoved(QString)));
+		connect(m_functionsModel, SIGNAL(functionModified(QString,Analitza::Expression)), SLOT(functionModified(QString,Analitza::Expression)));
 	}
 	
 	return m_functionsModel;
+}
+
+void KAlgebraMobile::functionRemoved(const QString& name)
+{
+	m_vars->remove(name);
+}
+
+void KAlgebraMobile::functionModified(const QString& name, const Analitza::Expression& exp)
+{
+	m_vars->modify(name, exp);
 }
 
 Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }
 
 QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 225); }
 
-QStringList KAlgebraMobile::addFunction(const QString& expression, const QString& name, const QColor& color, double up, double down)
+QStringList KAlgebraMobile::addFunction(const QString& expression, double up, double down)
 {
 	FunctionsModel* model=functionsModel();
 	
+	Analitza::Variables* vars = variables();
 	Analitza::Expression e(expression, Analitza::Expression::isMathML(expression));
-	QString fname = name.isEmpty() ? model->freeId() : name;
-	QColor fcolor = color.isValid() ? color : randomFunctionColor();
+	QString fname;
+	do {
+		fname = model->freeId();
+	} while(vars->contains(fname));
+	QColor fcolor = randomFunctionColor();
 	
 	QStringList err;
-	Function f(fname, e, variables(), fcolor, up,down);
+	Function f(fname, e, vars, fcolor, up,down);
 	
 	if(f.isCorrect()) {
 		bool b = model->addFunction(f);

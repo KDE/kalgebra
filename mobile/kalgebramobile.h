@@ -22,7 +22,10 @@
 #include <QObject>
 #include <QColor>
 
-namespace Analitza { class Variables;}
+namespace Analitza {
+	class Variables;
+	class Expression;
+}
 
 class VariablesModel;
 class PluginsModel;
@@ -42,7 +45,11 @@ class KAlgebraMobile : public QObject
 	public slots:
 		FunctionsModel* functionsModel();
 		Analitza::Variables* variables() const;
-		QStringList addFunction(const QString& expression, const QString& name = QString(), const QColor& color = QColor(), double up = 0., double down = 0.);
+		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
+		
+	private slots:
+		void functionRemoved(const QString& name);
+		void functionModified(const QString& name, const Analitza::Expression& exp);
 		
 	signals:
 		void variablesChanged();
