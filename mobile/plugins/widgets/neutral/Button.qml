@@ -12,6 +12,7 @@ Item {
 		radius: 5
 		opacity: 0.3
 		anchors.fill: parent
+		anchors.margins: 2
 		color: palette.button
 		border.width: buttonArea.containsMouse ? 5 : 1
 		border.color: palette.buttonText
