@@ -32,7 +32,7 @@ KAlgebraPage
 			
 			input.selectAll();
 			
-			view.currentIndex = itemModel.count-1
+			view.currentIndex = 0
 		}
 		
 		width: parent.width
@@ -43,12 +43,13 @@ KAlgebraPage
 		model: itemModel
 		id: view
 		
-		height: 200
-		
 		role: "result"
 		
-		anchors.top: input.bottom
-		anchors.bottom: parent.bottom
-		width: parent.width
+		anchors {
+			top: input.bottom
+			bottom: parent.bottom
+			left: parent.left
+			right: parent.right
+		}
 	}
 }
