@@ -5,6 +5,8 @@ Item {
 	signal clicked
 	width: display.width+15
 	height: display.height+15
+	property alias implicitWidth: display.implicitWidth
+	property alias implicitHeight: display.implicitHeight
 	
 	SystemPalette { id: palette }
 	

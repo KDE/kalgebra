@@ -7,6 +7,8 @@ Rectangle
 	
 	Button {
 		text: "<-"
+		width: 50
+		height: 50
 		anchors {
 			bottom: parent.bottom
 			right: parent.right
