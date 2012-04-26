@@ -4,46 +4,42 @@ import widgets 1.0
 
 KAlgebraPage
 {
-	function addFunc() { app.addFunction(input.text) }
-	
 	anchors.margins: 0
 	
-	Column {
+	Row {
 		id: controls
-		anchors.fill: parent
+		spacing: 10
 		
-		Row {
-			spacing: 10
+		width: parent.width
+		ExpressionInput {
+			id: input
+			width: parent.width-exec.width
+			anchors.verticalCenter: exec.verticalCenter
+			text: "sin x"
+			focus: true
+			Component.onCompleted: selectAll()
 			
-			width: parent.width
-			ExpressionInput {
-				id: input
-				width: parent.width-exec.width
-				anchors.verticalCenter: exec.verticalCenter
-				text: "sin x"
-				focus: true
-				Component.onCompleted: selectAll()
-				
-				Keys.onReturnPressed: addFunc()
-			}
-			
-			Button {
-				id: exec
-				text: "Clear"
-				width: 100
-				
-				onClicked: {
-					app.functionsModel().clear()
-					view.resetViewport()
-					input.focus = true
-				}
-			}
+			Keys.onReturnPressed: app.addFunction(input.text)
 		}
 		
-		Graph2D {
-			id: view
-			width: parent.width
-			height: parent.height-input.height
+		Button {
+			id: exec
+			text: "Clear"
+			width: 100
+			
+			onClicked: {
+				app.functionsModel().clear()
+				view.resetViewport()
+				input.focus = true
+			}
+		}
+	}
+	
+	Graph2D {
+		id: view
+		anchors {
+			fill: parent
+			topMargin: controls.height
 		}
 	}
 }
