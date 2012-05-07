@@ -447,7 +447,7 @@ void Graph3D::setFunc(const Expression& exp)
 		Analitza::Analyzer f3d;
 		f3d.setExpression(exp);
 		f3d.setExpression(f3d.dependenciesToLambda());
-		f3d.calculate();
+		f3d.simplify();
 		
 		if(!checkExpression(f3d.expression().bvarList(), f3d.type())) {
 			sendStatus(i18n("Error: Wrong type of function"));
