@@ -120,16 +120,12 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 	if(a.isCorrect()) {
 		result = res.toHtml();
 		
-		Analitza::Expression lambdaexp = a.dependenciesToLambda();
-		QStringList bvars = lambdaexp.bvarList();
+		Analitza::Analyzer lambdifier(a.variables());
+		lambdifier.setExpression(res);
+		Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
+		lambdifier.setExpression(lambdaexp);
 		
-		Analitza::ExpressionType functype;
-		{
-			Analitza::Analyzer b;
-			b.setExpression(lambdaexp);
-			
-			functype = b.type();
-		}
+		Analitza::ExpressionType functype = lambdifier.type();
 		
 		foreach(InlineOptions* opt, m_options) {
 			if(opt->matchesExpression(lambdaexp, functype)) {
