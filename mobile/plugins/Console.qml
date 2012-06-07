@@ -22,16 +22,14 @@ KAlgebraPage
 		Keys.onReturnPressed: {
 			var res = a.execute(text)
 			
-			if(!a.isCorrect) {
-				if(res)
-					itemModel.append({ result: "Error: " + res })
-				else
-					itemModel.append({ result: "Error: " + a.errors })
-			} else
-				itemModel.insert(0, { result: text + " = " + res.expression });
+			var toadd = ""
+			if(!a.isCorrect)
+				toadd = "Error: " + (res ? res : a.errors)
+			else
+				toadd = text + " = " + res.expression
 			
-			input.selectAll();
-			
+			itemModel.insert(0, { result: toadd, resultsInput: text })
+			input.selectAll()
 			view.currentIndex = 0
 		}
 		
@@ -43,7 +41,17 @@ KAlgebraPage
 		model: itemModel
 		id: view
 		
-		role: "result"
+		delegate: Label {
+			text: result
+			MouseArea {
+				anchors.fill: parent
+				onClicked:  {
+					input.text = resultsInput
+					input.selectAll()
+					input.focus = true
+				}
+			}
+		}
 		
 		anchors {
 			top: input.bottom
