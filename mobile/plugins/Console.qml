@@ -4,20 +4,13 @@ import widgets 1.0
 
 KAlgebraPage
 {
-	Analitza {
-		id: a
-	}
-	
-	function doSelectAll()
-	{
-		input.selectAll()
-	}
-	
 	ListModel { id: itemModel }
 	
 	ExpressionInput {
 		id: input
 		focus: true
+		
+		Analitza { id: a }
 		
 		Keys.onReturnPressed: {
 			var res = a.execute(text)
