@@ -41,44 +41,49 @@ Item {
 		id: init
 		anchors.margins: 10
 		
-		GridView {
-			id: pluginsView
+		Flow {
 			anchors.fill: parent
-			cellHeight: 100
-			cellWidth: 200
+			spacing: 5
 			
-			delegate:
-				ListItem {
-					width: pluginsView.cellWidth
-					height: pluginsView.cellHeight
-					Column {
-						anchors.fill: parent
-						spacing: 10
-						
-						QIconItem {
-							id: icon
-							width: 50
-							height: 50
-							anchors.horizontalCenter: parent.horizontalCenter
-							icon: decoration
+			move: Transition {
+				NumberAnimation {
+					properties: "x,y"
+					easing.type: Easing.InOutQuad
+				}
+			}
+			
+			Repeater {
+				delegate:
+					ListItem {
+						width: 200
+						height: 100
+						enabled: true
+						Column {
+							anchors.fill: parent
+							spacing: 10
+							
+							QIconItem {
+								id: icon
+								width: 50
+								height: 50
+								anchors.horizontalCenter: parent.horizontalCenter
+								icon: decoration
+							}
+							
+							Text {
+								id: description
+								anchors.left: parent.left
+								anchors.right: parent.right
+								horizontalAlignment: Text.AlignHCenter
+								text: i18n("%1<br/>\n<em>%2</em>", title, subtitle)
+							}
 						}
 						
-						Text {
-							id: description
-							anchors.left: parent.left
-							anchors.right: parent.right
-							horizontalAlignment: Text.AlignHCenter
-							text: i18n("%1<br/>\n%2", title, subtitle)
-						}
-					}
-					
-					MouseArea {
-						anchors.fill: parent
 						onClicked: goToPage(model.path, decoration)
 					}
-				}
-			
-			model: PluginsModel { id: plugins }
+				
+				model: PluginsModel { id: plugins }
+			}
 		}
 		
 		tools: ToolBarLayout {}
@@ -89,23 +94,27 @@ Item {
 		z: 10
 		width: parent.width
 		height: 40
-		anchors {
-			top: parent.top
+		anchors.top: parent.top
+		
+		
+		Image {
+			anchors {
+				left: parent.left
+				verticalCenter: parent.verticalCenter
+				leftMargin: 5
+			}
+			
+			source: "qrc:/kde-edu-logo.png"
+			height: parent.height
+			fillMode: Image.PreserveAspectFit
+			smooth: true
+			
+			MouseArea {
+				anchors.fill: parent
+				onClicked: Qt.openUrlExternally("http://edu.kde.org")
+			}
 		}
 	}
-	
-// 	IconWidget {
-// 		id: d
-// 		height: toolBar.height-5
-// 		width: height
-// 		anchors.top: parent.top
-// 		anchors.left: parent.left
-// 		anchors.margins: 5
-// 		anchors.leftMargin: 20
-// 		
-// 		source: "kalgebra"
-// 		
-// 	}
 	
 	PageStack
 	{

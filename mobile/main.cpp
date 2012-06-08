@@ -31,6 +31,7 @@
 #include <QDeclarativeView>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
+#include <QIcon>
 
 #include "kalgebramobile.h"
 
@@ -42,10 +43,12 @@ int main(int argc, char *argv[])
 // 	KCmdLineArgs::init(argc, argv, &about);
 	QApplication app(argc, argv);
 	app.setApplicationName("kalgebramobile");
+	app.setWindowIcon(QIcon::fromTheme("kalgebra"));
 	
 	KAlgebraMobile widget;
 	
 	QDeclarativeView view;
+	view.setWindowTitle("KAlgebra Mobile");
 	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	view.engine()->rootContext()->setContextProperty("app", &widget);
 	
