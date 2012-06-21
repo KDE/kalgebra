@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KAlgebra/Script
 
 Name=About KAlgebra
+Name[bg]=Относно KAlgebra
 Name[cs]=O aplikaci KAlgebra
 Name[da]=Om KAlgebra
 Name[de]=Über KAlgebra
@@ -12,6 +13,7 @@ Name[es]=Acerca de KAlgebra
 Name[et]=Teave KAlgebra kohta
 Name[hu]=A KAlgebra névjegye
 Name[it]=Informazioni su KAlgebra
+Name[km]=អំពី KAlgebra
 Name[nb]=Om KAlgebra
 Name[nl]=Over KAlgebra
 Name[pl]=O KAlgebra
