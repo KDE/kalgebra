@@ -40,6 +40,7 @@ Name[x-test]=xxVariablesxx
 Name[zh_CN]=变量
 Name[zh_TW]=變數
 Comment=Displays the stored values
+Comment[ca]=Mostra els valors desats
 Comment[da]=Vis de lagrede værdier
 Comment[de]=Zeigt die gespeicherten Werte an
 Comment[el]=Εμφανίζει τις αποθηκευμένες τιμές
