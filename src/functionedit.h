@@ -27,10 +27,11 @@
 #include <KColorCombo>
 #include <KLineEdit>
 
+class PlaneCurve;
+class PlotsView2D;
+class FunctionGraph;
+class PlotsModel;
 class KTabWidget;
-class Function;
-class Graph2D;
-class FunctionsModel;
 class ExpressionEdit;
 namespace Analitza
 {
@@ -56,7 +57,7 @@ public:
 	/** Retrieves the resulting expression text. */
 	Analitza::Expression expression() const;
 	
-	Function createFunction() const;
+	PlaneCurve* createFunction() const;
 	
 	/** Sets an expression text to the ExpressionEdit widget. */
 	void setFunction(const QString &newText);
@@ -115,9 +116,9 @@ private:
 	QPushButton *m_ok;
 	QLabel *m_valid;
 	QLabel *m_validIcon;
-	Graph2D *m_graph;
+	PlotsView2D *m_graph;
 	KColorCombo *m_color;
-	FunctionsModel *m_funcsModel;
+	PlotsModel *m_funcsModel;
 	Analitza::Variables* m_vars;
 	
 	bool m_modmode;

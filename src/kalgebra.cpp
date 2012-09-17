@@ -29,13 +29,12 @@
 #endif
 
 #include <analitzagui/operatorsmodel.h>
-#include <analitzagui/functionfactory.h>
-
-#include <analitzagui/functionsmodel.h>
-#include <analitzagui/functionsview.h>
 #include <analitzagui/expressionedit.h>
-#include <analitzagui/graph2d.h>
 #include <analitzagui/variablesmodel.h>
+#include <analitzaplot/plotsview2d.h>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/functiongraph.h>
+#include <analitzaplot/planecurve.h>
 #include <analitza/variables.h>
 #include <analitza/value.h>
 
@@ -67,9 +66,7 @@ class Add2DOption : public InlineOptions
 		virtual QString id() const { return "add2d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
 		{
-			bool cont = FunctionFactory::self()->contains(exp.bvarList());
-				
-			return cont && functype.canReduceTo(FunctionFactory::self()->type(exp.bvarList()));
+			return FunctionGraph::canDraw(exp, Dim2D).isEmpty();
 		}
 
 		virtual QString caption() const { return i18n("Plot 2D"); }
@@ -91,7 +88,7 @@ class Add3DOption : public InlineOptions
 		virtual QString id() const { return "add3d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
 		{
-			return Graph3D::checkExpression(exp.bvarList(), functype);
+			return FunctionGraph::canDraw(exp, Dim3D).isEmpty();
 		}
 
 		virtual QString caption() const { return i18n("Plot 3D"); }
@@ -188,16 +185,16 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//////EOConsola
 	
 	//////2D Graph
-	b_funcsModel=new FunctionsModel(this);
+	b_funcsModel=new PlotsModel(this);
 	
-	m_graph2d = new Graph2D(b_funcsModel, m_tabs);
+	m_graph2d = new PlotsView2D(m_tabs, b_funcsModel);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);
 	b_tools->setTabPosition(QTabWidget::South);
 	addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
-	b_funcs = new FunctionsView(b_tools);
+	b_funcs = new QTreeView(b_tools);
 	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -274,7 +271,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_actions[3]->setChecked(true);
 	b_actions[4]->setCheckable(true);
 	b_actions[5]->setCheckable(true);
-	set_res_std();
+// 	set_res_std();
 	//////EO2D Graph
 	
 	/////3DGraph
@@ -350,11 +347,12 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//Ego's reminder
 	KHelpMenu* help = new KHelpMenu(this, KGlobal::mainComponent().aboutData());
 	menuBar()->addMenu(help->menu());
-	
-	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
-			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
-	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
-			c_results, SLOT(removeVariable(QString)));
+
+#warning TODO: Port to PlotsModel
+// 	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
+// 			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
+// 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
+// 			c_results, SLOT(removeVariable(QString)));
 	
 	connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 	tabChanged(0);
@@ -387,30 +385,37 @@ void KAlgebra::newInstance()
 	KProcess::startDetached(QApplication::applicationFilePath());
 }
 
+QString freeId(QAbstractItemModel* m)
+{
+	//FIXME: dude!
+	return QString::number(qrand()*m->rowCount());
+}
+
 void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	Function f(b_funcsModel->freeId(), exp, c_results->analitza()->variables(), QPen(randomFunctionColor()), 6, 0);
-	b_funcsModel->addFunction(f);
+	PlaneCurve* curve = new PlaneCurve(exp, freeId(b_funcsModel), randomFunctionColor(), c_results->analitza()->variables());
+	b_funcsModel->addPlot(curve);
 	
 	m_tabs->setCurrentIndex(1);
 }
 
 void KAlgebra::new_func()
 {
-	Function f=b_funced->createFunction();
+	FunctionGraph* f=b_funced->createFunction();
 	
 	if(b_funced->editing()) {
-		b_funcsModel->editFunction(f.name(), f);
+		QModelIndex idx = b_funcsModel->indexForName(f->name());
+		b_funcsModel->updatePlot(idx.row(), f);
 	} else {
-		b_funcsModel->addFunction(f);
+		b_funcsModel->addPlot(f);
 	}
 	
 	b_funced->setEditing(false);
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
-	b_funcs->setCurrentIndex(b_funcsModel->indexForId(f.name()));
+	b_funcs->setCurrentIndex(b_funcsModel->indexForName(f->name()));
 	m_graph2d->setFocus();
 }
 
@@ -429,7 +434,7 @@ void KAlgebra::functools(int i)
 	if(i==0)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
-		b_funced->setName(b_funcsModel->freeId());
+		b_funced->setName(freeId(b_funcsModel));
 		b_funced->setColor(randomFunctionColor());
 		b_funced->setEditing(false);
 		b_funced->setFocus();
@@ -505,10 +510,10 @@ void KAlgebra::saveLog()
 		c_results->saveLog(path);
 }
 
-void KAlgebra::set_res_low()	{ b_funcsModel->setResolution(416); }
-void KAlgebra::set_res_std()	{ b_funcsModel->setResolution(832); }
-void KAlgebra::set_res_fine()	{ b_funcsModel->setResolution(1664);}
-void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
+// void KAlgebra::set_res_low()	{ b_funcsModel->setResolution(416); }
+// void KAlgebra::set_res_std()	{ b_funcsModel->setResolution(832); }
+// void KAlgebra::set_res_fine()	{ b_funcsModel->setResolution(1664);}
+// void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
 
 void KAlgebra::new_func3d()
 {
@@ -576,7 +581,7 @@ void KAlgebra::saveGraph()
 		QString filename = dialog->selectedFile();
 		
 		bool isSvg = filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg");
-		Graph2D::Format f = isSvg ? Graph2D::PNG : Graph2D::SVG;
+		PlotsView2D::Format f = isSvg ? PlotsView2D::PNG : PlotsView2D::SVG;
 		m_graph2d->toImage(filename, f);
 	}
 	delete dialog;
@@ -652,7 +657,7 @@ void KAlgebra::valueChanged()
 {
 	//FIXME: Should only repaint the affected ones.
 	if(b_funcsModel->rowCount()>0)
-		m_graph2d->updateFunctions(b_funcsModel->index(0,0), b_funcsModel->index(b_funcsModel->rowCount()-1,0));
+		m_graph2d->updateFunctions(QModelIndex(), 0, b_funcsModel->rowCount()-1);
 }
 
 void KAlgebra::varsContextMenu(const QPoint& p)

@@ -28,13 +28,13 @@
 #include <QListView>
 #include <config-kalgebra.h>
 
+class PlotsView2D;
+class PlotsModel;
 class ExpressionEdit;
 class ConsoleHtml;
 class VariablesModel;
 class FunctionEdit;
-class Graph2D;
 class Graph3D;
-class FunctionsModel;
 class KRecentFilesAction;
 
 namespace Analitza { class Expression; }
@@ -63,10 +63,10 @@ class KAlgebra : public KMainWindow
 		
 		//graf 2d
 		QMenu* b_menu;
-		FunctionsModel* b_funcsModel;
+		PlotsModel* b_funcsModel;
 		QTreeView *b_funcs;
 		QTabWidget *b_tools;
-		Graph2D *m_graph2d;
+		PlotsView2D *m_graph2d;
 		QDockWidget *b_dock_funcs;
 		FunctionEdit *b_funced;
 		VariablesModel* b_varsModel;
@@ -101,10 +101,10 @@ class KAlgebra : public KMainWindow
 		void edit_var ( const QModelIndex & );
 		void toggleSquares();
 		void toggleKeepAspect();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
+// 		void set_res_low();
+// 		void set_res_std();
+// 		void set_res_fine();
+// 		void set_res_vfine();
 		void valueChanged();
 		void varsContextMenu(const QPoint&);
 		

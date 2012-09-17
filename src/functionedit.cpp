@@ -27,15 +27,15 @@
 #include <KTabWidget>
 #include <KColorScheme>
 
-#include <analitzagui/graph2d.h>
-#include <analitzagui/functionsmodel.h>
 #include <analitzagui/expressionedit.h>
 #include <analitza/analyzer.h>
 #include <analitza/expression.h>
 #include <analitza/variables.h>
 #include <analitza/value.h>
-#include <analitzagui/functionfactory.h>
 #include <analitzagui/algebrahighlighter.h>
+#include <analitzaplot/planecurve.h>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/plotsview2d.h>
 
 namespace {
 	static const int resolution = 200;
@@ -53,7 +53,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_name = new KLineEdit(this);
 	
 	m_func = new ExpressionEdit(this);
-    m_func->setExamples(FunctionFactory::self()->examples());
+    m_func->setExamples(PlaneCurve::examples());
 	m_func->setAns("x");
 	connect(m_func, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));
@@ -75,19 +75,19 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_color->setColor(QColor(0,150,0));
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	
-	m_funcsModel=new FunctionsModel;
-	m_funcsModel->setResolution(resolution);
-//	m_funcsModel->addFunction(function(m_name->text(), m_func->expression(), m_color->color()));
+	m_funcsModel=new PlotsModel(this);
 	
 	m_viewTabs=new KTabWidget(this);
 	
-	m_graph = new Graph2D(m_funcsModel, m_viewTabs);
+	m_graph = new PlotsView2D(m_viewTabs, m_funcsModel);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
+	m_graph->showHTicks(false);
+	m_graph->showVTicks(false);
 	
 	m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
 	QWidget *options=new QWidget(m_viewTabs);
@@ -151,8 +151,7 @@ void FunctionEdit::setColor(const QColor &newColor)
 {
 	m_color->setColor(newColor);
 	if(m_funcsModel->rowCount()>0)
-		  m_funcsModel->editFunction(0)->setColor(newColor);
-	m_graph->forceRepaint();
+		  m_funcsModel->setData(m_funcsModel->index(0), newColor);
 }
 
 void FunctionEdit::colorChange(int)
@@ -258,22 +257,18 @@ void FunctionEdit::edit()
 		return;
 	}
 	
-	Function f=createFunction();
-	if(f.isCorrect()) {
-		f.setResolution(resolution);
-		f.calc(QPointF());
-	}
+	PlaneCurve* f=createFunction();
 	
-	if(f.isCorrect())
-		f.update_points(QRect(-10, 10, 20, -20));
+	if(f->isCorrect())
+		f->update(QRect(-10, 10, 20, -20));
 	
-	if(f.isCorrect()) {
+	if(f->isCorrect()) {
 		m_funcsModel->clear();
-		m_funcsModel->addFunction(f);
+		m_funcsModel->addPlot(f);
 		setState(QString("%1:=%2")
-			.arg(m_name->text()).arg(f.expression().toString()), false);
+			.arg(m_name->text()).arg(f->expression().toString()), false);
 	} else {
-		QStringList errors = f.errors();
+		QStringList errors = f->errors();
 		Q_ASSERT(!errors.isEmpty());
 		
 		m_funcsModel->clear();
@@ -283,8 +278,8 @@ void FunctionEdit::edit()
 		setState(errors.first(), true);
 		m_valid->setToolTip(errors.join("<br />"));
 	}
-	m_func->setCorrect(f.isCorrect());
-	m_ok->setEnabled(f.isCorrect());
+	m_func->setCorrect(f->isCorrect());
+	m_ok->setEnabled(f->isCorrect());
 }
 
 void FunctionEdit::ok()
@@ -298,9 +293,15 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 	m_func->setFocus();
 }
 
-Function FunctionEdit::createFunction() const
+PlaneCurve* FunctionEdit::createFunction() const
 {
-	return Function(name(), expression(), m_vars, color(), m_calcUplimit, m_calcDownlimit);
+	Q_ASSERT(PlaneCurve::canDraw(expression()).isEmpty());
+	PlaneCurve* curve = new PlaneCurve(expression(), name(), color(), m_vars);
+	if(m_calcUplimit != m_calcDownlimit) {
+		foreach(const QString& var, curve->parameters())
+			curve->setInterval(var, m_calcUplimit, m_calcDownlimit);
+	}
+	return curve;
 }
 
 Analitza::Expression FunctionEdit::expression() const

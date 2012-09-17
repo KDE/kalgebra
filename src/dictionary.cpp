@@ -17,8 +17,6 @@
  *************************************************************************************/
 
 #include "dictionary.h"
-#include <analitzagui/functionsmodel.h>
-#include <analitzagui/graph2d.h>
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 #include <analitzagui/operatorsmodel.h>
@@ -30,6 +28,9 @@
 #include <QFormLayout>
 #include <KLocale>
 #include <QtMmlWidget>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/plotsview2d.h>
+#include <analitzaplot/planecurve.h>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
@@ -53,9 +54,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 // 	m_formula->setFrameStyle(2);
 	m_formula->setBaseFontPointSize(10);
 	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_funcs=new FunctionsModel(descr);
-	m_funcs->setResolution(400);
-	m_graph=new Graph2D(m_funcs, descr);
+	m_funcs=new PlotsModel(descr);
+	m_graph=new PlotsView2D(descr, m_funcs);
 	m_graph->setReadOnly(true);
 	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
 	m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -117,7 +117,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
-		m_funcs->addFunction(Function("func", e, m_vars, QColor(0,150,0), 0, 0));
+		m_funcs->addPlot(new PlaneCurve(e, "func", QColor(0,150,0), m_vars));
 	} else {
 		QString error;
 		m_name->setText(QString());
