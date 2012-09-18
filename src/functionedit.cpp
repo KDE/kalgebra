@@ -256,30 +256,34 @@ void FunctionEdit::edit()
 		setState(i18n("Downlimit cannot be greater than uplimit"), true);
 		return;
 	}
+	bool added = false;
 	
-	PlaneCurve* f=createFunction();
+	PlaneCurve* f = 0;
+	QStringList errors = PlaneCurve::canDraw(expression());
+	if(errors.isEmpty())
+		f = createFunction();
 	
-	if(f->isCorrect())
+	if(f && f->isCorrect())
 		f->update(QRect(-10, 10, 20, -20));
 	
-	if(f->isCorrect()) {
+	if(f && f->isCorrect()) {
 		m_funcsModel->clear();
 		m_funcsModel->addPlot(f);
+		added=true;
 		setState(QString("%1:=%2")
 			.arg(m_name->text()).arg(f->expression().toString()), false);
 	} else {
-		QStringList errors = f->errors();
+		if(f)
+			errors = f->errors();
 		Q_ASSERT(!errors.isEmpty());
 		
 		m_funcsModel->clear();
-		m_graph->forceRepaint();
-// 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-		
 		setState(errors.first(), true);
 		m_valid->setToolTip(errors.join("<br />"));
+		delete f;
 	}
-	m_func->setCorrect(f->isCorrect());
-	m_ok->setEnabled(f->isCorrect());
+	m_func->setCorrect(added);
+	m_ok->setEnabled(added);
 }
 
 void FunctionEdit::ok()
@@ -295,7 +299,6 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 
 PlaneCurve* FunctionEdit::createFunction() const
 {
-	Q_ASSERT(PlaneCurve::canDraw(expression()).isEmpty());
 	PlaneCurve* curve = new PlaneCurve(expression(), name(), color(), m_vars);
 	if(m_calcUplimit != m_calcDownlimit) {
 		foreach(const QString& var, curve->parameters())
