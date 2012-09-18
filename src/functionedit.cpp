@@ -79,7 +79,8 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	
 	m_viewTabs=new KTabWidget(this);
 	
-	m_graph = new PlotsView2D(m_viewTabs, m_funcsModel);
+	m_graph = new PlotsView2D(m_viewTabs);
+	m_graph->setModel(m_funcsModel);
 	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);

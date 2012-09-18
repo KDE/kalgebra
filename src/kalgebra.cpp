@@ -187,7 +187,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//////2D Graph
 	b_funcsModel=new PlotsModel(this);
 	
-	m_graph2d = new PlotsView2D(m_tabs, b_funcsModel);
+	m_graph2d = new PlotsView2D(m_tabs);
+	m_graph2d->setModel(b_funcsModel);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
 	b_tools = new QTabWidget(b_dock_funcs);

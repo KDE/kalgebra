@@ -22,7 +22,7 @@
 #include <QEvent>
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
-	: QDeclarativeItem(parent), Plotter2D(boundingRect().size(), 0)
+	: QDeclarativeItem(parent), Plotter2D(boundingRect().size())
 	, m_dirty(true), m_currentFunction(-1)
 {
 	setSize(QSizeF(100,100));

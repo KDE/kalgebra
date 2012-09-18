@@ -55,7 +55,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_formula->setBaseFontPointSize(10);
 	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_funcs=new PlotsModel(descr);
-	m_graph=new PlotsView2D(descr, m_funcs);
+	m_graph=new PlotsView2D(descr);
+	m_graph->setModel(m_funcs);
 	m_graph->setReadOnly(true);
 	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
 	m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
