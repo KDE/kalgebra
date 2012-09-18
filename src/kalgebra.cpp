@@ -385,17 +385,11 @@ void KAlgebra::newInstance()
 	KProcess::startDetached(QApplication::applicationFilePath());
 }
 
-QString freeId(QAbstractItemModel* m)
-{
-	//FIXME: dude!
-	return QString::number(qrand()*m->rowCount());
-}
-
 void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	PlaneCurve* curve = new PlaneCurve(exp, freeId(b_funcsModel), randomFunctionColor(), c_results->analitza()->variables());
+	PlaneCurve* curve = new PlaneCurve(exp, b_funcsModel->freeId(), randomFunctionColor(), c_results->analitza()->variables());
 	b_funcsModel->addPlot(curve);
 	
 	m_tabs->setCurrentIndex(1);
@@ -434,7 +428,7 @@ void KAlgebra::functools(int i)
 	if(i==0)
 		b_tools->setTabText(1, i18n("&Add"));
 	else {
-		b_funced->setName(freeId(b_funcsModel));
+		b_funced->setName(b_funcsModel->freeId());
 		b_funced->setColor(randomFunctionColor());
 		b_funced->setEditing(false);
 		b_funced->setFocus();

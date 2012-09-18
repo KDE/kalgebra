@@ -27,9 +27,9 @@ namespace Analitza {
 	class Expression;
 }
 
+class PlotsModel;
 class VariablesModel;
 class PluginsModel;
-class FunctionsModel;
 class AnalitzaWrapper;
 
 class KAlgebraMobile : public QObject
@@ -43,7 +43,7 @@ class KAlgebraMobile : public QObject
 		void notifyVariablesChanged() { variablesChanged(); }
 		
 	public slots:
-		FunctionsModel* functionsModel();
+		PlotsModel* functionsModel();
 		Analitza::Variables* variables() const;
 		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
 		
@@ -57,7 +57,7 @@ class KAlgebraMobile : public QObject
 	private:
 		static KAlgebraMobile* s_self;
 		
-		FunctionsModel* m_functionsModel;
+		PlotsModel* m_functionsModel;
 		Analitza::Variables* m_vars;
 };
 

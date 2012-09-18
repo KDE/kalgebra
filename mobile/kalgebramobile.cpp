@@ -19,8 +19,9 @@
 #include "kalgebramobile.h"
 
 #include <analitza/variables.h>
-#include <analitzagui/functionsmodel.h>
 #include <analitzagui/variablesmodel.h>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/planecurve.h>
 #include "analitzawrapper.h"
 
 #include <QDeclarativeContext>
@@ -39,18 +40,17 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	qmlRegisterType<PluginsModel>("org.kde.analitza", 1, 0, "PluginsModel");
 	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
 	qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
-	qmlRegisterType<FunctionsModel>("org.kde.analitza", 1, 0, "FunctionsModel");
+	qmlRegisterType<PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
 	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
 	qmlRegisterType<VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
 	qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 }
 
-FunctionsModel* KAlgebraMobile::functionsModel()
+PlotsModel* KAlgebraMobile::functionsModel()
 {
 	if(!m_functionsModel) {
-		m_functionsModel = new FunctionsModel(this);
-		m_functionsModel->setResolution(500);
+		m_functionsModel = new PlotsModel(this);
 		connect(m_functionsModel, SIGNAL(functionRemoved(QString)), SLOT(functionRemoved(QString)));
 		connect(m_functionsModel, SIGNAL(functionModified(QString,Analitza::Expression)), SLOT(functionModified(QString,Analitza::Expression)));
 	}
@@ -74,7 +74,7 @@ QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 225); }
 
 QStringList KAlgebraMobile::addFunction(const QString& expression, double up, double down)
 {
-	FunctionsModel* model=functionsModel();
+	PlotsModel* model=functionsModel();
 	
 	Analitza::Variables* vars = variables();
 	Analitza::Expression e(expression, Analitza::Expression::isMathML(expression));
@@ -85,13 +85,16 @@ QStringList KAlgebraMobile::addFunction(const QString& expression, double up, do
 	QColor fcolor = randomFunctionColor();
 	
 	QStringList err;
-	Function f(fname, e, vars, fcolor, up,down);
+	PlaneCurve* it = new PlaneCurve(e, fname, fcolor, m_vars);
+	if(up!=down)
+		it->setInterval(it->parameters().first(), down, up);
 	
-	if(f.isCorrect()) {
-		bool b = model->addFunction(f);
-		Q_ASSERT(b);
-	} else
-		err = f.errors();
+	if(it->isCorrect())
+		model->addPlot(it);
+	else {
+		err = it->errors();
+		delete it;
+	}
 	
 	return err;
 }

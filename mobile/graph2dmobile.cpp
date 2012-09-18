@@ -19,11 +19,10 @@
 #include "graph2dmobile.h"
 #include <QPainter>
 #include <qstyleoption.h>
-#include <analitzagui/functionsmodel.h>
 #include <QEvent>
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
-	: QDeclarativeItem(parent), FunctionsPainter(0, boundingRect().size())
+	: QDeclarativeItem(parent), Plotter2D(boundingRect().size(), 0)
 	, m_dirty(true), m_currentFunction(-1)
 {
 	setSize(QSizeF(100,100));
@@ -76,10 +75,10 @@ void Graph2DMobile::modelChanged()
 		this, SLOT(removeFuncs(const QModelIndex&, int, int)));
 }
 
-void Graph2DMobile::addFuncs(const QModelIndex&, int start, int end) { updateFunctions(model()->index(start,0), model()->index(end,0)); }
+void Graph2DMobile::addFuncs(const QModelIndex& parent, int start, int end) { updateFunctions(parent, start, end); }
 
 void Graph2DMobile::removeFuncs(const QModelIndex&, int, int) { forceRepaint(); }
-void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(start, end); }
+void Graph2DMobile::updateFuncs(const QModelIndex& start, const QModelIndex& end) { updateFunctions(QModelIndex(), start.row(), end.row()); }
 
 void Graph2DMobile::scale(qreal s, int x, int y)
 {

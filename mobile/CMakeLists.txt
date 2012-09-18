@@ -9,7 +9,7 @@ kde4_add_executable(kalgebramobile pluginsmodel.cpp graph2dmobile.cpp analitzawr
 	kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
-	${QT_QTGUI_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY})
+	${QT_QTGUI_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
 
 add_definitions("-DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
 
