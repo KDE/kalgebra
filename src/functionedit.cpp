@@ -86,8 +86,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
 	m_graph->setSquares(false);
-	m_graph->showHTicks(false);
-	m_graph->showVTicks(false);
+	m_graph->setTicksShown(Qt::Orientation(0));
 	
 	m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
 	QWidget *options=new QWidget(m_viewTabs);
