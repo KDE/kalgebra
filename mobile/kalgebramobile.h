@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QColor>
 
+class QModelIndex;
 namespace Analitza {
 	class Variables;
 	class Expression;
@@ -48,8 +49,9 @@ class KAlgebraMobile : public QObject
 		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
 		
 	private slots:
-		void functionRemoved(const QString& name);
-		void functionModified(const QString& name, const Analitza::Expression& exp);
+		void functionRemoved(const QModelIndex& parent, int start, int end);
+		void functionModified(const QModelIndex& idxA, const QModelIndex& idxB);
+        void functionInserted(const QModelIndex& parent, int start, int end);
 		
 	signals:
 		void variablesChanged();
