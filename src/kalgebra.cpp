@@ -25,7 +25,7 @@
 #include "viewportwidget.h"
 #include "functionedit.h"
 #ifdef HAVE_OPENGL
-#	include "graph3d.h"
+#	include <analitzaplot/plotsview3d.h>
 #endif
 
 #include <analitzagui/operatorsmodel.h>
@@ -282,7 +282,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_exp = new ExpressionEdit(tridim);
 	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
 	t_exp->setAns("x");
-	m_graph3d = new Graph3D(tridim);
+	t_model3d = new PlotsModel(this);
+	m_graph3d = new PlotsView3D(tridim);
+	m_graph3d->setModel(t_model3d);
 	
 	tridim->setLayout(t_layo);
 	m_tabs->addTab(tridim, i18n("&3D Graph"));
@@ -513,29 +515,34 @@ void KAlgebra::saveLog()
 void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setFunc(t_exp->expression());
-	m_graph3d->setFocus();
+	Analitza::Expression exp = t_exp->expression();
+	QStringList errors = FunctionGraph::canDraw(exp, Dim3D);
+	if(errors.isEmpty()) {
+		t_model3d->clear();
+		t_model3d->addPlot(new FunctionGraph(exp, Dim3D, "func3d", Qt::yellow, c_results->analitza()->variables()));
+	} else
+		changeStatusBar(i18n("Errors: %1", errors.join(i18n(", "))));
 #endif
 }
 
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setMethod(Graph3D::Dots);
+// 	m_graph3d->setMethod(PlotsView3D::Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setMethod(Graph3D::Lines);
+// 	m_graph3d->setMethod(PlotsView3D::Lines);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setMethod(Graph3D::Solid);
+// 	m_graph3d->setMethod(PlotsView3D::Solid);
 #endif
 }
 
@@ -544,14 +551,14 @@ void KAlgebra::save3DGraph()
 #ifdef HAVE_OPENGL
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty())
-		m_graph3d->toPixmap().save(path, "PNG");
+		m_graph3d->saveSnapshot(path);
 #endif
 }
 
 void KAlgebra::toggleTransparency()
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setTransparency(!m_graph3d->transparency());
+// 	m_graph3d->setTransparency(!m_graph3d->transparency());
 #endif
 }
 
@@ -674,7 +681,8 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 void KAlgebra::add3D(const Analitza::Expression& exp)
 {
 #ifdef HAVE_OPENGL
-	m_graph3d->setFunc(exp);
+	t_model3d->clear();
+	t_model3d->addPlot(new FunctionGraph(exp, Dim3D, "func3d", Qt::yellow, c_results->analitza()->variables()));
 	m_tabs->setCurrentIndex(2);
 #endif
 }

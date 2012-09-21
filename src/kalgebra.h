@@ -29,12 +29,12 @@
 #include <config-kalgebra.h>
 
 class PlotsView2D;
+class PlotsView3D;
 class PlotsModel;
 class ExpressionEdit;
 class ConsoleHtml;
 class VariablesModel;
 class FunctionEdit;
-class Graph3D;
 class KRecentFilesAction;
 
 namespace Analitza { class Expression; }
@@ -75,7 +75,8 @@ class KAlgebra : public KMainWindow
 		//graph 3d
 		QMenu* t_menu;
 		ExpressionEdit *t_exp;
-		Graph3D *m_graph3d;
+		PlotsView3D *m_graph3d;
+        PlotsModel* t_model3d;
 #endif
 		//Dictionary
 		QDockWidget *d_dock;
