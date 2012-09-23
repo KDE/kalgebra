@@ -22,6 +22,7 @@
 #include <analitzagui/variablesmodel.h>
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/planecurve.h>
+#include <analitzaplot/plotsfactory.h>
 #include "analitzawrapper.h"
 
 #include <QDeclarativeContext>
@@ -51,7 +52,7 @@ PlotsModel* KAlgebraMobile::functionsModel()
 {
 	if(!m_functionsModel) {
 		m_functionsModel = new PlotsModel(this);
-		connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QString)));
+		connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QModelIndex,int,int)));
 		connect(m_functionsModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(functionInserted(QModelIndex,int,int)));
 		connect(m_functionsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(functionModified(QModelIndex, QModelIndex)));
 	}
@@ -104,7 +105,8 @@ QStringList KAlgebraMobile::addFunction(const QString& expression, double up, do
 	QColor fcolor = randomFunctionColor();
 	
 	QStringList err;
-	PlaneCurve* it = new PlaneCurve(e, fname, fcolor, m_vars);
+	PlotBuilder req = PlotsFactory::self()->requestPlot(e, Dim2D);
+	PlaneCurve* it = static_cast<PlaneCurve*>(req.create(fcolor, fname, m_vars));
 	if(up!=down)
 		it->setInterval(it->parameters().first(), down, up);
 	

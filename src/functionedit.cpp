@@ -36,6 +36,7 @@
 #include <analitzaplot/planecurve.h>
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/plotsview2d.h>
+#include <analitzaplot/plotsfactory.h>
 
 namespace {
 	static const int resolution = 200;
@@ -53,7 +54,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_name = new KLineEdit(this);
 	
 	m_func = new ExpressionEdit(this);
-    m_func->setExamples(PlaneCurve::examples());
+    m_func->setExamples(PlotsFactory::self()->examples(Dim2D));
 	m_func->setAns("x");
 	connect(m_func, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));
@@ -259,8 +260,8 @@ void FunctionEdit::edit()
 	bool added = false;
 	
 	PlaneCurve* f = 0;
-	QStringList errors = PlaneCurve::canDraw(expression());
-	if(errors.isEmpty())
+	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D);
+	if(req.canDraw())
 		f = createFunction();
 	
 	if(f && f->isCorrect())
@@ -273,6 +274,7 @@ void FunctionEdit::edit()
 		setState(QString("%1:=%2")
 			.arg(m_name->text()).arg(f->expression().toString()), false);
 	} else {
+		QStringList errors = req.errors();
 		if(f)
 			errors = f->errors();
 		Q_ASSERT(!errors.isEmpty());
@@ -299,7 +301,8 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 
 PlaneCurve* FunctionEdit::createFunction() const
 {
-	PlaneCurve* curve = new PlaneCurve(expression(), name(), color(), m_vars);
+	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D);
+	PlaneCurve* curve = static_cast<PlaneCurve*>(req.create(color(), name(), m_vars));
 	if(m_calcUplimit != m_calcDownlimit) {
 		foreach(const QString& var, curve->parameters())
 			curve->setInterval(var, m_calcUplimit, m_calcDownlimit);

@@ -20,6 +20,9 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 #include <analitzagui/operatorsmodel.h>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/plotsview2d.h>
+#include <analitzaplot/plotsfactory.h>
 
 #include <QLabel>
 #include <QGroupBox>
@@ -28,9 +31,6 @@
 #include <QFormLayout>
 #include <KLocale>
 #include <QtMmlWidget>
-#include <analitzaplot/plotsmodel.h>
-#include <analitzaplot/plotsview2d.h>
-#include <analitzaplot/planecurve.h>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
@@ -118,7 +118,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
-		m_funcs->addPlot(new PlaneCurve(e, "func", QColor(0,150,0), m_vars));
+		m_funcs->addPlot(PlotsFactory::self()->requestPlot(e, Dim2D).create(QColor(0,150,0), "dict", m_vars));
 	} else {
 		QString error;
 		m_name->setText(QString());

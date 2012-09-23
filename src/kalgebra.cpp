@@ -55,6 +55,7 @@
 #include <KRecentFilesAction>
 #include <KApplication>
 #include <kabstractfilewidget.h>
+#include <analitzaplot/plotsfactory.h>
 
 class Add2DOption : public InlineOptions
 {
@@ -64,9 +65,8 @@ class Add2DOption : public InlineOptions
 		{}
 		
 		virtual QString id() const { return "add2d"; }
-		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
-		{
-			return FunctionGraph::canDraw(exp, Dim2D).isEmpty();
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const {
+			return PlotsFactory::self()->requestPlot(exp, Dim2D).canDraw();
 		}
 
 		virtual QString caption() const { return i18n("Plot 2D"); }
@@ -88,7 +88,7 @@ class Add3DOption : public InlineOptions
 		virtual QString id() const { return "add3d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
 		{
-			return FunctionGraph::canDraw(exp, Dim3D).isEmpty();
+			return PlotsFactory::self()->requestPlot(exp, Dim2D).canDraw();
 		}
 
 		virtual QString caption() const { return i18n("Plot 3D"); }
@@ -285,6 +285,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_model3d = new PlotsModel(this);
 	m_graph3d = new PlotsView3D(tridim);
 	m_graph3d->setModel(t_model3d);
+// 	m_graph3d->setBackgroundColor(Qt::black);
 	
 	tridim->setLayout(t_layo);
 	m_tabs->addTab(tridim, i18n("&3D Graph"));
@@ -292,7 +293,6 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_layo->addWidget(t_exp);
 	
 	connect(t_exp,  SIGNAL(returnPressed()), this, SLOT(new_func3d()));
-	connect(m_graph3d, SIGNAL(status(QString)), this, SLOT(changeStatusBar(QString)));
 	c_results->addOptionsObserver(new Add3DOption(this));
 	
 	////////menu
@@ -301,7 +301,6 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
 	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
-	t_menu->addSeparator()->setText(i18n("Type"));
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
 	t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
 	t_actions[4] = t_menu->addAction(i18n("Solid"), this, SLOT(set_solid()));
@@ -392,7 +391,8 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	PlaneCurve* curve = new PlaneCurve(exp, b_funcsModel->freeId(), randomFunctionColor(), c_results->analitza()->variables());
+	PlotItem* curve = PlotsFactory::self()->requestPlot(exp, Dim2D).create(randomFunctionColor(), b_funcsModel->freeId(),
+																		   c_results->analitza()->variables());
 	b_funcsModel->addPlot(curve);
 	
 	m_tabs->setCurrentIndex(1);
@@ -516,33 +516,36 @@ void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
 	Analitza::Expression exp = t_exp->expression();
-	QStringList errors = FunctionGraph::canDraw(exp, Dim3D);
-	if(errors.isEmpty()) {
+	PlotBuilder plot = PlotsFactory::self()->requestPlot(exp, Dim3D);
+	if(plot.canDraw()) {
 		t_model3d->clear();
-		t_model3d->addPlot(new FunctionGraph(exp, Dim3D, "func3d", Qt::yellow, c_results->analitza()->variables()));
+		t_model3d->addPlot(plot.create(Qt::yellow, "func3d", c_results->analitza()->variables()));
 	} else
-		changeStatusBar(i18n("Errors: %1", errors.join(i18n(", "))));
+		changeStatusBar(i18n("Errors: %1", plot.errors().join(i18n(", "))));
 #endif
 }
 
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-// 	m_graph3d->setMethod(PlotsView3D::Dots);
+	if(t_model3d->rowCount()>0)
+		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-// 	m_graph3d->setMethod(PlotsView3D::Lines);
+	if(t_model3d->rowCount()>0)
+		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Wired);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-// 	m_graph3d->setMethod(PlotsView3D::Solid);
+	if(t_model3d->rowCount()>0)
+		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Solid);
 #endif
 }
 
@@ -550,8 +553,9 @@ void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this, QString(), KFileDialog::ConfirmOverwrite);
-	if(!path.isEmpty())
-		m_graph3d->saveSnapshot(path);
+// 	if(!path.isEmpty())
+// 		m_graph3d->saveSnapshot(path);
+#warning TODO: port to the new viewer
 #endif
 }
 
@@ -682,7 +686,7 @@ void KAlgebra::add3D(const Analitza::Expression& exp)
 {
 #ifdef HAVE_OPENGL
 	t_model3d->clear();
-	t_model3d->addPlot(new FunctionGraph(exp, Dim3D, "func3d", Qt::yellow, c_results->analitza()->variables()));
+	t_model3d->addPlot(PlotsFactory::self()->requestPlot(exp, Dim3D).create(Qt::yellow, "func3d_console", c_results->analitza()->variables()));
 	m_tabs->setCurrentIndex(2);
 #endif
 }
