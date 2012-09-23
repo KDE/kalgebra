@@ -23,6 +23,7 @@
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/plotsview2d.h>
 #include <analitzaplot/plotsfactory.h>
+#include <analitzaplot/functiongraph.h>
 
 #include <QLabel>
 #include <QGroupBox>
