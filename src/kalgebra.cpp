@@ -528,24 +528,24 @@ void KAlgebra::new_func3d()
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-	if(t_model3d->rowCount()>0)
-		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Dots);
+// 	if(t_model3d->rowCount()>0)
+// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-	if(t_model3d->rowCount()>0)
-		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Wired);
+// 	if(t_model3d->rowCount()>0)
+// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Wired);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-	if(t_model3d->rowCount()>0)
-		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Solid);
+// 	if(t_model3d->rowCount()>0)
+// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Solid);
 #endif
 }
 
