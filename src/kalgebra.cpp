@@ -300,9 +300,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	////////menu
 	t_menu = menuBar()->addMenu(i18n("3D &Graph"));
 	QAction* t_actions[5];
-	t_actions[0] = t_menu->addAction(i18n("&Transparency"), this, SLOT(toggleTransparency()));
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
 	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
+	t_menu->addSeparator();
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
 	t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
 	t_actions[4] = t_menu->addAction(i18n("Solid"), this, SLOT(set_solid()));
@@ -312,7 +312,6 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_type->addAction(t_actions[3]);
 	t_type->addAction(t_actions[4]);
 	
-	t_actions[0]->setCheckable(true);
 	t_actions[2]->setCheckable(true);
 	t_actions[3]->setCheckable(true);
 	t_actions[4]->setCheckable(true);
@@ -530,24 +529,21 @@ void KAlgebra::new_func3d()
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-// 	if(t_model3d->rowCount()>0)
-// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Dots);
+    m_graph3d->setPlotStyle(Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-// 	if(t_model3d->rowCount()>0)
-// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Wired);
+    m_graph3d->setPlotStyle(Wired);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-// 	if(t_model3d->rowCount()>0)
-// 		m_graph3d->itemAt(0)->setPlotStyle(PlotItem::Solid);
+    m_graph3d->setPlotStyle(Solid);
 #endif
 }
 
@@ -555,16 +551,10 @@ void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
 	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this, QString(), KFileDialog::ConfirmOverwrite);
-// 	if(!path.isEmpty())
-// 		m_graph3d->saveSnapshot(path);
-#warning TODO: port to the new viewer
-#endif
-}
-
-void KAlgebra::toggleTransparency()
-{
-#ifdef HAVE_OPENGL
-// 	m_graph3d->setTransparency(!m_graph3d->transparency());
+	if(!path.isEmpty()) {
+		QPixmap px = m_graph3d->renderPixmap();
+		px.save(path);
+	}
 #endif
 }
 

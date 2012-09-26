@@ -113,7 +113,6 @@ class KAlgebra : public KMainWindow
 		void set_dots();
 		void set_lines();
 		void set_solid();
-		void toggleTransparency();
 		void save3DGraph();
 		
 		void saveGraph();
