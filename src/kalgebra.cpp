@@ -188,6 +188,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funcsModel=new PlotsModel(this);
 	
 	m_graph2d = new PlotsView2D(m_tabs);
+	m_graph2d->setTicksShown(0);
 	m_graph2d->setModel(b_funcsModel);
 	
 	b_dock_funcs = new QDockWidget(i18n("Functions"), this);
@@ -196,6 +197,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	addDockWidget(Qt::RightDockWidgetArea, b_dock_funcs);
 	
 	b_funcs = new QTreeView(b_tools);
+	b_funcs->setRootIsDecorated(false);
 	b_funcs->setModel(b_funcsModel);
 	b_funcs->header()->resizeSections(QHeaderView::ResizeToContents);
 	b_funcs->setSelectionMode(QAbstractItemView::SingleSelection);
