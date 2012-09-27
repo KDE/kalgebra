@@ -77,6 +77,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	connect(m_color, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChange(int)));
 	
 	m_funcsModel=new PlotsModel(this);
+    m_funcsModel->setResolution(resolution);
 	
 	m_viewTabs=new KTabWidget(this);
 	
@@ -303,6 +304,7 @@ PlaneCurve* FunctionEdit::createFunction() const
 {
 	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D);
 	PlaneCurve* curve = static_cast<PlaneCurve*>(req.create(color(), name(), m_vars));
+	curve->setResolution(resolution);
 	if(m_calcUplimit != m_calcDownlimit) {
 		foreach(const QString& var, curve->parameters())
 			curve->setInterval(var, m_calcUplimit, m_calcDownlimit);

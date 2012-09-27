@@ -102,10 +102,10 @@ class KAlgebra : public KMainWindow
 		void edit_var ( const QModelIndex & );
 		void toggleSquares();
 		void toggleKeepAspect();
-// 		void set_res_low();
-// 		void set_res_std();
-// 		void set_res_fine();
-// 		void set_res_vfine();
+		void set_res_low();
+		void set_res_std();
+		void set_res_fine();
+		void set_res_vfine();
 		void valueChanged();
 		void varsContextMenu(const QPoint&);
 		

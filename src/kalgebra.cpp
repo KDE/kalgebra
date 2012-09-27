@@ -274,7 +274,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_actions[3]->setChecked(true);
 	b_actions[4]->setCheckable(true);
 	b_actions[5]->setCheckable(true);
-// 	set_res_std();
+	set_res_std();
 	//////EO2D Graph
 	
 	/////3DGraph
@@ -508,10 +508,10 @@ void KAlgebra::saveLog()
 		c_results->saveLog(path);
 }
 
-// void KAlgebra::set_res_low()	{ b_funcsModel->setResolution(416); }
-// void KAlgebra::set_res_std()	{ b_funcsModel->setResolution(832); }
-// void KAlgebra::set_res_fine()	{ b_funcsModel->setResolution(1664);}
-// void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
+void KAlgebra::set_res_low()	{ b_funcsModel->setResolution(416); }
+void KAlgebra::set_res_std()	{ b_funcsModel->setResolution(832); }
+void KAlgebra::set_res_fine()	{ b_funcsModel->setResolution(1664);}
+void KAlgebra::set_res_vfine()	{ b_funcsModel->setResolution(3328);}
 
 void KAlgebra::new_func3d()
 {
