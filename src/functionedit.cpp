@@ -33,10 +33,12 @@
 #include <analitza/variables.h>
 #include <analitza/value.h>
 #include <analitzagui/algebrahighlighter.h>
+#include <analitzagui/plotsview2d.h>
 #include <analitzaplot/planecurve.h>
 #include <analitzaplot/plotsmodel.h>
-#include <analitzaplot/plotsview2d.h>
 #include <analitzaplot/plotsfactory.h>
+
+using namespace Analitza;
 
 namespace {
 	static const int resolution = 200;

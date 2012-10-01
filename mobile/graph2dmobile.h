@@ -23,7 +23,7 @@
 #include <QDeclarativeItem>
 #include <analitzaplot/plotter2d.h>
 
-class Graph2DMobile : public QDeclarativeItem, public Plotter2D
+class Graph2DMobile : public QDeclarativeItem, public Analitza::Plotter2D
 {
 	Q_OBJECT
 	Q_PROPERTY(QAbstractItemModel* model READ model WRITE setModel);

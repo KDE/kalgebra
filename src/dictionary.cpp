@@ -20,8 +20,8 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 #include <analitzagui/operatorsmodel.h>
+#include <analitzagui/plotsview2d.h>
 #include <analitzaplot/plotsmodel.h>
-#include <analitzaplot/plotsview2d.h>
 #include <analitzaplot/plotsfactory.h>
 #include <analitzaplot/functiongraph.h>
 
@@ -55,8 +55,8 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 // 	m_formula->setFrameStyle(2);
 	m_formula->setBaseFontPointSize(10);
 	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_funcs=new PlotsModel(descr);
-	m_graph=new PlotsView2D(descr);
+	m_funcs=new Analitza::PlotsModel(descr);
+	m_graph=new Analitza::PlotsView2D(descr);
 	m_graph->setTicksShown(0);
 	m_graph->setModel(m_funcs);
 	m_graph->setReadOnly(true);
@@ -120,7 +120,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
-		m_funcs->addPlot(PlotsFactory::self()->requestPlot(e, Dim2D).create(QColor(0,150,0), "dict", m_vars));
+		m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D).create(QColor(0,150,0), "dict", m_vars));
 	} else {
 		QString error;
 		m_name->setText(QString());

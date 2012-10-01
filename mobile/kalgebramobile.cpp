@@ -29,6 +29,8 @@
 #include "graph2dmobile.h"
 #include "pluginsmodel.h"
 
+using namespace Analitza;
+
 KAlgebraMobile* KAlgebraMobile::s_self=0;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
 
@@ -41,17 +43,18 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	qmlRegisterType<PluginsModel>("org.kde.analitza", 1, 0, "PluginsModel");
 	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
 	qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
-	qmlRegisterType<PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
+	qmlRegisterType<Analitza::PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
 	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
 	qmlRegisterType<VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
 	qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
+	qmlRegisterType<QAbstractItemModel>();
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 }
 
 PlotsModel* KAlgebraMobile::functionsModel()
 {
 	if(!m_functionsModel) {
-		m_functionsModel = new PlotsModel(this);
+		m_functionsModel = new Analitza::PlotsModel(this);
 		connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QModelIndex,int,int)));
 		connect(m_functionsModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(functionInserted(QModelIndex,int,int)));
 		connect(m_functionsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(functionModified(QModelIndex, QModelIndex)));

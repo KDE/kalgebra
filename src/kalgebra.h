@@ -28,9 +28,12 @@
 #include <QListView>
 #include <config-kalgebra.h>
 
+namespace Analitza {
 class PlotsView2D;
 class PlotsView3D;
 class PlotsModel;
+}
+
 class ExpressionEdit;
 class ConsoleHtml;
 class VariablesModel;
@@ -63,10 +66,10 @@ class KAlgebra : public KMainWindow
 		
 		//graf 2d
 		QMenu* b_menu;
-		PlotsModel* b_funcsModel;
+		Analitza::PlotsModel* b_funcsModel;
 		QTreeView *b_funcs;
 		QTabWidget *b_tools;
-		PlotsView2D *m_graph2d;
+		Analitza::PlotsView2D *m_graph2d;
 		QDockWidget *b_dock_funcs;
 		FunctionEdit *b_funced;
 		VariablesModel* b_varsModel;
@@ -75,8 +78,8 @@ class KAlgebra : public KMainWindow
 		//graph 3d
 		QMenu* t_menu;
 		ExpressionEdit *t_exp;
-		PlotsView3D *m_graph3d;
-        PlotsModel* t_model3d;
+		Analitza::PlotsView3D *m_graph3d;
+        Analitza::PlotsModel* t_model3d;
 #endif
 		//Dictionary
 		QDockWidget *d_dock;

@@ -25,13 +25,13 @@
 #include "viewportwidget.h"
 #include "functionedit.h"
 #ifdef HAVE_OPENGL
-#	include <analitzaplot/plotsview3d.h>
+#	include <analitzagui//plotsview3d.h>
 #endif
 
 #include <analitzagui/operatorsmodel.h>
 #include <analitzagui/expressionedit.h>
 #include <analitzagui/variablesmodel.h>
-#include <analitzaplot/plotsview2d.h>
+#include <analitzagui/plotsview2d.h>
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/functiongraph.h>
 #include <analitzaplot/planecurve.h>
@@ -66,7 +66,7 @@ class Add2DOption : public InlineOptions
 		
 		virtual QString id() const { return "add2d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const {
-			return PlotsFactory::self()->requestPlot(exp, Dim2D).canDraw();
+			return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).canDraw();
 		}
 
 		virtual QString caption() const { return i18n("Plot 2D"); }
@@ -88,7 +88,7 @@ class Add3DOption : public InlineOptions
 		virtual QString id() const { return "add3d"; }
 		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
 		{
-			return PlotsFactory::self()->requestPlot(exp, Dim2D).canDraw();
+			return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).canDraw();
 		}
 
 		virtual QString caption() const { return i18n("Plot 3D"); }
@@ -185,9 +185,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	//////EOConsola
 	
 	//////2D Graph
-	b_funcsModel=new PlotsModel(this);
+	b_funcsModel=new Analitza::PlotsModel(this);
 	
-	m_graph2d = new PlotsView2D(m_tabs);
+	m_graph2d = new Analitza::PlotsView2D(m_tabs);
 	m_graph2d->setTicksShown(0);
 	m_graph2d->setModel(b_funcsModel);
 	
@@ -284,8 +284,8 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_exp = new ExpressionEdit(tridim);
 	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
 	t_exp->setAns("x");
-	t_model3d = new PlotsModel(this);
-	m_graph3d = new PlotsView3D(tridim);
+	t_model3d = new Analitza::PlotsModel(this);
+	m_graph3d = new Analitza::PlotsView3D(tridim);
 	m_graph3d->setModel(t_model3d);
 // 	m_graph3d->setBackgroundColor(Qt::black);
 	
@@ -392,7 +392,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	PlotItem* curve = PlotsFactory::self()->requestPlot(exp, Dim2D).create(randomFunctionColor(), b_funcsModel->freeId(),
+	Analitza::PlotItem* curve = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).create(randomFunctionColor(), b_funcsModel->freeId(),
 																		   c_results->analitza()->variables());
 	b_funcsModel->addPlot(curve);
 	
@@ -401,7 +401,7 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 
 void KAlgebra::new_func()
 {
-	FunctionGraph* f=b_funced->createFunction();
+	Analitza::FunctionGraph* f=b_funced->createFunction();
 	
 	if(b_funced->editing()) {
 		QModelIndex idx = b_funcsModel->indexForName(f->name());
@@ -517,7 +517,7 @@ void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
 	Analitza::Expression exp = t_exp->expression();
-	PlotBuilder plot = PlotsFactory::self()->requestPlot(exp, Dim3D);
+	Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D);
 	if(plot.canDraw()) {
 		t_model3d->clear();
 		t_model3d->addPlot(plot.create(Qt::yellow, "func3d", c_results->analitza()->variables()));
@@ -529,21 +529,21 @@ void KAlgebra::new_func3d()
 void KAlgebra::set_dots()
 {
 #ifdef HAVE_OPENGL
-    m_graph3d->setPlotStyle(Dots);
+    m_graph3d->setPlotStyle(Analitza::Dots);
 #endif
 }
 
 void KAlgebra::set_lines()
 {
 #ifdef HAVE_OPENGL
-    m_graph3d->setPlotStyle(Wired);
+    m_graph3d->setPlotStyle(Analitza::Wired);
 #endif
 }
 
 void KAlgebra::set_solid()
 {
 #ifdef HAVE_OPENGL
-    m_graph3d->setPlotStyle(Solid);
+    m_graph3d->setPlotStyle(Analitza::Solid);
 #endif
 }
 
@@ -579,7 +579,7 @@ void KAlgebra::saveGraph()
 		QString filename = dialog->selectedFile();
 		
 		bool isSvg = filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg");
-		PlotsView2D::Format f = isSvg ? PlotsView2D::PNG : PlotsView2D::SVG;
+		Analitza::PlotsView2D::Format f = isSvg ? Analitza::PlotsView2D::PNG : Analitza::PlotsView2D::SVG;
 		m_graph2d->toImage(filename, f);
 	}
 	delete dialog;
@@ -678,7 +678,7 @@ void KAlgebra::add3D(const Analitza::Expression& exp)
 {
 #ifdef HAVE_OPENGL
 	t_model3d->clear();
-	t_model3d->addPlot(PlotsFactory::self()->requestPlot(exp, Dim3D).create(Qt::yellow, "func3d_console", c_results->analitza()->variables()));
+	t_model3d->addPlot(Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).create(Qt::yellow, "func3d_console", c_results->analitza()->variables()));
 	m_tabs->setCurrentIndex(2);
 #endif
 }

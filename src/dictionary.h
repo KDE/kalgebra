@@ -22,11 +22,11 @@
 #include <QWidget>
 #include <QSortFilterProxyModel>
 
-class PlotsView2D;
-class PlotsModel;
 namespace Analitza
 {
 class Variables;
+class PlotsView2D;
+class PlotsModel;
 }
 
 class QLabel;
@@ -57,8 +57,8 @@ Q_OBJECT
 		QLabel *m_example;
 		
 		QtMmlWidget* m_formula;
-		PlotsView2D *m_graph;
-		PlotsModel *m_funcs;
+		Analitza::PlotsView2D *m_graph;
+		Analitza::PlotsModel *m_funcs;
 		OperatorsModel *m_ops;
 		Analitza::Variables* m_vars;
 		QSortFilterProxyModel *m_sortProxy;
