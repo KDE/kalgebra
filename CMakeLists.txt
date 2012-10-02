@@ -6,7 +6,6 @@ set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 find_package(Analitza REQUIRED)
 macro_optional_find_package(LibKdeEdu)
-find_library(QGLVIEWER_LIBRARY NAMES qglviewer-qt4 QGLViewer)
 find_library(QTMML_LIBRARY qtmmlwidget)
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml ${ANALITZA_INCLUDE_DIR})

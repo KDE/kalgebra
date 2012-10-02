@@ -29,7 +29,7 @@ kde4_add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
 
 if(OPENGL_FOUND)
-   target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${QGLVIEWER_LIBRARY})
+   target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
 endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
