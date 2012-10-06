@@ -287,7 +287,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_model3d = new Analitza::PlotsModel(this);
 	m_graph3d = new Analitza::PlotsView3D(tridim);
 	m_graph3d->setModel(t_model3d);
-// 	m_graph3d->setBackgroundColor(Qt::black);
+	m_graph3d->setUseSimpleRotation(true);
 	
 	tridim->setLayout(t_layo);
 	m_tabs->addTab(tridim, i18n("&3D Graph"));
