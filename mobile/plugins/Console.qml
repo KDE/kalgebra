@@ -10,7 +10,10 @@ KAlgebraPage
 		id: input
 		focus: true
 		
-		Analitza { id: a }
+		Analitza {
+			id: a
+			variables: app.variables
+		}
 		
 		Keys.onReturnPressed: {
 			var res = a.execute(text)

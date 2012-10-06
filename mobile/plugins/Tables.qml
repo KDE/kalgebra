@@ -5,7 +5,10 @@ import widgets 1.0
 KAlgebraPage
 {
 	ListModel { id: resultsModel }
-	Analitza { id: a }
+	Analitza {
+		id: a
+		variables: app.variables
+	}
 	
 	function calculateTable() {
 		resultsModel.clear();

@@ -28,8 +28,8 @@ void AnalitzaDeclarativePlugin::registerTypes(const char* uri)
 {
     qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
     qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
+	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
     qmlRegisterType<Analitza::PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
-    qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
-    qmlRegisterType<VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
+    qmlRegisterType<Analitza::VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
     qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
 }

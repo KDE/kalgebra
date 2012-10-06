@@ -18,13 +18,11 @@
 
 #include "kalgebramobile.h"
 
-#include <analitza/variables.h>
-#include <analitzagui/variablesmodel.h>
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/planecurve.h>
 #include <analitzaplot/plotsfactory.h>
+#include <analitza/variables.h>
 
-#include <QDeclarativeContext>
 #include <qdeclarative.h>
 #include "pluginsmodel.h"
 
@@ -41,7 +39,6 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	
 	qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
 	qmlRegisterType<QAbstractItemModel>();
-// 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 }
 
 PlotsModel* KAlgebraMobile::functionsModel()
