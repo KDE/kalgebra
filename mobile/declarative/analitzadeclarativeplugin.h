@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2012 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,46 +16,16 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRAMOBILE_H
-#define KALGEBRAMOBILE_H
+#ifndef ANALITZADECLARATIVEPLUGIN_H
+#define ANALITZADECLARATIVEPLUGIN_H
 
-#include <QObject>
-#include <QColor>
+#include <QDeclarativeExtensionPlugin>
 
-class QModelIndex;
-namespace Analitza {
-	class Variables;
-	class PlotsModel;
-}
-
-class KAlgebraMobile : public QObject
+class AnalitzaDeclarativePlugin : public QDeclarativeExtensionPlugin
 {
-	Q_OBJECT
-	Q_PROPERTY(Analitza::Variables* variables READ variables NOTIFY variablesChanged)
-	public:
-		explicit KAlgebraMobile(QObject* parent=0);
-		
-		static KAlgebraMobile* self();
-		void notifyVariablesChanged() { variablesChanged(); }
-		
-	public slots:
-		Analitza::PlotsModel* functionsModel();
-		Analitza::Variables* variables() const;
-		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
-		
-	private slots:
-		void functionRemoved(const QModelIndex& parent, int start, int end);
-		void functionModified(const QModelIndex& idxA, const QModelIndex& idxB);
-        void functionInserted(const QModelIndex& parent, int start, int end);
-		
-	signals:
-		void variablesChanged();
-		
-	private:
-		static KAlgebraMobile* s_self;
-		
-		Analitza::PlotsModel* m_functionsModel;
-		Analitza::Variables* m_vars;
+    virtual void registerTypes(const char* uri);
 };
 
-#endif // KALGEBRAMOBILE_H
+Q_EXPORT_PLUGIN2(analitzadeclarativeplugin, AnalitzaDeclarativePlugin);
+
+#endif // ANALITZADECLARATIVEPLUGIN_H

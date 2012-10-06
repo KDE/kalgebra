@@ -23,10 +23,9 @@
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/planecurve.h>
 #include <analitzaplot/plotsfactory.h>
-#include "analitzawrapper.h"
 
 #include <QDeclarativeContext>
-#include "graph2dmobile.h"
+#include <qdeclarative.h>
 #include "pluginsmodel.h"
 
 using namespace Analitza;
@@ -40,13 +39,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
 	Q_ASSERT(s_self==0);
 	s_self=this;
 	
-	qmlRegisterType<PluginsModel>("org.kde.analitza", 1, 0, "PluginsModel");
-	qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
-	qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
-	qmlRegisterType<Analitza::PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
-	qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
-	qmlRegisterType<Analitza::VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
-	qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
+	qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
 	qmlRegisterType<QAbstractItemModel>();
 // 	global.setProperty("VariablesModel", varsmodel, QScriptValue::Undeletable|QScriptValue::ReadOnly);
 }

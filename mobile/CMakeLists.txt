@@ -1,3 +1,4 @@
+add_subdirectory(declarative)
 add_subdirectory(plugins)
 
 if(${MOBILE_BACKEND} STREQUAL "kde")
@@ -5,7 +6,7 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
 endif(${MOBILE_BACKEND} STREQUAL "kde")
 
 qt4_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
-kde4_add_executable(kalgebramobile pluginsmodel.cpp graph2dmobile.cpp analitzawrapper.cpp
+kde4_add_executable(kalgebramobile pluginsmodel.cpp
 	kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile ${KDE4_KDECORE_LIBS} ${QT_QTDECLARATIVE_LIBRARY}

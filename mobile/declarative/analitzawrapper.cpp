@@ -24,7 +24,6 @@
 #include <analitzagui/variablesmodel.h>
 
 #include <QVariant>
-#include "kalgebramobile.h"
 
 Q_DECLARE_METATYPE(ExpressionWrapper*);
 
@@ -49,11 +48,34 @@ QStringList ExpressionWrapper::errors() const { return m_exp.error(); }
 
 AnalitzaWrapper::AnalitzaWrapper(QObject* parent)
 	: QObject(parent)
-	, m_wrapped(new Analitza::Analyzer(KAlgebraMobile::self()->variables())), m_calc(false)
-{}
+	, m_wrapped(0), m_calc(false)
+{
+	initWrapped();
+}
+
+void AnalitzaWrapper::initWrapped()
+{
+	if(!m_wrapped) {
+		if(m_vars)
+			m_wrapped = new Analitza::Analyzer(m_vars);
+		else {
+			m_wrapped = new Analitza::Analyzer;
+			m_vars = m_wrapped->variables();
+		}
+	}
+}
+
+void AnalitzaWrapper::setVariables(Analitza::Variables* v)
+{
+	delete m_wrapped;
+	m_wrapped = 0;
+	m_vars = v;
+	initWrapped();
+}
 
 QVariant AnalitzaWrapper::execute(const QString& expression)
 {
+	initWrapped();
 	Analitza::Expression e(expression, false);
 	if(!e.isCorrect()) {
 		return e.error();
@@ -69,14 +91,12 @@ QVariant AnalitzaWrapper::execute(const QString& expression)
 	if(!m_wrapped->isCorrect())
 		return QVariant();
 	
-	KAlgebraMobile::self()->notifyVariablesChanged();
-	
 	return qVariantFromValue(new ExpressionWrapper(res));
 }
 
 QVariant AnalitzaWrapper::executeFunc(const QString& name, const QVariantList& args)
 {
-	if(!m_wrapped->variables()->contains(name))
+	if(m_vars && !m_vars->contains(name))
 		return QVariant();
 	
 	QStack<Analitza::Object*> stack;
@@ -106,7 +126,6 @@ QString AnalitzaWrapper::dependenciesToLambda(const QString& expression) const
 void AnalitzaWrapper::insertVariable(const QString& name, const QString& expression) const
 {
 	m_wrapped->insertVariable(name, Analitza::Expression(expression, false));
-	KAlgebraMobile::self()->notifyVariablesChanged();
 }
 
 QString AnalitzaWrapper::unusedVariableName() const
@@ -114,8 +133,7 @@ QString AnalitzaWrapper::unusedVariableName() const
 	QString candidate;
 	char curr='a';
 	
-	Analitza::Variables* v = m_wrapped->variables();
-	for(candidate=curr; v->contains(candidate); ) {
+	for(candidate=curr; m_vars->contains(candidate); ) {
 		curr+=1;
 		if(curr>'z')
 			curr='a';
@@ -130,8 +148,7 @@ QString AnalitzaWrapper::unusedVariableName() const
 
 void AnalitzaWrapper::removeVariable(const QString& name)
 {
-	m_wrapped->variables()->remove(name);
-	KAlgebraMobile::self()->notifyVariablesChanged();
+	m_vars->remove(name);
 }
 
 bool AnalitzaWrapper::isCorrect() const { return m_wrapped->isCorrect(); }

@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2012 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,46 +16,20 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KALGEBRAMOBILE_H
-#define KALGEBRAMOBILE_H
+#include "analitzadeclarativeplugin.h"
+#include "analitzawrapper.h"
+#include <analitzaplot/plotsmodel.h>
+#include <analitzagui/variablesmodel.h>
+#include <analitza/variables.h>
+#include <graph2dmobile.h>
+#include <QtDeclarative/QDeclarativeItem>
 
-#include <QObject>
-#include <QColor>
-
-class QModelIndex;
-namespace Analitza {
-	class Variables;
-	class PlotsModel;
-}
-
-class KAlgebraMobile : public QObject
+void AnalitzaDeclarativePlugin::registerTypes(const char* uri)
 {
-	Q_OBJECT
-	Q_PROPERTY(Analitza::Variables* variables READ variables NOTIFY variablesChanged)
-	public:
-		explicit KAlgebraMobile(QObject* parent=0);
-		
-		static KAlgebraMobile* self();
-		void notifyVariablesChanged() { variablesChanged(); }
-		
-	public slots:
-		Analitza::PlotsModel* functionsModel();
-		Analitza::Variables* variables() const;
-		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
-		
-	private slots:
-		void functionRemoved(const QModelIndex& parent, int start, int end);
-		void functionModified(const QModelIndex& idxA, const QModelIndex& idxB);
-        void functionInserted(const QModelIndex& parent, int start, int end);
-		
-	signals:
-		void variablesChanged();
-		
-	private:
-		static KAlgebraMobile* s_self;
-		
-		Analitza::PlotsModel* m_functionsModel;
-		Analitza::Variables* m_vars;
-};
-
-#endif // KALGEBRAMOBILE_H
+    qmlRegisterType<AnalitzaWrapper>("org.kde.analitza", 1, 0, "Analitza");
+    qmlRegisterType<ExpressionWrapper>("org.kde.analitza", 1, 0, "Expression");
+    qmlRegisterType<Analitza::PlotsModel>("org.kde.analitza", 1, 0, "PlotsModel");
+    qmlRegisterType<Graph2DMobile>("org.kde.analitza", 1, 0, "Graph2DView");
+    qmlRegisterType<VariablesModel>("org.kde.analitza", 1, 0, "VariablesModel");
+    qmlRegisterInterface<Analitza::Variables*>("Analitza::Variables");
+}

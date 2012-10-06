@@ -1,6 +1,7 @@
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import org.kde.analitza 1.0
+import org.kde.kalgebra.mobile 1.0
 import QtQuick 1.1
 
 PageStackWindow

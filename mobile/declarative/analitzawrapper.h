@@ -54,6 +54,7 @@ class AnalitzaWrapper : public QObject
 	Q_PROPERTY(bool calculate READ isCalculate WRITE setCalculate)
 	Q_PROPERTY(bool isCorrect READ isCorrect)
 	Q_PROPERTY(QStringList errors READ errors)
+	Q_PROPERTY(Analitza::Variables* variables READ variables WRITE setVariables)
 	public:
 		explicit AnalitzaWrapper(QObject* parent = 0);
 		
@@ -71,8 +72,15 @@ class AnalitzaWrapper : public QObject
 		
 		QStringList errors() const;
 		bool isCorrect() const;
+		
+		Analitza::Variables* variables() const { return m_vars; }
+		void setVariables(Analitza::Variables* v);
+		
 	private:
+		void initWrapped();
+		
 		Analitza::Analyzer* m_wrapped;
+		Analitza::Variables* m_vars;
 		bool m_calc;
 };
 
