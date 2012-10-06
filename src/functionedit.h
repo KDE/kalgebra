@@ -28,15 +28,14 @@
 #include <KLineEdit>
 
 class KTabWidget;
-class ExpressionEdit;
 namespace Analitza
 {
 class Variables;
 class Expression;
 class PlotsView2D;
-class FunctionGraph;
 class PlotsModel;
 class PlaneCurve;
+class ExpressionEdit;
 }
 
 /**
@@ -109,8 +108,8 @@ private:
 	void setState(const QString& text, bool negative);
 	void focusInEvent(QFocusEvent*);
 	
-	ExpressionEdit *m_func;
-	ExpressionEdit *m_uplimit, *m_downlimit;
+	Analitza::ExpressionEdit *m_func;
+	Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
 	double m_calcUplimit, m_calcDownlimit;
 	KLineEdit *m_name;
 	QPushButton *m_ok;

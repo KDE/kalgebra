@@ -32,11 +32,11 @@ namespace Analitza {
 class PlotsView2D;
 class PlotsView3D;
 class PlotsModel;
+class VariablesModel;
+class ExpressionEdit;
 }
 
-class ExpressionEdit;
 class ConsoleHtml;
-class VariablesModel;
 class FunctionEdit;
 class KRecentFilesAction;
 
@@ -58,11 +58,11 @@ class KAlgebra : public KMainWindow
 		//consoleeWidget
 		QMenu* c_menu;
 		KRecentFilesAction* c_recentScripts;
-		ExpressionEdit *c_exp;
+		Analitza::ExpressionEdit *c_exp;
 		ConsoleHtml *c_results;
 		QTreeView *c_variables;
 		QDockWidget *c_dock_vars;
-		VariablesModel* c_varsModel;
+		Analitza::VariablesModel* c_varsModel;
 		
 		//graf 2d
 		QMenu* b_menu;
@@ -72,12 +72,12 @@ class KAlgebra : public KMainWindow
 		Analitza::PlotsView2D *m_graph2d;
 		QDockWidget *b_dock_funcs;
 		FunctionEdit *b_funced;
-		VariablesModel* b_varsModel;
+		Analitza::VariablesModel* b_varsModel;
 
 #ifdef HAVE_OPENGL
 		//graph 3d
 		QMenu* t_menu;
-		ExpressionEdit *t_exp;
+		Analitza::ExpressionEdit *t_exp;
 		Analitza::PlotsView3D *m_graph3d;
         Analitza::PlotsModel* t_model3d;
 #endif

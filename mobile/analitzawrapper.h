@@ -23,8 +23,10 @@
 #include <QVariant>
 #include <analitza/expression.h>
 
-class VariablesModel;
-namespace Analitza { class Analyzer; }
+namespace Analitza {
+	class Analyzer;
+	class Variables;
+}
 
 class ExpressionWrapper : public QObject
 {

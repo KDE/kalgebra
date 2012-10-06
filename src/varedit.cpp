@@ -46,7 +46,7 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
 	connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
 	
-	m_exp = new ExpressionEdit(widget);
+	m_exp = new Analitza::ExpressionEdit(widget);
 	connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_exp, SIGNAL(returnPressed()), this, SLOT(ok()));
 	

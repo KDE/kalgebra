@@ -129,7 +129,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
 	addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
 	
-	c_varsModel=new VariablesModel(c_results->analitza()->variables());
+	c_varsModel=new Analitza::VariablesModel(c_results->analitza()->variables());
 	c_varsModel->setEditable(false);
 	
 	c_variables = new QTreeView(c_dock_vars);
@@ -139,7 +139,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	c_variables->setSelectionBehavior(QAbstractItemView::SelectRows);
 	c_variables->setSelectionMode(QAbstractItemView::SingleSelection);
 	
-	c_exp = new ExpressionEdit(console);
+	c_exp = new Analitza::ExpressionEdit(console);
 	c_exp->setAnalitza(c_results->analitza());
 	c_exp->setExamples(QStringList() << "square:=x->x**2" << "fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }");
 	c_dock_vars->setWidget(c_variables);
@@ -211,7 +211,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
 	QTableView* b_varsView=new QTableView(b_tools);
-	b_varsModel=new VariablesModel(b_funced->variables());
+	b_varsModel=new Analitza::VariablesModel(b_funced->variables());
 	b_varsView->setModel(b_varsModel);
 	b_varsView->setShowGrid(false);
 	b_varsView->verticalHeader()->hide();
@@ -281,7 +281,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 #ifdef HAVE_OPENGL
 	QWidget *tridim = new QWidget(m_tabs);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
-	t_exp = new ExpressionEdit(tridim);
+	t_exp = new Analitza::ExpressionEdit(tridim);
 	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
 	t_exp->setAns("x");
 	t_model3d = new Analitza::PlotsModel(this);

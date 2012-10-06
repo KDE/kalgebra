@@ -31,8 +31,8 @@ namespace Analitza
 class Analyzer;
 class Variables;
 class Expression;
-}
 class ExpressionEdit;
+}
 
 /**
  *	The VarEdit provides a dialog to allow users to edit/create a variable.
@@ -56,7 +56,7 @@ class VarEdit : public KDialog
 		Analitza::Expression val();
 		
 	private:
-		ExpressionEdit *m_exp;
+		Analitza::ExpressionEdit *m_exp;
 		
 		QLabel *m_valid;
 		Analitza::Variables *vars;
