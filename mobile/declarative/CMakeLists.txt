@@ -11,3 +11,8 @@ target_link_libraries(analitzadeclarativeplugin ${QT_QTCORE_LIBRARY} ${QT_QTGUI_
 
 install(TARGETS analitzadeclarativeplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/analitza)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/analitza)
+
+install( FILES
+        qml/Graph2D.qml
+        DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/analitza
+)

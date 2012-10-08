@@ -41,7 +41,6 @@ class KAlgebraMobile : public QObject
 	public slots:
 		Analitza::PlotsModel* functionsModel();
 		Analitza::Variables* variables() const;
-		QStringList addFunction(const QString& expression, double up = 0., double down = 0.);
 		
 	private slots:
 		void functionRemoved(const QModelIndex& parent, int start, int end);

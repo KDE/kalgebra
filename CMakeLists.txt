@@ -26,7 +26,7 @@ set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mob
 if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
   add_subdirectory(doc)
   add_subdirectory(src)
-  add_subdirectory(plasmoid)
+  add_subdirectory(plasmoids)
 endif(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
 add_subdirectory(icons)
 add_subdirectory(utils)

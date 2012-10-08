@@ -23,14 +23,19 @@
 #include <QDeclarativeItem>
 #include <analitzaplot/plotter2d.h>
 
+namespace Analitza {
+class Variables;
+}
+
 class Graph2DMobile : public QDeclarativeItem, public Analitza::Plotter2D
 {
 	Q_OBJECT
-	Q_PROPERTY(QAbstractItemModel* model READ model WRITE setModel);
-	Q_PROPERTY(QRectF viewport READ lastViewport WRITE setViewport);
-	Q_PROPERTY(bool squares READ squares WRITE setSquares);
-	Q_PROPERTY(bool keepAspectRatio READ keepAspectRatio WRITE setKeepAspectRatio);
-	Q_PROPERTY(int currentFunction READ currentFunction WRITE setCurrentFunction)
+	Q_PROPERTY(QAbstractItemModel* model READ model WRITE setModel)
+	Q_PROPERTY(QRectF viewport READ lastViewport WRITE setViewport)
+	Q_PROPERTY(bool squares READ squares WRITE setSquares)
+	Q_PROPERTY(bool keepAspectRatio READ keepAspectRatio WRITE setKeepAspectRatio)
+	Q_PROPERTY(bool currentFunction READ currentFunction WRITE setCurrentFunction)
+	Q_PROPERTY(bool ticksShown READ ticksShownAtAll WRITE setTicksShownAtAll)
 	public:
 		Graph2DMobile(QDeclarativeItem* parent = 0);
 		
@@ -42,11 +47,14 @@ class Graph2DMobile : public QDeclarativeItem, public Analitza::Plotter2D
 		virtual void paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* w);
 		
 		void setCurrentFunction(int f) { m_currentFunction = f; }
+		bool ticksShownAtAll() const { return ticksShown()!=0; }
+		void setTicksShownAtAll(bool shown) { setTicksShown(shown ? Qt::Vertical|Qt::Horizontal : Qt::Orientations(0));}
 		
 	public slots:
 		void translate(qreal x, qreal y);
 		void scale(qreal s, int x, int y);
 		void resetViewport();
+		QStringList addFunction(const QString& expression, Analitza::Variables* vars=0);
 		
 	private slots:
 		void updateFuncs(const QModelIndex& start, const QModelIndex& end);

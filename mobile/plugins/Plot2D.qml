@@ -19,7 +19,7 @@ KAlgebraPage
 			focus: true
 			Component.onCompleted: selectAll()
 			
-			Keys.onReturnPressed: app.addFunction(input.text)
+			Keys.onReturnPressed: view.addFunction(input.text, app.variables)
 		}
 		
 		Button {
@@ -35,11 +35,20 @@ KAlgebraPage
 		}
 	}
 	
-	Graph2D {
-		id: view
+	
+	Rectangle {
+		width: parent.width
 		anchors {
 			fill: parent
 			topMargin: controls.height
+		}
+		height: 200
+		color: 'white'
+	
+		Graph2D {
+			id: view
+			anchors.fill: parent
+			model: app.functionsModel()
 		}
 	}
 }

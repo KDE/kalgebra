@@ -19,9 +19,8 @@
 #include "kalgebramobile.h"
 
 #include <analitzaplot/plotsmodel.h>
-#include <analitzaplot/planecurve.h>
-#include <analitzaplot/plotsfactory.h>
 #include <analitza/variables.h>
+#include <analitza/expression.h>
 
 #include <qdeclarative.h>
 #include "pluginsmodel.h"
@@ -82,34 +81,3 @@ void KAlgebraMobile::functionModified(const QModelIndex& idxA, const QModelIndex
 }
 
 Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }
-
-QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 225); }
-
-QStringList KAlgebraMobile::addFunction(const QString& expression, double up, double down)
-{
-	PlotsModel* model=functionsModel();
-	
-	Analitza::Variables* vars = variables();
-	Analitza::Expression e(expression, Analitza::Expression::isMathML(expression));
-	QString fname;
-	do {
-		fname = model->freeId();
-	} while(vars->contains(fname));
-	QColor fcolor = randomFunctionColor();
-	
-	QStringList err;
-	PlotBuilder req = PlotsFactory::self()->requestPlot(e, Dim2D);
-	PlaneCurve* it = static_cast<PlaneCurve*>(req.create(fcolor, fname, m_vars));
-	if(up!=down)
-		it->setInterval(it->parameters().first(), down, up);
-	
-	if(it->isCorrect())
-		model->addPlot(it);
-	else {
-		err = it->errors();
-		delete it;
-	}
-	
-	return err;
-}
-

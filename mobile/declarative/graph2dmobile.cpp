@@ -18,8 +18,15 @@
 
 #include "graph2dmobile.h"
 #include <QPainter>
-#include <qstyleoption.h>
+#include <QStyleOption>
 #include <QEvent>
+#include <analitza/variables.h>
+#include <analitzaplot/planecurve.h>
+#include <analitzaplot/plotsmodel.h>
+#include <analitzaplot/plotsfactory.h>
+#include <KDebug>
+
+using namespace Analitza;
 
 Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 	: QDeclarativeItem(parent), Plotter2D(boundingRect().size())
@@ -91,4 +98,34 @@ void Graph2DMobile::scale(qreal s, int x, int y)
 void Graph2DMobile::translate(qreal x, qreal y)
 {
 	moveViewport(QPoint(x,y));
+}
+
+QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 225); }
+
+QStringList Graph2DMobile::addFunction(const QString& expression, Analitza::Variables* vars)
+{
+	Analitza::Expression e(expression, Analitza::Expression::isMathML(expression));
+	PlotsModel* plotsmodel = qobject_cast<PlotsModel*>(model());
+	if(!plotsmodel)
+		qWarning() << "only can add plots to a PlotsModel instance";
+	QString fname;
+	do {
+		fname = plotsmodel->freeId();
+	} while(vars && vars->contains(fname));
+	QColor fcolor = randomFunctionColor();
+	
+	QStringList err;
+	PlotBuilder req = PlotsFactory::self()->requestPlot(e, Dim2D);
+	if(req.canDraw()) {
+		PlaneCurve* it = static_cast<PlaneCurve*>(req.create(fcolor, fname, vars));
+		
+		if(it->isCorrect())
+			plotsmodel->addPlot(it);
+		else {
+			err = it->errors();
+			delete it;
+		}
+	}
+	
+	return err;
 }
