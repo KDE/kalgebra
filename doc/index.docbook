@@ -9,7 +9,7 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<book lang="&language;">
+<book id="kalgebra" lang="&language;">
 
 <bookinfo>
 <title>The &kalgebra; Handbook</title>
