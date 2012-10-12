@@ -9,9 +9,9 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<book lang="&language;">
+<book id="kalgebra" lang="&language;">
 
-<bookinfo>
+<book id="kalgebra"info>
 <title>The &kalgebra; Handbook</title>
 
 <authorgroup>
