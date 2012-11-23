@@ -177,9 +177,9 @@ static double calcExp(const Analitza::Expression& exp, Analitza::Variables* v, b
 
 void FunctionEdit::updateUplimit()
 {
-	bool corr;
-	Analitza::Expression e=m_uplimit->expression();
-	if(e.isCorrect()) {
+	bool corr = m_uplimit->isCorrect();
+	if(corr) {
+		Analitza::Expression e=m_uplimit->expression();
 		m_calcUplimit=calcExp(e, m_vars, &corr);
 		m_uplimit->setCorrect(corr);
 		if(corr)
@@ -189,9 +189,9 @@ void FunctionEdit::updateUplimit()
 
 void FunctionEdit::updateDownlimit()
 {
-	bool corr;
-	Analitza::Expression e=m_downlimit->expression();
-	if(e.isCorrect()) {
+	bool corr = m_downlimit->isCorrect();
+	if(corr) {
+		Analitza::Expression e=m_downlimit->expression();
 		m_calcDownlimit=calcExp(e, m_vars, &corr);
 		m_downlimit->setCorrect(corr);
 		if(corr)
