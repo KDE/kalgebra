@@ -50,6 +50,7 @@ Item {
 	Component.onCompleted: {
 		plasmoid.addEventListener('ConfigChanged', function() {
 			displayedFunction = plasmoid.readConfig("function")
+			input.text = displayedFunction
 		});
 	}
 	
