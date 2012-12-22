@@ -40,6 +40,7 @@ Name[x-test]=xxValue Tablesxx
 Name[zh_CN]=数值表
 Name[zh_TW]=數值表
 Comment=Easily create value tables
+Comment[bs]=Jednostavno kreiranje tablica vrijednosti
 Comment[ca]=Crea taules de valors de forma senzilla
 Comment[ca@valencia]=Crea taules de valors de forma senzilla
 Comment[cs]=Jednoduše vytvářejte tabulky hodnot
