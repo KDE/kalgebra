@@ -5,7 +5,6 @@ ServiceTypes=KAlgebra/Script
 
 Name=Console
 Name[bg]=Конзола
-Name[bs]=Konzola
 Name[ca]=Consola
 Name[ca@valencia]=Consola
 Name[cs]=Konzole
@@ -45,7 +44,6 @@ Name[zh_CN]=控制台
 Name[zh_TW]=主控台
 Comment=Scientific calculator
 Comment[bg]=Научен калкулатор
-Comment[bs]=Naučni kalkulator
 Comment[ca]=Calculadora científica
 Comment[ca@valencia]=Calculadora científica
 Comment[cs]=Vědecká kalkulačka

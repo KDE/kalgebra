@@ -2,7 +2,6 @@
 Name=KAlgebra
 Name[ast]=KAlgebra
 Name[bg]=KAlgebra
-Name[bs]=Kalgebra
 Name[ca]=KAlgebra
 Name[ca@valencia]=KAlgebra
 Name[cs]=KAlgebra
@@ -59,7 +58,6 @@ Icon=kalgebra
 Comment=A Calculator
 Comment[ast]=Una calculadora
 Comment[bg]=Калкулатор
-Comment[bs]=Kalkulator
 Comment[ca]=Una calculadora
 Comment[ca@valencia]=Una calculadora
 Comment[cs]=Kalkulačka

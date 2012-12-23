@@ -5,7 +5,6 @@ ServiceTypes=KAlgebra/Script
 
 Name=Graph 2D
 Name[bg]=Двуизмерна графика
-Name[bs]=Graf 2D
 Name[ca]=Gràfic 2D
 Name[ca@valencia]=Gràfic 2D
 Name[cs]=Graf 2D
@@ -43,7 +42,6 @@ Name[zh_CN]=二维图
 Name[zh_TW]=平面圖形
 Comment=Draws any 2D graph you want
 Comment[bg]=Изчертаване на двуизмерна графика
-Comment[bs]=Crta svaki 2D graf koji želite
 Comment[ca]=Dibuixa qualsevol gràfic 2D que desitgeu
 Comment[ca@valencia]=Dibuixa qualsevol gràfic 2D que desitgeu
 Comment[cs]=Nakreslí jakýkoliv 2D graf, který si přejete
