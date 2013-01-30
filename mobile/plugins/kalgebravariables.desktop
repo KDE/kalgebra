@@ -43,6 +43,7 @@ Name[zh_TW]=變數
 Comment=Displays the stored values
 Comment[bs]=Prikaz smještenih vrijednosti
 Comment[ca]=Mostra els valors desats
+Comment[ca@valencia]=Mostra els valors guardats
 Comment[da]=Vis de lagrede værdier
 Comment[de]=Zeigt die gespeicherten Werte an
 Comment[el]=Εμφανίζει τις αποθηκευμένες τιμές
