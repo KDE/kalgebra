@@ -392,8 +392,8 @@ void KAlgebra::add2D(const Analitza::Expression& exp)
 {
 	qDebug() << "adding" << exp.toString();
 	
-	Analitza::PlotItem* curve = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).create(randomFunctionColor(), b_funcsModel->freeId(),
-																		   c_results->analitza()->variables());
+	Analitza::PlotBuilder req = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D, c_results->analitza()->variables());
+	Analitza::PlotItem* curve = req.create(randomFunctionColor(), b_funcsModel->freeId());
 	b_funcsModel->addPlot(curve);
 	
 	m_tabs->setCurrentIndex(1);
@@ -517,10 +517,10 @@ void KAlgebra::new_func3d()
 {
 #ifdef HAVE_OPENGL
 	Analitza::Expression exp = t_exp->expression();
-	Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D);
+	Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables());
 	if(plot.canDraw()) {
 		t_model3d->clear();
-		t_model3d->addPlot(plot.create(Qt::yellow, "func3d", c_results->analitza()->variables()));
+		t_model3d->addPlot(plot.create(Qt::yellow, "func3d"));
 	} else
 		changeStatusBar(i18n("Errors: %1", plot.errors().join(i18n(", "))));
 #endif
@@ -678,7 +678,8 @@ void KAlgebra::add3D(const Analitza::Expression& exp)
 {
 #ifdef HAVE_OPENGL
 	t_model3d->clear();
-	t_model3d->addPlot(Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).create(Qt::yellow, "func3d_console", c_results->analitza()->variables()));
+	t_model3d->addPlot(Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables())
+													 .create(Qt::yellow, "func3d_console"));
 	m_tabs->setCurrentIndex(2);
 #endif
 }

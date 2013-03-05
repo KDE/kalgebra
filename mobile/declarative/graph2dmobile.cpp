@@ -115,9 +115,9 @@ QStringList Graph2DMobile::addFunction(const QString& expression, Analitza::Vari
 	QColor fcolor = randomFunctionColor();
 	
 	QStringList err;
-	PlotBuilder req = PlotsFactory::self()->requestPlot(e, Dim2D);
+	PlotBuilder req = PlotsFactory::self()->requestPlot(e, Dim2D, vars);
 	if(req.canDraw()) {
-		PlaneCurve* it = static_cast<PlaneCurve*>(req.create(fcolor, fname, vars));
+		PlaneCurve* it = static_cast<PlaneCurve*>(req.create(fcolor, fname));
 		
 		if(it->isCorrect())
 			plotsmodel->addPlot(it);

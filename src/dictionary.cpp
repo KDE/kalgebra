@@ -120,7 +120,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
-		m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D).create(QColor(0,150,0), "dict", m_vars));
+		m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), "dict"));
 	} else {
 		QString error;
 		m_name->setText(QString());

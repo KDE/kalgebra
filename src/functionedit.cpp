@@ -304,8 +304,8 @@ void FunctionEdit::focusInEvent(QFocusEvent *)
 
 PlaneCurve* FunctionEdit::createFunction() const
 {
-	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D);
-	PlaneCurve* curve = static_cast<PlaneCurve*>(req.create(color(), name(), m_vars));
+	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D, m_vars);
+	PlaneCurve* curve = static_cast<PlaneCurve*>(req.create(color(), name()));
 	curve->setResolution(resolution);
 	if(m_calcUplimit != m_calcDownlimit) {
 		foreach(const QString& var, curve->parameters())
