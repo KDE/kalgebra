@@ -361,7 +361,9 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	KHelpMenu* help = new KHelpMenu(this, KGlobal::mainComponent().aboutData());
 	menuBar()->addMenu(help->menu());
 
+#ifdef __GNUC__
 #warning TODO: Port to PlotsModel
+#endif
 // 	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
 // 			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
 // 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
