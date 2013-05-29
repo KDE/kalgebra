@@ -47,7 +47,7 @@ class VarEdit : public KDialog
 		explicit VarEdit(QWidget *parent = 0, bool modal = false);
 		
 		/** Sets the editing variable name */
-		void setName(const QString& newVar);	//This should edit the variable name
+		void setName(const QString& newVar);
 		
 		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
 		void setAnalitza(Analitza::Analyzer *na);
@@ -56,6 +56,8 @@ class VarEdit : public KDialog
 		Analitza::Expression val();
 		
 	private:
+		bool canRemove(const QString& name) const;
+		
 		Analitza::ExpressionEdit *m_exp;
 		
 		QLabel *m_valid;
@@ -66,6 +68,7 @@ class VarEdit : public KDialog
 	private slots:
 		void edit();
 		void ok();
+		void removeVariable();
 };
 
 #endif

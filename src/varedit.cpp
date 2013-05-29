@@ -36,12 +36,17 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	QWidget *widget = new QWidget( this );
 	setCaption(i18n("Add/Edit a variable"));
 	setModal(modal);
-	setButtons(KDialog::Ok | KDialog::Cancel);
+	setButtons(KDialog::User1 | KDialog::Ok | KDialog::Cancel);
 	enableButtonApply( false );
 	setMainWidget( widget );
 	
+	setButtonText(KDialog::User1, i18n("Remove Variable"));
+	
+	setButtonIcon(KDialog::User1, KIcon("edit-table-delete-row"));
 	setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
 	setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
+	
+	connect(button(KDialog::User1), SIGNAL(clicked(bool)), SLOT(removeVariable()));
 	
 	connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
 	connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
@@ -68,6 +73,20 @@ void VarEdit::setName(const QString& newVar)
 	else {
 		m_exp->setExpression(Analitza::Expression(vars->value(newVar)->copy()));
 	}
+	
+	button(KDialog::User1)->setEnabled(canRemove(newVar));
+}
+
+bool VarEdit::canRemove(const QString& name) const
+{
+	QHash<QString, Analitza::Object*>::const_iterator it = vars->constBegin(), itEnd = vars->constEnd();
+	for(; it!=itEnd; ++it) {
+		QStringList deps = AnalitzaUtils::dependencies(*it, QStringList());
+		if(deps.contains(name)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 Analitza::Expression VarEdit::val()
@@ -113,5 +132,8 @@ void VarEdit::setAnalitza(Analitza::Analyzer * na)
 	m_exp->setAnalitza(na);
 }
 
-#include "varedit.moc"
-
+void VarEdit::removeVariable()
+{
+	vars->remove(m_var);
+	close();
+}
