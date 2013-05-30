@@ -6,6 +6,7 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
 endif(${MOBILE_BACKEND} STREQUAL "kde")
 
 qt4_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
+kde4_add_app_icon(KALGEBRAMOBILE_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 kde4_add_executable(kalgebramobile pluginsmodel.cpp
 	kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
