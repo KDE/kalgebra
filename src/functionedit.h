@@ -89,6 +89,8 @@ public:
 	
 	void setOptionsShown(bool shown);
 	
+	virtual void resizeEvent(QResizeEvent* ev);
+	
 public slots:
 	/** Clears the dialog. */
 	void clear();

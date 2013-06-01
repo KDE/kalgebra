@@ -131,6 +131,10 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	
 	m_func->setFocus();
 	m_ok->setEnabled(false);
+	
+	QFont errorFont=m_valid->font();
+	errorFont.setBold(true);
+	m_valid->setFont(errorFont);
 }
 
 FunctionEdit::~FunctionEdit()
@@ -204,24 +208,9 @@ void FunctionEdit::updateDownlimit()
 
 void FunctionEdit::setState(const QString& text, bool negative)
 {
-	QFont errorFont=m_valid->font();
-	errorFont.setBold(true);
-	m_valid->setFont(errorFont);
-	
-	QString errorm=text, error=text;
-	QFontMetrics fm(errorFont);
-	
-	if(fm.width(errorm)>m_valid->width()) {
-		for(int i=3; i<errorm.size(); ++i) {
-			QString aux=i18nc("text ellipsis", "%1...", errorm.mid(0,i));
-			
-			if(fm.width(aux) <= m_valid->width())
-				error=aux;
-			else
-				break;
-		}
-	}
-	m_valid->setText(error);
+	QFontMetrics fm(m_valid->font());
+	m_valid->setText(fm.elidedText(text, Qt::ElideRight, m_valid->width()));
+	m_valid->setToolTip(text);
 	
 	KColorScheme scheme(QPalette::Normal);
 	KColorScheme::ForegroundRole role = negative? KColorScheme::NegativeText : KColorScheme::PositiveText;
@@ -329,4 +318,8 @@ void FunctionEdit::setOptionsShown(bool shown)
 	m_viewTabs->setVisible(shown);
 }
 
-#include "functionedit.moc"
+void FunctionEdit::resizeEvent(QResizeEvent*)
+{
+	QFontMetrics fm(m_valid->font());
+	m_valid->setText(fm.elidedText(m_valid->toolTip(), Qt::ElideRight, m_valid->width()));
+}
