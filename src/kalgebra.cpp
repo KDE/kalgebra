@@ -585,28 +585,34 @@ void KAlgebra::saveGraph()
 	delete dialog;
 }
 
+void menuEnabledHelper(QMenu* m, bool enabled)
+{
+	m->setEnabled(enabled);
+	foreach(QAction* action, m->actions()) {
+		action->setEnabled(enabled);
+	}
+}
+
 void KAlgebra::tabChanged(int n)
 {
 	c_dock_vars->hide();
 	b_dock_funcs->hide();
 	d_dock->hide();
 	
-	c_menu->setEnabled(false);
-	b_menu->setEnabled(false);
+	menuEnabledHelper(c_menu, n==0);
+	menuEnabledHelper(b_menu, n==1);
 #ifdef HAVE_OPENGL
-	t_menu->setEnabled(false);
+	menuEnabledHelper(t_menu, n==2);
 #endif
 	m_status->clear();
 	
 	switch(n) {
 		case 0:
-			c_menu->setEnabled(true);
 			c_dock_vars->show();
 			c_dock_vars->raise();
 			c_exp->setFocus();
 			break;
 		case 1:
-			b_menu->setEnabled(true);
 			b_dock_funcs->show();
 			b_dock_funcs->raise();
 			
@@ -616,7 +622,6 @@ void KAlgebra::tabChanged(int n)
 			break;
 #ifdef HAVE_OPENGL
 		case 2:
-			t_menu->setEnabled(true);
 			t_exp->setFocus();
 			break;
 #endif
