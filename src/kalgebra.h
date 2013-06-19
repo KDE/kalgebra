@@ -88,6 +88,7 @@ class KAlgebra : public KMainWindow
 		
 	private slots:
 		void newInstance();
+		void fullScreen(bool isFull);
 		
 		void initializeRecentScripts();
 		void operate();

@@ -54,6 +54,7 @@
 #include <KProcess>
 #include <KRecentFilesAction>
 #include <KApplication>
+#include <KToggleFullScreenAction>
 #include <kabstractfilewidget.h>
 #include <analitzaplot/plotsfactory.h>
 
@@ -106,15 +107,22 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 {
 	resize(900, 500);
 	
-	m_tabs = new QTabWidget(this);
+	m_tabs = new QTabWidget;
 	setCentralWidget(m_tabs);
 	
 	setStatusBar(new KStatusBar(this));
 	setMenuBar(new KMenuBar(this));
 	
+	KToggleFullScreenAction* fullScreenAction = KStandardAction::fullScreen(this, SLOT(fullScreen(bool)), this, this);
+	
 	QMenu* g_menu = menuBar()->addMenu(i18n("Session"));
 	g_menu->addAction(KStandardAction::openNew(this, SLOT(newInstance()), this));
+	g_menu->addAction(fullScreenAction);
 	g_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
+	
+	QToolButton* fullScreenButton = new QToolButton(this);
+	fullScreenButton->setDefaultAction(fullScreenAction);
+	m_tabs->setCornerWidget(fullScreenButton);
 	
 	m_status = new QLabel(this);
 	statusBar()->insertWidget(0, m_status);
@@ -695,4 +703,17 @@ void KAlgebra::dictionaryFilterChanged(const QString&)
 		d_list->setCurrentIndex(d_list->model()->index(0,0));
 }
 
-#include "kalgebra.moc"
+void KAlgebra::fullScreen(bool isFull)
+{
+	m_tabs->setDocumentMode(isFull);
+	m_tabs->setTabEnabled(3, !isFull);
+	if(isFull) {
+		hide();
+		m_tabs->setParent(0);
+		setCentralWidget(0);
+		m_tabs->showFullScreen();
+	} else {
+		setCentralWidget(m_tabs);
+		show();
+	}
+}
