@@ -67,7 +67,7 @@ of mathematical operations and show graphically. At one time, this
 program was MathML oriented. Now it can be used by anyone with a little
 mathematical knowledge to solve simple and advanced problems alike.
 </para>
-
+<!--FIXME http://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
 <para>
 It includes such features as:
 </para>
@@ -140,7 +140,7 @@ which shows the results.
 </menuchoice></term>
 <listitem><para>Opens a new &kalgebra; window.</para></listitem>
 </varlistentry>
-
+<!--FIXME Full Screen Mode Ctrl+Shift+F-->
 <varlistentry>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
@@ -223,7 +223,7 @@ user may enter expressions for evaluation in <guimenu>Calculate</guimenu>
 or <guimenu>Evaluate</guimenu> mode, depending on the <guimenu>Console</guimenu>
 menu selection.
 </para>
-
+<!--FIXME explain Calculate + Evaluate mode -->
 <para>
 In addition to displaying the user entered equations and results in the
 console display, all variables that are declared are displayed in a
@@ -336,7 +336,8 @@ you can zoom in and out. You can also select an area with the left button
 of the mouse and this area will be zoomed in. Move the view with the arrow keys.</para>
 
 <para>In the <guilabel>List</guilabel> tab, you can open a context menu with a &RMB; click on a function and hide or remove it.</para>
-
+<!--FIXME no context menu 
+  check box to hide/display, how to remove a function? -->
 <para>In the <guimenu>2D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
 <listitem><para>Show or hide the grid</para></listitem>
@@ -349,7 +350,7 @@ of the mouse and this area will be zoomed in. Move the view with the arrow keys.
 <listitem><para>Reset the view to the original zoom</para></listitem>
 <listitem><para>Select a resolution for the graphs</para></listitem>
 </itemizedlist>
-
+<!--FIXME Viewport missing-->
 
 <para>
    Below is a screenshot of a user who's cursor is at the rightmost root
@@ -398,10 +399,11 @@ where z=x*y.
 you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.</para>
 
 <para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view.</para>
-
+<!--FIXME not possible to do it with cursor keys -->
 <para>In the <guimenu>3D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
 <listitem><para>Enable or disable transparency in the 3D graph menu</para></listitem>
+<!--FIXME not in master-->
 <listitem><para>Save (<keycombo action="simul">&Ctrl;
 <keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
 <listitem><para>Reset the view to the original zoom in the 3D graph menu</para></listitem>
@@ -456,7 +458,7 @@ place to go to find the many capabilities of &kalgebra;.
 </chapter>
 
 &commands;
-
+  <!--FIXME ask maintainer if it needs to be regenerated from the code-->
 <chapter id="credits">
 <title>Credits and License</title>
 
