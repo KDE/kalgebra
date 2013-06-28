@@ -147,7 +147,11 @@ which shows the results.
 <keycap>F</keycap></keycombo></shortcut>
 <guimenu>Session</guimenu><guimenuitem>Full Screen Mode</guimenuitem>
 </menuchoice></term>
-<listitem><para>Toogle full screen mode for &kalgebra; window.</para></listitem>
+<listitem><para>Toogle full screen mode for &kalgebra; window. The full
+screen mode can also be switched on and off using  <inlinemediaobject>
+<imageobject> <imagedata fileref="view-fullscreen.png" format="PNG"/>
+</imageobject> </inlinemediaobject> button at the top right part of
+&kalgebra; window.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -233,7 +237,9 @@ or <guimenu>Evaluate</guimenu> mode, depending on the <guimenu>Console</guimenu>
 menu selection.
 </para>
 <para>
-  In evaluation mode &kalgebra; simplifies the expression or tries to simplify it when sees a variable not defined. When in calculation mode &kalgebra; calculates everything and if it finds a not defined variable shows an error.
+In evaluation mode &kalgebra; simplifies the expression even if it sees an undefined variable.
+When in calculation mode &kalgebra;, calculates everything and if it finds an undefined
+variable shows an error.
 </para>
 <para>
 In addition to displaying the user entered equations and results in the
