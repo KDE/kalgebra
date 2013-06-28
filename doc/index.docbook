@@ -144,7 +144,7 @@ which shows the results.
 <varlistentry>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;&Shift;
-<keycap>N</keycap></keycombo></shortcut>
+<keycap>F</keycap></keycombo></shortcut>
 <guimenu>Session</guimenu><guimenuitem>Full Screen Mode</guimenuitem>
 </menuchoice></term>
 <listitem><para>Toogle full screen mode for &kalgebra; window.</para></listitem>
