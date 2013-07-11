@@ -42,6 +42,7 @@
 #include <QHeaderView>
 #include <QDockWidget>
 #include <QTableView>
+#include <QPrinter>
 #include <KAction>
 #include <KHTMLView>
 #include <KHelpMenu>
@@ -558,10 +559,22 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File\n*.pdf|PDF Document"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty()) {
 		QPixmap px = m_graph3d->renderPixmap();
-		px.save(path);
+		if(path.endsWith(".pdf")) {
+			QPrinter printer;
+			printer.setOutputFormat(QPrinter::PdfFormat);
+			printer.setOutputFileName(path);
+			printer.setPaperSize(px.size(), QPrinter::DevicePixel);
+			printer.setPageMargins(0,0,0,0, QPrinter::DevicePixel);
+			QPainter painter;
+			painter.begin(&printer);
+			painter.drawPixmap(QPoint(0,0), px);
+			painter.end();
+		} else {
+			px.save(path);
+		}
 	}
 #endif
 }
