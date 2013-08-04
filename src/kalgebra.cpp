@@ -217,6 +217,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funced = new FunctionEdit(b_tools);
 	b_funced->setVariables(new Analitza::Variables);
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
+	connect(b_funced, SIGNAL(removeEditingPlot()), this, SLOT(remove_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
 	
 	QTableView* b_varsView=new QTableView(b_tools);
@@ -423,6 +424,18 @@ void KAlgebra::new_func()
 	b_funced->clear();
 	b_tools->setCurrentIndex(0);
 	b_funcs->setCurrentIndex(b_funcsModel->indexForName(f->name()));
+	m_graph2d->setFocus();
+}
+
+void KAlgebra::remove_func()
+{
+	Q_ASSERT(b_funced->editing());
+	b_funcsModel->removeRow(b_funcs->currentIndex().row());
+	
+	b_funced->setEditing(false);
+	b_funced->clear();
+	b_tools->setCurrentIndex(0);
+	b_funcs->setCurrentIndex(QModelIndex());
 	m_graph2d->setFocus();
 }
 

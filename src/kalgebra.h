@@ -102,6 +102,7 @@ class KAlgebra : public KMainWindow
 		
 		void select(const QModelIndex& idx);
 		void new_func();
+		void remove_func();
 		void edit_func ( const QModelIndex & );
 		void edit_var ( const QModelIndex & );
 		void toggleSquares();

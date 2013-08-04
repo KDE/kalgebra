@@ -112,10 +112,10 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	QHBoxLayout *m_butts = new QHBoxLayout;
 	m_ok = new QPushButton(i18n("OK"), this);
 	m_ok->setIcon(QIcon::fromTheme("dialog-ok"));
-	QPushButton *m_clear = new QPushButton(i18nc("@action:button", "Clear"), this);
-	m_clear->setIcon(QIcon::fromTheme("dialog-cancel"));
+	m_remove = new QPushButton(i18nc("@action:button", "Remove"), this);
+	m_remove->setIcon(QIcon::fromTheme("list-remove"));
 	connect(m_ok, SIGNAL(clicked()), this, SLOT(ok()));
-	connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
+	connect(m_remove, SIGNAL(clicked()), this, SIGNAL(removeEditingPlot()));
 	
 	topLayout->addWidget(m_name);
 	topLayout->addWidget(m_func);
@@ -127,7 +127,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_name->hide(); //FIXME: Remove this when the name has any sense
 	
 	m_butts->addWidget(m_ok);
-	m_butts->addWidget(m_clear);
+	m_butts->addWidget(m_remove);
 	
 	m_func->setFocus();
 	m_ok->setEnabled(false);
@@ -308,11 +308,6 @@ Analitza::Expression FunctionEdit::expression() const
 	return m_func->expression();
 }
 
-bool FunctionEdit::isMathML() const
-{
-    return m_func->isMathML();
-}
-
 void FunctionEdit::setOptionsShown(bool shown)
 {
 	m_viewTabs->setVisible(shown);
@@ -322,4 +317,10 @@ void FunctionEdit::resizeEvent(QResizeEvent*)
 {
 	QFontMetrics fm(m_valid->font());
 	m_valid->setText(fm.elidedText(m_valid->toolTip(), Qt::ElideRight, m_valid->width()));
+}
+
+void FunctionEdit::setEditing(bool m)
+{
+	m_modmode=m;
+	m_remove->setVisible(m);
 }

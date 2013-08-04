@@ -67,14 +67,11 @@ public:
 	/** Sets the selected color for the function.*/
 	void setColor(const QColor &newColor);
 	
-	/** Returns whether it is a MathML function. */
-	bool isMathML() const;
-	
 	/** Returns whether we are editing or adding a function. */
 	bool editing() const { return m_modmode; }
 	
 	/** Sets whether we are editing or adding a function. */
-	void setEditing(bool m) { m_modmode=m; }
+	void setEditing(bool m);
 	
 	/** Sets a name to the function. (Not used YET) */
 	void setName(const QString& name) { m_name->setText(name); }
@@ -98,6 +95,9 @@ public slots:
 signals:
 	/** Tells that the result has been accepted. */
 	void accept();
+	
+	/** asks the currently edited plot to be removed. */
+	void removeEditingPlot();
 	
 private slots:
 	void edit();
@@ -124,6 +124,7 @@ private:
 	
 	bool m_modmode;
 	KTabWidget* m_viewTabs;
+	QPushButton* m_remove;
 };
 
 #endif
