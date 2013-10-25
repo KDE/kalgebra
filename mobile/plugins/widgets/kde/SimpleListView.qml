@@ -1,5 +1,5 @@
-import org.kde.plasma.components 0.1
-import QtQuick 1.0
+import org.kde.plasma.components 2.0
+import QtQuick 2.0
 
 ListView
 {

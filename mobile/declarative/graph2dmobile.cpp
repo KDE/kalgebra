@@ -18,7 +18,6 @@
 
 #include "graph2dmobile.h"
 #include <QPainter>
-#include <QStyleOption>
 #include <QEvent>
 #include <analitza/variables.h>
 #include <analitzaplot/planecurve.h>
@@ -28,18 +27,17 @@
 
 using namespace Analitza;
 
-Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
-	: QDeclarativeItem(parent), Plotter2D(boundingRect().size())
+Graph2DMobile::Graph2DMobile(QQuickItem* parent)
+	: QQuickPaintedItem(parent), Plotter2D(boundingRect().size())
 	, m_dirty(true), m_currentFunction(-1)
 {
 	setSize(QSizeF(100,100));
-	setFlag(QGraphicsItem::ItemHasNoContents, false);
 	
 	defViewport = QRectF(QPointF(-12., 10.), QSizeF(24., -20.));
 	resetViewport();
 }
 
-void Graph2DMobile::paint(QPainter* p, const QStyleOptionGraphicsItem* options, QWidget* )
+void Graph2DMobile::paint(QPainter* p)
 {
 // 	qDebug() << "hellooo" << boundingRect();
 	if(boundingRect().size().isEmpty())

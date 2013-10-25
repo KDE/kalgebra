@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 2.0
 import QtDesktop 0.1
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0

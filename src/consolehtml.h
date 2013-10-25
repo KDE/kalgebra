@@ -71,18 +71,18 @@ class ConsoleHtml : public QWebView
 
 		virtual void contextMenuEvent(QContextMenuEvent* ev);
 
-	public slots:
+	public Q_SLOTS:
 		/** Adds the operation defined by the expression @p e. */
 		bool addOperation(const Analitza::Expression& e, const QString& input);
 		
 		/** Loads a script from @p path. */
-		bool loadScript(const KUrl& path);
+		bool loadScript(const QUrl& path);
 		
 		/** Save a script yo @p path. */
-		bool saveScript(const KUrl& path) const;
+		bool saveScript(const QUrl& path) const;
 		
 		/** Saves a log to @p path. */
-		bool saveLog(const KUrl& path) const;
+		bool saveLog(const QUrl& path) const;
 		
 		/** Flushes the contents. */
 		void clear();
@@ -92,7 +92,7 @@ class ConsoleHtml : public QWebView
 		
 		void openClickedUrl(const QUrl& url);
 		
-	signals:
+	Q_SIGNALS:
 		/** Emits a notification that tells that the widget status. */
 		void status(const QString &msg);
 		
@@ -102,7 +102,7 @@ class ConsoleHtml : public QWebView
 		/** Emits the selected code to be pasted somewhere */
 		void paste(const QString& code);
 		
-	private slots:
+	private Q_SLOTS:
 		void initialize();
 		
 		void modifyVariable(const QString& name, const Analitza::Expression& exp);
@@ -110,7 +110,7 @@ class ConsoleHtml : public QWebView
 		void paste();
 		
 	private:
-		QString retrieve(const KUrl& remoteUrl);
+		QString retrieve(const QUrl& remoteUrl);
 		
 		Analitza::Analyzer a;
 		void sendStatus(const QString& msg) { emit status(msg); }

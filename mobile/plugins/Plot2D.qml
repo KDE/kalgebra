@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 2.0
 import org.kde.analitza 1.0
 import widgets 1.0
 

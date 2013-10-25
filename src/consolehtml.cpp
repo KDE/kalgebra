@@ -33,7 +33,7 @@
 #include <KStandardAction>
 #include <KMenu>
 #include <KHTMLView>
-#include <KAction>
+#include <QAction>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
 #include <kio/job.h>
@@ -47,7 +47,15 @@ ConsoleHtml::ConsoleHtml(QWidget *parent)
 	page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	setRenderHint(QPainter::TextAntialiasing);
 	
+<<<<<<< HEAD
 	connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
+=======
+	view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	
+	connect(this, SIGNAL(popupMenu(QString,QPoint)), this, SLOT(context(QString,QPoint)));
+	connect(browserExtension(), SIGNAL(openUrlRequest(QUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), SLOT(openClickedUrl(QUrl)));
+	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int,int)));
+>>>>>>> First approach to a kf5 port
 	
 	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
@@ -121,7 +129,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		
 		foreach(InlineOptions* opt, m_options) {
 			if(opt->matchesExpression(lambdaexp, functype)) {
-				KUrl url("/query");
+				QUrl url("/query");
 				url.addQueryItem("id", opt->id());
 				url.addQueryItem("func", lambdaexp.toString());
 				
@@ -153,11 +161,11 @@ QString temporaryPath()
 	return QDir::tempPath()+'/'+temp.fileName();
 }
 
-QString ConsoleHtml::retrieve(const KUrl& remoteUrl)
+QString ConsoleHtml::retrieve(const QUrl& remoteUrl)
 {
 	QString path=temporaryPath();
 	
-	KIO::CopyJob* job=KIO::copyAs(remoteUrl, KUrl(path));
+	KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl(path));
 	
 	bool ret = KIO::NetAccess::synchronousRun(job, 0);
 	if(!ret)
@@ -166,7 +174,7 @@ QString ConsoleHtml::retrieve(const KUrl& remoteUrl)
 	return path;
 }
 
-bool ConsoleHtml::loadScript(const KUrl& path)
+bool ConsoleHtml::loadScript(const QUrl& path)
 {
 	Q_ASSERT(!path.isEmpty());
 	
@@ -191,7 +199,7 @@ bool ConsoleHtml::loadScript(const KUrl& path)
 	return correct;
 }
 
-bool ConsoleHtml::saveScript(const KUrl & path) const
+bool ConsoleHtml::saveScript(const QUrl & path) const
 {
 	bool correct=false;
 	Q_ASSERT(!path.isEmpty());
@@ -213,7 +221,7 @@ bool ConsoleHtml::saveScript(const KUrl & path) const
 	return correct;
 }
 
-bool ConsoleHtml::saveLog(const KUrl& path) const
+bool ConsoleHtml::saveLog(const QUrl& path) const
 {
 	Q_ASSERT(!path.isEmpty());
 	//FIXME: We have to choose between txt and html
@@ -273,7 +281,7 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 	KMenu popup;
 	if(hasSelection()) {
 		popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
-		KAction *act=new KAction(KIcon("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
+		QAction *act=new QAction(QIcon::fromTheme("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
 		connect(act, SIGNAL(triggered()), SLOT(paste()));
 		popup.addAction(act);
 		popup.addSeparator();

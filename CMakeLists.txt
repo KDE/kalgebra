@@ -1,20 +1,31 @@
 project(kalgebra)
+cmake_minimum_required(VERSION 2.8.11)
 
-find_package(KDE4 REQUIRED)
-include(KDE4Defaults)
-set(CMAKE_MODULE_PATH ${kalgebra_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+find_package(ECM 0.0.9 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Widgets Qml Quick Xml Svg OpenGL PrintSupport Test)
+find_package(KF5 5.0.0 REQUIRED MODULE COMPONENTS CMake Compiler InstallDirs)
 
 find_package(Analitza REQUIRED)
-macro_optional_find_package(LibKdeEdu)
-find_library(QTMML_LIBRARY qtmmlwidget)
+find_package(KConfig REQUIRED)
+find_package(KDeclarative)
+# macro_optional_find_package(LibKdeEdu)
+# find_library(QTMML_LIBRARY qtmmlwidget)
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml ${ANALITZA_INCLUDE_DIR})
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${ANALITZA_INCLUDE_DIR}
+	${CMAKE_INSTALL_PREFIX}/include/KDE #FIXME
+)
+remove_definitions(-DQT_NO_CAST_TO_ASCII)
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
+remove_definitions(-DQT_NO_KEYWORDS)
 
-macro_optional_find_package(OpenGL)
-macro_bool_to_01(OPENGL_FOUND HAVE_OPENGL)
-macro_log_feature(OPENGL_FOUND "OpenGL" "Support for 3D graphs in KAlgebra" "http://mesa3d.sourceforge.net" FALSE "" "")
-
-macro_log_feature(QTMML_LIBRARY "QtMathML Widget" "Supports displaying some formulas in a mathematic form" "http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html" FALSE "" "")
+find_package(OpenGL)
+set(HAVE_OPENGL ${OPENGL_FOUND})
+# macro_log_feature(OPENGL_FOUND "OpenGL" "Support for 3D graphs in KAlgebra" "http://mesa3d.sourceforge.net" FALSE "" "")
+# macro_log_feature(QTMML_LIBRARY "QtMathML Widget" "Supports displaying some formulas in a mathematic form" "http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html" FALSE "" "")
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 
@@ -25,13 +36,12 @@ set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mob
 
 if(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
   add_subdirectory(doc)
-  add_subdirectory(src)
-  add_subdirectory(plasmoids)
 endif(QTMML_LIBRARY AND NOT MOBILE_BACKEND STREQUAL "harmattan")
+add_subdirectory(src)
+add_subdirectory(plasmoids)
 add_subdirectory(icons)
 add_subdirectory(utils)
-
-macro_optional_add_subdirectory(mobile)
+add_subdirectory(mobile)
 
 add_custom_target(commandsdoc
 	${CMAKE_CURRENT_BINARY_DIR}/utils/docbook_analitzacommands commands.docbook
@@ -40,7 +50,7 @@ add_custom_target(commandsdoc
 	COMMENT "Generating commands docbook information"
 )
 
-if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
-   macro_display_feature_log()
-endif (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
+# if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
+#    macro_display_feature_log()
+# endif (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
 

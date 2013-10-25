@@ -19,12 +19,12 @@
 #ifndef ASKNAME_H
 #define ASKNAME_H
 
-#include <QtGui/QLineEdit>
-#include <QtGui/QLabel>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QRegExpValidator>
+#include <QLineEdit>
+#include <QLabel>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
+#include <QRegExpValidator>
 
 class AskName : public QDialog
 {

@@ -46,7 +46,7 @@ Q_OBJECT
 		
 		QSortFilterProxyModel* model() const { return m_sortProxy; }
 		
-	public slots:
+	public Q_SLOTS:
 		void activated(const QModelIndex& prev, const QModelIndex& );
 		void setFilter(const QString&);
 		

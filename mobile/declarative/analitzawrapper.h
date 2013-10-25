@@ -19,7 +19,7 @@
 #ifndef ANALITZAWRAPPER_H
 #define ANALITZAWRAPPER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 #include <QVariant>
 #include <analitza/expression.h>
 
@@ -38,7 +38,7 @@ class ExpressionWrapper : public QObject
 		
 		void setText(const QString& exp);
 		
-	public slots:
+	public Q_SLOTS:
 		QString toString() const;
 		bool isCorrect() const;
 		QVariant value() const;

@@ -26,17 +26,17 @@ class ViewportWidget : public QWidget
 {
 	Q_OBJECT
 	public:
-		explicit ViewportWidget(QWidget * parent = 0, Qt::WFlags flags = 0);
+		explicit ViewportWidget(QWidget * parent = 0);
 		
 		QRectF viewport() const;
 		
-	public slots:
+	public Q_SLOTS:
 		void setViewport(const QRectF& current);
 		
-	private slots:
+	private Q_SLOTS:
 		void emitViewport();
 		
-	signals:
+	Q_SIGNALS:
 		void viewportChange(const QRectF& newViewport);
 		
 	private:

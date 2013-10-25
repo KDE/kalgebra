@@ -22,7 +22,7 @@
 #include <analitzagui/variablesmodel.h>
 #include <analitza/variables.h>
 #include <graph2dmobile.h>
-#include <QtDeclarative/QDeclarativeItem>
+#include <QQuickItem>
 
 void AnalitzaDeclarativePlugin::registerTypes(const char* uri)
 {

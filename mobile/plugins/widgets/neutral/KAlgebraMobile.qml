@@ -1,5 +1,5 @@
 import org.kde.analitza 1.0
-import QtQuick 1.1
+import QtQuick 2.0
 import org.kde.kalgebra.mobile 1.0
 
 Rectangle

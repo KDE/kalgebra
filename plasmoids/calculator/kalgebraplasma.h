@@ -30,7 +30,7 @@
 class QSizeF;
 class QLabel;
 
-class KAlgebraPlasmoid : public Plasma::PopupApplet
+class KAlgebraPlasmoid : public Plasma::Applet
 {
 	Q_OBJECT
 	public:
@@ -38,9 +38,9 @@ class KAlgebraPlasmoid : public Plasma::PopupApplet
 		~KAlgebraPlasmoid();
 		
 		void init();
-		virtual QGraphicsWidget* graphicsWidget();
+		virtual QQuickItem* graphicsWidget();
 		
-	private slots:
+	private Q_SLOTS:
 		void simplify();
 		void addOperation();
 		
@@ -51,7 +51,7 @@ class KAlgebraPlasmoid : public Plasma::PopupApplet
 		
 		void plasmoidFont(bool big, const QColor& c, bool bold);
 		
-		QGraphicsWidget* m_widget;
+		QQuickItem* m_widget;
 		QGraphicsLinearLayout* m_layout;
 		Plasma::LineEdit *m_input;
 		Plasma::Label *m_output;

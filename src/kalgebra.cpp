@@ -25,7 +25,7 @@
 #include "viewportwidget.h"
 #include "functionedit.h"
 #ifdef HAVE_OPENGL
-#	include <analitzagui//plotsview3d.h>
+#	include <analitzagui/plotsview3d.h>
 #endif
 
 #include <analitzagui/operatorsmodel.h>
@@ -35,6 +35,7 @@
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/functiongraph.h>
 #include <analitzaplot/planecurve.h>
+#include <analitzaplot/plotsfactory.h>
 #include <analitza/variables.h>
 #include <analitza/value.h>
 
@@ -43,7 +44,8 @@
 #include <QDockWidget>
 #include <QTableView>
 #include <QPrinter>
-#include <KAction>
+#include <QAction>
+#include <QFileDialog>
 #include <KHTMLView>
 #include <KHelpMenu>
 #include <KFileDialog>
@@ -56,8 +58,6 @@
 #include <KRecentFilesAction>
 #include <KApplication>
 #include <KToggleFullScreenAction>
-#include <kabstractfilewidget.h>
-#include <analitzaplot/plotsfactory.h>
 
 class Add2DOption : public InlineOptions
 {
@@ -167,15 +167,15 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	////////menu
 	c_menu = menuBar()->addMenu(i18n("C&onsole"));
 	
-	c_menu->addAction(KIcon("document-open"), i18nc("@item:inmenu", "&Load Script..."),
+	c_menu->addAction(QIcon::fromTheme("document-open"), i18nc("@item:inmenu", "&Load Script..."),
 						this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
-	c_recentScripts=new KRecentFilesAction(KIcon("document-open-recent"), i18n("Recent Scripts"), this);
-	connect(c_recentScripts, SIGNAL(urlSelected(KUrl)), this, SLOT(loadScript(KUrl)));
+	c_recentScripts=new KRecentFilesAction(QIcon::fromTheme("document-open-recent"), i18n("Recent Scripts"), this);
+	connect(c_recentScripts, SIGNAL(urlSelected(QUrl)), this, SLOT(loadScript(QUrl)));
 	c_menu->addAction(c_recentScripts);
 	
-	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Save Script..."),
+	c_menu->addAction(QIcon::fromTheme("document-save"), i18nc("@item:inmenu", "&Save Script..."),
 						this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
-	c_menu->addAction(KIcon("document-save"), i18nc("@item:inmenu", "&Export Log..."),
+	c_menu->addAction(QIcon::fromTheme("document-save"), i18nc("@item:inmenu", "&Export Log..."),
 						this, SLOT(saveLog()), QKeySequence::Save);
 	c_menu->addSeparator()->setText(i18n("Execution Mode"));
 	QActionGroup *execGroup = new QActionGroup(c_menu);
@@ -218,7 +218,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_funced->setVariables(c_varsModel->variables());
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	connect(b_funced, SIGNAL(removeEditingPlot()), this, SLOT(remove_func()));
-	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));
+	b_tools->addTab(b_funced, QIcon::fromTheme("list-add"), i18n("&Add"));
 	
 	QTableView* b_varsView=new QTableView(b_tools);
 	b_varsModel=new Analitza::VariablesModel(b_funced->variables());
@@ -258,7 +258,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_menu->addSeparator();
 	b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
 	b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
-	KAction* ac=KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this);
+	QAction* ac=KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this);
 	ac->setShortcut(Qt::ControlModifier + Qt::Key_0);
 	b_menu->addAction(ac);
 	b_menu->addSeparator()->setText(i18n("Resolution"));
@@ -311,7 +311,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	t_menu = menuBar()->addMenu(i18n("3D &Graph"));
 	QAction* t_actions[5];
 	t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
-	t_menu->addAction(KIcon("zoom-original"), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
+	t_menu->addAction(QIcon::fromTheme("zoom-original"), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
 	t_menu->addSeparator();
 	t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
 	t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
@@ -358,7 +358,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	//EODictionary
 	//Ego's reminder
-	KHelpMenu* help = new KHelpMenu(this, KGlobal::mainComponent().aboutData());
+	KHelpMenu* help = new KHelpMenu(this);
 	menuBar()->addMenu(help->menu());
 
 #warning TODO: Port to PlotsModel
@@ -376,8 +376,8 @@ KAlgebra::~KAlgebra()
 	KConfig conf("kalgebrarc");
 	KConfigGroup config(&conf, "Default");
 	QStringList urls;
-	foreach(const KUrl& url, c_recentScripts->urls())
-		urls += url.prettyUrl();
+	foreach(const QUrl& url, c_recentScripts->urls())
+		urls += url.toDisplayString();
 	
 	config.writeEntry("recent", urls);
 }
@@ -389,7 +389,7 @@ void KAlgebra::initializeRecentScripts()
 	
 	QStringList urls=config.readEntry("recent", QStringList());
 	foreach(const QString& url, urls) {
-		c_recentScripts->addUrl(KUrl(url));
+		c_recentScripts->addUrl(QUrl(url));
 	}
 }
 
@@ -498,13 +498,13 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	KUrl path = KFileDialog::getOpenUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
+	QUrl path = KFileDialog::getOpenUrl(QUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
 	
 	if(!path.isEmpty())
 		loadScript(path);
 }
 
-void KAlgebra::loadScript(const KUrl& path)
+void KAlgebra::loadScript(const QUrl& path)
 {
 	bool loaded=c_results->loadScript(path);
 	
@@ -514,7 +514,7 @@ void KAlgebra::loadScript(const KUrl& path)
 
 void KAlgebra::saveScript()
 {
-	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.kal|"+i18n("Script (*.kal)"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QUrl path = KFileDialog::getSaveUrl(QUrl(), "*.kal|"+i18n("Script (*.kal)"), this, QString(), KFileDialog::ConfirmOverwrite);
 	bool loaded=false;
 	if(!path.isEmpty())
 		loaded=c_results->saveScript(path);
@@ -525,7 +525,7 @@ void KAlgebra::saveScript()
 
 void KAlgebra::saveLog()
 {
-	KUrl path = KFileDialog::getSaveUrl(KUrl(), "*.html|"+i18n("HTML File (*.html)"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QUrl path = KFileDialog::getSaveUrl(QUrl(), "*.html|"+i18n("HTML File (*.html)"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
@@ -572,7 +572,7 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = KFileDialog::getSaveFileName(KUrl(), i18n("*.png|PNG File\n*.pdf|PDF Document"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QString path = KFileDialog::getSaveFileName(QUrl(), i18n("*.png|PNG File\n*.pdf|PDF Document"), this, QString(), KFileDialog::ConfirmOverwrite);
 	if(!path.isEmpty()) {
 		QPixmap px = m_graph3d->renderPixmap();
 		if(path.endsWith(".pdf")) {
@@ -604,8 +604,7 @@ void KAlgebra::toggleKeepAspect()
 
 void KAlgebra::saveGraph()
 {
-	QPointer<KFileDialog> dialog=new KFileDialog(KUrl(), i18n("*.png|Image File\n*.svg|SVG File"), this);
-	dialog->setOperationMode(KFileDialog::Saving);
+	QFileDialog* dialog=new QFileDialog(i18n("Select where to put the rendered plot"), i18n("*.png|Image File\n*.svg|SVG File"), this);
 	dialog->setConfirmOverwrite(true);
 	
 	if(dialog->exec()) {

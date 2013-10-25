@@ -16,18 +16,13 @@ set(kalgebra_SRCS
 
 #uncomment this if oxygen icons for kalgebra are available
 #kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
-kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
+# kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png") #FIXME: port!
 
-kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra
-	${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${QT_QTWEBKIT_LIBRARY}
-	${KDE4_KPARTS_LIBS}
-	${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY}
-	${QTMML_LIBRARY}
-)
+add_executable(kalgebra ${kalgebra_SRCS})
+target_link_libraries(kalgebra KF5::KHtml Qt5::PrintSupport ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
 
 if(OPENGL_FOUND)
-   target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
+   target_link_libraries(kalgebra Qt5::OpenGL ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
 endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})

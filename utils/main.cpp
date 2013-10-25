@@ -21,7 +21,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QTextDocument>
-#include <QtCore/QTextStream>
+#include <QTextStream>
 
 int main(int argc, char** argv)
 {
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 		QString id = m.index(i,0).data().toString();
 		str << "\t<sect1 id='" << id << "'><title>" << id << "</title><itemizedlist>\n";
 		for(int c=0; c<cols; c++)
-			str << QString("\t\t<listitem><para>%1: %2</para></listitem>").arg(colHeaders[c]).arg(Qt::escape(m.index(i,c).data().toString())) << '\n';
+			str << QString("\t\t<listitem><para>%1: %2</para></listitem>").arg(colHeaders[c]).arg(m.index(i,c).data().toString().toHtmlEscaped()) << '\n';
 		
 		str << "\t</itemizedlist></sect1>\n";
 	}

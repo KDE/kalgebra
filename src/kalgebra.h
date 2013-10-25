@@ -86,14 +86,14 @@ class KAlgebra : public KMainWindow
 		QListView *d_list;
 		KLineEdit *d_filter;
 		
-	private slots:
+	private Q_SLOTS:
 		void newInstance();
 		void fullScreen(bool isFull);
 		
 		void initializeRecentScripts();
 		void operate();
 		void loadScript();
-		void loadScript(const KUrl& path);
+		void loadScript(const QUrl& path);
 		void saveScript();
 		void saveLog();
 		void updateInformation();

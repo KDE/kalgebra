@@ -58,10 +58,10 @@ void KAlgebraPlasmoid::init()
 	setPopupIcon("kalgebra");
 }
 
-QGraphicsWidget* KAlgebraPlasmoid::graphicsWidget()
+QQuickItem* KAlgebraPlasmoid::graphicsWidget()
 {
 	if(!m_widget) {
-		m_widget = new QGraphicsWidget(this);
+		m_widget = new QQuickItem(this);
 		m_input = new Plasma::LineEdit(m_widget);
 		m_input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 		m_input->setClearButtonShown(true);
@@ -105,7 +105,7 @@ void KAlgebraPlasmoid::addOperation()
 		Plasma::ToolTipContent data;
 		data.setMainText(i18n("KAlgebra"));
 		data.setSubText(i18n("%1 = %2", m_input->text(), result));
-		data.setImage(KIcon("kalgebra").pixmap(IconSize(KIconLoader::Desktop)));
+		data.setImage(QIcon::fromTheme("kalgebra").pixmap(IconSize(KIconLoader::Desktop)));
 		Plasma::ToolTipManager::self()->setContent(this, data);
 		
 		c=correctColor();

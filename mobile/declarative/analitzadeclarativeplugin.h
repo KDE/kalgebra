@@ -19,13 +19,14 @@
 #ifndef ANALITZADECLARATIVEPLUGIN_H
 #define ANALITZADECLARATIVEPLUGIN_H
 
-#include <QDeclarativeExtensionPlugin>
+#include <QQmlExtensionPlugin>
 
-class AnalitzaDeclarativePlugin : public QDeclarativeExtensionPlugin
+class AnalitzaDeclarativePlugin : public QQmlExtensionPlugin
 {
+	Q_OBJECT
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+public:
     virtual void registerTypes(const char* uri);
 };
-
-Q_EXPORT_PLUGIN2(analitzadeclarativeplugin, AnalitzaDeclarativePlugin);
 
 #endif // ANALITZADECLARATIVEPLUGIN_H

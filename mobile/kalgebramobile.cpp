@@ -22,7 +22,7 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
-#include <qdeclarative.h>
+#include <qqml.h>
 #include "pluginsmodel.h"
 
 using namespace Analitza;

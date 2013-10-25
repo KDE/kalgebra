@@ -42,9 +42,9 @@ VarEdit::VarEdit(QWidget *parent, bool modal) :
 	
 	setButtonText(KDialog::User1, i18n("Remove Variable"));
 	
-	setButtonIcon(KDialog::User1, KIcon("edit-table-delete-row"));
-	setButtonIcon(KDialog::Ok, KIcon("dialog-ok"));
-	setButtonIcon(KDialog::Cancel, KIcon("dialog-cancel"));
+	setButtonIcon(KDialog::User1, QIcon::fromTheme("edit-table-delete-row"));
+	setButtonIcon(KDialog::Ok, QIcon::fromTheme("dialog-ok"));
+	setButtonIcon(KDialog::Cancel, QIcon::fromTheme("dialog-cancel"));
 	
 	connect(button(KDialog::User1), SIGNAL(clicked(bool)), SLOT(removeVariable()));
 	

@@ -65,7 +65,7 @@ class VarEdit : public KDialog
 		bool m_correct;
 		QString m_var;
 		
-	private slots:
+	private Q_SLOTS:
 		void edit();
 		void ok();
 		void removeVariable();

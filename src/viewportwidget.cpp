@@ -25,8 +25,8 @@
 #include <QBoxLayout>
 #include <limits>
 
-ViewportWidget::ViewportWidget(QWidget * parent, Qt::WFlags flags)
-	: QWidget (parent, flags)
+ViewportWidget::ViewportWidget(QWidget * parent)
+	: QWidget (parent)
 {
 	const double LIMIT=std::numeric_limits<double>::max();
 	
@@ -48,7 +48,7 @@ ViewportWidget::ViewportWidget(QWidget * parent, Qt::WFlags flags)
 	layout->addRow(i18n("Width:"), m_width);
 	layout->addRow(i18n("Height:"), m_height);
 	
-	QPushButton *apply=new KPushButton(KIcon("dialog-ok-apply"), i18n("Apply"), this);
+	QPushButton *apply=new KPushButton(QIcon::fromTheme("dialog-ok-apply"), i18n("Apply"), this);
 	connect(apply, SIGNAL(clicked()), SLOT(emitViewport()));
 	
 	upperLayout->addLayout(layout);

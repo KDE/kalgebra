@@ -18,34 +18,27 @@
 
 
 #include "pluginsmodel.h"
-#include <KStandardDirs>
 #include <KConfigGroup>
 #include <KConfig>
 #include <QIcon>
 #include <QDir>
 #include <QDebug>
+#include <QStandardPaths>
 
 PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
-	QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
-	rolenames.insert(PathRole, "path");
-	rolenames.insert(PriorityRole, "priority");
-	rolenames.insert(TitleRole, "title");
-	rolenames.insert(SubtitleRole, "subtitle");
-	setRoleNames(rolenames);
-
-	QStringList foundPlugins = KGlobal::dirs()->findAllResources("appdata", "plugins/*.desktop");
+	QStringList foundPlugins = QStandardPaths::locateAll(QStandardPaths::DataLocation, "plugins/*.desktop");
 
 	qDebug() << "Plugins found:" << foundPlugins;
 
 	QList<QStandardItem*> items;
 	Q_FOREACH(const QString& file, foundPlugins) {
-		KConfig info(file, KConfig::SimpleConfig, "appdata");
+		KConfig info(file, KConfig::SimpleConfig, QStandardPaths::DataLocation);
 		KConfigGroup cg = info.group("Desktop Entry");
 		QStandardItem* item = new QStandardItem;
 
 		QString postfix = "plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
-		QString scriptPath = KStandardDirs::locate("appdata", postfix);
+		QString scriptPath = QStandardPaths::locate(QStandardPaths::DataLocation, postfix);
 
 		Q_ASSERT(!scriptPath.isEmpty());
 
@@ -64,6 +57,16 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 	invisibleRootItem()->appendRows(items);
 	setSortRole(PriorityRole);
 	sort(0, Qt::DescendingOrder);
+}
+
+QHash<int, QByteArray> PluginsModel::roleNames() const
+{
+	QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
+	rolenames.insert(PathRole, "path");
+	rolenames.insert(PriorityRole, "priority");
+	rolenames.insert(TitleRole, "title");
+	rolenames.insert(SubtitleRole, "subtitle");
+	return rolenames;
 }
 
 QString PluginsModel::pluginPath(int row)

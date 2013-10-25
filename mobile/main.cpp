@@ -16,21 +16,22 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <KApplication>
+#include <QGuiApplication>
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include <KStandardDirs>
 
 #ifdef KDECOMPONENTS
-#include <kdeclarative.h>
+#include <kdeclarative/kdeclarative.h>
 #endif
 
 #include <QDebug>
 #include <QFileInfo>
 #include <QDir>
-#include <QDeclarativeView>
-#include <QDeclarativeEngine>
-#include <QDeclarativeContext>
+#include <QStandardPaths>
+#include <QQuickView>
+#include <QQmlEngine>
+#include <QQmlContext>
 #include <QIcon>
 
 #include "kalgebramobile.h"
@@ -41,34 +42,33 @@ int main(int argc, char *argv[])
 // 			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
 // 	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
 // 	KCmdLineArgs::init(argc, argv, &about);
-	QApplication app(argc, argv);
+	QGuiApplication app(argc, argv);
 	app.setApplicationName("kalgebramobile");
-	app.setWindowIcon(QIcon::fromTheme("kalgebra"));
+// 	app.setWindowIcon(QIcon::fromTheme("kalgebra"));
 	
 	KAlgebraMobile widget;
 	
-	QDeclarativeView view;
-	view.setWindowTitle("KAlgebra Mobile");
-	view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
+	QQuickView view;
+	view.setTitle(view.tr("KAlgebra Mobile"));
 	view.engine()->rootContext()->setContextProperty("app", &widget);
 	
 // 	KGlobal::dirs()->addResourceDir("appdata", PREFIX "/share/apps");
 	
 #ifdef KDECOMPONENTS
 	KDeclarative kdeclarative;
-	kdeclarative.setDeclarativeEngine(view.engine());
-	kdeclarative.initialize();
+// 	kdeclarative.setDeclarativeEngine(view.engine());
+// 	kdeclarative.initialize();
 	//binds things like kconfig and icons
-	kdeclarative.setupBindings();
+// 	kdeclarative.setupBindings();
 #endif
 	
-	QString main = KStandardDirs::locate("appdata", "plugins/widgets/KAlgebraMobile.qml");
+	QString main = QStandardPaths::locate(QStandardPaths::DataLocation, "plugins/widgets/KAlgebraMobile.qml");
 //     QString main = KStandardDirs::locate("appdata", "plugins/Tables.qml");
 	QDir dir = QFileInfo(main).dir();
 	dir.cdUp();
 	
 	view.engine()->addImportPath(dir.path());
-	view.setSource(main);
+	view.setSource(QUrl::fromLocalFile(main));
 	
 	#if defined(__arm__) && !defined(ANDROID)
 		view.showFullScreen();

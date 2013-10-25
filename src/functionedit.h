@@ -88,18 +88,18 @@ public:
 	
 	virtual void resizeEvent(QResizeEvent* ev);
 	
-public slots:
+public Q_SLOTS:
 	/** Clears the dialog. */
 	void clear();
 	
-signals:
+Q_SIGNALS:
 	/** Tells that the result has been accepted. */
 	void accept();
 	
 	/** asks the currently edited plot to be removed. */
 	void removeEditingPlot();
 	
-private slots:
+private Q_SLOTS:
 	void edit();
 	void ok();
 	void colorChange(int);

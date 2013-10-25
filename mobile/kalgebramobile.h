@@ -38,16 +38,16 @@ class KAlgebraMobile : public QObject
 		static KAlgebraMobile* self();
 		void notifyVariablesChanged() { variablesChanged(); }
 		
-	public slots:
+	public Q_SLOTS:
 		Analitza::PlotsModel* functionsModel();
 		Analitza::Variables* variables() const;
 		
-	private slots:
+	private Q_SLOTS:
 		void functionRemoved(const QModelIndex& parent, int start, int end);
 		void functionModified(const QModelIndex& idxA, const QModelIndex& idxB);
         void functionInserted(const QModelIndex& parent, int start, int end);
 		
-	signals:
+	Q_SIGNALS:
 		void variablesChanged();
 		
 	private:
