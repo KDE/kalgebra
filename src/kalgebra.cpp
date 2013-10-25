@@ -133,7 +133,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	QWidget *console = new QWidget(m_tabs);
 	QVBoxLayout *c_layo = new QVBoxLayout(console);
 	c_results = new ConsoleHtml(console);
-	c_results->view()->setFocusPolicy(Qt::NoFocus);
+	c_results->setFocusPolicy(Qt::NoFocus);
 	c_dock_vars = new QDockWidget(i18n("Variables"), this);
 	c_dock_vars->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
 	addDockWidget(Qt::RightDockWidgetArea, c_dock_vars);
@@ -155,7 +155,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	m_tabs->addTab(console, i18n("&Console"));
 	console->setLayout(c_layo);
-	c_layo->addWidget(c_results->view());
+	c_layo->addWidget(c_results);
 	c_layo->addWidget(c_exp);
 	
 	connect(c_exp, SIGNAL(returnPressed()), this, SLOT(operate()));

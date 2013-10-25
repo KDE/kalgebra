@@ -20,10 +20,11 @@
 #define CONSOLE_H
 
 #include <QWidget>
-#include <khtml_part.h>
+#include <QWebView>
 
 #include <analitza/analyzer.h>
 
+class KUrl;
 class InlineOptions
 {
 	public:
@@ -41,7 +42,7 @@ class InlineOptions
  *	@author Aleix Pol Gonzalez
  */
 
-class ConsoleHtml : public KHTMLPart
+class ConsoleHtml : public QWebView
 {
 	Q_OBJECT
 	public:
@@ -67,6 +68,9 @@ class ConsoleHtml : public KHTMLPart
 		ConsoleMode mode() const { return m_mode; }
 		
 		void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
+
+		virtual void contextMenuEvent(QContextMenuEvent* ev);
+
 	public slots:
 		/** Adds the operation defined by the expression @p e. */
 		bool addOperation(const Analitza::Expression& e, const QString& input);
@@ -86,7 +90,7 @@ class ConsoleHtml : public KHTMLPart
 		/** Copies the selected text to the clipboard */
 		void copy() const;
 		
-		void openClickedUrl(const KUrl& url);
+		void openClickedUrl(const QUrl& url);
 		
 	signals:
 		/** Emits a notification that tells that the widget status. */
@@ -100,12 +104,10 @@ class ConsoleHtml : public KHTMLPart
 		
 	private slots:
 		void initialize();
-		void context(const QString&, const QPoint& p);
 		
 		void modifyVariable(const QString& name, const Analitza::Expression& exp);
 		void removeVariable(const QString& name);
 		void paste();
-		void scrollDown(int min, int max);
 		
 	private:
 		QString retrieve(const KUrl& remoteUrl);
@@ -118,7 +120,7 @@ class ConsoleHtml : public KHTMLPart
 		
 		void updateView(const QString& newEntry, const QString& options);
 		
-		QString m_css;
+		QByteArray m_css;
 		QList<InlineOptions*> m_options;
 };
 

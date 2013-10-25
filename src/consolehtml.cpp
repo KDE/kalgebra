@@ -25,7 +25,9 @@
 #include <QTemporaryFile>
 #include <QTimer>
 #include <QTextDocument>
+#include <qevent.h>
 #include <QDir>
+#include <QWebFrame>
 
 #include <KLocale>
 #include <KStandardAction>
@@ -39,19 +41,13 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
-ConsoleHtml::ConsoleHtml(QWidget *parent) : KHTMLPart(parent), m_mode(Evaluation)
+ConsoleHtml::ConsoleHtml(QWidget *parent)
+	: QWebView(parent), m_mode(Evaluation)
 {
-	setJScriptEnabled(false);
-	setJavaEnabled(false);
-	setMetaRefreshEnabled(false);
-	setPluginsEnabled(false);
-	setOnlyLocalReferences(true);
+	page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+	setRenderHint(QPainter::TextAntialiasing);
 	
-	view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
-	connect(this, SIGNAL(popupMenu(QString,QPoint)), this, SLOT(context(QString,QPoint)));
-	connect(browserExtension(), SIGNAL(openUrlRequest(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), SLOT(openClickedUrl(KUrl)));
-	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int,int)));
+	connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
 	
 	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
@@ -84,16 +80,12 @@ void ConsoleHtml::initialize()
 	m_css +="\t.string { color: #bb0000 }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
 	m_css +="</style>\n";
-	
-// 	begin();
-// 	write("<html>\n<head>"+m_css+"</head></html>");
-// 	end();
 }
 
-void ConsoleHtml::openClickedUrl(const KUrl& url)
+void ConsoleHtml::openClickedUrl(const QUrl& url)
 {
-	QString id =url.queryItem("id");
-	QString exp=url.queryItem("func");
+	QString id =url.queryItemValue("id");
+	QString exp=url.queryItemValue("func");
 	
 	foreach(InlineOptions* opt, m_options) {
 		if(opt->id() == id) {
@@ -248,29 +240,27 @@ bool ConsoleHtml::saveLog(const KUrl& path) const
 
 void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 {
-	//FIXME: Check that the output html is not correct
-	begin();
-	write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
-	write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n");
-	write(m_css);
-	write("</head>\n<body>");
+	QByteArray code;
+	code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+	code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
+	code += m_css;
+	code += "</head>\n<body>";
 	foreach(const QString &entry, m_htmlLog)
-		write("<p class='normal'>"+entry+"</p>");
-	
+		code += "<p class='normal'>"+entry+"</p>";
+
 	if(!newEntry.isEmpty()) {
 		m_htmlLog += newEntry;
-		write(options);
-		write("<p class='last'>"+newEntry+"</p>");
+		code += options;
+		code += "<p class='last'>"+newEntry+"</p>";
 	}
-	write("</body></html>");
-	end();
+	code += "</body></html>";
+
+	setContent(code);
 	
 	emit changed();
-}
 
-void ConsoleHtml::scrollDown(int min, int max)
-{
-	view()->verticalScrollBar()->setValue(max);
+	QWebFrame* mf = page()->mainFrame();
+	mf->setScrollBarValue(Qt::Vertical, mf->scrollBarMaximum(Qt::Vertical));
 }
 
 void ConsoleHtml::copy() const
@@ -278,7 +268,7 @@ void ConsoleHtml::copy() const
 	QApplication::clipboard()->setText(selectedText());
 }
 
-void ConsoleHtml::context(const QString & /*url*/, const QPoint & p)
+void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 {
 	KMenu popup;
 	if(hasSelection()) {
@@ -290,7 +280,7 @@ void ConsoleHtml::context(const QString & /*url*/, const QPoint & p)
 	}
 	popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
 	
-	popup.exec(p);
+	popup.exec(ev->pos());
 }
 
 void ConsoleHtml::clear()

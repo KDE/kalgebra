@@ -26,7 +26,12 @@ endif(OPENGL_FOUND)
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
 
 kde4_add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra ${KDE4_KHTML_LIBS} ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
+target_link_libraries(kalgebra
+	${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} ${QT_QTWEBKIT_LIBRARY}
+	${KDE4_KPARTS_LIBS}
+	${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY}
+	${QTMML_LIBRARY}
+)
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra ${QT_QTOPENGL_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
