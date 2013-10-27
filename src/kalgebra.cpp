@@ -215,7 +215,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	b_tools->addTab(b_funcs, i18n("List"));
 	
 	b_funced = new FunctionEdit(b_tools);
-	b_funced->setVariables(new Analitza::Variables);
+	b_funced->setVariables(c_varsModel->variables());
 	connect(b_funced, SIGNAL(accept()), this, SLOT(new_func()));
 	connect(b_funced, SIGNAL(removeEditingPlot()), this, SLOT(remove_func()));
 	b_tools->addTab(b_funced, KIcon("list-add"), i18n("&Add"));

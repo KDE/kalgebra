@@ -138,9 +138,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 }
 
 FunctionEdit::~FunctionEdit()
-{
-	delete m_vars;
-}
+{}
 
 void FunctionEdit::clear()
 {
@@ -252,15 +250,15 @@ void FunctionEdit::edit()
 	bool added = false;
 	
 	PlaneCurve* f = 0;
-	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D);
+	PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D, m_vars);
 	if(req.canDraw())
 		f = createFunction();
 	
 	if(f && f->isCorrect())
 		f->update(QRect(-10, 10, 20, -20));
 	
+	m_funcsModel->clear();
 	if(f && f->isCorrect()) {
-		m_funcsModel->clear();
 		m_funcsModel->addPlot(f);
 		added=true;
 		setState(QString("%1:=%2")
@@ -271,7 +269,6 @@ void FunctionEdit::edit()
 			errors = f->errors();
 		Q_ASSERT(!errors.isEmpty());
 		
-		m_funcsModel->clear();
 		setState(errors.first(), true);
 		m_valid->setToolTip(errors.join("<br />"));
 		delete f;
