@@ -73,12 +73,24 @@ void AnalitzaWrapper::setVariables(Analitza::Variables* v)
 	initWrapped();
 }
 
+QVariant AnalitzaWrapper::simplify(const QString& expression)
+{
+	Analitza::Expression e(expression, false);
+	if(!e.isCorrect()) {
+		return qVariantFromValue(new ExpressionWrapper(e));
+	}
+	m_wrapped->setExpression(e);
+	m_wrapped->simplify();
+
+	return qVariantFromValue(new ExpressionWrapper(m_wrapped->expression()));
+}
+
 QVariant AnalitzaWrapper::execute(const QString& expression)
 {
 	initWrapped();
 	Analitza::Expression e(expression, false);
 	if(!e.isCorrect()) {
-		return e.error();
+		return qVariantFromValue(new ExpressionWrapper(e));
 	}
 	m_wrapped->setExpression(e);
 	

@@ -32,6 +32,8 @@ class ExpressionWrapper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString expression READ toString WRITE setText);
+	Q_PROPERTY(bool isCorrect READ isCorrect);
+	Q_PROPERTY(QStringList errors READ errors);
 	public:
 		ExpressionWrapper(QObject* parent=0);
 		explicit ExpressionWrapper(const Analitza::Expression & e, QObject* parent = 0);
@@ -63,6 +65,7 @@ class AnalitzaWrapper : public QObject
 		
 		Analitza::Analyzer* wrapped() const { return m_wrapped; }
 		
+		Q_SCRIPTABLE QVariant simplify(const QString& expression);
 		Q_SCRIPTABLE QVariant execute(const QString& expression);
 		Q_SCRIPTABLE QVariant executeFunc(const QString& name, const QVariantList& args);
 		Q_SCRIPTABLE QString unusedVariableName() const;
