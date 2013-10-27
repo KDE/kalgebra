@@ -14,13 +14,6 @@ set(kalgebra_SRCS
 	functionedit.cpp
 )
 
-if(OPENGL_FOUND)
-	set(kalgebra_SRCS
-		${kalgebra_SRCS}
-		graph3d.cpp
-	)
-endif(OPENGL_FOUND)
-
 #uncomment this if oxygen icons for kalgebra are available
 #kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
 kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png")
