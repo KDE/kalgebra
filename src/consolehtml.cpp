@@ -78,7 +78,11 @@ void ConsoleHtml::initialize()
 	m_css +="\t.result { padding-left: 10%; }\n";
 	m_css +="\t.options { font-size: small; text-align:right }\n";
 	m_css +="\t.string { color: #bb0000 }\n";
-	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
+	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }\n";
+	m_css +="\ta:link {text-decoration:none;}\n";
+	m_css +="\ta:visited {text-decoration:none;}\n";
+	m_css +="\ta:hover {text-decoration:underline;}\n";
+	m_css +="\ta:active {text-decoration:underline;}\n";
 	m_css +="</style>\n";
 }
 
@@ -87,7 +91,11 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
 	QString id =url.queryItemValue("id");
 	QString exp=url.queryItemValue("func");
 	
-	foreach(InlineOptions* opt, m_options) {
+	qDebug() << "xxxxxx" << exp << id;
+
+	if(id=="copy") {
+		emit paste(exp);
+	} else foreach(InlineOptions* opt, m_options) {
 		if(opt->id() == id) {
 			opt->triggerOption(Analitza::Expression(exp, false));
 		}
@@ -134,7 +142,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		
 		a.insertVariable("ans", res);
 		m_script += e; //Script won't have the errors
-		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
+		newEntry = QString("<a href='/query?id=copy&func=%1'>*</a> %2<br />=<span class='result'>%3</span>").arg(e.toString()).arg(e.toHtml()).arg(result);
 	} else {
 		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(input), a.errors().join("</li>\n<li>"));
 	}
