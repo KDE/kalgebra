@@ -416,9 +416,8 @@ where z=x*y.
 <para>The view can be zoomed and moved with the mouse. Using the wheel
 you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.</para>
 
-<!--FIXME BUG:321686 it is not possible to do use keys
-<para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view.</para>
- -->
+ <para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view. Press <keycap>W</keycap> to zoom in the plot and <keycap>S</keycap> to zoom it out.</para>
+
 <para>In the <guimenu>3D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
 <!-- not in master for 4.11
