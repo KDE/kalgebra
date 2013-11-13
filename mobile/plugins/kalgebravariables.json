@@ -1,0 +1,13 @@
+{
+    "Comment": "Displays the stored values",
+    "Icon": "document-properties",
+    "Name": "Variables",
+    "ServiceTypes": "KAlgebra/Script",
+    "Type": "Service",
+    "X-KAlgebra-Priority": "0",
+    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
+    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
+    "X-KDE-PluginInfo-License": "GPL",
+    "X-KDE-PluginInfo-Name": "VariablesView.qml",
+    "X-KDE-PluginInfo-Version": "1.0"
+}

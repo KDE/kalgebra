@@ -1,0 +1,13 @@
+{
+    "Comment": "Scientific calculator",
+    "Icon": "utilities-terminal",
+    "Name": "Console",
+    "ServiceTypes": "KAlgebra/Script",
+    "Type": "Service",
+    "X-KAlgebra-Priority": "1000",
+    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
+    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
+    "X-KDE-PluginInfo-License": "GPL",
+    "X-KDE-PluginInfo-Name": "Console.qml",
+    "X-KDE-PluginInfo-Version": "1.0"
+}
