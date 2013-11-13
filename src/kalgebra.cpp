@@ -717,8 +717,9 @@ void KAlgebra::add3D(const Analitza::Expression& exp)
 {
 #ifdef HAVE_OPENGL
 	t_model3d->clear();
-	t_model3d->addPlot(Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables())
-													 .create(Qt::yellow, "func3d_console"));
+	Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables());
+	Q_ASSERT(plot.canDraw());
+	t_model3d->addPlot(plot.create(Qt::yellow, "func3d_console"));
 	m_tabs->setCurrentIndex(2);
 #endif
 }
