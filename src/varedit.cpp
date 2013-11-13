@@ -22,44 +22,40 @@
 #include <analitza/variables.h>
 #include <analitzagui/expressionedit.h>
 
-#include <KLocale>
-
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGroupBox>
+#include <QDialogButtonBox>
 #include <KPushButton>
+#include <klocalizedstring.h>
 
-VarEdit::VarEdit(QWidget *parent, bool modal) :
-	KDialog(parent), vars(0), m_correct(false)
+VarEdit::VarEdit(QWidget *parent, bool modal)
+	: QDialog(parent), vars(0), m_correct(false)
 {
-	QWidget *widget = new QWidget( this );
-	setCaption(i18n("Add/Edit a variable"));
+	setWindowTitle(i18n("Add/Edit a variable"));
 	setModal(modal);
-	setButtons(KDialog::User1 | KDialog::Ok | KDialog::Cancel);
-	enableButtonApply( false );
-	setMainWidget( widget );
+
+	m_buttonBox = new QDialogButtonBox(this);
+	m_buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	m_removeBtn = m_buttonBox->addButton(i18n("Remove Variable"), QDialogButtonBox::DestructiveRole);
+	m_removeBtn->setIcon(QIcon::fromTheme("edit-table-delete-row"));
 	
-	setButtonText(KDialog::User1, i18n("Remove Variable"));
-	
-	setButtonIcon(KDialog::User1, QIcon::fromTheme("edit-table-delete-row"));
-	setButtonIcon(KDialog::Ok, QIcon::fromTheme("dialog-ok"));
-	setButtonIcon(KDialog::Cancel, QIcon::fromTheme("dialog-cancel"));
-	
-	connect(button(KDialog::User1), SIGNAL(clicked(bool)), SLOT(removeVariable()));
+	connect(m_removeBtn, SIGNAL(clicked(bool)), SLOT(removeVariable()));
 	
 	connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
 	connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
 	
-	m_exp = new Analitza::ExpressionEdit(widget);
+	m_exp = new Analitza::ExpressionEdit(this);
 	connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));
 	connect(m_exp, SIGNAL(returnPressed()), this, SLOT(ok()));
 	
-	m_valid = new QLabel(widget);
+	m_valid = new QLabel(this);
 	
-	QVBoxLayout *topLayout = new QVBoxLayout(widget);
+	QVBoxLayout *topLayout = new QVBoxLayout(this);
 	topLayout->addWidget(m_exp);
 	topLayout->addWidget(m_valid);
+	topLayout->addWidget(m_buttonBox);
 	
 	m_exp->setFocus();
 }
@@ -74,7 +70,7 @@ void VarEdit::setName(const QString& newVar)
 		m_exp->setExpression(Analitza::Expression(vars->value(newVar)->copy()));
 	}
 	
-	button(KDialog::User1)->setEnabled(canRemove(newVar));
+	m_removeBtn->setEnabled(canRemove(newVar));
 }
 
 bool VarEdit::canRemove(const QString& name) const
@@ -109,7 +105,7 @@ Analitza::Expression VarEdit::val()
 		m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
 		m_valid->setToolTip(a.errors().join("\n"));
 	}
-	button(Ok)->setEnabled(m_correct);
+	m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_correct);
 	m_exp->setCorrect(m_correct);
 	
 	return val;

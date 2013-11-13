@@ -19,13 +19,12 @@
 #ifndef KALGEBRA_H
 #define KALGEBRA_H
 
-#include <KMainWindow>
-#include <KLineEdit>
 #include <QTreeView>
 #include <QPushButton>
 #include <QTabWidget>
 #include <QLabel>
 #include <QListView>
+#include <QMainWindow>
 #include <config-kalgebra.h>
 
 namespace Analitza {
@@ -42,7 +41,7 @@ class KRecentFilesAction;
 
 namespace Analitza { class Expression; }
 
-class KAlgebra : public KMainWindow
+class KAlgebra : public QMainWindow
 {
 	Q_OBJECT
 	public:
@@ -84,7 +83,7 @@ class KAlgebra : public KMainWindow
 		//Dictionary
 		QDockWidget *d_dock;
 		QListView *d_list;
-		KLineEdit *d_filter;
+		QLineEdit *d_filter;
 		
 	private Q_SLOTS:
 		void newInstance();

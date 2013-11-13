@@ -17,9 +17,6 @@
  *************************************************************************************/
 
 #include <QGuiApplication>
-#include <KAboutData>
-#include <KCmdLineArgs>
-#include <KStandardDirs>
 
 #ifdef KDECOMPONENTS
 #include <kdeclarative/kdeclarative.h>

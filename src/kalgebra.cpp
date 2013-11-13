@@ -46,18 +46,19 @@
 #include <QPrinter>
 #include <QAction>
 #include <QFileDialog>
-#include <KHTMLView>
+#include <QStatusBar>
+#include <QMenuBar>
+#include <QToolButton>
+#include <QApplication>
+#include <klocalizedstring.h>
 #include <KHelpMenu>
-#include <KFileDialog>
-#include <KMenu>
-#include <KMenuBar>
-#include <KStatusBar>
-#include <KLocale>
 #include <KStandardAction>
-#include <KProcess>
-#include <KRecentFilesAction>
-#include <KApplication>
 #include <KToggleFullScreenAction>
+#include <KRecentFilesAction>
+#include <kconfig.h>
+#include <QProcess>
+#include <QPointer>
+#include <kconfiggroup.h>
 
 class Add2DOption : public InlineOptions
 {
@@ -104,15 +105,16 @@ class Add3DOption : public InlineOptions
 
 QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
 
-KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
+KAlgebra::KAlgebra(QWidget *parent)
+	: QMainWindow(parent)
 {
 	resize(900, 500);
 	
 	m_tabs = new QTabWidget;
 	setCentralWidget(m_tabs);
 	
-	setStatusBar(new KStatusBar(this));
-	setMenuBar(new KMenuBar(this));
+	setStatusBar(new QStatusBar(this));
+	setMenuBar(new QMenuBar(this));
 	
 	KToggleFullScreenAction* fullScreenAction = KStandardAction::fullScreen(this, SLOT(fullScreen(bool)), this, this);
 	
@@ -340,8 +342,7 @@ KAlgebra::KAlgebra(QWidget *parent) : KMainWindow(parent)
 	
 	QWidget *w=new QWidget;
 	QLayout *leftLayo=new QVBoxLayout(w);
-	d_filter=new KLineEdit(w);
-	d_filter->setClearButtonShown(true);
+	d_filter=new QLineEdit(w);
 	d_filter->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	connect(d_filter, SIGNAL(textChanged(QString)), dic, SLOT(setFilter(QString)));
 	connect(d_filter, SIGNAL(textChanged(QString)), this, SLOT(dictionaryFilterChanged(QString)));
@@ -395,7 +396,7 @@ void KAlgebra::initializeRecentScripts()
 
 void KAlgebra::newInstance()
 {
-	KProcess::startDetached(QApplication::applicationFilePath());
+	QProcess::startDetached(QApplication::applicationFilePath());
 }
 
 void KAlgebra::add2D(const Analitza::Expression& exp)
@@ -498,7 +499,7 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	QUrl path = KFileDialog::getOpenUrl(QUrl(), "*.kal|"+i18n("Script (*.kal)"), this, i18n("Choose a script"));
+	QUrl path = QFileDialog::getOpenFileUrl(this, i18n("Choose a script"), QUrl(), "*.kal|"+i18n("Script (*.kal)"));
 	
 	if(!path.isEmpty())
 		loadScript(path);
@@ -514,7 +515,7 @@ void KAlgebra::loadScript(const QUrl& path)
 
 void KAlgebra::saveScript()
 {
-	QUrl path = KFileDialog::getSaveUrl(QUrl(), "*.kal|"+i18n("Script (*.kal)"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), "*.kal|"+i18n("Script (*.kal)"));
 	bool loaded=false;
 	if(!path.isEmpty())
 		loaded=c_results->saveScript(path);
@@ -525,7 +526,7 @@ void KAlgebra::saveScript()
 
 void KAlgebra::saveLog()
 {
-	QUrl path = KFileDialog::getSaveUrl(QUrl(), "*.html|"+i18n("HTML File (*.html)"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), "*.html|"+i18n("HTML File (*.html)"));
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
@@ -572,7 +573,7 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = KFileDialog::getSaveFileName(QUrl(), i18n("*.png|PNG File\n*.pdf|PDF Document"), this, QString(), KFileDialog::ConfirmOverwrite);
+	QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("*.png|PNG File\n*.pdf|PDF Document"));
 	if(!path.isEmpty()) {
 		QPixmap px = m_graph3d->renderPixmap();
 		if(path.endsWith(".pdf")) {
@@ -604,12 +605,12 @@ void KAlgebra::toggleKeepAspect()
 
 void KAlgebra::saveGraph()
 {
-	QFileDialog* dialog=new QFileDialog(i18n("Select where to put the rendered plot"), i18n("*.png|Image File\n*.svg|SVG File"), this);
+    QPointer<QFileDialog> dialog=new QFileDialog(this, i18n("Select where to put the rendered plot"), QString(), i18n("*.png|Image File\n*.svg|SVG File"));
 	dialog->setConfirmOverwrite(true);
 	
-	if(dialog->exec()) {
-		QString filter = dialog->fileWidget()->currentFilter();
-		QString filename = dialog->selectedFile();
+	if(dialog->exec() && !dialog->selectedFiles().isEmpty()) {
+		QString filter = dialog->selectedNameFilter();
+		QString filename = dialog->selectedFiles().first();
 		
 		bool isSvg = filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg");
 		Analitza::PlotsView2D::Format f = isSvg ? Analitza::PlotsView2D::PNG : Analitza::PlotsView2D::SVG;

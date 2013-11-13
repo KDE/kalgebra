@@ -19,10 +19,10 @@
 #include "viewportwidget.h"
 
 #include <QFormLayout>
-#include <KLocale>
 #include <QDoubleSpinBox>
-#include <KPushButton>
 #include <QBoxLayout>
+#include <QPushButton>
+#include <klocalizedstring.h>
 #include <limits>
 
 ViewportWidget::ViewportWidget(QWidget * parent)
@@ -48,7 +48,7 @@ ViewportWidget::ViewportWidget(QWidget * parent)
 	layout->addRow(i18n("Width:"), m_width);
 	layout->addRow(i18n("Height:"), m_height);
 	
-	QPushButton *apply=new KPushButton(QIcon::fromTheme("dialog-ok-apply"), i18n("Apply"), this);
+	QPushButton *apply=new QPushButton(QIcon::fromTheme("dialog-ok-apply"), i18n("Apply"), this);
 	connect(apply, SIGNAL(clicked()), SLOT(emitViewport()));
 	
 	upperLayout->addLayout(layout);

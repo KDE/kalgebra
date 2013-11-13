@@ -19,13 +19,11 @@
 #ifndef VAREDIT_H
 #define VAREDIT_H
 
-#include <KDialog>
-
+#include <QDialog>
 #include <QRadioButton>
 #include <QLabel>
 
-#include <analitza/expression.h>
-
+class QDialogButtonBox;
 namespace Analitza
 {
 class Analyzer;
@@ -39,7 +37,7 @@ class ExpressionEdit;
  *	@author Aleix Pol i Gonzalez
  */
 
-class VarEdit : public KDialog
+class VarEdit : public QDialog
 {
 	Q_OBJECT
 	public:
@@ -64,7 +62,9 @@ class VarEdit : public KDialog
 		Analitza::Variables *vars;
 		bool m_correct;
 		QString m_var;
-		
+		QDialogButtonBox* m_buttonBox;
+		QPushButton* m_removeBtn;
+
 	private Q_SLOTS:
 		void edit();
 		void ok();

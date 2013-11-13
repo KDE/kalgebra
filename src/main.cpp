@@ -23,20 +23,13 @@
 
 int main(int argc, char *argv[])
 {
-	KAboutData about("kalgebra", 0, ki18n(("KAlgebra")), "0.11", ki18n("A calculator"),
-			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
-	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
-    about.addAuthor( ki18n("Percy Camilo Triveño Aucahuasi"),  ki18n("Developed feature for drawing implicit curves. Improvements for plotting functions."),
-    "percy.camilo.ta@gmail.com" );
-	KCmdLineArgs::init(argc, argv, &about);
-	KApplication app;
+	QApplication app(argc, argv);
+	app.setApplicationName("kalgebra");
+	app.setApplicationDisplayName(app.tr("KAlgebra"));
+	app.setApplicationVersion("0.99");
 	
-	/*if(app.isSessionRestored()) {
-		RESTORE(KAlgebra);
-	} else {*/
-		KAlgebra* widget = new KAlgebra;
-		widget->show();
-	//}
+	KAlgebra widget;
+	widget.show();
 	
 	return app.exec();
 }

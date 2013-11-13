@@ -23,11 +23,11 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QComboBox>
+#include <QLineEdit>
 
 #include <KColorCombo>
-#include <KLineEdit>
 
-class KTabWidget;
+class QTabWidget;
 namespace Analitza
 {
 class Variables;
@@ -113,7 +113,7 @@ private:
 	Analitza::ExpressionEdit *m_func;
 	Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
 	double m_calcUplimit, m_calcDownlimit;
-	KLineEdit *m_name;
+	QLineEdit *m_name;
 	QPushButton *m_ok;
 	QLabel *m_valid;
 	QLabel *m_validIcon;
@@ -123,7 +123,7 @@ private:
 	Analitza::Variables* m_vars;
 	
 	bool m_modmode;
-	KTabWidget* m_viewTabs;
+	QTabWidget* m_viewTabs;
 	QPushButton* m_remove;
 };
 

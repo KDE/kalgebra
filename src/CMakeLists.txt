@@ -19,7 +19,9 @@ set(kalgebra_SRCS
 # kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png") #FIXME: port!
 
 add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra KF5::KHtml Qt5::PrintSupport ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
+target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets
+                               KF5::KI18n KF5::XmlGui KF5::KIOWidgets
+                               ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra Qt5::OpenGL ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})

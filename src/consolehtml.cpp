@@ -27,12 +27,14 @@
 #include <QTextDocument>
 #include <qevent.h>
 #include <QDir>
+#include <qurlquery.h>
 #include <QWebFrame>
 
 #include <KLocale>
 #include <KStandardAction>
-#include <KMenu>
+#include <QMenu>
 #include <KHTMLView>
+#include <KLocalizedString>
 #include <QAction>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
@@ -47,15 +49,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent)
 	page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	setRenderHint(QPainter::TextAntialiasing);
 	
-<<<<<<< HEAD
 	connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
-=======
-	view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
-	connect(this, SIGNAL(popupMenu(QString,QPoint)), this, SLOT(context(QString,QPoint)));
-	connect(browserExtension(), SIGNAL(openUrlRequest(QUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), SLOT(openClickedUrl(QUrl)));
-	connect(view()->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(scrollDown(int,int)));
->>>>>>> First approach to a kf5 port
 	
 	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
@@ -92,8 +86,9 @@ void ConsoleHtml::initialize()
 
 void ConsoleHtml::openClickedUrl(const QUrl& url)
 {
-	QString id =url.queryItemValue("id");
-	QString exp=url.queryItemValue("func");
+	QUrlQuery query(url);
+	QString id =query.queryItemValue("id");
+	QString exp=query.queryItemValue("func");
 	
 	foreach(InlineOptions* opt, m_options) {
 		if(opt->id() == id) {
@@ -130,10 +125,11 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		foreach(InlineOptions* opt, m_options) {
 			if(opt->matchesExpression(lambdaexp, functype)) {
 				QUrl url("/query");
-				url.addQueryItem("id", opt->id());
-				url.addQueryItem("func", lambdaexp.toString());
+				QUrlQuery query(url);
+				query.addQueryItem("id", opt->id());
+				query.addQueryItem("func", lambdaexp.toString());
 				
-				options += i18n(" <a href='%1'>%2</a>", url.url(), opt->caption());
+				options += i18n(" <a href='%1'>%2</a>", query.toString(), opt->caption());
 			}
 		}
 		
@@ -144,7 +140,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 		m_script += e; //Script won't have the errors
 		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
 	} else {
-		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", Qt::escape(input), a.errors().join("</li>\n<li>"));
+		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join("</li>\n<li>"));
 	}
 	
 	updateView(newEntry, options);
@@ -167,7 +163,7 @@ QString ConsoleHtml::retrieve(const QUrl& remoteUrl)
 	
 	KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl(path));
 	
-	bool ret = KIO::NetAccess::synchronousRun(job, 0);
+	bool ret = job->exec();
 	if(!ret)
 		path.clear();
 	
@@ -190,11 +186,11 @@ bool ConsoleHtml::loadScript(const QUrl& path)
 	}
 	
 	if(!correct) {
-		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.pathOrUrl(), a.errors().join("<br/>"));
+		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join("<br/>"));
 		updateView(QString(), QString());
 	}
 	else
-		updateView(i18n("Imported: %1", path.pathOrUrl()), QString());
+		updateView(i18n("Imported: %1", path.toString()), QString());
 	
 	return correct;
 }
@@ -215,8 +211,8 @@ bool ConsoleHtml::saveScript(const QUrl & path) const
 	}
 	
 	if(!path.isLocalFile()) {
-		KIO::CopyJob* job=KIO::move(savePath, path);
-		correct=KIO::NetAccess::synchronousRun(job, 0);
+		KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+		correct=job->exec();
 	}
 	return correct;
 }
@@ -240,8 +236,8 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
 	}
 	
 	if(!path.isLocalFile()) {
-		KIO::CopyJob* job=KIO::move(savePath, path);
-		correct=KIO::NetAccess::synchronousRun(job, 0);
+		KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+		correct=job->exec();
 	}
 	return correct;
 }
@@ -278,7 +274,7 @@ void ConsoleHtml::copy() const
 
 void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 {
-	KMenu popup;
+	QMenu popup;
 	if(hasSelection()) {
 		popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
 		QAction *act=new QAction(QIcon::fromTheme("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);

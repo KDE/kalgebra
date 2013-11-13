@@ -37,6 +37,7 @@
 #include <analitzaplot/planecurve.h>
 #include <analitzaplot/plotsmodel.h>
 #include <analitzaplot/plotsfactory.h>
+#include <klocalizedstring.h>
 
 using namespace Analitza;
 
@@ -53,7 +54,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	topLayout->setMargin(2);
 	topLayout->setSpacing(5);
 	
-	m_name = new KLineEdit(this);
+	m_name = new QLineEdit(this);
 	
 	m_func = new ExpressionEdit(this);
     m_func->setExamples(PlotsFactory::self()->examples(Dim2D));
@@ -81,7 +82,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_funcsModel=new PlotsModel(this);
     m_funcsModel->setResolution(resolution);
 	
-	m_viewTabs=new KTabWidget(this);
+	m_viewTabs=new QTabWidget(this);
 	
 	m_graph = new PlotsView2D(m_viewTabs);
 	m_graph->setModel(m_funcsModel);
