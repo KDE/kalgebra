@@ -24,33 +24,49 @@
 #include <QDir>
 #include <QDebug>
 #include <QStandardPaths>
+#include <QJsonDocument>
 
 PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
-	QStringList foundPlugins = QStandardPaths::locateAll(QStandardPaths::DataLocation, "plugins/*.desktop");
+	QString pluginsDirectory = QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
+	QStringList foundPlugins;
+	QDir dir(pluginsDirectory);
+	foreach(const QString& file, dir.entryList(QStringList("*.json"))) {
+		foundPlugins += dir.absoluteFilePath(file);
+	}
 
 	qDebug() << "Plugins found:" << foundPlugins;
 
 	QList<QStandardItem*> items;
 	Q_FOREACH(const QString& file, foundPlugins) {
-		KConfig info(file, KConfig::SimpleConfig, QStandardPaths::DataLocation);
-		KConfigGroup cg = info.group("Desktop Entry");
+		QFile f(file);
+		bool ret = f.open(QIODevice::ReadOnly);
+		if(!ret) {
+			qWarning() << "error opening " << file;
+			continue;
+		}
+// 		qDebug() << "laaaaa" << f.readAll() << file;
+
+		QByteArray data = f.readAll();
+		QJsonDocument doc = QJsonDocument::fromJson(data);
+
+		QVariantMap cg = doc.toVariant().toMap();
 		QStandardItem* item = new QStandardItem;
 
-		QString postfix = "plugins/"+cg.readEntry("X-KDE-PluginInfo-Name", QString());
+		QString postfix = "plugins/"+cg.value("X-KDE-PluginInfo-Name", QString()).toString();
 		QString scriptPath = QStandardPaths::locate(QStandardPaths::DataLocation, postfix);
 
 		Q_ASSERT(!scriptPath.isEmpty());
 
-		QVariant priority = cg.readEntry("X-KAlgebra-Priority", QString());
+		QVariant priority = cg.value("X-KAlgebra-Priority", QString());
 		if(!priority.isValid())
 			priority = 1000;
 		
 		item->setData(scriptPath, PathRole);
 		item->setData(priority, PriorityRole);
-		item->setData(cg.readEntry("Name", QString()), TitleRole);
-		item->setData(cg.readEntry("Comment", QString()), SubtitleRole);
-		item->setData(cg.readEntry("Icon", QString()), Qt::DecorationRole);
+		item->setData(cg.value("Name", QString()), TitleRole);
+		item->setData(cg.value("Comment", QString()), SubtitleRole);
+		item->setData(cg.value("Icon", QString()), Qt::DecorationRole);
 		
 		items += item;
 	}
