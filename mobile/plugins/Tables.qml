@@ -26,10 +26,7 @@ KAlgebraPage
 		if(fstep==0) {
 			resultsModel.append( { element: "Errors: The step can't be 0" } );
 		} else if(!a.isCorrect) {
-			if(ret)
-				resultsModel.append( { element: "Errors: "+ret } );
-			else
-				resultsModel.append( { element: "Errors: "+a.errors } );
+			resultsModel.append( { element: "Errors: "+ (ret ? ret : a.errors) } );
 		} else {
 			for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
 				var args = new Array();
