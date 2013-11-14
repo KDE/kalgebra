@@ -8,6 +8,8 @@ find_package(Analitza REQUIRED)
 macro_optional_find_package(LibKdeEdu)
 find_library(QTMML_LIBRARY qtmmlwidget)
 
+find_package(Qt4 COMPONENTS QtWebKit REQUIRED)
+
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${LIBKDEEDU_INCLUDE_DIR}/qtmml ${ANALITZA_INCLUDE_DIR})
 
 macro_optional_find_package(OpenGL)
