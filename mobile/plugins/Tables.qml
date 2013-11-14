@@ -19,7 +19,7 @@ KAlgebraPage
 // 		console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 		if((fto-ffrom>0)!=(fstep>0)) {
 			fstep *= -1;
-			step = fstep
+			step.value = fstep
 		}
 // 		console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 		
