@@ -17,6 +17,7 @@ find_package(KConfig REQUIRED)
 # find_package(KDocTools)
 find_package(KI18n REQUIRED)
 find_package(KIO REQUIRED)
+find_package(Qt5WebKitWidgets REQUIRED)
 
 if(OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
