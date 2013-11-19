@@ -1,4 +1,3 @@
-add_subdirectory(declarative)
 add_subdirectory(plugins)
 
 if(KDeclarative_FOUND)
