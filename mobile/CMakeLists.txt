@@ -10,7 +10,7 @@ add_executable(kalgebramobile pluginsmodel.cpp
 	kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
-	${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
+	KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 add_definitions("-DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
 

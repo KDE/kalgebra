@@ -41,7 +41,7 @@ set(kalgebra_SRCS
 add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets
                                KF5::KI18n KF5::XmlGui KF5::KIOWidgets
-                               ${QTMML_LIBRARY} ${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
+                               ${QTMML_LIBRARY} KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 if(OPENGL_FOUND)
    target_link_libraries(kalgebra Qt5::OpenGL ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})

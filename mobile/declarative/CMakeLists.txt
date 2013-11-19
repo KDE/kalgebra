@@ -9,7 +9,7 @@ add_library(analitzadeclarativeplugin SHARED analitzadeclarativeplugin.cpp graph
 
 target_link_libraries(analitzadeclarativeplugin
 	Qt5::Core Qt5::Gui Qt5::Qml Qt5::Quick
-	${ANALITZA_LIBRARY} ${ANALITZAGUI_LIBRARY} ${ANALITZAPLOT_LIBRARY})
+	KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 install(TARGETS analitzadeclarativeplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/analitza)
 install(FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/analitza)
