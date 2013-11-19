@@ -18,8 +18,6 @@
 
 
 #include "pluginsmodel.h"
-#include <KConfigGroup>
-#include <KConfig>
 #include <QIcon>
 #include <QDir>
 #include <QDebug>
