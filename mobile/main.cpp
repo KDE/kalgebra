@@ -32,6 +32,7 @@
 #include <QIcon>
 
 #include "kalgebramobile.h"
+#include "pluginsmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -59,16 +60,18 @@ int main(int argc, char *argv[])
 // 	kdeclarative.setupBindings();
 #endif
 	
-	QString main = QStandardPaths::locate(QStandardPaths::DataLocation, "plugins/widgets/KAlgebraMobile.qml");
-//     QString main = KStandardDirs::locate("appdata", "plugins/Tables.qml");
+	QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
+
 	QDir dir = QFileInfo(main).dir();
 	dir.cdUp();
 	
 	view.engine()->addImportPath(dir.path());
 	view.setSource(QUrl::fromLocalFile(main));
+	view.setResizeMode(QQuickView::SizeRootObjectToView);
 	
-	#if defined(__arm__) && !defined(ANDROID)
-		view.showFullScreen();
+	//it's not like we want it different for ARM, it's more like we want it maximized on touch devices I guess
+	#if defined(__arm__)
+		view.showMaximized();
 	#else
 		view.resize(view.initialSize().width(), view.initialSize().height());
 		view.show();

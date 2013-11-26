@@ -31,7 +31,7 @@ Rectangle
 		anchors.fill: parent
 		spacing: 10
 		header: Image {
-			source: "qrc:/kalgebra.svgz"
+			source: "qrc:/kalgebra.png"
 			anchors.horizontalCenter: parent.horizontalCenter
 			
 			MouseArea {

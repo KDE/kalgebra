@@ -24,11 +24,16 @@
 #include <QStandardPaths>
 #include <QJsonDocument>
 
+QString PluginsModel::pluginsDirectoryPath()
+{
+	return QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
+// 	return "../kalgebramobile/plugins";
+}
+
 PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
-	QString pluginsDirectory = QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
 	QStringList foundPlugins;
-	QDir dir(pluginsDirectory);
+	QDir dir(pluginsDirectoryPath());
 	foreach(const QString& file, dir.entryList(QStringList("*.json"))) {
 		foundPlugins += dir.absoluteFilePath(file);
 	}
@@ -51,8 +56,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		QVariantMap cg = doc.toVariant().toMap();
 		QStandardItem* item = new QStandardItem;
 
-		QString postfix = "plugins/"+cg.value("X-KDE-PluginInfo-Name", QString()).toString();
-		QString scriptPath = QStandardPaths::locate(QStandardPaths::DataLocation, postfix);
+		QString scriptPath = dir.absoluteFilePath(cg.value("X-KDE-PluginInfo-Name", QString()).toString());
 
 		Q_ASSERT(!scriptPath.isEmpty());
 

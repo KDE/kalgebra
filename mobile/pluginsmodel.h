@@ -31,6 +31,8 @@ class PluginsModel : public QStandardItemModel
 		explicit PluginsModel(QObject* parent = 0);
 		virtual QHash<int, QByteArray> roleNames() const;
 		
+		static QString pluginsDirectoryPath();
+
 	public Q_SLOTS:
 		///qml can't access data. Yay!
 		QString pluginPath(int row);
