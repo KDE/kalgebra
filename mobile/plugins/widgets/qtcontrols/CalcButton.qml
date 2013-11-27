@@ -1,0 +1,4 @@
+Button
+{
+	onClicked: doOp(text)
+}
