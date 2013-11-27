@@ -34,20 +34,10 @@ KAlgebraPage
 	}
 	
 	SimpleListView {
-		model: itemModel
 		id: view
-		
-		delegate: Label {
-			text: result
-			MouseArea {
-				anchors.fill: parent
-				onClicked:  {
-					input.text = resultsInput
-					input.selectAll()
-					input.focus = true
-				}
-			}
-		}
+		model: itemModel
+		role: "result"
+		title: "Log"
 		
 		anchors {
 			top: input.bottom

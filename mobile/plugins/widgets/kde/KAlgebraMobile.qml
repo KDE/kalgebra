@@ -35,7 +35,6 @@ Item {
 		} catch (e) {
 			console.log("error: "+e)
 		}
-// 		d.text=deco
 	}
 	
 	Page {

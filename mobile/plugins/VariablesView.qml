@@ -7,7 +7,8 @@ KAlgebraPage
 	SimpleListView {
 		anchors.fill: parent
 		model: VariablesModel { variables: app.variables }
-		delegate: Label { text: display+": "+toolTip }
 		currentIndex: -1
+		role: "whatsThis"
+		title: "Variables"
 	}
 }
