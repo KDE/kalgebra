@@ -16,8 +16,7 @@ Rectangle
 			if (component.status == Component.Ready) {
 				var obj = component.createObject(rootItem)
 // 				obj.z = rootItem+1
-				obj.anchors.fill = rootItem
-				
+				obj.anchors.fill = pluginsView
 			} else {
 				console.log("Error loading component:", component.errorString());
 			}
