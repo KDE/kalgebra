@@ -49,10 +49,16 @@ ApplicationWindow
 					onClicked: goToPage(model.path)
 					anchors.horizontalCenter: parent.horizontalCenter
 				}
-
-
 			model: PluginsModel { id: plugins }
 		}
+	}
+
+	Action {
+		id: backAction
+		text: "Back"
+		shortcut: "Back"
+		tooltip: "Go back"
+		onTriggered: pageStack.pop()
 	}
 
 	StackView {
