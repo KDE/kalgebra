@@ -35,7 +35,7 @@ Graph2DMobile::Graph2DMobile(QDeclarativeItem* parent)
 	setSize(QSizeF(100,100));
 	setFlag(QGraphicsItem::ItemHasNoContents, false);
 	
-	defViewport = QRectF(QPointF(-12., 10.), QSizeF(24., -20.));
+	defViewport = QRectF(QPointF(-10.0, 10.0), QSizeF(20.0, -20.0));
 	resetViewport();
 }
 

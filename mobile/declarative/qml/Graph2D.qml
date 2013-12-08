@@ -5,7 +5,7 @@ Graph2DView {
 	id: view
 	anchors.fill: parent
 	
-	squares: true
+	showGrid: true
 	
 	PinchArea {
 		anchors.fill: parent
