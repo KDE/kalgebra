@@ -48,7 +48,7 @@ class Graph2DMobile : public QDeclarativeItem, public Analitza::Plotter2D
 		
 		void setCurrentFunction(int f) { m_currentFunction = f; }
 		bool ticksShownAtAll() const { return ticksShown()!=0; }
-		void setTicksShownAtAll(bool shown) { setTicksShown(shown ? Qt::Vertical|Qt::Horizontal : Qt::Orientations(0));}
+		void setTicksShownAtAll(bool shown) { setShowTickLabels(shown ? Qt::Vertical|Qt::Horizontal : Qt::Orientations(0));}
 		
 	public slots:
 		void translate(qreal x, qreal y);

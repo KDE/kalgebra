@@ -54,7 +54,8 @@ void Graph2DMobile::paint(QPainter* p, const QStyleOptionGraphicsItem* options, 
 	
 	if(m_dirty) {
 		m_buffer.fill(Qt::transparent);
-		drawFunctions(&m_buffer);
+        drawGrid(&m_buffer);
+        drawFunctions(&m_buffer);
 		m_dirty=false;
 	}
 	
