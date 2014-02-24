@@ -27,7 +27,6 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QDialogButtonBox>
-#include <KPushButton>
 #include <klocalizedstring.h>
 
 VarEdit::VarEdit(QWidget *parent, bool modal)

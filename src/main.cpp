@@ -16,9 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <KApplication>
+#include <QApplication>
 #include <KAboutData>
-#include <KCmdLineArgs>
 #include "kalgebra.h"
 
 int main(int argc, char *argv[])

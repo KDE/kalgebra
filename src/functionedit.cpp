@@ -23,8 +23,6 @@
 #include <QLabel>
 #include <QLineEdit>
 
-#include <KLocale>
-#include <KTabWidget>
 #include <KColorScheme>
 
 #include <analitzagui/expressionedit.h>

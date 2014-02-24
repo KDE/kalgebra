@@ -30,14 +30,11 @@
 #include <qurlquery.h>
 #include <QWebFrame>
 
-#include <KLocale>
 #include <KStandardAction>
 #include <QMenu>
-#include <KHTMLView>
 #include <KLocalizedString>
 #include <QAction>
 #include <kio/copyjob.h>
-#include <kio/netaccess.h>
 #include <kio/job.h>
 
 #include <analitza/variables.h>
