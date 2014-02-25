@@ -8,6 +8,7 @@ ApplicationWindow
 	id: rootItem
 	height: 600
 	width: 600
+	visible: true
 	
 	function goToPage(path, deco) {
 		try {
