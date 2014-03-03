@@ -25,7 +25,7 @@ KAlgebraPage
 			wrapMode: Text.WordWrap
 			horizontalAlignment: Text.AlignHCenter
 			text: ("KAlgebra is brought to you by the lovely community of <a href='http://kde.org'>KDE</a> "+
-					+"and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free Software envionment.")
+					"and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free Software envionment.")
 			onLinkActivated: Qt.openUrlExternally(link)
 		}
 		
