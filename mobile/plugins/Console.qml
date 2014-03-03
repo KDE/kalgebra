@@ -37,7 +37,7 @@ KAlgebraPage
 		id: view
 		model: itemModel
 		role: "result"
-		title: "Log"
+		title: "Results"
 		
 		anchors {
 			top: input.bottom
