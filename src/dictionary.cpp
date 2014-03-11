@@ -31,7 +31,6 @@
 #include <QHBoxLayout>
 #include <QFormLayout>
 #include <KLocale>
-#include <QtMmlWidget>
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
@@ -51,10 +50,6 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_descr=new QLabel(descr);
 	m_sample=new QLabel(descr);
 	m_example=new QLabel(descr);
-	m_formula=new QtMmlWidget(descr);
-// 	m_formula->setFrameStyle(2);
-	m_formula->setBaseFontPointSize(10);
-	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_funcs=new Analitza::PlotsModel(descr);
 	m_graph=new Analitza::PlotsView2D(descr);
 	m_graph->setTicksShown(0);
@@ -74,15 +69,12 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example);
-	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula);
  	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 	graphLayo->addWidget(descr);
-// 	graphLayo->addWidget(m_formula);
 	graphLayo->addWidget(m_graph);
 	descr->setLayout(descrLayo);
 
 	m_funcs->clear();
-	m_formula->setContent("<math />");
 // 	connect(m_list, SIGNAL(clicked(QModelIndex)), this, SLOT(activated(QModelIndex)));
 }
 
@@ -116,7 +108,6 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		m_example->setText(example);
 
 		QString error;
-		m_formula->setContent(e.toMathMLPresentation(), &error);
 		if(!error.isEmpty())
 			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
 
@@ -127,7 +118,6 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		m_descr->setText(QString());
 		m_sample->setText(QString());
 		m_example->setText(QString());
-		m_formula->setContent("<math />", &error);
 	}
 }
 
