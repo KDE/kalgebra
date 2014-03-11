@@ -31,9 +31,6 @@
 #include <QHBoxLayout>
 #include <QFormLayout>
 #include <klocalizedstring.h>
-#if 0 //QtMmlWidget not ported yet, use webkit instead?
-#include <QtMmlWidget>
-#endif
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
@@ -53,12 +50,6 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	m_descr=new QLabel(descr);
 	m_sample=new QLabel(descr);
 	m_example=new QLabel(descr);
-#if 0
-	m_formula=new QtMmlWidget(descr);
-// 	m_formula->setFrameStyle(2);
-	m_formula->setBaseFontPointSize(10);
-	m_formula->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-#endif
 	m_funcs=new Analitza::PlotsModel(descr);
 	m_graph=new Analitza::PlotsView2D(descr);
 	m_graph->setTicksShown(0);
@@ -78,10 +69,6 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
 	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example);
-#if 0
-	descrLayo->addRow(i18n("<b>Formula</b>"), m_formula);
-	m_formula->setContent("<math />");
-#endif
  	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 	graphLayo->addWidget(descr);
 	graphLayo->addWidget(m_graph);
@@ -120,13 +107,6 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		m_sample->setText(sample);
 		m_example->setText(example);
 
-		QString error;
-#if 0
-		m_formula->setContent(e.toMathMLPresentation(), &error);
-#endif
-		if(!error.isEmpty())
-			qDebug() << "dict formula error: " << error << e.toMathMLPresentation();
-
 		m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), "dict"));
 	} else {
 		QString error;
@@ -134,9 +114,6 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 		m_descr->setText(QString());
 		m_sample->setText(QString());
 		m_example->setText(QString());
-#if 0
-		m_formula->setContent("<math />", &error);
-#endif
 	}
 }
 

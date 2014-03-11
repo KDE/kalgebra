@@ -29,8 +29,6 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
 
 	find_package(KF5Declarative REQUIRED)
 endif()
-# macro_optional_find_package(LibKdeEdu)
-# find_library(QTMML_LIBRARY qtmmlwidget)
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
 	${CMAKE_INSTALL_PREFIX}/include/KDE #FIXME

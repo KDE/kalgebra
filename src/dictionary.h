@@ -32,7 +32,6 @@ class PlotsModel;
 class QLabel;
 class QModelIndex;
 class OperatorsModel;
-class QtMmlWidget;
 
 /**
 	@author Aleix Pol
@@ -56,7 +55,6 @@ Q_OBJECT
 		QLabel *m_sample;
 		QLabel *m_example;
 		
-		QtMmlWidget* m_formula;
 		Analitza::PlotsView2D *m_graph;
 		Analitza::PlotsModel *m_funcs;
 		OperatorsModel *m_ops;

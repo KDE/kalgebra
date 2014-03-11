@@ -84,12 +84,12 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	
 	m_graph = new PlotsView2D(m_viewTabs);
 	m_graph->setModel(m_funcsModel);
-	m_graph->setViewport(QRect(QPoint(-5, 7), QPoint(5, -7)));
+	m_graph->setViewport(QRectF(QPointF(-10.0, 10.0), QSizeF(20.0, -20.0)));
 	m_graph->setFocusPolicy(Qt::NoFocus);
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
-	m_graph->setSquares(false);
+	m_graph->setShowGrid(false);
 	m_graph->setTicksShown(Qt::Orientation(0));
 	
 	m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
