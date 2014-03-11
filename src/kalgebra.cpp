@@ -595,7 +595,7 @@ void KAlgebra::save3DGraph()
 
 void KAlgebra::toggleSquares()
 {
-	m_graph2d->setShowGrid(!m_graph2d->showGrid());
+	m_graph2d->setTicksShown(m_graph2d->ticksShown() ? (Qt::Horizontal|Qt::Vertical) : ~(Qt::Horizontal|Qt::Vertical));
 }
 
 void KAlgebra::toggleKeepAspect()
