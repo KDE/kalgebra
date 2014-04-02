@@ -29,6 +29,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QQmlContext>
+#include <QQmlApplicationEngine>
 #include <QIcon>
 
 #include "kalgebramobile.h"
@@ -46,12 +47,9 @@ int main(int argc, char *argv[])
 	
 	KAlgebraMobile widget;
 	
-	QQuickView view;
-	view.setTitle(view.tr("KAlgebra Mobile"));
-	view.engine()->rootContext()->setContextProperty("app", &widget);
-	
 // 	KGlobal::dirs()->addResourceDir("appdata", PREFIX "/share/apps");
-	
+
+
 #ifdef KDECOMPONENTS
 	KDeclarative kdeclarative;
 // 	kdeclarative.setDeclarativeEngine(view.engine());
@@ -59,23 +57,16 @@ int main(int argc, char *argv[])
 	//binds things like kconfig and icons
 // 	kdeclarative.setupBindings();
 #endif
-	
+
 	QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
 
 	QDir dir = QFileInfo(main).dir();
 	dir.cdUp();
-	
-	view.engine()->addImportPath(dir.path());
-	view.setSource(QUrl::fromLocalFile(main));
-	view.setResizeMode(QQuickView::SizeRootObjectToView);
-	
-	//it's not like we want it different for ARM, it's more like we want it maximized on touch devices I guess
-	#if defined(__arm__)
-		view.showMaximized();
-	#else
-		view.resize(view.initialSize().width(), view.initialSize().height());
-		view.show();
-	#endif
+
+	QQmlApplicationEngine engine;
+	engine.rootContext()->setContextProperty("app", &widget);
+	engine.addImportPath(dir.path());
+	engine.load(QUrl::fromLocalFile(main));
 	
 	return app.exec();
 }
