@@ -1,26 +1,20 @@
 import QtQuick 2.0
+import QtQuick.Window 2.1
 import org.kde.plasma.components 2.0
-import org.kde.qtextracomponents 2.0
+import org.kde.kquickcontrolsaddons 2.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 import org.kde.plasma.core 2.0
 
-Item {
+Window {
 	height: 400
 	width: 300
+	visible: true
 	
-	Theme { id: theme }
-	
-	//sebas's hack :D
 	Rectangle {
 		anchors.fill: parent
-		color: theme.backgroundColor
+		color: "black"
 		opacity: .2
-		
-		Rectangle {
-			anchors.fill: parent
-			color: theme.textColor
-		}
 	}
 	
 	function goToPage(path, deco) {
