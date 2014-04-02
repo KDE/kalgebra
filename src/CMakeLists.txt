@@ -1,24 +1,3 @@
-find_package(KF5I18n ${KF5_VERSION} REQUIRED)
-find_package(KF5GuiAddons ${KF5_VERSION} REQUIRED)
-find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
-find_package(KF5DBusAddons ${KF5_VERSION} REQUIRED)
-find_package(KF5Service ${KF5_VERSION} REQUIRED)
-find_package(KF5Completion ${KF5_VERSION} REQUIRED)
-find_package(KF5WindowSystem ${KF5_VERSION} REQUIRED)
-find_package(KF5ItemViews ${KF5_VERSION} REQUIRED)
-find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
-find_package(KF5IconThemes ${KF5_VERSION} REQUIRED)
-find_package(KF5TextWidgets ${KF5_VERSION} REQUIRED)
-find_package(KF5XmlGui ${KF5_VERSION} REQUIRED)
-find_package(KF5Solid ${KF5_VERSION} REQUIRED)
-find_package(KF5Bookmarks ${KF5_VERSION} REQUIRED)
-
-find_package(KF5Config REQUIRED)
-# find_package(KF5DocTools)
-find_package(KF5I18n REQUIRED)
-find_package(KF5KIO REQUIRED)
-find_package(Qt5WebKitWidgets REQUIRED)
-
 if(OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
@@ -40,8 +19,10 @@ set(kalgebra_SRCS
 # kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png") #FIXME: port!
 
 add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets
-                               KF5::I18n KF5::XmlGui KF5::KIOWidgets
+target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets KF5::I18n
+                               KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigWidgets
+                               KF5::XmlGui # HelpMenu
+                               KF5::KIOCore
                                KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 if(OPENGL_FOUND)

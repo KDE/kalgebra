@@ -9,26 +9,11 @@ find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg OpenGL Prin
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
+include(FeatureSummary)
 
 find_package(Analitza REQUIRED)
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
-if(${MOBILE_BACKEND} STREQUAL "kde")
-    find_package(KF5GuiAddons REQUIRED)
-    find_package(KF5I18n REQUIRED)
-    find_package(KF5ConfigWidgets REQUIRED)
-    find_package(KF5DBusAddons REQUIRED)
-    find_package(KF5WindowSystem REQUIRED)
-    find_package(KF5Service REQUIRED)
-    find_package(KF5Completion REQUIRED)
-    find_package(KF5ItemViews REQUIRED)
-    find_package(KF5IconThemes REQUIRED)
-    find_package(KF5TextWidgets REQUIRED)
-    find_package(KF5XmlGui REQUIRED)
-    find_package(KF5Bookmarks REQUIRED)
-
-	find_package(KF5Declarative REQUIRED)
-endif()
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
 	${CMAKE_INSTALL_PREFIX}/include/KDE #FIXME
@@ -51,6 +36,13 @@ if(KDocTools_FOUND)
   add_subdirectory(doc)
 endif()
 if(${MOBILE_BACKEND} STREQUAL "kde")
+    find_package(KF5I18n ${KF5_VERSION} REQUIRED)
+    find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
+    find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
+    find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
+    find_package(KF5KIO REQUIRED)
+    find_package(Qt5WebKitWidgets REQUIRED)
+
     add_subdirectory(src)
     add_subdirectory(plasmoids)
     add_subdirectory(icons)
@@ -65,7 +57,4 @@ add_custom_target(commandsdoc
 	COMMENT "Generating commands docbook information"
 )
 
-# if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
-#    macro_display_feature_log()
-# endif (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
-
+feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
