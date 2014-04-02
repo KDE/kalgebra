@@ -59,7 +59,12 @@ ApplicationWindow
 		text: "Back"
 		shortcut: "Back"
 		tooltip: "Go back"
-		onTriggered: pageStack.pop()
+		onTriggered: {
+			if (pageStack.depth==1)
+				Qt.quit();
+			else
+				pageStack.pop();
+		}
 	}
 
 	StackView {

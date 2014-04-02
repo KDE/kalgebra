@@ -9,7 +9,7 @@ TableView
 	property alias currentIndex: viewItem.currentRow
 	property Component delegate
 	
-	TableViewColumn{
+	TableViewColumn {
 		role: viewItem.role
 		title: viewItem.title
 	}
