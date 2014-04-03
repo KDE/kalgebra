@@ -294,7 +294,7 @@ KAlgebra::KAlgebra(QWidget *parent)
 	QWidget *tridim = new QWidget(m_tabs);
 	QVBoxLayout *t_layo = new QVBoxLayout(tridim);
 	t_exp = new Analitza::ExpressionEdit(tridim);
-	t_exp->setExamples(QStringList() << "sin x+sin y" << "(x,y)->x" << "x*y");
+	t_exp->setExamples(Analitza::PlotsFactory::self()->examples(Analitza::Dim3D));
 	t_exp->setAns("x");
 	t_model3d = new Analitza::PlotsModel(this);
 	m_graph3d = new Analitza::PlotsView3D(tridim);
