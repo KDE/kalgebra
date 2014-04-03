@@ -11,8 +11,6 @@ add_executable(kalgebramobile pluginsmodel.cpp
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
 	KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
-add_definitions("-DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
-
 set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR})
 if(${MOBILE_BACKEND} STREQUAL "harmattan")
 	set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR}/..)

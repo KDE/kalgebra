@@ -47,9 +47,6 @@ int main(int argc, char *argv[])
 	
 	KAlgebraMobile widget;
 	
-// 	KGlobal::dirs()->addResourceDir("appdata", PREFIX "/share/apps");
-
-
 #ifdef KDECOMPONENTS
 	KDeclarative kdeclarative;
 // 	kdeclarative.setDeclarativeEngine(view.engine());
