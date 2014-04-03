@@ -573,10 +573,12 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("*.png|PNG File\n*.pdf|PDF Document"));
+	QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("*.png|PNG File\n*.pdf|PDF Document\n*.x3d|X3D Document"));
 	if(!path.isEmpty()) {
-		QPixmap px = m_graph3d->renderPixmap();
-		if(path.endsWith(".pdf")) {
+		if(path.endsWith(".x3d")) {
+			m_graph3d->exportSurfaces(path);
+		} else if(path.endsWith(".pdf")) {
+			QPixmap px = m_graph3d->renderPixmap();
 			QPrinter printer;
 			printer.setOutputFormat(QPrinter::PdfFormat);
 			printer.setOutputFileName(path);
@@ -587,6 +589,7 @@ void KAlgebra::save3DGraph()
 			painter.drawPixmap(QPoint(0,0), px);
 			painter.end();
 		} else {
+			QPixmap px = m_graph3d->renderPixmap();
 			px.save(path);
 		}
 	}
