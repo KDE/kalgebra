@@ -9,6 +9,7 @@ find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg OpenGL Prin
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
+include(ECMInstallIcons)
 include(FeatureSummary)
 
 find_package(Analitza REQUIRED)
@@ -44,9 +45,9 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
 
     add_subdirectory(src)
     add_subdirectory(plasmoids)
-    add_subdirectory(icons)
     add_subdirectory(utils)
 endif()
+add_subdirectory(icons)
 add_subdirectory(mobile)
 
 add_custom_target(commandsdoc
