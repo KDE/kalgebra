@@ -1,14 +1,16 @@
 import org.kde.analitza 1.0
 import QtQuick 2.0
+import QtQuick.Window 2.1
 import org.kde.kalgebra.mobile 1.0
 
-Rectangle
+Window
 {
 	id: rootItem
 	SystemPalette { id: palette }
 	color: palette.window
 	height: 600
 	width: 600
+	visible: true
 	
 	function goToPage(path) {
 		try {
