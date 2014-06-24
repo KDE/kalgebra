@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>KAlgebra</name>
+  <name xml:lang="cs">KAlgebra</name>
   <name xml:lang="es">KAlgebra</name>
   <name xml:lang="fi">KAlgebra</name>
   <name xml:lang="hu">KAlgebra</name>
@@ -17,6 +18,7 @@
   <name xml:lang="uk">KAlgebra</name>
   <name xml:lang="x-test">xxKAlgebraxx</name>
   <summary>Graph Calculator</summary>
+  <summary xml:lang="cs">Kalkulačka grafů</summary>
   <summary xml:lang="es">Calculadora gráfica</summary>
   <summary xml:lang="fi">Graafinen laskin</summary>
   <summary xml:lang="hu">Grafikonszámoló</summary>
