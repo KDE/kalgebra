@@ -362,7 +362,7 @@ KAlgebra::KAlgebra(QWidget *parent)
 	KHelpMenu* help = new KHelpMenu(this);
 	menuBar()->addMenu(help->menu());
 
-#warning TODO: Port to PlotsModel
+#pragma message("TODO: Port to PlotsModel")
 // 	connect(b_funcsModel, SIGNAL(functionModified(QString,Analitza::Expression)),
 // 			c_results, SLOT(modifyVariable(QString,Analitza::Expression)));
 // 	connect(b_funcsModel, SIGNAL(functionRemoved(QString)),
