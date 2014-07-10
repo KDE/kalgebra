@@ -5,6 +5,6 @@ ecm_install_icons(ICONS
     hi64-apps-kalgebra.png
     hi128-apps-kalgebra.png
     hisc-apps-kalgebra.svgz
-THEME hi
+THEME hicolor
 DESTINATION ${ICON_INSTALL_DIR} )
 
