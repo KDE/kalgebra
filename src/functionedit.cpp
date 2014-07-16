@@ -89,7 +89,6 @@ FunctionEdit::FunctionEdit(QWidget *parent)
 	m_graph->setMouseTracking(false);
 	m_graph->setFramed(true);
 	m_graph->setReadOnly(true);
-	m_graph->setTicksShown(false);
 	m_graph->setTicksShown(Qt::Orientation(0));
 	
 	m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
