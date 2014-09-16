@@ -22,10 +22,11 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
 
 find_package(OpenGL)
 set(HAVE_OPENGL ${OPENGL_FOUND})
-# macro_log_feature(OPENGL_FOUND "OpenGL" "Support for 3D graphs in KAlgebra" "http://mesa3d.sourceforge.net" FALSE "" "")
-# macro_log_feature(QTMML_LIBRARY "QtMathML Widget" "Supports displaying some formulas in a mathematic form" "http://doc.qt.nokia.com/solutions/4/qtmmlwidget/qtmmlwidget.html" FALSE "" "")
+set_package_properties(OpenGL PROPERTIES TYPE OPTIONAL
+                                         PURPOSE "Support for 3D graphs in KAlgebra"
+                                         URL "http://opengl.org")
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
+                                         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 if(${MOBILE_BACKEND} STREQUAL "kde")
