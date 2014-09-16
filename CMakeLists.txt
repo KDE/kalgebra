@@ -39,6 +39,7 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
     add_subdirectory(src)
     add_subdirectory(plasmoids)
 endif()
+
 add_subdirectory(icons)
 add_subdirectory(mobile)
 
@@ -54,5 +55,6 @@ if(KF5DocTools_FOUND)
 
   add_subdirectory(doc)
 endif()
+install(FILES kalgebra.appdata.xml DESTINATION ${SHARE_INSTALL_PREFIX}/appdata/)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
