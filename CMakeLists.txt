@@ -26,7 +26,7 @@ set_package_properties(OpenGL PROPERTIES TYPE OPTIONAL
                                          PURPOSE "Support for 3D graphs in KAlgebra"
                                          URL "http://opengl.org")
 
-                                         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 if(${MOBILE_BACKEND} STREQUAL "kde")
