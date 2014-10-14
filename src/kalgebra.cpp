@@ -68,7 +68,7 @@ class Add2DOption : public InlineOptions
 		{}
 		
 		virtual QString id() const { return "add2d"; }
-		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const {
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const {
 			return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).canDraw();
 		}
 
@@ -89,7 +89,7 @@ class Add3DOption : public InlineOptions
 		{}
 		
 		virtual QString id() const { return "add3d"; }
-		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const
+		virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const
 		{
 			return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).canDraw();
 		}
