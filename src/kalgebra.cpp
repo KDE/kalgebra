@@ -613,7 +613,7 @@ void KAlgebra::saveGraph()
 		QString filename = dialog->selectedFile();
 		
 		bool isSvg = filename.endsWith(".svg") || (!filename.endsWith(".png") && filter.mid(2, 3)=="svg");
-		Analitza::PlotsView2D::Format f = isSvg ? Analitza::PlotsView2D::PNG : Analitza::PlotsView2D::SVG;
+		Analitza::PlotsView2D::Format f = isSvg ? Analitza::PlotsView2D::SVG : Analitza::PlotsView2D::PNG;
 		m_graph2d->toImage(filename, f);
 	}
 	delete dialog;
