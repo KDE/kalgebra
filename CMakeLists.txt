@@ -26,6 +26,17 @@ set_package_properties(OpenGL PROPERTIES TYPE OPTIONAL
                                          PURPOSE "Support for 3D graphs in KAlgebra"
                                          URL "http://opengl.org")
 
+set(CURSES_NEED_NCURSES TRUE)
+find_package(Curses)
+find_package(Readline)
+
+set_package_properties(Readline PROPERTIES TYPE OPTIONAL
+                                           PURPOSE "Allows KAlgebra to provide a console interface."
+                                           URL "http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html")
+set_package_properties(Curses PROPERTIES TYPE OPTIONAL
+                                         PURPOSE "Allows KAlgebra to provide a console interface."
+                                         URL "http://www.gnu.org/software/ncurses/")
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
@@ -43,6 +54,10 @@ endif()
 
 add_subdirectory(icons)
 add_subdirectory(mobile)
+
+if(READLINE_FOUND AND CURSES_FOUND)
+    add_subdirectory(calgebra)
+endif()
 
 if(KF5DocTools_FOUND)
   add_subdirectory(utils)
