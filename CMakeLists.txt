@@ -16,9 +16,7 @@ find_package(Analitza REQUIRED)
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
-	${CMAKE_INSTALL_PREFIX}/include/KDE #FIXME
-)
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
 find_package(OpenGL)
 set(HAVE_OPENGL ${OPENGL_FOUND})
