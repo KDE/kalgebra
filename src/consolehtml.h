@@ -24,7 +24,6 @@
 
 #include <analitza/analyzer.h>
 
-class KUrl;
 class InlineOptions
 {
 	public:

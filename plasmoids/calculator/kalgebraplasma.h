@@ -27,8 +27,6 @@
 #include <QGraphicsLinearLayout>
 #include <analitza/analyzer.h>
 
-class QSizeF;
-class QLabel;
 
 class KAlgebraPlasmoid : public Plasma::Applet
 {
