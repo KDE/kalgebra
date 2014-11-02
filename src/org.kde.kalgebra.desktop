@@ -173,3 +173,4 @@ Type=Application
 X-DocPath=kalgebra/index.html
 Terminal=false
 Categories=Qt;KDE;Education;Math;Science;
+X-DBUS-ServiceName=org.kde.kalgebra

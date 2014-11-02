@@ -23,6 +23,7 @@ target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets
                                KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigWidgets
                                KF5::XmlGui # HelpMenu
                                KF5::KIOCore
+                               KF5::I18n
                                KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 if(OPENGL_FOUND)
@@ -30,5 +31,5 @@ if(OPENGL_FOUND)
 endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install(FILES kalgebra.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax )
