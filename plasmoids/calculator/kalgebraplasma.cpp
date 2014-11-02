@@ -159,4 +159,4 @@ void KAlgebraPlasmoid::simplify()
 		m_output->setText(QString());
 }
 
-#include "kalgebraplasma.moc"
+

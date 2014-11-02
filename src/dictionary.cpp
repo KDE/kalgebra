@@ -122,4 +122,4 @@ void Dictionary::setFilter(const QString &filter)
 	m_sortProxy->setFilterFixedString(filter);
 }
 
-#include "dictionary.moc"
+

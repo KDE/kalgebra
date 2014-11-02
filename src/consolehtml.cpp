@@ -306,4 +306,4 @@ void ConsoleHtml::paste()
 	emit paste(selectedText());
 }
 
-#include "consolehtml.moc"
+
