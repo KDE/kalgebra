@@ -20,6 +20,7 @@
 #include <KAboutData>
 #include <KLocalizedString>
 #include "kalgebra.h"
+#include <klocalizedstring.h>
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,8 @@ int main(int argc, char *argv[])
 	app.setApplicationDisplayName(i18n("KAlgebra"));
 	app.setApplicationVersion("0.99");
 	
+        KLocalizedString::setApplicationDomain("kalgebra");
+
 	KAlgebra widget;
 	widget.show();
 	
