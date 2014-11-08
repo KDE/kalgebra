@@ -18,13 +18,11 @@
 
 #include <QApplication>
 #include <KAboutData>
-#include <KLocalizedString>
 #include "kalgebra.h"
 #include <klocalizedstring.h>
 
 int main(int argc, char *argv[])
 {
-        KLocalizedString::setApplicationDomain("kalgebra");
 	QApplication app(argc, argv);
 	app.setApplicationName("kalgebra");
 	app.setApplicationDisplayName(i18n("KAlgebra"));
