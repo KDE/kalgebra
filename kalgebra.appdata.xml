@@ -13,6 +13,7 @@
   <name xml:lang="fi">KAlgebra</name>
   <name xml:lang="hu">KAlgebra</name>
   <name xml:lang="it">KAlgebra</name>
+  <name xml:lang="lt">KAlgebra</name>
   <name xml:lang="nds">KAlgebra</name>
   <name xml:lang="nl">KAlgebra</name>
   <name xml:lang="pl">KAlgebra</name>
@@ -34,6 +35,7 @@
   <summary xml:lang="fi">Graafinen laskin</summary>
   <summary xml:lang="hu">Grafikus számológép</summary>
   <summary xml:lang="it">Calcolatrice grafica</summary>
+  <summary xml:lang="lt">Grafinis skaičiuotuvas</summary>
   <summary xml:lang="nds">Funkschonenreekner</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
   <summary xml:lang="pl">Kalkulator wykresów</summary>
