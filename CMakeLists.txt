@@ -12,7 +12,7 @@ include(KDECMakeSettings)
 include(ECMInstallIcons)
 include(FeatureSummary)
 
-find_package(Analitza REQUIRED)
+find_package(Analitza5 REQUIRED)
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
 
