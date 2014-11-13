@@ -2,8 +2,7 @@ project(kalgebra)
 cmake_minimum_required(VERSION 2.8.11)
 
 find_package(ECM 1.3.0 REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg OpenGL PrintSupport Test)
 include(KDEInstallDirs)
@@ -12,7 +11,7 @@ include(KDECMakeSettings)
 include(ECMInstallIcons)
 include(FeatureSummary)
 
-find_package(Analitza REQUIRED)
+find_package(Analitza5 REQUIRED)
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
 
