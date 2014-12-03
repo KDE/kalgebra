@@ -18,7 +18,6 @@
 
 
 #include "pluginsmodel.h"
-#include <QIcon>
 #include <QDir>
 #include <QDebug>
 #include <QStandardPaths>

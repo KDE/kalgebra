@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include <QApplication>
-#include <KAboutData>
 #include "kalgebra.h"
 #include <klocalizedstring.h>
 

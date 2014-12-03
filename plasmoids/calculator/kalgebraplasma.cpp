@@ -18,10 +18,7 @@
 
 #include "kalgebraplasma.h"
 
-#include <QPainter>
 #include <QFontMetrics>
-#include <QSizeF>
-#include <QLabel>
 #include <QGraphicsProxyWidget>
 #include <QFont>
 #include <KIcon>

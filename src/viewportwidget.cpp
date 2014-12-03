@@ -20,7 +20,6 @@
 
 #include <QFormLayout>
 #include <QDoubleSpinBox>
-#include <QBoxLayout>
 #include <QPushButton>
 #include <klocalizedstring.h>
 #include <limits>

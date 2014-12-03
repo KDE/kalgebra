@@ -20,7 +20,6 @@
 #include <QApplication>
 #include <QStringList>
 #include <QFile>
-#include <QTextDocument>
 #include <QTextStream>
 
 int main(int argc, char** argv)

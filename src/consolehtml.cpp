@@ -18,13 +18,9 @@
 
 #include "consolehtml.h"
 #include <QFile>
-#include <QHeaderView>
 #include <QClipboard>
 #include <QApplication>
-#include <QScrollBar>
 #include <QTemporaryFile>
-#include <QTimer>
-#include <QTextDocument>
 #include <qevent.h>
 #include <QDir>
 #include <qurlquery.h>

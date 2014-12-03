@@ -25,7 +25,6 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QGroupBox>
 #include <QDialogButtonBox>
 #include <klocalizedstring.h>
 

@@ -20,7 +20,6 @@
 #define KALGEBRAMOBILE_H
 
 #include <QObject>
-#include <QColor>
 
 class QModelIndex;
 namespace Analitza {

@@ -20,7 +20,6 @@
 #define VAREDIT_H
 
 #include <QDialog>
-#include <QRadioButton>
 #include <QLabel>
 
 class QDialogButtonBox;

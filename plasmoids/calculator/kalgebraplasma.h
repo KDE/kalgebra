@@ -23,7 +23,6 @@
 #include <Plasma/PopupApplet>
 #include <Plasma/Label>
 #include <Plasma/LineEdit>
-#include <KLineEdit>
 #include <QGraphicsLinearLayout>
 #include <analitza/analyzer.h>
 

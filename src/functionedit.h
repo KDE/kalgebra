@@ -22,7 +22,6 @@
 #include <QLabel>
 #include <QWidget>
 #include <QPushButton>
-#include <QComboBox>
 #include <QLineEdit>
 
 #include <KColorCombo>
