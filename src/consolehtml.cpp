@@ -57,7 +57,7 @@ void ConsoleHtml::initialize()
 	QPalette p=qApp->palette();
 	
 	m_css ="<style type=\"text/css\">\n";
-	m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name());
+	m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
 	m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
 	m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
 	m_css +="\t.before { text-align:right; }\n";
@@ -243,12 +243,12 @@ void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 	code += m_css;
 	code += "</head>\n<body>";
 	foreach(const QString &entry, m_htmlLog)
-		code += "<p class='normal'>"+entry+"</p>";
+		code += "<p class='normal'>"+entry.toUtf8()+"</p>";
 
 	if(!newEntry.isEmpty()) {
 		m_htmlLog += newEntry;
-		code += options;
-		code += "<p class='last'>"+newEntry+"</p>";
+		code += options.toUtf8();
+		code += "<p class='last'>"+newEntry.toUtf8()+"</p>";
 	}
 	code += "</body></html>";
 
