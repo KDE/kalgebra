@@ -3,5 +3,5 @@ install( FILES
     RealInput.qml SimpleListView.qml ScrollDecorator.qml
     
     KAlgebraPage.qml  KAlgebraMobile.qml
-    DESTINATION ${DATA_INSTALL_DIR}/kalgebramobile/plugins/widgets/
+    DESTINATION ${KDE_INSTALL_DATADIR}/kalgebramobile/plugins/widgets/
 )

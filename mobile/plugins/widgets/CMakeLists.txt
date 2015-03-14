@@ -2,5 +2,5 @@ add_subdirectory(${MOBILE_BACKEND})
 
 install( FILES
     qmldir
-    DESTINATION ${DATA_INSTALL_DIR}/kalgebramobile/plugins/widgets/
+    DESTINATION ${KDE_INSTALL_DATADIR}/kalgebramobile/plugins/widgets/
 )

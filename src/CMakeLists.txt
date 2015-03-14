@@ -30,8 +30,8 @@ if(OPENGL_FOUND)
    target_link_libraries(kalgebra Qt5::OpenGL ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
 endif(OPENGL_FOUND)
 
-install(TARGETS kalgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install(FILES kalgebra.xml DESTINATION ${DATA_INSTALL_DIR}/katepart5/syntax )
+install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+install(FILES kalgebra.xml DESTINATION ${KDE_INSTALL_DATADIR}/katepart5/syntax )
 
 

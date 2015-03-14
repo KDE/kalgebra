@@ -11,9 +11,9 @@ add_executable(kalgebramobile pluginsmodel.cpp
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
 	KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
-set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR})
+set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
 if(${MOBILE_BACKEND} STREQUAL "harmattan")
-	set(DESKTOPFILE_INSTALL ${XDG_APPS_INSTALL_DIR}/..)
+	set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR}/..)
 elseif(KDeclarative_FOUND)
 	target_link_libraries(kalgebramobile KF5::KDeclarative)
 endif()
@@ -23,5 +23,5 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/kalgebramobile${MOBILE_BACKEND}.desktop)
 	set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
 endif()
 
-install(TARGETS kalgebramobile ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS kalgebramobile ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS ${DESKTOPFILE} DESTINATION ${DESKTOPFILE_INSTALL} )

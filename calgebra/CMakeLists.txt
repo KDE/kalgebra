@@ -15,5 +15,5 @@ endif()
 add_executable(calgebra main.cpp)
 target_link_libraries(calgebra Qt5::Core ${READLINE_LIBRARY} KF5::Analitza)
 
-install(TARGETS calgebra ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS calgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

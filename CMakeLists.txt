@@ -1,7 +1,7 @@
 project(kalgebra)
 cmake_minimum_required(VERSION 2.8.11)
 
-find_package(ECM 1.3.0 REQUIRED NO_MODULE)
+find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg OpenGL PrintSupport Test)
@@ -10,6 +10,7 @@ include(KDECompilerSettings)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
 include(FeatureSummary)
+include(ECMAddAppIcon)
 
 find_package(Analitza5 REQUIRED)
 
@@ -68,6 +69,6 @@ if(KF5DocTools_FOUND)
 
   add_subdirectory(doc)
 endif()
-install(FILES kalgebra.appdata.xml DESTINATION ${SHARE_INSTALL_PREFIX}/appdata/)
+install(FILES kalgebra.appdata.xml DESTINATION ${KDE_INSTALL_DATAROOTDIR}/appdata/)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)

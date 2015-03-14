@@ -5,5 +5,5 @@ install( FILES
 	About.qml VariablesView.qml
 	kalgebraabout.json
 	kalgebraconsole.json kalgebraplot2d.json kalgebratables.json kalgebravariables.json
-	DESTINATION ${DATA_INSTALL_DIR}/kalgebramobile/plugins/
+	DESTINATION ${KDE_INSTALL_DATADIR}/kalgebramobile/plugins/
 )
