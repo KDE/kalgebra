@@ -3,7 +3,7 @@
 		<file alias='kde-edu-logo.png'>plugins/resources/kde-edu-logo.png</file>
     </qresource>
     <qresource>
-		<file alias='kalgebra.png'>../icons/hi64-apps-kalgebra.png</file>
-		<file alias='kalgebra.svgz'>../icons/hisc-apps-kalgebra.svgz</file>
+		<file alias='kalgebra.png'>../icons/64-apps-kalgebra.png</file>
+		<file alias='kalgebra.svgz'>../icons/sc-apps-kalgebra.svgz</file>
     </qresource>
 </RCC>
