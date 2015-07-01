@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=KAlgebra
+Name[ast]=KAlgebra
 Name[bg]=KAlgebra
 Name[bs]=Kalgebra
 Name[ca]=KAlgebra
@@ -57,6 +58,7 @@ Name[x-test]=xxKAlgebraxx
 Name[zh_CN]=KAlgebra
 Name[zh_TW]=數學_KAlgebra
 GenericName=Graph Calculator
+GenericName[ast]=Calculadora gráfica
 GenericName[bg]=Графичен калкулатор
 GenericName[bs]=Graf kalkulator
 GenericName[ca]=Calculadora gràfica
@@ -111,6 +113,7 @@ GenericName[x-test]=xxGraph Calculatorxx
 GenericName[zh_CN]=图形计算器
 GenericName[zh_TW]=圖形計算器
 Comment=Math Expression Solver and Plotter
+Comment[ast]=Igua y traza espresiones matemátiques
 Comment[bg]=Решаване на математически задачи
 Comment[bs]=Matematski Sistem za rješavanje i crtač
 Comment[ca]=Soluciona i representa gràficament expressions matemàtiques
