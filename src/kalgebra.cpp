@@ -499,7 +499,7 @@ void KAlgebra::changeStatusBar(const QString& msg)
 
 void KAlgebra::loadScript()
 {
-	QUrl path = QFileDialog::getOpenFileUrl(this, i18n("Choose a script"), QUrl(), "*.kal|"+i18n("Script (*.kal)"));
+	QUrl path = QFileDialog::getOpenFileUrl(this, i18n("Choose a script"), QUrl(), i18n("Script (*.kal)"));
 	
 	if(!path.isEmpty())
 		loadScript(path);
@@ -515,7 +515,7 @@ void KAlgebra::loadScript(const QUrl& path)
 
 void KAlgebra::saveScript()
 {
-	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), "*.kal|"+i18n("Script (*.kal)"));
+	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), i18n("Script (*.kal)"));
 	bool loaded=false;
 	if(!path.isEmpty())
 		loaded=c_results->saveScript(path);
@@ -526,7 +526,7 @@ void KAlgebra::saveScript()
 
 void KAlgebra::saveLog()
 {
-	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), "*.html|"+i18n("HTML File (*.html)"));
+	QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), i18n("HTML File (*.html)"));
 	if(!path.isEmpty())
 		c_results->saveLog(path);
 }
@@ -573,7 +573,7 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-	QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("*.png|PNG File\n*.pdf|PDF Document\n*.x3d|X3D Document"));
+	QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d)"));
 	if(!path.isEmpty()) {
 		if(path.endsWith(".x3d")) {
 			m_graph3d->exportSurfaces(path);
@@ -608,7 +608,7 @@ void KAlgebra::toggleKeepAspect()
 
 void KAlgebra::saveGraph()
 {
-    QPointer<QFileDialog> dialog=new QFileDialog(this, i18n("Select where to put the rendered plot"), QString(), i18n("*.png|Image File\n*.svg|SVG File"));
+    QPointer<QFileDialog> dialog=new QFileDialog(this, i18n("Select where to put the rendered plot"), QString(), i18n("Image File (*.png);;SVG File (*.svg)"));
 	dialog->setConfirmOverwrite(true);
 	
 	if(dialog->exec() && !dialog->selectedFiles().isEmpty()) {
