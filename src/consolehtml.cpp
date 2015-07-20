@@ -121,8 +121,9 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 				QUrlQuery query(url);
 				query.addQueryItem("id", opt->id());
 				query.addQueryItem("func", lambdaexp.toString());
+				url.setQuery(query);
 				
-				options += i18n(" <a href='%1'>%2</a>", query.toString(), opt->caption());
+				options += i18n(" <a href='%1'>%2</a>", url.toString(), opt->caption());
 			}
 		}
 		
