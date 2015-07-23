@@ -74,6 +74,7 @@ void ConsoleHtml::initialize()
 	m_css +="\t.options { font-size: small; text-align:right }\n";
 	m_css +="\t.string { color: #bb0000 }\n";
 	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
+    m_css +="\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }";
 	m_css +="</style>\n";
 }
 
