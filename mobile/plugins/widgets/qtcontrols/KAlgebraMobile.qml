@@ -70,5 +70,6 @@ ApplicationWindow
 	StackView {
 		id: pageStack
 		initialItem: pluginsView
+		anchors.fill: parent
 	}
 }
