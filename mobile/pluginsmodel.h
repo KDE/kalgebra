@@ -25,13 +25,17 @@
 class PluginsModel : public QStandardItemModel
 {
 	Q_OBJECT
+	Q_PROPERTY(QStringList titles READ titles CONSTANT)
 	public:
 		enum Roles { PathRole = Qt::UserRole+1, PriorityRole, TitleRole, SubtitleRole };
+		Q_ENUMS(Roles)
 
 		explicit PluginsModel(QObject* parent = 0);
 		virtual QHash<int, QByteArray> roleNames() const;
 		
 		static QString pluginsDirectoryPath();
+
+		QStringList titles() const;
 
 	public Q_SLOTS:
 		///qml can't access data. Yay!

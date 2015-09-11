@@ -93,3 +93,12 @@ QString PluginsModel::pluginPath(int row)
 {
 	return data(index(row, 0), PathRole).toString();
 }
+
+QStringList PluginsModel::titles() const
+{
+	QStringList ret;
+	for (int i=0, c=rowCount(); i<c; ++i) {
+		ret += item(i, 0)->data(TitleRole).toString();
+	}
+	return ret;
+}
