@@ -77,6 +77,7 @@ KAlgebraPage
 			topMargin: 5
 		}
 		currentIndex: -1
+		clip: true
 		
 		model: resultsModel
 		role: "element"

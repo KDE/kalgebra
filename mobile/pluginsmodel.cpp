@@ -69,7 +69,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		item->setData(scriptPath, PathRole);
 		item->setData(priority, PriorityRole);
 		item->setData(cg.value("Name", QString()), TitleRole);
-		item->setData(cg.value("Comment", QString()), SubtitleRole);
+		item->setData(cg.value("Comment", QStringLiteral("")), SubtitleRole);
 		item->setData(cg.value("Icon", QString()), Qt::DecorationRole);
 		
 		items += item;

@@ -35,7 +35,7 @@ Window {
 		id: init
 		anchors.margins: 10
 		
-		Flow {
+		ListView {
 			anchors.fill: parent
 			spacing: 5
 			
@@ -46,38 +46,34 @@ Window {
 				}
 			}
 			
-			Repeater {
-				delegate:
-					ListItem {
-						width: 200
-						height: 100
-						enabled: true
-						Column {
-							anchors.fill: parent
-							spacing: 10
-							
-							QIconItem {
-								id: icon
-								width: 50
-								height: 50
-								anchors.horizontalCenter: parent.horizontalCenter
-								icon: decoration
-							}
-							
-							Text {
-								id: description
-								anchors.left: parent.left
-								anchors.right: parent.right
-								horizontalAlignment: Text.AlignHCenter
-								text: i18n("%1<br/>\n<em>%2</em>", title, subtitle)
-							}
+			delegate: ListItem {
+					height: 100
+					enabled: true
+					Column {
+						anchors.fill: parent
+						spacing: 10
+
+						QIconItem {
+							id: icon
+							width: 50
+							height: 50
+							anchors.horizontalCenter: parent.horizontalCenter
+							icon: decoration
 						}
-						
-						onClicked: goToPage(model.path, decoration)
+
+						Text {
+							id: description
+							anchors.left: parent.left
+							anchors.right: parent.right
+							horizontalAlignment: Text.AlignHCenter
+							text: i18n("%1<br/>\n<em>%2</em>", title, subtitle)
+						}
 					}
-				
-				model: PluginsModel { id: plugins }
-			}
+
+					onClicked: goToPage(model.path, decoration)
+				}
+
+			model: PluginsModel { id: plugins }
 		}
 		
 		tools: ToolBarLayout {}
