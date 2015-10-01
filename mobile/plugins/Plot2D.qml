@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.0
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -6,31 +7,32 @@ KAlgebraPage
 {
 	anchors.margins: 0
 	
-	Row {
+	RowLayout {
 		id: controls
 		spacing: 10
 		
 		width: parent.width
 		ExpressionInput {
 			id: input
-			width: parent.width-exec.width
-			anchors.verticalCenter: exec.verticalCenter
+			Layout.fillWidth: true
 			text: "sin x"
 			focus: true
 			Component.onCompleted: selectAll()
 			
-			Keys.onReturnPressed: view.addFunction(input.text, app.variables)
+			Keys.onReturnPressed: {
+                view.addFunction(input.text, app.variables)
+                selectAll();
+            }
 		}
 		
 		Button {
-			id: exec
 			text: "Clear"
-			width: 100
 			
 			onClicked: {
 				app.functionsModel().clear()
 				view.resetViewport()
-				input.focus = true
+				input.focus = true;
+				selectAll();
 			}
 		}
 	}
