@@ -38,6 +38,7 @@ ApplicationWindow
 				anchors.fill: parent
 				delegate: ListItem.Standard {
 					text: title
+					selected: mainUi.source == model.path
 					onClicked: {
 						mainUi.source = model.path
 						navDrawer.close()

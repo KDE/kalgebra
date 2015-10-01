@@ -20,6 +20,7 @@
 #include "pluginsmodel.h"
 #include <QDir>
 #include <QDebug>
+#include <QUrl>
 #include <QStandardPaths>
 #include <QJsonDocument>
 
@@ -66,7 +67,7 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 		if(!priority.isValid())
 			priority = 1000;
 		
-		item->setData(scriptPath, PathRole);
+		item->setData(QUrl::fromLocalFile(scriptPath), PathRole);
 		item->setData(priority, PriorityRole);
 		item->setData(cg.value("Name", QString()), TitleRole);
 		item->setData(cg.value("Comment", QStringLiteral("")), SubtitleRole);
