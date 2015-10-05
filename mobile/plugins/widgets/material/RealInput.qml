@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 
 RowLayout
 {
+    id: root
     property alias text: input.text
     property alias minimumValue: realvalidator.bottom
     property alias maximumValue: realvalidator.top
@@ -25,22 +26,20 @@ RowLayout
         onAccepted: parent.accepted()
     }
 
-    Button {
-        text: "+"
-        elevation: 1
+    IconButton {
+        iconName: "hardware/keyboard_arrow_up"
         onClicked: {
-            if(input.value+1<maximumValue) {
-                input.text=(input.value+1)
+            if(root.value+1<realvalidator.top) {
+                input.text=(root.value+1)
             }
         }
     }
 
-    Button {
-        text: "-"
-        elevation: 1
+    IconButton {
+        iconName: "hardware/keyboard_arrow_down"
         onClicked: {
-            if(input.value-1>minimumValue) {
-                input.text=(input.value-1)
+            if(root.value-1>realvalidator.bottom) {
+                input.text=(root.value-1)
             }
         }
     }

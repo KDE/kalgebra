@@ -31,7 +31,7 @@ ApplicationWindow
 		NavigationDrawer {
 			id: navDrawer
 
-			enabled: parent.width < Units.dp(500)
+			enabled: parent.width < Units.dp(700)
 
 			ListView {
 				spacing: 10
