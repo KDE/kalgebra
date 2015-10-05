@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.1
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -40,7 +41,7 @@ KAlgebraPage
 		a.removeVariable(tmp);
 	}
 	
-	Column {
+	ColumnLayout {
 		id: inputcol
 		
 		anchors {
@@ -50,19 +51,25 @@ KAlgebraPage
 		}
 		spacing: 10
 		
-		Grid {
+		GridLayout {
 			id: ins
 			columns: 2
-			spacing: 5
-			width: parent.width
+			Layout.fillWidth: true
 			
-			Label { text: "Input:" }  ExpressionInput { id: input; text: "sin x"; width: ins.width-input.x-5; onAccepted: calculateTable() }
-			Label { text: "From:" }   RealInput { id: from; value: 0; width: ins.width-from.x-5; onAccepted: calculateTable() }
-			Label { text: "To:" }     RealInput { id: to; value: 10; width: ins.width-to.x-5; onAccepted: calculateTable() }
-			Label { text: "Step:" }   RealInput { id: step; value: 1; width: ins.width-step.x-5; onAccepted: calculateTable() }
+			Label { text: "Input:" }
+			ExpressionInput {
+                id: input
+                text: "sin x";
+                Layout.fillWidth: true
+                onAccepted: calculateTable();
+            }
+			Label { text: "From:" }   RealInput { id: from; text: "0"; Layout.fillWidth: true; onAccepted: calculateTable() }
+			Label { text: "To:" }     RealInput { id: to; text: "10"; Layout.fillWidth: true; onAccepted: calculateTable() }
+			Label { text: "Step:" }   RealInput { id: step; text: "1"; Layout.fillWidth: true; onAccepted: calculateTable() }
 		}
 		
 		Button {
+            anchors.right: parent.right
 			text: "Go!"
 			
 			onClicked: calculateTable()
