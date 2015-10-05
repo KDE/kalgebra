@@ -12,4 +12,8 @@ ListView
 		text: ListView.view.title
 	}
 	delegate: ListItem.Standard { text: model[role] }
+
+	Scrollbar {
+        flickableItem: viewItem
+    }
 }
