@@ -43,89 +43,89 @@ namespace Analitza { class Expression; }
 
 class KAlgebra : public QMainWindow
 {
-	Q_OBJECT
-	public:
-		KAlgebra ( QWidget *parent=0 );
-		~KAlgebra();
-		
-		void add2D(const Analitza::Expression& exp);
-		void add3D(const Analitza::Expression& exp);
-	private:
-		QLabel *m_status;
-		QTabWidget* m_tabs;
-		
-		//consoleeWidget
-		QMenu* c_menu;
-		KRecentFilesAction* c_recentScripts;
-		Analitza::ExpressionEdit *c_exp;
-		ConsoleHtml *c_results;
-		QTreeView *c_variables;
-		QDockWidget *c_dock_vars;
-		Analitza::VariablesModel* c_varsModel;
-		
-		//graf 2d
-		QMenu* b_menu;
-		Analitza::PlotsModel* b_funcsModel;
-		QTreeView *b_funcs;
-		QTabWidget *b_tools;
-		Analitza::PlotsView2D *m_graph2d;
-		QDockWidget *b_dock_funcs;
-		FunctionEdit *b_funced;
-		Analitza::VariablesModel* b_varsModel;
+    Q_OBJECT
+    public:
+        KAlgebra ( QWidget *parent=0 );
+        ~KAlgebra();
+        
+        void add2D(const Analitza::Expression& exp);
+        void add3D(const Analitza::Expression& exp);
+    private:
+        QLabel *m_status;
+        QTabWidget* m_tabs;
+        
+        //consoleeWidget
+        QMenu* c_menu;
+        KRecentFilesAction* c_recentScripts;
+        Analitza::ExpressionEdit *c_exp;
+        ConsoleHtml *c_results;
+        QTreeView *c_variables;
+        QDockWidget *c_dock_vars;
+        Analitza::VariablesModel* c_varsModel;
+        
+        //graf 2d
+        QMenu* b_menu;
+        Analitza::PlotsModel* b_funcsModel;
+        QTreeView *b_funcs;
+        QTabWidget *b_tools;
+        Analitza::PlotsView2D *m_graph2d;
+        QDockWidget *b_dock_funcs;
+        FunctionEdit *b_funced;
+        Analitza::VariablesModel* b_varsModel;
 
 #ifdef HAVE_OPENGL
-		//graph 3d
-		QMenu* t_menu;
-		Analitza::ExpressionEdit *t_exp;
-		Analitza::PlotsView3D *m_graph3d;
+        //graph 3d
+        QMenu* t_menu;
+        Analitza::ExpressionEdit *t_exp;
+        Analitza::PlotsView3D *m_graph3d;
         Analitza::PlotsModel* t_model3d;
 #endif
-		//Dictionary
-		QDockWidget *d_dock;
-		QListView *d_list;
-		QLineEdit *d_filter;
-		
-	private Q_SLOTS:
-		void newInstance();
-		void fullScreen(bool isFull);
-		
-		void initializeRecentScripts();
-		void operate();
-		void loadScript();
-		void loadScript(const QUrl& path);
-		void saveScript();
-		void saveLog();
-		void updateInformation();
-		void consoleCalculate();
-		void consoleEvaluate();
-		
-		void select(const QModelIndex& idx);
-		void new_func();
-		void remove_func();
-		void edit_func ( const QModelIndex & );
-		void edit_var ( const QModelIndex & );
-		void toggleSquares();
-		void toggleKeepAspect();
-		void set_res_low();
-		void set_res_std();
-		void set_res_fine();
-		void set_res_vfine();
-		void valueChanged();
-		void varsContextMenu(const QPoint&);
-		
-		void new_func3d();
-		void set_dots();
-		void set_lines();
-		void set_solid();
-		void save3DGraph();
-		
-		void saveGraph();
-		void functools ( int );
-		
-		void dictionaryFilterChanged(const QString& filter);
-		
-		void changeStatusBar ( const QString & );
-		void tabChanged ( int );
+        //Dictionary
+        QDockWidget *d_dock;
+        QListView *d_list;
+        QLineEdit *d_filter;
+        
+    private Q_SLOTS:
+        void newInstance();
+        void fullScreen(bool isFull);
+        
+        void initializeRecentScripts();
+        void operate();
+        void loadScript();
+        void loadScript(const QUrl& path);
+        void saveScript();
+        void saveLog();
+        void updateInformation();
+        void consoleCalculate();
+        void consoleEvaluate();
+        
+        void select(const QModelIndex& idx);
+        void new_func();
+        void remove_func();
+        void edit_func ( const QModelIndex & );
+        void edit_var ( const QModelIndex & );
+        void toggleSquares();
+        void toggleKeepAspect();
+        void set_res_low();
+        void set_res_std();
+        void set_res_fine();
+        void set_res_vfine();
+        void valueChanged();
+        void varsContextMenu(const QPoint&);
+        
+        void new_func3d();
+        void set_dots();
+        void set_lines();
+        void set_solid();
+        void save3DGraph();
+        
+        void saveGraph();
+        void functools ( int );
+        
+        void dictionaryFilterChanged(const QString& filter);
+        
+        void changeStatusBar ( const QString & );
+        void tabChanged ( int );
 };
 
 #endif

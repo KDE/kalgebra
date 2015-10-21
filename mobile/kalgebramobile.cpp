@@ -31,53 +31,53 @@ KAlgebraMobile* KAlgebraMobile::s_self=0;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
 
 KAlgebraMobile::KAlgebraMobile(QObject* parent)
-	: QObject(parent), m_functionsModel(0), m_vars(new Analitza::Variables)
+    : QObject(parent), m_functionsModel(0), m_vars(new Analitza::Variables)
 {
-	Q_ASSERT(s_self==0);
-	s_self=this;
-	
-	qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
-	qmlRegisterType<QAbstractItemModel>();
+    Q_ASSERT(s_self==0);
+    s_self=this;
+    
+    qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
+    qmlRegisterType<QAbstractItemModel>();
 }
 
 PlotsModel* KAlgebraMobile::functionsModel()
 {
-	if(!m_functionsModel) {
-		m_functionsModel = new Analitza::PlotsModel(this);
-		connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QModelIndex,int,int)));
-		connect(m_functionsModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(functionInserted(QModelIndex,int,int)));
-		connect(m_functionsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(functionModified(QModelIndex, QModelIndex)));
-	}
-	
-	return m_functionsModel;
+    if(!m_functionsModel) {
+        m_functionsModel = new Analitza::PlotsModel(this);
+        connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QModelIndex,int,int)));
+        connect(m_functionsModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(functionInserted(QModelIndex,int,int)));
+        connect(m_functionsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(functionModified(QModelIndex, QModelIndex)));
+    }
+    
+    return m_functionsModel;
 }
 
 void KAlgebraMobile::functionInserted(const QModelIndex& parent, int start, int end)
 {
-	Q_ASSERT(!parent.isValid());
-	for(int i=start; i<=end; i++) {
-		QModelIndex idx = functionsModel()->index(i, 1);
-		m_vars->modify(idx.sibling(i,0).data().toString(), Analitza::Expression(idx.data().toString()));
-	}
+    Q_ASSERT(!parent.isValid());
+    for(int i=start; i<=end; i++) {
+        QModelIndex idx = functionsModel()->index(i, 1);
+        m_vars->modify(idx.sibling(i,0).data().toString(), Analitza::Expression(idx.data().toString()));
+    }
 }
 
 void KAlgebraMobile::functionRemoved(const QModelIndex& parent, int start, int end)
 {
-	Q_ASSERT(!parent.isValid());
-	for(int i=start; i<=end; i++) {
-		QModelIndex idx = functionsModel()->index(i);
-		m_vars->remove(functionsModel()->data(idx, Qt::DisplayRole).toString());
-	}
+    Q_ASSERT(!parent.isValid());
+    for(int i=start; i<=end; i++) {
+        QModelIndex idx = functionsModel()->index(i);
+        m_vars->remove(functionsModel()->data(idx, Qt::DisplayRole).toString());
+    }
 }
 
 void KAlgebraMobile::functionModified(const QModelIndex& idxA, const QModelIndex& idxB)
 {
-	if(idxB.column()==1) {
-		for(int i=idxA.row(); i<idxB.row(); ++i) {
-			QModelIndex idx = functionsModel()->index(i, 1);
-			m_vars->modify(idx.sibling(i,0).data().toString(), Analitza::Expression(idx.data().toString()));
-		}
-	} //else TODO: figure out how to control a "rename"
+    if(idxB.column()==1) {
+        for(int i=idxA.row(); i<idxB.row(); ++i) {
+            QModelIndex idx = functionsModel()->index(i, 1);
+            m_vars->modify(idx.sibling(i,0).data().toString(), Analitza::Expression(idx.data().toString()));
+        }
+    } //else TODO: figure out how to control a "rename"
 }
 
 Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }

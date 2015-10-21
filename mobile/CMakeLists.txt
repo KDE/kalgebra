@@ -1,31 +1,31 @@
 add_subdirectory(plugins)
 
 if(KDeclarative_FOUND)
-	add_definitions(-DKDECOMPONENTS)
+    add_definitions(-DKDECOMPONENTS)
 endif()
 
 qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
 add_executable(kalgebramobile pluginsmodel.cpp
-	kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
+    kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
-	KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
+    KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
 if(${MOBILE_BACKEND} STREQUAL "harmattan")
-	set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR}/..)
+    set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR}/..)
 elseif(${MOBILE_BACKEND} STREQUAL "material")
 #   Material requires QtSvg for icons
 #   if we don't link it here explicitly, androiddeployqt doesn't bring it
     find_package(Qt5Svg REQUIRED)
     target_link_libraries(kalgebramobile Qt5::Svg)
 elseif(KDeclarative_FOUND)
-	target_link_libraries(kalgebramobile KF5::KDeclarative)
+    target_link_libraries(kalgebramobile KF5::KDeclarative)
 endif()
 
 set(DESKTOPFILE kalgebramobile.desktop)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/kalgebramobile${MOBILE_BACKEND}.desktop)
-	set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
+    set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
 endif()
 
 install(TARGETS kalgebramobile ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -1,17 +1,17 @@
 if(OPENGL_FOUND)
-	include_directories(${OPENGL_INCLUDE_DIR})
+    include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
 
 set(kalgebra_SRCS
-	kalgebra.cpp
-	dictionary.cpp
-	#console.cpp
-	consolehtml.cpp
-	varedit.cpp
-	main.cpp
-	variablesdelegate.cpp
-	viewportwidget.cpp
-	functionedit.cpp
+    kalgebra.cpp
+    dictionary.cpp
+    #console.cpp
+    consolehtml.cpp
+    varedit.cpp
+    main.cpp
+    variablesdelegate.cpp
+    viewportwidget.cpp
+    functionedit.cpp
 )
 
 #uncomment this if oxygen icons for kalgebra are available

@@ -22,15 +22,15 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
-	app.setApplicationName("kalgebra");
-	app.setApplicationDisplayName(i18n("KAlgebra"));
-	app.setApplicationVersion("0.99");
-	
+    QApplication app(argc, argv);
+    app.setApplicationName("kalgebra");
+    app.setApplicationDisplayName(i18n("KAlgebra"));
+    app.setApplicationVersion("0.99");
+    
         KLocalizedString::setApplicationDomain("kalgebra");
 
-	KAlgebra widget;
-	widget.show();
-	
-	return app.exec();
+    KAlgebra widget;
+    widget.show();
+    
+    return app.exec();
 }

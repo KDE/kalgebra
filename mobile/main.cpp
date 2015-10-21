@@ -37,33 +37,33 @@
 
 int main(int argc, char *argv[])
 {
-// 	KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
-// 			 KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
-// 	about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
-// 	KCmdLineArgs::init(argc, argv, &about);
-	QGuiApplication app(argc, argv);
-	app.setApplicationName("kalgebramobile");
-// 	app.setWindowIcon(QIcon::fromTheme("kalgebra"));
-	
-	KAlgebraMobile widget;
-	
+//     KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
+//              KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
+//     about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
+//     KCmdLineArgs::init(argc, argv, &about);
+    QGuiApplication app(argc, argv);
+    app.setApplicationName("kalgebramobile");
+//     app.setWindowIcon(QIcon::fromTheme("kalgebra"));
+    
+    KAlgebraMobile widget;
+    
 #ifdef KDECOMPONENTS
-	KDeclarative kdeclarative;
-// 	kdeclarative.setDeclarativeEngine(view.engine());
-// 	kdeclarative.initialize();
-	//binds things like kconfig and icons
-// 	kdeclarative.setupBindings();
+    KDeclarative kdeclarative;
+//     kdeclarative.setDeclarativeEngine(view.engine());
+//     kdeclarative.initialize();
+    //binds things like kconfig and icons
+//     kdeclarative.setupBindings();
 #endif
 
-	QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
+    QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
 
-	QDir dir = QFileInfo(main).dir();
-	dir.cdUp();
+    QDir dir = QFileInfo(main).dir();
+    dir.cdUp();
 
-	QQmlApplicationEngine engine;
-	engine.rootContext()->setContextProperty("app", &widget);
-	engine.addImportPath(dir.path());
-	engine.load(QUrl::fromLocalFile(main));
-	
-	return app.exec();
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("app", &widget);
+    engine.addImportPath(dir.path());
+    engine.load(QUrl::fromLocalFile(main));
+    
+    return app.exec();
 }

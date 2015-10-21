@@ -4,11 +4,11 @@ import widgets 1.0
 
 KAlgebraPage
 {
-	SimpleListView {
-		anchors.fill: parent
-		model: VariablesModel { variables: app.variables }
-		currentIndex: -1
-		role: "whatsThis"
-		title: "Variables"
-	}
+    SimpleListView {
+        anchors.fill: parent
+        model: VariablesModel { variables: app.variables }
+        currentIndex: -1
+        role: "whatsThis"
+        title: "Variables"
+    }
 }

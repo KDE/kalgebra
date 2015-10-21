@@ -38,92 +38,92 @@ class ExpressionEdit;
 }
 
 /**
- *	The FunctionEdit dialog provides a way to specify functions.
- *	@author Aleix Pol i Gonzalez
+ *    The FunctionEdit dialog provides a way to specify functions.
+ *    @author Aleix Pol i Gonzalez
  */
 
 class FunctionEdit : public QWidget
 {
 Q_OBJECT
 public:
-	/** Constructor. */
-	explicit FunctionEdit(QWidget *parent=0);
-	
-	/** Destructor. */
-	~FunctionEdit();
-	
-	/** Retrieves the resulting expression text. */
-	Analitza::Expression expression() const;
-	
-	Analitza::PlaneCurve* createFunction() const;
-	
-	/** Sets an expression text to the ExpressionEdit widget. */
-	void setFunction(const QString &newText);
-	
-	/** Retrieves the selected color for the function */
-	QColor color() const { return m_color->color(); }
-	
-	/** Sets the selected color for the function.*/
-	void setColor(const QColor &newColor);
-	
-	/** Returns whether we are editing or adding a function. */
-	bool editing() const { return m_modmode; }
-	
-	/** Sets whether we are editing or adding a function. */
-	void setEditing(bool m);
-	
-	/** Sets a name to the function. (Not used YET) */
-	void setName(const QString& name) { m_name->setText(name); }
-	
-	/** Retrieves a name for the function. (Not used YET) */
-	QString name() const { return m_name->text(); }
-	
-	/** Sets the variables class to be used with the graph functions*/
-	void setVariables(Analitza::Variables* v) { m_vars=v; }
-	
-	Analitza::Variables* variables() const { return m_vars; }
-	
-	void setOptionsShown(bool shown);
-	
-	virtual void resizeEvent(QResizeEvent* ev);
-	
+    /** Constructor. */
+    explicit FunctionEdit(QWidget *parent=0);
+    
+    /** Destructor. */
+    ~FunctionEdit();
+    
+    /** Retrieves the resulting expression text. */
+    Analitza::Expression expression() const;
+    
+    Analitza::PlaneCurve* createFunction() const;
+    
+    /** Sets an expression text to the ExpressionEdit widget. */
+    void setFunction(const QString &newText);
+    
+    /** Retrieves the selected color for the function */
+    QColor color() const { return m_color->color(); }
+    
+    /** Sets the selected color for the function.*/
+    void setColor(const QColor &newColor);
+    
+    /** Returns whether we are editing or adding a function. */
+    bool editing() const { return m_modmode; }
+    
+    /** Sets whether we are editing or adding a function. */
+    void setEditing(bool m);
+    
+    /** Sets a name to the function. (Not used YET) */
+    void setName(const QString& name) { m_name->setText(name); }
+    
+    /** Retrieves a name for the function. (Not used YET) */
+    QString name() const { return m_name->text(); }
+    
+    /** Sets the variables class to be used with the graph functions*/
+    void setVariables(Analitza::Variables* v) { m_vars=v; }
+    
+    Analitza::Variables* variables() const { return m_vars; }
+    
+    void setOptionsShown(bool shown);
+    
+    virtual void resizeEvent(QResizeEvent* ev);
+    
 public Q_SLOTS:
-	/** Clears the dialog. */
-	void clear();
-	
+    /** Clears the dialog. */
+    void clear();
+    
 Q_SIGNALS:
-	/** Tells that the result has been accepted. */
-	void accept();
-	
-	/** asks the currently edited plot to be removed. */
-	void removeEditingPlot();
-	
+    /** Tells that the result has been accepted. */
+    void accept();
+    
+    /** asks the currently edited plot to be removed. */
+    void removeEditingPlot();
+    
 private Q_SLOTS:
-	void edit();
-	void ok();
-	void colorChange(int);
-	void updateUplimit();
-	void updateDownlimit();
-	
+    void edit();
+    void ok();
+    void colorChange(int);
+    void updateUplimit();
+    void updateDownlimit();
+    
 private:
-	void setState(const QString& text, bool negative);
-	void focusInEvent(QFocusEvent*);
-	
-	Analitza::ExpressionEdit *m_func;
-	Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
-	double m_calcUplimit, m_calcDownlimit;
-	QLineEdit *m_name;
-	QPushButton *m_ok;
-	QLabel *m_valid;
-	QLabel *m_validIcon;
-	Analitza::PlotsView2D *m_graph;
-	KColorCombo *m_color;
-	Analitza::PlotsModel *m_funcsModel;
-	Analitza::Variables* m_vars;
-	
-	bool m_modmode;
-	QTabWidget* m_viewTabs;
-	QPushButton* m_remove;
+    void setState(const QString& text, bool negative);
+    void focusInEvent(QFocusEvent*);
+    
+    Analitza::ExpressionEdit *m_func;
+    Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
+    double m_calcUplimit, m_calcDownlimit;
+    QLineEdit *m_name;
+    QPushButton *m_ok;
+    QLabel *m_valid;
+    QLabel *m_validIcon;
+    Analitza::PlotsView2D *m_graph;
+    KColorCombo *m_color;
+    Analitza::PlotsModel *m_funcsModel;
+    Analitza::Variables* m_vars;
+    
+    bool m_modmode;
+    QTabWidget* m_viewTabs;
+    QPushButton* m_remove;
 };
 
 #endif

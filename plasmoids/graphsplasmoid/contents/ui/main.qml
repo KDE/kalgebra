@@ -22,47 +22,47 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.analitza 1.0
 
 Item {
-	property Component compactRepresentation: Component {
-		PlasmaComponents.Button {
-			iconSource: "kalgebra"
-			onClicked: plasmoid.togglePopup()
-		}
-	}
-	property string displayedFunction
-	onDisplayedFunctionChanged: {
-		plots.clear()
-		view.addFunction(displayedFunction)
-	}
-	
-	PlasmaComponents.TextField {
-		id: input
-		anchors {
-			top: parent.top
-			left: parent.left
-			right: parent.right
-		}
-		onAccepted: {
-			displayedFunction = text
-			plasmoid.writeConfig("function", text)
-		}
-	}
-	
-	Component.onCompleted: {
-		plasmoid.addEventListener('ConfigChanged', function() {
-			displayedFunction = plasmoid.readConfig("function")
-			input.text = displayedFunction
-		});
-	}
-	
-	Graph2D {
-		id: view
-		anchors {
-			fill: parent
-			topMargin: input.height
-		}
-		
-		model: PlotsModel { id: plots }
-		
-		ticksShown: false
-	}
+    property Component compactRepresentation: Component {
+        PlasmaComponents.Button {
+            iconSource: "kalgebra"
+            onClicked: plasmoid.togglePopup()
+        }
+    }
+    property string displayedFunction
+    onDisplayedFunctionChanged: {
+        plots.clear()
+        view.addFunction(displayedFunction)
+    }
+    
+    PlasmaComponents.TextField {
+        id: input
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        onAccepted: {
+            displayedFunction = text
+            plasmoid.writeConfig("function", text)
+        }
+    }
+    
+    Component.onCompleted: {
+        plasmoid.addEventListener('ConfigChanged', function() {
+            displayedFunction = plasmoid.readConfig("function")
+            input.text = displayedFunction
+        });
+    }
+    
+    Graph2D {
+        id: view
+        anchors {
+            fill: parent
+            topMargin: input.height
+        }
+        
+        model: PlotsModel { id: plots }
+        
+        ticksShown: false
+    }
 }

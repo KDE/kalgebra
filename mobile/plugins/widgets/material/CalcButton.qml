@@ -1,4 +1,4 @@
 Button
 {
-	onClicked: doOp(text)
+    onClicked: doOp(text)
 }

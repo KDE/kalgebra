@@ -37,271 +37,271 @@
 #include <analitza/expression.h>
 
 ConsoleHtml::ConsoleHtml(QWidget *parent)
-	: QWebView(parent), m_mode(Evaluation)
+    : QWebView(parent), m_mode(Evaluation)
 {
-	page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-	setRenderHint(QPainter::TextAntialiasing);
-	
-	connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
-	
-	QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
+    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    setRenderHint(QPainter::TextAntialiasing);
+    
+    connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
+    
+    QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
 
 ConsoleHtml::~ConsoleHtml()
 {
-	qDeleteAll(m_options);
+    qDeleteAll(m_options);
 }
 
 void ConsoleHtml::initialize()
 {
-	QPalette p=qApp->palette();
-	
-	m_css ="<style type=\"text/css\">\n";
-	m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
-	m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
-	m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
-	m_css +="\t.before { text-align:right; }\n";
-	m_css +="\t.op  { font-weight: bold; }\n";
-// 	m_css +="\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
-	m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
-	m_css +="\t.cont { color: #560000; }\n";
-	m_css +="\t.num { color: #0000C4; }\n";
-	m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
-	m_css +="\t.var { color: #640000; }\n";
-	m_css +="\t.keyword { color: #000064; }\n";
-	m_css +="\t.func { color: #008600; }\n";
-	m_css +="\t.result { padding-left: 10%; }\n";
-	m_css +="\t.options { font-size: small; text-align:right }\n";
-	m_css +="\t.string { color: #bb0000 }\n";
-	m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
+    QPalette p=qApp->palette();
+    
+    m_css ="<style type=\"text/css\">\n";
+    m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
+    m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
+    m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
+    m_css +="\t.before { text-align:right; }\n";
+    m_css +="\t.op  { font-weight: bold; }\n";
+//     m_css +="\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
+    m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
+    m_css +="\t.cont { color: #560000; }\n";
+    m_css +="\t.num { color: #0000C4; }\n";
+    m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
+    m_css +="\t.var { color: #640000; }\n";
+    m_css +="\t.keyword { color: #000064; }\n";
+    m_css +="\t.func { color: #008600; }\n";
+    m_css +="\t.result { padding-left: 10%; }\n";
+    m_css +="\t.options { font-size: small; text-align:right }\n";
+    m_css +="\t.string { color: #bb0000 }\n";
+    m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
     m_css +="\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }";
-	m_css +="</style>\n";
+    m_css +="</style>\n";
 }
 
 void ConsoleHtml::openClickedUrl(const QUrl& url)
 {
-	QUrlQuery query(url);
-	QString id =query.queryItemValue("id");
-	QString exp=query.queryItemValue("func");
-	
-	foreach(InlineOptions* opt, m_options) {
-		if(opt->id() == id) {
-			opt->triggerOption(Analitza::Expression(exp, false));
-		}
-	}
+    QUrlQuery query(url);
+    QString id =query.queryItemValue("id");
+    QString exp=query.queryItemValue("func");
+    
+    foreach(InlineOptions* opt, m_options) {
+        if(opt->id() == id) {
+            opt->triggerOption(Analitza::Expression(exp, false));
+        }
+    }
 }
 
 bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
 {
-	QString result, newEntry;
-	Analitza::Expression res;
-	
-	a.setExpression(e);
-	if(a.isCorrect()) {
-		if(m_mode==Evaluation) {
-			res=a.evaluate();
-		} else {
-			res=a.calculate();
-		}
-	}
-	
-	QString options;
-	if(a.isCorrect()) {
-		result = res.toHtml();
-		
-		Analitza::Analyzer lambdifier(a.variables());
-		lambdifier.setExpression(res);
-		Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
-		lambdifier.setExpression(lambdaexp);
-		
-		Analitza::ExpressionType functype = lambdifier.type();
-		
-		foreach(InlineOptions* opt, m_options) {
-			if(opt->matchesExpression(lambdaexp, functype)) {
-				QUrl url("/query");
-				QUrlQuery query(url);
-				query.addQueryItem("id", opt->id());
-				query.addQueryItem("func", lambdaexp.toString());
-				url.setQuery(query);
-				
-				options += i18n(" <a href='%1'>%2</a>", url.toString(), opt->caption());
-			}
-		}
-		
-		if(!options.isEmpty())
-			options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
-		
-		a.insertVariable("ans", res);
-		m_script += e; //Script won't have the errors
-		newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
-	} else {
-		m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join("</li>\n<li>"));
-	}
-	
-	updateView(newEntry, options);
-	
-	return a.isCorrect();
+    QString result, newEntry;
+    Analitza::Expression res;
+    
+    a.setExpression(e);
+    if(a.isCorrect()) {
+        if(m_mode==Evaluation) {
+            res=a.evaluate();
+        } else {
+            res=a.calculate();
+        }
+    }
+    
+    QString options;
+    if(a.isCorrect()) {
+        result = res.toHtml();
+        
+        Analitza::Analyzer lambdifier(a.variables());
+        lambdifier.setExpression(res);
+        Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
+        lambdifier.setExpression(lambdaexp);
+        
+        Analitza::ExpressionType functype = lambdifier.type();
+        
+        foreach(InlineOptions* opt, m_options) {
+            if(opt->matchesExpression(lambdaexp, functype)) {
+                QUrl url("/query");
+                QUrlQuery query(url);
+                query.addQueryItem("id", opt->id());
+                query.addQueryItem("func", lambdaexp.toString());
+                url.setQuery(query);
+                
+                options += i18n(" <a href='%1'>%2</a>", url.toString(), opt->caption());
+            }
+        }
+        
+        if(!options.isEmpty())
+            options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
+        
+        a.insertVariable("ans", res);
+        m_script += e; //Script won't have the errors
+        newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
+    } else {
+        m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join("</li>\n<li>"));
+    }
+    
+    updateView(newEntry, options);
+    
+    return a.isCorrect();
 }
 
 QString temporaryPath()
 {
-	QTemporaryFile temp("consolelog");
-	temp.open();
-	temp.close();
-	temp.setAutoRemove(false);
-	return QDir::tempPath()+'/'+temp.fileName();
+    QTemporaryFile temp("consolelog");
+    temp.open();
+    temp.close();
+    temp.setAutoRemove(false);
+    return QDir::tempPath()+'/'+temp.fileName();
 }
 
 QString ConsoleHtml::retrieve(const QUrl& remoteUrl)
 {
-	QString path=temporaryPath();
-	
-	KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl(path));
-	
-	bool ret = job->exec();
-	if(!ret)
-		path.clear();
-	
-	return path;
+    QString path=temporaryPath();
+    
+    KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl(path));
+    
+    bool ret = job->exec();
+    if(!ret)
+        path.clear();
+    
+    return path;
 }
 
 bool ConsoleHtml::loadScript(const QUrl& path)
 {
-	Q_ASSERT(!path.isEmpty());
-	
-	//FIXME: We have expression-only script support
-	bool correct=false;
-	QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
-	
-	if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		QTextStream stream(&file);
-		
-		a.importScript(&stream);
-		correct=a.isCorrect();
-	}
-	
-	if(!correct) {
-		m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join("<br/>"));
-		updateView(QString(), QString());
-	}
-	else
-		updateView(i18n("Imported: %1", path.toString()), QString());
-	
-	return correct;
+    Q_ASSERT(!path.isEmpty());
+    
+    //FIXME: We have expression-only script support
+    bool correct=false;
+    QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
+    
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        
+        a.importScript(&stream);
+        correct=a.isCorrect();
+    }
+    
+    if(!correct) {
+        m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join("<br/>"));
+        updateView(QString(), QString());
+    }
+    else
+        updateView(i18n("Imported: %1", path.toString()), QString());
+    
+    return correct;
 }
 
 bool ConsoleHtml::saveScript(const QUrl & path) const
 {
-	bool correct=false;
-	Q_ASSERT(!path.isEmpty());
-		
-	QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
-	QFile file(savePath);
-	correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-	
-	if(correct) {
-		QTextStream out(&file);
-		foreach(const Analitza::Expression& exp, m_script)
-			out << exp.toString() << endl;
-	}
-	
-	if(!path.isLocalFile()) {
-		KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
-		correct=job->exec();
-	}
-	return correct;
+    bool correct=false;
+    Q_ASSERT(!path.isEmpty());
+        
+    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+    QFile file(savePath);
+    correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+    
+    if(correct) {
+        QTextStream out(&file);
+        foreach(const Analitza::Expression& exp, m_script)
+            out << exp.toString() << endl;
+    }
+    
+    if(!path.isLocalFile()) {
+        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+        correct=job->exec();
+    }
+    return correct;
 }
 
 bool ConsoleHtml::saveLog(const QUrl& path) const
 {
-	Q_ASSERT(!path.isEmpty());
-	//FIXME: We have to choose between txt and html
-	bool correct=false;
-	QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
-	QFile file(savePath);
-	correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-	
-	if(correct) {
-		QTextStream out(&file);
-		out << "<html>\n<head>" << m_css << "</head>" << endl;
-		out << "<body>" << endl;
-		foreach(const QString &entry, m_htmlLog)
-			out << "<p>" << entry << "</p>" << endl;
-		out << "</body>\n</html>" << endl;
-	}
-	
-	if(!path.isLocalFile()) {
-		KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
-		correct=job->exec();
-	}
-	return correct;
+    Q_ASSERT(!path.isEmpty());
+    //FIXME: We have to choose between txt and html
+    bool correct=false;
+    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+    QFile file(savePath);
+    correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+    
+    if(correct) {
+        QTextStream out(&file);
+        out << "<html>\n<head>" << m_css << "</head>" << endl;
+        out << "<body>" << endl;
+        foreach(const QString &entry, m_htmlLog)
+            out << "<p>" << entry << "</p>" << endl;
+        out << "</body>\n</html>" << endl;
+    }
+    
+    if(!path.isLocalFile()) {
+        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+        correct=job->exec();
+    }
+    return correct;
 }
 
 void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 {
-	QByteArray code;
-	code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
-	code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
-	code += m_css;
-	code += "</head>\n<body>";
-	foreach(const QString &entry, m_htmlLog)
-		code += "<p class='normal'>"+entry.toUtf8()+"</p>";
+    QByteArray code;
+    code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+    code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
+    code += m_css;
+    code += "</head>\n<body>";
+    foreach(const QString &entry, m_htmlLog)
+        code += "<p class='normal'>"+entry.toUtf8()+"</p>";
 
-	if(!newEntry.isEmpty()) {
-		m_htmlLog += newEntry;
-		code += options.toUtf8();
-		code += "<p class='last'>"+newEntry.toUtf8()+"</p>";
-	}
-	code += "</body></html>";
+    if(!newEntry.isEmpty()) {
+        m_htmlLog += newEntry;
+        code += options.toUtf8();
+        code += "<p class='last'>"+newEntry.toUtf8()+"</p>";
+    }
+    code += "</body></html>";
 
-	setContent(code);
-	
-	emit changed();
+    setContent(code);
+    
+    emit changed();
 
-	QWebFrame* mf = page()->mainFrame();
-	mf->setScrollBarValue(Qt::Vertical, mf->scrollBarMaximum(Qt::Vertical));
+    QWebFrame* mf = page()->mainFrame();
+    mf->setScrollBarValue(Qt::Vertical, mf->scrollBarMaximum(Qt::Vertical));
 }
 
 void ConsoleHtml::copy() const
 {
-	QApplication::clipboard()->setText(selectedText());
+    QApplication::clipboard()->setText(selectedText());
 }
 
 void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 {
-	QMenu popup;
-	if(hasSelection()) {
-		popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
-		QAction *act=new QAction(QIcon::fromTheme("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
-		connect(act, SIGNAL(triggered()), SLOT(paste()));
-		popup.addAction(act);
-		popup.addSeparator();
-	}
-	popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
-	
-	popup.exec(ev->pos());
+    QMenu popup;
+    if(hasSelection()) {
+        popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
+        QAction *act=new QAction(QIcon::fromTheme("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
+        connect(act, SIGNAL(triggered()), SLOT(paste()));
+        popup.addAction(act);
+        popup.addSeparator();
+    }
+    popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
+    
+    popup.exec(ev->pos());
 }
 
 void ConsoleHtml::clear()
 {
-	m_script.clear();
-	m_htmlLog.clear();
-	updateView(QString(), QString());
+    m_script.clear();
+    m_htmlLog.clear();
+    updateView(QString(), QString());
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)
 {
-	a.variables()->modify(name, exp);
+    a.variables()->modify(name, exp);
 }
 
 void ConsoleHtml::removeVariable(const QString & name)
 {
-	a.variables()->remove(name);
+    a.variables()->remove(name);
 }
 
 void ConsoleHtml::paste()
 {
-	emit paste(selectedText());
+    emit paste(selectedText());
 }
 
 

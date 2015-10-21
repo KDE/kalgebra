@@ -24,26 +24,26 @@ class QDoubleSpinBox;
 
 class ViewportWidget : public QWidget
 {
-	Q_OBJECT
-	public:
-		explicit ViewportWidget(QWidget * parent = 0);
-		
-		QRectF viewport() const;
-		
-	public Q_SLOTS:
-		void setViewport(const QRectF& current);
-		
-	private Q_SLOTS:
-		void emitViewport();
-		
-	Q_SIGNALS:
-		void viewportChange(const QRectF& newViewport);
-		
-	private:
-		QDoubleSpinBox* m_left;
-		QDoubleSpinBox* m_top;
-		QDoubleSpinBox* m_width;
-		QDoubleSpinBox* m_height;
+    Q_OBJECT
+    public:
+        explicit ViewportWidget(QWidget * parent = 0);
+        
+        QRectF viewport() const;
+        
+    public Q_SLOTS:
+        void setViewport(const QRectF& current);
+        
+    private Q_SLOTS:
+        void emitViewport();
+        
+    Q_SIGNALS:
+        void viewportChange(const QRectF& newViewport);
+        
+    private:
+        QDoubleSpinBox* m_left;
+        QDoubleSpinBox* m_top;
+        QDoubleSpinBox* m_width;
+        QDoubleSpinBox* m_height;
 };
 
 #endif // VIEWPORTDIALOG_H

@@ -33,92 +33,92 @@
 
 Dictionary::Dictionary(QWidget *p) : QWidget(p)
 {
-	m_ops=new OperatorsModel(this);
-	m_sortProxy = new QSortFilterProxyModel(this);
-	m_sortProxy->setSourceModel(m_ops);
-	m_sortProxy->sort(2, Qt::AscendingOrder);
-	m_sortProxy->setFilterKeyColumn(2);
+    m_ops=new OperatorsModel(this);
+    m_sortProxy = new QSortFilterProxyModel(this);
+    m_sortProxy->setSourceModel(m_ops);
+    m_sortProxy->sort(2, Qt::AscendingOrder);
+    m_sortProxy->setFilterKeyColumn(2);
 
-	m_vars = new Analitza::Variables;
+    m_vars = new Analitza::Variables;
 
-	QGroupBox *descr=new QGroupBox(i18n("Information"), this);
-	descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	QFormLayout *descrLayo=new QFormLayout;
-	QVBoxLayout *graphLayo=new QVBoxLayout(this);
-	m_name=new QLabel(descr);
-	m_descr=new QLabel(descr);
-	m_sample=new QLabel(descr);
-	m_example=new QLabel(descr);
-	m_funcs=new Analitza::PlotsModel(descr);
-	m_graph=new Analitza::PlotsView2D(descr);
-	m_graph->setTicksShown(0);
-	m_graph->setModel(m_funcs);
-	m_graph->setReadOnly(true);
-	m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
-	m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QGroupBox *descr=new QGroupBox(i18n("Information"), this);
+    descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QFormLayout *descrLayo=new QFormLayout;
+    QVBoxLayout *graphLayo=new QVBoxLayout(this);
+    m_name=new QLabel(descr);
+    m_descr=new QLabel(descr);
+    m_sample=new QLabel(descr);
+    m_example=new QLabel(descr);
+    m_funcs=new Analitza::PlotsModel(descr);
+    m_graph=new Analitza::PlotsView2D(descr);
+    m_graph->setTicksShown(0);
+    m_graph->setModel(m_funcs);
+    m_graph->setReadOnly(true);
+    m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
+    m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_name->setIndent(10);
-	m_descr->setIndent(10);
-	m_sample->setIndent(10);
-	m_example->setIndent(10);
+    m_name->setIndent(10);
+    m_descr->setIndent(10);
+    m_sample->setIndent(10);
+    m_example->setIndent(10);
 
-	m_example->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    m_example->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
-	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString()), m_name);
-	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
-	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
-	descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example);
- 	descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-	graphLayo->addWidget(descr);
-	graphLayo->addWidget(m_graph);
-	descr->setLayout(descrLayo);
+    descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(0, Qt::Horizontal).toString()), m_name);
+    descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(1, Qt::Horizontal).toString()), m_descr);
+    descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(2, Qt::Horizontal).toString()), m_sample);
+    descrLayo->addRow(i18n("<b>%1</b>", m_ops->headerData(3, Qt::Horizontal).toString()), m_example);
+     descrLayo->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+    graphLayo->addWidget(descr);
+    graphLayo->addWidget(m_graph);
+    descr->setLayout(descrLayo);
 
-	m_funcs->clear();
-// 	connect(m_list, SIGNAL(clicked(QModelIndex)), this, SLOT(activated(QModelIndex)));
+    m_funcs->clear();
+//     connect(m_list, SIGNAL(clicked(QModelIndex)), this, SLOT(activated(QModelIndex)));
 }
 
 Dictionary::~Dictionary()
 {
-	delete m_vars;
+    delete m_vars;
 }
 
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
 {
-	Q_UNUSED(prev);
+    Q_UNUSED(prev);
 
-	m_funcs->clear();
-	if(idx.isValid()) {
-		QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
-		nameIdx = idx.sibling(idx.row(), 0);
-		descriptionIdx = idx.sibling(idx.row(), 1);
-		sampleIdx = idx.sibling(idx.row(), 2);
-		exampleIdx = idx.sibling(idx.row(), 3);
+    m_funcs->clear();
+    if(idx.isValid()) {
+        QModelIndex nameIdx, descriptionIdx, sampleIdx, exampleIdx;
+        nameIdx = idx.sibling(idx.row(), 0);
+        descriptionIdx = idx.sibling(idx.row(), 1);
+        sampleIdx = idx.sibling(idx.row(), 2);
+        exampleIdx = idx.sibling(idx.row(), 3);
 
-		QString name=m_sortProxy->data(nameIdx).toString();
-		QString description=m_sortProxy->data(descriptionIdx).toString();
-		QString sample=m_sortProxy->data(sampleIdx).toString();
-		QString example=m_sortProxy->data(exampleIdx).toString();
+        QString name=m_sortProxy->data(nameIdx).toString();
+        QString description=m_sortProxy->data(descriptionIdx).toString();
+        QString sample=m_sortProxy->data(sampleIdx).toString();
+        QString example=m_sortProxy->data(exampleIdx).toString();
 
-		Analitza::Expression e(example, false);
+        Analitza::Expression e(example, false);
 
-		m_name->setText(name);
-		m_descr->setText(description);
-		m_sample->setText(sample);
-		m_example->setText(example);
+        m_name->setText(name);
+        m_descr->setText(description);
+        m_sample->setText(sample);
+        m_example->setText(example);
 
-		m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), "dict"));
-	} else {
-		QString error;
-		m_name->setText(QString());
-		m_descr->setText(QString());
-		m_sample->setText(QString());
-		m_example->setText(QString());
-	}
+        m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), "dict"));
+    } else {
+        QString error;
+        m_name->setText(QString());
+        m_descr->setText(QString());
+        m_sample->setText(QString());
+        m_example->setText(QString());
+    }
 }
 
 void Dictionary::setFilter(const QString &filter)
 {
-	m_sortProxy->setFilterFixedString(filter);
+    m_sortProxy->setFilterFixedString(filter);
 }
 
 

@@ -27,79 +27,79 @@
 QString PluginsModel::pluginsDirectoryPath()
 {
 #ifdef __ANDROID__
-	return "/data/data/org.kde.kalgebramobile/qt-reserved-files/share/kalgebramobile/plugins";
+    return "/data/data/org.kde.kalgebramobile/qt-reserved-files/share/kalgebramobile/plugins";
 #else
-	return QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
+    return QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
 #endif
 }
 
 PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
-	QStringList foundPlugins;
-	QDir dir(pluginsDirectoryPath());
-	foreach(const QString& file, dir.entryList(QStringList("*.json"))) {
-		foundPlugins += dir.absoluteFilePath(file);
-	}
+    QStringList foundPlugins;
+    QDir dir(pluginsDirectoryPath());
+    foreach(const QString& file, dir.entryList(QStringList("*.json"))) {
+        foundPlugins += dir.absoluteFilePath(file);
+    }
 
-	qDebug() << "Plugins found:" << foundPlugins;
+    qDebug() << "Plugins found:" << foundPlugins;
 
-	QList<QStandardItem*> items;
-	Q_FOREACH(const QString& file, foundPlugins) {
-		QFile f(file);
-		bool ret = f.open(QIODevice::ReadOnly);
-		if(!ret) {
-			qWarning() << "error opening " << file;
-			continue;
-		}
-// 		qDebug() << "laaaaa" << f.readAll() << file;
+    QList<QStandardItem*> items;
+    Q_FOREACH(const QString& file, foundPlugins) {
+        QFile f(file);
+        bool ret = f.open(QIODevice::ReadOnly);
+        if(!ret) {
+            qWarning() << "error opening " << file;
+            continue;
+        }
+//         qDebug() << "laaaaa" << f.readAll() << file;
 
-		QByteArray data = f.readAll();
-		QJsonDocument doc = QJsonDocument::fromJson(data);
+        QByteArray data = f.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
 
-		QVariantMap cg = doc.toVariant().toMap();
-		QStandardItem* item = new QStandardItem;
+        QVariantMap cg = doc.toVariant().toMap();
+        QStandardItem* item = new QStandardItem;
 
-		QString scriptPath = dir.absoluteFilePath(cg.value("X-KDE-PluginInfo-Name", QString()).toString());
+        QString scriptPath = dir.absoluteFilePath(cg.value("X-KDE-PluginInfo-Name", QString()).toString());
 
-		Q_ASSERT(!scriptPath.isEmpty());
+        Q_ASSERT(!scriptPath.isEmpty());
 
-		QVariant priority = cg.value("X-KAlgebra-Priority", QString());
-		if(!priority.isValid())
-			priority = 1000;
-		
-		item->setData(QUrl::fromLocalFile(scriptPath), PathRole);
-		item->setData(priority, PriorityRole);
-		item->setData(cg.value("Name", QString()), TitleRole);
-		item->setData(cg.value("Comment", QStringLiteral("")), SubtitleRole);
-		item->setData(cg.value("Icon", QString()), Qt::DecorationRole);
-		
-		items += item;
-	}
-	invisibleRootItem()->appendRows(items);
-	setSortRole(PriorityRole);
-	sort(0, Qt::DescendingOrder);
+        QVariant priority = cg.value("X-KAlgebra-Priority", QString());
+        if(!priority.isValid())
+            priority = 1000;
+        
+        item->setData(QUrl::fromLocalFile(scriptPath), PathRole);
+        item->setData(priority, PriorityRole);
+        item->setData(cg.value("Name", QString()), TitleRole);
+        item->setData(cg.value("Comment", QStringLiteral("")), SubtitleRole);
+        item->setData(cg.value("Icon", QString()), Qt::DecorationRole);
+        
+        items += item;
+    }
+    invisibleRootItem()->appendRows(items);
+    setSortRole(PriorityRole);
+    sort(0, Qt::DescendingOrder);
 }
 
 QHash<int, QByteArray> PluginsModel::roleNames() const
 {
-	QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
-	rolenames.insert(PathRole, "path");
-	rolenames.insert(PriorityRole, "priority");
-	rolenames.insert(TitleRole, "title");
-	rolenames.insert(SubtitleRole, "subtitle");
-	return rolenames;
+    QHash<int, QByteArray> rolenames=QStandardItemModel::roleNames();
+    rolenames.insert(PathRole, "path");
+    rolenames.insert(PriorityRole, "priority");
+    rolenames.insert(TitleRole, "title");
+    rolenames.insert(SubtitleRole, "subtitle");
+    return rolenames;
 }
 
 QString PluginsModel::pluginPath(int row)
 {
-	return data(index(row, 0), PathRole).toString();
+    return data(index(row, 0), PathRole).toString();
 }
 
 QStringList PluginsModel::titles() const
 {
-	QStringList ret;
-	for (int i=0, c=rowCount(); i<c; ++i) {
-		ret += item(i, 0)->data(TitleRole).toString();
-	}
-	return ret;
+    QStringList ret;
+    for (int i=0, c=rowCount(); i<c; ++i) {
+        ret += item(i, 0)->data(TitleRole).toString();
+    }
+    return ret;
 }

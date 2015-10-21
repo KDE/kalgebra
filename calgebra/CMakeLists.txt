@@ -9,7 +9,7 @@ set(CMAKE_REQUIRED_LIBRARIES ${READLINE_LIBRARY} ${CURSES_LIBRARIES})
 check_function_exists(free_history_entry HAVE_FREE_HISTORY_ENTRY)
 cmake_pop_check_state()
 if(HAVE_FREE_HISTORY_ENTRY)
-	add_definitions(-DHAVE_FREE_HISTORY_ENTRY)
+    add_definitions(-DHAVE_FREE_HISTORY_ENTRY)
 endif()
 
 add_executable(calgebra main.cpp)

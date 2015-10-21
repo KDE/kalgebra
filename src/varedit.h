@@ -32,42 +32,42 @@ class ExpressionEdit;
 }
 
 /**
- *	The VarEdit provides a dialog to allow users to edit/create a variable.
- *	@author Aleix Pol i Gonzalez
+ *    The VarEdit provides a dialog to allow users to edit/create a variable.
+ *    @author Aleix Pol i Gonzalez
  */
 
 class VarEdit : public QDialog
 {
-	Q_OBJECT
-	public:
-		/** Constructor. Creates a variable editing dialog. */
-		explicit VarEdit(QWidget *parent = 0, bool modal = false);
-		
-		/** Sets the editing variable name */
-		void setName(const QString& newVar);
-		
-		/** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
-		void setAnalitza(Analitza::Analyzer *na);
-		
-		/** Returns the resulting variable expression */
-		Analitza::Expression val();
-		
-	private:
-		bool canRemove(const QString& name) const;
-		
-		Analitza::ExpressionEdit *m_exp;
-		
-		QLabel *m_valid;
-		Analitza::Variables *vars;
-		bool m_correct;
-		QString m_var;
-		QDialogButtonBox* m_buttonBox;
-		QPushButton* m_removeBtn;
+    Q_OBJECT
+    public:
+        /** Constructor. Creates a variable editing dialog. */
+        explicit VarEdit(QWidget *parent = 0, bool modal = false);
+        
+        /** Sets the editing variable name */
+        void setName(const QString& newVar);
+        
+        /** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
+        void setAnalitza(Analitza::Analyzer *na);
+        
+        /** Returns the resulting variable expression */
+        Analitza::Expression val();
+        
+    private:
+        bool canRemove(const QString& name) const;
+        
+        Analitza::ExpressionEdit *m_exp;
+        
+        QLabel *m_valid;
+        Analitza::Variables *vars;
+        bool m_correct;
+        QString m_var;
+        QDialogButtonBox* m_buttonBox;
+        QPushButton* m_removeBtn;
 
-	private Q_SLOTS:
-		void edit();
-		void ok();
-		void removeVariable();
+    private Q_SLOTS:
+        void edit();
+        void ok();
+        void removeVariable();
 };
 
 #endif

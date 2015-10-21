@@ -29,30 +29,30 @@
 
 class KAlgebraPlasmoid : public Plasma::Applet
 {
-	Q_OBJECT
-	public:
-		KAlgebraPlasmoid(QObject *parent, const QVariantList &args);
-		~KAlgebraPlasmoid();
-		
-		void init();
-		virtual QQuickItem* graphicsWidget();
-		
-	private Q_SLOTS:
-		void simplify();
-		void addOperation();
-		
-	private:
-		static QColor correctColor();
-		static QColor errorColor();
-		static int simplificationSize();
-		
-		void plasmoidFont(bool big, const QColor& c, bool bold);
-		
-		QQuickItem* m_widget;
-		QGraphicsLinearLayout* m_layout;
-		Plasma::LineEdit *m_input;
-		Plasma::Label *m_output;
-		Analitza::Analyzer a;
+    Q_OBJECT
+    public:
+        KAlgebraPlasmoid(QObject *parent, const QVariantList &args);
+        ~KAlgebraPlasmoid();
+        
+        void init();
+        virtual QQuickItem* graphicsWidget();
+        
+    private Q_SLOTS:
+        void simplify();
+        void addOperation();
+        
+    private:
+        static QColor correctColor();
+        static QColor errorColor();
+        static int simplificationSize();
+        
+        void plasmoidFont(bool big, const QColor& c, bool bold);
+        
+        QQuickItem* m_widget;
+        QGraphicsLinearLayout* m_layout;
+        Plasma::LineEdit *m_input;
+        Plasma::Label *m_output;
+        Analitza::Analyzer a;
 };
 
 // This is the command that links your applet to the .desktop file

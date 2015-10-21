@@ -23,10 +23,10 @@
 
 class VariablesDelegate : public QItemDelegate
 {
-	public:
-		VariablesDelegate(QObject* parent=0) : QItemDelegate(parent) {}
-		virtual QWidget* createEditor (QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
-		virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+    public:
+        VariablesDelegate(QObject* parent=0) : QItemDelegate(parent) {}
+        virtual QWidget* createEditor (QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
+        virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
 };
 
 #endif // VARIABLESDELEGATE_H
