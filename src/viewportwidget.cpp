@@ -48,8 +48,8 @@ ViewportWidget::ViewportWidget(QWidget * parent)
     layout->addRow(i18n("Width:"), m_width);
     layout->addRow(i18n("Height:"), m_height);
 
-    QPushButton *apply=new QPushButton(QIcon::fromTheme("dialog-ok-apply"), i18n("Apply"), this);
-    connect(apply, SIGNAL(clicked()), SLOT(emitViewport()));
+    QPushButton *apply=new QPushButton(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18n("Apply"), this);
+    connect(apply, &QAbstractButton::clicked, this, &ViewportWidget::emitViewport);
 
     upperLayout->addLayout(layout);
     upperLayout->addWidget(apply);

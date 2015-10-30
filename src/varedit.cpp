@@ -37,16 +37,16 @@ VarEdit::VarEdit(QWidget *parent, bool modal)
     m_buttonBox = new QDialogButtonBox(this);
     m_buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     m_removeBtn = m_buttonBox->addButton(i18n("Remove Variable"), QDialogButtonBox::DestructiveRole);
-    m_removeBtn->setIcon(QIcon::fromTheme("edit-table-delete-row"));
+    m_removeBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-table-delete-row")));
     
-    connect(m_removeBtn, SIGNAL(clicked(bool)), SLOT(removeVariable()));
+    connect(m_removeBtn, &QAbstractButton::clicked, this, &VarEdit::removeVariable);
     
     connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
     connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
     
     m_exp = new Analitza::ExpressionEdit(this);
-    connect(m_exp, SIGNAL(textChanged()), this, SLOT(edit()));
-    connect(m_exp, SIGNAL(returnPressed()), this, SLOT(ok()));
+    connect(m_exp, &QPlainTextEdit::textChanged, this, &VarEdit::edit);
+    connect(m_exp, &Analitza::ExpressionEdit::returnPressed, this, &VarEdit::ok);
     
     m_valid = new QLabel(this);
     
@@ -101,7 +101,7 @@ Analitza::Expression VarEdit::val()
         m_valid->setToolTip(QString());
     } else {
         m_valid->setText(i18n("<b style='color:red'>WRONG</b>"));
-        m_valid->setToolTip(a.errors().join("\n"));
+        m_valid->setToolTip(a.errors().join(QStringLiteral("\n")));
     }
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_correct);
     m_exp->setCorrect(m_correct);

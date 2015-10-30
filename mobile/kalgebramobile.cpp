@@ -44,9 +44,9 @@ PlotsModel* KAlgebraMobile::functionsModel()
 {
     if(!m_functionsModel) {
         m_functionsModel = new Analitza::PlotsModel(this);
-        connect(m_functionsModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(functionRemoved(QModelIndex,int,int)));
-        connect(m_functionsModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(functionInserted(QModelIndex,int,int)));
-        connect(m_functionsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(functionModified(QModelIndex, QModelIndex)));
+        connect(m_functionsModel, &QAbstractItemModel::rowsRemoved, this, &KAlgebraMobile::functionRemoved);
+        connect(m_functionsModel, &QAbstractItemModel::rowsInserted, this, &KAlgebraMobile::functionInserted);
+        connect(m_functionsModel, &QAbstractItemModel::dataChanged, this, &KAlgebraMobile::functionModified);
     }
     
     return m_functionsModel;

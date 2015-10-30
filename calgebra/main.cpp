@@ -59,7 +59,7 @@ void calculate(const Expression& e, CalcType t)
     
     if(a.isCorrect()) {
         qDebug() << qPrintable(ans.toString());
-        a.insertVariable("ans", ans);
+        a.insertVariable(QStringLiteral("ans"), ans);
     } else {
         QStringList errors = a.errors();
         qDebug() << "Error:";

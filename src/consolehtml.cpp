@@ -42,7 +42,7 @@ ConsoleHtml::ConsoleHtml(QWidget *parent)
     page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     setRenderHint(QPainter::TextAntialiasing);
     
-    connect(this, SIGNAL(linkClicked(QUrl)), SLOT(openClickedUrl(QUrl)));
+    connect(this, &QWebView::linkClicked, this, &ConsoleHtml::openClickedUrl);
     
     QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
@@ -57,7 +57,7 @@ void ConsoleHtml::initialize()
     QPalette p=qApp->palette();
     
     m_css ="<style type=\"text/css\">\n";
-    m_css +=QString("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
+    m_css +=QStringLiteral("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
     m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
     m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
     m_css +="\t.before { text-align:right; }\n";
@@ -81,8 +81,8 @@ void ConsoleHtml::initialize()
 void ConsoleHtml::openClickedUrl(const QUrl& url)
 {
     QUrlQuery query(url);
-    QString id =query.queryItemValue("id");
-    QString exp=query.queryItemValue("func");
+    QString id =query.queryItemValue(QStringLiteral("id"));
+    QString exp=query.queryItemValue(QStringLiteral("func"));
     
     foreach(InlineOptions* opt, m_options) {
         if(opt->id() == id) {
@@ -118,10 +118,10 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
         
         foreach(InlineOptions* opt, m_options) {
             if(opt->matchesExpression(lambdaexp, functype)) {
-                QUrl url("/query");
+                QUrl url(QStringLiteral("/query"));
                 QUrlQuery query(url);
-                query.addQueryItem("id", opt->id());
-                query.addQueryItem("func", lambdaexp.toString());
+                query.addQueryItem(QStringLiteral("id"), opt->id());
+                query.addQueryItem(QStringLiteral("func"), lambdaexp.toString());
                 url.setQuery(query);
                 
                 options += i18n(" <a href='%1'>%2</a>", url.toString(), opt->caption());
@@ -131,11 +131,11 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
         if(!options.isEmpty())
             options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
         
-        a.insertVariable("ans", res);
+        a.insertVariable(QStringLiteral("ans"), res);
         m_script += e; //Script won't have the errors
-        newEntry = QString("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
+        newEntry = QStringLiteral("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
     } else {
-        m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join("</li>\n<li>"));
+        m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>")));
     }
     
     updateView(newEntry, options);
@@ -145,7 +145,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 
 QString temporaryPath()
 {
-    QTemporaryFile temp("consolelog");
+    QTemporaryFile temp(QStringLiteral("consolelog"));
     temp.open();
     temp.close();
     temp.setAutoRemove(false);
@@ -181,7 +181,7 @@ bool ConsoleHtml::loadScript(const QUrl& path)
     }
     
     if(!correct) {
-        m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join("<br/>"));
+        m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join(QStringLiteral("<br/>")));
         updateView(QString(), QString());
     }
     else
@@ -272,7 +272,7 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
     QMenu popup;
     if(hasSelection()) {
         popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
-        QAction *act=new QAction(QIcon::fromTheme("edit-paste"), i18n("Paste \"%1\" to input", selectedText()), &popup);
+        QAction *act=new QAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste \"%1\" to input", selectedText()), &popup);
         connect(act, SIGNAL(triggered()), SLOT(paste()));
         popup.addAction(act);
         popup.addSeparator();

@@ -29,7 +29,7 @@ QString PluginsModel::pluginsDirectoryPath()
 #ifdef __ANDROID__
     return "/data/data/org.kde.kalgebramobile/qt-reserved-files/share/kalgebramobile/plugins";
 #else
-    return QStandardPaths::locate(QStandardPaths::DataLocation, "plugins", QStandardPaths::LocateDirectory);
+    return QStandardPaths::locate(QStandardPaths::DataLocation, QStringLiteral("plugins"), QStandardPaths::LocateDirectory);
 #endif
 }
 
@@ -59,19 +59,19 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
         QVariantMap cg = doc.toVariant().toMap();
         QStandardItem* item = new QStandardItem;
 
-        QString scriptPath = dir.absoluteFilePath(cg.value("X-KDE-PluginInfo-Name", QString()).toString());
+        QString scriptPath = dir.absoluteFilePath(cg.value(QStringLiteral("X-KDE-PluginInfo-Name"), QString()).toString());
 
         Q_ASSERT(!scriptPath.isEmpty());
 
-        QVariant priority = cg.value("X-KAlgebra-Priority", QString());
+        QVariant priority = cg.value(QStringLiteral("X-KAlgebra-Priority"), QString());
         if(!priority.isValid())
             priority = 1000;
         
         item->setData(QUrl::fromLocalFile(scriptPath), PathRole);
         item->setData(priority, PriorityRole);
-        item->setData(cg.value("Name", QString()), TitleRole);
-        item->setData(cg.value("Comment", QStringLiteral("")), SubtitleRole);
-        item->setData(cg.value("Icon", QString()), Qt::DecorationRole);
+        item->setData(cg.value(QStringLiteral("Name"), QString()), TitleRole);
+        item->setData(cg.value(QStringLiteral("Comment"), QStringLiteral("")), SubtitleRole);
+        item->setData(cg.value(QStringLiteral("Icon"), QString()), Qt::DecorationRole);
         
         items += item;
     }

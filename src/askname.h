@@ -32,7 +32,7 @@ class AskName : public QDialog
         AskName(const QString& text, QWidget* parent) : QDialog(parent)
         {
             edit=new QLineEdit(this);
-            edit->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z][\\w]*"), edit));
+            edit->setValidator(new QRegExpValidator(QRegExp(QStringLiteral("[a-zA-Z][\\w]*")), edit));
             
             QDialogButtonBox * buttonBox;
             QVBoxLayout *items=new QVBoxLayout(this);
@@ -41,8 +41,8 @@ class AskName : public QDialog
 //             items->addItem(new QSpacerItem());
             items->addWidget(buttonBox=new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal, this));
             
-            connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-            connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+            connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+            connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
         }
         
         QString name() const { return edit->text(); }

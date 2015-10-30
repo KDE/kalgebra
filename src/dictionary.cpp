@@ -106,7 +106,7 @@ void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)
         m_sample->setText(sample);
         m_example->setText(example);
 
-        m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), "dict"));
+        m_funcs->addPlot(Analitza::PlotsFactory::self()->requestPlot(e, Analitza::Dim2D, m_vars).create(QColor(0,150,0), QStringLiteral("dict")));
     } else {
         QString error;
         m_name->setText(QString());

@@ -56,9 +56,9 @@ FunctionEdit::FunctionEdit(QWidget *parent)
     
     m_func = new ExpressionEdit(this);
     m_func->setExamples(PlotsFactory::self()->examples(Dim2D));
-    m_func->setAns("x");
-    connect(m_func, SIGNAL(textChanged()), this, SLOT(edit()));
-    connect(m_func, SIGNAL(returnPressed()), this, SLOT(ok()));
+    m_func->setAns(QStringLiteral("x"));
+    connect(m_func, &QPlainTextEdit::textChanged, this, &FunctionEdit::edit);
+    connect(m_func, &ExpressionEdit::returnPressed, this, &FunctionEdit::ok);
     
     m_valid = new QLabel(this);
     m_valid->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -91,29 +91,29 @@ FunctionEdit::FunctionEdit(QWidget *parent)
     m_graph->setReadOnly(true);
     m_graph->setTicksShown(Qt::Orientation(0));
     
-    m_viewTabs->addTab(m_graph, QIcon::fromTheme("document-preview"), i18n("Preview"));
+    m_viewTabs->addTab(m_graph, QIcon::fromTheme(QStringLiteral("document-preview")), i18n("Preview"));
     QWidget *options=new QWidget(m_viewTabs);
     options->setLayout(new QVBoxLayout);
     m_uplimit=new ExpressionEdit(options);
     m_downlimit=new ExpressionEdit(options);
-    m_uplimit->setText("2*pi");
-    m_downlimit->setText("0");
+    m_uplimit->setText(QStringLiteral("2*pi"));
+    m_downlimit->setText(QStringLiteral("0"));
     options->layout()->addWidget(new QLabel(i18n("From:"), options));
     options->layout()->addWidget(m_downlimit);
     options->layout()->addWidget(new QLabel(i18n("To:"), options));
     options->layout()->addWidget(m_uplimit);
     options->layout()->addItem(new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-    m_viewTabs->addTab(options, QIcon::fromTheme("configure"), i18n("Options"));
-    connect(m_uplimit, SIGNAL(textChanged()), this, SLOT(updateUplimit()));
-    connect(m_downlimit, SIGNAL(textChanged()), this, SLOT(updateDownlimit()));
+    m_viewTabs->addTab(options, QIcon::fromTheme(QStringLiteral("configure")), i18n("Options"));
+    connect(m_uplimit, &QPlainTextEdit::textChanged, this, &FunctionEdit::updateUplimit);
+    connect(m_downlimit, &QPlainTextEdit::textChanged, this, &FunctionEdit::updateDownlimit);
     
     QHBoxLayout *m_butts = new QHBoxLayout;
     m_ok = new QPushButton(i18n("OK"), this);
-    m_ok->setIcon(QIcon::fromTheme("dialog-ok"));
+    m_ok->setIcon(QIcon::fromTheme(QStringLiteral("dialog-ok")));
     m_remove = new QPushButton(i18nc("@action:button", "Remove"), this);
-    m_remove->setIcon(QIcon::fromTheme("list-remove"));
-    connect(m_ok, SIGNAL(clicked()), this, SLOT(ok()));
-    connect(m_remove, SIGNAL(clicked()), this, SIGNAL(removeEditingPlot()));
+    m_remove->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
+    connect(m_ok, &QAbstractButton::clicked, this, &FunctionEdit::ok);
+    connect(m_remove, &QAbstractButton::clicked, this, &FunctionEdit::removeEditingPlot);
     
     topLayout->addWidget(m_name);
     topLayout->addWidget(m_func);
@@ -216,9 +216,9 @@ void FunctionEdit::setState(const QString& text, bool negative)
     m_valid->setPalette(p);
     
     if(negative)
-        m_validIcon->setPixmap(QIcon::fromTheme("flag-red").pixmap(QSize(16,16)));
+        m_validIcon->setPixmap(QIcon::fromTheme(QStringLiteral("flag-red")).pixmap(QSize(16,16)));
     else
-        m_validIcon->setPixmap(QIcon::fromTheme("flag-green").pixmap(QSize(16,16)));
+        m_validIcon->setPixmap(QIcon::fromTheme(QStringLiteral("flag-green")).pixmap(QSize(16,16)));
 }
 
 ///Let's see if the exp is correct
@@ -229,7 +229,7 @@ void FunctionEdit::edit()
         m_ok->setEnabled(false);
         m_valid->clear();
         m_valid->setToolTip(QString());
-        m_validIcon->setPixmap(QIcon::fromTheme("flag-yellow").pixmap(QSize(16,16)));
+        m_validIcon->setPixmap(QIcon::fromTheme(QStringLiteral("flag-yellow")).pixmap(QSize(16,16)));
         
         m_funcsModel->clear();
         m_graph->forceRepaint();
@@ -259,7 +259,7 @@ void FunctionEdit::edit()
     if(f && f->isCorrect()) {
         m_funcsModel->addPlot(f);
         added=true;
-        setState(QString("%1:=%2")
+        setState(QStringLiteral("%1:=%2")
             .arg(m_name->text()).arg(f->expression().toString()), false);
     } else {
         QStringList errors = req.errors();
@@ -268,7 +268,7 @@ void FunctionEdit::edit()
         Q_ASSERT(!errors.isEmpty());
         
         setState(errors.first(), true);
-        m_valid->setToolTip(errors.join("<br />"));
+        m_valid->setToolTip(errors.join(QStringLiteral("<br />")));
         delete f;
     }
     m_func->setCorrect(added);

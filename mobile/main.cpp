@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 //     about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
 //     KCmdLineArgs::init(argc, argv, &about);
     QGuiApplication app(argc, argv);
-    app.setApplicationName("kalgebramobile");
+    app.setApplicationName(QStringLiteral("kalgebramobile"));
 //     app.setWindowIcon(QIcon::fromTheme("kalgebra"));
     
     KAlgebraMobile widget;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     dir.cdUp();
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("app", &widget);
+    engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
     engine.addImportPath(dir.path());
     engine.load(QUrl::fromLocalFile(main));
     

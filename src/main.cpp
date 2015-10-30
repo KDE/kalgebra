@@ -23,9 +23,9 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setApplicationName("kalgebra");
+    app.setApplicationName(QStringLiteral("kalgebra"));
     app.setApplicationDisplayName(i18n("KAlgebra"));
-    app.setApplicationVersion("0.99");
+    app.setApplicationVersion(QStringLiteral("0.99"));
     
         KLocalizedString::setApplicationDomain("kalgebra");
 
