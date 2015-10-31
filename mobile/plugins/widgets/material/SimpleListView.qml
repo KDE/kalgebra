@@ -11,7 +11,10 @@ ListView
     header: ListItem.Subheader {
         text: ListView.view.title
     }
-    delegate: ListItem.Standard { text: model[role] }
+    delegate: ListItem.Standard {
+        text: model[role]
+        interactive: false
+    }
 
     Scrollbar {
         flickableItem: viewItem
