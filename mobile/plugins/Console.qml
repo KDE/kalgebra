@@ -29,8 +29,11 @@ KAlgebraPage
             view.currentIndex = 0
         }
         
-        width: parent.width
-        anchors.top: parent.top
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
     }
     
     SimpleListView {

@@ -11,7 +11,12 @@ KAlgebraPage
         id: controls
         spacing: 10
         
-        width: parent.width
+        anchors {
+            left: parent.left
+            top: parent.top
+            right: parent.right
+        }
+
         ExpressionInput {
             id: input
             Layout.fillWidth: true
@@ -36,17 +41,16 @@ KAlgebraPage
             }
         }
     }
-    
+
     
     Rectangle {
-        width: parent.width
         anchors {
             fill: parent
             topMargin: controls.height
         }
         height: 200
         color: 'white'
-    
+
         Graph2D {
             id: view
             anchors.fill: parent
