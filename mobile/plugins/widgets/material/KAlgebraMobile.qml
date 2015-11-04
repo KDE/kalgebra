@@ -1,4 +1,5 @@
 import QtQuick 2.2
+import QtQuick.Layouts 1.2
 import Material 0.1
 import Material.ListItems 0.1 as ListItem
 import org.kde.analitza 1.0
@@ -28,6 +29,7 @@ ApplicationWindow
         }
 
         backAction: navDrawer.action
+
         NavigationDrawer {
             id: navDrawer
 
@@ -36,6 +38,27 @@ ApplicationWindow
             ListView {
                 spacing: 10
                 anchors.fill: parent
+                header: ColumnLayout {
+                    width: parent.width
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: Units.dp(100)
+                        color: "#4A66A0"
+                        Image {
+                            anchors {
+                                fill: parent
+                                bottomMargin: 10
+                            }
+                            fillMode: Image.PreserveAspectFit
+
+                            source: "qrc:/kde-edu-logo.png"
+                        }
+                    }
+                    ListItem.Subheader {
+                        Layout.fillWidth: true
+                        text: "Sections"
+                    }
+                }
                 delegate: ListItem.Standard {
                     text: title
                     selected: mainUi.source == model.path
