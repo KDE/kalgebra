@@ -7,3 +7,5 @@ ToolTip 1.0 ToolTip.qml
 SimpleListView 1.0 SimpleListView.qml
 KAlgebraPage 1.0 KAlgebraPage.qml
 KAlgebraMobile 1.0 KAlgebraMobile.qml
+AddButton 1.0 AddButton.qml
+Dialog 1.0 Dialog.qml

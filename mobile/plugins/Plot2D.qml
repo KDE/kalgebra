@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.0 as Controls
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -7,47 +8,8 @@ KAlgebraPage
 {
     anchors.margins: 0
     
-    RowLayout {
-        id: controls
-        spacing: 10
-        
-        anchors {
-            left: parent.left
-            top: parent.top
-            right: parent.right
-        }
-
-        ExpressionInput {
-            id: input
-            Layout.fillWidth: true
-            text: "sin x"
-            focus: true
-            Component.onCompleted: selectAll()
-            
-            Keys.onReturnPressed: {
-                view.addFunction(input.text, app.variables)
-                selectAll();
-            }
-        }
-        
-        Button {
-            text: "Clear"
-            
-            onClicked: {
-                app.functionsModel().clear()
-                view.resetViewport()
-                input.focus = true;
-                selectAll();
-            }
-        }
-    }
-
-    
     Rectangle {
-        anchors {
-            fill: parent
-            topMargin: controls.height
-        }
+        anchors.fill: parent
         height: 200
         color: 'white'
 
@@ -55,6 +17,50 @@ KAlgebraPage
             id: view
             anchors.fill: parent
             model: app.functionsModel()
+
+            Dialog {
+                id: dialog
+                height: Math.min((4*view.height)/5, list.contentHeight)
+
+                SimpleListView {
+                    id: list
+                    anchors.fill: parent
+                    role: "description"
+                    model: app.functionsModel()
+
+                    header: RowLayout {
+                        width: parent.width
+                        ExpressionInput {
+                            id: input
+                            Layout.fillWidth: true
+                            text: "sin x"
+                            focus: true
+                            Component.onCompleted: selectAll()
+                        }
+                        Button {
+                            iconName: "content/add"
+                            onClicked: {
+                                input.selectAll()
+                                view.addFunction(input.text, app.variables)
+                            }
+                        }
+                    }
+
+                    footer: Button {
+                        text: "Clear All"
+                        onClicked: {
+                            app.functionsModel().clear();
+                            view.resetViewport();
+                        }
+                    }
+                }
+            }
+
+            AddButton {
+                onTriggered: {
+                    dialog.open();
+                }
+            }
         }
     }
 }

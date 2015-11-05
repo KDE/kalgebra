@@ -23,45 +23,55 @@ import widgets 1.0
 
 KAlgebraPage
 {
-    ColumnLayout
+    Graph3D
     {
+        id: view
         anchors.fill: parent
 
-        RowLayout {
-            Layout.fillWidth: true
+        Dialog {
+            id: dialog
+            height: Math.min((4*view.height)/5, list.contentHeight)
 
-            ExpressionInput {
-                id: input
-                Layout.fillWidth: true
+            SimpleListView {
+                id: list
+                anchors.fill: parent
+                role: "description"
+                model: view.model
 
-                text: "sin x*sin y"
-                focus: true
-                Component.onCompleted: selectAll()
-
-                Keys.onReturnPressed: {
-                    var err = view.addFunction(input.text, app.variables)
-                    if (err.length>0)
-                        console.warn("errors:", err)
+                header: RowLayout {
+                    width: parent.width
+                    ExpressionInput {
+                        id: input
+                        Layout.fillWidth: true
+                        text: "sin x*sin y"
+                        focus: true
+                        Component.onCompleted: selectAll()
+                    }
+                    Button {
+                        iconName: "content/add"
+                        onClicked: {
+                            input.selectAll()
+                            var err = view.addFunction(input.text, app.variables)
+                            if (err.length>0)
+                                console.warn("errors:", err)
+                        }
+                    }
                 }
-            }
 
-            Button {
-                id: exec
-                text: "Clear"
-                width: 100
-
-                onClicked: {
-                    view.model.clear()
-                    view.resetView()
-                    input.focus = true
+                footer: Button {
+                    text: "Clear All"
+                    onClicked: {
+                        view.model.clear()
+                        view.resetView()
+                    }
                 }
             }
         }
-        Graph3D
-        {
-            id: view
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+
+        AddButton {
+            onTriggered: {
+                dialog.open();
+            }
         }
     }
 }
