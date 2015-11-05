@@ -13,9 +13,9 @@ ApplicationWindow
     visible: true
 
     theme {
-        primaryColor: Palette.colors["red"]["500"]
+        primaryColor: Palette.colors["blue"]["500"]
         primaryDarkColor: Palette.colors["blue"]["700"]
-        accentColor: Palette.colors["red"]["A200"]
+        accentColor: Palette.colors["blue"]["A200"]
         tabHighlightColor: "white"
     }
     
@@ -24,8 +24,7 @@ ApplicationWindow
 
         tabs: navDrawer.enabled ? [] : plugins.titles
         onSelectedTabChanged: {
-            var path = plugins.pluginPath(selectedTab);
-            mainUi.source = path
+            mainUi.source = plugins.pluginPath(selectedTab);
         }
 
         backAction: navDrawer.action
@@ -38,25 +37,23 @@ ApplicationWindow
             ListView {
                 spacing: 10
                 anchors.fill: parent
-                header: ColumnLayout {
+                header: Rectangle {
                     width: parent.width
-                    Rectangle {
-                        Layout.fillWidth: true
-                        height: Units.dp(100)
-                        color: "#4A66A0"
-                        Image {
-                            anchors {
-                                fill: parent
-                                bottomMargin: 10
-                            }
-                            fillMode: Image.PreserveAspectFit
+                    height: navDrawer.height/5
+                    color: "#4A66A0"
+                    Image {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
 
-                            source: "qrc:/kde-edu-logo.png"
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: Units.dp(16)
+                            rightMargin: Units.dp(64)
+                            verticalCenterOffset: -height/20
                         }
-                    }
-                    ListItem.Subheader {
-                        Layout.fillWidth: true
-                        text: "Sections"
+                        fillMode: Image.PreserveAspectFit
+
+                        source: "qrc:/kde-edu-logo.png"
                     }
                 }
                 delegate: ListItem.Standard {
