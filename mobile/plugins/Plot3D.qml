@@ -23,6 +23,7 @@ import widgets 1.0
 
 KAlgebraPage
 {
+    id: page
     Graph3D
     {
         id: view
@@ -30,11 +31,14 @@ KAlgebraPage
 
         Dialog {
             id: dialog
-            height: Math.min((4*view.height)/5, list.contentHeight)
+            height: Math.min((4*view.height)/5, list.contentHeight)+page.dp*10
 
             SimpleListView {
                 id: list
-                anchors.fill: parent
+                anchors {
+                    fill: parent
+                    margins: page.dp*4
+                }
                 role: "description"
                 model: view.model
 

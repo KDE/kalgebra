@@ -4,6 +4,7 @@ import widgets 1.0
 
 KAlgebraPage
 {
+    id: page
     ListModel { id: itemModel }
     
     ExpressionInput {
@@ -33,6 +34,7 @@ KAlgebraPage
             top: parent.top
             left: parent.left
             right: parent.right
+            margins: page.dp*6
         }
     }
     
