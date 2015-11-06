@@ -14,7 +14,6 @@ TextField
     property var helperExpression: a.simplify(text)
     hasError: !helperExpression.isCorrect
     helperText: hasError ? helperExpression.toString() : helperExpression.expression
-    floatingLabel: true
 
     clip: true
 }
