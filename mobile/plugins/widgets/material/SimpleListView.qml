@@ -7,6 +7,7 @@ ListView
     id: viewItem
     property string role: ""
     property string title
+    clip: true
 
     header: ListItem.Subheader {
         text: ListView.view.title
