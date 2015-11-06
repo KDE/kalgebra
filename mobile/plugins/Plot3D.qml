@@ -46,6 +46,12 @@ KAlgebraPage
                         text: "sin x*sin y"
                         focus: true
                         Component.onCompleted: selectAll()
+                        onAccepted: {
+                            input.selectAll()
+                            var err = view.addFunction(input.text, app.variables)
+                            if (err.length>0)
+                                console.warn("errors:", err)
+                        }
                     }
                     Button {
                         iconName: "content/add"

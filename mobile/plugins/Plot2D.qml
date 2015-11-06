@@ -36,6 +36,10 @@ KAlgebraPage
                             text: "sin x"
                             focus: true
                             Component.onCompleted: selectAll()
+                            onAccepted: {
+                                input.selectAll()
+                                view.addFunction(input.text, app.variables)
+                            }
                         }
                         Button {
                             iconName: "content/add"
