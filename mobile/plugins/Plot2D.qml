@@ -57,7 +57,7 @@ KAlgebraPage
             }
 
             AddButton {
-                onTriggered: {
+                onClicked: {
                     dialog.open();
                 }
             }

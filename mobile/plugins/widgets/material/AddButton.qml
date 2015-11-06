@@ -3,7 +3,7 @@ import Material 0.1
 ActionButton
 {
     id: root
-    signal triggered()
+    signal clicked()
 
     anchors {
         right: parent.right
@@ -12,7 +12,7 @@ ActionButton
     }
 
     action: Action {
-        onTriggered: root.triggered()
+        onTriggered: root.clicked()
     }
     iconName: "content/add"
 }
