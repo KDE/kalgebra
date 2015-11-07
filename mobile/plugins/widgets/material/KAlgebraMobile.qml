@@ -56,8 +56,9 @@ ApplicationWindow
                         source: "qrc:/kde-edu-logo.png"
                     }
                 }
-                delegate: ListItem.Standard {
+                delegate: ListItem.Subtitled {
                     text: title
+                    subText: subtitle
                     selected: mainUi.source == model.path
                     onClicked: {
                         mainUi.source = model.path
