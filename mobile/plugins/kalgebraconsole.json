@@ -1,7 +1,7 @@
 {
     "Comment": "Scientific calculator",
     "Icon": "utilities-terminal",
-    "Name": "Console",
+    "Name": "Calculator",
     "ServiceTypes": "KAlgebra/Script",
     "Type": "Service",
     "X-KAlgebra-Priority": "1000",

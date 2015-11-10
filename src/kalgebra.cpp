@@ -155,7 +155,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     c_exp->setExamples(QStringList() << QStringLiteral("square:=x->x**2") << QStringLiteral("fib:=n->piecewise { eq(n,0)?0, eq(n,1)?1, ?fib(n-1)+fib(n-2) }"));
     c_dock_vars->setWidget(c_variables);
     
-    m_tabs->addTab(console, i18n("&Console"));
+    m_tabs->addTab(console, i18n("&Calculator"));
     console->setLayout(c_layo);
     c_layo->addWidget(c_results);
     c_layo->addWidget(c_exp);
