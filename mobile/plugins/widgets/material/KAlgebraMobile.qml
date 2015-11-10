@@ -18,6 +18,15 @@ ApplicationWindow
         accentColor: Palette.colors["blue"]["A200"]
         tabHighlightColor: "white"
     }
+
+    readonly property var iconConvert: {
+        "utilities-terminal": "communication/dialpad",
+        "draw-bezier-curves": "action/trending_up",
+        "adjustrgb": "action/view_carousel",
+        "kspread": "editor/format_list_numbered",
+        "document-properties": "content/content_copy",
+        "help-about": "action/help"
+    }
     
     initialPage: Page {
         title: "KAlgebra"
@@ -32,6 +41,7 @@ ApplicationWindow
         NavigationDrawer {
             id: navDrawer
 
+            width: Math.min(parent.width - Units.gu(1), Units.gu(7))
             enabled: parent.width < Units.dp(700)
 
             ListView {
@@ -60,6 +70,7 @@ ApplicationWindow
                     text: title
                     subText: subtitle
                     selected: mainUi.source == model.path
+                    iconName: rootItem.iconConvert[decoration]
                     onClicked: {
                         mainUi.source = model.path
                         navDrawer.close()
