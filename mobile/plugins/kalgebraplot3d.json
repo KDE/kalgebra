@@ -1,6 +1,6 @@
 {
     "Comment": "Draws any 3D graph you want",
-    "Icon": "draw-bezier-curves",
+    "Icon": "adjustrgb",
     "Name": "Graph 3D",
     "ServiceTypes": "KAlgebra/Script",
     "Type": "Service",
