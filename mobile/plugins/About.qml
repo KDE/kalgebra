@@ -5,10 +5,11 @@ import widgets 1.0
 
 KAlgebraPage
 {
+    id: page
     ColumnLayout {
-        anchors.margins: 20
+        anchors.margins: 20*page.dp
         anchors.fill: parent
-        spacing: 20
+        spacing: 20*page.dp
         
         Image {
             id: icon
