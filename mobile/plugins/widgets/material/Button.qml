@@ -1,5 +1,6 @@
 import Material 0.1
 import QtQuick 2.1
+import QtQuick.Layouts 1.1
 
 Loader
 {
@@ -20,9 +21,14 @@ Loader
     Component {
         id: iconComponent
         IconButton {
+            Layout.minimumWidth: implicitWidth*2
+            Layout.minimumHeight: implicitHeight*2
             iconName: root.iconName
         }
     }
+
+    Layout.minimumWidth: item.Layout.minimumWidth
+    Layout.minimumHeight: item.Layout.minimumHeight
 
     sourceComponent: root.text === "" ? iconComponent : textComponent
 
