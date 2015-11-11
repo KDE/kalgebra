@@ -46,7 +46,7 @@ KAlgebraPage
                             }
                         }
                         Button {
-                            iconName: "content/add"
+                            iconName: "list-add"
                             onClicked: {
                                 input.selectAll()
                                 view.addFunction(input.text, app.variables)

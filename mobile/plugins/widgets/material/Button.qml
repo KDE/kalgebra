@@ -23,7 +23,7 @@ Loader
         IconButton {
             Layout.minimumWidth: implicitWidth*2
             Layout.minimumHeight: implicitHeight*2
-            iconName: root.iconName
+            iconName: rootItem.iconConvert[root.iconName]
         }
     }
 

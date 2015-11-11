@@ -25,7 +25,8 @@ ApplicationWindow
         "adjustrgb": "action/view_carousel",
         "kspread": "editor/format_list_numbered",
         "document-properties": "content/content_copy",
-        "help-about": "action/help"
+        "help-about": "action/help",
+        "list-add": "content/add"
     }
     
     initialPage: Page {
