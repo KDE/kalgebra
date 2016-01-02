@@ -17,18 +17,25 @@
  *************************************************************************************/
 
 #include <QApplication>
+#include <QCommandLineParser>
+#include <KAboutData>
+#include <KLocalizedString>
 #include "kalgebra.h"
-#include <klocalizedstring.h>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("kalgebra"));
-    app.setOrganizationDomain(QStringLiteral("kde.org"));
-    app.setApplicationDisplayName(i18n("KAlgebra"));
-    app.setApplicationVersion(QStringLiteral("0.99"));
-    
-        KLocalizedString::setApplicationDomain("kalgebra");
+    KAboutData about("kalgebra", "KAlgebra", "0.10", i18n("A portable calculator"),
+             KAboutLicense::GPL, i18n("(C) 2006-2016 Aleix Pol i Gonzalez"));
+    about.addAuthor( "Aleix Pol i Gonzalez", QString(), "aleixpol@kde.org" );
+    KAboutData::setApplicationData(about);
+
+    QCommandLineParser parser;
+    about.setupCommandLine(&parser);
+    parser.process(app);
+    about.processCommandLine(&parser);
+
+    KLocalizedString::setApplicationDomain("kalgebra");
 
     KAlgebra widget;
     widget.show();
