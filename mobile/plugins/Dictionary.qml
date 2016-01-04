@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4 as Controls
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -8,6 +7,12 @@ KAlgebraPage
 {
     id: page
     anchors.margins: 0
+
+    function updateGraph() {
+        app.functionsModel().clear();
+        view.resetViewport();
+        view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), app.variables);
+    }
     
     ColumnLayout {
         id: descriptioncol
@@ -15,30 +20,17 @@ KAlgebraPage
         anchors.fill: parent
         spacing: 10
 
-        Controls.ComboBox {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+        ComboBox {
             id: chosebox
-            currentIndex: 29
-            activeFocusOnPress: true
+            Layout.fillWidth: true
             textRole: "display"
 
             model: OperatorsModel {
                 id: operators
             }
 
-            function updateGraph() {
-                app.functionsModel().clear();
-                view.resetViewport();
-                view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), app.variables);
-
-                console.log("falala", operators.itemData(operators.index(chosebox.currentIndex,3)))
-            }
-
             onCurrentIndexChanged: {
-                updateGraph();
+                page.updateGraph();
             }
         }
 
@@ -69,7 +61,7 @@ KAlgebraPage
                 }
                 model: app.functionsModel()
                 Component.onCompleted: {
-                    chosebox.updateGraph();
+                    page.updateGraph();
                 }
             }
         }
