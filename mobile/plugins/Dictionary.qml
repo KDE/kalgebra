@@ -9,7 +9,7 @@ KAlgebraPage
     anchors.margins: 0
 
     function updateGraph() {
-        app.functionsModel().clear();
+        view.model.clear();
         view.resetViewport();
         view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), app.variables);
     }
@@ -59,7 +59,9 @@ KAlgebraPage
                 anchors {
                     fill: parent
                 }
-                model: app.functionsModel()
+                model: PlotsModel {
+                    id: plotsModel
+                }
                 Component.onCompleted: {
                     page.updateGraph();
                 }
