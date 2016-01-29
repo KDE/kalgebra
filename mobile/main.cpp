@@ -19,7 +19,7 @@
 #include <QGuiApplication>
 
 #ifdef KDECOMPONENTS
-#include <kdeclarative/kdeclarative.h>
+#include <KLocalizedContext>
 #endif
 
 #include <QDebug>
@@ -47,14 +47,6 @@ int main(int argc, char *argv[])
     
     KAlgebraMobile widget;
     
-#ifdef KDECOMPONENTS
-    KDeclarative kdeclarative;
-//     kdeclarative.setDeclarativeEngine(view.engine());
-//     kdeclarative.initialize();
-    //binds things like kconfig and icons
-//     kdeclarative.setupBindings();
-#endif
-
     QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
 
     QDir dir = QFileInfo(main).dir();
@@ -63,7 +55,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
     engine.addImportPath(dir.path());
+
+#ifdef KDECOMPONENTS
+    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+#endif
+
     engine.load(QUrl::fromLocalFile(main));
-    
     return app.exec();
 }
