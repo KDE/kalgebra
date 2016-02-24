@@ -1,7 +1,3 @@
-if(OPENGL_FOUND)
-    include_directories(${OPENGL_INCLUDE_DIR})
-endif(OPENGL_FOUND)
-
 set(kalgebra_SRCS
     kalgebra.cpp
     dictionary.cpp
@@ -25,10 +21,6 @@ target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets
                                KF5::KIOCore
                                KF5::I18n
                                KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
-
-if(OPENGL_FOUND)
-   target_link_libraries(kalgebra Qt5::OpenGL ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
-endif(OPENGL_FOUND)
 
 install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
