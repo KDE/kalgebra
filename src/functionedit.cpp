@@ -44,7 +44,7 @@ namespace {
 }
 
 FunctionEdit::FunctionEdit(QWidget *parent)
-    : QWidget(parent), m_calcUplimit(0), m_calcDownlimit(0)
+    : QWidget(parent), m_calcUplimit(0), m_calcDownlimit(0), m_modmode(false)
 {
     setWindowTitle(i18n("Add/Edit a function"));
     

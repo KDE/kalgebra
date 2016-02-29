@@ -119,7 +119,7 @@ private:
     Analitza::PlotsView2D *m_graph;
     KColorCombo *m_color;
     Analitza::PlotsModel *m_funcsModel;
-    Analitza::Variables* m_vars;
+    Analitza::Variables* m_vars = nullptr;
     
     bool m_modmode;
     QTabWidget* m_viewTabs;
