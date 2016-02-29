@@ -67,8 +67,7 @@ void VarEdit::setName(const QString& newVar)
     else {
         m_exp->setExpression(Analitza::Expression(vars->value(newVar)->copy()));
     }
-    
-    m_removeBtn->setEnabled(canRemove(newVar));
+    m_removeBtn->setEnabled(vars && canRemove(newVar));
 }
 
 bool VarEdit::canRemove(const QString& name) const
