@@ -167,7 +167,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     connect(c_results, SIGNAL(paste(QString)), c_exp, SLOT(insertText(QString)));
     connect(c_variables, &QAbstractItemView::clicked, this, &KAlgebra::edit_var);
     ////////menu
-    c_menu = menuBar()->addMenu(i18n("C&onsole"));
+    c_menu = menuBar()->addMenu(i18n("C&alculator"));
     
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@item:inmenu", "&Load Script..."),
                         this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
