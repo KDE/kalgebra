@@ -25,6 +25,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    KLocalizedString::setApplicationDomain("kalgebra");
     KAboutData about("kalgebra", "KAlgebra", "0.10", i18n("A portable calculator"),
              KAboutLicense::GPL, i18n("(C) 2006-2016 Aleix Pol i Gonzalez"));
     about.addAuthor( "Aleix Pol i Gonzalez", QString(), "aleixpol@kde.org" );
@@ -35,8 +36,6 @@ int main(int argc, char *argv[])
     about.setupCommandLine(&parser);
     parser.process(app);
     about.processCommandLine(&parser);
-
-    KLocalizedString::setApplicationDomain("kalgebra");
 
     KAlgebra widget;
     widget.show();
