@@ -5,7 +5,6 @@ import widgets 1.0
 
 KAlgebraPage
 {
-    ListModel { id: resultsModel }
     Analitza {
         id: a
         variables: app.variables
@@ -86,7 +85,7 @@ KAlgebraPage
         currentIndex: -1
         clip: true
         
-        model: resultsModel
+        model: ListModel { id: resultsModel }
         role: "element"
         title: "Results:"
     }

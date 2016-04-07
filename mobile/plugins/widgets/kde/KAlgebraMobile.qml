@@ -1,122 +1,65 @@
-import QtQuick 2.0
-import QtQuick.Window 2.1
-import org.kde.plasma.components 2.0
-import org.kde.kquickcontrolsaddons 2.0
+import QtQuick 2.2
+import QtQuick.Layouts 1.2
+import org.kde.kirigami 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
-import org.kde.plasma.core 2.0
 
-Window {
-    height: 400
-    width: 300
+ApplicationWindow
+{
+    id: rootItem
+    height: 600
+    width: 600
     visible: true
-    
-    Rectangle {
-        anchors.fill: parent
-        color: "black"
-        opacity: .2
-    }
-    
-    function goToPage(path, deco) {
-//         var toOpen = plugins.pluginPath(idx)
-        
-        try {
-            var component = Qt.createComponent(path)
-            if (component.status == Component.Ready)
-                pageStack.push(component);
-            else
-                console.log("Error loading component:", component.errorString());
-        } catch (e) {
-            console.log("error: "+e)
-        }
-    }
-    
-    Page {
-        id: init
-        anchors.margins: 10
-        
-        ListView {
-            anchors.fill: parent
-            spacing: 5
-            
-            move: Transition {
-                NumberAnimation {
-                    properties: "x,y"
-                    easing.type: Easing.InOutQuad
-                }
-            }
-            
-            delegate: ListItem {
-                    height: 100
-                    enabled: true
-                    Column {
-                        anchors.fill: parent
-                        spacing: 10
 
-                        QIconItem {
-                            id: icon
-                            width: 50
-                            height: 50
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            icon: decoration
-                        }
+    globalDrawer: GlobalDrawer {
+        id: drawer
 
-                        Text {
-                            id: description
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            horizontalAlignment: Text.AlignHCenter
-                            text: i18n("%1<br/>\n<em>%2</em>", title, subtitle)
-                        }
+        title: "KAlgebra"
+        titleIcon: "kalgebra"
+
+        Instantiator {
+            delegate: Action {
+                text: title
+                iconName: decoration
+                onTriggered: {
+                    var component = Qt.createComponent(model.path);
+                    if (component.status == Component.Error) {
+                        console.log("error", component.errorString());
+                        return;
                     }
 
-                    onClicked: goToPage(model.path, decoration)
+                    try {
+                        rootItem.pageStack.clear();
+                        var obj = component.createObject(component);
+                        rootItem.pageStack.push(obj)
+                    } catch(e) {
+                        console.log("error", e)
+                    }
                 }
+            }
+            model: PluginsModel {}
+            onObjectAdded: {
+                var acts = [];
+                for(var v in drawer.actions) {
+                    acts.push(drawer.actions[v]);
+                }
+                acts.splice(index, 0, object)
+                drawer.actions = acts;
+            }
+            onObjectRemoved: {
+                var acts = [];
+                for(var v in drawer.actions) {
+                    acts.push(drawer.actions[v]);
+                }
+                drawer.actions.splice(drawer.actions.indexOf(object), 1)
+                drawer.actions = acts;
+            }
+        }
 
-            model: PluginsModel { id: plugins }
-        }
-        
-        tools: ToolBarLayout {}
+        actions: []
     }
-    
-    ToolBar {
-        id: toolBar
-        z: 10
-        width: parent.width
-        height: 40
-        anchors.top: parent.top
-        
-        
-        Image {
-            anchors {
-                left: parent.left
-                verticalCenter: parent.verticalCenter
-                leftMargin: 5
-            }
-            
-            source: "qrc:/kde-edu-logo.png"
-            height: parent.height
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked: Qt.openUrlExternally("http://edu.kde.org")
-            }
-        }
-    }
-    
-    PageStack
-    {
-        id: pageStack
-        width: parent.width
-        anchors {
-            top: toolBar.bottom
-            bottom: parent.bottom
-        }
-        
-        initialPage: init
-            
-        toolBar: toolBar
+
+    Component.onCompleted: {
+        drawer.actions[0].trigger()
     }
 }

@@ -1,18 +1,14 @@
-import org.kde.plasma.components 2.0
+import org.kde.kirigami 1.0
+import QtQuick 2.1
 
-Page {
-    id: page
-    height: 100
-    width: 100
-    
-    anchors.margins: 10
-    
-    tools: ToolBarLayout {
-        ToolButton {
-            iconSource: "go-previous"
-            text: i18n("Back")
-            
-            onClicked: page.pageStack.pop()
-        }
+Page
+{
+    readonly property real dp: Units.devicePixelRatio
+    title: "KAlgebra"
+    default property alias contents: item.data
+
+    Item {
+        id: item
+        anchors.fill: parent
     }
 }
