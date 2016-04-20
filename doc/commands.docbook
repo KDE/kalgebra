@@ -330,6 +330,30 @@
 		<listitem><para>Parameters: log(par1)</para></listitem>
 		<listitem><para>Example: x-&gt;log(x)</para></listitem>
 	</itemizedlist></sect1>
+	<sect1 id='conjugate'><title>conjugate</title><itemizedlist>
+		<listitem><para>Name: conjugate</para></listitem>
+		<listitem><para>Description: Conjugate</para></listitem>
+		<listitem><para>Parameters: conjugate(par1)</para></listitem>
+		<listitem><para>Example: x-&gt;conjugate(x*i)</para></listitem>
+	</itemizedlist></sect1>
+	<sect1 id='arg'><title>arg</title><itemizedlist>
+		<listitem><para>Name: arg</para></listitem>
+		<listitem><para>Description: Arg</para></listitem>
+		<listitem><para>Parameters: arg(par1)</para></listitem>
+		<listitem><para>Example: x-&gt;arg(x*i)</para></listitem>
+	</itemizedlist></sect1>
+	<sect1 id='real'><title>real</title><itemizedlist>
+		<listitem><para>Name: real</para></listitem>
+		<listitem><para>Description: Real</para></listitem>
+		<listitem><para>Parameters: real(par1)</para></listitem>
+		<listitem><para>Example: x-&gt;real(x*i)</para></listitem>
+	</itemizedlist></sect1>
+	<sect1 id='imaginary'><title>imaginary</title><itemizedlist>
+		<listitem><para>Name: imaginary</para></listitem>
+		<listitem><para>Description: Imaginary</para></listitem>
+		<listitem><para>Parameters: imaginary(par1)</para></listitem>
+		<listitem><para>Example: x-&gt;imaginary(x*i)</para></listitem>
+	</itemizedlist></sect1>
 	<sect1 id='sum'><title>sum</title><itemizedlist>
 		<listitem><para>Name: sum</para></listitem>
 		<listitem><para>Description: Summatory</para></listitem>

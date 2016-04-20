@@ -1,8 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!ENTITY kappname "&kalgebra;">
-  <!ENTITY package "kdeedu">
-
   <!ENTITY commands SYSTEM "commands.docbook">
 
   <!ENTITY % addindex "IGNORE">
@@ -33,8 +31,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2013-06-27</date>
-<releaseinfo>0.11 (&kde; 4.11)</releaseinfo>
+<date>2016-04-19</date>
+<releaseinfo>0.10 (Applications 16.04)</releaseinfo>
 
 <abstract>
 <para>
@@ -496,25 +494,6 @@ Documentation copyright 2007 &Aleix.Pol; &Aleix.Pol.mail;
 
 </chapter>
 
-
-<appendix id="installation">
-<title>Installation</title>
-
-<sect1 id="getting-kapptemplate">
-<title>How to obtain &kalgebra;</title>
-
-&install.intro.documentation;
-
-</sect1>
-
-<sect1 id="compilation">
-<title>Compilation and installation</title>
-
-&install.compile.documentation;
-
-</sect1>
-
-</appendix>
 &documentation.index;
 </book>
 
