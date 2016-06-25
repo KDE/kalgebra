@@ -37,6 +37,7 @@ set_package_properties(Curses PROPERTIES TYPE OPTIONAL
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
 add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 if(${MOBILE_BACKEND} STREQUAL "kde")
     find_package(KF5I18n ${KF5_VERSION} REQUIRED)
