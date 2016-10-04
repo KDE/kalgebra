@@ -1,46 +1,12 @@
-import QtQuick.Controls 1.0
-import QtQuick 2.0
+import QtQuick.Controls 2.0
 
-TextField
+SpinBox
 {
     id: input
-    property alias minimumValue: realvalidator.bottom
-    property alias maximumValue: realvalidator.top
+    property alias minimumValue: input.from
+    property alias maximumValue: input.to
+    property string text
+    value: valueFromText(text)
     
-    property double value: parseFloat(text)
-    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-    
-    validator: DoubleValidator { id: realvalidator }
-    
-    onTextChanged: value=parseFloat(text)
-    
-    Component.onCompleted: text=value
-    
-    Row {
-        anchors {
-            right: parent.right
-            rightMargin: 2
-        }
-        spacing: 2
-        height: parent.height-4
-        y:2
-        Button {
-            text: "+"
-            height: parent.height
-            onClicked: {
-                if(input.value+1<maximumValue) {
-                    input.text=(input.value+1)
-                }
-            }
-        }
-        Button {
-            text: "-"
-            onClicked: {
-                if(input.value-1>minimumValue) {
-                    input.text=(input.value-1)
-                }
-            }
-            height: parent.height
-        }
-    }
+    signal accepted()
 }

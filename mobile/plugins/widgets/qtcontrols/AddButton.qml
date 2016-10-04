@@ -1,14 +1,14 @@
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.1
 
-Button
+RoundButton
 {
     id: root
+
+    text: "+"
 
     anchors {
         right: parent.right
         bottom: parent.bottom
         margins: 20
     }
-
-    iconName: "list-add"
 }

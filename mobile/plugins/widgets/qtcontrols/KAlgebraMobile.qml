@@ -1,5 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.2
+import QtQuick.Layouts 1.2
+import QtQuick.Controls 2.1
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 
@@ -9,67 +10,70 @@ ApplicationWindow
     height: 600
     width: 600
     visible: true
-    
-    function goToPage(path, deco) {
+
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                text: "\u2630"
+                onClicked: drawer.open()
+            }
+            Label {
+                text: "KAlgebra"
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+        }
+    }
+
+    property string currentPath: pluginsModel.pluginPath(0)
+    onCurrentPathChanged: {
+        var component = Qt.createComponent(currentPath);
+        if (component.status == Component.Error) {
+            console.log("error", component.errorString());
+            return;
+        }
+
         try {
-            var component = Qt.createComponent(path)
-            if (component.status == Component.Ready)
-                pageStack.push(component);
-            else
-                console.log("Error loading component:", component.errorString());
-        } catch (e) {
-            console.log("error: "+e)
+            stack.replace(component)
+        } catch(e) {
+            console.log("error", e)
         }
+        drawer.position = 0
     }
-    
-    Component {
-        id: pluginsView
-        ListView {
-            spacing: 10
-            header: Image {
-                source: "qrc:/kalgebra.png"
-                anchors.horizontalCenter: parent.horizontalCenter
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: Qt.openUrlExternally("http://edu.kde.org/applications/mathematics/kalgebra/")
-                }
-            }
-            footer: Image {
-                source: "qrc:/kde-edu-logo.png"
-                anchors.horizontalCenter: parent.horizontalCenter
+    Drawer {
+        id: drawer
+        edge: Qt.LeftEdge
+        width: parent.width - 56 * 1
+        height: parent.height
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: Qt.openUrlExternally("http://edu.kde.org")
-                }
-            }
-            delegate:
-                Button {
+        ColumnLayout {
+            anchors.fill: parent
+            Repeater {
+                delegate: ItemDelegate {
+                    Layout.fillWidth: true
                     text: title
-                    onClicked: goToPage(model.path)
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    highlighted: model.path == rootItem.currentPath
+                    onClicked: {
+                        rootItem.currentPath = model.path
+                    }
                 }
-            model: PluginsModel { id: plugins }
-        }
-    }
+                model: PluginsModel {
+                    id: pluginsModel
+                }
+            }
 
-    Action {
-        id: backAction
-        text: "Back"
-        shortcut: "Back"
-        tooltip: "Go back"
-        onTriggered: {
-            if (pageStack.depth==1)
-                Qt.quit();
-            else
-                pageStack.pop();
+            Item {
+                width: 5
+                Layout.fillHeight: true
+            }
         }
     }
 
     StackView {
-        id: pageStack
-        initialItem: pluginsView
+        id: stack
         anchors.fill: parent
     }
 }

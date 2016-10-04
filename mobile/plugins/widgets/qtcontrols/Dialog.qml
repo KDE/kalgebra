@@ -1,10 +1,7 @@
-import QtQuick 2.1
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.1
 
-Dialog {
-    width: 100
+Drawer {
+    edge: Qt.BottomEdge
+    width: parent.width
     height: 100
-
-    default property Item fu
-    contentItem: fu
 }
