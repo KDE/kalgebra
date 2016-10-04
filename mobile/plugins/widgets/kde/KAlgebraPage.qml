@@ -7,6 +7,11 @@ Page
     title: "KAlgebra"
     default property alias contents: item.data
 
+    leftPadding: 0
+    rightPadding: 0
+    topPadding: 0
+    bottomPadding: 0
+
     Item {
         id: item
         anchors.fill: parent

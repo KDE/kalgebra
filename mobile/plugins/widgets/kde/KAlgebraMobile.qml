@@ -29,9 +29,7 @@ ApplicationWindow
                     }
 
                     try {
-                        rootItem.pageStack.clear();
-                        var obj = component.createObject(component);
-                        rootItem.pageStack.push(obj)
+                        rootItem.pageStack.replace(component)
                     } catch(e) {
                         console.log("error", e)
                     }
