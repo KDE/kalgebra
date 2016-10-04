@@ -16,6 +16,7 @@ KAlgebraPage
             source: "qrc:/kalgebra.svgz"
             Layout.fillWidth: true
             fillMode: Image.PreserveAspectFit
+            sourceSize: Qt.size(parent.width/4, parent.width/4)
 
             MouseArea {
                 anchors.fill: parent
