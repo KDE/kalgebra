@@ -573,9 +573,9 @@ void KAlgebra::set_solid()
 void KAlgebra::save3DGraph()
 {
 #ifdef HAVE_OPENGL
-    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d)"));
+    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document (*.stl)"));
     if(!path.isEmpty()) {
-        if(path.endsWith(QLatin1String(".x3d"))) {
+        if(path.endsWith(QLatin1String(".x3d")) || path.endsWith(QLatin1String(".stl"))) {
             m_graph3d->exportSurfaces(path);
         } else if(path.endsWith(QLatin1String(".pdf"))) {
             QPixmap px = m_graph3d->renderPixmap();
