@@ -23,6 +23,7 @@
   <name xml:lang="lt">KAlgebra</name>
   <name xml:lang="nds">KAlgebra</name>
   <name xml:lang="nl">KAlgebra</name>
+  <name xml:lang="nn">KAlgebra</name>
   <name xml:lang="pl">KAlgebra</name>
   <name xml:lang="pt">KAlgebra</name>
   <name xml:lang="pt-BR">KAlgebra</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="lt">Grafinis skaičiuotuvas</summary>
   <summary xml:lang="nds">Funkschonenreekner</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
+  <summary xml:lang="nn">Grafkalkulator</summary>
   <summary xml:lang="pl">Kalkulator wykresów</summary>
   <summary xml:lang="pt">Calculadora de Grafos</summary>
   <summary xml:lang="pt-BR">Calculadora gráfica</summary>
