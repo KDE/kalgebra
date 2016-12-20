@@ -37,7 +37,6 @@
   <name xml:lang="zh-CN">KAlgebra</name>
   <name xml:lang="zh-TW">數學_KAlgebra</name>
   <summary>Graph Calculator</summary>
-  <summary xml:lang="ast">Calculadora gráfica</summary>
   <summary xml:lang="bs">Graf kalkulator</summary>
   <summary xml:lang="ca">Calculadora gràfica</summary>
   <summary xml:lang="ca-valencia">Calculadora gràfica</summary>
@@ -70,7 +69,6 @@
   <summary xml:lang="zh-TW">圖形計算器</summary>
   <description>
     <p>KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D. KAlgebra is rooted in the Mathematical Markup Language (MathML); however, one does not need to know MathML to use KAlgebra.</p>
-    <p xml:lang="ast">KAlgebra ye una aplicación que pue trocar la to calculadora gráfica. Tien carauterístiques numbériques, llóxiques, simbóliques y d'analís que te permiten calcular espresiones matemátiques na consola y trazar gráficamente los resultaos en 2D ó 3D. KAlgebra ta arraigonáu nel llinguax matemáticu d'etiquetes (MathML); por embargu, naide necesita saber MathML pa usar KAlgebra</p>
     <p xml:lang="ca">KAlgebra és una aplicació que pot reemplaçar la vostra calculadora gràfica. Té capacitats numèriques, lògiques i d'anàlisi que us permetran calcular expressions matemàtiques en una consola i dibuixar una gràfica dels resultats en 2D o 3D. KAlgebra té les seves arrels en el Llenguatge de Marcat Matemàtic (MathML); tanmateix, no us caldrà tenir coneixements de MathML per emprar el KAlgebra.</p>
     <p xml:lang="ca-valencia">KAlgebra és una aplicació que pot reemplaçar la vostra calculadora gràfica. Té capacitats numèriques, lògiques i d'anàlisi que vos permetran calcular expressions matemàtiques en una consola i dibuixar una gràfica dels resultats en 2D o 3D. KAlgebra té les seues arrels en el Llenguatge de Marcat Matemàtic (MathML); tanmateix, no vos caldrà tindre coneixements de MathML per emprar el KAlgebra.</p>
     <p xml:lang="de">KAlgebra ist eine Anwendung, die Ihren grafischen Taschenrechner ersetzt. KAlgebra hat numerische, logische, symbolische und analytische Fähigkeiten, mit denen Sie mathematische Ausdrücke in der Konsole auswerten und die Ergebnisse zwei- oder dreidimensional darstellen können. KAlgebra basiert auf der Sprache „Mathematical Markup Language“ (MathML), es sind jedoch keine Kenntnisse von MathML erforderlich, um KAlgebra erfolgreich einsetzen zu können.</p>
