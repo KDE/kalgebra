@@ -4,6 +4,4 @@ OverlaySheet {
     default property var fu
     property real height: 0
     contentItem: fu
-
-    topPadding: 500
 }

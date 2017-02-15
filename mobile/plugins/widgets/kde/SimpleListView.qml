@@ -8,7 +8,13 @@ ListView
     property string role: ""
     property string title: ""
     delegate: BasicListItem { label: model[role] }
-    header: Label { visible: ListView.view.title!=""; text: ListView.view.title }
+    header: scrollList.title ? titleComponent : null
+
+    Component {
+        id: titleComponent
+        Label { text: ListView.view.title }
+    }
+
     clip: true
 }
 
