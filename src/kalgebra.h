@@ -29,7 +29,7 @@
 
 namespace Analitza {
 class PlotsView2D;
-class PlotsView3D;
+class PlotsView3DES;
 class PlotsModel;
 class VariablesModel;
 class ExpressionEdit;
@@ -73,13 +73,12 @@ class KAlgebra : public QMainWindow
         FunctionEdit *b_funced;
         Analitza::VariablesModel* b_varsModel;
 
-#ifdef HAVE_OPENGL
         //graph 3d
         QMenu* t_menu;
         Analitza::ExpressionEdit *t_exp;
-        Analitza::PlotsView3D *m_graph3d;
+        Analitza::PlotsView3DES *m_graph3d;
         Analitza::PlotsModel* t_model3d;
-#endif
+
         //Dictionary
         QDockWidget *d_dock;
         QListView *d_list;

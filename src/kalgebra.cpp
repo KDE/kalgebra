@@ -25,7 +25,7 @@
 #include "viewportwidget.h"
 #include "functionedit.h"
 #ifdef HAVE_OPENGL
-#    include <analitzagui/plotsview3d.h>
+#    include <analitzagui/plotsview3d_es.h>
 #endif
 
 #include <analitzagui/operatorsmodel.h>
@@ -297,7 +297,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     t_exp->setExamples(Analitza::PlotsFactory::self()->examples(Analitza::Dim3D));
     t_exp->setAns(QStringLiteral("x"));
     t_model3d = new Analitza::PlotsModel(this);
-    m_graph3d = new Analitza::PlotsView3D(tridim);
+    m_graph3d = new Analitza::PlotsView3DES(tridim);
     m_graph3d->setModel(t_model3d);
     m_graph3d->setUseSimpleRotation(true);
     
@@ -313,7 +313,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     t_menu = menuBar()->addMenu(i18n("3D &Graph"));
     QAction* t_actions[5];
     t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
-    t_menu->addAction(QIcon::fromTheme(QStringLiteral("zoom-original")), i18n("&Reset View"), m_graph3d, SLOT(resetView()));
+    t_menu->addAction(QIcon::fromTheme(QStringLiteral("zoom-original")), i18n("&Reset View"), m_graph3d, [this]() { m_graph3d->resetView(); });
     t_menu->addSeparator();
     t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
     t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
@@ -578,7 +578,7 @@ void KAlgebra::save3DGraph()
         if(path.endsWith(QLatin1String(".x3d")) || path.endsWith(QLatin1String(".stl"))) {
             m_graph3d->exportSurfaces(path);
         } else if(path.endsWith(QLatin1String(".pdf"))) {
-            QPixmap px = m_graph3d->renderPixmap();
+            auto px = m_graph3d->grabFramebuffer();
             QPrinter printer;
             printer.setOutputFormat(QPrinter::PdfFormat);
             printer.setOutputFileName(path);
@@ -586,10 +586,10 @@ void KAlgebra::save3DGraph()
             printer.setPageMargins(0,0,0,0, QPrinter::DevicePixel);
             QPainter painter;
             painter.begin(&printer);
-            painter.drawPixmap(QPoint(0,0), px);
+            painter.drawImage(QPoint(0,0), px);
             painter.end();
         } else {
-            QPixmap px = m_graph3d->renderPixmap();
+            auto px = m_graph3d->grabFramebuffer();
             px.save(path);
         }
     }
