@@ -1,24 +1,26 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.2
-import org.kde.kirigami 1.0
+import org.kde.kirigami 2.0 as Kirigami
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 
-ApplicationWindow
+Kirigami.ApplicationWindow
 {
     id: rootItem
     height: 600
     width: 600
     visible: true
 
-    globalDrawer: GlobalDrawer {
+    header: Kirigami.ApplicationHeader {}
+
+    globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
 
         title: "KAlgebra"
         titleIcon: "kalgebra"
 
         Instantiator {
-            delegate: Action {
+            delegate: Kirigami.Action {
                 text: title
                 iconName: decoration
                 onTriggered: {
