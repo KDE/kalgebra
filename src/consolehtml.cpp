@@ -73,8 +73,13 @@ void ConsoleHtml::initialize()
     m_css +="\t.result { padding-left: 10%; }\n";
     m_css +="\t.options { font-size: small; text-align:right }\n";
     m_css +="\t.string { color: #bb0000 }\n";
-    m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";
-    m_css +="\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }";
+    m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";m_css +="\t.exp { color: #000000 }\n";
+    m_css +="\ta { color: #0000ff }\n";
+    m_css +="\ta:link {text-decoration:none;}\n";
+    m_css +="\ta:visited {text-decoration:none;}\n";
+    m_css +="\ta:hover {text-decoration:underline;}\n";
+    m_css +="\ta:active {text-decoration:underline;}\n";
+    m_css +="\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n";
     m_css +="</style>\n";
 }
 
@@ -84,7 +89,9 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
     QString id =query.queryItemValue(QStringLiteral("id"));
     QString exp=query.queryItemValue(QStringLiteral("func"));
     
-    foreach(InlineOptions* opt, m_options) {
+    if(id=="copy") {
+        emit paste(exp);
+    } else foreach(InlineOptions* opt, m_options) {
         if(opt->id() == id) {
             opt->triggerOption(Analitza::Expression(exp, false));
         }
@@ -133,7 +140,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
         
         a.insertVariable(QStringLiteral("ans"), res);
         m_script += e; //Script won't have the errors
-        newEntry = QStringLiteral("%1<br />=<span class='result'>%2</span>").arg(e.toHtml()).arg(result);
+        newEntry = QString("<a title='%1' href='/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>").arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
     } else {
         m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>")));
     }
