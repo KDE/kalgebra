@@ -44,7 +44,7 @@ if(${MOBILE_BACKEND} STREQUAL "kde")
     find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
     find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
     find_package(KF5KIO REQUIRED)
-    find_package(Qt5WebKitWidgets REQUIRED)
+    find_package(Qt5WebEngineWidgets REQUIRED)
     find_package(KF5DocTools)
 
     add_subdirectory(src)

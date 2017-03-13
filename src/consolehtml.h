@@ -20,7 +20,7 @@
 #define CONSOLE_H
 
 #include <QWidget>
-#include <QWebView>
+#include <QWebEngineView>
 
 #include <analitza/analyzer.h>
 
@@ -41,7 +41,7 @@ class InlineOptions
  *    @author Aleix Pol Gonzalez
  */
 
-class ConsoleHtml : public QWebView
+class ConsoleHtml : public QWebEngineView
 {
     Q_OBJECT
     public:
@@ -55,7 +55,7 @@ class ConsoleHtml : public QWebView
         ConsoleHtml(QWidget *parent = 0);
         
         /** Destructor. */
-        virtual ~ConsoleHtml();
+        ~ConsoleHtml() override;
         
         /** Retrieves a pointer to the Analitza calculator associated. */
         Analitza::Analyzer* analitza() { return &a; }
@@ -68,7 +68,7 @@ class ConsoleHtml : public QWebView
         
         void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
 
-        virtual void contextMenuEvent(QContextMenuEvent* ev);
+        void contextMenuEvent(QContextMenuEvent* ev) override;
 
     public Q_SLOTS:
         /** Adds the operation defined by the expression @p e. */

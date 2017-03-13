@@ -24,7 +24,6 @@
 #include <qevent.h>
 #include <QDir>
 #include <qurlquery.h>
-#include <QWebFrame>
 
 #include <KStandardAction>
 #include <QMenu>
@@ -36,14 +35,24 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
-ConsoleHtml::ConsoleHtml(QWidget *parent)
-    : QWebView(parent), m_mode(Evaluation)
+class ConsolePage : public QWebEnginePage
 {
-    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-    setRenderHint(QPainter::TextAntialiasing);
-    
-    connect(this, &QWebView::linkClicked, this, &ConsoleHtml::openClickedUrl);
-    
+public:
+    ConsolePage(ConsoleHtml* parent) : QWebEnginePage(parent), m_console(parent) {}
+
+    bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override {
+        m_console->openClickedUrl(url);
+        return false;
+    }
+
+    ConsoleHtml* m_console;
+};
+
+ConsoleHtml::ConsoleHtml(QWidget *parent)
+    : QWebEngineView(parent), m_mode(Evaluation)
+{
+    setPage(new ConsolePage(this));
+
     QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
 
@@ -131,7 +140,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
                 query.addQueryItem(QStringLiteral("func"), lambdaexp.toString());
                 url.setQuery(query);
                 
-                options += i18n(" <a href='%1'>%2</a>", url.toString(), opt->caption());
+                options += i18n(" <a href='kalgebra:%1'>%2</a>", url.toString(), opt->caption());
             }
         }
         
@@ -140,7 +149,7 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
         
         a.insertVariable(QStringLiteral("ans"), res);
         m_script += e; //Script won't have the errors
-        newEntry = QString("<a title='%1' href='/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>").arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
+        newEntry = QString("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>").arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
     } else {
         m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>")));
     }
@@ -244,6 +253,7 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
     return correct;
 }
 
+
 void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
 {
     QByteArray code;
@@ -261,12 +271,15 @@ void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
     }
     code += "</body></html>";
 
-    setContent(code);
+    page()->setHtml(code);
     
     emit changed();
 
-    QWebFrame* mf = page()->mainFrame();
-    mf->setScrollBarValue(Qt::Vertical, mf->scrollBarMaximum(Qt::Vertical));
+    QObject* o = new QObject;
+    connect(this, &QWebEngineView::loadFinished, o, [this, o](){
+        page()->runJavaScript(QStringLiteral("window.scrollTo(0, document.body.scrollHeight);"));
+        delete o;
+    });
 }
 
 void ConsoleHtml::copy() const

@@ -15,7 +15,7 @@ set(kalgebra_SRCS
 # kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png") #FIXME: port!
 
 add_executable(kalgebra ${kalgebra_SRCS})
-target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebKitWidgets KF5::I18n
+target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebEngineWidgets KF5::I18n
                                KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigWidgets
                                KF5::XmlGui # HelpMenu
                                KF5::KIOCore
