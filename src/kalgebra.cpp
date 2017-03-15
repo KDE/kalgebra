@@ -24,9 +24,7 @@
 #include "variablesdelegate.h"
 #include "viewportwidget.h"
 #include "functionedit.h"
-#ifdef HAVE_OPENGL
-#    include <analitzagui/plotsview3d_es.h>
-#endif
+#include <analitzagui/plotsview3d_es.h>
 
 #include <analitzagui/operatorsmodel.h>
 #include <analitzagui/expressionedit.h>
@@ -80,7 +78,6 @@ class Add2DOption : public InlineOptions
         KAlgebra* m_kalgebra;
 };
 
-#ifdef HAVE_OPENGL
 class Add3DOption : public InlineOptions
 {
     public:
@@ -101,7 +98,6 @@ class Add3DOption : public InlineOptions
     private:
         KAlgebra* m_kalgebra;
 };
-#endif
 
 QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
 
@@ -290,7 +286,6 @@ KAlgebra::KAlgebra(QWidget *parent)
     //////EO2D Graph
     
     /////3DGraph
-#ifdef HAVE_OPENGL
     QWidget *tridim = new QWidget(m_tabs);
     QVBoxLayout *t_layo = new QVBoxLayout(tridim);
     t_exp = new Analitza::ExpressionEdit(tridim);
@@ -328,7 +323,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     t_actions[3]->setCheckable(true);
     t_actions[4]->setCheckable(true);
     t_actions[4]->setChecked(true);
-#endif
+
     ////////////
     //////EO3D Graph
     menuBar()->addMenu(QStringLiteral("|"))->setEnabled(false);
@@ -538,7 +533,6 @@ void KAlgebra::set_res_vfine()    { b_funcsModel->setResolution(3328);}
 
 void KAlgebra::new_func3d()
 {
-#ifdef HAVE_OPENGL
     Analitza::Expression exp = t_exp->expression();
     Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables());
     if(plot.canDraw()) {
@@ -546,33 +540,25 @@ void KAlgebra::new_func3d()
         t_model3d->addPlot(plot.create(Qt::yellow, QStringLiteral("func3d")));
     } else
         changeStatusBar(i18n("Errors: %1", plot.errors().join(i18n(", "))));
-#endif
 }
 
 void KAlgebra::set_dots()
 {
-#ifdef HAVE_OPENGL
     m_graph3d->setPlotStyle(Analitza::Dots);
-#endif
 }
 
 void KAlgebra::set_lines()
 {
-#ifdef HAVE_OPENGL
     m_graph3d->setPlotStyle(Analitza::Wired);
-#endif
 }
 
 void KAlgebra::set_solid()
 {
-#ifdef HAVE_OPENGL
     m_graph3d->setPlotStyle(Analitza::Solid);
-#endif
 }
 
 void KAlgebra::save3DGraph()
 {
-#ifdef HAVE_OPENGL
     QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document (*.stl)"));
     if(!path.isEmpty()) {
         if(path.endsWith(QLatin1String(".x3d")) || path.endsWith(QLatin1String(".stl"))) {
@@ -593,7 +579,6 @@ void KAlgebra::save3DGraph()
             px.save(path);
         }
     }
-#endif
 }
 
 void KAlgebra::toggleSquares()
@@ -638,9 +623,8 @@ void KAlgebra::tabChanged(int n)
     
     menuEnabledHelper(c_menu, n==0);
     menuEnabledHelper(b_menu, n==1);
-#ifdef HAVE_OPENGL
     menuEnabledHelper(t_menu, n==2);
-#endif
+
     m_status->clear();
     
     switch(n) {
@@ -657,11 +641,9 @@ void KAlgebra::tabChanged(int n)
                 b_tools->setCurrentIndex(1); //We set the Add tab
 //             b_add->setFocus();
             break;
-#ifdef HAVE_OPENGL
         case 2:
             t_exp->setFocus();
             break;
-#endif
         case 3:
             d_filter->setFocus();
             d_dock->show();
@@ -718,13 +700,11 @@ void KAlgebra::varsContextMenu(const QPoint& p)
 
 void KAlgebra::add3D(const Analitza::Expression& exp)
 {
-#ifdef HAVE_OPENGL
     t_model3d->clear();
     Analitza::PlotBuilder plot = Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D, c_results->analitza()->variables());
     Q_ASSERT(plot.canDraw());
     t_model3d->addPlot(plot.create(Qt::yellow, QStringLiteral("func3d_console")));
     m_tabs->setCurrentIndex(2);
-#endif
 }
 
 void KAlgebra::dictionaryFilterChanged(const QString&)

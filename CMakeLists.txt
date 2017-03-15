@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8.11)
 find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
-find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg OpenGL PrintSupport Test)
+find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg Test)
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
@@ -18,12 +18,6 @@ set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mob
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
-find_package(OpenGL)
-set(HAVE_OPENGL ${OPENGL_FOUND})
-set_package_properties(OpenGL PROPERTIES TYPE OPTIONAL
-                                         PURPOSE "Support for 3D graphs in KAlgebra"
-                                         URL "http://opengl.org")
-
 set(CURSES_NEED_NCURSES TRUE)
 find_package(Curses)
 find_package(Readline)
@@ -35,8 +29,7 @@ set_package_properties(Curses PROPERTIES TYPE OPTIONAL
                                          PURPOSE "Allows KAlgebra to provide a console interface."
                                          URL "http://www.gnu.org/software/ncurses/")
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kalgebra.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-kalgebra.h)
-add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 if(${MOBILE_BACKEND} STREQUAL "kde")
