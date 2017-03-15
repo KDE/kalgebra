@@ -25,7 +25,6 @@
 #include <QLabel>
 #include <QListView>
 #include <QMainWindow>
-#include <config-kalgebra.h>
 
 namespace Analitza {
 class PlotsView2D;
