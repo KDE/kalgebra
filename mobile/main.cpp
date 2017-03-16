@@ -37,6 +37,10 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
+#ifdef __ANDROID__
+    qputenv("QT_QUICK_CONTROLS_STYLE", "material");
+#endif
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 //     KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
 //              KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
 //     about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
