@@ -10,9 +10,8 @@ set(kalgebra_SRCS
     functionedit.cpp
 )
 
-#uncomment this if oxygen icons for kalgebra are available
-#kde4_add_app_icon(kalgebra_SRCS "${CMAKE_INSTALL_PREFIX}/share/icons/oxygen/*/apps/kalgebra.png")
-# kde4_add_app_icon(kalgebra_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-kalgebra.png") #FIXME: port!
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*-apps-kalgebra.png")
+ecm_add_app_icon(kalgebra_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebEngineWidgets KF5::I18n
