@@ -9,6 +9,5 @@ KAlgebraPage
         model: VariablesModel { variables: app.variables }
         currentIndex: -1
         role: "whatsThis"
-        title: "Variables"
     }
 }
