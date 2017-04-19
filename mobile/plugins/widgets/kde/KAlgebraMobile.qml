@@ -7,8 +7,8 @@ import org.kde.kalgebra.mobile 1.0
 Kirigami.ApplicationWindow
 {
     id: rootItem
-    height: 600
-    width: 600
+    height: 500
+    width: 900
     visible: true
 
     header: Kirigami.ApplicationHeader {}
