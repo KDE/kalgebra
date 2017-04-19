@@ -31,7 +31,7 @@ Kirigami.ApplicationWindow
                     }
 
                     try {
-                        rootItem.pageStack.replace(component)
+                        rootItem.pageStack.replace(component, {title: title})
                     } catch(e) {
                         console.log("error", e)
                     }
