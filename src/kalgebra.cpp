@@ -65,14 +65,14 @@ class Add2DOption : public InlineOptions
         : m_kalgebra(c)
         {}
         
-        virtual QString id() const { return QStringLiteral("add2d"); }
-        virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const {
+        QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add2d"); }
+        bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const Q_DECL_OVERRIDE {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).canDraw();
         }
 
-        virtual QString caption() const { return i18n("Plot 2D"); }
+        QString caption() const Q_DECL_OVERRIDE { return i18n("Plot 2D"); }
 
-        virtual void triggerOption(const Analitza::Expression& exp) { m_kalgebra->add2D(exp); }
+        void triggerOption(const Analitza::Expression& exp) Q_DECL_OVERRIDE { m_kalgebra->add2D(exp); }
     
     private:
         KAlgebra* m_kalgebra;
@@ -85,15 +85,15 @@ class Add3DOption : public InlineOptions
         : m_kalgebra(c)
         {}
         
-        virtual QString id() const { return QStringLiteral("add3d"); }
-        virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const
+        QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add3d"); }
+        bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const Q_DECL_OVERRIDE
         {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).canDraw();
         }
 
-        virtual QString caption() const { return i18n("Plot 3D"); }
+        QString caption() const Q_DECL_OVERRIDE { return i18n("Plot 3D"); }
 
-        virtual void triggerOption(const Analitza::Expression& exp) { m_kalgebra->add3D(exp); }
+        void triggerOption(const Analitza::Expression& exp) Q_DECL_OVERRIDE { m_kalgebra->add3D(exp); }
     
     private:
         KAlgebra* m_kalgebra;

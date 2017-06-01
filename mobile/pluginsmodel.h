@@ -31,7 +31,7 @@ class PluginsModel : public QStandardItemModel
         Q_ENUMS(Roles)
 
         explicit PluginsModel(QObject* parent = 0);
-        virtual QHash<int, QByteArray> roleNames() const;
+        QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
         
         static QString pluginsDirectoryPath();
 
