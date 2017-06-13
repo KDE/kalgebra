@@ -12,9 +12,8 @@ target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
     KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
-if(${MOBILE_BACKEND} STREQUAL "harmattan")
-    set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR}/..)
-elseif(${MOBILE_BACKEND} STREQUAL "material")
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 #   Material requires QtSvg for icons
 #   if we don't link it here explicitly, androiddeployqt doesn't bring it
     find_package(Qt5Svg REQUIRED)
