@@ -17,7 +17,7 @@ Kirigami.ApplicationWindow
         id: drawer
 
         title: "KAlgebra"
-        titleIcon: "kalgebra"
+        titleIcon: "qrc:/kalgebra.svgz"
 
         Instantiator {
             delegate: Kirigami.Action {
