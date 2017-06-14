@@ -6,6 +6,7 @@ endif()
 
 qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
 add_executable(kalgebramobile pluginsmodel.cpp
+    ../src/consolemodel.cpp
     kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui

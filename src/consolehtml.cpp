@@ -98,9 +98,10 @@ public:
 
 ConsoleHtml::ConsoleHtml(QWidget *parent)
     : QWebEngineView(parent)
-    , m_model(new ConsoleModel)
+    , m_model(new ConsoleModel(this, false))
 {
     connect(m_model.data(), &ConsoleModel::updateView, this, &ConsoleHtml::updateView);
+    connect(m_model.data(), &ConsoleModel::operationSuccessful, this, &ConsoleHtml::includeOperation);
     connect(m_model.data(), &ConsoleModel::errorMessage, this, &ConsoleHtml::addMessage);
     setPage(new ConsolePage(this));
 }
@@ -190,10 +191,14 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
     return correct;
 }
 
-void ConsoleHtml::updateView(const QString& newEntry, const Analitza::Expression &res)
+void ConsoleHtml::includeOperation(const Analitza::Expression& e, const Analitza::Expression& res)
 {
-    QString options;
+    QString options, newEntry;
     if (res.isCorrect()) {
+        const auto result = res.toHtml();
+        newEntry = QStringLiteral("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>")
+            .arg(i18n("Paste to Input"), e.toString(), e.toHtml(), res.toString(), result);
+
         Analitza::Analyzer lambdifier(m_model->variables());
         lambdifier.setExpression(res);
         Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
@@ -214,7 +219,16 @@ void ConsoleHtml::updateView(const QString& newEntry, const Analitza::Expression
         if(!options.isEmpty())
             options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
     }
+    updateViewWithOptions(newEntry, options);
+}
 
+void ConsoleHtml::updateView(const QString& newEntry)
+{
+    updateViewWithOptions(newEntry, {});
+}
+
+void ConsoleHtml::updateViewWithOptions(const QString& newEntry, const QString &options)
+{
     QByteArray code;
     code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
     code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
@@ -265,7 +279,7 @@ void ConsoleHtml::clear()
 {
     m_model->clear();
     m_htmlLog.clear();
-    updateView(QString(), {});
+    updateView(QString());
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)
@@ -282,5 +296,3 @@ void ConsoleHtml::paste()
 {
     emit paste(selectedText());
 }
-
-#include "consolehtml.moc"

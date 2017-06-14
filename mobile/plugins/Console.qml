@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
+import org.kde.kalgebra.mobile 1.0
 import widgets 1.0
 
 KAlgebraPage
@@ -8,10 +9,22 @@ KAlgebraPage
     id: page
     ListModel { id: itemModel }
 
-    Analitza {
-        id: a
-        variables: app.variables
-        calculate: false
+    ConsoleModel {
+        id: consoleModel
+//         variables: app.variables
+        mode: ConsoleModel.Evaluate
+        onErrorMessage: {
+            var toadd = i18n("Error: %1", error)
+
+            itemModel.insert(0, { result: toadd })
+            input.selectAll()
+            view.currentIndex = 0
+        }
+        onOperationSuccessfulString: {
+            itemModel.insert(0, { result: expression + "=" + result })
+            input.selectAll()
+            view.currentIndex = 0
+        }
     }
 
     FileDialog {
@@ -22,7 +35,9 @@ KAlgebraPage
         property var proceed
     }
 
-    function proceedLoadScript()
+    function proceedLoadScript() {
+
+    }
 
     contextualActions: [
         Action {
@@ -42,8 +57,8 @@ KAlgebraPage
         },
         // --
         Action {
-            text: a.calculate ? i18n("Evaluate...") : i18n("Calculate...")
-            onTriggered: a.calculate = !a.calculate
+            text: consoleModel.mode == ConsoleModel.Calculate ? i18n("Evaluate...") : i18n("Calculate...")
+            onTriggered: consoleModel.mode = !consoleModel.mode
         },
         // --
         Action {
@@ -58,17 +73,7 @@ KAlgebraPage
         focus: true
         
         Keys.onReturnPressed: {
-            var res = a.execute(text)
-            
-            var toadd = ""
-            if(!a.isCorrect)
-                toadd = "Error: " + (res ? res : a.errors)
-            else
-                toadd = text + " = " + res.expression
-            
-            itemModel.insert(0, { result: toadd, resultsInput: text })
-            input.selectAll()
-            view.currentIndex = 0
+            consoleModel.addOperation(text)
         }
         
         anchors {

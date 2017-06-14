@@ -26,8 +26,11 @@
 class ConsoleModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode)
+    Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode NOTIFY modeChanged)
+    Q_PROPERTY(Analitza::Variables* variables READ variables)
 public:
+    ConsoleModel(QObject* parent = nullptr, bool preferString = true);
+
     /** This enumeration controles the way the console will calculate and show his results. */
     enum ConsoleMode {
         Evaluation, /**< Simplifies the expression, tries to simplify when sees a variable not defined. */
@@ -35,20 +38,25 @@ public:
     };
     Q_ENUM(ConsoleMode)
 
+    Q_SCRIPTABLE bool addOperation(const QString& input);
     bool addOperation(const Analitza::Expression& e, const QString& input);
 
-    bool loadScript(const QString &path);
-    bool saveScript(const QString &path);
+    Q_SCRIPTABLE bool loadScript(const QString &path);
+    Q_SCRIPTABLE bool saveScript(const QString &path);
+    Q_SCRIPTABLE void clear() { m_script.clear(); }
+
+    ConsoleMode mode() const { return m_mode; }
+    void setMode(ConsoleMode mode);
 
     Analitza::Variables* variables() const { return a.variables(); }
-    ConsoleMode mode() const { return m_mode; }
-    void setMode(ConsoleMode mode) { m_mode = mode; }
-    void clear() { m_script.clear(); }
     Analitza::Analyzer* analyzer() { return &a; }
 
 Q_SIGNALS:
     void errorMessage(const QString &error);
-    void updateView(const QString &newEntry, const Analitza::Expression &result = {});
+    void updateView(const QString &entry);
+    void modeChanged(ConsoleMode mode);
+    void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
+    void operationSuccessfulString(const QString &expression, const QString &result);
 
 private:
     Analitza::Analyzer a;

@@ -22,6 +22,8 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
+#include "../src/consolemodel.h"
+
 #include <qqml.h>
 #include "pluginsmodel.h"
 
@@ -37,7 +39,9 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     s_self=this;
     
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
+    qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QAbstractItemModel>();
+    qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
 }
 
 PlotsModel* KAlgebraMobile::functionsModel()

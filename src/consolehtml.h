@@ -105,10 +105,11 @@ class ConsoleHtml : public QWebEngineView
         void addMessage(const QString& message);
         
     private:
+        void includeOperation(const Analitza::Expression &expression, const Analitza::Expression &result);
+        void updateView(const QString& newEntry);
+        void updateViewWithOptions(const QString& newEntry, const QString &options);
+
         QStringList m_htmlLog;
-        
-        void updateView(const QString& newEntry, const Analitza::Expression &exp);
-        
         QList<InlineOptions*> m_options;
         QScopedPointer<ConsoleModel> m_model;
 };

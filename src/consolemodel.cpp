@@ -22,6 +22,21 @@
 #include <QUrl>
 #include <KLocalizedString>
 
+ConsoleModel::ConsoleModel(QObject* parent, bool preferString)
+    : QObject(parent)
+{
+    if(preferString) {
+        connect(this, &ConsoleModel::operationSuccessful, this, [this](const Analitza::Expression &exp, const Analitza::Expression &res) {
+            operationSuccessfulString(exp.toString(), res.toString());
+        });
+    }
+}
+
+bool ConsoleModel::addOperation(const QString& input)
+{
+    return addOperation(Analitza::Expression(input), input);
+}
+
 bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& input)
 {
     Analitza::Expression res;
@@ -35,19 +50,15 @@ bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& in
         }
     }
 
-    QString result, newEntry;
     if(a.isCorrect()) {
-        result = res.toHtml();
-
         a.insertVariable(QStringLiteral("ans"), res);
         m_script += e; //Script won't have the errors
-        newEntry = QString("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>")
-            .arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
-    } else {
-        errorMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))));
-    }
 
-    updateView(newEntry);
+        Q_EMIT operationSuccessful(e, res);
+    } else {
+        Q_EMIT errorMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))));
+        Q_EMIT updateView({});
+    }
 
     return a.isCorrect();
 }
@@ -69,10 +80,10 @@ bool ConsoleModel::loadScript(const QString& path)
 
     if(!correct) {
         Q_EMIT errorMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path, a.errors().join(QStringLiteral("<br/>"))));
-        updateView(QString());
+        Q_EMIT updateView(QString());
     }
     else
-        updateView(i18n("Imported: %1", path));
+        Q_EMIT updateView(i18n("Imported: %1", path));
 
     return correct;
 }
@@ -92,3 +103,12 @@ bool ConsoleModel::saveScript(const QString& savePath)
 
     return correct;
 }
+
+void ConsoleModel::setMode(ConsoleMode mode)
+{
+    if (m_mode != mode) {
+        m_mode = mode;
+        Q_EMIT modeChanged(mode);
+    }
+}
+
