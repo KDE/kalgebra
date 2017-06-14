@@ -35,34 +35,6 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
-    "<style type=\"text/css\">\n"
-        "\thtml { background-color: " + qApp->palette().color(QPalette::Active, QPalette::Base).name().toLatin1() + "; }\n"
-        "\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n"
-        "\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n"
-        "\t.before { text-align:right; }\n"
-        "\t.op  { font-weight: bold; }\n"
-    //     "\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
-        "\t.normal:hover  { background-color: #f7f7f7; }\n"
-        "\t.cont { color: #560000; }\n"
-        "\t.num { color: #0000C4; }\n"
-        "\t.sep { font-weight: bold; color: #0000FF; }\n"
-        "\t.var { color: #640000; }\n"
-        "\t.keyword { color: #000064; }\n"
-        "\t.func { color: #008600; }\n"
-        "\t.result { padding-left: 10%; }\n"
-        "\t.options { font-size: small; text-align:right }\n"
-        "\t.string { color: #bb0000 }\n"
-        "\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }"
-        "\t.exp { color: #000000 }\n"
-        "\ta { color: #0000ff }\n"
-        "\ta:link {text-decoration:none;}\n"
-        "\ta:visited {text-decoration:none;}\n"
-        "\ta:hover {text-decoration:underline;}\n"
-        "\ta:active {text-decoration:underline;}\n"
-        "\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n"
-        "</style>\n"))
-
 static QUrl temporaryPath()
 {
     QTemporaryFile temp(QStringLiteral("consolelog"));
@@ -97,22 +69,16 @@ public:
 
 ConsoleHtml::ConsoleHtml(QWidget *parent)
     : QWebEngineView(parent)
-    , m_model(new ConsoleModel(this, false))
+    , m_model(new ConsoleModel(this))
 {
     connect(m_model.data(), &ConsoleModel::updateView, this, &ConsoleHtml::updateView);
     connect(m_model.data(), &ConsoleModel::operationSuccessful, this, &ConsoleHtml::includeOperation);
-    connect(m_model.data(), &ConsoleModel::errorMessage, this, &ConsoleHtml::addMessage);
     setPage(new ConsolePage(this));
 }
 
 ConsoleHtml::~ConsoleHtml()
 {
     qDeleteAll(m_options);
-}
-
-void ConsoleHtml::addMessage(const QString& message)
-{
-    m_htmlLog += message;
 }
 
 void ConsoleHtml::openClickedUrl(const QUrl& url)
@@ -166,23 +132,10 @@ bool ConsoleHtml::saveScript(const QUrl & path) const
     return correct;
 }
 
-bool ConsoleHtml::saveLog(const QUrl& path) const
+bool ConsoleHtml::saveLog(const QUrl & path) const
 {
-    Q_ASSERT(!path.isEmpty());
-    //FIXME: We have to choose between txt and html
     const QUrl savePath=path.isLocalFile() ? path : temporaryPath();
-    QFile file(savePath.toLocalFile());
-    bool correct = file.open(QIODevice::WriteOnly | QIODevice::Text);
-
-    if(correct) {
-        QTextStream out(&file);
-        out << "<html>\n<head>" << *s_css << "</head>" << endl;
-        out << "<body>" << endl;
-        foreach(const QString &entry, m_htmlLog)
-            out << "<p>" << entry << "</p>" << endl;
-        out << "</body>\n</html>" << endl;
-    }
-
+    bool correct = m_model->saveLog(savePath);
     if(!path.isLocalFile()) {
         KIO::CopyJob* job=KIO::move(savePath, path);
         correct=job->exec();
@@ -190,14 +143,10 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
     return correct;
 }
 
-void ConsoleHtml::includeOperation(const Analitza::Expression& e, const Analitza::Expression& res)
+void ConsoleHtml::includeOperation(const Analitza::Expression& /*e*/, const Analitza::Expression& res)
 {
-    QString options, newEntry;
+    m_optionsString.clear();
     if (res.isCorrect()) {
-        const auto result = res.toHtml();
-        newEntry = QStringLiteral("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>")
-            .arg(i18n("Paste to Input"), e.toString(), e.toHtml(), res.toString(), result);
-
         Analitza::Analyzer lambdifier(m_model->variables());
         lambdifier.setExpression(res);
         Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
@@ -211,36 +160,34 @@ void ConsoleHtml::includeOperation(const Analitza::Expression& e, const Analitza
                 query.addQueryItem(QStringLiteral("func"), lambdaexp.toString());
                 url.setQuery(query);
 
-                options += i18n(" <a href='kalgebra:%1'>%2</a>", url.toString(), opt->caption());
+                m_optionsString += i18n(" <a href='kalgebra:%1'>%2</a>", url.toString(), opt->caption());
             }
         }
 
-        if(!options.isEmpty())
-            options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
+        if(!m_optionsString.isEmpty()) {
+            m_optionsString = "<div class='options'>"+i18n("Options: %1", m_optionsString)+"</div>";
+        }
     }
-    updateViewWithOptions(newEntry, options);
 }
 
-void ConsoleHtml::updateView(const QString& newEntry)
-{
-    updateViewWithOptions(newEntry, {});
-}
-
-void ConsoleHtml::updateViewWithOptions(const QString& newEntry, const QString &options)
+void ConsoleHtml::updateView()
 {
     QByteArray code;
     code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
     code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
-    code += *s_css;
+    code += m_model->css();
     code += "</head>\n<body>";
-    foreach(const QString &entry, m_htmlLog)
-        code += "<p class='normal'>"+entry.toUtf8()+"</p>";
 
-    if(!newEntry.isEmpty()) {
-        m_htmlLog += newEntry;
-        code += options.toUtf8();
-        code += "<p class='last'>"+newEntry.toUtf8()+"</p>";
-    }
+    auto log = m_model->htmlLog();
+    const auto newEntry = log.takeLast();
+    foreach(const QString &entry, log)
+        code += "<p class='normal'>" + entry + "</p>\n";
+
+    code += m_optionsString.toUtf8();
+    if (newEntry.startsWith("<ul class='error'>"))
+        code += newEntry;
+    else
+        code += "<p class='last'>" + newEntry + "</p>\n";
     code += "</body></html>";
 
     page()->setHtml(code);
@@ -277,8 +224,7 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 void ConsoleHtml::clear()
 {
     m_model->clear();
-    m_htmlLog.clear();
-    updateView(QString());
+    updateView();
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)

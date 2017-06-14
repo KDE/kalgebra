@@ -43,8 +43,8 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QAbstractItemModel>();
-    qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
+    qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
 }
 
 PlotsModel* KAlgebraMobile::functionsModel()

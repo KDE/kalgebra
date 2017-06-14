@@ -11,19 +11,9 @@ KAlgebraPage
 
     ConsoleModel {
         id: consoleModel
-        Component.onCompleted: {
-            for(var v in app)
-                console.log("lalala", v)
-            console.log("xxx", app.variables)
-        }
         variables: app.variables
-        onErrorMessage: {
-            itemModel.insert(0, { result: error })
-            input.selectAll()
-            view.currentIndex = 0
-        }
-        onOperationSuccessfulString: {
-            itemModel.insert(0, { result: expression + "=" + result })
+        onMessage: {
+            itemModel.insert(0, { result: msg })
             input.selectAll()
             view.currentIndex = 0
         }
@@ -44,6 +34,7 @@ KAlgebraPage
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.loadScript(fileDialog.fileUrl) }
                 fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
+                fileDialog.selectExisting = true
                 fileDialog.open()
             }
         },
@@ -53,12 +44,20 @@ KAlgebraPage
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveScript(fileDialog.fileUrl) }
                 fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
+                fileDialog.selectExisting = false
                 fileDialog.open()
             }
         },
         //TODO: Recent scripts
         Action {
             text: i18n("Export Log...")
+            onTriggered: {
+                fileDialog.title = text
+                fileDialog.proceed = function() { consoleModel.saveLog(fileDialog.fileUrl) }
+                fileDialog.nameFilters = [ i18n("HTML (*.html)") ]
+                fileDialog.selectExisting = false
+                fileDialog.open()
+            }
         },
         // --
         Action {

@@ -29,7 +29,7 @@ class ConsoleModel : public QObject
     Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables WRITE setVariables)
 public:
-    ConsoleModel(QObject* parent = nullptr, bool preferString = true);
+    ConsoleModel(QObject* parent = nullptr);
 
     /** This enumeration controles the way the console will calculate and show his results. */
     enum ConsoleMode {
@@ -43,7 +43,10 @@ public:
 
     Q_SCRIPTABLE bool loadScript(const QUrl &path);
     Q_SCRIPTABLE bool saveScript(const QUrl &path);
-    Q_SCRIPTABLE void clear() { m_script.clear(); }
+    Q_SCRIPTABLE void clear();
+    Q_SCRIPTABLE bool saveLog(const QUrl& path) const;
+
+    QByteArray css() const;
 
     ConsoleMode mode() const { return m_mode; }
     void setMode(ConsoleMode mode);
@@ -51,15 +54,19 @@ public:
     QSharedPointer<Analitza::Variables> variables() const { return a.variables(); }
     void setVariables(const QSharedPointer<Analitza::Variables> &vars);
     Analitza::Analyzer* analyzer() { return &a; }
+    void addMessage(const QString &msg);
+
+    QList<QByteArray> htmlLog() const { return m_htmlLog; }
 
 Q_SIGNALS:
-    void errorMessage(const QString &error);
-    void updateView(const QString &entry);
+    void message(const QString &msg);
+    void updateView();
     void modeChanged(ConsoleMode mode);
     void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
-    void operationSuccessfulString(const QString &expression, const QString &result);
 
 private:
+
+    QList<QByteArray> m_htmlLog;
     Analitza::Analyzer a;
     ConsoleMode m_mode = Evaluation;
     QVector<Analitza::Expression> m_script;
