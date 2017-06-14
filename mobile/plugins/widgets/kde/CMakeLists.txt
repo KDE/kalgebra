@@ -1,5 +1,5 @@
 install( FILES
-    SimpleListView.qml Dialog.qml AddButton.qml
+    SimpleListView.qml Dialog.qml AddButton.qml Action.qml
     
     KAlgebraPage.qml KAlgebraMobile.qml
     DESTINATION ${KDE_INSTALL_DATADIR}/kalgebramobile/plugins/widgets/
