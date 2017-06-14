@@ -66,7 +66,7 @@ class Add2DOption : public InlineOptions
         {}
         
         QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add2d"); }
-        bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const Q_DECL_OVERRIDE {
+        bool matchesExpression(const Analitza::Expression& exp) const Q_DECL_OVERRIDE {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).canDraw();
         }
 
@@ -86,7 +86,7 @@ class Add3DOption : public InlineOptions
         {}
         
         QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add3d"); }
-        bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& /*functype*/) const Q_DECL_OVERRIDE
+        bool matchesExpression(const Analitza::Expression& exp) const Q_DECL_OVERRIDE
         {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).canDraw();
         }

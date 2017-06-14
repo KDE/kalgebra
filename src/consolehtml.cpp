@@ -35,12 +35,148 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
+    "<style type=\"text/css\">\n"
+        "\thtml { background-color: " + qApp->palette().color(QPalette::Active, QPalette::Base).name().toLatin1() + "; }\n"
+        "\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n"
+        "\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n"
+        "\t.before { text-align:right; }\n"
+        "\t.op  { font-weight: bold; }\n"
+    //     "\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
+        "\t.normal:hover  { background-color: #f7f7f7; }\n"
+        "\t.cont { color: #560000; }\n"
+        "\t.num { color: #0000C4; }\n"
+        "\t.sep { font-weight: bold; color: #0000FF; }\n"
+        "\t.var { color: #640000; }\n"
+        "\t.keyword { color: #000064; }\n"
+        "\t.func { color: #008600; }\n"
+        "\t.result { padding-left: 10%; }\n"
+        "\t.options { font-size: small; text-align:right }\n"
+        "\t.string { color: #bb0000 }\n"
+        "\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }"
+        "\t.exp { color: #000000 }\n"
+        "\ta { color: #0000ff }\n"
+        "\ta:link {text-decoration:none;}\n"
+        "\ta:visited {text-decoration:none;}\n"
+        "\ta:hover {text-decoration:underline;}\n"
+        "\ta:active {text-decoration:underline;}\n"
+        "\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n"
+        "</style>\n"))
+
+class ConsoleModel : public QObject
+{
+    Q_OBJECT
+public:
+    bool loadScript(const QUrl &path) {
+        Q_ASSERT(!path.isEmpty());
+
+        //FIXME: We have expression-only script support
+        bool correct=false;
+        QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
+
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream stream(&file);
+
+            a.importScript(&stream);
+            correct=a.isCorrect();
+        }
+
+        if(!correct) {
+            Q_EMIT errorMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join(QStringLiteral("<br/>"))));
+            updateView(QString());
+        }
+        else
+            updateView(i18n("Imported: %1", path.toString()));
+
+        return correct;
+    }
+
+    bool addOperation(const Analitza::Expression& e, const QString& input) {
+        Analitza::Expression res;
+
+        a.setExpression(e);
+        if(a.isCorrect()) {
+            if (m_mode==ConsoleHtml::Evaluation) {
+                res=a.evaluate();
+            } else {
+                res=a.calculate();
+            }
+        }
+
+        QString result, newEntry;
+        if(a.isCorrect()) {
+            result = res.toHtml();
+
+            a.insertVariable(QStringLiteral("ans"), res);
+            m_script += e; //Script won't have the errors
+            newEntry = QString("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>")
+                .arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
+        } else {
+            errorMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))));
+        }
+
+        updateView(newEntry);
+
+        return a.isCorrect();
+    }
+
+    bool saveScript(const QUrl &path) {
+        bool correct=false;
+        Q_ASSERT(!path.isEmpty());
+
+        QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+        QFile file(savePath);
+        correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+        if(correct) {
+            QTextStream out(&file);
+            foreach(const Analitza::Expression& exp, m_script)
+                out << exp.toString() << endl;
+        }
+
+        if(!path.isLocalFile()) {
+            KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+            correct=job->exec();
+        }
+        return correct;
+    }
+
+Q_SIGNALS:
+    void errorMessage(const QString &error);
+    void updateView(const QString &newEntry, const Analitza::Expression &result = {});
+
+public:
+    static QString temporaryPath()
+    {
+        QTemporaryFile temp(QStringLiteral("consolelog"));
+        temp.open();
+        temp.close();
+        temp.setAutoRemove(false);
+        return temp.fileName();
+    }
+
+    static QString retrieve(const QUrl& remoteUrl)
+    {
+        QString path = temporaryPath();
+
+        KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl::fromLocalFile(path));
+
+        job->exec();
+
+        return path;
+    }
+
+    Analitza::Analyzer a;
+    ConsoleHtml::ConsoleMode m_mode = ConsoleHtml::Evaluation;
+    QList<Analitza::Expression> m_script;
+};
+
 class ConsolePage : public QWebEnginePage
 {
 public:
     ConsolePage(ConsoleHtml* parent) : QWebEnginePage(parent), m_console(parent) {}
 
-    bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override {
+    bool acceptNavigationRequest(const QUrl &url, NavigationType /*type*/, bool /*isMainFrame*/) override {
         m_console->openClickedUrl(url);
         return false;
     }
@@ -49,11 +185,12 @@ public:
 };
 
 ConsoleHtml::ConsoleHtml(QWidget *parent)
-    : QWebEngineView(parent), m_mode(Evaluation)
+    : QWebEngineView(parent)
+    , m_model(new ConsoleModel)
 {
+    connect(m_model.data(), &ConsoleModel::updateView, this, &ConsoleHtml::updateView);
+    connect(m_model.data(), &ConsoleModel::errorMessage, this, &ConsoleHtml::addMessage);
     setPage(new ConsolePage(this));
-
-    QMetaObject::invokeMethod(this, "initialize", Qt::QueuedConnection);
 }
 
 ConsoleHtml::~ConsoleHtml()
@@ -61,35 +198,9 @@ ConsoleHtml::~ConsoleHtml()
     qDeleteAll(m_options);
 }
 
-void ConsoleHtml::initialize()
+void ConsoleHtml::addMessage(const QString& message)
 {
-    QPalette p=qApp->palette();
-    
-    m_css ="<style type=\"text/css\">\n";
-    m_css +=QStringLiteral("\thtml { background-color: %1; }\n").arg(p.color(QPalette::Active, QPalette::Base).name()).toLatin1();
-    m_css +="\t.error { border-style: solid; border-width: 1px; border-color: #ff3b21; background-color: #ffe9c4; padding:7px;}\n";
-    m_css +="\t.last  { border-style: solid; border-width: 1px; border-color: #2020ff; background-color: #e0e0ff; padding:7px;}\n";
-    m_css +="\t.before { text-align:right; }\n";
-    m_css +="\t.op  { font-weight: bold; }\n";
-//     m_css +="\t.normal:hover  { border-style: solid; border-width: 1px; border-color: #777; }\n";
-    m_css +="\t.normal:hover  { background-color: #f7f7f7; }\n";
-    m_css +="\t.cont { color: #560000; }\n";
-    m_css +="\t.num { color: #0000C4; }\n";
-    m_css +="\t.sep { font-weight: bold; color: #0000FF; }\n";
-    m_css +="\t.var { color: #640000; }\n";
-    m_css +="\t.keyword { color: #000064; }\n";
-    m_css +="\t.func { color: #008600; }\n";
-    m_css +="\t.result { padding-left: 10%; }\n";
-    m_css +="\t.options { font-size: small; text-align:right }\n";
-    m_css +="\t.string { color: #bb0000 }\n";
-    m_css +="\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }";m_css +="\t.exp { color: #000000 }\n";
-    m_css +="\ta { color: #0000ff }\n";
-    m_css +="\ta:link {text-decoration:none;}\n";
-    m_css +="\ta:visited {text-decoration:none;}\n";
-    m_css +="\ta:hover {text-decoration:underline;}\n";
-    m_css +="\ta:active {text-decoration:underline;}\n";
-    m_css +="\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n";
-    m_css +="</style>\n";
+    m_htmlLog += message;
 }
 
 void ConsoleHtml::openClickedUrl(const QUrl& url)
@@ -109,157 +220,87 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
 
 bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& input)
 {
-    QString result, newEntry;
-    Analitza::Expression res;
-    
-    a.setExpression(e);
-    if(a.isCorrect()) {
-        if(m_mode==Evaluation) {
-            res=a.evaluate();
-        } else {
-            res=a.calculate();
-        }
-    }
-    
-    QString options;
-    if(a.isCorrect()) {
-        result = res.toHtml();
-        
-        Analitza::Analyzer lambdifier(a.variables());
-        lambdifier.setExpression(res);
-        Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
-        lambdifier.setExpression(lambdaexp);
-        
-        Analitza::ExpressionType functype = lambdifier.type();
-        
-        foreach(InlineOptions* opt, m_options) {
-            if(opt->matchesExpression(lambdaexp, functype)) {
-                QUrl url(QStringLiteral("/query"));
-                QUrlQuery query(url);
-                query.addQueryItem(QStringLiteral("id"), opt->id());
-                query.addQueryItem(QStringLiteral("func"), lambdaexp.toString());
-                url.setQuery(query);
-                
-                options += i18n(" <a href='kalgebra:%1'>%2</a>", url.toString(), opt->caption());
-            }
-        }
-        
-        if(!options.isEmpty())
-            options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
-        
-        a.insertVariable(QStringLiteral("ans"), res);
-        m_script += e; //Script won't have the errors
-        newEntry = QString("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>").arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
-    } else {
-        m_htmlLog += i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>")));
-    }
-    
-    updateView(newEntry, options);
-    
-    return a.isCorrect();
+    return m_model->addOperation(e, input);
 }
 
-QString temporaryPath()
+ConsoleHtml::ConsoleMode ConsoleHtml::mode() const
 {
-    QTemporaryFile temp(QStringLiteral("consolelog"));
-    temp.open();
-    temp.close();
-    temp.setAutoRemove(false);
-    return QDir::tempPath()+'/'+temp.fileName();
+    return m_model->m_mode;
 }
 
-QString ConsoleHtml::retrieve(const QUrl& remoteUrl)
+void ConsoleHtml::setMode(ConsoleMode newMode)
 {
-    QString path=temporaryPath();
-    
-    KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl(path));
-    
-    bool ret = job->exec();
-    if(!ret)
-        path.clear();
-    
-    return path;
+    m_model->m_mode = newMode;
+}
+
+Analitza::Analyzer* ConsoleHtml::analitza()
+{
+    return &(m_model->a);
 }
 
 bool ConsoleHtml::loadScript(const QUrl& path)
 {
-    Q_ASSERT(!path.isEmpty());
-    
-    //FIXME: We have expression-only script support
-    bool correct=false;
-    QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
-    
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream stream(&file);
-        
-        a.importScript(&stream);
-        correct=a.isCorrect();
-    }
-    
-    if(!correct) {
-        m_htmlLog += i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join(QStringLiteral("<br/>")));
-        updateView(QString(), QString());
-    }
-    else
-        updateView(i18n("Imported: %1", path.toString()), QString());
-    
-    return correct;
+    return m_model->loadScript(path);
 }
 
 bool ConsoleHtml::saveScript(const QUrl & path) const
 {
-    bool correct=false;
-    Q_ASSERT(!path.isEmpty());
-        
-    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
-    QFile file(savePath);
-    correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-    
-    if(correct) {
-        QTextStream out(&file);
-        foreach(const Analitza::Expression& exp, m_script)
-            out << exp.toString() << endl;
-    }
-    
-    if(!path.isLocalFile()) {
-        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
-        correct=job->exec();
-    }
-    return correct;
+    return m_model->saveScript(path);
 }
 
 bool ConsoleHtml::saveLog(const QUrl& path) const
 {
     Q_ASSERT(!path.isEmpty());
     //FIXME: We have to choose between txt and html
-    bool correct=false;
-    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+    QString savePath=path.isLocalFile() ?  path.toLocalFile() : ConsoleModel::temporaryPath();
     QFile file(savePath);
-    correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-    
+    bool correct = file.open(QIODevice::WriteOnly | QIODevice::Text);
+
     if(correct) {
         QTextStream out(&file);
-        out << "<html>\n<head>" << m_css << "</head>" << endl;
+        out << "<html>\n<head>" << *s_css << "</head>" << endl;
         out << "<body>" << endl;
         foreach(const QString &entry, m_htmlLog)
             out << "<p>" << entry << "</p>" << endl;
         out << "</body>\n</html>" << endl;
     }
-    
+
     if(!path.isLocalFile()) {
-        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+        KIO::CopyJob* job=KIO::move(QUrl::fromLocalFile(savePath), path);
         correct=job->exec();
     }
     return correct;
 }
 
-
-void ConsoleHtml::updateView(const QString& newEntry, const QString& options)
+void ConsoleHtml::updateView(const QString& newEntry, const Analitza::Expression &res)
 {
+    QString options;
+    if (res.isCorrect()) {
+        Analitza::Analyzer lambdifier(m_model->a.variables());
+        lambdifier.setExpression(res);
+        Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
+        lambdifier.setExpression(lambdaexp);
+
+        foreach(InlineOptions* opt, m_options) {
+            if(opt->matchesExpression(lambdaexp)) {
+                QUrl url(QStringLiteral("/query"));
+                QUrlQuery query(url);
+                query.addQueryItem(QStringLiteral("id"), opt->id());
+                query.addQueryItem(QStringLiteral("func"), lambdaexp.toString());
+                url.setQuery(query);
+
+                options += i18n(" <a href='kalgebra:%1'>%2</a>", url.toString(), opt->caption());
+            }
+        }
+
+        if(!options.isEmpty())
+            options = "<div class='options'>"+i18n("Options: %1", options)+"</div>";
+    }
+
     QByteArray code;
     code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
     code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
-    code += m_css;
+    code += *s_css;
     code += "</head>\n<body>";
     foreach(const QString &entry, m_htmlLog)
         code += "<p class='normal'>"+entry.toUtf8()+"</p>";
@@ -304,19 +345,19 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 
 void ConsoleHtml::clear()
 {
-    m_script.clear();
+    m_model->m_script.clear();
     m_htmlLog.clear();
-    updateView(QString(), QString());
+    updateView(QString(), {});
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)
 {
-    a.variables()->modify(name, exp);
+    m_model->a.variables()->modify(name, exp);
 }
 
 void ConsoleHtml::removeVariable(const QString & name)
 {
-    a.variables()->remove(name);
+    m_model->a.variables()->remove(name);
 }
 
 void ConsoleHtml::paste()
@@ -324,4 +365,4 @@ void ConsoleHtml::paste()
     emit paste(selectedText());
 }
 
-
+#include "consolehtml.moc"

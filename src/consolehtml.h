@@ -24,6 +24,8 @@
 
 #include <analitza/analyzer.h>
 
+class ConsoleModel;
+
 class InlineOptions
 {
     public:
@@ -31,7 +33,7 @@ class InlineOptions
         
         virtual QString id() const = 0;
         virtual QString caption() const = 0;
-        virtual bool matchesExpression(const Analitza::Expression& exp, const Analitza::ExpressionType& functype) const = 0;
+        virtual bool matchesExpression(const Analitza::Expression& exp) const = 0;
         virtual void triggerOption(const Analitza::Expression& exp) = 0;
 };
 
@@ -58,13 +60,13 @@ class ConsoleHtml : public QWebEngineView
         ~ConsoleHtml() override;
         
         /** Retrieves a pointer to the Analitza calculator associated. */
-        Analitza::Analyzer* analitza() { return &a; }
+        Analitza::Analyzer* analitza();
         
         /** Sets a @p newMode console mode. */
-        void setMode(ConsoleMode newMode) { m_mode = newMode; }
+        void setMode(ConsoleMode newMode);
         
         /** Retrieves the console mode. */
-        ConsoleMode mode() const { return m_mode; }
+        ConsoleMode mode() const;
         
         void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
 
@@ -102,25 +104,18 @@ class ConsoleHtml : public QWebEngineView
         void paste(const QString& code);
         
     private Q_SLOTS:
-        void initialize();
-        
         void modifyVariable(const QString& name, const Analitza::Expression& exp);
         void removeVariable(const QString& name);
         void paste();
+        void addMessage(const QString& message);
         
     private:
-        QString retrieve(const QUrl& remoteUrl);
-        
-        Analitza::Analyzer a;
-        void sendStatus(const QString& msg) { emit status(msg); }
-        ConsoleMode m_mode;
-        QList<Analitza::Expression> m_script;
         QStringList m_htmlLog;
         
-        void updateView(const QString& newEntry, const QString& options);
+        void updateView(const QString& newEntry, const Analitza::Expression &exp);
         
-        QByteArray m_css;
         QList<InlineOptions*> m_options;
+        QScopedPointer<ConsoleModel> m_model;
 };
 
 #endif
