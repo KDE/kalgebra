@@ -7,6 +7,20 @@ KAlgebraPage
 {
     id: page
     anchors.margins: 0
+
+    contextualActions: [
+        Action {
+            text: i18n("View Grid")
+            checkable: true
+            checked: view.showGrid
+            onToggled: view.showGrid = checked
+        },
+        Action {
+            text: i18n("Reset Viewport")
+            onTriggered: view.resetViewport()
+        }
+        //custom viewport?
+    ]
     
     Rectangle {
         anchors.fill: parent

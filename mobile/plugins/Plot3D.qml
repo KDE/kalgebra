@@ -24,6 +24,14 @@ import widgets 1.0
 KAlgebraPage
 {
     id: page
+
+    contextualActions: [
+        Action {
+            text: i18n("Reset Viewport")
+            onTriggered: view.resetViewport()
+        }
+    ]
+
     Graph3D
     {
         id: view

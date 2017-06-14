@@ -308,7 +308,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     t_menu = menuBar()->addMenu(i18n("3D &Graph"));
     QAction* t_actions[5];
     t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
-    t_menu->addAction(QIcon::fromTheme(QStringLiteral("zoom-original")), i18n("&Reset View"), m_graph3d, [this]() { m_graph3d->resetView(); });
+    t_menu->addAction(QIcon::fromTheme(QStringLiteral("zoom-original")), i18n("&Reset View"), m_graph3d, [this]() { m_graph3d->resetViewport(); });
     t_menu->addSeparator();
     t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
     t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
