@@ -14,9 +14,7 @@ KAlgebraPage
 //         variables: app.variables
         mode: ConsoleModel.Evaluate
         onErrorMessage: {
-            var toadd = i18n("Error: %1", error)
-
-            itemModel.insert(0, { result: toadd })
+            itemModel.insert(0, { result: error })
             input.selectAll()
             view.currentIndex = 0
         }
@@ -36,7 +34,7 @@ KAlgebraPage
     }
 
     function proceedLoadScript() {
-
+        consoleModel.loadScript(fileDialog.fileUrl)
     }
 
     contextualActions: [
@@ -44,6 +42,7 @@ KAlgebraPage
             text: i18n("Load Script...")
             onTriggered: {
                 fileDialog.title = text
+                fileDialog.proceed = page.proceedLoadScript
                 var v = fileDialog.open()
                 console.log("opened...", v)
             }

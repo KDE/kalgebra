@@ -41,8 +41,8 @@ public:
     Q_SCRIPTABLE bool addOperation(const QString& input);
     bool addOperation(const Analitza::Expression& e, const QString& input);
 
-    Q_SCRIPTABLE bool loadScript(const QString &path);
-    Q_SCRIPTABLE bool saveScript(const QString &path);
+    Q_SCRIPTABLE bool loadScript(const QUrl &path);
+    Q_SCRIPTABLE bool saveScript(const QUrl &path);
     Q_SCRIPTABLE void clear() { m_script.clear(); }
 
     ConsoleMode mode() const { return m_mode; }

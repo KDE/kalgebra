@@ -63,20 +63,19 @@ Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
         "\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n"
         "</style>\n"))
 
-static QString temporaryPath()
+static QUrl temporaryPath()
 {
     QTemporaryFile temp(QStringLiteral("consolelog"));
     temp.open();
     temp.close();
     temp.setAutoRemove(false);
-    return temp.fileName();
+    return QUrl::fromLocalFile(temp.fileName());
 }
 
-static QString retrieve(const QUrl& remoteUrl)
+static QUrl retrieve(const QUrl& remoteUrl)
 {
-    QString path = temporaryPath();
-
-    KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl::fromLocalFile(path));
+    const QUrl path = temporaryPath();
+    KIO::CopyJob* job=KIO::copyAs(remoteUrl, path);
 
     job->exec();
 
@@ -153,15 +152,15 @@ Analitza::Analyzer* ConsoleHtml::analitza()
 
 bool ConsoleHtml::loadScript(const QUrl& path)
 {
-    return m_model->loadScript(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
+    return m_model->loadScript(path.isLocalFile() ? path : retrieve(path));
 }
 
 bool ConsoleHtml::saveScript(const QUrl & path) const
 {
-    const QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+    const QUrl savePath=path.isLocalFile() ? path : temporaryPath();
     bool correct = m_model->saveScript(savePath);
     if(!path.isLocalFile()) {
-        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+        KIO::CopyJob* job=KIO::move(savePath, path);
         correct=job->exec();
     }
     return correct;
@@ -171,8 +170,8 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
 {
     Q_ASSERT(!path.isEmpty());
     //FIXME: We have to choose between txt and html
-    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
-    QFile file(savePath);
+    const QUrl savePath=path.isLocalFile() ? path : temporaryPath();
+    QFile file(savePath.toLocalFile());
     bool correct = file.open(QIODevice::WriteOnly | QIODevice::Text);
 
     if(correct) {
@@ -185,7 +184,7 @@ bool ConsoleHtml::saveLog(const QUrl& path) const
     }
 
     if(!path.isLocalFile()) {
-        KIO::CopyJob* job=KIO::move(QUrl::fromLocalFile(savePath), path);
+        KIO::CopyJob* job=KIO::move(savePath, path);
         correct=job->exec();
     }
     return correct;

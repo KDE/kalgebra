@@ -63,13 +63,13 @@ bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& in
     return a.isCorrect();
 }
 
-bool ConsoleModel::loadScript(const QString& path)
+bool ConsoleModel::loadScript(const QUrl& path)
 {
-    Q_ASSERT(!path.isEmpty());
+    Q_ASSERT(!path.isEmpty() && path.isLocalFile());
 
     //FIXME: We have expression-only script support
     bool correct=false;
-    QFile file(path);
+    QFile file(path.toLocalFile());
 
     if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
@@ -79,20 +79,20 @@ bool ConsoleModel::loadScript(const QString& path)
     }
 
     if(!correct) {
-        Q_EMIT errorMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path, a.errors().join(QStringLiteral("<br/>"))));
+        Q_EMIT errorMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toDisplayString(), a.errors().join(QStringLiteral("<br/>"))));
         Q_EMIT updateView(QString());
     }
     else
-        Q_EMIT updateView(i18n("Imported: %1", path));
+        Q_EMIT updateView(i18n("Imported: %1", path.toDisplayString()));
 
     return correct;
 }
 
-bool ConsoleModel::saveScript(const QString& savePath)
+bool ConsoleModel::saveScript(const QUrl& savePath)
 {
     Q_ASSERT(!savePath.isEmpty());
 
-    QFile file(savePath);
+    QFile file(savePath.toLocalFile());
     bool correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
 
     if(correct) {
