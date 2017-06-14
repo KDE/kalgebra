@@ -26,23 +26,31 @@
 class ConsoleModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode)
 public:
     /** This enumeration controles the way the console will calculate and show his results. */
     enum ConsoleMode {
         Evaluation, /**< Simplifies the expression, tries to simplify when sees a variable not defined. */
         Calculation /**< Calculates everything, if it finds a not defined variable shows an error. */
     };
+    Q_ENUM(ConsoleMode)
 
     bool addOperation(const Analitza::Expression& e, const QString& input);
 
     bool loadScript(const QString &path);
     bool saveScript(const QString &path);
 
+    Analitza::Variables* variables() const { return a.variables(); }
+    ConsoleMode mode() const { return m_mode; }
+    void setMode(ConsoleMode mode) { m_mode = mode; }
+    void clear() { m_script.clear(); }
+    Analitza::Analyzer* analyzer() { return &a; }
+
 Q_SIGNALS:
     void errorMessage(const QString &error);
     void updateView(const QString &newEntry, const Analitza::Expression &result = {});
 
-public:
+private:
     Analitza::Analyzer a;
     ConsoleMode m_mode = Evaluation;
     QVector<Analitza::Expression> m_script;

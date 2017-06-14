@@ -137,17 +137,17 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
 
 ConsoleModel::ConsoleMode ConsoleHtml::mode() const
 {
-    return m_model->m_mode;
+    return m_model->mode();
 }
 
 void ConsoleHtml::setMode(ConsoleModel::ConsoleMode newMode)
 {
-    m_model->m_mode = newMode;
+    m_model->setMode(newMode);
 }
 
 Analitza::Analyzer* ConsoleHtml::analitza()
 {
-    return &(m_model->a);
+    return m_model->analyzer();
 }
 
 bool ConsoleHtml::loadScript(const QUrl& path)
@@ -194,7 +194,7 @@ void ConsoleHtml::updateView(const QString& newEntry, const Analitza::Expression
 {
     QString options;
     if (res.isCorrect()) {
-        Analitza::Analyzer lambdifier(m_model->a.variables());
+        Analitza::Analyzer lambdifier(m_model->variables());
         lambdifier.setExpression(res);
         Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
         lambdifier.setExpression(lambdaexp);
@@ -263,19 +263,19 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
 
 void ConsoleHtml::clear()
 {
-    m_model->m_script.clear();
+    m_model->clear();
     m_htmlLog.clear();
     updateView(QString(), {});
 }
 
 void ConsoleHtml::modifyVariable(const QString& name, const Analitza::Expression& exp)
 {
-    m_model->a.variables()->modify(name, exp);
+    m_model->variables()->modify(name, exp);
 }
 
 void ConsoleHtml::removeVariable(const QString & name)
 {
-    m_model->a.variables()->remove(name);
+    m_model->variables()->remove(name);
 }
 
 void ConsoleHtml::paste()
