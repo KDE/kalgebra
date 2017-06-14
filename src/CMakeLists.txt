@@ -1,7 +1,7 @@
 set(kalgebra_SRCS
     kalgebra.cpp
     dictionary.cpp
-    #console.cpp
+    consolemodel.cpp
     consolehtml.cpp
     varedit.cpp
     main.cpp

@@ -667,12 +667,12 @@ void KAlgebra::updateInformation()
 
 void KAlgebra::consoleCalculate()
 {
-    c_results->setMode(ConsoleHtml::Calculation);
+    c_results->setMode(ConsoleModel::Calculation);
 }
 
 void KAlgebra::consoleEvaluate()
 {
-    c_results->setMode(ConsoleHtml::Evaluation);
+    c_results->setMode(ConsoleModel::Evaluation);
 }
 
 void KAlgebra::valueChanged()

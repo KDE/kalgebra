@@ -17,13 +17,13 @@
  *************************************************************************************/
 
 #include "consolehtml.h"
-#include <QFile>
+
 #include <QClipboard>
 #include <QApplication>
-#include <QTemporaryFile>
 #include <qevent.h>
+#include <QUrlQuery>
+#include <QTemporaryFile>
 #include <QDir>
-#include <qurlquery.h>
 
 #include <KStandardAction>
 #include <QMenu>
@@ -63,113 +63,25 @@ Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
         "\tp { font-size: " +QByteArray::number(QFontMetrics(QApplication::font()).height())+ "px; }\n"
         "</style>\n"))
 
-class ConsoleModel : public QObject
+static QString temporaryPath()
 {
-    Q_OBJECT
-public:
-    bool loadScript(const QUrl &path) {
-        Q_ASSERT(!path.isEmpty());
+    QTemporaryFile temp(QStringLiteral("consolelog"));
+    temp.open();
+    temp.close();
+    temp.setAutoRemove(false);
+    return temp.fileName();
+}
 
-        //FIXME: We have expression-only script support
-        bool correct=false;
-        QFile file(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
+static QString retrieve(const QUrl& remoteUrl)
+{
+    QString path = temporaryPath();
 
-        if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            QTextStream stream(&file);
+    KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl::fromLocalFile(path));
 
-            a.importScript(&stream);
-            correct=a.isCorrect();
-        }
+    job->exec();
 
-        if(!correct) {
-            Q_EMIT errorMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toString(), a.errors().join(QStringLiteral("<br/>"))));
-            updateView(QString());
-        }
-        else
-            updateView(i18n("Imported: %1", path.toString()));
-
-        return correct;
-    }
-
-    bool addOperation(const Analitza::Expression& e, const QString& input) {
-        Analitza::Expression res;
-
-        a.setExpression(e);
-        if(a.isCorrect()) {
-            if (m_mode==ConsoleHtml::Evaluation) {
-                res=a.evaluate();
-            } else {
-                res=a.calculate();
-            }
-        }
-
-        QString result, newEntry;
-        if(a.isCorrect()) {
-            result = res.toHtml();
-
-            a.insertVariable(QStringLiteral("ans"), res);
-            m_script += e; //Script won't have the errors
-            newEntry = QString("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='/query?id=copy&func=%4'><span class='result'>%5</span>")
-                .arg(i18n("Paste to Input")).arg(e.toString()).arg(e.toHtml()).arg(res.toString()).arg(result);
-        } else {
-            errorMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))));
-        }
-
-        updateView(newEntry);
-
-        return a.isCorrect();
-    }
-
-    bool saveScript(const QUrl &path) {
-        bool correct=false;
-        Q_ASSERT(!path.isEmpty());
-
-        QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
-        QFile file(savePath);
-        correct=file.open(QIODevice::WriteOnly | QIODevice::Text);
-
-        if(correct) {
-            QTextStream out(&file);
-            foreach(const Analitza::Expression& exp, m_script)
-                out << exp.toString() << endl;
-        }
-
-        if(!path.isLocalFile()) {
-            KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
-            correct=job->exec();
-        }
-        return correct;
-    }
-
-Q_SIGNALS:
-    void errorMessage(const QString &error);
-    void updateView(const QString &newEntry, const Analitza::Expression &result = {});
-
-public:
-    static QString temporaryPath()
-    {
-        QTemporaryFile temp(QStringLiteral("consolelog"));
-        temp.open();
-        temp.close();
-        temp.setAutoRemove(false);
-        return temp.fileName();
-    }
-
-    static QString retrieve(const QUrl& remoteUrl)
-    {
-        QString path = temporaryPath();
-
-        KIO::CopyJob* job=KIO::copyAs(remoteUrl, QUrl::fromLocalFile(path));
-
-        job->exec();
-
-        return path;
-    }
-
-    Analitza::Analyzer a;
-    ConsoleHtml::ConsoleMode m_mode = ConsoleHtml::Evaluation;
-    QList<Analitza::Expression> m_script;
-};
+    return path;
+}
 
 class ConsolePage : public QWebEnginePage
 {
@@ -223,12 +135,12 @@ bool ConsoleHtml::addOperation(const Analitza::Expression& e, const QString& inp
     return m_model->addOperation(e, input);
 }
 
-ConsoleHtml::ConsoleMode ConsoleHtml::mode() const
+ConsoleModel::ConsoleMode ConsoleHtml::mode() const
 {
     return m_model->m_mode;
 }
 
-void ConsoleHtml::setMode(ConsoleMode newMode)
+void ConsoleHtml::setMode(ConsoleModel::ConsoleMode newMode)
 {
     m_model->m_mode = newMode;
 }
@@ -240,19 +152,25 @@ Analitza::Analyzer* ConsoleHtml::analitza()
 
 bool ConsoleHtml::loadScript(const QUrl& path)
 {
-    return m_model->loadScript(path);
+    return m_model->loadScript(path.isLocalFile() ? path.toLocalFile() : retrieve(path));
 }
 
 bool ConsoleHtml::saveScript(const QUrl & path) const
 {
-    return m_model->saveScript(path);
+    const QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
+    bool correct = m_model->saveScript(savePath);
+    if(!path.isLocalFile()) {
+        KIO::CopyJob* job=KIO::move(QUrl(savePath), path);
+        correct=job->exec();
+    }
+    return correct;
 }
 
 bool ConsoleHtml::saveLog(const QUrl& path) const
 {
     Q_ASSERT(!path.isEmpty());
     //FIXME: We have to choose between txt and html
-    QString savePath=path.isLocalFile() ?  path.toLocalFile() : ConsoleModel::temporaryPath();
+    QString savePath=path.isLocalFile() ?  path.toLocalFile() : temporaryPath();
     QFile file(savePath);
     bool correct = file.open(QIODevice::WriteOnly | QIODevice::Text);
 

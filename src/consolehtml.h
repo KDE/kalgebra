@@ -22,6 +22,7 @@
 #include <QWidget>
 #include <QWebEngineView>
 
+#include "consolemodel.h"
 #include <analitza/analyzer.h>
 
 class ConsoleModel;
@@ -47,12 +48,6 @@ class ConsoleHtml : public QWebEngineView
 {
     Q_OBJECT
     public:
-        /** This enumeration controles the way the console will calculate and show his results. */
-        enum ConsoleMode {
-            Evaluation, /**< Simplifies the expression, tries to simplify when sees a variable not defined. */
-            Calculation /**< Calculates everything, if it finds a not defined variable shows an error. */
-        };
-        
         /** Constructor. Creates a console widget. */
         ConsoleHtml(QWidget *parent = 0);
         
@@ -63,10 +58,10 @@ class ConsoleHtml : public QWebEngineView
         Analitza::Analyzer* analitza();
         
         /** Sets a @p newMode console mode. */
-        void setMode(ConsoleMode newMode);
+        void setMode(ConsoleModel::ConsoleMode newMode);
         
         /** Retrieves the console mode. */
-        ConsoleMode mode() const;
+        ConsoleModel::ConsoleMode mode() const;
         
         void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
 
