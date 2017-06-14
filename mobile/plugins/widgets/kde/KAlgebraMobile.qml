@@ -20,7 +20,7 @@ Kirigami.ApplicationWindow
 
         title: "KAlgebra"
         titleIcon: "qrc:/kalgebra.svgz"
-        bannerImageSource: "https://images.unsplash.com/photo-1464831728920-2095a7fbc506?ixlib=rb-0.3.5&q=35&fm=jpg&crop=entropy&cs=srgb&s=8887357234283ab5cc2088b779615d87"
+        bannerImageSource: "https://images.unsplash.com/photo-1464831728920-2095a7fbc506?ixlib=rb-0.3.5&q=35&fm=jpg&crop=entropy&cs=srgb&s=8887357234283ab5cc2088b779615d87" //TODO: use something local!
 
         Instantiator {
             delegate: Kirigami.Action {
