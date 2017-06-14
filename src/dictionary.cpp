@@ -39,7 +39,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
     m_sortProxy->sort(2, Qt::AscendingOrder);
     m_sortProxy->setFilterKeyColumn(2);
 
-    m_vars = new Analitza::Variables;
+    m_vars = QSharedPointer<Analitza::Variables>(new Analitza::Variables);
 
     QGroupBox *descr=new QGroupBox(i18n("Information"), this);
     descr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -79,7 +79,6 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
 
 Dictionary::~Dictionary()
 {
-    delete m_vars;
 }
 
 void Dictionary::activated(const QModelIndex& idx, const QModelIndex& prev)

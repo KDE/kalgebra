@@ -11,8 +11,12 @@ KAlgebraPage
 
     ConsoleModel {
         id: consoleModel
-//         variables: app.variables
-        mode: ConsoleModel.Evaluate
+        Component.onCompleted: {
+            for(var v in app)
+                console.log("lalala", v)
+            console.log("xxx", app.variables)
+        }
+        variables: app.variables
         onErrorMessage: {
             itemModel.insert(0, { result: error })
             input.selectAll()
@@ -33,22 +37,24 @@ KAlgebraPage
         property var proceed
     }
 
-    function proceedLoadScript() {
-        consoleModel.loadScript(fileDialog.fileUrl)
-    }
-
     contextualActions: [
         Action {
             text: i18n("Load Script...")
             onTriggered: {
                 fileDialog.title = text
-                fileDialog.proceed = page.proceedLoadScript
-                var v = fileDialog.open()
-                console.log("opened...", v)
+                fileDialog.proceed = function() { consoleModel.loadScript(fileDialog.fileUrl) }
+                fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
+                fileDialog.open()
             }
         },
         Action {
             text: i18n("Save Script...")
+            onTriggered: {
+                fileDialog.title = text
+                fileDialog.proceed = function() { consoleModel.saveScript(fileDialog.fileUrl) }
+                fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
+                fileDialog.open()
+            }
         },
         //TODO: Recent scripts
         Action {

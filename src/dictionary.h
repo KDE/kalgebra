@@ -58,7 +58,7 @@ Q_OBJECT
         Analitza::PlotsView2D *m_graph;
         Analitza::PlotsModel *m_funcs;
         OperatorsModel *m_ops;
-        Analitza::Variables* m_vars;
+        QSharedPointer<Analitza::Variables> m_vars;
         QSortFilterProxyModel *m_sortProxy;
 };
 

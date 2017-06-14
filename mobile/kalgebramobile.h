@@ -20,6 +20,7 @@
 #define KALGEBRAMOBILE_H
 
 #include <QObject>
+#include <QSharedPointer>
 
 class QModelIndex;
 namespace Analitza {
@@ -30,7 +31,7 @@ namespace Analitza {
 class KAlgebraMobile : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Analitza::Variables* variables READ variables NOTIFY variablesChanged)
+    Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables NOTIFY variablesChanged)
     public:
         explicit KAlgebraMobile(QObject* parent=0);
         
@@ -39,7 +40,7 @@ class KAlgebraMobile : public QObject
         
     public Q_SLOTS:
         Analitza::PlotsModel* functionsModel();
-        Analitza::Variables* variables() const;
+        QSharedPointer<Analitza::Variables> variables() const;
         
     private Q_SLOTS:
         void functionRemoved(const QModelIndex& parent, int start, int end);
@@ -53,7 +54,7 @@ class KAlgebraMobile : public QObject
         static KAlgebraMobile* s_self;
         
         Analitza::PlotsModel* m_functionsModel;
-        Analitza::Variables* m_vars;
+        QSharedPointer<Analitza::Variables> m_vars;
 };
 
 #endif // KALGEBRAMOBILE_H

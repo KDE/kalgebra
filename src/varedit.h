@@ -58,7 +58,7 @@ class VarEdit : public QDialog
         Analitza::ExpressionEdit *m_exp;
         
         QLabel *m_valid;
-        Analitza::Variables *vars;
+        QSharedPointer<Analitza::Variables> vars;
         bool m_correct;
         QString m_var;
         QDialogButtonBox* m_buttonBox;

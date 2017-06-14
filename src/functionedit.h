@@ -79,9 +79,9 @@ public:
     QString name() const { return m_name->text(); }
     
     /** Sets the variables class to be used with the graph functions*/
-    void setVariables(Analitza::Variables* v) { m_vars=v; }
+    void setVariables(const QSharedPointer<Analitza::Variables> &v) { m_vars=v; }
     
-    Analitza::Variables* variables() const { return m_vars; }
+    QSharedPointer<Analitza::Variables> variables() const { return m_vars; }
     
     void setOptionsShown(bool shown);
     
@@ -119,7 +119,7 @@ private:
     Analitza::PlotsView2D *m_graph;
     KColorCombo *m_color;
     Analitza::PlotsModel *m_funcsModel;
-    Analitza::Variables* m_vars = nullptr;
+    QSharedPointer<Analitza::Variables> m_vars;
     
     bool m_modmode;
     QTabWidget* m_viewTabs;

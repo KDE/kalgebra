@@ -32,6 +32,8 @@ using namespace Analitza;
 KAlgebraMobile* KAlgebraMobile::s_self=0;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
 
+Q_DECLARE_METATYPE(QSharedPointer<Analitza::Variables>)
+
 KAlgebraMobile::KAlgebraMobile(QObject* parent)
     : QObject(parent), m_functionsModel(0), m_vars(new Analitza::Variables)
 {
@@ -41,6 +43,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QAbstractItemModel>();
+    qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
 }
 
@@ -84,4 +87,4 @@ void KAlgebraMobile::functionModified(const QModelIndex& idxA, const QModelIndex
     } //else TODO: figure out how to control a "rename"
 }
 
-Analitza::Variables* KAlgebraMobile::variables() const { return m_vars; }
+QSharedPointer<Analitza::Variables> KAlgebraMobile::variables() const { return m_vars; }

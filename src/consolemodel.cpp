@@ -112,3 +112,8 @@ void ConsoleModel::setMode(ConsoleMode mode)
     }
 }
 
+void ConsoleModel::setVariables(const QSharedPointer<Analitza::Variables>& vars)
+{
+    qDebug() << "fuuuuuuuu";
+    a.setVariables(vars);
+}

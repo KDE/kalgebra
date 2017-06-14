@@ -163,7 +163,7 @@ void FunctionEdit::colorChange(int)
     setColor(m_color->color());
 }
 
-static double calcExp(const Analitza::Expression& exp, Analitza::Variables* v, bool* corr)
+static double calcExp(const Analitza::Expression& exp, const QSharedPointer<Analitza::Variables>& v, bool* corr)
 {
     Q_ASSERT(exp.isCorrect());
     Analitza::Analyzer d(v);

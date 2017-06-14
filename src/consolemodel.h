@@ -27,7 +27,7 @@ class ConsoleModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode NOTIFY modeChanged)
-    Q_PROPERTY(Analitza::Variables* variables READ variables)
+    Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables WRITE setVariables)
 public:
     ConsoleModel(QObject* parent = nullptr, bool preferString = true);
 
@@ -48,7 +48,8 @@ public:
     ConsoleMode mode() const { return m_mode; }
     void setMode(ConsoleMode mode);
 
-    Analitza::Variables* variables() const { return a.variables(); }
+    QSharedPointer<Analitza::Variables> variables() const { return a.variables(); }
+    void setVariables(const QSharedPointer<Analitza::Variables> &vars);
     Analitza::Analyzer* analyzer() { return &a; }
 
 Q_SIGNALS:
