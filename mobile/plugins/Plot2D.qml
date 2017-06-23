@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -7,6 +8,14 @@ KAlgebraPage
 {
     id: page
     anchors.margins: 0
+
+    FileDialog {
+        id: fileDialog
+        folder: shortcuts.home
+        onAccepted: proceed()
+
+        property var proceed
+    }
 
     contextualActions: [
         Action {
