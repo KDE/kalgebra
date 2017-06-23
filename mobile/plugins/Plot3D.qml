@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.1
 import widgets 1.0
 
@@ -25,7 +26,28 @@ KAlgebraPage
 {
     id: page
 
+    FileDialog {
+        id: fileDialog
+        folder: shortcuts.home
+        onAccepted: proceed()
+
+        property var proceed
+    }
+
     contextualActions: [
+        Action {
+            text: i18n("Save...")
+            onTriggered: {
+                fileDialog.title = text
+                fileDialog.proceed = function() {
+                    var ret = view.save(fileDialog.fileUrl)
+                    console.log("saved 3D", fileDialog.fileUrl, ret)
+                }
+                fileDialog.nameFilters = view.filters
+                fileDialog.selectExisting = false
+                fileDialog.open()
+            }
+        },
         Action {
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()

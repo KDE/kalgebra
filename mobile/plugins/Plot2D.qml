@@ -10,6 +10,19 @@ KAlgebraPage
 
     contextualActions: [
         Action {
+            text: i18n("Save...")
+            onTriggered: {
+                fileDialog.title = text
+                fileDialog.proceed = function() {
+                    var ret = view.save(fileDialog.fileUrl)
+                    console.log("saved 2D", fileDialog.fileUrl, ret)
+                }
+                fileDialog.nameFilters = view.filters
+                fileDialog.selectExisting = false
+                fileDialog.open()
+            }
+        },
+        Action {
             text: i18n("View Grid")
             checkable: true
             checked: view.showGrid

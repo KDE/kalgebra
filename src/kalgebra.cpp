@@ -559,25 +559,9 @@ void KAlgebra::set_solid()
 
 void KAlgebra::save3DGraph()
 {
-    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), i18n("PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document (*.stl)"));
+    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), m_graph3d->filters().join(";;"));
     if(!path.isEmpty()) {
-        if(path.endsWith(QLatin1String(".x3d")) || path.endsWith(QLatin1String(".stl"))) {
-            m_graph3d->exportSurfaces(path);
-        } else if(path.endsWith(QLatin1String(".pdf"))) {
-            auto px = m_graph3d->grabFramebuffer();
-            QPrinter printer;
-            printer.setOutputFormat(QPrinter::PdfFormat);
-            printer.setOutputFileName(path);
-            printer.setPaperSize(px.size(), QPrinter::DevicePixel);
-            printer.setPageMargins(0,0,0,0, QPrinter::DevicePixel);
-            QPainter painter;
-            painter.begin(&printer);
-            painter.drawImage(QPoint(0,0), px);
-            painter.end();
-        } else {
-            auto px = m_graph3d->grabFramebuffer();
-            px.save(path);
-        }
+        m_graph3d->save(QUrl::fromLocalFile(path));
     }
 }
 
