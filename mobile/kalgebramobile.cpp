@@ -24,6 +24,7 @@
 
 #include "../src/consolemodel.h"
 
+#include <QSortFilterProxyModel>
 #include <qqml.h>
 #include "pluginsmodel.h"
 
@@ -42,6 +43,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
+    qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
     qmlRegisterType<QAbstractItemModel>();
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
