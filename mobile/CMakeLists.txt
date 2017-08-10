@@ -1,6 +1,6 @@
 add_subdirectory(plugins)
 
-if(KF5I18n_FOUND)
+if(TARGET KF5::I18n)
     add_definitions(-DKDECOMPONENTS)
 endif()
 
@@ -19,7 +19,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 #   if we don't link it here explicitly, androiddeployqt doesn't bring it
     find_package(Qt5Svg REQUIRED)
     target_link_libraries(kalgebramobile Qt5::Svg)
-elseif(KF5I18n_FOUND)
+endif()
+
+if(TARGET KF5::I18n)
     target_link_libraries(kalgebramobile KF5::I18n)
 endif()
 
