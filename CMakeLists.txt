@@ -32,13 +32,13 @@ set_package_properties(Curses PROPERTIES TYPE OPTIONAL
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
+find_package(KF5I18n ${KF5_VERSION} REQUIRED)
+find_package(Qt5PrintSupport REQUIRED)
 if(${MOBILE_BACKEND} STREQUAL "kde")
-    find_package(KF5I18n ${KF5_VERSION} REQUIRED)
     find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
     find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
     find_package(KF5KIO REQUIRED)
     find_package(Qt5WebEngineWidgets REQUIRED)
-    find_package(Qt5PrintSupport REQUIRED)
     find_package(KF5DocTools)
 
     add_subdirectory(src)
