@@ -34,7 +34,7 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 find_package(KF5I18n ${KF5_VERSION} REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
-if(${MOBILE_BACKEND} STREQUAL "kde")
+if(${MOBILE_BACKEND} STREQUAL "kde" AND NOT CMAKE_SYSTEM MATCHES Android*)
     find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
     find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
     find_package(KF5KIO REQUIRED)
