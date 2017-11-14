@@ -31,6 +31,7 @@ set_package_properties(Curses PROPERTIES TYPE OPTIONAL
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
+add_definitions(-DQT_NO_CAST_TO_ASCII)
 
 find_package(KF5I18n ${KF5_VERSION} REQUIRED)
 find_package(KF5 ${KF5_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools)
