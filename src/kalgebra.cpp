@@ -125,7 +125,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     
     m_status = new QLabel(this);
     statusBar()->insertWidget(0, m_status);
-    menuBar()->addMenu(QStringLiteral("|"))->setEnabled(false);
+    menuBar()->addAction(QStringLiteral("|"))->setEnabled(false);
     
     ///////Console
     QWidget *console = new QWidget(m_tabs);
@@ -326,7 +326,7 @@ KAlgebra::KAlgebra(QWidget *parent)
 
     ////////////
     //////EO3D Graph
-    menuBar()->addMenu(QStringLiteral("|"))->setEnabled(false);
+    menuBar()->addAction(QStringLiteral("|"))->setEnabled(false);
     
     //Dictionary tab
     d_dock = new QDockWidget(i18n("Operations"), this);
