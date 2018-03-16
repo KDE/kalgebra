@@ -4,7 +4,7 @@ if(TARGET KF5::I18n)
     add_definitions(-DKDECOMPONENTS)
 endif()
 
-qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
+qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc header.qrc)
 add_executable(kalgebramobile pluginsmodel.cpp
     ../src/consolemodel.cpp
     kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
