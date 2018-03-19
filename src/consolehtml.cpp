@@ -181,7 +181,7 @@ void ConsoleHtml::updateView()
     auto log = m_model->htmlLog();
     const auto newEntry = log.takeLast();
     foreach(const QString &entry, log)
-        code += "<p class='normal'>" + entry + "</p>\n";
+        code += "<p class='normal'>" + entry.toUtf8() + "</p>\n";
 
     code += m_optionsString.toUtf8();
     if (newEntry.startsWith("<ul class='error'>"))
