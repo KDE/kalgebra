@@ -61,6 +61,5 @@ if(KF5DocTools_FOUND)
 
   add_subdirectory(doc)
 endif()
-install(FILES org.kde.kalgebra.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)

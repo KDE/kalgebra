@@ -24,5 +24,5 @@ target_link_libraries(kalgebra Qt5::Widgets Qt5::PrintSupport Qt5::WebEngineWidg
 install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
 install(FILES kalgebra.xml DESTINATION ${KDE_INSTALL_DATADIR}/katepart5/syntax )
-
+install(FILES org.kde.kalgebra.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
