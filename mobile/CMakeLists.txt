@@ -26,11 +26,6 @@ if(TARGET KF5::I18n)
     target_link_libraries(kalgebramobile KF5::I18n)
 endif()
 
-set(DESKTOPFILE kalgebramobile.desktop)
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/kalgebramobile${MOBILE_BACKEND}.desktop)
-    set(DESKTOPFILE kalgebramobile${MOBILE_BACKEND}.desktop)
-endif()
-
 install(TARGETS kalgebramobile ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS ${DESKTOPFILE} DESTINATION ${DESKTOPFILE_INSTALL} )
+install(PROGRAMS org.kde.kalgebramobile.desktop DESTINATION ${DESKTOPFILE_INSTALL} )
 install(FILES org.kde.kalgebramobile.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
