@@ -117,6 +117,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     QMenu* g_menu = menuBar()->addMenu(i18n("Session"));
     g_menu->addAction(KStandardAction::openNew(this, SLOT(newInstance()), this));
     g_menu->addAction(fullScreenAction);
+    g_menu->addSeparator();
     g_menu->addAction(KStandardAction::quit(this, SLOT(close()), this));
     
     QToolButton* fullScreenButton = new QToolButton(this);
