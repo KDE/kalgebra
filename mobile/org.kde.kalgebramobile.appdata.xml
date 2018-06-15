@@ -10,6 +10,7 @@
   <name xml:lang="nl">KAlgebra-mobiel</name>
   <name xml:lang="pt">KAlgebra Móvel</name>
   <name xml:lang="sk">KAlgebra Mobile</name>
+  <name xml:lang="uk">Мобільна KAlgebra</name>
   <name xml:lang="x-test">xxKAlgebra Mobilexx</name>
   <summary>Graph Calculator</summary>
   <summary xml:lang="ca">Calculadora gràfica</summary>
@@ -18,6 +19,7 @@
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
   <summary xml:lang="pt">Calculadora de Grafos</summary>
   <summary xml:lang="sk">Grafická kalkulačka</summary>
+  <summary xml:lang="uk">Графічний калькулятор</summary>
   <summary xml:lang="x-test">xxGraph Calculatorxx</summary>
   <description>
     <p>KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.</p>
@@ -27,6 +29,7 @@
     <p xml:lang="nl">KAlgebra is een toepassing die uw grafische rekenmachine kan vervangen. Het heeft numerieke, logische, symbolische en analyse functies die u mathematische expressies op de console laar berekenen en de resultaten grafisch plot in 2D of 3D.</p>
     <p xml:lang="pt">O KAlgebra é uma aplicação que poderá substituir a sua calculadora gráfica. Tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas na consola e lhe permite desenhar de forma gráfica os resultados em 2D e 3D.</p>
     <p xml:lang="sk">KAlgebra je aplikácia, ktorá vie nahradiť vašu grafickú kalkulačku. Má numerické, logické, symbolické a analytické funkcie, ktoré vám umožnia vypočítať matematické výrazy na konzole a graficky znázorniť výsledky v 2D alebo 3D.</p>
+    <p xml:lang="uk">KAlgebra — програма, яка може замінити вам графічний калькулятор. У ній ви знайдете можливості з числового, логічного, символічного аналізу, які нададуть вам змогу обчислювати математичні вирази у консолі і графічно будувати результати на площині або у просторі.</p>
     <p xml:lang="x-test">xxKAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.xx</p>
   </description>
   <url type="homepage">http://edu.kde.org/kalgebra/</url>
