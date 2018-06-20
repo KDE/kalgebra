@@ -29,7 +29,7 @@
 #include <klocalizedstring.h>
 
 VarEdit::VarEdit(QWidget *parent, bool modal)
-    : QDialog(parent), vars(0), m_correct(false)
+    : QDialog(parent), vars(nullptr), m_correct(false)
 {
     setWindowTitle(i18n("Add/Edit a variable"));
     setModal(modal);
@@ -41,8 +41,8 @@ VarEdit::VarEdit(QWidget *parent, bool modal)
     
     connect(m_removeBtn, &QAbstractButton::clicked, this, &VarEdit::removeVariable);
     
-    connect( this, SIGNAL(applyClicked()), this, SLOT(accept()) );
-    connect( this, SIGNAL(okClicked()), this, SLOT(reject()) );
+    connect( m_buttonBox, &QDialogButtonBox::accepted, this, &VarEdit::accept );
+    connect( m_buttonBox, &QDialogButtonBox::rejected, this, &VarEdit::reject );
     
     m_exp = new Analitza::ExpressionEdit(this);
     connect(m_exp, &QPlainTextEdit::textChanged, this, &VarEdit::edit);
