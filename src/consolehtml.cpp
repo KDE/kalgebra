@@ -218,7 +218,7 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
     }
     popup.addAction(KStandardAction::clear(this, SLOT(clear()), &popup));
     
-    popup.exec(ev->pos());
+    popup.exec(mapToGlobal(ev->pos()));
 }
 
 void ConsoleHtml::clear()
