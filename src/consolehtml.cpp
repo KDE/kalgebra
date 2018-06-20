@@ -179,15 +179,17 @@ void ConsoleHtml::updateView()
     code += "</head>\n<body>";
 
     auto log = m_model->htmlLog();
-    const auto newEntry = log.takeLast();
-    foreach(const QString &entry, log)
-        code += "<p class='normal'>" + entry.toUtf8() + "</p>\n";
+    if (!log.isEmpty()) {
+        const auto newEntry = log.takeLast();
+        foreach(const QString &entry, log)
+            code += "<p class='normal'>" + entry.toUtf8() + "</p>\n";
 
-    code += m_optionsString.toUtf8();
-    if (newEntry.startsWith("<ul class='error'>"))
-        code += newEntry;
-    else
-        code += "<p class='last'>" + newEntry + "</p>\n";
+        code += m_optionsString.toUtf8();
+        if (newEntry.startsWith("<ul class='error'>"))
+            code += newEntry;
+        else
+            code += "<p class='last'>" + newEntry + "</p>\n";
+    }
     code += "</body></html>";
 
     page()->setHtml(code);
