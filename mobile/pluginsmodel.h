@@ -28,7 +28,7 @@ class PluginsModel : public QStandardItemModel
     Q_PROPERTY(QStringList titles READ titles CONSTANT)
     public:
         enum Roles { PathRole = Qt::UserRole+1, PriorityRole, TitleRole, SubtitleRole };
-        Q_ENUMS(Roles)
+        Q_ENUM(Roles)
 
         explicit PluginsModel(QObject* parent = 0);
         QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;

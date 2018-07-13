@@ -260,7 +260,7 @@ void FunctionEdit::edit()
         m_funcsModel->addPlot(f);
         added=true;
         setState(QStringLiteral("%1:=%2")
-            .arg(m_name->text()).arg(f->expression().toString()), false);
+            .arg(m_name->text(), f->expression().toString()), false);
     } else {
         QStringList errors = req.errors();
         if(f)

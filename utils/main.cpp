@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     OperatorsModel m;
     
-    QFile f(app.arguments().last());
+    QFile f(app.arguments().constLast());
     bool fileopened = f.open(QFile::WriteOnly);
     Q_ASSERT(fileopened);
     
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
         QString id = m.index(i,0).data().toString();
         str << "\t<sect1 id='" << id << "'><title>" << id << "</title><itemizedlist>\n";
         for(int c=0; c<cols; c++)
-            str << QStringLiteral("\t\t<listitem><para>%1: %2</para></listitem>").arg(colHeaders[c]).arg(m.index(i,c).data().toString().toHtmlEscaped()) << '\n';
+            str << QStringLiteral("\t\t<listitem><para>%1: %2</para></listitem>").arg(colHeaders[c], m.index(i,c).data().toString().toHtmlEscaped()) << '\n';
         
         str << "\t</itemizedlist></sect1>\n";
     }

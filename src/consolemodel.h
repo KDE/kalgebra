@@ -61,7 +61,7 @@ public:
 Q_SIGNALS:
     void message(const QString &msg);
     void updateView();
-    void modeChanged(ConsoleMode mode);
+    void modeChanged(ConsoleModel::ConsoleMode mode);
     void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
 
 private:
