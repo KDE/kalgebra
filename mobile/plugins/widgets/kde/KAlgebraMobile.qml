@@ -11,8 +11,6 @@ Kirigami.ApplicationWindow
     width: 900
     visible: true
 
-    header: Kirigami.ApplicationHeader {}
-
     contextDrawer: Kirigami.ContextDrawer {}
 
     globalDrawer: Kirigami.GlobalDrawer {
