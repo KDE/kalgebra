@@ -12,6 +12,7 @@
   <name xml:lang="es">KAlgebra Mobile</name>
   <name xml:lang="fr">KAlgebra Mobile</name>
   <name xml:lang="nl">KAlgebra-mobiel</name>
+  <name xml:lang="nn">KAlgebra mobil</name>
   <name xml:lang="pl">Mobilna KAlgebra</name>
   <name xml:lang="pt">KAlgebra Móvel</name>
   <name xml:lang="pt-BR">KAlgebra Móvel</name>
@@ -28,6 +29,7 @@
   <summary xml:lang="es">Calculadora gráfica</summary>
   <summary xml:lang="fr">Calculatrice graphique</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
+  <summary xml:lang="nn">Grafkalkulator</summary>
   <summary xml:lang="pl">Kalkulator wykresów</summary>
   <summary xml:lang="pt">Calculadora de Grafos</summary>
   <summary xml:lang="pt-BR">Calculadora gráfica</summary>
