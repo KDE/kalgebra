@@ -70,7 +70,7 @@ KAlgebraPage
         }
         
         Button {
-            anchors.right: parent.right
+            Layout.alignment: Qt.AlignRight
             text: "Go!"
             
             onClicked: calculateTable()
