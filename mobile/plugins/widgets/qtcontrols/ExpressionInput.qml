@@ -28,11 +28,11 @@ TextField
             }
 
             delegate: ItemDelegate {
-                text: display + " - " + description
+                text: model.display + " - " + description
                 highlighted: view.currentIndex === index
 
                 function complete() {
-                    var toInsert = display.substr(field.currentWord.length);
+                    var toInsert = model.display.substr(field.currentWord.length);
                     if(isVariable)
                         toInsert += '(';
                     field.insert(field.cursorPosition, toInsert)
