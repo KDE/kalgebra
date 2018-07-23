@@ -7,7 +7,10 @@ ListView
     id: scrollList
     property string role: ""
     property string title: ""
-    delegate: BasicListItem { label: model[role] }
+    delegate: BasicListItem {
+        label: model[role]
+        supportsMouseEvents: false
+    }
     header: scrollList.title ? titleComponent : null
 
     Component {
