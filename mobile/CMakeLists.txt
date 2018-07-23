@@ -19,6 +19,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 #   if we don't link it here explicitly, androiddeployqt doesn't bring it
     find_package(Qt5Svg REQUIRED)
     find_package(KF5Kirigami2 REQUIRED)
+    kirigami_package_breeze_icons(ICONS list-add)
     target_link_libraries(kalgebramobile Qt5::Svg KF5::Kirigami2)
 endif()
 
