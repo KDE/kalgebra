@@ -59,7 +59,10 @@ class ConsolePage : public QWebEnginePage
 public:
     ConsolePage(ConsoleHtml* parent) : QWebEnginePage(parent), m_console(parent) {}
 
-    bool acceptNavigationRequest(const QUrl &url, NavigationType /*type*/, bool /*isMainFrame*/) override {
+    bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool /*isMainFrame*/) override {
+        if (url.scheme() == QLatin1String("data"))
+            return true;
+        qDebug() << "navigating to" << url << type;
         m_console->openClickedUrl(url);
         return false;
     }
