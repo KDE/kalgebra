@@ -43,7 +43,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
         "\t.result { padding-left: 10%; }\n"
         "\t.options { font-size: small; text-align:right }\n"
         "\t.string { color: #bb0000 }\n"
-        "\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }"
+        "\tli { padding-left: 12px; padding-bottom: 4px; list-style-position: inside; }\n"
         "\t.exp { color: #000000 }\n"
         "\ta { color: #0000ff }\n"
         "\ta:link {text-decoration:none;}\n"

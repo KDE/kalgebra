@@ -179,7 +179,7 @@ void ConsoleHtml::updateView()
     code += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
     code += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<title> :) </title>\n";
     code += m_model->css();
-    code += "</head>\n<body>";
+    code += "</head>\n<body>\n";
 
     auto log = m_model->htmlLog();
     if (!log.isEmpty()) {
@@ -196,13 +196,14 @@ void ConsoleHtml::updateView()
     code += "</body></html>";
 
     page()->setHtml(code);
-    
+
     emit changed();
 
-    QObject* o = new QObject;
-    connect(this, &QWebEngineView::loadFinished, o, [this, o](){
+    connect(this, &QWebEngineView::loadFinished, this, [this](bool ok){
+        if (!ok) {
+            qWarning() << "error loading page" << url();
+        }
         page()->runJavaScript(QStringLiteral("window.scrollTo(0, document.body.scrollHeight);"));
-        delete o;
     });
 }
 
