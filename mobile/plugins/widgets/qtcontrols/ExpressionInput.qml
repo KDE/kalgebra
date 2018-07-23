@@ -30,6 +30,7 @@ TextField
             delegate: ItemDelegate {
                 text: model.display + " - " + description
                 highlighted: view.currentIndex === index
+                width: view.width
 
                 function complete() {
                     var toInsert = model.display.substr(field.currentWord.length);
