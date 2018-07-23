@@ -16,6 +16,9 @@ Kirigami.ApplicationWindow
     globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
 
+        modal: Kirigami.Settings.isMobile
+        handleVisible: modal
+
         title: "KAlgebra"
         titleIcon: "qrc:/kalgebra.svgz"
         bannerImageSource: "qrc:/header.jpg"
