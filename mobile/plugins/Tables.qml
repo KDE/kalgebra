@@ -31,7 +31,6 @@ KAlgebraPage
             for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
                 var args = new Array();
                 args[0]=i;
-    //             console.log("!!! " + i); 
                 var expr = a.executeFunc(tmp, args);
                 resultsModel.append( { element: i +" = "+ expr.expression } );
             }
