@@ -68,9 +68,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
     engine.addImportPath(dir.path());
 
-#ifdef KDECOMPONENTS
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-#endif
 
     engine.load(QUrl::fromLocalFile(main));
     return app.exec();
