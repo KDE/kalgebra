@@ -37,8 +37,8 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 {
     QStringList foundPlugins;
     QDir dir(pluginsDirectoryPath());
-    foreach(const QString& file, dir.entryList(QStringList("*.json"))) {
-        foundPlugins += dir.absoluteFilePath(file);
+    foreach(const auto& file, dir.entryInfoList(QStringList("*.json"))) {
+        foundPlugins += file.absoluteFilePath();
     }
 
     qDebug() << "Plugins found:" << foundPlugins;
