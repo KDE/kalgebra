@@ -90,7 +90,7 @@ KAlgebraPage
                     }
 
                     footer: Button {
-                        text: "Clear All"
+                        text: i18n("Clear All")
                         onClicked: {
                             app.functionsModel().clear();
                             view.resetViewport();

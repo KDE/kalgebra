@@ -86,6 +86,6 @@ KAlgebraPage
         
         model: ListModel { id: resultsModel }
         role: "element"
-        title: "Results:"
+        title: i18n("Results:")
     }
 }

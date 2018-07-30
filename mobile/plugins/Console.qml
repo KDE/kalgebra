@@ -92,7 +92,7 @@ KAlgebraPage
         id: view
         model: itemModel
         role: "result"
-        title: "Results"
+        title: i18n("Results")
         
         anchors {
             top: input.bottom
