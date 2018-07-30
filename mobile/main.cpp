@@ -18,9 +18,9 @@
 
 #include <QGuiApplication>
 
-#ifdef KDECOMPONENTS
 #include <KLocalizedContext>
-#endif
+#include <KLocalizedString>
+#include <KAboutData>
 
 #include <QDebug>
 #include <QFileInfo>
@@ -30,6 +30,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
+#include <QCommandLineParser>
 #include <QIcon>
 
 #include "kalgebramobile.h"
@@ -38,16 +39,23 @@
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
 #ifdef __ANDROID__
-    qputenv("QT_QUICK_CONTROLS_STYLE", "material");
+    qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
 #endif
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-//     KAboutData about("kalgebra", 0, ki18n(("KAlgebra Mobile")), "0.10", ki18n("A portable calculator"),
-//              KAboutData::License_GPL, ki18n("(C) 2006-2010 Aleix Pol Gonzalez"));
-//     about.addAuthor( ki18n("Aleix Pol Gonzalez"), KLocalizedString(), "aleixpol@kde.org" );
-//     KCmdLineArgs::init(argc, argv, &about);
     QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("kalgebramobile"));
-//     app.setWindowIcon(QIcon::fromTheme("kalgebra"));
+    KLocalizedString::setApplicationDomain("kalgebramobile");
+    KAboutData about("kalgebramobile", "KAlgebra", "0.10", i18n("A portable calculator"),
+             KAboutLicense::GPL, i18n("(C) 2006-2018 Aleix Pol i Gonzalez"));
+    about.addAuthor( "Aleix Pol i Gonzalez", QString(), "aleixpol@kde.org" );
+    about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    KAboutData::setApplicationData(about);
+
+    {
+        QCommandLineParser parser;
+        about.setupCommandLine(&parser);
+        parser.process(app);
+        about.processCommandLine(&parser);
+    }
     
     KAlgebraMobile widget;
     

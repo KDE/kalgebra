@@ -6,7 +6,7 @@ add_executable(kalgebramobile pluginsmodel.cpp
     kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
-    KF5::I18n KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
+    KF5::CoreAddons KF5::I18n KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)
 
 set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
 
