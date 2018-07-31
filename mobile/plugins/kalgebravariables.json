@@ -1,9 +1,13 @@
 {
     "KPlugin": {
-        "Name": "Variables",
-        "Icon": "document-properties",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Description": "Displays the stored values",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Icon": "document-properties",
+        "Name": "Variables"
     },
     "X-KAlgebra-Priority": "0",
     "X-KDE-PluginInfo-Name": "VariablesView.qml"

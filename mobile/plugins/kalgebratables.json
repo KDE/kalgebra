@@ -1,9 +1,13 @@
 {
     "KPlugin": {
-        "Name": "Value Tables",
-        "Icon": "kspread",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Description": "Easily create value tables",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Icon": "kspread",
+        "Name": "Value Tables"
     },
     "X-KAlgebra-Priority": "10",
     "X-KDE-PluginInfo-Name": "Tables.qml"

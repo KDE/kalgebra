@@ -1,9 +1,13 @@
 {
     "KPlugin": {
-        "Name": "Graph 2D",
-        "Icon": "draw-bezier-curves",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Description": "Draws any 2D graph you want",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Icon": "draw-bezier-curves",
+        "Name": "Graph 2D"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot2D.qml"

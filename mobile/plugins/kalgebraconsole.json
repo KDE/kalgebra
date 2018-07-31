@@ -1,9 +1,13 @@
 {
     "KPlugin": {
-        "Name": "Calculator",
-        "Icon": "utilities-terminal",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Description": "Scientific calculator",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Icon": "utilities-terminal",
+        "Name": "Calculator"
     },
     "X-KAlgebra-Priority": "1000",
     "X-KDE-PluginInfo-Name": "Console.qml"

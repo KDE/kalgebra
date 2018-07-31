@@ -1,9 +1,13 @@
 {
     "KPlugin": {
-        "Name": "Graph 3D",
-        "Icon": "adjustrgb",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Description": "Draws any 3D graph you want",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Icon": "adjustrgb",
+        "Name": "Graph 3D"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot3D.qml"

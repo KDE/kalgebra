@@ -1,8 +1,12 @@
 {
     "KPlugin": {
-        "Name": "About KAlgebra",
+        "Authors": [
+            {
+                "Name": "Aleix Pol Gonzalez"
+            }
+        ],
         "Icon": "help-about",
-        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+        "Name": "About KAlgebra"
     },
     "X-KAlgebra-Priority": "-10",
     "X-KDE-PluginInfo-Name": "About.qml"

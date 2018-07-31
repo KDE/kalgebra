@@ -1,9 +1,14 @@
 {
     "KPlugin": {
-        "Name": "Dictionary",
-        "Icon": "documentation",
+        "Authors": [
+            {
+                "Name": "Artur Puzio",
+                "e-mail": "cytadela8@op.pl"
+            }
+        ],
         "Description": "List of available functions",
-        "Authors": [ { "Name": "Artur Puzio", "e-mail": "cytadela8@op.pl" } ]
+        "Icon": "documentation",
+        "Name": "Dictionary"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Dictionary.qml"
