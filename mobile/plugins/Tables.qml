@@ -24,9 +24,9 @@ KAlgebraPage
 //         console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
         
         if(fstep==0) {
-            resultsModel.append( { element: "Errors: The step can't be 0" } );
+            resultsModel.append( { element: i18n("Errors: The step can't be 0") } );
         } else if(!a.isCorrect) {
-            resultsModel.append( { element: "Errors: "+ (ret ? ret : a.errors) } );
+            resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
             for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
                 var args = new Array();
@@ -54,21 +54,21 @@ KAlgebraPage
             columns: 2
             Layout.fillWidth: true
             
-            Label { text: "Input:" }
+            Label { text: i18n("Input:") }
             ExpressionInput {
                 id: input
                 text: "sin x";
                 Layout.fillWidth: true
                 onAccepted: calculateTable();
             }
-            Label { text: "From:" }   RealInput { id: from; text: "0"; Layout.fillWidth: true; onAccepted: calculateTable() }
-            Label { text: "To:" }     RealInput { id: to; text: "10"; Layout.fillWidth: true; onAccepted: calculateTable() }
-            Label { text: "Step:" }   RealInput { id: step; text: "1"; Layout.fillWidth: true; onAccepted: calculateTable() }
+            Label { text: i18n("From:") }   RealInput { id: from; text: "0"; Layout.fillWidth: true; onAccepted: calculateTable() }
+            Label { text: i18n("To:") }     RealInput { id: to; text: "10"; Layout.fillWidth: true; onAccepted: calculateTable() }
+            Label { text: i18n("Step:") }   RealInput { id: step; text: "1"; Layout.fillWidth: true; onAccepted: calculateTable() }
         }
         
         Button {
             anchors.right: parent.right
-            text: "Go!"
+            text: i18n("Run")
             
             onClicked: calculateTable()
         }
