@@ -29,8 +29,7 @@ KAlgebraPage
             
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignJustify
-            text: i18n("KAlgebra is brought to you by the lovely community of <a href='http://kde.org'>KDE</a> "+
-                    "and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free Software envionment.")
+            text: i18n("KAlgebra is brought to you by the lovely community of <a href='http://kde.org'>KDE</a> and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free Software envionment.")
             onLinkActivated: Qt.openUrlExternally(link)
         }
         
@@ -39,10 +38,7 @@ KAlgebraPage
             
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignJustify
-            text: i18n("In case you want to learn more about KAlgebra, you can find more information "+
-                    "<a href='http://edu.kde.org/applications/mathematics/kalgebra/'>in the official site</a> and in "+
-                    "the <a href='http://userbase.kde.org/KAlgebra'>users wiki</a>.<br/>"+
-                    "If you have any problem with your software, please report it to <a href='http://bugs.kde.org'>our bug tracker</a>.")
+            text: i18n("In case you want to learn more about KAlgebra, you can find more information <a href='http://edu.kde.org/applications/mathematics/kalgebra/'>in the official site</a> and in the <a href='http://userbase.kde.org/KAlgebra'>users wiki</a>.<br/>If you have any problem with your software, please report it to <a href='http://bugs.kde.org'>our bug tracker</a>.")
             onLinkActivated: Qt.openUrlExternally(link)
         }
         
