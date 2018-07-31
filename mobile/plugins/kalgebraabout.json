@@ -1,12 +1,9 @@
 {
-    "Icon": "help-about",
-    "Name": "About KAlgebra",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "About KAlgebra",
+        "Icon": "help-about",
+        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+    },
     "X-KAlgebra-Priority": "-10",
-    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
-    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "About.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "About.qml"
 }

@@ -1,13 +1,10 @@
 {
-    "Comment": "Easily create value tables",
-    "Icon": "kspread",
-    "Name": "Value Tables",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "Value Tables",
+        "Icon": "kspread",
+        "Description": "Easily create value tables",
+        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+    },
     "X-KAlgebra-Priority": "10",
-    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
-    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "Tables.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "Tables.qml"
 }

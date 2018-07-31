@@ -22,7 +22,7 @@
 #include <QDebug>
 #include <QUrl>
 #include <QStandardPaths>
-#include <QJsonDocument>
+#include <KPluginMetaData>
 
 QString PluginsModel::pluginsDirectoryPath()
 {
@@ -45,33 +45,26 @@ PluginsModel::PluginsModel(QObject* parent) :QStandardItemModel(parent)
 
     QList<QStandardItem*> items;
     Q_FOREACH(const QString& file, foundPlugins) {
-        QFile f(file);
-        bool ret = f.open(QIODevice::ReadOnly);
-        if(!ret) {
+        KPluginMetaData md(file);
+        if(!md.isValid()) {
             qWarning() << "error opening " << file;
             continue;
         }
 //         qDebug() << "laaaaa" << f.readAll() << file;
 
-        QByteArray data = f.readAll();
-        QJsonDocument doc = QJsonDocument::fromJson(data);
-
-        QVariantMap cg = doc.toVariant().toMap();
         QStandardItem* item = new QStandardItem;
 
-        QString scriptPath = dir.absoluteFilePath(cg.value(QStringLiteral("X-KDE-PluginInfo-Name"), QString()).toString());
+        QString scriptPath = dir.absoluteFilePath(md.value(QStringLiteral("X-KDE-PluginInfo-Name"), QString()));
 
         Q_ASSERT(!scriptPath.isEmpty());
 
-        QVariant priority = cg.value(QStringLiteral("X-KAlgebra-Priority"), QString());
-        if(!priority.isValid())
-            priority = 1000;
+        const auto priority = md.value(QStringLiteral("X-KAlgebra-Priority"), QStringLiteral("1000")).toInt();
         
         item->setData(QUrl::fromLocalFile(scriptPath), PathRole);
         item->setData(priority, PriorityRole);
-        item->setData(cg.value(QStringLiteral("Name"), QString()), TitleRole);
-        item->setData(cg.value(QStringLiteral("Comment"), QStringLiteral("")), SubtitleRole);
-        item->setData(cg.value(QStringLiteral("Icon"), QString()), Qt::DecorationRole);
+        item->setData(md.name(), TitleRole);
+        item->setData(md.description(), SubtitleRole);
+        item->setData(md.iconName(), Qt::DecorationRole);
         
         items += item;
     }

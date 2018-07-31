@@ -1,13 +1,10 @@
 {
-    "Comment": "Scientific calculator",
-    "Icon": "utilities-terminal",
-    "Name": "Calculator",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "Calculator",
+        "Icon": "utilities-terminal",
+        "Description": "Scientific calculator",
+        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+    },
     "X-KAlgebra-Priority": "1000",
-    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
-    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "Console.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "Console.qml"
 }

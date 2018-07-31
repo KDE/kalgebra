@@ -1,13 +1,10 @@
 {
-    "Comment": "Draws any 3D graph you want",
-    "Icon": "adjustrgb",
-    "Name": "Graph 3D",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "Graph 3D",
+        "Icon": "adjustrgb",
+        "Description": "Draws any 3D graph you want",
+        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+    },
     "X-KAlgebra-Priority": "100",
-    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
-    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "Plot3D.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "Plot3D.qml"
 }

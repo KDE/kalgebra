@@ -1,13 +1,10 @@
 {
-    "Comment": "Draws any 2D graph you want",
-    "Icon": "draw-bezier-curves",
-    "Name": "Graph 2D",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "Graph 2D",
+        "Icon": "draw-bezier-curves",
+        "Description": "Draws any 2D graph you want",
+        "Authors": [ { "Name": "Aleix Pol Gonzalez" } ]
+    },
     "X-KAlgebra-Priority": "100",
-    "X-KDE-PluginInfo-Author": "Aleix Pol Gonzalez",
-    "X-KDE-PluginInfo-Email": "aleixpol@kde.org",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "Plot2D.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "Plot2D.qml"
 }

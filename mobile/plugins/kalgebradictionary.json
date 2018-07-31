@@ -1,13 +1,10 @@
 {
-    "Comment": "List of available functions",
-    "Icon": "documentation",
-    "Name": "Dictionary",
-    "ServiceTypes": "KAlgebra/Script",
-    "Type": "Service",
+    "KPlugin": {
+        "Name": "Dictionary",
+        "Icon": "documentation",
+        "Description": "List of available functions",
+        "Authors": [ { "Name": "Artur Puzio", "e-mail": "cytadela8@op.pl" } ]
+    },
     "X-KAlgebra-Priority": "100",
-    "X-KDE-PluginInfo-Author": "Artur Puzio",
-    "X-KDE-PluginInfo-Email": "cytadela8@op.pl",
-    "X-KDE-PluginInfo-License": "GPL",
-    "X-KDE-PluginInfo-Name": "Dictionary.qml",
-    "X-KDE-PluginInfo-Version": "1.0"
+    "X-KDE-PluginInfo-Name": "Dictionary.qml"
 }
