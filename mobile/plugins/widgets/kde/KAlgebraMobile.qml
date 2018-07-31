@@ -11,16 +11,14 @@ Kirigami.ApplicationWindow
     width: 900
     visible: true
 
-    header: Kirigami.ApplicationHeader {}
-
-    contextDrawer: Kirigami.ContextDrawer {}
-
     globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
 
         title: "KAlgebra"
         titleIcon: "qrc:/kalgebra.svgz"
         bannerImageSource: "qrc:/header.jpg"
+        modal: Kirigami.Settings.isMobile
+        drawerOpen: true
 
         Instantiator {
             delegate: Kirigami.Action {
