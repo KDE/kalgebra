@@ -50,7 +50,7 @@ TextField
         y: globalPos.y + field.height
     }
 
-    placeholderText: "Expression to calculate..."
+    placeholderText: i18n("Expression to calculate...")
     inputMethodHints: /*Qt.ImhPreferNumbers |*/ Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 
     Keys.forwardTo: view.visible && view.currentItem ? [ view.currentItem ] : null
