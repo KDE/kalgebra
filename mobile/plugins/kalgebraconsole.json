@@ -2,12 +2,22 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Aleix Pol Gonzalez"
+                "Name": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx"
             }
         ],
         "Description": "Scientific calculator",
+        "Description[nl]": "Wetenschappelijke rekenmachine",
+        "Description[pt]": "Calculadora científica",
+        "Description[uk]": "Інженерний калькулятор",
+        "Description[x-test]": "xxScientific calculatorxx",
         "Icon": "utilities-terminal",
-        "Name": "Calculator"
+        "Name": "Calculator",
+        "Name[nl]": "Rekenmachine",
+        "Name[pt]": "Calculadora",
+        "Name[pt_BR]": "Calculadora",
+        "Name[uk]": "Калькулятор",
+        "Name[x-test]": "xxCalculatorxx"
     },
     "X-KAlgebra-Priority": "1000",
     "X-KDE-PluginInfo-Name": "Console.qml"

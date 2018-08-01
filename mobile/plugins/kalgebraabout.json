@@ -2,11 +2,16 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Aleix Pol Gonzalez"
+                "Name": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx"
             }
         ],
         "Icon": "help-about",
-        "Name": "About KAlgebra"
+        "Name": "About KAlgebra",
+        "Name[pt]": "Acerca do KAlgebra",
+        "Name[pt_BR]": "Sobre o KAlgebra",
+        "Name[uk]": "Про KAlgebra",
+        "Name[x-test]": "xxAbout KAlgebraxx"
     },
     "X-KAlgebra-Priority": "-10",
     "X-KDE-PluginInfo-Name": "About.qml"

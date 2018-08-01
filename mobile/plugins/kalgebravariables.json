@@ -2,12 +2,20 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Aleix Pol Gonzalez"
+                "Name": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx"
             }
         ],
         "Description": "Displays the stored values",
+        "Description[pt]": "Mostra os valores armazenados",
+        "Description[uk]": "Показує збережені значення",
+        "Description[x-test]": "xxDisplays the stored valuesxx",
         "Icon": "document-properties",
-        "Name": "Variables"
+        "Name": "Variables",
+        "Name[nl]": "Variabelen",
+        "Name[pt]": "Variáveis",
+        "Name[uk]": "Змінні",
+        "Name[x-test]": "xxVariablesxx"
     },
     "X-KAlgebra-Priority": "0",
     "X-KDE-PluginInfo-Name": "VariablesView.qml"

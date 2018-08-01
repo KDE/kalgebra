@@ -2,12 +2,19 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Aleix Pol Gonzalez"
+                "Name": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx"
             }
         ],
         "Description": "Draws any 2D graph you want",
+        "Description[pt]": "Desenha qualquer gráfico 2D que desejar",
+        "Description[uk]": "Креслить будь-який потрібний вам двовимірний графік",
+        "Description[x-test]": "xxDraws any 2D graph you wantxx",
         "Icon": "draw-bezier-curves",
-        "Name": "Graph 2D"
+        "Name": "Graph 2D",
+        "Name[pt]": "Gráfico 2D",
+        "Name[uk]": "Двовимірний графік",
+        "Name[x-test]": "xxGraph 2Dxx"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot2D.qml"

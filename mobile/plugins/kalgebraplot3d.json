@@ -2,12 +2,19 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Aleix Pol Gonzalez"
+                "Name": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx"
             }
         ],
         "Description": "Draws any 3D graph you want",
+        "Description[pt]": "Desenha qualquer gráfico 3D que desejar",
+        "Description[uk]": "Креслить будь-який потрібний вам просторовий графік",
+        "Description[x-test]": "xxDraws any 3D graph you wantxx",
         "Icon": "adjustrgb",
-        "Name": "Graph 3D"
+        "Name": "Graph 3D",
+        "Name[pt]": "Gráfico 3D",
+        "Name[uk]": "Просторовий графік",
+        "Name[x-test]": "xxGraph 3Dxx"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot3D.qml"

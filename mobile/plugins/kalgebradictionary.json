@@ -3,12 +3,21 @@
         "Authors": [
             {
                 "Name": "Artur Puzio",
+                "Name[x-test]": "xxArtur Puzioxx",
                 "e-mail": "cytadela8@op.pl"
             }
         ],
         "Description": "List of available functions",
+        "Description[pt]": "Lista de funções disponíveis",
+        "Description[uk]": "Список доступних функцій",
+        "Description[x-test]": "xxList of available functionsxx",
         "Icon": "documentation",
-        "Name": "Dictionary"
+        "Name": "Dictionary",
+        "Name[nl]": "Woordenboek",
+        "Name[pt]": "Dicionário",
+        "Name[pt_BR]": "Dicionário",
+        "Name[uk]": "Словник",
+        "Name[x-test]": "xxDictionaryxx"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Dictionary.qml"
