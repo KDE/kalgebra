@@ -7,6 +7,8 @@
             }
         ],
         "Description": "Displays the stored values",
+        "Description[ca]": "Ensenya les variables que hagueu desat",
+        "Description[nl]": "Toont opgeslagen waarden",
         "Description[pt]": "Mostra os valores armazenados",
         "Description[uk]": "Показує збережені значення",
         "Description[x-test]": "xxDisplays the stored valuesxx",

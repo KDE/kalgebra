@@ -7,11 +7,16 @@
             }
         ],
         "Description": "Draws any 2D graph you want",
+        "Description[ca]": "Dibuixa els gràfics 2D que tu vulguis",
+        "Description[nl]": "Tekent elke gewenste 2D-grafiek",
         "Description[pt]": "Desenha qualquer gráfico 2D que desejar",
         "Description[uk]": "Креслить будь-який потрібний вам двовимірний графік",
         "Description[x-test]": "xxDraws any 2D graph you wantxx",
         "Icon": "draw-bezier-curves",
         "Name": "Graph 2D",
+        "Name[ca]": "Gràfics 2D",
+        "Name[fr]": "Graphe 2D",
+        "Name[nl]": "Grafiek 2D",
         "Name[pt]": "Gráfico 2D",
         "Name[uk]": "Двовимірний графік",
         "Name[x-test]": "xxGraph 2Dxx"
