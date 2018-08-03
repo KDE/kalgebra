@@ -11,6 +11,7 @@
         "Description[ca]": "Llista de funcions disponibles",
         "Description[nl]": "Beschikbare functies",
         "Description[pt]": "Lista de funções disponíveis",
+        "Description[sv]": "Lista över tillgängliga funktioner",
         "Description[uk]": "Список доступних функцій",
         "Description[x-test]": "xxList of available functionsxx",
         "Icon": "documentation",
@@ -20,6 +21,7 @@
         "Name[nl]": "Woordenboek",
         "Name[pt]": "Dicionário",
         "Name[pt_BR]": "Dicionário",
+        "Name[sv]": "Ordlista",
         "Name[uk]": "Словник",
         "Name[x-test]": "xxDictionaryxx"
     },

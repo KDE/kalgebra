@@ -10,6 +10,7 @@
         "Description[ca]": "Crea fàcilment taules de valors",
         "Description[nl]": "Eenvoudig maken van tabellen",
         "Description[pt]": "Criar facilmente tabelas de valores",
+        "Description[sv]": "Enkelt skapade värdetabeller",
         "Description[uk]": "Просте створення таблиць значень",
         "Description[x-test]": "xxEasily create value tablesxx",
         "Icon": "kspread",
@@ -18,6 +19,7 @@
         "Name[fr]": "Tableaux de valeurs",
         "Name[nl]": "Tabellen",
         "Name[pt]": "Tabelas de Valores",
+        "Name[sv]": "Värdetabeller",
         "Name[uk]": "Таблиці значень",
         "Name[x-test]": "xxValue Tablesxx"
     },
