@@ -8,6 +8,7 @@
             }
         ],
         "Description": "List of available functions",
+        "Description[ca@valencia]": "Llista de funcions disponibles",
         "Description[ca]": "Llista de funcions disponibles",
         "Description[nl]": "Beschikbare functies",
         "Description[pt]": "Lista de funções disponíveis",
@@ -16,6 +17,7 @@
         "Description[x-test]": "xxList of available functionsxx",
         "Icon": "documentation",
         "Name": "Dictionary",
+        "Name[ca@valencia]": "Diccionari",
         "Name[ca]": "Diccionari",
         "Name[fr]": "Dictionnaire",
         "Name[nl]": "Woordenboek",

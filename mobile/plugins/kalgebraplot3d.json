@@ -7,6 +7,7 @@
             }
         ],
         "Description": "Draws any 3D graph you want",
+        "Description[ca@valencia]": "Dibuixa els gràfics 3D que tu vulgues",
         "Description[ca]": "Dibuixa els gràfics 3D que tu vulguis",
         "Description[nl]": "Tekent elke gewenste 3D-grafiek",
         "Description[pt]": "Desenha qualquer gráfico 3D que desejar",
@@ -15,6 +16,7 @@
         "Description[x-test]": "xxDraws any 3D graph you wantxx",
         "Icon": "adjustrgb",
         "Name": "Graph 3D",
+        "Name[ca@valencia]": "Gràfics 3D",
         "Name[ca]": "Gràfics 3D",
         "Name[nl]": "Grafiek 3D",
         "Name[pt]": "Gráfico 3D",
