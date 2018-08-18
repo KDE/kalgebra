@@ -24,7 +24,7 @@ KAlgebraPage
 //         console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
         
         if(fstep==0) {
-            resultsModel.append( { element: i18n("Errors: The step can't be 0") } );
+            resultsModel.append( { element: i18n("Errors: The step cannot be 0") } );
         } else if(!a.isCorrect) {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
