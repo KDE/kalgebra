@@ -17,6 +17,7 @@
         "Description[x-test]": "xxDisplays the stored valuesxx",
         "Icon": "document-properties",
         "Name": "Variables",
+        "Name[cs]": "Proměnné",
         "Name[nl]": "Variabelen",
         "Name[pt]": "Variáveis",
         "Name[sk]": "Premenné",
