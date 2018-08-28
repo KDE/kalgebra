@@ -84,7 +84,6 @@ KAlgebraPage
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: page.dp*6
         }
     }
     
