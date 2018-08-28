@@ -13,9 +13,10 @@ KAlgebraPage
         id: consoleModel
         variables: app.variables
         onMessage: {
-            itemModel.insert(0, { result: msg })
+            itemModel.append({ result: msg })
             input.selectAll()
-            view.currentIndex = 0
+            view.currentIndex = view.count-1
+            view.positionViewAtIndex(view.currentIndex, ListView.Contain)
         }
     }
 
@@ -72,6 +73,19 @@ KAlgebraPage
         }
     ]
     
+    SimpleListView {
+        id: view
+        model: itemModel
+        role: "result"
+
+        anchors {
+            top: parent.top
+            bottom: input.top
+            left: parent.left
+            right: parent.right
+        }
+    }
+
     ExpressionInput {
         id: input
         focus: true
@@ -81,20 +95,6 @@ KAlgebraPage
         }
         
         anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-    }
-    
-    SimpleListView {
-        id: view
-        model: itemModel
-        role: "result"
-        title: i18n("Results")
-        
-        anchors {
-            top: input.bottom
             bottom: parent.bottom
             left: parent.left
             right: parent.right
