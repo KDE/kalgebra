@@ -35,6 +35,6 @@
         "Name[uk]": "Словник",
         "Name[x-test]": "xxDictionaryxx"
     },
-    "X-KAlgebra-Priority": "100",
+    "X-KAlgebra-Priority": "-1",
     "X-KDE-PluginInfo-Name": "Dictionary.qml"
 }
