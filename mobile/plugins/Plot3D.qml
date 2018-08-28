@@ -26,6 +26,12 @@ KAlgebraPage
 {
     id: page
 
+    leftPadding: 0
+    rightPadding: 0
+    topPadding: 0
+    bottomPadding: 0
+
+
     FileDialog {
         id: fileDialog
         folder: shortcuts.home

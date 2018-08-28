@@ -7,7 +7,12 @@ import widgets 1.0
 KAlgebraPage
 {
     id: page
-    anchors.margins: 0
+
+    leftPadding: 0
+    rightPadding: 0
+    topPadding: 0
+    bottomPadding: 0
+
 
     FileDialog {
         id: fileDialog
