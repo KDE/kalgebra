@@ -6,7 +6,7 @@ SpinBox
     property alias minimumValue: input.from
     property alias maximumValue: input.to
     property string text
-    value: valueFromText(text)
-    
+    value: text
+
     signal accepted()
 }
