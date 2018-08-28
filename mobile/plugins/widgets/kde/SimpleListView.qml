@@ -1,10 +1,13 @@
 import org.kde.kirigami 2.0
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.1
 import QtQuick 2.0
 
 ListView
 {
     id: scrollList
+
+    ScrollBar.vertical: ScrollBar {}
+
     property string role: ""
     property string title: ""
     delegate: BasicListItem { label: model[role] }

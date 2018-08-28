@@ -6,6 +6,7 @@ ListView
     id: scrollList
     property string role: ""
     property string title: ""
+    ScrollBar.vertical: ScrollBar {}
     delegate: ItemDelegate {
         Label {
             text: model[role]
