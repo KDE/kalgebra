@@ -67,7 +67,7 @@ KAlgebraPage
         }
         
         Button {
-            anchors.right: parent.right
+            Layout.alignment: Qt.AlignRight
             text: i18n("Run")
             
             onClicked: calculateTable()
