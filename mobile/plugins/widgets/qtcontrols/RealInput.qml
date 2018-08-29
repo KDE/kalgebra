@@ -1,12 +1,10 @@
 import QtQuick.Controls 2.0
+import QtQuick 2.0
 
-SpinBox
+TextField
 {
     id: input
-    property alias minimumValue: input.from
-    property alias maximumValue: input.to
-    property string text
-    value: text
 
-    signal accepted()
+    readonly property real realValue: Number.fromLocaleString(locale, text)
+    validator: DoubleValidator {}
 }

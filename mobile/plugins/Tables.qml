@@ -15,7 +15,7 @@ KAlgebraPage
         
         var tmp = a.unusedVariableName()
         var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
-        var ffrom=from.value, fto=to.value, fstep=step.value;
+        var ffrom = from.realValue, fto=to.realValue, fstep=step.realValue;
 //         console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
         if((fto-ffrom>0)!=(fstep>0)) {
             fstep *= -1;
