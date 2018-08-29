@@ -7,4 +7,5 @@ TextField
 
     readonly property real realValue: Number.fromLocaleString(locale, text)
     validator: DoubleValidator {}
+    inputMethodHints: Qt.ImhPreferNumbers
 }
