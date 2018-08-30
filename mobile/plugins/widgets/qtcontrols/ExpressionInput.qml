@@ -12,7 +12,7 @@ TextField
     onCurrentWordChanged: view.currentIndex = -1
 
     Window {
-        height: 100
+        height: Math.min(100, view.contentHeight)
         width: field.width
         flags: Qt.ToolTip
         ListView {
@@ -21,6 +21,7 @@ TextField
                 fill: parent
                 margins: 1
             }
+            ScrollBar.vertical: ScrollBar {}
             currentIndex: -1
             model: QSortFilterProxyModel {
                 sourceModel: OperatorsModel { id: operators }
@@ -30,6 +31,7 @@ TextField
             delegate: ItemDelegate {
                 text: model.display + " - " + description
                 highlighted: view.currentIndex === index
+                width: ListView.view.width
 
                 function complete() {
                     var toInsert = model.display.substr(field.currentWord.length);
@@ -44,7 +46,7 @@ TextField
         }
 
         visible: view.count >= 0 && field.activeFocus && field.currentWord.length > 0
-        readonly property point globalPos: visible ? field.mapToGlobal(field.x, field.y) : Qt.point(0,0)
+        readonly property point globalPos: visible ? parent.mapToGlobal(field.x, field.y) : Qt.point(0,0)
 
         x: globalPos.x
         y: globalPos.y + field.height
