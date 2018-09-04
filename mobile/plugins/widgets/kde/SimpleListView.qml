@@ -1,8 +1,8 @@
-import org.kde.kirigami 2.0
+import org.kde.kirigami 2.5
 import QtQuick.Controls 2.1
 import QtQuick 2.0
 
-ListView
+CardsListView
 {
     id: scrollList
 
@@ -10,12 +10,14 @@ ListView
 
     property string role: ""
     property string title: ""
-    delegate: BasicListItem { label: model[role] }
+    delegate: Card {
+        contentItem: Label { text: model[scrollList.role] }
+    }
     header: scrollList.title ? titleComponent : null
 
     Component {
         id: titleComponent
-        Label { text: ListView.view.title }
+        Label { text: scrollList.title }
     }
 
     clip: true
