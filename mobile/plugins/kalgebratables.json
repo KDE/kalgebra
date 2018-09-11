@@ -17,6 +17,7 @@
         "Description[sv]": "Enkelt skapade värdetabeller",
         "Description[uk]": "Просте створення таблиць значень",
         "Description[x-test]": "xxEasily create value tablesxx",
+        "Description[zh_CN]": "方便地创建数值表",
         "Icon": "kspread",
         "Name": "Value Tables",
         "Name[ca@valencia]": "Taula de valors",
@@ -29,7 +30,8 @@
         "Name[pt]": "Tabelas de Valores",
         "Name[sv]": "Värdetabeller",
         "Name[uk]": "Таблиці значень",
-        "Name[x-test]": "xxValue Tablesxx"
+        "Name[x-test]": "xxValue Tablesxx",
+        "Name[zh_CN]": "数值表"
     },
     "X-KAlgebra-Priority": "10",
     "X-KDE-PluginInfo-Name": "Tables.qml"

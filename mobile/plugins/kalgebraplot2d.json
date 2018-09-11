@@ -17,6 +17,7 @@
         "Description[sv]": "Ritar vilken tvådimensionell graf som helst",
         "Description[uk]": "Креслить будь-який потрібний вам двовимірний графік",
         "Description[x-test]": "xxDraws any 2D graph you wantxx",
+        "Description[zh_CN]": "绘制想要的二维图",
         "Icon": "draw-bezier-curves",
         "Name": "Graph 2D",
         "Name[ca@valencia]": "Gràfics 2D",
@@ -30,7 +31,8 @@
         "Name[pt]": "Gráfico 2D",
         "Name[sv]": "Tvådimensionella grafer",
         "Name[uk]": "Двовимірний графік",
-        "Name[x-test]": "xxGraph 2Dxx"
+        "Name[x-test]": "xxGraph 2Dxx",
+        "Name[zh_CN]": "二维图"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot2D.qml"

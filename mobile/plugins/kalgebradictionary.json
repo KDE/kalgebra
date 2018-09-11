@@ -18,6 +18,7 @@
         "Description[sv]": "Lista över tillgängliga funktioner",
         "Description[uk]": "Список доступних функцій",
         "Description[x-test]": "xxList of available functionsxx",
+        "Description[zh_CN]": "可用函数列表",
         "Icon": "documentation",
         "Name": "Dictionary",
         "Name[ca@valencia]": "Diccionari",
@@ -33,7 +34,8 @@
         "Name[sk]": "Slovník",
         "Name[sv]": "Ordlista",
         "Name[uk]": "Словник",
-        "Name[x-test]": "xxDictionaryxx"
+        "Name[x-test]": "xxDictionaryxx",
+        "Name[zh_CN]": "词典"
     },
     "X-KAlgebra-Priority": "-1",
     "X-KDE-PluginInfo-Name": "Dictionary.qml"

@@ -17,6 +17,7 @@
         "Description[sv]": "Ritar vilken tredimensionell graf som helst",
         "Description[uk]": "Креслить будь-який потрібний вам просторовий графік",
         "Description[x-test]": "xxDraws any 3D graph you wantxx",
+        "Description[zh_CN]": "绘制想要的三维图",
         "Icon": "adjustrgb",
         "Name": "Graph 3D",
         "Name[ca@valencia]": "Gràfics 3D",
@@ -29,7 +30,8 @@
         "Name[pt]": "Gráfico 3D",
         "Name[sv]": "Tredimensionella grafer",
         "Name[uk]": "Просторовий графік",
-        "Name[x-test]": "xxGraph 3Dxx"
+        "Name[x-test]": "xxGraph 3Dxx",
+        "Name[zh_CN]": "三维图"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot3D.qml"
