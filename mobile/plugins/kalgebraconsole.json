@@ -24,6 +24,7 @@
         "Description[zh_CN]": "科学计算器",
         "Icon": "utilities-terminal",
         "Name": "Calculator",
+        "Name[ast]": "Calculadora",
         "Name[ca@valencia]": "Calculadora",
         "Name[ca]": "Calculadora",
         "Name[cs]": "Kalkulačka",
