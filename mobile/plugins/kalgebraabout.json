@@ -3,7 +3,24 @@
         "Authors": [
             {
                 "Name": "Aleix Pol Gonzalez",
-                "Name[x-test]": "xxAleix Pol Gonzalezxx"
+                "Name[ca@valencia]": "Aleix Pol Gonzalez",
+                "Name[ca]": "Aleix Pol Gonzalez",
+                "Name[cs]": "Aleix Pol Gonzalez",
+                "Name[en_GB]": "Aleix Pol Gonzalez",
+                "Name[es]": "Aleix Pol Gonzalez",
+                "Name[fi]": "Aleix Pol Gonzalez",
+                "Name[fr]": "Aleix Pol Gonzalez",
+                "Name[it]": "Aleix Pol Gonzalez",
+                "Name[nl]": "Aleix Pol Gonzalez",
+                "Name[pl]": "Aleix Pol Gonzalez",
+                "Name[pt]": "Aleix Pol Gonzalez",
+                "Name[pt_BR]": "Aleix Pol Gonzalez",
+                "Name[ru]": "Aleix Pol Gonzalez",
+                "Name[sk]": "Aleix Pol Gonzalez",
+                "Name[sv]": "Aleix Pol Gonzalez",
+                "Name[uk]": "Aleix Pol Gonzalez",
+                "Name[x-test]": "xxAleix Pol Gonzalezxx",
+                "Name[zh_CN]": "Aleix Pol Gonzalez"
             }
         ],
         "Icon": "help-about",
@@ -11,6 +28,7 @@
         "Name[ca@valencia]": "Quant al KAlgebra",
         "Name[ca]": "Quant al KAlgebra",
         "Name[cs]": "O aplikaci KAlgebra",
+        "Name[en_GB]": "About KAlgebra",
         "Name[es]": "Acerca de KAlgebra",
         "Name[fi]": "Tietoa KAlgebrasta",
         "Name[fr]": "À propos de KAlgebra",
