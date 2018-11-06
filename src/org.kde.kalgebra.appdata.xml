@@ -99,6 +99,7 @@
   <url type="donation">https://kde.org/donate/</url>
   <screenshots>
     <screenshot type="default">
+      <caption>2D plot in KAlgebra</caption>
       <image>http://kde.org/images/screenshots/kalgebra.png</image>
     </screenshot>
   </screenshots>
