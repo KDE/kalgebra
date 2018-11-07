@@ -96,7 +96,7 @@
   <url type="homepage">http://edu.kde.org/kalgebra/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kalgebra</url>
   <url type="help">http://docs.kde.org/stable/en/kdeedu/kalgebra/index.html</url>
-  <url type="donation">https://kde.org/donate/</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=kalgebra&amp;source=appdata</url>
   <screenshots>
     <screenshot type="default">
       <caption>2D plot in KAlgebra</caption>
