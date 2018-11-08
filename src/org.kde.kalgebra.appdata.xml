@@ -100,6 +100,14 @@
   <screenshots>
     <screenshot type="default">
       <caption>2D plot in KAlgebra</caption>
+      <caption xml:lang="ca">Gràfic 2D al KAlgebra</caption>
+      <caption xml:lang="ca-valencia">Gràfic 2D al KAlgebra</caption>
+      <caption xml:lang="gl">Gráfica 2D en KAlgebra</caption>
+      <caption xml:lang="nl">2D plot in KAlgebra</caption>
+      <caption xml:lang="pt">Gráfico 2D no KAlgebra</caption>
+      <caption xml:lang="sv">Tvådimensionellt diagram i Kalgebra</caption>
+      <caption xml:lang="uk">Графік у KAlgebra</caption>
+      <caption xml:lang="x-test">xx2D plot in KAlgebraxx</caption>
       <image>http://kde.org/images/screenshots/kalgebra.png</image>
     </screenshot>
   </screenshots>
