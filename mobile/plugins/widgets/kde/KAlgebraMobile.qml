@@ -29,8 +29,13 @@ Kirigami.ApplicationWindow
     width: 900
     visible: true
 
+    contextDrawer: Kirigami.ContextDrawer {}
+
     globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
+
+        modal: Kirigami.Settings.isMobile
+        handleVisible: modal
 
         title: "KAlgebra"
         titleIcon: "qrc:/kalgebra.svgz"
