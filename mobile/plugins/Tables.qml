@@ -44,7 +44,7 @@ KAlgebraPage
         if(fstep==0) {
             resultsModel.append( { element: i18n("Errors: The step cannot be 0") } );
         } else if(ffrom == fto) {
-            resultsModel.append( { element: "Errors: The start and end are the same" } );
+            resultsModel.append( { element: i18n("Errors: The start and end are the same") } );
         } else if(!a.isCorrect) {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
@@ -88,11 +88,7 @@ KAlgebraPage
         
         Button {
             Layout.alignment: Qt.AlignRight
-<<<<<<< HEAD
             text: i18n("Run")
-=======
-            text: "Go!"
->>>>>>> Applications/18.08
             
             onClicked: calculateTable()
         }
