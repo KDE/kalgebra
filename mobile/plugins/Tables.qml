@@ -43,10 +43,12 @@ KAlgebraPage
         
         if(fstep==0) {
             resultsModel.append( { element: i18n("Errors: The step cannot be 0") } );
+        } else if(ffrom == fto) {
+            resultsModel.append( { element: i18n("Errors: The start and end are the same") } );
         } else if(!a.isCorrect) {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
-            for (var i=ffrom; i<=fto && a.isCorrect; i+=fstep) {
+            for (var i=ffrom; i<=fto &&  i>ffrom && a.isCorrect; i+=fstep) {
                 var args = new Array();
                 args[0]=i;
                 var expr = a.executeFunc(tmp, args);
