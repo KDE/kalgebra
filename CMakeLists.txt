@@ -33,8 +33,8 @@ add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_NO_CAST_TO_ASCII)
 
-find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
-find_package(KF5 ${KF5_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
+find_package(KF5 ${KF5_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools)
 find_package(Qt5WebEngineWidgets)
 
 if(KF5DocTools_FOUND AND Qt5WebEngineWidgets_FOUND AND KF5ConfigWidgets_FOUND AND KF5WidgetsAddons_FOUND AND KF5KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
