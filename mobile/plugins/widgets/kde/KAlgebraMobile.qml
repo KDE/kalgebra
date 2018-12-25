@@ -38,7 +38,6 @@ Kirigami.ApplicationWindow
         title: "KAlgebra"
         titleIcon: "qrc:/kalgebra.svgz"
         bannerImageSource: "qrc:/header.jpg"
-        modal: Kirigami.Settings.isMobile
         drawerOpen: true
 
         Instantiator {
