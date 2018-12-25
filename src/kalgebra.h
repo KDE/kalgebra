@@ -96,6 +96,7 @@ class KAlgebra : public QMainWindow
         void updateInformation();
         void consoleCalculate();
         void consoleEvaluate();
+        void insertAns();
         
         void select(const QModelIndex& idx);
         void new_func();

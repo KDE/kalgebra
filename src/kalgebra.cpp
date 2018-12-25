@@ -176,6 +176,9 @@ KAlgebra::KAlgebra(QWidget *parent)
                         this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Export Log..."),
                         this, SLOT(saveLog()), QKeySequence::Save);
+    c_menu->addSeparator();
+    c_menu->addAction(i18nc("@item:inmenu", "&Insert ans..."),
+                        this, SLOT(insertAns()), Qt::Key_F3);
     c_menu->addSeparator()->setText(i18n("Execution Mode"));
     QActionGroup *execGroup = new QActionGroup(c_menu);
     QAction* calc = c_menu->addAction(i18nc("@item:inmenu", "Calculate"), this, SLOT(consoleCalculate()));
@@ -525,6 +528,11 @@ void KAlgebra::saveLog()
     QUrl path = QFileDialog::getSaveFileUrl(this, QString(), QUrl(), i18n("HTML File (*.html)"));
     if(!path.isEmpty())
         c_results->saveLog(path);
+}
+
+void KAlgebra::insertAns()
+{
+    c_exp->insertText("ans");
 }
 
 void KAlgebra::set_res_low()    { b_funcsModel->setResolution(416); }
