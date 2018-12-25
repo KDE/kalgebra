@@ -217,7 +217,7 @@ void ConsoleHtml::contextMenuEvent(QContextMenuEvent* ev)
     QMenu popup;
     if(hasSelection()) {
         popup.addAction(KStandardAction::copy(this, SLOT(copy()), &popup));
-        QAction *act=new QAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste \"%1\" to input", selectedText()), &popup);
+        QAction *act=new QAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste \"%1\" to input", selectedText().trimmed()), &popup);
         connect(act, SIGNAL(triggered()), SLOT(paste()));
         popup.addAction(act);
         popup.addSeparator();
@@ -245,5 +245,5 @@ void ConsoleHtml::removeVariable(const QString & name)
 
 void ConsoleHtml::paste()
 {
-    emit paste(selectedText());
+    emit paste(selectedText().trimmed());
 }
