@@ -13,6 +13,7 @@
   <name xml:lang="fi">KAlgebra Mobile</name>
   <name xml:lang="fr">KAlgebra Mobile</name>
   <name xml:lang="gl">KAlgebra Mobile</name>
+  <name xml:lang="id">KAlgebra Mobile</name>
   <name xml:lang="nl">KAlgebra-mobiel</name>
   <name xml:lang="nn">KAlgebra mobil</name>
   <name xml:lang="pl">Mobilna KAlgebra</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="fi">Kaaviolaskin</summary>
   <summary xml:lang="fr">Calculatrice graphique</summary>
   <summary xml:lang="gl">Calculadora gráfica</summary>
+  <summary xml:lang="id">Kalkulator Grafik</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
   <summary xml:lang="nn">Grafkalkulator</summary>
   <summary xml:lang="pl">Kalkulator wykresów</summary>
@@ -53,6 +55,7 @@
     <p xml:lang="fi">KAlgebra on sovellus, joka voi korvata kaaviolaskimesi. Siinä on numeeriset, loogiset, symboliset ja analyysiominaisuudet, joiden avulla voit laskea matemaattisia lausekkeita konsolissa ja graafisesti kuvata tulokset kaksi- tai kolmiulotteisena.</p>
     <p xml:lang="fr">KAlgebra est une application qui peut remplacer votre calculatrice graphique. Elle fournit des fonctions pour le calcul numérique, logique, symbolique et l'analyse qui vous permettent de calculer des expressions mathématiques dans la console et tracer graphiquement les résultats en 2D ou 3D.</p>
     <p xml:lang="gl">KAlgebra é un aplicativo que pode substituír as calculadoras gráficas. Ten funcionalidades numéricas, lóxicas, simbólicas e de análise que permiten calcular expresións matemáticas na consola e trazar graficamente os resultados en 2D ou 3D.</p>
+    <p xml:lang="id">KAlgebra adalah aplikasi yang dapat menggantikan kalkulator grafikmu. Ini memiliki fitur numerik, logis, simbolis, dan analisis yang memungkinkanmu menghitung ekspresi matematis pada konsol dan secara grafik memplot hasilnya dalam 2D atau 3D.</p>
     <p xml:lang="nl">KAlgebra is een toepassing die uw grafische rekenmachine kan vervangen. Het heeft numerieke, logische, symbolische en analyse functies die u mathematische expressies op de console laar berekenen en de resultaten grafisch plot in 2D of 3D.</p>
     <p xml:lang="pl">KAlgebra jest programem, który może zastąpić twój kalkulator graficzny. Ma możliwość przeprowadzania analiz numerycznych, logicznych i  symbolicznych, które umożliwiają obliczanie wyrażeń matematycznych w konsoli i rysowanie wyników w 2D lub 3D.</p>
     <p xml:lang="pt">O KAlgebra é uma aplicação que poderá substituir a sua calculadora gráfica. Tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas na consola e lhe permite desenhar de forma gráfica os resultados em 2D e 3D.</p>
