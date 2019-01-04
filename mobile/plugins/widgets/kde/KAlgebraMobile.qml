@@ -42,10 +42,14 @@ Kirigami.ApplicationWindow
 
         Instantiator {
             delegate: Kirigami.Action {
+                id: action
                 text: title
                 iconName: decoration
+                property Component component
                 onTriggered: {
-                    var component = Qt.createComponent(model.path);
+                    if (!component)
+                        component = Qt.createComponent(model.path, action)
+
                     if (component.status == Component.Error) {
                         console.log("error", component.errorString());
                         return;
