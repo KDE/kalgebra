@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 import QtQuick 2.2
+import QtQuick.Controls 2.5 as QQC2
 import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
@@ -27,11 +28,28 @@ KAlgebraPage
     id: page
     ListModel { id: itemModel }
 
+    Clipboard {
+        id: clipboard
+    }
+
+    Component {
+        id: copyAction
+        QQC2.Action {
+            property string valueHtml: "null"
+            readonly property string value: valueHtml.replace(/<[^>]*>/g, '');
+            text: i18n("Copy \"%1\"", value)
+            icon.name: "edit-copy"
+            onTriggered: {
+                clipboard.content = value
+            }
+        }
+    }
+
     ConsoleModel {
         id: consoleModel
         variables: app.variables
         onMessage: {
-            itemModel.append({ result: msg })
+            itemModel.append({ result: msg, hiddenActions: copyAction.createObject(itemModel, {valueHtml: msg }) })
             input.selectAll()
             view.currentIndex = view.count-1
             view.positionViewAtIndex(view.currentIndex, ListView.Contain)

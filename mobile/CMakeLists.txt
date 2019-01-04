@@ -3,6 +3,7 @@ add_subdirectory(plugins)
 qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc header.qrc)
 add_executable(kalgebramobile pluginsmodel.cpp
     ../src/consolemodel.cpp
+    clipboard.cpp
     kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui

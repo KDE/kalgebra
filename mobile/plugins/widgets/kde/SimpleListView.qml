@@ -37,6 +37,7 @@ ListView
         width: scrollList.width - Units.largeSpacing * 4
         x: Units.largeSpacing * 2
 
+        hiddenActions: model.hiddenActions || []
         contentItem: Label { text: model[scrollList.role] }
     }
     header: scrollList.title ? titleComponent : null

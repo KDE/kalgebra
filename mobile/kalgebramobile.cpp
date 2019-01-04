@@ -27,6 +27,7 @@
 #include <QSortFilterProxyModel>
 #include <qqml.h>
 #include "pluginsmodel.h"
+#include "clipboard.h"
 
 using namespace Analitza;
 
@@ -41,9 +42,11 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     Q_ASSERT(s_self==0);
     s_self=this;
     
+    const auto uri = "org.kde.kalgebra.mobile";
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
+    qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
     qmlRegisterType<QAbstractItemModel>();
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
