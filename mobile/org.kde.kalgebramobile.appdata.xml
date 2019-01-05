@@ -24,6 +24,7 @@
   <name xml:lang="uk">Мобільна KAlgebra</name>
   <name xml:lang="x-test">xxKAlgebra Mobilexx</name>
   <name xml:lang="zh-CN">KAlgebra 移动版</name>
+  <name xml:lang="zh-TW">KAlgebra 行動版</name>
   <summary>Graph Calculator</summary>
   <summary xml:lang="ca">Calculadora gràfica</summary>
   <summary xml:lang="ca-valencia">Calculadora gràfica</summary>
@@ -46,6 +47,7 @@
   <summary xml:lang="uk">Графічний калькулятор</summary>
   <summary xml:lang="x-test">xxGraph Calculatorxx</summary>
   <summary xml:lang="zh-CN">图形计算器</summary>
+  <summary xml:lang="zh-TW">圖形計算機</summary>
   <description>
     <p>KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.</p>
     <p xml:lang="ca">El KAlgebra és una aplicació que pot substituir la calculadora gràfica. Té característiques numèriques, lògiques, simbòliques, i analítiques que permeten calcular expressions matemàtiques a la consola i dibuixar gràficament els resultats en 2D o 3D.</p>
@@ -65,6 +67,7 @@
     <p xml:lang="uk">KAlgebra — програма, яка може замінити вам графічний калькулятор. У ній ви знайдете можливості з числового, логічного, символічного аналізу, які нададуть вам змогу обчислювати математичні вирази у консолі і графічно будувати результати на площині або у просторі.</p>
     <p xml:lang="x-test">xxKAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.xx</p>
     <p xml:lang="zh-CN">KAlgebra可以代替您的其他图形计算器。它包含数值计算、逻辑计算、符号计算，以及分析功能，能让您在控制台中计算数学表达式，并将函数结果绘制为2D或3D图像。</p>
+    <p xml:lang="zh-TW">KAlgebra 是個能替代繪圖計算機的應用程式，它包含數字、邏輯、符號以及分析功能，讓您能在終端計算數學表達式，並用圖形化的方式以 2D 或 3D 繪製結果。</p>
   </description>
   <url type="homepage">http://edu.kde.org/kalgebra/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kalgebra</url>
