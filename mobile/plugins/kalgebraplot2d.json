@@ -22,7 +22,8 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
                 "Name[x-test]": "xxAleix Pol Gonzalezxx",
-                "Name[zh_CN]": "Aleix Pol Gonzalez"
+                "Name[zh_CN]": "Aleix Pol Gonzalez",
+                "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
         "Description": "Draws any 2D graph you want",
@@ -42,6 +43,7 @@
         "Description[uk]": "Креслить будь-який потрібний вам двовимірний графік",
         "Description[x-test]": "xxDraws any 2D graph you wantxx",
         "Description[zh_CN]": "绘制想要的二维图",
+        "Description[zh_TW]": "繪製任何您想要的 2D 圖形",
         "Icon": "draw-bezier-curves",
         "Name": "Graph 2D",
         "Name[ca@valencia]": "Gràfics 2D",
@@ -60,7 +62,8 @@
         "Name[sv]": "Tvådimensionella grafer",
         "Name[uk]": "Двовимірний графік",
         "Name[x-test]": "xxGraph 2Dxx",
-        "Name[zh_CN]": "二维图"
+        "Name[zh_CN]": "二维图",
+        "Name[zh_TW]": "2D 圖形"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot2D.qml"

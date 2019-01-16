@@ -22,7 +22,8 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
                 "Name[x-test]": "xxAleix Pol Gonzalezxx",
-                "Name[zh_CN]": "Aleix Pol Gonzalez"
+                "Name[zh_CN]": "Aleix Pol Gonzalez",
+                "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
         "Description": "Scientific calculator",
@@ -45,6 +46,7 @@
         "Description[uk]": "Інженерний калькулятор",
         "Description[x-test]": "xxScientific calculatorxx",
         "Description[zh_CN]": "科学计算器",
+        "Description[zh_TW]": "科學計算機",
         "Icon": "utilities-terminal",
         "Name": "Calculator",
         "Name[ca@valencia]": "Calculadora",
@@ -65,7 +67,8 @@
         "Name[sv]": "Räknare",
         "Name[uk]": "Калькулятор",
         "Name[x-test]": "xxCalculatorxx",
-        "Name[zh_CN]": "计算器"
+        "Name[zh_CN]": "计算器",
+        "Name[zh_TW]": "計算機"
     },
     "X-KAlgebra-Priority": "1000",
     "X-KDE-PluginInfo-Name": "Console.qml"

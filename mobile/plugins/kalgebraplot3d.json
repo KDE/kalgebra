@@ -22,7 +22,8 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
                 "Name[x-test]": "xxAleix Pol Gonzalezxx",
-                "Name[zh_CN]": "Aleix Pol Gonzalez"
+                "Name[zh_CN]": "Aleix Pol Gonzalez",
+                "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
         "Description": "Draws any 3D graph you want",
@@ -42,6 +43,7 @@
         "Description[uk]": "Креслить будь-який потрібний вам просторовий графік",
         "Description[x-test]": "xxDraws any 3D graph you wantxx",
         "Description[zh_CN]": "绘制想要的三维图",
+        "Description[zh_TW]": "繪製任何您想要的 3D 圖形",
         "Icon": "adjustrgb",
         "Name": "Graph 3D",
         "Name[ca@valencia]": "Gràfics 3D",
@@ -60,7 +62,8 @@
         "Name[sv]": "Tredimensionella grafer",
         "Name[uk]": "Просторовий графік",
         "Name[x-test]": "xxGraph 3Dxx",
-        "Name[zh_CN]": "三维图"
+        "Name[zh_CN]": "三维图",
+        "Name[zh_TW]": "3D 圖形"
     },
     "X-KAlgebra-Priority": "100",
     "X-KDE-PluginInfo-Name": "Plot3D.qml"

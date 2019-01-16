@@ -22,7 +22,8 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
                 "Name[x-test]": "xxAleix Pol Gonzalezxx",
-                "Name[zh_CN]": "Aleix Pol Gonzalez"
+                "Name[zh_CN]": "Aleix Pol Gonzalez",
+                "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
         "Description": "Easily create value tables",
@@ -43,6 +44,7 @@
         "Description[uk]": "Просте створення таблиць значень",
         "Description[x-test]": "xxEasily create value tablesxx",
         "Description[zh_CN]": "方便地创建数值表",
+        "Description[zh_TW]": "輕鬆建立數值表格",
         "Icon": "kspread",
         "Name": "Value Tables",
         "Name[ca@valencia]": "Taula de valors",
@@ -62,7 +64,8 @@
         "Name[sv]": "Värdetabeller",
         "Name[uk]": "Таблиці значень",
         "Name[x-test]": "xxValue Tablesxx",
-        "Name[zh_CN]": "数值表"
+        "Name[zh_CN]": "数值表",
+        "Name[zh_TW]": "數值表格"
     },
     "X-KAlgebra-Priority": "10",
     "X-KDE-PluginInfo-Name": "Tables.qml"
