@@ -54,17 +54,17 @@ public:
     QSharedPointer<Analitza::Variables> variables() const { return a.variables(); }
     void setVariables(const QSharedPointer<Analitza::Variables> &vars);
     Analitza::Analyzer* analyzer() { return &a; }
-    void addMessage(const QString &msg);
 
     QList<QByteArray> htmlLog() const { return m_htmlLog; }
 
 Q_SIGNALS:
-    void message(const QString &msg);
+    void message(const QString &msg, const Analitza::Expression& operation, const Analitza::Expression& result);
     void updateView();
     void modeChanged(ConsoleModel::ConsoleMode mode);
     void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
 
 private:
+    void addMessage(const QString &msg, const Analitza::Expression& operation, const Analitza::Expression& result);
 
     QList<QByteArray> m_htmlLog;
     Analitza::Analyzer a;

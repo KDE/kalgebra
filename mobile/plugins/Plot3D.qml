@@ -31,7 +31,6 @@ KAlgebraPage
     topPadding: 0
     bottomPadding: 0
 
-
     FileDialog {
         id: fileDialog
         folder: shortcuts.home
@@ -64,6 +63,7 @@ KAlgebraPage
     {
         id: view
         anchors.fill: parent
+        model: app.functionsModel()
 
         Dialog {
             id: dialog
@@ -88,7 +88,7 @@ KAlgebraPage
                         Component.onCompleted: selectAll()
                         onAccepted: {
                             input.selectAll()
-                            var err = view.addFunction(input.text, app.variables)
+                            var err = app.functionsModel().addFunction(input.text, 4, app.variables)
                             if (err.length>0)
                                 console.warn("errors:", err)
                         }

@@ -16,8 +16,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+import org.kde.kirigami 2.5 as Kirigami
 import QtQuick 2.2
 import QtQuick.Controls 2.5 as QQC2
+import QtQml.Models 2.10
 import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
@@ -32,24 +34,11 @@ KAlgebraPage
         id: clipboard
     }
 
-    Component {
-        id: copyAction
-        QQC2.Action {
-            property string valueHtml: "null"
-            readonly property string value: valueHtml.replace(/<[^>]*>/g, '');
-            text: i18n("Copy \"%1\"", value)
-            icon.name: "edit-copy"
-            onTriggered: {
-                clipboard.content = value
-            }
-        }
-    }
-
     ConsoleModel {
         id: consoleModel
         variables: app.variables
         onMessage: {
-            itemModel.append({ result: msg, hiddenActions: copyAction.createObject(itemModel, {valueHtml: msg }) })
+            itemModel.append({ result: msg, expression: result.toString()  })
             input.selectAll()
             view.currentIndex = view.count-1
             view.positionViewAtIndex(view.currentIndex, ListView.Contain)
@@ -109,10 +98,40 @@ KAlgebraPage
         }
     ]
     
-    SimpleListView {
+    Kirigami.CardsListView {
         id: view
         model: itemModel
-        role: "result"
+
+        delegate: Kirigami.Card {
+            contentItem: Label { text: model.result }
+
+            hiddenActions: [
+                QQC2.Action {
+                    readonly property string value: result.replace(/<[^>]*>/g, '');
+                    text: i18n("Copy \"%1\"", value)
+                    icon.name: "edit-copy"
+                    onTriggered: {
+                        clipboard.content = value
+                    }
+                }
+            ]
+            actions: [
+                Kirigami.Action {
+                    enabled: app.functionsModel().canAddFunction(expression, 2, app.variables)
+                    text: i18n("2D Plot")
+                    onTriggered: {
+                        app.functionsModel().addFunction(expression, 2, app.variables)
+                    }
+                },
+                Kirigami.Action {
+                    enabled: app.functionsModel().canAddFunction(expression, 4, app.variables)
+                    text: i18n("3D Plot")
+                    onTriggered: {
+                        app.functionsModel().addFunction(expression, 4, app.variables)
+                    }
+                }
+            ]
+        }
 
         anchors {
             top: parent.top
