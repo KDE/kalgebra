@@ -1,4 +1,0 @@
-Button
-{
-    onClicked: doOp(text)
-}

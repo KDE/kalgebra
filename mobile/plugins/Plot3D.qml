@@ -21,6 +21,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.1
 import widgets 1.0
+import QtQuick.Controls 2.5
+import org.kde.kirigami 2.5 as Kirigami
 
 KAlgebraPage
 {
@@ -65,44 +67,41 @@ KAlgebraPage
         anchors.fill: parent
         model: app.functionsModel()
 
-        Dialog {
+        Kirigami.OverlaySheet {
             id: dialog
-            height: Math.min((4*view.height)/5, list.contentHeight)+page.dp*10
 
-            SimpleListView {
+            header: RowLayout {
+                width: parent.width
+                ExpressionInput {
+                    id: input
+                    Layout.fillWidth: true
+                    text: "sin x*sin y"
+                    focus: true
+                    Component.onCompleted: selectAll()
+                    onAccepted: {
+                        input.selectAll()
+                        var err = app.functionsModel().addFunction(input.text, 4, app.variables)
+                        if (err.length>0)
+                            console.warn("errors:", err)
+                    }
+                }
+                Button {
+                    icon.name: "list-add"
+                    onClicked: {
+                        input.selectAll()
+                        var err = view.addFunction(input.text, app.variables)
+                        if (err.length>0)
+                            console.warn("errors:", err)
+                    }
+                }
+            }
+
+            contentItem: Kirigami.CardsListView {
                 id: list
-                anchors {
-                    fill: parent
-                    margins: page.dp*4
+                delegate: Kirigami.Card {
+                    contentItem: Label { text: model.description }
                 }
-                role: "description"
                 model: view.model
-
-                header: RowLayout {
-                    width: parent.width
-                    ExpressionInput {
-                        id: input
-                        Layout.fillWidth: true
-                        text: "sin x*sin y"
-                        focus: true
-                        Component.onCompleted: selectAll()
-                        onAccepted: {
-                            input.selectAll()
-                            var err = app.functionsModel().addFunction(input.text, 4, app.variables)
-                            if (err.length>0)
-                                console.warn("errors:", err)
-                        }
-                    }
-                    Button {
-                        iconName: "list-add"
-                        onClicked: {
-                            input.selectAll()
-                            var err = view.addFunction(input.text, app.variables)
-                            if (err.length>0)
-                                console.warn("errors:", err)
-                        }
-                    }
-                }
 
                 footer: Button {
                     text: i18n("Clear All")

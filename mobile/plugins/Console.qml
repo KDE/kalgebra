@@ -54,7 +54,7 @@ KAlgebraPage
     }
 
     contextualActions: [
-        Action {
+        Kirigami.Action {
             text: i18n("Load Script...")
             onTriggered: {
                 fileDialog.title = text
@@ -64,7 +64,7 @@ KAlgebraPage
                 fileDialog.open()
             }
         },
-        Action {
+        Kirigami.Action {
             text: i18n("Save Script...")
             onTriggered: {
                 fileDialog.title = text
@@ -75,7 +75,7 @@ KAlgebraPage
             }
         },
         //TODO: Recent scripts
-        Action {
+        Kirigami.Action {
             text: i18n("Export Log...")
             onTriggered: {
                 fileDialog.title = text
@@ -86,12 +86,12 @@ KAlgebraPage
             }
         },
         // --
-        Action {
+        Kirigami.Action {
             text: consoleModel.mode == ConsoleModel.Calculate ? i18n("Evaluate...") : i18n("Calculate...")
             onTriggered: consoleModel.mode = consoleModel.mode == ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
         },
         // --
-        Action {
+        Kirigami.Action {
             iconName: "edit-clear-history"
             text: i18n("Clear Log")
             onTriggered: itemModel.clear()
@@ -103,7 +103,7 @@ KAlgebraPage
         model: itemModel
 
         delegate: Kirigami.Card {
-            contentItem: Label { text: model.result }
+            contentItem: QQC2.Label { text: model.result }
 
             hiddenActions: [
                 QQC2.Action {

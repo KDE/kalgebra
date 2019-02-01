@@ -19,6 +19,8 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
+import QtQuick.Controls 2.3
+import org.kde.kirigami 2.5 as Kirigami
 import org.kde.analitza 1.0
 import widgets 1.0
 
@@ -41,7 +43,7 @@ KAlgebraPage
     }
 
     contextualActions: [
-        Action {
+        Kirigami.Action {
             text: i18n("Save...")
             onTriggered: {
                 fileDialog.title = text
@@ -54,13 +56,13 @@ KAlgebraPage
                 fileDialog.open()
             }
         },
-        Action {
+        Kirigami.Action {
             text: i18n("View Grid")
             checkable: true
             checked: view.showGrid
             onToggled: view.showGrid = checked
         },
-        Action {
+        Kirigami.Action {
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()
         }
@@ -77,40 +79,33 @@ KAlgebraPage
             anchors.fill: parent
             model: app.functionsModel()
 
-            Dialog {
+            Kirigami.OverlaySheet {
                 id: dialog
-                height: Math.min((4*view.height)/5, list.contentHeight)+page.dp*10
 
-                SimpleListView {
-                    id: list
-                    anchors {
-                        fill: parent
-                        margins: page.dp*4
+                header: RowLayout {
+                    width: parent.width
+                    ExpressionInput {
+                        id: input
+                        Layout.fillWidth: true
+                        text: "sin x"
+                        focus: true
+                        Component.onCompleted: selectAll()
+                        onAccepted: {
+                            input.selectAll()
+                            view.addFunction(input.text, app.variables)
+                        }
                     }
-                    role: "description"
+                    Button {
+                        icon.name: "list-add"
+                        onClicked: {
+                            input.selectAll()
+                            view.addFunction(input.text, app.variables)
+                        }
+                    }
+                }
+                contentItem: Kirigami.CardsListView {
+                    delegate: Kirigami.Card { contentItem: Label { text: model.description } }
                     model: app.functionsModel()
-
-                    header: RowLayout {
-                        width: parent.width
-                        ExpressionInput {
-                            id: input
-                            Layout.fillWidth: true
-                            text: "sin x"
-                            focus: true
-                            Component.onCompleted: selectAll()
-                            onAccepted: {
-                                input.selectAll()
-                                view.addFunction(input.text, app.variables)
-                            }
-                        }
-                        Button {
-                            iconName: "list-add"
-                            onClicked: {
-                                input.selectAll()
-                                view.addFunction(input.text, app.variables)
-                            }
-                        }
-                    }
 
                     footer: Button {
                         text: i18n("Clear All")

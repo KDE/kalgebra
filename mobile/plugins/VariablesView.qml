@@ -19,13 +19,17 @@
 import QtQuick 2.0
 import org.kde.analitza 1.0
 import widgets 1.0
+import org.kde.kirigami 2.5 as Kirigami
+import QtQuick.Controls 2.5 as QQC2
 
 KAlgebraPage
 {
-    SimpleListView {
+    Kirigami.CardsListView {
         anchors.fill: parent
         model: VariablesModel { variables: app.variables }
         currentIndex: -1
-        role: "whatsThis"
+        delegate: Kirigami.Card {
+            contentItem: QQC2.Label { text: model.whatsThis }
+        }
     }
 }

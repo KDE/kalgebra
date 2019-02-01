@@ -20,6 +20,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import org.kde.analitza 1.0
 import widgets 1.0
+import QtQuick.Controls 2.5
+import org.kde.kirigami 2.5 as Kirigami
 
 KAlgebraPage
 {
@@ -48,7 +50,7 @@ KAlgebraPage
         } else if(!a.isCorrect) {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
-            for (var i=ffrom; i<=fto &&  i>ffrom && a.isCorrect; i+=fstep) {
+            for (var i=ffrom; i<=fto &&  i>=ffrom && a.isCorrect; i+=fstep) {
                 var args = new Array();
                 args[0]=i;
                 var expr = a.executeFunc(tmp, args);
@@ -94,7 +96,7 @@ KAlgebraPage
         }
     }
     
-    SimpleListView {
+    Kirigami.CardsListView {
         width: parent.width
         anchors {
             top: inputcol.bottom
@@ -102,10 +104,9 @@ KAlgebraPage
             topMargin: 5
         }
         currentIndex: -1
-        clip: true
         
         model: ListModel { id: resultsModel }
-        role: "element"
-        title: i18n("Results:")
+        delegate: Kirigami.Card { contentItem: Label { text: model.element} }
+        header: Label { text: i18n("Results:") }
     }
 }

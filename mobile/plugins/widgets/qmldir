@@ -1,13 +1,6 @@
-Label 1.0 Label.qml
-Button 1.0 Button.qml
-CalcButton 1.0 CalcButton.qml
 ExpressionInput 1.0 ExpressionInput.qml
 RealInput 1.0 RealInput.qml
 ToolTip 1.0 ToolTip.qml
-SimpleListView 1.0 SimpleListView.qml
 KAlgebraPage 1.0 KAlgebraPage.qml
 KAlgebraMobile 1.0 KAlgebraMobile.qml
 AddButton 1.0 AddButton.qml
-Dialog 1.0 Dialog.qml
-ComboBox 1.0 ComboBox.qml
-Action 1.0 Action.qml
