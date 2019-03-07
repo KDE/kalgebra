@@ -18,71 +18,39 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
-import org.kde.analitza 1.0
-import widgets 1.0
 import QtQuick.Controls 2.5
+import org.kde.analitza 1.0
+import org.kde.kirigami 2.6 as Kirigami
 
-KAlgebraPage
+Kirigami.AboutPage
 {
-    id: page
-    ColumnLayout {
-        anchors.margins: 20*page.dp
-        anchors.fill: parent
-        spacing: 20*page.dp
-        
-        Image {
-            id: icon
-            source: "qrc:/kalgebra.svgz"
-            Layout.fillWidth: true
-            fillMode: Image.PreserveAspectFit
-            sourceSize: Qt.size(parent.width/4, parent.width/4)
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: Qt.openUrlExternally("http://edu.kde.org/applications/mathematics/kalgebra")
+    aboutData: {
+        "displayName": i18n("KAlgebra Mobile"),
+        "productName": "kalgebramobile",
+        "componentName": "kalgebramobile",
+        "shortDescription": i18n("A simple scientific calculator"),
+        "programIconName": "kalgebra",
+        "homepage": "https://edu.kde.org/kalgebra/",
+        "bugAddress": "submit@bugs.kde.org",
+        "otherText": "",
+        "authors": [
+            {
+                "name": "Aleix Pol Gonzalez",
+                "task": "",
+                "emailAddress": "aleixpol@kde.org",
+                "webAddress": "https://proli.net",
+                "ocsUsername": ""
             }
-        }
-        
-        Label {
-            Layout.fillWidth: true
-            
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignJustify
-            text: i18n("KAlgebra is brought to you by the lovely community of <a href='http://kde.org'>KDE</a> and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free Software environment.")
-            onLinkActivated: Qt.openUrlExternally(link)
-        }
-        
-        Label {
-            Layout.fillWidth: true
-            
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignJustify
-            text: i18n("In case you want to learn more about KAlgebra, you can find more information <a href='https://edu.kde.org/applications/mathematics/kalgebra/'>in the official site</a> and in the <a href='https://userbase.kde.org/KAlgebra'>users wiki</a>.<br/>If you have any problem with your software, please report it to <a href='https://bugs.kde.org'>our bug tracker</a>.")
-            onLinkActivated: Qt.openUrlExternally(link)
-        }
-        
-        Label {
-            Layout.fillWidth: true
-            
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignJustify
-            text: "Aleix Pol Gonzalez &lt;<a href='mailto:aleixpol@kde.org'>aleixpol@kde.org</a>&gt;"
-            onLinkActivated: Qt.openUrlExternally(link)
-        }
-        
-        Image {
-            source: "qrc:/kde-edu-logo.png"
-            Layout.fillWidth: true
-            fillMode: Image.PreserveAspectFit
-            Layout.maximumHeight: icon.height
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked: Qt.openUrlExternally("http://edu.kde.org")
+        ],
+        "credits": [],
+        "translators": [],
+        "licenses": [
+            {
+                "name": "GPL v2",
+                "spdx": "GPL-2.0"
             }
-        }
-        Item {
-            Layout.fillHeight: true
-        }
+        ],
+        "copyrightStatement": "© 2007-2019 by Aleix Pol Gonzalez",
+        "desktopFileName": "org.kde.kalgebramobile"
     }
 }
