@@ -87,8 +87,8 @@ KAlgebraPage
         },
         // --
         Kirigami.Action {
-            text: consoleModel.mode == ConsoleModel.Calculate ? i18n("Evaluate...") : i18n("Calculate...")
-            onTriggered: consoleModel.mode = consoleModel.mode == ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
+            text: consoleModel.mode === ConsoleModel.Calculate ? i18n("Evaluate...") : i18n("Calculate...")
+            onTriggered: consoleModel.mode = consoleModel.mode === ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
         },
         // --
         Kirigami.Action {
