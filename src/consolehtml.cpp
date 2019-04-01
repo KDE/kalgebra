@@ -20,7 +20,7 @@
 
 #include <QClipboard>
 #include <QApplication>
-#include <qevent.h>
+#include <QEvent>
 #include <QUrlQuery>
 #include <QTemporaryFile>
 #include <QDir>
