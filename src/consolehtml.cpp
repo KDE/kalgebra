@@ -90,7 +90,7 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
     QString id =query.queryItemValue(QStringLiteral("id"));
     QString exp=query.queryItemValue(QStringLiteral("func"));
     
-    if(id=="copy") {
+    if(id==QLatin1String("copy")) {
         emit paste(exp);
     } else foreach(InlineOptions* opt, m_options) {
         if(opt->id() == id) {

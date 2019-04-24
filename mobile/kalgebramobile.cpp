@@ -48,7 +48,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
     qmlRegisterType<QAbstractItemModel>();
-    qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", "because");
+    qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", QStringLiteral("because"));
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
 }
 

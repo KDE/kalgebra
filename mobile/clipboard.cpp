@@ -28,7 +28,7 @@ Clipboard::Clipboard(QObject* parent)
     , m_clipboard(QGuiApplication::clipboard())
     , m_mode(QClipboard::Clipboard)
 {
-    connect(m_clipboard, SIGNAL(changed(QClipboard::Mode)), SLOT(clipboardChanged(QClipboard::Mode)));
+    connect(m_clipboard, &QClipboard::changed, this, &Clipboard::clipboardChanged);
 }
 
 void Clipboard::setMode(QClipboard::Mode mode)

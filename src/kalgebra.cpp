@@ -173,16 +173,16 @@ KAlgebra::KAlgebra(QWidget *parent)
     c_menu->addAction(c_recentScripts);
     
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Save Script..."),
-                        this, SLOT(saveScript()), Qt::CTRL+Qt::Key_G);
+                        this, &KAlgebra::saveScript, Qt::CTRL+Qt::Key_G);
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Export Log..."),
-                        this, SLOT(saveLog()), QKeySequence::Save);
+                        this, &KAlgebra::saveLog, QKeySequence::Save);
     c_menu->addSeparator();
     c_menu->addAction(i18nc("@item:inmenu", "&Insert ans..."),
-                        this, SLOT(insertAns()), Qt::Key_F3);
+                        this, &KAlgebra::insertAns, Qt::Key_F3);
     c_menu->addSeparator()->setText(i18n("Execution Mode"));
     QActionGroup *execGroup = new QActionGroup(c_menu);
-    QAction* calc = c_menu->addAction(i18nc("@item:inmenu", "Calculate"), this, SLOT(consoleCalculate()));
-    QAction* eval = c_menu->addAction(i18nc("@item:inmenu", "Evaluate"), this, SLOT(consoleEvaluate()));
+    QAction* calc = c_menu->addAction(i18nc("@item:inmenu", "Calculate"), this, &KAlgebra::consoleCalculate);
+    QAction* eval = c_menu->addAction(i18nc("@item:inmenu", "Evaluate"), this, &KAlgebra::consoleEvaluate);
     
     calc->setCheckable(true);
     eval->setCheckable(true);
@@ -254,8 +254,8 @@ KAlgebra::KAlgebra(QWidget *parent)
     ////////menu
     b_menu = menuBar()->addMenu(i18n("2&D Graph"));
     QAction* b_actions[6];
-    b_actions[0] = b_menu->addAction(i18n("&Grid"), this, SLOT(toggleSquares()));
-    b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, SLOT(toggleKeepAspect()));
+    b_actions[0] = b_menu->addAction(i18n("&Grid"), this, &KAlgebra::toggleSquares);
+    b_actions[1] = b_menu->addAction(i18n("&Keep Aspect Ratio"), this, &KAlgebra::toggleKeepAspect);
     b_menu->addAction(KStandardAction::save(this, SLOT(saveGraph()), this));
     b_menu->addSeparator();
     b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
@@ -264,10 +264,10 @@ KAlgebra::KAlgebra(QWidget *parent)
     ac->setShortcut(Qt::ControlModifier + Qt::Key_0);
     b_menu->addAction(ac);
     b_menu->addSeparator()->setText(i18n("Resolution"));
-    b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, SLOT(set_res_low()));
-    b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, SLOT(set_res_std()));
-    b_actions[4] = b_menu->addAction(i18nc("@item:inmenu", "Fine"), this, SLOT(set_res_fine()));
-    b_actions[5] = b_menu->addAction(i18nc("@item:inmenu", "Very Fine"), this, SLOT(set_res_vfine()));
+    b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, &KAlgebra::set_res_low);
+    b_actions[3] = b_menu->addAction(i18nc("@item:inmenu", "Normal"), this, &KAlgebra::set_res_std);
+    b_actions[4] = b_menu->addAction(i18nc("@item:inmenu", "Fine"), this, &KAlgebra::set_res_fine);
+    b_actions[5] = b_menu->addAction(i18nc("@item:inmenu", "Very Fine"), this, &KAlgebra::set_res_vfine);
     m_graph2d->setContextMenuPolicy(Qt::ActionsContextMenu);
     m_graph2d->addActions(b_menu->actions());
     
@@ -314,9 +314,9 @@ KAlgebra::KAlgebra(QWidget *parent)
     t_menu->addAction(KStandardAction::save(this, SLOT(save3DGraph()), this));
     t_menu->addAction(QIcon::fromTheme(QStringLiteral("zoom-original")), i18n("&Reset View"), m_graph3d, [this]() { m_graph3d->resetViewport(); });
     t_menu->addSeparator();
-    t_actions[2] = t_menu->addAction(i18n("Dots"), this, SLOT(set_dots()));
-    t_actions[3] = t_menu->addAction(i18n("Lines"), this, SLOT(set_lines()));
-    t_actions[4] = t_menu->addAction(i18n("Solid"), this, SLOT(set_solid()));
+    t_actions[2] = t_menu->addAction(i18n("Dots"), this, &KAlgebra::set_dots);
+    t_actions[3] = t_menu->addAction(i18n("Lines"), this, &KAlgebra::set_lines);
+    t_actions[4] = t_menu->addAction(i18n("Solid"), this, &KAlgebra::set_solid);
     
     QActionGroup *t_type = new QActionGroup(t_menu);
     t_type->addAction(t_actions[2]);
@@ -532,7 +532,7 @@ void KAlgebra::saveLog()
 
 void KAlgebra::insertAns()
 {
-    c_exp->insertText("ans");
+    c_exp->insertText(QStringLiteral("ans"));
 }
 
 void KAlgebra::set_res_low()    { b_funcsModel->setResolution(416); }
@@ -568,7 +568,7 @@ void KAlgebra::set_solid()
 
 void KAlgebra::save3DGraph()
 {
-    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), m_graph3d->filters().join(";;"));
+    QString path = QFileDialog::getSaveFileName(this, QString(), QString(), m_graph3d->filters().join(QStringLiteral(";;")));
     if(!path.isEmpty()) {
         m_graph3d->save(QUrl::fromLocalFile(path));
     }

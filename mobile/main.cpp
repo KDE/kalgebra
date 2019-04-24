@@ -44,9 +44,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kalgebramobile");
-    KAboutData about("kalgebramobile", "KAlgebra", "0.10", i18n("A portable calculator"),
+    KAboutData about(QStringLiteral("kalgebramobile"), QStringLiteral("KAlgebra"), QStringLiteral("0.10"), i18n("A portable calculator"),
              KAboutLicense::GPL, i18n("(C) 2006-2018 Aleix Pol i Gonzalez"));
-    about.addAuthor( "Aleix Pol i Gonzalez", QString(), "aleixpol@kde.org" );
+    about.addAuthor( QStringLiteral("Aleix Pol i Gonzalez"), QString(), QStringLiteral("aleixpol@kde.org") );
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);
 

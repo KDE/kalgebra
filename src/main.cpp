@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kalgebra");
-    KAboutData about("kalgebra", "KAlgebra", "0.10", i18n("A portable calculator"),
+    KAboutData about(QStringLiteral("kalgebra"), QStringLiteral("KAlgebra"), QStringLiteral("0.10"), i18n("A portable calculator"),
              KAboutLicense::GPL, i18n("(C) 2006-2016 Aleix Pol i Gonzalez"));
-    about.addAuthor( "Aleix Pol i Gonzalez", QString(), "aleixpol@kde.org" );
+    about.addAuthor( QStringLiteral("Aleix Pol i Gonzalez"), QString(), QStringLiteral("aleixpol@kde.org") );
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);
 
