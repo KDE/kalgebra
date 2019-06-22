@@ -1,5 +1,12 @@
-project(kalgebra)
 cmake_minimum_required(VERSION 3.5)
+
+# KDE Application Version, managed by release script
+set(KDE_APPLICATIONS_VERSION_MAJOR "19")
+set(KDE_APPLICATIONS_VERSION_MINOR "07")
+set(KDE_APPLICATIONS_VERSION_MICRO "70")
+set(KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
+
+project(kalgebra VERSION ${KDE_APPLICATIONS_VERSION})
 
 find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
@@ -9,6 +16,7 @@ include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
+include(ECMSetupVersion)
 include(FeatureSummary)
 include(ECMAddAppIcon)
 
@@ -21,6 +29,8 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 set(CURSES_NEED_NCURSES TRUE)
 find_package(Curses)
 find_package(Readline)
+
+ecm_setup_version(${KDE_APPLICATIONS_VERSION} VARIABLE_PREFIX KALGEBRA VERSION_HEADER kalgebra_version.h)
 
 set_package_properties(Readline PROPERTIES TYPE OPTIONAL
                                            PURPOSE "Allows KAlgebra to provide a console interface."
