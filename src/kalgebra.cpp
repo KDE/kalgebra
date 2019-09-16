@@ -587,8 +587,7 @@ void KAlgebra::toggleKeepAspect()
 void KAlgebra::saveGraph()
 {
     QPointer<QFileDialog> dialog=new QFileDialog(this, i18n("Select where to put the rendered plot"), QString(), i18n("Image File (*.png);;SVG File (*.svg)"));
-    dialog->setConfirmOverwrite(true);
-    
+    dialog->setOption(QFileDialog::DontConfirmOverwrite, false);
     if(dialog->exec() && !dialog->selectedFiles().isEmpty()) {
         QString filter = dialog->selectedNameFilter();
         QString filename = dialog->selectedFiles().first();

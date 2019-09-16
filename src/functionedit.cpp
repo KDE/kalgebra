@@ -49,7 +49,7 @@ FunctionEdit::FunctionEdit(QWidget *parent)
     setWindowTitle(i18n("Add/Edit a function"));
     
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-    topLayout->setMargin(2);
+    topLayout->setContentsMargins(2, 2, 2, 2);
     topLayout->setSpacing(5);
     
     m_name = new QLineEdit(this);
