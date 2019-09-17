@@ -21,7 +21,7 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QFile>
 
 using namespace std;
@@ -46,7 +46,7 @@ void calculate(const Expression& e, CalcType t)
     Expression ans;
     a.setExpression(e);
     if(e.isCorrect()) {
-        QTime time;
+        QElapsedTimer time;
         if(configuration.showElapsedType) time.start();
         
         if(t==Calculate)
