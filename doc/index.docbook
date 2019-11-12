@@ -65,7 +65,7 @@ of mathematical operations and show graphically. At one time, this
 program was MathML oriented. Now it can be used by anyone with a little
 mathematical knowledge to solve simple and advanced problems alike.
 </para>
-<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: http://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
 <para>
 It includes such features as:
 </para>
@@ -173,7 +173,7 @@ similar to that used on most modern graphing calculators. This section
 lists the fundamental built-in operators available in &kalgebra;. The
 author of &kalgebra; modeled this syntax after
 <ulink url="http://maxima.sourceforge.net/">Maxima</ulink> and
-  <ulink url="http://www.maplesoft.com/products/maple/">maple</ulink> for users
+  <ulink url="https://www.maplesoft.com/products/maple/">maple</ulink> for users
 that may be familiar with these programs.
 </para>
 

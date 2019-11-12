@@ -34,10 +34,10 @@ ecm_setup_version(${KDE_APPLICATIONS_VERSION} VARIABLE_PREFIX KALGEBRA VERSION_H
 
 set_package_properties(Readline PROPERTIES TYPE OPTIONAL
                                            PURPOSE "Allows KAlgebra to provide a console interface."
-                                           URL "http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html")
+                                           URL "https://tiswww.case.edu/php/chet/readline/rltop.html")
 set_package_properties(Curses PROPERTIES TYPE OPTIONAL
                                          PURPOSE "Allows KAlgebra to provide a console interface."
-                                         URL "http://www.gnu.org/software/ncurses/")
+                                         URL "https://www.gnu.org/software/ncurses/")
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
