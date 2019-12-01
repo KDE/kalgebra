@@ -47,7 +47,12 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
-    qmlRegisterType<QAbstractItemModel>();
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    qmlRegisterType<QStandardItemModel>();
+#else
+    qmlRegisterAnonymousType<QStandardItemModel>("Kalgebra", 1);
+#endif
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", QStringLiteral("because"));
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
 }

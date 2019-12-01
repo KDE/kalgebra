@@ -24,6 +24,7 @@
 #include <QUrlQuery>
 #include <QTemporaryFile>
 #include <QDir>
+#include <QContextMenuEvent>
 
 #include <KStandardAction>
 #include <QMenu>
