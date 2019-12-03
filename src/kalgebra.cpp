@@ -199,7 +199,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     b_funcsModel=new Analitza::PlotsModel(this);
     
     m_graph2d = new Analitza::PlotsView2D(m_tabs);
-    m_graph2d->setTicksShown(0);
+    m_graph2d->setTicksShown(Qt::Orientation(0));
     m_graph2d->setModel(b_funcsModel);
     
     b_dock_funcs = new QDockWidget(i18n("Functions"), this);

@@ -51,7 +51,7 @@ Dictionary::Dictionary(QWidget *p) : QWidget(p)
     m_example=new QLabel(descr);
     m_funcs=new Analitza::PlotsModel(descr);
     m_graph=new Analitza::PlotsView2D(descr);
-    m_graph->setTicksShown(0);
+    m_graph->setTicksShown(Qt::Orientation(0));
     m_graph->setModel(m_funcs);
     m_graph->setReadOnly(true);
     m_graph->setViewport(QRect(QPoint(-30, 7), QPoint(30, -7)));
