@@ -43,6 +43,7 @@
 #include <QTableView>
 #include <QPrinter>
 #include <QAction>
+#include <QRandomGenerator>
 #include <QFileDialog>
 #include <QStatusBar>
 #include <QMenuBar>
@@ -99,7 +100,9 @@ class Add3DOption : public InlineOptions
         KAlgebra* m_kalgebra;
 };
 
-QColor randomFunctionColor() { return QColor::fromHsv(qrand()%255, 255, 255); }
+QColor randomFunctionColor() {
+    return QColor::fromHsv(QRandomGenerator::global()->bounded(255), 255, 255);
+}
 
 KAlgebra::KAlgebra(QWidget *parent)
     : QMainWindow(parent)
