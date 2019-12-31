@@ -124,7 +124,7 @@ bool ConsoleModel::saveScript(const QUrl& savePath)
     if(correct) {
         QTextStream out(&file);
         foreach(const Analitza::Expression& exp, m_script)
-            out << exp.toString() << endl;
+            out << exp.toString() << QLatin1Char('\n');
     }
 
     return correct;
@@ -159,11 +159,11 @@ bool ConsoleModel::saveLog(const QUrl& savePath) const
 
     if(correct) {
         QTextStream out(&file);
-        out << "<html>\n<head>" << *s_css << "</head>" << endl;
-        out << "<body>" << endl;
+        out << "<html>\n<head>" << *s_css << "</head>" << QLatin1Char('\n');
+        out << "<body>" << QLatin1Char('\n');
         foreach(const QString &entry, m_htmlLog)
-            out << "<p>" << entry << "</p>" << endl;
-        out << "</body>\n</html>" << endl;
+            out << "<p>" << entry << "</p>" << QLatin1Char('\n');
+        out << "</body>\n</html>" << QLatin1Char('\n');
     }
 
     return correct;
