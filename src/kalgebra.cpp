@@ -398,7 +398,7 @@ void KAlgebra::initializeRecentScripts()
 
 void KAlgebra::newInstance()
 {
-    QProcess::startDetached(QApplication::applicationFilePath());
+    QProcess::startDetached(QApplication::applicationFilePath(), QStringList());
 }
 
 void KAlgebra::add2D(const Analitza::Expression& exp)
