@@ -66,6 +66,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
     engine.addImportPath(pluginsDir);
+#ifdef __ANDROID__
+    engine.addImportPath(QStringLiteral("assets:/qml"));
+#endif
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 

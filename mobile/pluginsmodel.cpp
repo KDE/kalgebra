@@ -27,7 +27,7 @@
 QString PluginsModel::pluginsDirectoryPath()
 {
 #ifdef __ANDROID__
-    return "/data/data/org.kde.kalgebramobile/qt-reserved-files/share/kalgebramobile/plugins";
+    return QStringLiteral("assets:/share/kalgebramobile/plugins");
 #else
     return QStandardPaths::locate(QStandardPaths::DataLocation, QStringLiteral("plugins"), QStandardPaths::LocateDirectory);
 #endif
