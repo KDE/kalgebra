@@ -46,7 +46,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kalgebramobile");
     KAboutData about(QStringLiteral("kalgebramobile"), QStringLiteral("KAlgebra"), QStringLiteral(KALGEBRA_VERSION_STRING), i18n("A portable calculator"),
-             KAboutLicense::GPL, i18n("(C) 2006-2018 Aleix Pol i Gonzalez"));
+             KAboutLicense::GPL, i18n("(C) 2006-2020 Aleix Pol i Gonzalez"));
     about.addAuthor( QStringLiteral("Aleix Pol i Gonzalez"), QString(), QStringLiteral("aleixpol@kde.org") );
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);
@@ -60,14 +60,15 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     
     KAlgebraMobile widget;
     
-    QString widgetsDir = PluginsModel::pluginsDirectoryPath()+"/widgets";
+    const QString pluginsDir = PluginsModel::pluginsDirectoryPath();
 
     QQmlApplicationEngine engine;
+
     engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
-    engine.addImportPath(widgetsDir);
+    engine.addImportPath(pluginsDir);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 
-    engine.load(QUrl::fromLocalFile(widgetsDir + QStringLiteral("/KAlgebraMobile.qml")));
+    engine.load(QUrl::fromLocalFile(pluginsDir + QStringLiteral("/widgets/KAlgebraMobile.qml")));
     return app.exec();
 }

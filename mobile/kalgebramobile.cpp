@@ -46,6 +46,7 @@ KAlgebraMobile::KAlgebraMobile(QObject* parent)
     qmlRegisterType<PluginsModel>("org.kde.kalgebra.mobile", 1, 0, "PluginsModel");
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
+    qmlRegisterUncreatableType<QAbstractItemModel>("org.kde.kalgebra.mobile", 1, 0, "QAbstractItemModel", "no");
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
