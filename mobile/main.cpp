@@ -60,17 +60,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     
     KAlgebraMobile widget;
     
-    QString main = PluginsModel::pluginsDirectoryPath()+"/widgets/KAlgebraMobile.qml";
-
-    QDir dir = QFileInfo(main).dir();
-    dir.cdUp();
+    QString widgetsDir = PluginsModel::pluginsDirectoryPath()+"/widgets";
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
-    engine.addImportPath(dir.path());
+    engine.addImportPath(widgetsDir);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 
-    engine.load(QUrl::fromLocalFile(main));
+    engine.load(QUrl::fromLocalFile(widgetsDir + QStringLiteral("/KAlgebraMobile.qml")));
     return app.exec();
 }
