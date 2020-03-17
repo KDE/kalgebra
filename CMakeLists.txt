@@ -46,10 +46,7 @@ add_definitions(-DQT_NO_CAST_TO_ASCII)
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
 find_package(KF5 ${KF5_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools)
 find_package(Qt5WebEngineWidgets)
-if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
-   add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
-   add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x060000)
-endif()
+
 
 if(KF5DocTools_FOUND AND Qt5WebEngineWidgets_FOUND AND KF5ConfigWidgets_FOUND AND KF5WidgetsAddons_FOUND AND KF5KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(src)
