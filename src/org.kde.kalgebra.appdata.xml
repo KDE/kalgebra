@@ -10,6 +10,7 @@
   <name xml:lang="cs">KAlgebra</name>
   <name xml:lang="da">KAlgebra</name>
   <name xml:lang="de">KAlgebra</name>
+  <name xml:lang="el">KAlgebra</name>
   <name xml:lang="en-GB">KAlgebra</name>
   <name xml:lang="es">KAlgebra</name>
   <name xml:lang="et">KAlgebra</name>
@@ -42,6 +43,7 @@
   <summary xml:lang="ca-valencia">Calculadora gràfica</summary>
   <summary xml:lang="cs">Kalkulačka grafů</summary>
   <summary xml:lang="de">Graphenrechner</summary>
+  <summary xml:lang="el">Υπολογιστής γραφικών παραστάσεων</summary>
   <summary xml:lang="en-GB">Graph Calculator</summary>
   <summary xml:lang="es">Calculadora gráfica</summary>
   <summary xml:lang="et">Graafide arvutaja</summary>
@@ -73,6 +75,7 @@
     <p xml:lang="ca">KAlgebra és una aplicació que pot reemplaçar la vostra calculadora gràfica. Té capacitats numèriques, lògiques i d'anàlisi que us permetran calcular expressions matemàtiques en una consola i dibuixar una gràfica dels resultats en 2D o 3D. KAlgebra té les seves arrels en el Llenguatge de Marcat Matemàtic (MathML); tanmateix, no us caldrà tenir coneixements de MathML per emprar el KAlgebra.</p>
     <p xml:lang="ca-valencia">KAlgebra és una aplicació que pot reemplaçar la vostra calculadora gràfica. Té capacitats numèriques, lògiques i d'anàlisi que vos permetran calcular expressions matemàtiques en una consola i dibuixar una gràfica dels resultats en 2D o 3D. KAlgebra té les seues arrels en el Llenguatge de Marcat Matemàtic (MathML); tanmateix, no vos caldrà tindre coneixements de MathML per emprar el KAlgebra.</p>
     <p xml:lang="de">KAlgebra ist eine Anwendung, die Ihren grafischen Taschenrechner ersetzt. KAlgebra hat numerische, logische, symbolische und analytische Fähigkeiten, mit denen Sie mathematische Ausdrücke in der Konsole auswerten und die Ergebnisse zwei- oder dreidimensional darstellen können. KAlgebra basiert auf der Sprache „Mathematical Markup Language“ (MathML), es sind jedoch keine Kenntnisse von MathML erforderlich, um KAlgebra erfolgreich einsetzen zu können.</p>
+    <p xml:lang="el">Η KAlgebra είναι μία εφαρμογή αντικατάστασης του υπολογιστή για τα γραφικά σας. Έχει αριθμητικές, λογικές, συμβολικές και αναλυτικές λειτουργίες για να υπολογίζετε μαθηματικές εκφράσεις στην κονσόλα και να αναπαριστάτε γραφικά τα αποτελέσματα σε 2 ή 3 διαστάσεις. Η KAlgebra προέρχεται από τη Μαθηματική Γλώσσα Σήμανσης (MathML): ωστόσο, δεν χρειάζεται κανείς να γνωρίζει τη MathML για να χρησιμοποιήσει την KAlgebra.</p>
     <p xml:lang="en-GB">KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D. KAlgebra is rooted in the Mathematical Markup Language (MathML); however, one does not need to know MathML to use KAlgebra.</p>
     <p xml:lang="es">KAlgebra es una aplicación que puede sustituir su calculadora gráfica. Contiene funciones numéricas, lógicas, simbólicas y de análisis que le permiten calcular expresiones matemáticas en la consola y dibujar gráficamente su resultado en dos o tres dimensiones. KAlgebra se basa fuertemente en el «lenguaje de marcado matemático» (MathML); sin embargo, no es necesario saber MathML para usar KAlgebra.</p>
     <p xml:lang="et">KAlgebra on rakendus, mis võib asendada su senist graafikalkulaatorit Sel on arvulisi, loogilisi, sümbolilisi ja analüüsiomadusi, mis võimaldavad arvutada matemaatilisi avaldisi konsoolis ja lasta tulemusi kujutada graafiliselt nii tasapinnaliselt (2D) kui ka ruumiliselt (3D). KAlgebra juured on matemaatilises märkekeeles (MathML), kuid KAlgebra kasutamiseks ei ole MathML-i tundmine sugugi vajalik.</p>
@@ -107,6 +110,7 @@
       <caption xml:lang="ca">Gràfic 2D al KAlgebra</caption>
       <caption xml:lang="ca-valencia">Gràfic 2D al KAlgebra</caption>
       <caption xml:lang="cs">2D graf v KAlgebra</caption>
+      <caption xml:lang="el">2D σχεδίαση στην KAlgebra</caption>
       <caption xml:lang="en-GB">2D plot in KAlgebra</caption>
       <caption xml:lang="es">Gráfico 2D en KAlgebra</caption>
       <caption xml:lang="et">2D joonis KAlgebras</caption>
@@ -115,6 +119,7 @@
       <caption xml:lang="id">Plot 2D di KAlgebra</caption>
       <caption xml:lang="it">Grafico 2D in KAlgebra</caption>
       <caption xml:lang="nl">2D plot in KAlgebra</caption>
+      <caption xml:lang="nn">2D-plott i KAlgebra</caption>
       <caption xml:lang="pl">Wykres 2D w KAlgebra</caption>
       <caption xml:lang="pt">Gráfico 2D no KAlgebra</caption>
       <caption xml:lang="pt-BR">Gráfico 2D no KAlgebra</caption>
