@@ -25,7 +25,6 @@
                 "Name[sk]": "Aleix Pol Gonzalez",
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
-                "Name[x-test]": "xxAleix Pol Gonzalezxx",
                 "Name[zh_CN]": "Aleix Pol Gonzalez",
                 "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
@@ -53,7 +52,6 @@
         "Name[sk]": "O KAlgebra",
         "Name[sv]": "Om Kalgebra",
         "Name[uk]": "Про KAlgebra",
-        "Name[x-test]": "xxAbout KAlgebraxx",
         "Name[zh_CN]": "关于 KAlgebra",
         "Name[zh_TW]": "關於 KAlgebra"
     },
