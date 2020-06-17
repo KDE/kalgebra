@@ -34,7 +34,6 @@
   <name xml:lang="sv">Kalgebra</name>
   <name xml:lang="tr">KAlgebra</name>
   <name xml:lang="uk">KAlgebra</name>
-  <name xml:lang="x-test">xxKAlgebraxx</name>
   <name xml:lang="zh-CN">KAlgebra</name>
   <name xml:lang="zh-TW">數學_KAlgebra</name>
   <summary>Graph Calculator</summary>
@@ -67,7 +66,6 @@
   <summary xml:lang="sv">Grafräknare</summary>
   <summary xml:lang="tr">Grafik Hesap Makinesi</summary>
   <summary xml:lang="uk">Графічний калькулятор</summary>
-  <summary xml:lang="x-test">xxGraph Calculatorxx</summary>
   <summary xml:lang="zh-CN">图形计算器</summary>
   <summary xml:lang="zh-TW">圖形計算器</summary>
   <description>
@@ -97,7 +95,6 @@
     <p xml:lang="sv">Kalgebra; är ett program som kan ersätta en grafisk miniräknare. Det har numeriska, logiska, symboliska och analytiska funktioner som gör det möjligt att beräkna matematiska uttryck i terminalen och rita upp resultatet grafiskt i två eller tre dimensioner. Kalgebra är grundat på det matematiska taggspråket (MathML), men man behöver dock inte känna till MathML för att använda Kalgebra.</p>
     <p xml:lang="tr">KAlgebra, grafik hesap makinanızın yerine geçebilecek bir uygulamadır. Sayısal, mantıksal, sembolik ve analiz özellikleriyle, terminal üzerinden matematiksel ifadeleri hesaplayabilir ve sonuçları 2D veya 3D olarak olarak grafik olarak çizdirebilirsiniz. KAlgebra, Matematiksel İşaret Dili (MathML) üzerine inşa edilmiştir; ancak, KAlgebra kullanmak için MathML bilmek zorunda değilsiniz.</p>
     <p xml:lang="uk">KAlgebra; — програма, яка може замінити вам калькулятор з можливістю побудови графіків У програмі передбачено числові, логічні, символічні та аналітичні можливості, за допомогою яких ви зможете виконувати обчислення за формулами у консолі або будувати результати у форматі плоских кривих або просторових графіків. KAlgebra засновано на мові математичної розмітки (Mathematical Markup Language і MathML). Втім, для користування KAlgebra знати MathML не потрібно.</p>
-    <p xml:lang="x-test">xxKAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D. KAlgebra is rooted in the Mathematical Markup Language (MathML); however, one does not need to know MathML to use KAlgebra.xx</p>
     <p xml:lang="zh-CN">KAlgebra 是一个可以替代您的图形计算器的应用程序。它具有数字、逻辑、符号和分析功能，可让您在控制台上计算数学表达式，并将结果绘制成 2D 或 3D 图形。 KAlgebra 基于数学标记语言（MathML）；但是，人们并不需要知道 MathML 就可以使用 KAlgebra。</p>
     <p xml:lang="zh-TW">KAlgebra 是一套可以取代您的圖形計算器的應用程式。它有數值、邏輯、符號與分析等功能，讓您計算您的數學式，並繪出平面或立體的圖形。KAlgebra 是基於 Mathematical Markup Language (MathML)。不過即使您不知道 MathML 也可以使用 KAlgebra。</p>
   </description>
@@ -127,7 +124,6 @@
       <caption xml:lang="sk">2D graf v KAlgebre</caption>
       <caption xml:lang="sv">Tvådimensionellt diagram i Kalgebra</caption>
       <caption xml:lang="uk">Графік у KAlgebra</caption>
-      <caption xml:lang="x-test">xx2D plot in KAlgebraxx</caption>
       <caption xml:lang="zh-CN">KAlgebra 中的 2D 绘图</caption>
       <caption xml:lang="zh-TW">KAlgebra 中 2D 繪圖</caption>
       <image>https://cdn.kde.org/screenshots/kalgebra/kalgebra.png</image>
