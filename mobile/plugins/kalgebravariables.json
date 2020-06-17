@@ -26,7 +26,6 @@
                 "Name[sl]": "Aleix Pol Gonzalez",
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
-                "Name[x-test]": "xxAleix Pol Gonzalezxx",
                 "Name[zh_CN]": "Aleix Pol Gonzalez",
                 "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
@@ -53,7 +52,6 @@
         "Description[sl]": "Prikaže shranjene vrednosti",
         "Description[sv]": "Visar de lagrade värdena",
         "Description[uk]": "Показує збережені значення",
-        "Description[x-test]": "xxDisplays the stored valuesxx",
         "Description[zh_CN]": "显示存储的值",
         "Description[zh_TW]": "顯示儲存的數值",
         "Icon": "document-properties",
@@ -80,7 +78,6 @@
         "Name[sl]": "Spremenljivke",
         "Name[sv]": "Variabler",
         "Name[uk]": "Змінні",
-        "Name[x-test]": "xxVariablesxx",
         "Name[zh_CN]": "变量",
         "Name[zh_TW]": "變數"
     },

@@ -26,7 +26,6 @@
                 "Name[sl]": "Artur Puzio",
                 "Name[sv]": "Artur Puzio",
                 "Name[uk]": "Artur Puzio",
-                "Name[x-test]": "xxArtur Puzioxx",
                 "Name[zh_CN]": "Artur Puzio",
                 "Name[zh_TW]": "Artur Puzio",
                 "e-mail": "cytadela8@op.pl"
@@ -54,7 +53,6 @@
         "Description[sl]": "Seznam funkcij, ki so na voljo",
         "Description[sv]": "Lista över tillgängliga funktioner",
         "Description[uk]": "Список доступних функцій",
-        "Description[x-test]": "xxList of available functionsxx",
         "Description[zh_CN]": "可用函数列表",
         "Description[zh_TW]": "列出可使用的函數",
         "Icon": "documentation",
@@ -81,7 +79,6 @@
         "Name[sl]": "Slovar",
         "Name[sv]": "Ordlista",
         "Name[uk]": "Словник",
-        "Name[x-test]": "xxDictionaryxx",
         "Name[zh_CN]": "词典",
         "Name[zh_TW]": "字典"
     },
