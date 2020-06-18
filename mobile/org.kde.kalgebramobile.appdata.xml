@@ -26,6 +26,7 @@
   <name xml:lang="sl">KAlgebra Mobile</name>
   <name xml:lang="sv">Mobil Kalgebra</name>
   <name xml:lang="uk">Мобільна KAlgebra</name>
+  <name xml:lang="x-test">xxKAlgebra Mobilexx</name>
   <name xml:lang="zh-CN">KAlgebra 移动版</name>
   <name xml:lang="zh-TW">KAlgebra 行動版</name>
   <summary>Graph Calculator</summary>
@@ -52,6 +53,7 @@
   <summary xml:lang="sl">Kalkulator grafov</summary>
   <summary xml:lang="sv">Grafräknare</summary>
   <summary xml:lang="uk">Графічний калькулятор</summary>
+  <summary xml:lang="x-test">xxGraph Calculatorxx</summary>
   <summary xml:lang="zh-CN">图形计算器</summary>
   <summary xml:lang="zh-TW">圖形計算機</summary>
   <description>
@@ -76,6 +78,7 @@
     <p xml:lang="sl">KAlgebra je aplikacija, ki lahko nadomesti vaš grafični kalkulator. Ima numerične, logične, simbolične in analizne funkcije, ki omogočajo izračunavanje matematičnih izrazov na konzoli in rezultate narišejo v 2D ali 3D grafu.</p>
     <p xml:lang="sv">Kalgebra är en applikation som kan ersätta en grafräknare. Den har numeriska, logiska, symboliska och analytiska funktioner som låter dig beräkna matematiska uttryck i terminalen och rita upp resultaten grafiskt med två eller tre dimensioner.</p>
     <p xml:lang="uk">KAlgebra — програма, яка може замінити вам графічний калькулятор. У ній ви знайдете можливості з числового, логічного, символічного аналізу, які нададуть вам змогу обчислювати математичні вирази у консолі і графічно будувати результати на площині або у просторі.</p>
+    <p xml:lang="x-test">xxKAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.xx</p>
     <p xml:lang="zh-CN">KAlgebra可以代替您的其他图形计算器。它包含数值计算、逻辑计算、符号计算，以及分析功能，能让您在控制台中计算数学表达式，并将函数结果绘制为2D或3D图像。</p>
     <p xml:lang="zh-TW">KAlgebra 是個能替代繪圖計算機的應用程式，它包含數字、邏輯、符號以及分析功能，讓您能在終端計算數學表達式，並用圖形化的方式以 2D 或 3D 繪製結果。</p>
   </description>
