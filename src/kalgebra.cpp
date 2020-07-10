@@ -54,10 +54,10 @@
 #include <KStandardAction>
 #include <KToggleFullScreenAction>
 #include <KRecentFilesAction>
-#include <kconfig.h>
+#include <KConfig>
 #include <QProcess>
 #include <QPointer>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 
 class Add2DOption : public InlineOptions
 {
