@@ -32,8 +32,8 @@
             }
         ],
         "Description": "Displays the stored values",
-        "Description[ca@valencia]": "Ensenya les variables que hagueu guardat",
-        "Description[ca]": "Ensenya les variables que hagueu desat",
+        "Description[ca@valencia]": "Ensenya les variables que hàgeu guardat",
+        "Description[ca]": "Ensenya les variables que hàgiu desat",
         "Description[de]": "Anzeige der gespeicherten Werte",
         "Description[el]": "Εμφανίζει τις αποθηκευμένες τιμές",
         "Description[en_GB]": "Displays the stored values",
