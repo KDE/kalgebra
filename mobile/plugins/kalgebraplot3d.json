@@ -32,7 +32,7 @@
             }
         ],
         "Description": "Draws any 3D graph you want",
-        "Description[ca@valencia]": "Dibuixa els gràfics 3D que tu vulgues",
+        "Description[ca@valencia]": "Dibuixa els gràfics en 3D que vulgueu",
         "Description[ca]": "Dibuixa els gràfics en 3D que vulgueu",
         "Description[el]": "Σχεδιάζει όποιον γράφο θέλετε σε τρεις διαστάσεις",
         "Description[en_GB]": "Draws any 3D graph you want",
@@ -57,7 +57,7 @@
         "Description[zh_TW]": "繪製任何您想要的 3D 圖形",
         "Icon": "adjustrgb",
         "Name": "Graph 3D",
-        "Name[ca@valencia]": "Gràfics 3D",
+        "Name[ca@valencia]": "Gràfics en 3D",
         "Name[ca]": "Gràfics en 3D",
         "Name[cs]": "Grafy 3D",
         "Name[el]": "Γράφος 3D",

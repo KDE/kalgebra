@@ -32,7 +32,7 @@
             }
         ],
         "Description": "Draws any 2D graph you want",
-        "Description[ca@valencia]": "Dibuixa els gràfics 2D que tu vulgues",
+        "Description[ca@valencia]": "Dibuixa els gràfics en 2D que vulgueu",
         "Description[ca]": "Dibuixa els gràfics en 2D que vulgueu",
         "Description[el]": "Σχεδιάζει όποιον γράφο θέλετε σε δύο διαστάσεις",
         "Description[en_GB]": "Draws any 2D graph you want",
@@ -57,7 +57,7 @@
         "Description[zh_TW]": "繪製任何您想要的 2D 圖形",
         "Icon": "draw-bezier-curves",
         "Name": "Graph 2D",
-        "Name[ca@valencia]": "Gràfics 2D",
+        "Name[ca@valencia]": "Gràfics en 2D",
         "Name[ca]": "Gràfics en 2D",
         "Name[cs]": "Grafy 2D",
         "Name[el]": "Γράφος 2D",
