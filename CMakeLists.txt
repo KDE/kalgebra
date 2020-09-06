@@ -73,4 +73,5 @@ if(KF5DocTools_FOUND)
   add_subdirectory(doc)
 endif()
 
+ki18n_install(po)
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
