@@ -1,6 +1,6 @@
 add_subdirectory(plugins)
 
-qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc header.qrc)
+qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
 add_executable(kalgebramobile pluginsmodel.cpp
     ../src/consolemodel.cpp
     clipboard.cpp
