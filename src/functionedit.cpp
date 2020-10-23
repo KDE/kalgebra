@@ -20,8 +20,6 @@
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
 
 #include <KColorScheme>
 

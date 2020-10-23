@@ -23,7 +23,6 @@
 #include <analitzagui/expressionedit.h>
 
 #include <QPushButton>
-#include <QLabel>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <klocalizedstring.h>

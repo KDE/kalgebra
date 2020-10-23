@@ -19,7 +19,6 @@
 
 #include "clipboard.h"
 #include <QGuiApplication>
-#include <QMimeData>
 #include <QUrl>
 #include <QDebug>
 
