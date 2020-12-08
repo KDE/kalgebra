@@ -25,14 +25,18 @@ import org.kde.kalgebra.mobile 1.0
 Kirigami.ApplicationWindow
 {
     id: rootItem
-    height: 500
-    width: 900
+    height: 800
+    width: Kirigami.Units.gridUnit * 70
     visible: true
+
+    readonly property int columnWidth: Kirigami.Units.gridUnit * 13
+    wideScreen: width > columnWidth * 5
 
     globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
 
-        modal: Kirigami.Settings.isMobile
+        modal: !rootItem.wideScreen
+        onModalChanged: drawerOpen = !modal
         handleVisible: modal
 
         title: "KAlgebra"
