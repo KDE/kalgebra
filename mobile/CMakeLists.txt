@@ -1,10 +1,11 @@
-add_subdirectory(plugins)
-
 qt5_add_resources(KALGEBRAMOBILE_SRCS resources.qrc)
-add_executable(kalgebramobile pluginsmodel.cpp
+
+add_executable(kalgebramobile
     ../src/consolemodel.cpp
     clipboard.cpp
-    kalgebramobile.cpp main.cpp ${KALGEBRAMOBILE_SRCS})
+    kalgebramobile.cpp
+    main.cpp
+    ${KALGEBRAMOBILE_SRCS})
 
 target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
     KF5::CoreAddons KF5::I18n KF5::Analitza KF5::AnalitzaGui KF5::AnalitzaPlot)

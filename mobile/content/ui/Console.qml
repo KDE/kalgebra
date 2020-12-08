@@ -23,10 +23,8 @@ import QtQml.Models 2.10
 import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
-import widgets 1.0
 
-KAlgebraPage
-{
+KAlgebraPage {
     id: page
     ListModel { id: itemModel }
 
@@ -36,7 +34,7 @@ KAlgebraPage
 
     ConsoleModel {
         id: consoleModel
-        variables: app.variables
+        variables: App.variables
         onMessage: {
             itemModel.append({ result: msg, expression: result.toString()  })
             input.selectAll()
@@ -117,17 +115,17 @@ KAlgebraPage
             ]
             actions: [
                 Kirigami.Action {
-                    enabled: app.functionsModel().canAddFunction(expression, 2, app.variables)
+                    enabled: App.functionsModel().canAddFunction(expression, 2, App.variables)
                     text: i18n("2D Plot")
                     onTriggered: {
-                        app.functionsModel().addFunction(expression, 2, app.variables)
+                        App.functionsModel().addFunction(expression, 2, App.variables)
                     }
                 },
                 Kirigami.Action {
-                    enabled: app.functionsModel().canAddFunction(expression, 4, app.variables)
+                    enabled: App.functionsModel().canAddFunction(expression, 4, App.variables)
                     text: i18n("3D Plot")
                     onTriggered: {
-                        app.functionsModel().addFunction(expression, 4, app.variables)
+                        App.functionsModel().addFunction(expression, 4, App.variables)
                     }
                 }
             ]

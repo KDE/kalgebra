@@ -35,7 +35,6 @@
 
 #include "kalgebramobile.h"
 #include "kalgebra_version.h"
-#include "pluginsmodel.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -57,21 +56,13 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
         parser.process(app);
         about.processCommandLine(&parser);
     }
-    
+
     KAlgebraMobile widget;
-    
-    const QString pluginsDir = PluginsModel::pluginsDirectoryPath();
 
     QQmlApplicationEngine engine;
 
-    engine.rootContext()->setContextProperty(QStringLiteral("app"), &widget);
-    engine.addImportPath(pluginsDir);
-#ifdef __ANDROID__
-    engine.addImportPath(QStringLiteral("assets:/qml"));
-#endif
-
+    qmlRegisterSingletonInstance("org.kde.kalgebra.mobile", 1, 0, "App", &widget);
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-
-    engine.load(QUrl::fromLocalFile(pluginsDir + QStringLiteral("/widgets/KAlgebraMobile.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     return app.exec();
 }

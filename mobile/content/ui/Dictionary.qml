@@ -19,21 +19,19 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import org.kde.analitza 1.0
-import widgets 1.0
 import org.kde.kirigami 2.5 as Kirigami
+import org.kde.kalgebra.mobile 1.0
 import QtQuick.Controls 2.5
 
-KAlgebraPage
-{
+KAlgebraPage {
     id: page
-    anchors.margins: 0
 
     function updateGraph() {
         view.model.clear();
         view.resetViewport();
-        view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), app.variables);
+        view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), App.variables);
     }
-    
+
     ColumnLayout {
         id: descriptioncol
 

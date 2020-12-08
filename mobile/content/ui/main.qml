@@ -18,7 +18,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.2
-import org.kde.kirigami 2.0 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 
@@ -32,6 +32,10 @@ Kirigami.ApplicationWindow
     readonly property int columnWidth: Kirigami.Units.gridUnit * 13
     wideScreen: width > columnWidth * 5
 
+    Kirigami.PagePool {
+        id: mainPagePool
+    }
+
     globalDrawer: Kirigami.GlobalDrawer {
         id: drawer
 
@@ -43,51 +47,51 @@ Kirigami.ApplicationWindow
         titleIcon: "qrc:/kalgebra.svgz"
         drawerOpen: true
 
-        Instantiator {
-            delegate: Kirigami.Action {
-                id: action
-                text: title
-                iconName: decoration
-                property Component component
-                onTriggered: {
-                    if (!component)
-                        component = Qt.createComponent(model.path, action)
-
-                    if (component.status == Component.Error) {
-                        console.log("error", component.errorString());
-                        return;
-                    }
-
-                    try {
-                        rootItem.pageStack.replace(component, {title: title})
-                    } catch(e) {
-                        console.log("error", e)
-                    }
-                }
+        actions: [
+            Kirigami.PagePoolAction {
+                icon.name: "utilities-terminal"
+                text: i18n("Calculator")
+                page: "qrc:/Console.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "draw-bezier-curves"
+                text: i18n("Graph 2D")
+                page: "qrc:/Plot2D.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "adjustrgb"
+                text: i18n("Graph 3D")
+                page: "qrc:/Plot3D.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "kspread"
+                text: i18n("Value Tables")
+                page: "qrc:/Tables.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "document-properties"
+                text: i18n("Variables")
+                page: "qrc:/VariablesView.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "documentation"
+                text: i18n("Dictionary")
+                page: "qrc:/Dictionary.qml"
+                pagePool: mainPagePool
+            },
+            Kirigami.PagePoolAction {
+                icon.name: "help-about"
+                text: i18n("About KAlgebra")
+                page: "qrc:/About.qml"
+                pagePool: mainPagePool
             }
-            model: PluginsModel {}
-            onObjectAdded: {
-                var acts = [];
-                for(var v in drawer.actions) {
-                    acts.push(drawer.actions[v]);
-                }
-                acts.splice(index, 0, object)
-                drawer.actions = acts;
-            }
-            onObjectRemoved: {
-                var acts = [];
-                for(var v in drawer.actions) {
-                    acts.push(drawer.actions[v]);
-                }
-                drawer.actions.splice(drawer.actions.indexOf(object), 1)
-                drawer.actions = acts;
-            }
-        }
-
-        actions: []
+        ]
     }
 
-    Component.onCompleted: {
-        drawer.actions[0].trigger()
-    }
+    pageStack.initialPage: mainPagePool.loadPage("qrc:/Console.qml")
 }

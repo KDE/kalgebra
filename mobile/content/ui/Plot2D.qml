@@ -22,10 +22,9 @@ import QtQuick.Dialogs 1.0
 import QtQuick.Controls 2.3
 import org.kde.kirigami 2.5 as Kirigami
 import org.kde.analitza 1.0
-import widgets 1.0
+import org.kde.kalgebra.mobile 1.0
 
-KAlgebraPage
-{
+KAlgebraPage {
     id: page
 
     leftPadding: 0
@@ -77,7 +76,7 @@ KAlgebraPage
         Graph2D {
             id: view
             anchors.fill: parent
-            model: app.functionsModel()
+            model: App.functionsModel()
 
             Kirigami.OverlaySheet {
                 id: dialog
@@ -92,25 +91,25 @@ KAlgebraPage
                         Component.onCompleted: selectAll()
                         onAccepted: {
                             input.selectAll()
-                            view.addFunction(input.text, app.variables)
+                            view.addFunction(input.text, App.variables)
                         }
                     }
                     Button {
                         icon.name: "list-add"
                         onClicked: {
                             input.selectAll()
-                            view.addFunction(input.text, app.variables)
+                            view.addFunction(input.text, App.variables)
                         }
                     }
                 }
                 contentItem: Kirigami.CardsListView {
                     delegate: Kirigami.Card { contentItem: Label { text: model.description } }
-                    model: app.functionsModel()
+                    model: App.functionsModel()
 
                     footer: Button {
                         text: i18n("Clear All")
                         onClicked: {
-                            app.functionsModel().clear();
+                            App.functionsModel().clear();
                             view.resetViewport();
                         }
                     }
