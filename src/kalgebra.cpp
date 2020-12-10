@@ -264,7 +264,7 @@ KAlgebra::KAlgebra(QWidget *parent)
     b_menu->addAction(KStandardAction::zoomIn(m_graph2d, SLOT(zoomIn()), this));
     b_menu->addAction(KStandardAction::zoomOut(m_graph2d, SLOT(zoomOut()), this));
     QAction* ac=KStandardAction::actualSize(m_graph2d, SLOT(resetViewport()), this);
-    ac->setShortcut(Qt::ControlModifier + Qt::Key_0);
+    ac->setShortcut({Qt::ControlModifier | Qt::Key_0});
     b_menu->addAction(ac);
     b_menu->addSeparator()->setText(i18n("Resolution"));
     b_actions[2] = b_menu->addAction(i18nc("@item:inmenu", "Poor"), this, &KAlgebra::set_res_low);
