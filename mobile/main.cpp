@@ -17,6 +17,10 @@
  *************************************************************************************/
 
 #include <QGuiApplication>
+#ifndef Q_OS_ANDROID
+#include <QApplication>
+#include <QQuickStyle>
+#endif
 
 #include <KLocalizedContext>
 #include <KLocalizedString>
@@ -38,11 +42,15 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-#ifdef __ANDROID__
-    qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
+#ifdef Q_OS_ANDROID
+    QQuickStyle::setStyle("Material");
 #endif
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#ifdef Q_OS_ANDROID
     QGuiApplication app(argc, argv);
+#else
+    QApplication app(argc, argv);
+#endif
     KLocalizedString::setApplicationDomain("kalgebramobile");
     KAboutData about(QStringLiteral("kalgebramobile"), QStringLiteral("KAlgebra"), QStringLiteral(KALGEBRA_VERSION_STRING), i18n("A portable calculator"),
              KAboutLicense::GPL, i18n("(C) 2006-2020 Aleix Pol i Gonzalez"));

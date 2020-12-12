@@ -11,7 +11,7 @@ project(kalgebra VERSION ${RELEASE_SERVICE_VERSION})
 find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
-find_package(Qt5 5.2 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
+find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)

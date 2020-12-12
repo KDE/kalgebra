@@ -12,13 +12,17 @@ target_link_libraries(kalgebramobile Qt5::Qml Qt5::Quick Qt5::Gui
 
 set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+if(ANDROID)
 #   Material requires QtSvg for icons
 #   if we don't link it here explicitly, androiddeployqt doesn't bring it
     find_package(Qt5Svg REQUIRED)
+    find_package(Qt5QuickControls2 REQUIRED)
     find_package(KF5Kirigami2 REQUIRED)
     kirigami_package_breeze_icons(ICONS list-add)
-    target_link_libraries(kalgebramobile Qt5::Svg KF5::Kirigami2)
+    target_link_libraries(kalgebramobile Qt5::Svg KF5::Kirigami2 Qt5::QuickControls2)
+else()
+    find_package(Qt5Widgets REQUIRED)
+    target_link_libraries(kalgebramobile Qt5::Widgets)
 endif()
 
 install(TARGETS kalgebramobile ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
