@@ -67,12 +67,14 @@ Kirigami.ApplicationWindow
                 pagePool: mainPagePool
             },
             Kirigami.PagePoolAction {
+                id: show2dPlotAction
                 icon.name: "draw-bezier-curves"
                 text: i18n("Graph 2D")
                 page: "qrc:/Plot2D.qml"
                 pagePool: mainPagePool
             },
             Kirigami.PagePoolAction {
+                id: show3dPlotAction
                 icon.name: "adjustrgb"
                 text: i18n("Graph 3D")
                 page: "qrc:/Plot3D.qml"

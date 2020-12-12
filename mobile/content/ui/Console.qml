@@ -153,6 +153,7 @@ Kirigami.Page {
                     text: i18n("2D Plot")
                     onTriggered: {
                         App.functionsModel().addFunction(expression, 2, App.variables)
+                        show2dPlotAction.trigger();
                     }
                 },
                 Kirigami.Action {
@@ -160,6 +161,7 @@ Kirigami.Page {
                     text: i18n("3D Plot")
                     onTriggered: {
                         App.functionsModel().addFunction(expression, 4, App.variables)
+                        show3dPlotAction.trigger();
                     }
                 }
             ]
