@@ -22,8 +22,9 @@ import org.kde.kirigami 2.5 as Kirigami
 import org.kde.kalgebra.mobile 1.0
 import QtQuick.Controls 2.5 as QQC2
 
-KAlgebraPage
-{
+
+Kirigami.ScrollablePage {
+    title: i18n("Variables")
     Kirigami.CardsListView {
         anchors.fill: parent
         model: VariablesModel { variables: App.variables }
