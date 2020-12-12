@@ -17,9 +17,10 @@
  *************************************************************************************/
 
 #include <QGuiApplication>
-#ifndef Q_OS_ANDROID
-#include <QApplication>
+#ifdef Q_OS_ANDROID
 #include <QQuickStyle>
+#else
+#include <QApplication>
 #endif
 
 #include <KLocalizedContext>
