@@ -24,8 +24,10 @@ import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 
-KAlgebraPage {
+Kirigami.Page {
     id: page
+
+    title: i18n("Calculator")
     ListModel { id: itemModel }
 
     Clipboard {
