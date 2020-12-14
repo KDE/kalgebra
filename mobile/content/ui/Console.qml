@@ -173,18 +173,12 @@ Kirigami.Page {
         }
     }
 
-    ExpressionInput {
+    footer: ExpressionInput {
         id: input
         focus: true
-        
+
         Keys.onReturnPressed: {
             consoleModel.addOperation(text)
-        }
-        
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
         }
     }
 }
