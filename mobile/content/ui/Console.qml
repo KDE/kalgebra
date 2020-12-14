@@ -18,6 +18,7 @@
 
 import org.kde.kirigami 2.5 as Kirigami
 import QtQuick 2.2
+import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.5 as QQC2
 import QtQml.Models 2.10
 import QtQuick.Dialogs 1.0
@@ -29,6 +30,37 @@ Kirigami.Page {
 
     title: i18n("Calculator")
     ListModel { id: itemModel }
+
+    // This content is only available in the desktop version of Kalgebra.
+    // Don't put any information here that can't be accessed by another
+    // part of Kalgebra.
+    readonly property Item drawerContent : ColumnLayout {
+        visible: true
+        width: 300
+        Kirigami.AbstractApplicationHeader {
+            Layout.fillWidth: true
+            topPadding: Kirigami.Units.smallSpacing
+            bottomPadding: Kirigami.Units.largeSpacing
+            leftPadding: Kirigami.Units.smallSpacing
+            rightPadding: Kirigami.Units.smallSpacing
+            Layout.preferredHeight: Kirigami.Units.gridUnit * 2
+            Kirigami.Heading {
+                level: 1
+                text: i18n("Variables")
+                Layout.fillWidth: true
+            }
+        }
+        QQC2.ScrollView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            ListView {
+                model: VariablesModel { variables: App.variables }
+                delegate: Kirigami.BasicListItem {
+                    label: model.whatsThis
+                }
+            }
+        }
+    }
 
     Clipboard {
         id: clipboard

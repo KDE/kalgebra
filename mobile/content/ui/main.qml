@@ -42,9 +42,21 @@ Kirigami.ApplicationWindow
         modal: !rootItem.wideScreen
         onModalChanged: drawerOpen = !modal
         handleVisible: modal
+        width: contentItem ? columnWidth : 0
 
-        title: "KAlgebra"
-        titleIcon: "qrc:/kalgebra.svgz"
+        header: Kirigami.AbstractApplicationHeader {
+            topPadding: Kirigami.Units.smallSpacing
+            bottomPadding: Kirigami.Units.largeSpacing
+            leftPadding: Kirigami.Units.smallSpacing
+            rightPadding: Kirigami.Units.smallSpacing
+            implicitHeight: Kirigami.Units.gridUnit * 2
+            Kirigami.Heading {
+                level: 1
+                text: i18n("KAlgebra")
+                Layout.fillWidth: true
+            }
+        }
+
         drawerOpen: true
 
         actions: [
@@ -91,6 +103,33 @@ Kirigami.ApplicationWindow
                 pagePool: mainPagePool
             }
         ]
+    }
+
+    readonly property Component customDrawer: Kirigami.OverlayDrawer {
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
+
+        edge: Qt.application.layoutDirection == Qt.RightToLeft ? Qt.LeftEdge : Qt.RightEdge
+        modal: !rootItem.wideScreen
+        onModalChanged: drawerOpen = !modal
+        drawerOpen: true
+        onContentItemChanged: if (contentItem) {
+            contentItem.visible = true;
+        }
+        width: contentItem ? columnWidth : 0
+
+        contentItem: mainPagePool.lastLoadedItem.drawerContent ?? null
+        handleVisible: mainPagePool.lastLoadedItem.drawerContent !== undefined
+    }
+
+    readonly property Component normalDrawer: Kirigami.ContextDrawer {}
+
+    Component.onCompleted: if (Kirigami.Settings.isMobile) {
+        contextDrawer = normalDrawer.createObject(rootItem);
+    } else {
+        contextDrawer = customDrawer.createObject(rootItem);
     }
 
     pageStack.initialPage: mainPagePool.loadPage("qrc:/Console.qml")
