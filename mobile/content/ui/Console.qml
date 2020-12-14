@@ -25,7 +25,7 @@ import QtQuick.Dialogs 1.0
 import org.kde.analitza 1.0
 import org.kde.kalgebra.mobile 1.0
 
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: page
 
     title: i18n("Calculator")
@@ -60,29 +60,6 @@ Kirigami.Page {
                 }
             }
         }
-    }
-
-    Clipboard {
-        id: clipboard
-    }
-
-    ConsoleModel {
-        id: consoleModel
-        variables: App.variables
-        onMessage: {
-            itemModel.append({ result: msg, expression: result.toString()  })
-            input.selectAll()
-            view.currentIndex = view.count-1
-            view.positionViewAtIndex(view.currentIndex, ListView.Contain)
-        }
-    }
-
-    FileDialog {
-        id: fileDialog
-        folder: shortcuts.home
-        onAccepted: proceed()
-
-        property var proceed
     }
 
     contextualActions: [
@@ -166,13 +143,29 @@ Kirigami.Page {
                 }
             ]
         }
-
-        anchors {
-            top: parent.top
-            bottom: input.top
-            left: parent.left
-            right: parent.right
+        Clipboard {
+            id: clipboard
         }
+
+        ConsoleModel {
+            id: consoleModel
+            variables: App.variables
+            onMessage: {
+                itemModel.append({ result: msg, expression: result.toString()  })
+                input.selectAll()
+                view.currentIndex = view.count-1
+                view.positionViewAtIndex(view.currentIndex, ListView.Contain)
+            }
+        }
+
+        FileDialog {
+            id: fileDialog
+            folder: shortcuts.home
+            onAccepted: proceed()
+
+            property var proceed
+        }
+
     }
 
     footer: ExpressionInput {
