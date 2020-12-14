@@ -20,18 +20,17 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import org.kde.analitza 1.0
 import QtQuick.Controls 2.5
-import org.kde.kirigami 2.5 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 import org.kde.kalgebra.mobile 1.0
 
-KAlgebraPage {
-    Analitza {
-        id: a
-        variables: App.variables
-    }
-    
+Kirigami.ScrollablePage {
+    title: i18n("Value tables")
+
+    property ListModel resultsModel: ListModel {}
+
     function calculateTable() {
         resultsModel.clear();
-        
+
         var tmp = a.unusedVariableName()
         var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
         var ffrom = from.realValue, fto=to.realValue, fstep=step.realValue;
@@ -41,7 +40,7 @@ KAlgebraPage {
             step.value = fstep
         }
 //         console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
-        
+
         if(fstep===0) {
             resultsModel.append( { element: i18n("Errors: The step cannot be 0") } );
         } else if(ffrom === fto) {
@@ -56,56 +55,64 @@ KAlgebraPage {
                 resultsModel.append( { element: i +" = "+ expr.expression } );
             }
         }
-        
+
         a.removeVariable(tmp);
-    }
-    
-    ColumnLayout {
-        id: inputcol
-        
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
+        if (applicationWindow().pageStack.depth > 1) {
+            applicationWindow().pageStack.replace("qrc:/TableResultPage.qml", {
+                'results': resultsModel
+            });
+        } else {
+            applicationWindow().pageStack.push("qrc:/TableResultPage.qml", {
+                'results': resultsModel
+            });
         }
-        spacing: 10
-        
-        GridLayout {
-            id: ins
-            columns: 2
+    }
+
+    actions.main: Kirigami.Action {
+        icon.name: 'dialog-ok'
+        text: i18n('Run')
+        onTriggered: calculateTable()
+    }
+
+    Analitza {
+        id: a
+        variables: App.variables
+    }
+
+    Kirigami.FormLayout {
+        ExpressionInput {
+            Kirigami.FormData.label: i18n("Input")
+            id: input
+            text: "sin x";
             Layout.fillWidth: true
-            
-            Label { text: i18n("Input:") }
-            ExpressionInput {
-                id: input
-                text: "sin x";
-                Layout.fillWidth: true
-                onAccepted: calculateTable();
-            }
-            Label { text: i18n("From:") }   RealInput { id: from; text: "0"; Layout.fillWidth: true; onAccepted: calculateTable() }
-            Label { text: i18n("To:") }     RealInput { id: to; text: "10"; Layout.fillWidth: true; onAccepted: calculateTable() }
-            Label { text: i18n("Step:") }   RealInput { id: step; text: "1"; Layout.fillWidth: true; onAccepted: calculateTable() }
+            onAccepted: calculateTable();
         }
-        
+        RealInput {
+            id: from;
+            text: "0";
+            Kirigami.FormData.label: i18n("From:")
+            Layout.fillWidth: true;
+            onAccepted: calculateTable()
+        }
+        RealInput {
+            id: to;
+            text: "10";
+            Kirigami.FormData.label: i18n("To:")
+            Layout.fillWidth: true;
+            onAccepted: calculateTable()
+        }
+
+        RealInput {
+            id: step;
+            Kirigami.FormData.label: i18n("Step")
+            text: "1";
+            Layout.fillWidth: true;
+            onAccepted: calculateTable()
+        }
         Button {
-            Layout.alignment: Qt.AlignRight
             text: i18n("Run")
-            
             onClicked: calculateTable()
+            visible: !Kirigami.Settings.isMobile
         }
-    }
-    
-    Kirigami.CardsListView {
-        width: parent.width
-        anchors {
-            top: inputcol.bottom
-            bottom: parent.bottom
-            topMargin: 5
-        }
-        currentIndex: -1
-        
-        model: ListModel { id: resultsModel }
-        delegate: Kirigami.Card { contentItem: Label { text: model.element} }
-        header: Label { text: i18n("Results:") }
     }
 }

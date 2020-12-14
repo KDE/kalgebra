@@ -5,6 +5,7 @@
     <file alias='kalgebra.svgz'>../icons/sc-apps-kalgebra.svgz</file>
     <file alias="main.qml">content/ui/main.qml</file>
     <file alias="About.qml">content/ui/About.qml</file>
+    <file alias="TableResultPage.qml">content/ui/TableResultPage.qml</file>
     <file alias="Console.qml">content/ui/Console.qml</file>
     <file alias="Dictionary.qml">content/ui/Dictionary.qml</file>
     <file alias="Plot2D.qml">content/ui/Plot2D.qml</file>
