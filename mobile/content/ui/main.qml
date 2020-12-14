@@ -118,9 +118,9 @@ Kirigami.ApplicationWindow
         onModalChanged: drawerOpen = !modal
         drawerOpen: true
         onContentItemChanged: if (contentItem) {
-            contentItem.visible = true;
+            contentItem.visible = (mainPagePool.lastLoadedItem.drawerContent !== undefined);
         }
-        width: contentItem ? columnWidth : 0
+        width: mainPagePool.lastLoadedItem.drawerContent ? columnWidth : 0
 
         contentItem: mainPagePool.lastLoadedItem.drawerContent ?? null
         handleVisible: mainPagePool.lastLoadedItem.drawerContent !== undefined
