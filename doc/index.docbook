@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&kalgebra;">
   <!ENTITY commands SYSTEM "commands.docbook">
 
+  <!ENTITY MathML "<acronym>MathML</acronym>">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -31,8 +31,8 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 
-<date>2016-04-19</date>
-<releaseinfo>0.10 (Applications 16.04)</releaseinfo>
+<date>2020-12-17</date>
+<releaseinfo>Applications 20.12</releaseinfo>
 
 <abstract>
 <para>
@@ -40,7 +40,7 @@
 It has numerical, logical, symbolic, and analysis features that let you calculate
 mathematical expressions on the calculator and graphically plot the results
 in 2D or 3D. &kalgebra; is rooted in the Mathematical Markup Language
-(MathML); however, one does not need to know MathML to use &kalgebra;.
+(&MathML;); however, one does not need to know &MathML; to use &kalgebra;.
 </para>
 </abstract>
 
@@ -51,7 +51,7 @@ in 2D or 3D. &kalgebra; is rooted in the Mathematical Markup Language
 <keyword>mathematics</keyword>
 <keyword>2D</keyword>
 <keyword>3D</keyword>
-<keyword>mathML</keyword>
+<keyword>MathML</keyword>
 </keywordset>
 
 </bookinfo>
@@ -62,7 +62,7 @@ in 2D or 3D. &kalgebra; is rooted in the Mathematical Markup Language
 <para>
 &kalgebra; has numerous features that allow the user to perform all sorts
 of mathematical operations and show graphically. At one time, this
-program was MathML oriented. Now it can be used by anyone with a little
+program was &MathML; oriented. Now it can be used by anyone with a little
 mathematical knowledge to solve simple and advanced problems alike.
 </para>
 <!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
@@ -77,7 +77,7 @@ A calculator for quick and easy evaluation of math
 functions.
 </para></listitem>
 <listitem><para>
-Scripting capability for advanced series of calculations
+Scripting capability for advanced series of calculations.
 </para></listitem>
 <listitem><para>
 Language capabilities including function definition and syntax autocompletion.
@@ -173,57 +173,59 @@ similar to that used on most modern graphing calculators. This section
 lists the fundamental built-in operators available in &kalgebra;. The
 author of &kalgebra; modeled this syntax after
 <ulink url="http://maxima.sourceforge.net/">Maxima</ulink> and
-  <ulink url="https://www.maplesoft.com/products/maple/">maple</ulink> for users
+<ulink url="https://www.maplesoft.com/products/maple/">Maple</ulink> for users
 that may be familiar with these programs.
 </para>
 
 <para>
 For users that are interested in the inner workings of &kalgebra;, user
-entered expressions are converted to MathML on the backend. A rudimentary
-understanding of the capabilities supported by MathML will go a long way
+entered expressions are converted to &MathML; on the backend. A rudimentary
+understanding of the capabilities supported by &MathML; will go a long way
 toward revealing the inner capabilities of &kalgebra;.
 </para>
 
 <para>Here is a list of the available operators we have by now:</para>
 <itemizedlist>
-<listitem><para>+ - * / : Addition, subtraction, multiplication and
+<listitem><para><literal>+ - * / </literal>: Addition, subtraction, multiplication and
 division.</para> </listitem>
-<listitem><para>^, **: Power, you can use them both. Also it is possible to use
-the unicode ² characters. Powers are one way to make roots too, you can do it
-like: a**(1/b)</para></listitem>
-<listitem><para>-&gt; : lambda. It is the way to specify one or more free
+<listitem><para><literal>^, ** </literal>: Power, you can use them both. Also it is possible to use
+the unicode <literal>²</literal> characters. Powers are one way to make roots too, you can do it
+like: <literal>a**(1/b)</literal></para></listitem>
+<listitem><para><literal>-&gt; </literal>: lambda. It is the way to specify one or more free
 variables that will be  bound in a function. For example, in the expression,
 <userinput>length:=(x,y)->(x*x+y*y)^0.5</userinput>, the lambda operator is used to denote
-that x and y will be bound when the length function is used.
+that <literal>x</literal> and <literal>y</literal> will be bound when the length function is used.
 </para></listitem>
-<listitem><para>x=a..b : This is used when we need to delimit a range
-(bounded variable+uplimit+downlimit). This means that x goes from a to b.</para></listitem>
-<listitem><para>() : It is used to specify a higher priority.</para></listitem>
-<listitem><para>abc(params) : Functions. When the parser finds a function, it checks
-if abc is an operator. If it is, it will be treated as an operator, if it is
+<listitem><para><literal>x=a..b </literal>: This is used when we need to delimit a range
+(bounded variable+uplimit+downlimit). This means that <literal>x</literal> goes from <literal>a</literal>
+to <literal>b</literal>.</para></listitem>
+<listitem><para><literal>() </literal>: It is used to specify a higher priority.</para></listitem>
+<listitem><para><literal>abc(params) </literal>: Functions. When the parser finds a function, it checks
+if <literal>abc</literal> is an operator. If it is, it will be treated as an operator, if it is
 not, it will be treated as a user function.</para></listitem>
-<listitem><para>:= : Definition. It is used to define a variable value. You can
-do things like x:=3, x:=y being y defined or not or perimeter:=r->2*pi*r.
+<listitem><para><literal>:= </literal>: Definition. It is used to define a variable value. You can
+do things like <userinput>x:=3</userinput>, <userinput>x:=y</userinput> being <literal>y</literal> defined
+or not or <userinput>perimeter:=r->2*pi*r</userinput>.
 </para></listitem>
-<listitem><para>? : Piecewise condition definition. Piecewise is the way we can define
+<listitem><para><literal>? </literal>: Piecewise condition definition. Piecewise is the way we can define
 conditional operations in &kalgebra;. Put another way, this is a way of
-specifying an if, elseif, else condition. If we introduce the condition before the '?' it will
-use this condition only if it is true, if it finds a '?' without any condition, it will
+specifying an if, elseif, else condition. If we introduce the condition before the '<literal>?</literal>' it will
+use this condition only if it is true, if it finds a '<literal>?</literal>' without any condition, it will
 enter in the last instance.
-Example: piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }
+Example: <userinput>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput>
 </para></listitem>
-<listitem><para>{ } : MathML container. It can be used to define a container. Mainly
+<listitem><para><literal>{ } </literal>: &MathML; container. It can be used to define a container. Mainly
 useful for working with piecewise.
 </para></listitem>
-<listitem><para>= &gt; &gt;= &lt; &lt;= : Value comparators for equal,
-greater, greater or equal, less and less or equal respectively</para></listitem>
+<listitem><para><literal>= &gt; &gt;= &lt; &lt;= </literal>: Value comparators for equal,
+greater, greater or equal, less and less or equal respectively.</para></listitem>
 </itemizedlist>
 
-<para>Now you could ask me, why should the user mind about MathML? That’s easy.
-With this, we can operate with functions like cos(), sin(), any other
-trigonometrical functions, sum() or product(). It does not matter what kind it is.
-We can use plus(), times() and everything which has its operator. Boolean
-functions are implemented as well, so we can do something like or(1,0,0,0,0).</para>
+<para>Now you could ask me, why should the user mind about &MathML;? That’s easy.
+With this, we can operate with functions like <function>cos()</function>, <function>sin()</function>, any other
+trigonometrical functions, <function>sum()</function> or <function>product()</function>. It does not matter what kind it is.
+We can use <function>plus()</function>, <function>times()</function> and everything which has its operator. Boolean
+functions are implemented as well, so we can do something like <function>or(1,0,0,0,0)</function>.</para>
 
 </chapter>
 
@@ -247,18 +249,18 @@ dialog that lets you change their values (just a way to trick the log).
 </para>
 
 <para>
-The "ans" variable is special, every time you enter an expression, the
-"ans" variable value will be changed to the last result.
+The <quote><varname>ans</varname></quote> variable is special, every time you enter an expression, the
+<quote><varname>ans</varname></quote> variable value will be changed to the last result.
 </para>
 
 <para>The following are example functions that can be entered in
 the input field of the calculator window:</para>
 <itemizedlist>
-<listitem><para>sin(pi)</para></listitem>
-<listitem><para>k:=33</para></listitem>
-<listitem><para>sum(k*x : x=0..10)</para></listitem>
-<listitem><para>f:=p->p*k</para></listitem>
-<listitem><para>f(pi)</para></listitem>
+<listitem><para><userinput>sin(pi)</userinput></para></listitem>
+<listitem><para><userinput>k:=33</userinput></para></listitem>
+<listitem><para><userinput>sum(k*x : x=0..10)</userinput></para></listitem>
+<listitem><para><userinput>f:=p->p*k</userinput></para></listitem>
+<listitem><para><userinput>f(pi)</userinput></para></listitem>
 </itemizedlist>
 
 <para>
@@ -287,7 +289,7 @@ using the <guimenu>Calculator</guimenu> menu options:</para>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>L</keycap></keycombo></shortcut>
-<guimenu>Calculator</guimenu><guimenuitem>Load Script</guimenuitem>
+<guimenu>Calculator</guimenu><guimenuitem>Load Script...</guimenuitem>
 </menuchoice></term>
 <listitem><para>Executes the instructions in a file sequentially.
 Useful if you want to define some libraries or resume some previous work.</para></listitem>
@@ -295,25 +297,53 @@ Useful if you want to define some libraries or resume some previous work.</para>
 
 <varlistentry>
 <term><menuchoice>
+<guimenu>Calculator</guimenu><guisubmenu>Recent Scripts</guisubmenu>
+</menuchoice></term>
+<listitem><para>Displays a submenu that will allow you to choose the recently executed scripts.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>G</keycap></keycombo></shortcut>
-<guimenu>Calculator</guimenu><guimenuitem>Save Script</guimenuitem>
+<guimenu>Calculator</guimenu><guimenuitem>Save Script...</guimenuitem>
 </menuchoice></term>
 <listitem><para>Saves the instructions you have typed since the session began to be able to reuse. Generates text files so it should be easy to fix
-using any text editor, like Kate.</para></listitem>
+using any text editor, like &kate;.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><menuchoice>
 <shortcut><keycombo action="simul">&Ctrl;
 <keycap>S</keycap></keycombo></shortcut>
-<guimenu>Calculator</guimenu><guimenuitem>Export Log</guimenuitem>
+<guimenu>Calculator</guimenu><guimenuitem>Export Log...</guimenuitem>
 </menuchoice></term>
 <listitem><para>Saves the log with all results into an &HTML; file to be able to print or publish.</para></listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycap>F3</keycap></shortcut>
+<guimenu>Calculator</guimenu><guimenuitem>Insert ans...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Insert the <quote><varname>ans</varname></quote> variable and makes it easier to reuse older values.</para></listitem>
+</varlistentry>
 
+<varlistentry>
+<term><menuchoice>
+<guimenu>Calculator</guimenu><guimenuitem>Calculate</guimenuitem>
+</menuchoice></term>
+<listitem><para>A radio button to set the <guilabel>Execution Mode</guilabel> to calculation.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>Calculator</guimenu><guimenuitem>Evaluate</guimenuitem>
+</menuchoice></term>
+<listitem><para>A radio button to set the <guilabel>Execution Mode</guilabel> to evaluation.</para></listitem>
+</varlistentry>
+
+</variablelist>
 </chapter>
 
 <chapter id="two-D-graphs">
@@ -325,17 +355,18 @@ type your function.</para>
 
 <sect1 id="two-D-syntax">
 <title>Syntax</title>
-<para>If you want to use a typical f(x) function it is not necessary to specify
-it, but if you want a f(y) or a polar function, you will have to add y-&gt; and q-&gt;
+<para>If you want to use a typical <function>f(x)</function> function it is not
+necessary to specify it, but if you want a <function>f(y)</function> or a polar
+function, you will have to add <literal>y-&gt;</literal> and <literal>q-&gt;</literal>
 as the bounded variables.</para>
 
 <para>Examples:</para>
 <itemizedlist>
-<listitem><para>sin(x)</para></listitem>
-<listitem><para>x²</para></listitem>
-<listitem><para>y->sin(y)</para></listitem>
-<listitem><para>q->3*sin(7*q)</para></listitem>
-<listitem><para>t->vector{sin t, t**2}</para></listitem>
+<listitem><para><userinput>sin(x)</userinput></para></listitem>
+<listitem><para><userinput>x²</userinput></para></listitem>
+<listitem><para><userinput>y->sin(y)</userinput></para></listitem>
+<listitem><para><userinput>q->3*sin(7*q)</userinput></para></listitem>
+<listitem><para><userinput>t->vector{sin t, t**2}</userinput></para></listitem>
 </itemizedlist>
 <para>If you have entered the function click on the <guibutton>OK</guibutton> button to display the graph in the main window.</para>
 
@@ -347,45 +378,46 @@ as the bounded variables.</para>
 you are in List mode. You can set each graph its own color.</para>
 
 <para>The view can be zoomed and moved with the mouse. Using the wheel
-you can zoom in and out. You can also select an area with the left button
-of the mouse and this area will be zoomed in. Move the view with the arrow keys.</para>
+you can zoom in and out. You can also select an area with the &LMB; and this
+area will be zoomed in. Move the view with the keyboard arrow keys.</para>
 
 <note>
  <para>The viewport of 2D graphs can be explicitly defined using the <guilabel>Viewport</guilabel> tab on a <guilabel>2D Graph</guilabel> tab.</para>
 </note>
  
-<para>In the <guilabel>List</guilabel> tab, you can open an <guilabel>Editing</guilabel> tab to edit or remove a function with double-click and check or uncheck the check box next to the function name to show or hide it.</para>
+<para>In the <guilabel>List</guilabel> tab at the bottom right part, you can open an <guilabel>Editing</guilabel> tab to edit or remove a function with double-click and check or uncheck the check box next to the function name to show or hide it.</para>
 <para>In the <guimenu>2D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
-<listitem><para>Show or hide the grid</para></listitem>
-<listitem><para>Keep the aspect ratio while zooming</para></listitem>
-<listitem><para>Zoom in (<keycombo action="simul">&Ctrl;
+<listitem><para><guimenuitem>Grid</guimenuitem>: Show or hide the grid</para></listitem>
+<listitem><para><guimenuitem>Keep Aspect Ratio</guimenuitem>: Keep the aspect ratio while zooming</para></listitem>
+<listitem><para><guimenuitem>Save</guimenuitem>: Save (<keycombo action="simul">&Ctrl;
+<keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
+<listitem><para><guimenuitem>Zoom in/out</guimenuitem>: Zoom in (<keycombo action="simul">&Ctrl;
 <keycap>+</keycap></keycombo>) and zoom out (<keycombo action="simul">&Ctrl;
 <keycap>-</keycap></keycombo>)</para></listitem>
-<listitem><para>Save (<keycombo action="simul">&Ctrl;
-<keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
-<listitem><para>Reset the view to the original zoom</para></listitem>
-<listitem><para>Select a resolution for the graphs</para></listitem>
+<listitem><para><guimenuitem>Actual Size</guimenuitem>: Reset the view to the original zoom</para></listitem>
+<listitem><para><guilabel>Resolution</guilabel>: Followed by a list of radio buttons to select a resolution for the graphs</para></listitem>
 </itemizedlist>
 
 <para>
    Below is a screenshot of a user who's cursor is at the rightmost root
-   of the function, sin(1/x). The user who graphed it used very fine
-   resolution to make this graph (as it oscillates at higher and higher
-   frequency near the origin). There is also a live cursor feature
-   where whenever you move your cursor over a spot, it shows you the x
-   and y values in the bottom left corner of the screen. A live "tangent
-   line" is plotted on the function at the live cursor location.
+   of the function, <function>sin(1/x)</function>. The user who graphed
+   it used very fine resolution to make this graph (as it oscillates at
+   higher and higher frequency near the origin). There is also a live
+   cursor feature where whenever you move your cursor over a spot, it
+   shows you the <literal>x</literal> and <literal>y</literal> values in
+   the bottom left corner of the screen. A live <quote>tangent line</quote>
+   is plotted on the function at the live cursor location.
  </para>
 
 <screenshot>
-<screeninfo>Here's a screenshot of &kalgebra; 2D graph window</screeninfo>
+<screeninfo>Here's a screenshot of &kalgebra; 2D Graph window</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
 	  </imageobject>
 	    <textobject>
-	    <phrase>&kalgebra; 2D graph window</phrase>
+	    <phrase>&kalgebra; 2D Graph window</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
@@ -398,48 +430,48 @@ of the mouse and this area will be zoomed in. Move the view with the arrow keys.
 <chapter id="three-D-graphs">
 <title>3D Graphs</title>
 
-<para>To draw a 3D Graph with &kalgebra; select the <guilabel>3D Graph</guilabel> tab
+<para>To draw a 3D graph with &kalgebra; select the <guilabel>3D Graph</guilabel> tab
 and you will see an input field at the bottom where you will type your function.
-Z cannot be defined yet. For the moment &kalgebra; only supports
-3D graphs explicitly dependent only on the x and y, such as (x,y)->x*y,
-where z=x*y.
+<literal>Z</literal> cannot be defined yet. For the moment &kalgebra; only supports
+3D graphs explicitly dependent only on the <literal>x</literal> and <literal>y</literal>,
+such as <userinput>(x,y)->x*y</userinput>, where <userinput>z=x*y</userinput>.
 </para>
 
 <para>Examples:</para>
 <itemizedlist>
-<listitem><para>(x,y)->sin(x)*sin(y)</para></listitem>
-<listitem><para>(x,y)->x/y</para></listitem>
+<listitem><para><userinput>(x,y)->sin(x)*sin(y)</userinput></para></listitem>
+<listitem><para><userinput>(x,y)->x/y</userinput></para></listitem>
 </itemizedlist>
 
 <para>The view can be zoomed and moved with the mouse. Using the wheel
 you can zoom in and out. Hold the &LMB; and move the mouse to rotate the graph.</para>
 
- <para>The left and right arrow keys rotate the graph around the z axis, the up and down arrow keys rotate around the horizontal axis of the view. Press <keycap>W</keycap> to zoom in the plot and <keycap>S</keycap> to zoom it out.</para>
+<para>The &Left; and &Right; arrow keys rotate the graph around the <literal>z</literal> axis, the &Up; and &Down; arrow keys rotate around the horizontal axis of the view. Press <keycap>W</keycap> to zoom in the plot and <keycap>S</keycap> to zoom it out.</para>
 
 <para>In the <guimenu>3D Graph</guimenu> menu you find these options:</para>
 <itemizedlist>
 <!-- not in master for 4.11
-<listitem><para>Enable or disable transparency in the 3D graph menu</para></listitem>
+<listitem><para>Enable or disable transparency in the 3D Graph menu</para></listitem>
 -->
-<listitem><para>Save (<keycombo action="simul">&Ctrl;
-<keycap>S</keycap></keycombo>) the graph as image file</para></listitem>
-<listitem><para>Reset the view to the original zoom in the 3D graph menu</para></listitem>
-<listitem><para>You can draw the graphs with dots, lines or solid styles in the 3D graph menu</para></listitem>
+<listitem><para><guimenuitem>Save</guimenuitem>: Save (<keycombo action="simul">&Ctrl;
+<keycap>S</keycap></keycombo>) the graph as image file or supported document</para></listitem>
+<listitem><para><guimenuitem>Reset View</guimenuitem>: Reset the view to the original zoom in the <guimenu>3D Graph</guimenu> menu</para></listitem>
+<listitem><para>You can draw the graphs with <guimenuitem>Dots</guimenuitem>, <guimenuitem>Lines</guimenuitem> or <guimenuitem>Solid</guimenuitem> styles in the <guimenu>3D Graph</guimenu> menu</para></listitem>
 </itemizedlist>
 
 <para>
-Below is a screenshot of the so-called "sombrero" function. This particular
+Below is a screenshot of the so-called <quote>sombrero</quote> function. This particular
 graph is shown using the 3D graph line-style.
 </para>
 
 <screenshot>
-<screeninfo>Here's a screenshot of &kalgebra; 3D graph window</screeninfo>
+<screeninfo>Here's a screenshot of &kalgebra; 3D Graph window</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
 	  </imageobject>
 	    <textobject>
-	    <phrase>&kalgebra; 3D graph window</phrase>
+	    <phrase>&kalgebra; 3D Graph window</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
