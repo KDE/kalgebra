@@ -25,6 +25,7 @@
   <name xml:lang="nds">KAlgebra</name>
   <name xml:lang="nl">KAlgebra</name>
   <name xml:lang="nn">KAlgebra</name>
+  <name xml:lang="pa">ਕੇ-ਐਲਜਬਰਾ</name>
   <name xml:lang="pl">KAlgebra</name>
   <name xml:lang="pt">KAlgebra</name>
   <name xml:lang="pt-BR">KAlgebra</name>
@@ -58,6 +59,7 @@
   <summary xml:lang="nds">Funkschonenreekner</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
   <summary xml:lang="nn">Grafkalkulator</summary>
+  <summary xml:lang="pa">ਗਰਾਫ਼ ਕੈਲਕੂਲਟਰ</summary>
   <summary xml:lang="pl">Kalkulator wykresów</summary>
   <summary xml:lang="pt">Calculadora de Grafos</summary>
   <summary xml:lang="pt-BR">Calculadora gráfica</summary>
@@ -123,6 +125,7 @@
       <caption xml:lang="ko">KAlgebra의 2D 플로트</caption>
       <caption xml:lang="nl">2D plot in KAlgebra</caption>
       <caption xml:lang="nn">2D-plott i KAlgebra</caption>
+      <caption xml:lang="pa">ਕੇ-ਐਲਜਬਰਾ ਵਿੱਚ 2ਡੀ ਵਾਹੋ</caption>
       <caption xml:lang="pl">Wykres 2D w KAlgebra</caption>
       <caption xml:lang="pt">Gráfico 2D no KAlgebra</caption>
       <caption xml:lang="pt-BR">Gráfico 2D no KAlgebra</caption>
