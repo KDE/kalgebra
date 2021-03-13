@@ -43,7 +43,7 @@ KAlgebraPage {
 
     contextualActions: [
         Kirigami.Action {
-            text: i18n("Save...")
+            text: i18n("Save")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() {

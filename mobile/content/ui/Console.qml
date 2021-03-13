@@ -64,7 +64,7 @@ Kirigami.ScrollablePage {
 
     contextualActions: [
         Kirigami.Action {
-            text: i18n("Load Script...")
+            text: i18n("Load Script")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.loadScript(fileDialog.fileUrl) }
@@ -74,7 +74,7 @@ Kirigami.ScrollablePage {
             }
         },
         Kirigami.Action {
-            text: i18n("Save Script...")
+            text: i18n("Save Script")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveScript(fileDialog.fileUrl) }
@@ -85,7 +85,7 @@ Kirigami.ScrollablePage {
         },
         //TODO: Recent scripts
         Kirigami.Action {
-            text: i18n("Export Log...")
+            text: i18n("Export Log")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveLog(fileDialog.fileUrl) }
@@ -96,7 +96,7 @@ Kirigami.ScrollablePage {
         },
         // --
         Kirigami.Action {
-            text: consoleModel.mode === ConsoleModel.Calculate ? i18n("Evaluate...") : i18n("Calculate...")
+            text: consoleModel.mode === ConsoleModel.Calculate ? i18n("Evaluate") : i18n("Calculate")
             onTriggered: consoleModel.mode = consoleModel.mode === ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
         },
         // --
