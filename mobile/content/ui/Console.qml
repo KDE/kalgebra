@@ -126,7 +126,7 @@ Kirigami.ScrollablePage {
             ]
             actions: [
                 Kirigami.Action {
-                    enabled: App.functionsModel().canAddFunction(expression, 2, App.variables)
+                    visible: App.functionsModel().canAddFunction(expression, 2, App.variables)
                     text: i18n("2D Plot")
                     onTriggered: {
                         App.functionsModel().addFunction(expression, 2, App.variables)
@@ -134,7 +134,7 @@ Kirigami.ScrollablePage {
                     }
                 },
                 Kirigami.Action {
-                    enabled: App.functionsModel().canAddFunction(expression, 4, App.variables)
+                    visible: App.functionsModel().canAddFunction(expression, 4, App.variables)
                     text: i18n("3D Plot")
                     onTriggered: {
                         App.functionsModel().addFunction(expression, 4, App.variables)
