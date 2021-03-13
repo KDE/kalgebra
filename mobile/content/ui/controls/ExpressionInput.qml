@@ -26,38 +26,45 @@ import org.kde.kalgebra.mobile 1.0
 
 QQC2.TextField {
     id: field
-    readonly property string currentWord: field.selectionStart === field.selectionEnd ? operators.lastWord(field.cursorPosition, field.text) : ""
-
-    onCurrentWordChanged: view.currentIndex = -1
+    readonly property string currentWord: operators.lastWord(field.cursorPosition, field.text)
 
     QQC2.Popup {
+        id: popupCompletion
         x: 0
-        y: -height
+        y: -height - Kirigami.Units.smallSpacing
         width: parent.width
+        visible: view.count > 0 && field.activeFocus && field.currentWord.length > 0
+        topPadding: 0
+        leftPadding: 0
+        bottomPadding: 0
+        rightPadding: 0
         height: Math.min(Kirigami.Units.gridUnit * 10, view.contentHeight)
-        visible: view.count >= 0 && field.activeFocus && field.currentWord.length > 0
-        contentItem: ListView {
-            id: view
-            //currentIndex: -1
-            model: QSortFilterProxyModel {
-                sourceModel: OperatorsModel { id: operators }
-                filterRegularExpression: new RegExp("^" + field.currentWord)
-            }
-
-            delegate: Kirigami.BasicListItem {
-                text: model.display + " - " + description
-                highlighted: view.currentIndex === index
-                width: ListView.view.width
-
-                function complete() {
-                    var toInsert = model.display.substr(field.currentWord.length);
-                    if(isVariable)
-                        toInsert += '(';
-                    field.insert(field.cursorPosition, toInsert)
+        contentItem: QQC2.ScrollView {
+            ListView {
+                id: view
+                currentIndex: 0
+                keyNavigationWraps: true
+                model: QSortFilterProxyModel {
+                    sourceModel: OperatorsModel { id: operators }
+                    filterRegularExpression: new RegExp("^" + field.currentWord)
+                    filterCaseSensitivity: Qt.CaseInsensitive
                 }
 
-                onClicked: complete()
-                Keys.onReturnPressed: complete()
+                delegate: Kirigami.BasicListItem {
+                    text: model.display + " - " + description
+                    highlighted: view.currentIndex === index
+                    width: ListView.view.width
+
+                    function complete() {
+                        var toInsert = model.display.substr(field.currentWord.length);
+                        if(isVariable)
+                            toInsert += '(';
+                        field.insert(field.cursorPosition, toInsert)
+                    }
+
+                    onClicked: complete()
+                    Keys.onReturnPressed: complete()
+                }
             }
         }
     }
@@ -66,6 +73,7 @@ QQC2.TextField {
     inputMethodHints: /*Qt.ImhPreferNumbers |*/ Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 
     Keys.forwardTo: view.visible && view.currentItem ? [ view.currentItem ] : null
+    Keys.onTabPressed: view.incrementCurrentIndex()
     Keys.onUpPressed: view.decrementCurrentIndex()
     Keys.onDownPressed: view.incrementCurrentIndex()
     Keys.onReturnPressed: view.currentIndex = -1
