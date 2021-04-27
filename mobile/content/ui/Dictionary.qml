@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.1
 import org.kde.analitza 1.0
 import org.kde.kirigami 2.5 as Kirigami
 import org.kde.kalgebra.mobile 1.0
@@ -31,42 +31,43 @@ KAlgebraPage {
         view.resetViewport();
         view.addFunction(operators.data(operators.index(chosebox.currentIndex,3)), App.variables);
     }
-
     ColumnLayout {
-        id: descriptioncol
-
         anchors.fill: parent
-        spacing: 10
+        spacing: 15
 
-        ComboBox {
-            id: chosebox
-            Layout.fillWidth: true
-            textRole: "display"
+        Kirigami.FormLayout {
+            id: layout
 
-            model: OperatorsModel {
-                id: operators
+            ComboBox {
+                id: chosebox
+                Kirigami.FormData.label: i18n("Name:")
+                textRole: "display"
+
+                model: OperatorsModel {
+                    id: operators
+                }
+
+                onCurrentIndexChanged: {
+                    page.updateGraph();
+                }
             }
-
-            onCurrentIndexChanged: {
-                page.updateGraph();
+            Label {
+                text: operators.data(operators.index(chosebox.currentIndex,0))
+                Kirigami.FormData.label: i18n("%1:", operators.headerData(0,Qt.Horizontal))
+            }
+            Label {
+                text: operators.data(operators.index(chosebox.currentIndex,1))
+                Kirigami.FormData.label: i18n("%1:", operators.headerData(1,Qt.Horizontal))
+            }
+            Label {
+                text: operators.data(operators.index(chosebox.currentIndex,2))
+                Kirigami.FormData.label: i18n("%1:", operators.headerData(2,Qt.Horizontal))
+            }
+            Label {
+                text: operators.data(operators.index(chosebox.currentIndex,3))
+                Kirigami.FormData.label: i18n("%1:", operators.headerData(3,Qt.Horizontal))
             }
         }
-
-        GridLayout {
-            id: descgrid
-            columns: 2
-            Layout.fillWidth: true
-
-            Label { text: operators.headerData(0,Qt.Horizontal) }
-            Label { text: operators.data(operators.index(chosebox.currentIndex,0)) }
-            Label { text: operators.headerData(1,Qt.Horizontal) }
-            Label { text: operators.data(operators.index(chosebox.currentIndex,1)) }
-            Label { text: operators.headerData(2,Qt.Horizontal) }
-            Label { text: operators.data(operators.index(chosebox.currentIndex,2)) }
-            Label { text: operators.headerData(3,Qt.Horizontal) }
-            Label { text: operators.data(operators.index(chosebox.currentIndex,3)) }
-        }
-
         Rectangle {
             color: 'white'
             Layout.fillWidth: true
