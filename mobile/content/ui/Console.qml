@@ -104,6 +104,7 @@ Kirigami.ScrollablePage {
             iconName: "edit-clear-history"
             text: i18n("Clear Log")
             onTriggered: itemModel.clear()
+            enabled: itemModel.count != 0
         }
     ]
     
