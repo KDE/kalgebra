@@ -41,7 +41,7 @@ KAlgebraPage {
     }
 
     contextualActions: [
-        Action {
+        Kirigami.Action {
             text: i18n("Save")
             onTriggered: {
                 fileDialog.title = text
@@ -54,68 +54,24 @@ KAlgebraPage {
                 fileDialog.open()
             }
         },
-        Action {
+        Kirigami.Action {
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()
         }
     ]
 
-    Graph3D
-    {
+    actions.main: Kirigami.Action {
+        icon.name: 'list-add'
+        text: i18n('Add Plot')
+        onTriggered: plotDialog.open()
+    }
+
+    Graph3D {
         id: view
         anchors.fill: parent
         model: App.functionsModel()
-
-        Kirigami.OverlaySheet {
-            id: dialog
-
-            header: RowLayout {
-                width: parent.width
-                ExpressionInput {
-                    id: input
-                    Layout.fillWidth: true
-                    text: "sin x*sin y"
-                    focus: true
-                    Component.onCompleted: selectAll()
-                    onAccepted: {
-                        input.selectAll()
-                        var err = App.functionsModel().addFunction(input.text, 4, App.variables)
-                        if (err.length>0)
-                            console.warn("errors:", err)
-                    }
-                }
-                Button {
-                    icon.name: "list-add"
-                    onClicked: {
-                        input.selectAll()
-                        var err = view.addFunction(input.text, App.variables)
-                        if (err.length>0)
-                            console.warn("errors:", err)
-                    }
-                }
-            }
-
-            contentItem: Kirigami.CardsListView {
-                id: list
-                delegate: Kirigami.Card {
-                    contentItem: Label { text: model.description }
-                }
-                model: view.model
-
-                footer: Button {
-                    text: i18n("Clear All")
-                    onClicked: {
-                        view.model.clear()
-                        view.resetView()
-                    }
-                }
-            }
-        }
-
-        AddButton {
-            onClicked: {
-                dialog.open();
-            }
+        Add3DDialog {
+            id: plotDialog
         }
     }
 }

@@ -67,6 +67,12 @@ KAlgebraPage {
         }
         //custom viewport?
     ]
+
+    actions.main: Kirigami.Action {
+        icon.name: 'list-add'
+        text: i18n('Add Plot')
+        onTriggered: plotDialog.open()
+    }
     
     Rectangle {
         anchors.fill: parent
@@ -77,49 +83,8 @@ KAlgebraPage {
             id: view
             anchors.fill: parent
             model: App.functionsModel()
-
-            Kirigami.OverlaySheet {
-                id: dialog
-
-                header: RowLayout {
-                    width: parent.width
-                    ExpressionInput {
-                        id: input
-                        Layout.fillWidth: true
-                        text: "sin x"
-                        focus: true
-                        Component.onCompleted: selectAll()
-                        onAccepted: {
-                            input.selectAll()
-                            view.addFunction(input.text, App.variables)
-                        }
-                    }
-                    Button {
-                        icon.name: "list-add"
-                        onClicked: {
-                            input.selectAll()
-                            view.addFunction(input.text, App.variables)
-                        }
-                    }
-                }
-                contentItem: Kirigami.CardsListView {
-                    delegate: Kirigami.Card { contentItem: Label { text: model.description } }
-                    model: App.functionsModel()
-
-                    footer: Button {
-                        text: i18n("Clear All")
-                        onClicked: {
-                            App.functionsModel().clear();
-                            view.resetViewport();
-                        }
-                    }
-                }
-            }
-
-            AddButton {
-                onClicked: {
-                    dialog.open();
-                }
+            Add2DDialog {
+                id: plotDialog
             }
         }
     }
