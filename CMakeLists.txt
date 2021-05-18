@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 # KDE Application Version, managed by release script
 set(RELEASE_SERVICE_VERSION_MAJOR "21")
@@ -7,11 +7,11 @@ set(RELEASE_SERVICE_VERSION_MICRO "70")
 set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_VERSION_MINOR}.${RELEASE_SERVICE_VERSION_MICRO}")
 
 project(kalgebra VERSION ${RELEASE_SERVICE_VERSION})
-
-find_package(ECM 1.7.0 REQUIRED NO_MODULE)
+set(KF5_MIN_VERSION "5.83.0")
+find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
-find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
+find_package(Qt5 5.15 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
