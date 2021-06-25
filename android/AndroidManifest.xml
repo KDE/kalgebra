@@ -30,6 +30,5 @@
             <!--  Messages maps -->
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="21" />
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 </manifest>
