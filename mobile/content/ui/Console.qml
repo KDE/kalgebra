@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-import org.kde.kirigami 2.5 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 import QtQuick 2.2
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.5 as QQC2
@@ -115,16 +115,6 @@ Kirigami.ScrollablePage {
         delegate: Kirigami.Card {
             contentItem: QQC2.Label { text: model.result }
 
-            hiddenActions: [
-                QQC2.Action {
-                    readonly property string value: result.replace(/<[^>]*>/g, '');
-                    text: i18n("Copy \"%1\"", value)
-                    icon.name: "edit-copy"
-                    onTriggered: {
-                        clipboard.content = value
-                    }
-                }
-            ]
             actions: [
                 Kirigami.Action {
                     visible: App.functionsModel().canAddFunction(expression, 2, App.variables)
@@ -140,6 +130,15 @@ Kirigami.ScrollablePage {
                     onTriggered: {
                         App.functionsModel().addFunction(expression, 4, App.variables)
                         show3dPlotAction.trigger();
+                    }
+                },
+                Kirigami.Action {
+                    readonly property string value: result.replace(/<[^>]*>/g, '');
+                    text: i18n("Copy \"%1\"", value)
+                    icon.name: "edit-copy"
+                    displayHint: Kirigami.DisplayHint.AlwaysHide
+                    onTriggered: {
+                        clipboard.content = value
                     }
                 }
             ]
