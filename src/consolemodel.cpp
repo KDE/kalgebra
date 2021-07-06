@@ -82,7 +82,7 @@ bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& in
         Q_EMIT operationSuccessful(e, res);
 
         const auto result = res.toHtml();
-        addMessage(QStringLiteral("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />=<a title='kalgebra:%1' href='kalgebra:/query?id=copy&func=%4'><span class='result'>%5</span></a>")
+        addMessage(QStringLiteral("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />= <a title='kalgebra:%1' href='kalgebra:/query?id=copy&func=%4'><span class='result'>%5</span></a>")
                         .arg(i18n("Paste to Input"), e.toString(), e.toHtml(), res.toString(), result), e, res);
     } else {
         addMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))), {}, {});

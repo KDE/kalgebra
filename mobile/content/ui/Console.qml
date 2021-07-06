@@ -113,7 +113,9 @@ Kirigami.ScrollablePage {
         model: itemModel
 
         delegate: Kirigami.Card {
-            contentItem: QQC2.Label { text: model.result }
+            contentItem: QQC2.Label {
+                text: model.result
+            }
 
             actions: [
                 Kirigami.Action {
