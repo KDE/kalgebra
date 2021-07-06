@@ -46,6 +46,8 @@ public:
     Q_SCRIPTABLE void clear();
     Q_SCRIPTABLE bool saveLog(const QUrl& path) const;
 
+    Q_SCRIPTABLE static QString readContent(const QUrl &url);
+
     QByteArray css() const;
 
     ConsoleMode mode() const { return m_mode; }

@@ -115,6 +115,10 @@ Kirigami.ScrollablePage {
         delegate: Kirigami.Card {
             contentItem: QQC2.Label {
                 text: model.result
+                onLinkActivated: {
+                    input.remove(input.selectionStart, input.selectionEnd)
+                    input.insert(input.cursorPosition, consoleModel.readContent(link))
+                }
             }
 
             actions: [

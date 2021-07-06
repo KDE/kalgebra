@@ -24,6 +24,7 @@
 #include <KLocalizedString>
 #include <QGuiApplication>
 #include <QPalette>
+#include <QUrlQuery>
 
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
     "<style type=\"text/css\">\n"
@@ -178,4 +179,9 @@ void ConsoleModel::clear()
 QByteArray ConsoleModel::css() const
 {
     return *s_css;
+}
+
+QString ConsoleModel::readContent(const QUrl &url)
+{
+    return QUrlQuery(url).queryItemValue("func");
 }
