@@ -1,19 +1,28 @@
-set(kalgebra_SRCS
-    kalgebra.cpp
-    dictionary.cpp
-    consolemodel.cpp
+add_executable(kalgebra)
+target_sources(kalgebra PRIVATE
+    askname.h
     consolehtml.cpp
-    varedit.cpp
-    main.cpp
-    variablesdelegate.cpp
-    viewportwidget.cpp
+    consolehtml.h
+    consolemodel.cpp
+    consolemodel.h
+    dictionary.cpp
+    dictionary.h
     functionedit.cpp
+    functionedit.h
+    kalgebra.cpp
+    kalgebra.h
+    main.cpp
+    varedit.cpp
+    varedit.h
+    variablesdelegate.cpp
+    variablesdelegate.h
+    viewportwidget.cpp
+    viewportwidget.h
 )
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*-apps-kalgebra.png")
-ecm_add_app_icon(kalgebra_SRCS ICONS ${ICONS_SRCS})
+ecm_add_app_icon(kalgebra ICONS ${ICONS_SRCS})
 
-add_executable(kalgebra ${kalgebra_SRCS})
 target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF5::I18n
                                KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigWidgets
                                KF5::XmlGui # HelpMenu
