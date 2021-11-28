@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: None
+# SPDX-License-Identifier: CC0-1.0
+
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'frameworks/extra-cmake-modules': '@stable'
+    'frameworks/ki18n': '@stable'
+    'frameworks/kcoreaddons': '@stable'
+    'frameworks/kconfigwidgets': '@stable'
+    'frameworks/kwidgetaddons': '@stable'
+    'frameworks/kdoctools': '@stable'
+    'frameworks/kio': '@stable'
+    'education/analitza': '@same'
