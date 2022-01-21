@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>KAlgebra Mobile</name>
+  <name xml:lang="ar">جبرك للمحمول</name>
   <name xml:lang="ca">KAlgebra mòbil</name>
   <name xml:lang="ca-valencia">KAlgebra mòbil</name>
   <name xml:lang="cs">Mobilní KAlgebra</name>
@@ -34,6 +35,7 @@
   <name xml:lang="zh-CN">KAlgebra 移动版</name>
   <name xml:lang="zh-TW">KAlgebra 行動版</name>
   <summary>Graph Calculator</summary>
+  <summary xml:lang="ar">حاسبة رسومية</summary>
   <summary xml:lang="ca">Calculadora gràfica</summary>
   <summary xml:lang="ca-valencia">Calculadora gràfica</summary>
   <summary xml:lang="cs">Kalkulačka grafů</summary>
@@ -64,6 +66,7 @@
   <summary xml:lang="zh-TW">圖形計算機</summary>
   <description>
     <p>KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D.</p>
+    <p xml:lang="ar">هو أحد التطبيقات التي يمكن أن تحل محل آلة حاسبة الرسوم البيانية الخاصة بك. يحتوي على ميزات عددية ومنطقية ورمزية وتحليلية تتيح لك حساب التعبيرات الرياضية على وحدة التحكم ورسم النتائج بيانياً ثنائي الأبعاد أو ثلاثي الأبعاد.</p>
     <p xml:lang="ca">El KAlgebra és una aplicació que pot substituir la calculadora gràfica. Té característiques numèriques, lògiques, simbòliques, i analítiques que permeten calcular expressions matemàtiques a la consola i dibuixar gràficament els resultats en 2D o 3D.</p>
     <p xml:lang="ca-valencia">El KAlgebra és una aplicació que pot substituir la calculadora gràfica. Té característiques numèriques, lògiques, simbòliques, i analítiques que permeten calcular expressions matemàtiques a la consola i dibuixar gràficament els resultats en 2D o 3D.</p>
     <p xml:lang="de">KAlgebra ist eine Anwendung, die Ihren grafischen Taschenrechner ersetzt. Es  hat numerische, logische, symbolische und analytische Fähigkeiten, mit denen Sie mathematische Ausdrücke im Rechner auswerten und die Ergebnisse zwei- oder dreidimensional darstellen können.</p>
