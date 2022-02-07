@@ -276,7 +276,7 @@ void FunctionEdit::edit()
 void FunctionEdit::ok()
 {
     if(m_ok->isEnabled())
-        emit accept();
+        Q_EMIT accept();
 }
 
 void FunctionEdit::focusInEvent(QFocusEvent *)

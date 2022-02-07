@@ -92,7 +92,7 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
     QString exp=query.queryItemValue(QStringLiteral("func"));
     
     if(id==QLatin1String("copy")) {
-        emit paste(exp);
+        Q_EMIT paste(exp);
     } else foreach(InlineOptions* opt, m_options) {
         if(opt->id() == id) {
             opt->triggerOption(Analitza::Expression(exp, false));
@@ -198,7 +198,7 @@ void ConsoleHtml::updateView()
 
     page()->setHtml(code);
 
-    emit changed();
+    Q_EMIT changed();
 
     connect(this, &QWebEngineView::loadFinished, this, [this](bool ok){
         if (!ok) {
@@ -246,5 +246,5 @@ void ConsoleHtml::removeVariable(const QString & name)
 
 void ConsoleHtml::paste()
 {
-    emit paste(selectedText().trimmed());
+    Q_EMIT paste(selectedText().trimmed());
 }

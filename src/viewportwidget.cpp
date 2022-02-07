@@ -72,5 +72,5 @@ void ViewportWidget::setViewport(const QRectF& current)
 
 void ViewportWidget::emitViewport ()
 {
-    emit viewportChange(viewport());
+    Q_EMIT viewportChange(viewport());
 }

@@ -33,13 +33,13 @@ Clipboard::Clipboard(QObject* parent)
 void Clipboard::setMode(QClipboard::Mode mode)
 {
     m_mode = mode;
-    emit modeChanged(m_mode);
+    Q_EMIT modeChanged(m_mode);
 }
 
 void Clipboard::clipboardChanged(QClipboard::Mode m)
 {
     if (m == m_mode) {
-        emit contentChanged();
+        Q_EMIT contentChanged();
     }
 }
 
