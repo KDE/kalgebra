@@ -61,8 +61,11 @@ public:
     ConsolePage(ConsoleHtml* parent) : QWebEnginePage(parent), m_console(parent) {}
 
     bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool /*isMainFrame*/) override {
+        m_console->setActualUrl(url);
+
         if (url.scheme() == QLatin1String("data"))
             return true;
+
         qDebug() << "navigating to" << url << type;
         m_console->openClickedUrl(url);
         return false;
@@ -73,7 +76,7 @@ public:
 
 ConsoleHtml::ConsoleHtml(QWidget *parent)
     : QWebEngineView(parent)
-    , m_model(new ConsoleModel(this))
+    , m_actualUrl(), m_model(new ConsoleModel(this))
 {
     connect(m_model.data(), &ConsoleModel::updateView, this, &ConsoleHtml::updateView);
     connect(m_model.data(), &ConsoleModel::operationSuccessful, this, &ConsoleHtml::includeOperation);
@@ -83,6 +86,11 @@ ConsoleHtml::ConsoleHtml(QWidget *parent)
 ConsoleHtml::~ConsoleHtml()
 {
     qDeleteAll(m_options);
+}
+
+void ConsoleHtml::setActualUrl(const QUrl& url)
+{
+    m_actualUrl = url;
 }
 
 void ConsoleHtml::openClickedUrl(const QUrl& url)
@@ -201,9 +209,10 @@ void ConsoleHtml::updateView()
     Q_EMIT changed();
 
     connect(this, &QWebEngineView::loadFinished, this, [this](bool ok){
-        if (!ok) {
-            qWarning() << "error loading page" << url();
+        if (!ok && (m_actualUrl.scheme() != QLatin1String("kalgebra"))) {
+            qWarning() << "error loading page" << m_actualUrl;
         }
+
         page()->runJavaScript(QStringLiteral("window.scrollTo(0, document.body.scrollHeight);"));
     });
 }

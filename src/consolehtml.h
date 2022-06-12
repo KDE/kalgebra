@@ -87,6 +87,8 @@ class ConsoleHtml : public QWebEngineView
         void copy() const;
         
         void openClickedUrl(const QUrl& url);
+
+        void setActualUrl(const QUrl& url);
         
     Q_SIGNALS:
         /** Emits a notification that tells that the widget status. */
@@ -108,6 +110,7 @@ class ConsoleHtml : public QWebEngineView
         void updateView();
 
         QString m_optionsString;
+        QUrl m_actualUrl;
         QList<InlineOptions*> m_options;
         QScopedPointer<ConsoleModel> m_model;
 };
