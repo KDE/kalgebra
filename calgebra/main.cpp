@@ -72,7 +72,6 @@ int main(int argc, char *argv[])
 {
     configuration.calcType=Evaluate;
     configuration.showElapsedType=false;
-    bool hasImports = false;
     
     for(int i=1; i<argc; ++i) {
         QByteArray arg=argv[i];
@@ -92,7 +91,6 @@ int main(int argc, char *argv[])
             qDebug() << "\t...\t\tfiles that will be executed first";
             return 0;
         } else {
-//             hasImports = true;
             QFile f(arg);
             if(!f.open(QIODevice::ReadOnly)) {
                 qWarning() << "File not found: " << arg;
@@ -116,7 +114,7 @@ int main(int argc, char *argv[])
     
     using_history();
     QString entry;
-    while(!done && !hasImports) {
+    while(!done) {
         char * expr;
         if(inside)
             expr=readline(insidePrompt);
