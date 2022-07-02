@@ -22,6 +22,7 @@
 #include <QObject>
 #include <analitza/expression.h>
 #include <analitza/analyzer.h>
+#include <analitza/variables.h>
 
 class ConsoleModel : public QObject
 {

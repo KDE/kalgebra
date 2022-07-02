@@ -21,10 +21,10 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include <analitza/variables.h>
 
 class QModelIndex;
 namespace Analitza {
-    class Variables;
     class PlotsModel;
 }
 

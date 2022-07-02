@@ -30,6 +30,10 @@ target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets
                                KF5::I18n
                                KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
 
+                           if (QT_MAJOR_VERSION STREQUAL "6")
+                               target_link_libraries(kalgebra Qt6::OpenGLWidgets)
+                           endif()
+
 install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
 install(FILES kalgebra.xml DESTINATION ${KDE_INSTALL_DATADIR}/katepart5/syntax )

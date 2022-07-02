@@ -19,7 +19,6 @@
 #include "kalgebramobile.h"
 
 #include <analitzaplot/plotsmodel.h>
-#include <analitza/variables.h>
 #include <analitza/expression.h>
 
 #include "../src/consolemodel.h"

@@ -38,6 +38,7 @@
 #include <analitza/value.h>
 
 #include <QVBoxLayout>
+#include <QActionGroup>
 #include <QHeaderView>
 #include <QDockWidget>
 #include <QTableView>
@@ -170,13 +171,13 @@ KAlgebra::KAlgebra(QWidget *parent)
     c_menu = menuBar()->addMenu(i18n("C&alculator"));
     
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@item:inmenu", "&Load Script..."),
-                        this, SLOT(loadScript()), Qt::CTRL+Qt::Key_L);
+                        this, SLOT(loadScript()), Qt::CTRL | Qt::Key_L);
     c_recentScripts=new KRecentFilesAction(QIcon::fromTheme(QStringLiteral("document-open-recent")), i18n("Recent Scripts"), this);
     connect(c_recentScripts, SIGNAL(urlSelected(QUrl)), this, SLOT(loadScript(QUrl)));
     c_menu->addAction(c_recentScripts);
     
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Save Script..."),
-                        this, &KAlgebra::saveScript, Qt::CTRL+Qt::Key_G);
+                        this, &KAlgebra::saveScript, Qt::CTRL | Qt::Key_G);
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Export Log..."),
                         this, &KAlgebra::saveLog, QKeySequence::Save);
     c_menu->addSeparator();
