@@ -67,14 +67,14 @@ class Add2DOption : public InlineOptions
         : m_kalgebra(c)
         {}
         
-        QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add2d"); }
-        bool matchesExpression(const Analitza::Expression& exp) const Q_DECL_OVERRIDE {
+        QString id() const override { return QStringLiteral("add2d"); }
+        bool matchesExpression(const Analitza::Expression& exp) const override {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim2D).canDraw();
         }
 
-        QString caption() const Q_DECL_OVERRIDE { return i18n("Plot 2D"); }
+        QString caption() const override { return i18n("Plot 2D"); }
 
-        void triggerOption(const Analitza::Expression& exp) Q_DECL_OVERRIDE { m_kalgebra->add2D(exp); }
+        void triggerOption(const Analitza::Expression& exp) override { m_kalgebra->add2D(exp); }
     
     private:
         KAlgebra* m_kalgebra;
@@ -87,15 +87,15 @@ class Add3DOption : public InlineOptions
         : m_kalgebra(c)
         {}
         
-        QString id() const Q_DECL_OVERRIDE { return QStringLiteral("add3d"); }
-        bool matchesExpression(const Analitza::Expression& exp) const Q_DECL_OVERRIDE
+        QString id() const override { return QStringLiteral("add3d"); }
+        bool matchesExpression(const Analitza::Expression& exp) const override
         {
             return Analitza::PlotsFactory::self()->requestPlot(exp, Analitza::Dim3D).canDraw();
         }
 
-        QString caption() const Q_DECL_OVERRIDE { return i18n("Plot 3D"); }
+        QString caption() const override { return i18n("Plot 3D"); }
 
-        void triggerOption(const Analitza::Expression& exp) Q_DECL_OVERRIDE { m_kalgebra->add3D(exp); }
+        void triggerOption(const Analitza::Expression& exp) override { m_kalgebra->add3D(exp); }
     
     private:
         KAlgebra* m_kalgebra;

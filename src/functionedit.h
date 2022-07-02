@@ -85,7 +85,7 @@ public:
     
     void setOptionsShown(bool shown);
     
-    void resizeEvent(QResizeEvent* ev) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent* ev) override;
     
 public Q_SLOTS:
     /** Clears the dialog. */
@@ -107,7 +107,7 @@ private Q_SLOTS:
     
 private:
     void setState(const QString& text, bool negative);
-    void focusInEvent(QFocusEvent*) Q_DECL_OVERRIDE;
+    void focusInEvent(QFocusEvent*) override;
     
     Analitza::ExpressionEdit *m_func;
     Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
