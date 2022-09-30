@@ -37,28 +37,27 @@
 #include <analitza/variables.h>
 #include <analitza/value.h>
 
-#include <QVBoxLayout>
-#include <QActionGroup>
-#include <QHeaderView>
-#include <QDockWidget>
-#include <QTableView>
-#include <QPrinter>
-#include <QAction>
-#include <QRandomGenerator>
-#include <QFileDialog>
-#include <QStatusBar>
-#include <QMenuBar>
-#include <QToolButton>
-#include <QApplication>
-#include <klocalizedstring.h>
+#include <KConfig>
+#include <KConfigGroup>
 #include <KHelpMenu>
+#include <KRecentFilesAction>
 #include <KStandardAction>
 #include <KToggleFullScreenAction>
-#include <KRecentFilesAction>
-#include <KConfig>
-#include <QProcess>
+#include <QAction>
+#include <QActionGroup>
+#include <QApplication>
+#include <QDockWidget>
+#include <QFileDialog>
+#include <QHeaderView>
+#include <QMenuBar>
 #include <QPointer>
-#include <KConfigGroup>
+#include <QProcess>
+#include <QRandomGenerator>
+#include <QStatusBar>
+#include <QTableView>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <klocalizedstring.h>
 
 class Add2DOption : public InlineOptions
 {

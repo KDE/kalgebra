@@ -18,9 +18,10 @@
  */
 
 #include "clipboard.h"
-#include <QGuiApplication>
-#include <QUrl>
 #include <QDebug>
+#include <QGuiApplication>
+#include <QMimeData>
+#include <QUrl>
 
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)

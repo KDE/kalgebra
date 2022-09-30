@@ -27,16 +27,10 @@
 #include <KLocalizedString>
 #include <KAboutData>
 
-#include <QDebug>
-#include <QFileInfo>
-#include <QDir>
-#include <QStandardPaths>
-#include <QQuickView>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQmlApplicationEngine>
 #include <QCommandLineParser>
-#include <QIcon>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QStandardPaths>
 
 #include "kalgebramobile.h"
 #include "kalgebra_version.h"

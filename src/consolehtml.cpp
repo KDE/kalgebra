@@ -18,13 +18,11 @@
 
 #include "consolehtml.h"
 
-#include <QClipboard>
 #include <QApplication>
-#include <QEvent>
-#include <QUrlQuery>
-#include <QTemporaryFile>
-#include <QDir>
+#include <QClipboard>
 #include <QContextMenuEvent>
+#include <QTemporaryFile>
+#include <QUrlQuery>
 
 #include <KStandardAction>
 #include <QMenu>

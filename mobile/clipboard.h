@@ -22,7 +22,6 @@
 
 #include <QClipboard>
 #include <QVariant>
-#include <QMimeData>
 
 class ClipboardPrivate;
 
