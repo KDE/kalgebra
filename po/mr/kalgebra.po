@@ -1,0 +1,465 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Chetan Khona <chetan@kompkin.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2013-03-05 17:11+0530\n"
+"Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
+"Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "पर्याय : %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, fuzzy, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "त्रुटी"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "माहिती"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr ""
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr ""
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "पूर्वावलोकन"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "पासून :"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "पर्यंत :"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "पर्याय"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "ठीक आहे"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "सत्र"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "व्हेरिएबल्स"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "गणना करा"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "गणना करा"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr ""
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr ""
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr ""
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "गणना करा"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr ""
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "कार्ये"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "यादी"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, fuzzy, kde-format
+msgid "&Add"
+msgstr "जोडा (&A)"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr ""
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr ""
+
+#: kalgebra.cpp:260
+#, fuzzy, kde-format
+msgid "&Grid"
+msgstr "जाळे"
+
+#: kalgebra.cpp:261
+#, fuzzy, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "स्वरूपाचे गुणोत्तर ठेवा"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "घनता"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr ""
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "सामान्य"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr ""
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr ""
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr ""
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr ""
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr ""
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "ओळी"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "क्रिया"
+
+#: kalgebra.cpp:343
+#, fuzzy, kde-format
+msgid "&Dictionary"
+msgstr "शब्दकोश"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr ""
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr ""
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr ""
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr ""
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ""
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+msgid "Errors: %1"
+msgstr "त्रुटी"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+
+#: kalgebra.cpp:649
+#, fuzzy, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "तयार"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr ""
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr ""
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "एलैक्स पोल गोन्झालेझ"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "एलैक्स पोल गोन्झालेझ"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "चेतन खोना"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "chetan@kompkin.com"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr ""
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "व्हेरिएबल्स"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr ""
+
+#: varedit.cpp:65
+#, fuzzy, kde-format
+msgid "not available"
+msgstr "उपलब्ध नाही"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr ""
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr ""
+
+#: viewportwidget.cpp:46
+#, fuzzy, kde-format
+msgid "Left:"
+msgstr "डावे :"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "वर :"
+
+#: viewportwidget.cpp:48
+#, fuzzy, kde-format
+msgid "Width:"
+msgstr "रुंदी :"
+
+#: viewportwidget.cpp:49
+#, fuzzy, kde-format
+msgid "Height:"
+msgstr "उंची :"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "लागू करा"
+
+#, fuzzy
+#~ msgid "C&onsole"
+#~ msgstr "कन्सोल"
+
+#, fuzzy
+#~ msgid "&Console"
+#~ msgstr "कन्सोल"
+
+#, fuzzy
+#~ msgid "<b>Formula</b>"
+#~ msgstr "फोर्म्युला"
+
+#, fuzzy
+#~ msgid "Error: %1"
+#~ msgstr "त्रुटी : %1"
+
+#, fuzzy
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "पुसून टाका"

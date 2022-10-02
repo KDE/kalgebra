@@ -1,0 +1,900 @@
+# translation of kalgebra.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+# Safa Alfulaij <safa1996alfulaij@gmail.com>, 2015.
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-06-18 19:23+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: Arabic <kde-l10n-ar@kde.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "خيارات: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "ألصق \"%1\" إلى الدَّخْل"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "ألصق إلى الدَّخْل"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>خطأ: <b>%1</b>‎<li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "استُورد: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>خطأ: تعذّر تحميل %1. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "معلومات"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "أضف/حرّر دالةً"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "عاين"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "من:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "إلى:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "خيارات"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "حسنًا"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "أزل"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "الخيارات الّتي حدّدتها غير صحيحة"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "لا يمكن أن يكون الحدّ الأدنى أكبر من الحدّ الأعلى"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "ارسم ثنائيّ أبعاد"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "ارسم ثلاثيّ أبعاد"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "جلسة"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "المتغيّرات"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "ال&حاسبة"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "ال&حاسبة"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&حمّل سكرِبتًا..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "السّكرِبتات الحديثة"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "ا&حفظ السّكرِبت..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&صدّر السجلّ..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "أ&درج إجابة..."
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "وضع التّنفيذ"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "احسب"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "قدّر"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "الدّوال"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "القائمة"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "أ&ضف"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "منفذ العرض"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "مبيان ثنا&ئيّ أبعاد"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "مبيان ث&نائيّ أبعاد"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "ال&شّبكة"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "أ&بقِ النّسبة الباعيّة"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "الدّقّة"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "فقيرة"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "عاديّة"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "جيّدة"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "جيّدة جدًّا"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "مبيان ثلا&ثيّ أبعاد"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "مبيان ثلاث&يّ أبعاد"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&صفّر العرض"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "نقاط"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "خطوط"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "صلب"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "العمليّات"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "ال&قاموس"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "ابحث عن:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "ح&رّر"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "اختر سكرِبتًا"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "سكرِبت (‎*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "ملفّ HTML ‏(‎*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr "، "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "الأخطاء: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "حدّد أين تريد وضع الرسم المصيّر"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "ملف صورة (*.png);;ملف اس في جي (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "جاهز"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "أضف متغيّرًا"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "أدخِل اسم المتغيّر الجديد"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "حاسبة متنقلة"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mohamed SAAD محمد سعد"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "metehyi@free.fr"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "أضف/حرّر متغيّرًا"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "أزل المتغيّر"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "حرّر المتغيّر '%1'"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "غير متوفّر"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>‎%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>خاطئة</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "اليسار:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "الأعلى:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "العرض:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "الارتفاع:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "طبّق"
+
+#, fuzzy
+#~| msgid ""
+#~| "*.png|PNG File\n"
+#~| "*.pdf|PDF Document\n"
+#~| "*.x3d|X3D Document"
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "*.png|ملفّ PNG\n"
+#~ "*.pdf|مستند PDF\n"
+#~ "*.x3d|مستند X3D"
+
+#~ msgid "C&onsole"
+#~ msgstr "مع&راض"
+
+#~ msgid "KAlgebra"
+#~ msgstr "الجبر.ك"
+
+#~ msgid "&Console"
+#~ msgstr "م&عراض"
+
+#, fuzzy
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>%1</b>"
+
+#, fuzzy
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "تم"
+
+#, fuzzy
+#~ msgid "Error: %1"
+#~ msgstr "الخطأ: %1"
+
+#, fuzzy
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "امسح"
+
+#, fuzzy
+#~ msgid "*.png|PNG File"
+#~ msgstr "PNG ملف"
+
+#, fuzzy
+#~ msgid "&Transparency"
+#~ msgstr "شفافية"
+
+#, fuzzy
+#~ msgid "Type"
+#~ msgstr "النوع"
+
+#, fuzzy
+#~ msgid "To Expression"
+#~ msgstr "إلى تعبير"
+
+#, fuzzy
+#~ msgid "To MathML"
+#~ msgstr "إلى"
+
+#, fuzzy
+#~ msgid "Simplify"
+#~ msgstr "بسّط"
+
+#, fuzzy
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "الاسم"
+
+#, fuzzy
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "الوظيفة"
+
+#, fuzzy
+#~ msgid "%1 function added"
+#~ msgstr "الدالة"
+
+#, fuzzy
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "الوصف"
+
+#, fuzzy
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "معاملات"
+
+#, fuzzy
+#~ msgid "%1("
+#~ msgstr "%1"
+
+#, fuzzy
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "البارامترات"
+
+#, fuzzy
+#~ msgid "par%1"
+#~ msgstr "1"
+
+#, fuzzy
+#~ msgid "Addition"
+#~ msgstr "جمع"
+
+#, fuzzy
+#~ msgid "Multiplication"
+#~ msgstr "ضرب"
+
+#, fuzzy
+#~ msgid "Division"
+#~ msgstr "قسمة"
+
+#, fuzzy
+#~ msgid "Power"
+#~ msgstr "الطاقة"
+
+#, fuzzy
+#~ msgid "Remainder"
+#~ msgstr "البقيّة"
+
+#, fuzzy
+#~ msgid "Quotient"
+#~ msgstr "خارج القسمة"
+
+#, fuzzy
+#~ msgid "The factor of"
+#~ msgstr "الـ من"
+
+#, fuzzy
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "عاملي n n!"
+
+#, fuzzy
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "الوظيفة إلى حساب من a زاوية"
+
+#, fuzzy
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "الوظيفة إلى حساب من a زاوية"
+
+#, fuzzy
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "الوظيفة إلى حساب من a زاوية"
+
+#, fuzzy
+#~ msgid "Secant"
+#~ msgstr "القاطع"
+
+#, fuzzy
+#~ msgid "Cosecant"
+#~ msgstr "زاوية التّمام"
+
+#, fuzzy
+#~ msgid "Cotangent"
+#~ msgstr "ظل التمام"
+
+#, fuzzy
+#~ msgid "Hyperbolic sine"
+#~ msgstr "الجيب الزائد"
+
+#, fuzzy
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "جيب التمام الزائد"
+
+#, fuzzy
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "الظل الزائد"
+
+#, fuzzy
+#~ msgid "Hyperbolic secant"
+#~ msgstr "إطنابي"
+
+#, fuzzy
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "إطنابي"
+
+#, fuzzy
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "إطنابي"
+
+#, fuzzy
+#~ msgid "Arc sine"
+#~ msgstr "قوس الجيب"
+
+#, fuzzy
+#~ msgid "Arc cosine"
+#~ msgstr "قوس جيب التمام"
+
+#, fuzzy
+#~ msgid "Arc tangent"
+#~ msgstr "قوس الظل"
+
+#, fuzzy
+#~ msgid "Arc cotangent"
+#~ msgstr "قوس"
+
+#, fuzzy
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "For all"
+#~ msgstr "عادي"
+
+#, fuzzy
+#~ msgid "Exists"
+#~ msgstr "قائمة"
+
+#, fuzzy
+#~ msgid "Differentiation"
+#~ msgstr "التفاضل"
+
+#, fuzzy
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "Arc cosecant"
+#~ msgstr "قوس"
+
+#, fuzzy
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "Arc secant"
+#~ msgstr "قوس"
+
+#, fuzzy
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "Exponent (e^x)"
+#~ msgstr "القوَة e x"
+
+#, fuzzy
+#~ msgid "Base-e logarithm"
+#~ msgstr "الأساس e خوارزمية"
+
+#, fuzzy
+#~ msgid "Base-10 logarithm"
+#~ msgstr "الأساس خوارزمية"
+
+#, fuzzy
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "مطلق :: حتمي :: خالص :: كامل :: مُطبق قيمة n n"
+
+#, fuzzy
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "الأرضية قيمة n n"
+
+#, fuzzy
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "سقّف قيمة n n"
+
+#, fuzzy
+#~ msgid "Minimum"
+#~ msgstr "الأدنى"
+
+#, fuzzy
+#~ msgid "Maximum"
+#~ msgstr "الأقصى"
+
+#, fuzzy
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "مرحب a b a b"
+
+#, fuzzy
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "أقل اللثوانية a b a b"
+
+#, fuzzy
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "يساوي a b a b"
+
+#, fuzzy
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "التّقريب a a n"
+
+#, fuzzy
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "لا مساو a b a b"
+
+#, fuzzy
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "مرحب أو مساو a b a b"
+
+#, fuzzy
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "أقل أو مساو a b a b"
+
+#, fuzzy
+#~ msgid "Boolean and"
+#~ msgstr "منطقي و"
+
+#, fuzzy
+#~ msgid "Boolean not"
+#~ msgstr "منطقي ليس"
+
+#, fuzzy
+#~ msgid "Boolean or"
+#~ msgstr "منطقي أو"
+
+#, fuzzy
+#~ msgid "Boolean xor"
+#~ msgstr "منطقي"
+
+#, fuzzy
+#~ msgid "Boolean implication"
+#~ msgstr "منطقي"
+
+#, fuzzy
+#~ msgid "Greatest common divisor"
+#~ msgstr "أعظم شائع"
+
+#, fuzzy
+#~ msgid "Least common multiple"
+#~ msgstr "أقلّ شائع متعدد"
+
+#, fuzzy
+#~ msgid "Root"
+#~ msgstr "الجذر"
+
+#, fuzzy
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<b style='color:red'> الخطأ</b>"
+
+#, fuzzy
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "1"
+
+#, fuzzy
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#, fuzzy
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr "، "
+
+#, fuzzy
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "القيمة"
+
+#, fuzzy
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "، "
+
+#, fuzzy
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "إحسب تعبير"
+
+#, fuzzy
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "إحسب تعبير"
+
+#, fuzzy
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "إحسب تعبير"
+
+#, fuzzy
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "إحسب تعبير"
+
+#, fuzzy
+#~ msgid "Subtraction"
+#~ msgstr "طرح"
+
+#, fuzzy
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr "الخطأ: %1"
+
+#, fuzzy
+#~ msgid "Generating... Please wait"
+#~ msgstr "التوليد رجاء أنتطر"
+
+#, fuzzy
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "احفظ لغ"
+
+#, fuzzy
+#~ msgid "File"
+#~ msgstr "دقيق"
+
+#, fuzzy
+#~ msgid "Mode"
+#~ msgstr "الوضع"
+
+#, fuzzy
+#~ msgid "Save the expression"
+#~ msgstr "احفظ تعبير"
+
+#, fuzzy
+#~ msgid "Calculate the expression"
+#~ msgstr "إحسب تعبير"
+
+#, fuzzy
+#~ msgid "%1:=%2"
+#~ msgstr "2"
+
+#, fuzzy
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'> الخطأ</b>"
+
+#, fuzzy
+#~ msgid "From parser:"
+#~ msgstr "من:"
+
+#, fuzzy
+#~ msgid "%1, "
+#~ msgstr "، "
+
+#, fuzzy
+#~ msgid "Hyperbolic arc cotangent"
+#~ msgstr "إطنابي قوس"
+
+#, fuzzy
+#~ msgid "Real"
+#~ msgstr "حقيقي"
+
+#, fuzzy
+#~ msgid "Conjugate"
+#~ msgstr "صرفي"
+
+#, fuzzy
+#~ msgid "Imaginary"
+#~ msgstr "خيالي"
+
+#, fuzzy
+#~ msgctxt "@item:inmenu"
+#~ msgid "&New"
+#~ msgstr "&جديد"
+
+#, fuzzy
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Quit"
+#~ msgstr "ا&خرج"
+
+#, fuzzy
+#~ msgid "&Save"
+#~ msgstr "ا&حفظ"
+
+#, fuzzy
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "%1"
+#~ msgstr "%1"

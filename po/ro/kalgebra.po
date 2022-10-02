@@ -1,0 +1,1069 @@
+# Traducerea kalgebra.po în Română
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sergiu Bivol <sergiu@cip.md>, 2008, 2012.
+# Carla Boczor <wasp719@yahoo.com>, 2010.
+# Victor Cărbune <victor.carbune@kdemail.net>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2012-12-23 12:05+0200\n"
+"Last-Translator: Sergiu Bivol <sergiu@ase.md>\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Opțiuni: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Lipește  \"%1\" in partea de intrare "
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "Lipește  \"%1\" in partea de intrare "
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Eroare: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, fuzzy, kde-format
+#| msgid "<ul class='error'>Error: Could not load %1</ul>"
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Eroare:Nu se poate incărca %1</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Informație"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Adăugare/editare funcție"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "De la:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Către:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Opțiuni "
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: functionedit.cpp:111
+#, fuzzy, kde-format
+#| msgid "Remove '%1'"
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Elimină „%1”"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Opțiunile specificate nu sunt corecte"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Limita inferioară nu poate fi mai mare decat cea superioară"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Schița 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Schița 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Sesiune"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Variabile"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "Calculează"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "Calculează"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Încarcă Script..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Scripturi recente"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Salvează Scriptul..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Exportează Înregistrarea"
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Mod de execuție"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Calculează"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Evaluează"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Funcții"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Listă"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Adăugare"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Fereastră de vizualizare"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "Grafic &2D"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "Grafic 3&D"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Grilă"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Păstrează raportul de aspect"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Rezoluție"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Slabă"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normală"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Bună"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Foarte bună"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D Grafic"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &Grafic"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Resetați vizionarea "
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Puncte"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Linii"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Solid"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Operații"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Dicționar"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Caută:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Editare"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Alegeți un script "
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Script (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "Fișier HTML  (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Eroare: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Fișier Imagine\n"
+"*.svg|Fișier SVG"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Gata"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Adaugă variabilă"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Introduceți numele variabilei noi "
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Un calculator"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Adaugă/Editează o variabilă"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Variabile"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Editeaza valoarea '%1'"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "indisponibil"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>Greșit</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Stânga:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Sus:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Lățime:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Înălțime:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Aplică"
+
+#~ msgid "C&onsole"
+#~ msgstr "C&onsolă"
+
+#~ msgid "&Console"
+#~ msgstr "&Consolă"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "S-a dezvoltat proprietatea de a desena curbe implicite.Îmbunătățire "
+#~ "pentru trasarea funcțiilor."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formula</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Eroare: Tip de funcție greșit"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Gata: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Eroare: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Curăță"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr " *.png|Fișier PNG"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Transparența"
+
+#~ msgid "Type"
+#~ msgstr "Tip"
+
+#~ msgid "Result: %1"
+#~ msgstr "Rezultat: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "În expresie"
+
+#~ msgid "To MathML"
+#~ msgstr "În MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Reducere"
+
+#~ msgid "Examples"
+#~ msgstr "Exemple"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Putem desena numai rezultate reale."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Expresie incorectă"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Tipul funcției nerecunoscut"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "Topul funcției incorect pentru funcții depinzând de %1"
+
+#~ msgctxt ""
+#~ "This function can't be represented as a curve. To draw implicit curve, "
+#~ "the function has to satisfy the implicit function theorem."
+#~ msgid "Implicit function undefined in the plane"
+#~ msgstr "Funcție implicită nedefinită in plan "
+
+#~ msgid "center"
+#~ msgstr "centru"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Nume"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Funcție"
+
+#~ msgid "%1 function added"
+#~ msgstr "Funcția %1 adăugată"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Ascunde „%1”"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Arată „%1”"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Fereastra de vizualizare  alesă prea mică"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Descriere"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parametrii "
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Exemplu"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : var"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=de la..până la"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... parametrii, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Adunare"
+
+#~ msgid "Multiplication"
+#~ msgstr "Înmultire"
+
+#~ msgid "Division"
+#~ msgstr "Împartire"
+
+#~ msgid "Power"
+#~ msgstr "La putere"
+
+#~ msgid "Remainder"
+#~ msgstr "Rest"
+
+#~ msgid "Quotient"
+#~ msgstr "Cât"
+
+#~ msgid "The factor of"
+#~ msgstr "Factorul "
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "N factorial.factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Funcție care calculeaza sinusul unui unghi dat"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Funcție care calculează cosinusul unui unghi dat"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Funcție care calculează tangenta unui unghi dat "
+
+#~ msgid "Secant"
+#~ msgstr "Secantă"
+
+#~ msgid "Cosecant"
+#~ msgstr "Cosecantă"
+
+#~ msgid "Cotangent"
+#~ msgstr "Cotangentă"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Sinus hiperbolic"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Cosinus hiperbolic"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Tangentă hiperbolică"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Secantă hiperbolica"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Cosecantă hiperbolica"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Cotangentă hiperbolică"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arcsin"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arccos"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arctg"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Arcctg"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Arctg hiperbolică"
+
+#~ msgid "Summatory"
+#~ msgstr "Sumă"
+
+#~ msgid "Productory"
+#~ msgstr "Produs"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "Normală"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "Listă"
+
+#~ msgid "Differentiation"
+#~ msgstr "Diferență"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Arcsin hiperbolic"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Arccos hiperbolic"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Arccosecant"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Arccosecant hiperbolic"
+
+#~ msgid "Arc secant"
+#~ msgstr "Arcsecant"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Arcsecant hiperbolic"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Exponent (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Logaritm in baza e"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Logaritm in baza 10"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Valoare absoluta. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Partea întreagă=[n]"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "[x]+1"
+
+#~ msgid "Minimum"
+#~ msgstr "Minim"
+
+#~ msgid "Maximum"
+#~ msgstr "Maxim"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Mai mare. Mm(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Mai mic. Mm(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Egal.eg(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Aproximare.aprox(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Diferit.dif(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Mai mare sau egal. mmse(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Mai mic sau egal.mmse(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Conjuncție "
+
+#~ msgid "Boolean not"
+#~ msgstr "Negație "
+
+#~ msgid "Boolean or"
+#~ msgstr "Disjuncție"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Echivalență"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Implicație logică"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Cel mai mare divizor comun"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Cel mai mic multiplu comun"
+
+#~ msgid "Root"
+#~ msgstr "Rădăcină"
+
+#~ msgid "Cardinal"
+#~ msgstr "Cardinal"
+
+#~ msgid "Scalar product"
+#~ msgstr "Produs scalar"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr "Selectați elementul par1 din lista par2 sau din vector "
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Se alătură mai multe elemente de același tip "
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr ": limite"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Valoare"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Trebuie specificată o operație corectă"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Identificator necunoscut: '%1'"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr ""
+#~ "Nu s-a putut găsi o alegere adecvata pentru o condiție din declarație."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Tip nesuportat pentru delimitare."
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Limita inferioară este mai mare decat limita superioară"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Limită superioară sau inferioară incorecta. "
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Definit un ciclu de variabile"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Rezultatul nu este un număr"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Caracteristică necunoscut %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> are nevoie de cel putin 2 parametrii"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> are nevoie de %2 parametrii"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "Lipsește delimitarea pentru %1"
+
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Limita neașteptată pentru '%1'"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em>  lipsește limita la  '%2'"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Declarație greșită"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Variabilă goala: %1 "
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr "Nu putem avea condiții decât in funcții cu ramuri."
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr "Nu puteți avea două variabile cu același nume ca și '%1'."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "Parametrul <em>celălalt</em> ar trebui sa fie ultimul"
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "%1 nu este o condiție adecvată in interiorul funcției cu ramuri."
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Putem declara numai variabile"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Putem avea numai variabile limitate"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Eroare la analizare: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Container necunoscut: %1 "
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Nu se poate codifica %1 valoare."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "Operatorul  %1 nu poate avea contexte derivate. "
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Elementul '%1' nu este operator "
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Nu sunt doriti vectori fără nici un element."
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Nu este acceptat/străin: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Se așteaptă %1 in loc de  '%2'"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Lipsește paranteya dreapta "
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Paranteza dreaptă este dezaxată "
+
+#, fuzzy
+#~| msgid "Unexpected token %1"
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "Caracteristică neașteptată %1"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Caracteristică neașteptată %1"
+
+#, fuzzy
+#~| msgid "Could not calculate a value %1"
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Nu se poate calcula valoarea %1"
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] ""
+#~ "Sumă invalidă a paramerilor pentru '%2'.Ar trebui să fie 1 parametru."
+#~ msgstr[1] ""
+#~ "Sumă invalidă a paramerilor pentru '%2'.Ar trebui să fie %1 parametrii."
+#~ msgstr[2] ""
+#~ "Sumă invalidă a paramerilor pentru '%2'.Ar trebui să fie %1 parametrii."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Nu se poate denumi '%1'"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Nu se poate rezolva  '%1'"
+
+#, fuzzy
+#~| msgid "Enter a name for the new variable"
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Introduceți numele variabilei noi "
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "Nu se poate determina tipul ramificațiilor"
+
+#, fuzzy
+#~| msgid "Unexpected bounding for '%1'"
+#~ msgid "Unexpected type"
+#~ msgstr "Limita neașteptată pentru '%1'"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Nu se poate interschimba '%1' cu '%2'"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Caracteristică necunoscută %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Nu se poate calcula restul împărțirii cu 0."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Nu se pot calcula divizorii lui 0."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Nu se poate calcula cel mai mic multiplu comun a lui 0."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Nu se poate calcula valoarea %1"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Index invalid pentru un container"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Nu se pot face operații pe vectori de mărimi diferite."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Nu se poate calcula  %1 al vectorului "
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Nu se poate calcula %1 al listei "
+
+#, fuzzy
+#~| msgid "Could not calculate a value %1"
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Nu se poate calcula valoarea %1"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Nu se poate simplifica '%1' si '%2'."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Domeniu de definiție incorect."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Funcția parametrica nu redă un vector "
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Este nevoie de un vector bidimensional"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Elementele funcției parametrice ar trebui sa fie scalare"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "Derivata %1 nu a fost implementată."
+
+#~| msgctxt "@title:column"
+#~| msgid "Function"
+#~ msgid "Subtraction"
+#~ msgstr "Funcție"
+
+#~ msgctxt "Error message"
+#~ msgid "Did not understand the real value: %1"
+#~ msgstr "Nu se ințelege valoarea reala : %1"
+
+#, fuzzy
+#~| msgid "Error: %1"
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr "Eroare: %1"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Eroare: Avem nevoie de valori pentru a desena un grafic"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Generare... Așteptați"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Salvează jurnalul"
+
+#, fuzzy
+#~| msgid "We can only draw Real results."
+#~ msgid "We can only call functions"
+#~ msgstr "Putem desena numai rezultate reale."
+
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>%1</b>"

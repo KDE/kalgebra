@@ -1,0 +1,441 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Svetoslav Alexandrov AKA Zvezdichko <saturn@gbg.bg>, 2008.
+# Zlatko Popov <zlatkopopov@fsa-bg.org>, 2008.
+# Yasen Pramatarov <yasen@lindeas.com>, 2009, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2012-06-20 11:46+0300\n"
+"Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
+"Language-Team: Bulgarian <dict@ludost.net>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+msgid "Options: %1"
+msgstr "Операции"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Грешка: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Грешка: Не може да се зареди %1. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Информация"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Добавяне/Редактиране на функция"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Преглед"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "От:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "До:"
+
+#: functionedit.cpp:104
+#, fuzzy, kde-format
+msgid "Options"
+msgstr "Операции"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "ОК"
+
+#: functionedit.cpp:111
+#, fuzzy, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Премахване на \"%1\""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Сесия"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Променливи"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+msgid "&Calculator"
+msgstr "Калкулатор"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+msgid "C&alculator"
+msgstr "Калкулатор"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Зареждане на скрипт..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Скорошни скриптове"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Запис на скрипт..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Режим на изпълнение"
+
+#: kalgebra.cpp:187
+#, fuzzy, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Калкулатор"
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Стойност"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Функции"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Списък"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Добавяне"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D диаграма"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D диаграма"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Координатна мрежа"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Запазване на пропорциите"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Разделителна способност"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Слабо"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Нормално"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Добре"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Много добре"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D диаграма"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &диаграма"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Анулиране на изгледа"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Точки"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Линии"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Плътно"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Операции"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Речник"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Търсене:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Редактиране"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Изберете скрипт"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Скрипт (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "Файл HTML (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+msgid "Errors: %1"
+msgstr "Грешка: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|PNG изображение\n"
+"*.svg|SVG файл"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Готово"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Добавяне на променлива"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Въведете име за новата променлива"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+msgid "A portable calculator"
+msgstr "Калкулатор"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Добавяне/Редактиране на променлива"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+msgid "Remove Variable"
+msgstr "Променливи"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Редактиране на \"%1\""
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "не е налично"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>ГРЕШНО</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Широчина:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Височина:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Прилагане"

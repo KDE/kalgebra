@@ -1,0 +1,1175 @@
+# Translation of kalgebra.po to Ukrainian
+# Copyright (C) 2007-2018 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2022.
+# Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-06-12 08:30+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Параметри: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Вставити «%1» у вхідні дані"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "Вставити до вхідних даних"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Помилка: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Імпортовано: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Помилка: не вдалося завантажити %1. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Інформація"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Додати / змінити функцію"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Перегляд"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Від:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "До:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Параметри"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Гаразд"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Вилучити"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Вами вказано некоректні параметри"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Нижня межа не може бути більшою за верхню"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Двовимірний графік"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Тривимірний графік"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Сеанс"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Змінні"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "&Калькулятор"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "К&алькулятор"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Завантажити скрипт…"
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Нещодавні скрипти"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Зберегти скрипт…"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Експортувати журнал…"
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "&Вставити відповідь…"
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Режим виконання"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Обчислення"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Визначення значення"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Функції"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Список"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Додати"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Демонстраційне вікно"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&Двовимірний графік"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "Дво&вимірний графік"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Сітка"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Зберігати співвідношення розмірів"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Роздільна здатність"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Низька"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Звичайна"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Висока"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Дуже висока"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&Тривимірний графік"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "Тривимірний &графік"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Оновити перегляд"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Крапки"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Лінії"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Суцільна"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Дії"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Словник"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Шукати:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Редагування"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Виберіть скрипт"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Скрипт (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "Файл HTML (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Помилки: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "Виберіть місце для зображення графіка"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "файл зображення (*.png);;файл SVG (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Готово"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Додати змінну"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Введіть назву нової змінної"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "Портативний калькулятор"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "© Aleix Pol i Gonzalez, 2006–2016"
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Додати або редагувати змінну"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Вилучити змінну"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Змінити значення «%1»"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "недоступне"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>НЕПРАВИЛЬНО</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Ліворуч:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Згори:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Ширина:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Висота:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Застосувати"
+
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "файл PNG (*.png);;документи PDF (*.pdf);;документ X3D (*.x3d);;документ "
+#~ "STL (*.stl)"
+
+#~ msgid "C&onsole"
+#~ msgstr "К&онсоль"
+
+#~ msgid "KAlgebra"
+#~ msgstr "KAlgebra"
+
+#~ msgid "&Console"
+#~ msgstr "&Консоль"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Можливість побудови функцій, заданих неявно. Покращення у інструменті "
+#~ "побудови функцій."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Формула</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Помилка: помилковий тип функції"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Виконано: %1 мс"
+
+#~ msgid "Error: %1"
+#~ msgstr "Помилка: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Очистити"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|Файл PNG"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Прозорість"
+
+#~ msgid "Type"
+#~ msgstr "Тип"
+
+#~ msgid "Result: %1"
+#~ msgstr "Результат: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "До виразу"
+
+#~ msgid "To MathML"
+#~ msgstr "У MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Спростити"
+
+#~ msgid "Examples"
+#~ msgstr "Приклади"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Можливий показ лише дійсної частини результату."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Помилка у виразі"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Не вдалося розпізнати тип функції"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "Помилковий тип функції, залежної від %1"
+
+#~ msgctxt ""
+#~ "This function can't be represented as a curve. To draw implicit curve, "
+#~ "the function has to satisfy the implicit function theorem."
+#~ msgid "Implicit function undefined in the plane"
+#~ msgstr "Функція, задана неявно, є невизначеною на площині"
+
+#~ msgid "center"
+#~ msgstr "центр"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Назва"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Функція"
+
+#~ msgid "%1 function added"
+#~ msgstr "функцію %1 додано"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Сховати «%1»"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Показати «%1»"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Вибрана ділянка перегляду замала"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Опис"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Параметри"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Приклад"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : змінна"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=від...до"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... параметри, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Додавання"
+
+#~ msgid "Multiplication"
+#~ msgstr "Множення"
+
+#~ msgid "Division"
+#~ msgstr "Ділення"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Віднімання. Всі значення буде віднято від першого."
+
+#~ msgid "Power"
+#~ msgstr "Степінь"
+
+#~ msgid "Remainder"
+#~ msgstr "Залишок"
+
+#~ msgid "Quotient"
+#~ msgstr "Частка"
+
+#~ msgid "The factor of"
+#~ msgstr "Дільник"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Факторіал. factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Функція для обчислення синуса за заданим кутом"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Функція для обчислення косинуса за заданим кутом"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Функція для обчислення тангенса за заданим кутом"
+
+#~ msgid "Secant"
+#~ msgstr "Секанс"
+
+#~ msgid "Cosecant"
+#~ msgstr "Косеканс"
+
+#~ msgid "Cotangent"
+#~ msgstr "Котангенс"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Гіперболічний синус"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Гіперболічний косинус"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Гіперболічний тангенс"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Гіперболічний секанс"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Гіперболічний косеканс"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Гіперболічний котангенс"
+
+#~ msgid "Arc sine"
+#~ msgstr "Обернений синус"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Обернений косинус"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Обернений тангенс"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Обернений котангенс"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Обернений гіперболічний тангенс"
+
+#~ msgid "Summatory"
+#~ msgstr "Суматор"
+
+#~ msgid "Productory"
+#~ msgstr "Перемножувач"
+
+#~ msgid "For all"
+#~ msgstr "Для всіх"
+
+#~ msgid "Exists"
+#~ msgstr "Існує"
+
+#~ msgid "Differentiation"
+#~ msgstr "Диференціювання"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Обернений гіперболічний синус"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Обернений гіперболічний косинус"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Обернений косеканс"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Обернений гіперболічний косеканс"
+
+#~ msgid "Arc secant"
+#~ msgstr "Обернений секанс"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Обернений гіперболічний секанс"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Експонента (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Натуральний логарифм"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Десятковий логарифм"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Модуль числа. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Найближче менше ціле число. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Найближче більше ціле число. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Мінімальний"
+
+#~ msgid "Maximum"
+#~ msgstr "Максимальний"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Більше ніж. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Менше ніж. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Рівне. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Приблизне. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Не рівне. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Більше або рівне. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Менше або рівне. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Логічне «і»"
+
+#~ msgid "Boolean not"
+#~ msgstr "Логічне «ні»"
+
+#~ msgid "Boolean or"
+#~ msgstr "Логічне «або»"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Логічне виключне «або»"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Логічна імплікація"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Найбільший спільний дільник"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Найменше спільне кратне"
+
+#~ msgid "Root"
+#~ msgstr "Корінь"
+
+#~ msgid "Cardinal"
+#~ msgstr "Потужність множини"
+
+#~ msgid "Scalar product"
+#~ msgstr "Скалярний добуток"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr ""
+#~ "Вибрати елемент з номером, визначеним першим параметром, зі списку чи "
+#~ "вектора, визначеного другим параметром"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "З’єднує декілька елементів одного типу"
+
+#~ msgid "Applies a function to every element in a list"
+#~ msgstr "Застосовує функцію до всіх елементів у списку"
+
+#~ msgid "Removes all elements that don't fit a condition"
+#~ msgstr "Вилучає всі елементи, які не відповідають умові"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : межі"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Значення"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Слід вказати правильний оператор"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Невідомий ідентифікатор: «%1»"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Не вдалося знайти належного варіанта у умовному виразі."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Цей тип не можна використовувати для визначення меж."
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Нижня межа більша за верхню межу"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Некоректна верхня або нижня межа."
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Визначено цикл зі змінних"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Результат не є числом"
+
+#~ msgid "Unexpectedly arrived to the end of the input"
+#~ msgstr "Виявлено несподіване завершення вхідних даних"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Невідомий елемент %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> потрібні принаймні 2 параметри"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> потрібно %2 параметрів"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "У «%1» не вказано межу"
+
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Неочікуваний обмеження для «%1»"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "У <em>%1</em> відсутні обмеження на «%2»"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Неправильне оголошення"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Порожній контейнер: %1"
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr "Умови можна вказувати лише в умовних конструкціях."
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr ""
+#~ "Не можна використовувати два параметри з однією назвою, наприклад «%1»."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "Параметр <em>otherwise</em> слід вказувати останнім."
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "%1 не є належною умовою у конструкції умов"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Можна визначати лише змінні"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Можна лише обмежити змінні"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Помилка під час обробки: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Невідомий контейнер: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Не вдалося закодувати значення %1."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "Оператор %1 не може мати дочірніх контекстів."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Елемент «%1» не є оператором."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Порожні вектори нам не потрібні"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Не підтримується/невідомий: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Очікувалося %1, знайдено «%2»"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Не вистачає правої дужки"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Незакрита права дужка"
+
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "Неочікуваний ідентифікатор елемента: %1"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Неочікуваний елемент %1"
+
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Не вдалося знайти тип, який узагальнює «%1»"
+
+#~ msgid "The domain should be either a vector or a list"
+#~ msgstr "Мало бути вказано вектор або список"
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Некоректна кількість параметрів «%2». Мав бути %1 параметр."
+#~ msgstr[1] "Некоректна кількість параметрів «%2». Мало бути %1 параметри."
+#~ msgstr[2] "Некоректна кількість параметрів «%2». Мало бути %1 параметрів."
+#~ msgstr[3] "Некоректна кількість параметрів «%2». Мав бути один параметр."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Не вдалося викликати «%1»"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Не вдалося розв’язати «%1»"
+
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Невідповідний тип змінної «%1»"
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "Не вдалося визначити тип умови"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Неочікуваний тип"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Не вдалося перетворити «%1» на «%2»"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Невідомий елемент %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Не вдалося залишок від 0."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Не вдалося обчислити коефіцієнт при 0."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Не вдалося обчислити найменше спільне кратне для 0."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Не вдалося обчислити значення %1"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Некоректний індекс контейнера"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Виконувати операції над векторами різної розмірності не можна."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Не вдалося обчислити %1 вектора"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Не вдалося обчислити %1 списку"
+
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Не вдалося обчислити похідну «%1»"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Не вдалося спростити «%1» і «%2»."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Помилка у визначенні області."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Параметрична функція не повертає вектора"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Слід вказати двовимірний вектор"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Параметрами параметричної функції мають бути скалярні значення"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "Знайти похідну від %1 неможливо."
+
+#~ msgctxt "Error message"
+#~ msgid "Did not understand the real value: %1"
+#~ msgstr "Не вдалося обробити дійсне значення: %1"
+
+#~ msgid "Subtraction"
+#~ msgstr "Віднімання"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "Помилка: %2"
+
+#~ msgid "Select an element from a container"
+#~ msgstr "Вибір елемента з контейнера"
+
+#~ msgid " <a href='%1'>Plot 3D</a>"
+#~ msgstr " <a href='%1'>Тривимірний графік</a>"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Помилка: щоб побудувати графік, потрібні дані"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Створення... Будь ласка, зачекайте"
+
+#~ msgid "Wrong parameter count, had 1 parameter for '%2'"
+#~ msgid_plural "Wrong parameter count, had %1 parameters for '%2'"
+#~ msgstr[0] "Помилкова кількість параметрів, отримано %1 параметр для «%2»"
+#~ msgstr[1] "Помилкова кількість параметрів, отримано %1 параметри для «%2»"
+#~ msgstr[2] "Помилкова кількість параметрів, отримано %1 параметрів для «%2»"
+#~ msgstr[3] "Помилкова кількість параметрів, отримано %1 параметр для «%2»"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Зберегти журнал"
+
+#~ msgid "File"
+#~ msgstr "Файл"
+
+#~ msgid "We can only call functions"
+#~ msgstr "Викликати можна лише функції"
+
+#~ msgid "Wrong parameter count"
+#~ msgstr "Помилкова кількість параметрів"
+
+#~ msgctxt ""
+#~ "html representation of a true. please don't translate the true for "
+#~ "consistency"
+#~ msgid "<span class='const'>true</span>"
+#~ msgstr "<span class='const'>true</span>"
+
+#~ msgctxt ""
+#~ "html representation of a false. please don't translate the false for "
+#~ "consistency"
+#~ msgid "<span class='const'>false</span>"
+#~ msgstr "<span class='const'>false</span>"
+
+#~ msgctxt "html representation of a number"
+#~ msgid "<span class='num'>%1</span>"
+#~ msgstr "<span class='num'>%1</span>"
+
+#~ msgid "Invalid parameter count."
+#~ msgstr "Помилкова кількість параметрів."
+
+#~ msgid "Mode"
+#~ msgstr "Режим"
+
+#~ msgid "Save the expression"
+#~ msgstr "Зберегти вираз"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "Обчислити вираз"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#~ msgid "Cannot apply '%1' to '%2'"
+#~ msgstr "Не вдалося застосувати «%1» до «%2»"
+
+#~ msgid "Cannot operate '%1'"
+#~ msgstr "Не вдалося обробити «%1»"
+
+#~ msgid "Cannot check '%1' type"
+#~ msgstr "Не вдалося перевірити тип «%1»"
+
+#~ msgid "Wrong number of parameters when calling '%1'"
+#~ msgstr "Помилкова кількість параметрів у виклику «%1»"
+
+#~ msgid "Cannot have downlimit ≥ uplimit"
+#~ msgstr "Ситуація, коли нижня межа ≥ верхній межі, неможлива"
+
+#~ msgid "Trying to call an invalid function"
+#~ msgstr "Спроба виклику некоректно заданої функції"
+
+#~ msgid "Unfulfilled dependencies for: '%1'"
+#~ msgstr "Невиконані залежності «%1»"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "We want a 2 dimension vector"
+#~ msgstr "Потрібен двовимірний вектор"
+
+#~ msgid "The function <em>%1</em> does not exist"
+#~ msgstr "Функції з назвою <em>%1</em> не існує"
+
+#~ msgid "The variable <em>%1</em> does not exist"
+#~ msgstr "Змінної з назвою <em>%1</em> не існує"
+
+#~ msgid "Need a var name and a value"
+#~ msgstr "Потрібна назва змінної і значення"
+
+#~ msgid "We can only select a container's value with its integer index"
+#~ msgstr "Можна вибирати значення контейнера лише за цілим індексом"
+
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>%1</b>"
+
+#~ msgid "The first parameter in a function should be the name"
+#~ msgstr "Першим параметром у функції має бути назва."
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown bounded variable: %1"
+#~ msgstr "Невідома обмежена змінна: %1"
+
+#~ msgid "From parser:"
+#~ msgstr "Від обробника:"
+
+#~ msgid ""
+#~ "Wrong parameter count in a selector, should have 2 parameters, the "
+#~ "selected index and the container."
+#~ msgstr ""
+#~ "Неправильна кількість параметрів у інструменті вибору: має бути 2 "
+#~ "параметри, — вибраний індекс і контейнер."
+
+#~ msgid "piece or otherwise in the wrong place"
+#~ msgstr "piece або otherwise у неправильному місці"
+
+#~ msgid "No bounding variables for this sum"
+#~ msgstr "Не вказано меж суми"
+
+#~ msgid "Missing bounding limits on a sum operation"
+#~ msgstr "Не вказано меж для операції підсумовування"
+
+#~ msgctxt "Error message"
+#~ msgid "Trying to codify an unknown value: %1"
+#~ msgstr "Спроба кодифікації невідомого значення: %1"

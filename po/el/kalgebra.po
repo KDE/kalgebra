@@ -1,0 +1,1148 @@
+# translation of kalgebra.po to greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Spiros Georgaras <sng@hellug.gr>, 2007.
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2007, 2008, 2009.
+# Yannis Kaskamanidis <kiolalis@gmail.com>, 2010.
+# Petros <pvidalis@gmail.com>, 2010.
+# Antonis Geralis <capoiosct@gmail.com>, 2012.
+# Dimitrios Glentadakis <dglent@gmail.com>, 2012.
+# Dimitris Kardarakos <dimkard@gmail.com>, 2012, 2013, 2014.
+# Stelios <sstavra@gmail.com>, 2017, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2020-05-04 21:46+0300\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Επιλογές: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Επικόλληση \"%1\" στην είσοδο"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "Επικόλληση στην είσοδο"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Σφάλμα: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Εισάχθηκε: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Σφάλμα: Αδυναμία φόρτωσης του %1. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Πληροφορίες"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Προσθήκη/επεξεργασία μιας συνάρτησης"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Από:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Προς:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Επιλογές"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Εντάξει"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Οι επιλογές που καθορίσατε δεν είναι σωστές"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Το κατώτατο όριο δεν μπορεί να είναι μεγαλύτερο από το ανώτατο όριο."
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Γραφική απεικόνιση 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Γραφική απεικόνιση 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Συνεδρία"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Μεταβλητές"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "Αρι&θμομηχανή"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "Αριθμομηχ&ανή"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Φόρτωση σεναρίου..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Πρόσφατα σενάρια"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Αποθήκευση σεναρίου..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Εξαγωγή καταγραφής..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "Ε&ισαγωγή απάν..."
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Τρόπος εκτέλεσης"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Υπολογισμός"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Αποτίμηση"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Συναρτήσεις"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Λίστα"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Προσθήκη"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Παράθυρο προβολής"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D γράφημα"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D γράφημα"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Κάνναβος"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Διατήρηση αναλογιών"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Ανάλυση"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Φτωχή"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Κανονική"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Λεπτομερής"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Πολύ λεπτομερής"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D γράφημα"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &γράφημα"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Επαναφορά προβολής"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Τελείες"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Γραμμές"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Συμπαγές"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Λειτουργίες"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Λεξικό"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Αναζήτηση για:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Επεξεργασία"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Επιλέξτε ένα σενάριο"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Σενάριο (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "Αρχείο HTML (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Σφάλματα: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "Επιλέξτε τη θέση του σχεδίου"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "Αρχελιο εικόνας (*.png);;SVG αρχείο (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Έτοιμο"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Προσθήκη μεταβλητής"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Εισάγετε όνομα για τη νέα μεταβλητή"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "Ένας συμβατός υπολογιστής"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης, Σπύρος Γεωργαράς"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org, sng@hellug.gr"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Προσθήκη/επεξεργασία μιας μεταβλητής"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Αφαίρεση μεταβλητής"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Επεξεργασία τιμής της '%1'"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "μη διαθέσιμο"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>ΛΑΘΟΣ</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Αριστερά:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Επάνω:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Πλάτος:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Ύψος:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+#, fuzzy
+#~| msgid ""
+#~| "*.png|PNG File\n"
+#~| "*.pdf|PDF Document"
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "*.png|Αρχείο PNG\n"
+#~ "*.pdf|Έγγραφο PDF"
+
+#~ msgid "C&onsole"
+#~ msgstr "Κ&ονσόλα"
+
+#~ msgid "&Console"
+#~ msgstr "&Κονσόλα"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Ανάπτυξη χαρακτηριστικού για την σχεδίαση πεπλεγμένων καμπυλών. "
+#~ "Βελτιώσεις στη γραφική απεικόνιση των συναρτήσεων."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Μαθηματική σχέση</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Σφάλμα: Λανθασμένος τύπος της συνάρτησης"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Ολοκληρώθηκε: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Σφάλμα: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Καθαρισμός"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|Αρχείο PNG"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Διαφάνεια"
+
+#~ msgid "Type"
+#~ msgstr "Τύπος"
+
+#~ msgid "Result: %1"
+#~ msgstr "Αποτέλεσμα: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "Σε έκφραση"
+
+#~ msgid "To MathML"
+#~ msgstr "Σε MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Απλοποίηση"
+
+#, fuzzy
+#~ msgid "Examples"
+#~ msgstr "Παράδειγμα"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Μπορείτε να σχεδιάσετε μόνο αποτελέσματα πραγματικών."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Η έκφραση δεν είναι σωστή"
+
+#~ msgid "center"
+#~ msgstr "κέντρο"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Όνομα"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Συνάρτηση"
+
+#~ msgid "%1 function added"
+#~ msgstr "Προστέθηκε %1 συνάρτηση"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Απόκρυψη '%1'"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Εμφάνιση '%1'"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Η επιλεγμένη προβολή είναι πολύ μικρή"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Περιγραφή"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Παράμετροι"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Παράδειγμα"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... παράμετροι, ... %2)"
+
+#~ msgid "par%1"
+#~ msgstr "παρ%1"
+
+#~ msgid "Addition"
+#~ msgstr "Πρόσθεση"
+
+#~ msgid "Multiplication"
+#~ msgstr "Πολλαπλασιασμός"
+
+#~ msgid "Division"
+#~ msgstr "Διαίρεση"
+
+#~ msgid "Power"
+#~ msgstr "Δύναμη"
+
+#~ msgid "Remainder"
+#~ msgstr "Υπόλοιπο"
+
+#~ msgid "Quotient"
+#~ msgstr "Πηλίκο"
+
+#~ msgid "The factor of"
+#~ msgstr "Ο διαιρέτης του"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Παραγοντικό. factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Συνάρτηση υπολογισμού του ημιτονίου μιας δοσμένης γωνίας"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Συνάρτηση υπολογισμού του συνημιτόνου μιας δοσμένης γωνίας"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Συνάρτηση υπολογισμού της εφαπτομένης μιας δοσμένης γωνίας"
+
+#~ msgid "Secant"
+#~ msgstr "Τέμνουσα"
+
+#~ msgid "Cosecant"
+#~ msgstr "Συντέμνουσα"
+
+#~ msgid "Cotangent"
+#~ msgstr "Συνεφαπτομένη"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Υπερβολικό ημίτονο"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Υπερβολικό συνημίτονο"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Υπερβολική εφαπτομένη"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Υπερβολική τέμνουσα"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Υπερβολική συντέμνουσα"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Υπερβολική συνεφαπτομένη"
+
+#~ msgid "Arc sine"
+#~ msgstr "Τόξο ημίτονου"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Τόξο συνημιτόνου"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Τόξο εφαπτομένης"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Τόξο συνεφαπτομένης"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Υπερβολικό τόξο εφαπτομένης"
+
+#~ msgid "Summatory"
+#~ msgstr "Άθροισμα"
+
+#~ msgid "Productory"
+#~ msgstr "Γινόμενο"
+
+#, fuzzy
+#~ msgid "For all"
+#~ msgstr "Κανονική"
+
+#, fuzzy
+#~ msgid "Exists"
+#~ msgstr "Λίστα"
+
+#~ msgid "Differentiation"
+#~ msgstr "Διαφορικό"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Υπερβολικό τόξο ημιτονίου"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Υπερβολικό τόξο συνημιτόνου"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Τόξο συντέμνουσας"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Υπερβολικό τόξο συντέμνουσας"
+
+#~ msgid "Arc secant"
+#~ msgstr "Τόξο συντέμνουσας"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Υπερβολικό τόξο τέμνουσας"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Φυσικός εκθέτης (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Φυσικός λογάριθμος"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Δεκαδικός λογάριθμος"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Απόλυτη τιμή. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Κατώτερη τιμή. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Τιμή οροφής. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Ελάχιστο"
+
+#~ msgid "Maximum"
+#~ msgstr "Μέγιστο"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Μεγαλύτερο από. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Μικρότερο από. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Ίσο. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Προσέγγιση approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Άνισο. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Μεγαλύτερο ή ίσο. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Μικρότερο ή ίσο. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Δυαδικό και"
+
+#~ msgid "Boolean not"
+#~ msgstr "Δυαδικό όχι"
+
+#~ msgid "Boolean or"
+#~ msgstr "Δυαδικό ή"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Δυαδικό αποκλειστικά ή"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Δυαδική συνέπεια"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Μέγιστος κοινός διαιρέτης"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Ελάχιστο κοινό πολλαπλάσιο"
+
+#~ msgid "Root"
+#~ msgstr "Ρίζα"
+
+#~ msgid "Cardinal"
+#~ msgstr "Απόλυτο"
+
+#~ msgid "Scalar product"
+#~ msgstr "Αριθμητικό γινόμενο"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Συνδέει πολλά αντικείμενα του ίδιου τύπου"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>παρ%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "παρ%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : όρια"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Τιμή"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Πρέπει να καθορίσετε μια σωστή λειτουργία"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Άγνωστο αναγνωριστικό: '%1'"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Αδυναμία εύρεσης μιας κατάλληλης επιλογής για μια δήλωση συνθήκης."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Ο τύπος δεν υποστηρίζεται για περιορισμό."
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Το κατώτατο όριο είναι μεγαλύτερο από το ανώτατο όριο."
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Λανθασμένο κατώτατο ή ανώτατο όριο."
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Ορίστηκε ένας κύκλος μεταβλητής"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Το αποτέλεσμα δεν είναι αριθμός"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Άγνωστο ενδεικτικό %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "Η <em>%1</em> απαιτεί τουλάχιστον 2 παραμέτρους"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "Η <em>%1</em> απαιτεί %2 παραμέτρους"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "Λείπει όριο για το '%1'"
+
+#, fuzzy
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Μη αναμενόμενο ενδεικτικό %1"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em> λείπουν όρια στο '%2'"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Λανθασμένη δήλωση"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Κενός υποδοχέας: %1"
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr "Συνθήκες μπορούν να υπάρχουν μόνο σε δομές piecewise."
+
+#, fuzzy
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "Μόνο μία <em>διαφορετικά</em> οι παράμετροι είναι αρκετοί"
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "Το %1 δεν είναι μια σωστή συνθήκη μέσα στην piecewise"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Μπορείτε να δηλώσετε μόνο μεταβλητές."
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Μπορούμε να έχουμε μόνο περιορισμένες μεταβλητές"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Σφάλμα κατά την ανάλυση: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Άγνωστος υποδοχέας: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Αδυναμία κωδικοποίησης της τιμής %1."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "Ο τελεστής %1 δεν μπορεί να έχει υποπεριεχόμενο."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Το στοιχείο '%1'  δεν είναι τελεστής."
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Μη υποστηριζόμενο/άγνωστο: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Αναμενόταν %1 αντί για το %2"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Λείπει δεξιά παρένθεση"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Δεξιά παρένθεση χωρίς ισορροπία"
+
+#, fuzzy
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "Μη αναμενόμενο ενδεικτικό %1"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Μη αναμενόμενο ενδεικτικό %1"
+
+#, fuzzy
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Αδυναμία υπολογισμού της τιμής %1"
+
+#, fuzzy
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Λανθασμένη μέτρηση παραμέτρου, είχε 1 παράμετρο για '%2'"
+#~ msgstr[1] "Λανθασμένη μέτρηση παραμέτρου, είχε %1 παραμέτρους για '%2'"
+
+#, fuzzy
+#~ msgid "Could not call '%1'"
+#~ msgstr "Αδυναμία κλήσης '%1'"
+
+#, fuzzy
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Αδυναμία υπολογισμού της τιμής %1"
+
+#, fuzzy
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Εισάγετε όνομα για τη νέα μεταβλητή"
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "Αδυναμία καθορισμού του τύπου της τμηματικής συνάρτησης"
+
+#, fuzzy
+#~ msgid "Unexpected type"
+#~ msgstr "Μη αναμενόμενο ενδεικτικό %1"
+
+#, fuzzy
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Αδυναμία μετατροπής %1 σε %2"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#, fuzzy
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Άγνωστο σύμβολο %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Αδυναμία υπολογισμού του υπολοίπου στο 0."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Αδυναμία υπολογισμού του παράγοντα στο 0."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Αδυναμία υπολογισμού του ελάχιστου κοινού πολλαπλάσιου του 0."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Αδυναμία υπολογισμού της τιμής %1"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Μη έγκυρος δείκτης ενός υποδοχέα"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Αδυναμία τέλεσης σε διανύσματα διαφορετικού μεγέθους."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Αδυναμία υπολογισμού του %1 ενός διανύσματος"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Αδυναμία υπολογισμού μιας λίστας %1"
+
+#, fuzzy
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Αδυναμία υπολογισμού της τιμής %1"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Αδυναμία αλλαγής μεγέθους '%1' και '%2'."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Λανθασμένος τομέας."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Η παραμετρική συνάρτηση δεν επέστρεψε ένα διάνυσμα"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Ένα δισδιάστατο διάνυσμα είναι απαραίτητο"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Τα αντικείμενα της παραμετρικής συνάρτησης πρέπει να έχουν μέγεθος"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "Η παράγωγος %1 δεν έχει υλοποιηθεί."
+
+#~ msgctxt "Error message"
+#~ msgid "Did not understand the real value: %1"
+#~ msgstr "Αδυναμία υπολογισμού της πραγματικής τιμής: %1"
+
+#~ msgid "Subtraction"
+#~ msgstr "Αφαίρεση"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "Σφάλμα: %2"
+
+#~ msgid "Select an element from a container"
+#~ msgstr "Επιλέξτε ένα στοιχείο από έναν υποδοχέα"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Σφάλμα: απαιτούνται τιμές για τη σχεδίαση ενός γραφήματος"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Δημιουργία... παρακαλώ περιμένετε"
+
+#~ msgid "Wrong parameter count, had 1 parameter for '%2'"
+#~ msgid_plural "Wrong parameter count, had %1 parameters for '%2'"
+#~ msgstr[0] "Λανθασμένη μέτρηση παραμέτρου, είχε 1 παράμετρο για '%2'"
+#~ msgstr[1] "Λανθασμένη μέτρηση παραμέτρου, είχε %1 παραμέτρους για '%2'"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Αποθήκευση καταγραφής"
+
+#, fuzzy
+#~ msgid "File"
+#~ msgstr "Λεπτομερής"
+
+#~ msgid "We can only call functions"
+#~ msgstr "Μπορούμε να καλέσουμε μόνο μεταβλητές."
+
+#~ msgid "Wrong parameter count"
+#~ msgstr "Λανθασμένη μέτρηση παραμέτρου"
+
+#~ msgctxt ""
+#~ "html representation of a true. please don't translate the true for "
+#~ "consistency"
+#~ msgid "<span class='const'>true</span>"
+#~ msgstr "<span class='const'>αληθές</span>"
+
+#~ msgctxt ""
+#~ "html representation of a false. please don't translate the false for "
+#~ "consistency"
+#~ msgid "<span class='const'>false</span>"
+#~ msgstr "<span class='const'>ψευδές</span>"
+
+#~ msgctxt "html representation of a number"
+#~ msgid "<span class='num'>%1</span>"
+#~ msgstr "<span class='num'>%1</span>"
+
+#, fuzzy
+#~ msgid "Invalid parameter count."
+#~ msgstr "Λανθασμένη μέτρηση παραμέτρου"
+
+#~ msgid "Mode"
+#~ msgstr "Λειτουργία"
+
+#~ msgid "Save the expression"
+#~ msgstr "Αποθήκευση της έκφρασης"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "Υπολογισμός της έκφρασης"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#~ msgid "Cannot apply '%1' to '%2'"
+#~ msgstr "Αδυναμία εφαρμογής '%1' στο '%2'"
+
+#~ msgid "Cannot operate '%1'"
+#~ msgstr "Αδυναμία χειρισμού '%1'"
+
+#~ msgid "Cannot check '%1' type"
+#~ msgstr "Αδυναμία ελέγχου του '%1' τύπου"
+
+#~ msgid "Wrong number of parameters when calling '%1'"
+#~ msgstr "Λανθασμένος αριθμός παραμέτρων κατά την κλήση του '%1'"
+
+#~ msgid "Cannot have downlimit ≥ uplimit"
+#~ msgstr "Δεν μπορεί να είναι το κάτω όριο ≥ πάνω όριο"
+
+#, fuzzy
+#~ msgid "Trying to call an invalid function"
+#~ msgstr "Προσπάθεια κλήσης μιας κενής ή μη έγκυρης συνάρτησης"
+
+#~ msgid "The function <em>%1</em> does not exist"
+#~ msgstr "Η συνάρτηση <em>%1</em> δεν υπάρχει"
+
+#~ msgid "The variable <em>%1</em> does not exist"
+#~ msgstr "Η μεταβλητή <em>%1</em> δεν υπάρχει"
+
+#~ msgid "Need a var name and a value"
+#~ msgstr "Απαιτείται όνομα μεταβλητής και μια τιμή"
+
+#~ msgid "We can only select a container's value with its integer index"
+#~ msgstr "Μπορεί να επιλεγεί μια τιμή υποδοχέα μόνο με τον ακέραιο δείκτη της"
+
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>%1</b>"
+
+#, fuzzy
+#~ msgid "The first parameter in a function should be the name"
+#~ msgstr "Η πρώτη παράμετος σε μια κατασκευή συνάρτησης είναι το όνομα"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown bounded variable: %1"
+#~ msgstr "Άγνωστη περιορισμένη μεταβλητή: %1"
+
+#~ msgid "From parser:"
+#~ msgstr "Από τον αναλυτή:"
+
+#~ msgid ""
+#~ "Wrong parameter count in a selector, should have 2 parameters, the "
+#~ "selected index and the container."
+#~ msgstr ""
+#~ "Εσφαλμένο πλήθος παραμέτρων σε έναν επιλογέα, θα έπρεπε να είναι 2 "
+#~ "παράμετροι, το επιλεγμένο ευρετήριο και ο υποδοχέας."
+
+#~ msgid "piece or otherwise in the wrong place"
+#~ msgstr "piece ή otherwise σε λανθασμένη θέση"
+
+#~ msgid "No bounding variables for this sum"
+#~ msgstr "Χωρίς περιοριστικές μεταβλητές για αυτό το άθροισμα"
+
+#~ msgid "Missing bounding limits on a sum operation"
+#~ msgstr "Λείπουν περιοριστικές τιμές σε μια λειτουργία άθροισης"
+
+#~ msgctxt "Error message"
+#~ msgid "Trying to codify an unknown value: %1"
+#~ msgstr "Προσπάθεια κωδικοποίησης μιας άγνωστης τιμής: %1"
+
+#~ msgid "Hyperbolic arc cotangent"
+#~ msgstr "Υπερβολικό τόξο συνεφαπτομένης"
+
+#~ msgid "Real"
+#~ msgstr "Πραγματικός"
+
+#~ msgid "%1, "
+#~ msgstr "%1, "

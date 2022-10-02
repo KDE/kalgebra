@@ -1,0 +1,511 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Kristóf Kiszel <ulysses@kubuntu.org>, 2011, 2014.
+# Balázs Úr <urbalazs@gmail.com>, 2012, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2014-09-18 22:40+0200\n"
+"Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Beállítások: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "„%1” beillesztése a bemenetre"
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "„%1” beillesztése a bemenetre"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Hiba: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Importálva: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Hiba: %1 nem tölthető be. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Információ"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Függvény hozzáadása/szerkesztése"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Előnézet"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Ettől:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Eddig:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Beállítások"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "A megadott beállítás helytelen"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Az alsó korlát nem lehet nagyobb mint a felső korlát"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "2D-s ábrázolás"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "3D-s ábrázolás"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Munkamenet"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Változók"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "Számolás"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "Számolás"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "Szkript betö&ltése…"
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Legutóbbi szkriptek"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Szkript mentése…"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "Napló &exportálása…"
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Végrehajtó mód"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Számolás"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Kiértékelés"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Függvények"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Lista"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "Hozzá&adás"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Nézőpont"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D-s grafikon"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D-s grafikon"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Rács"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "Az arány &megőrzése"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Felbontás"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Alacsony"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normál"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Magas"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Nagyon magas"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D-s grafikon"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3&D-s grafikon"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "Alapé&rtelmezett nézet"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Pontok"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Vonalak"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Folytonos"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Műveletek"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Szótár"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Keresés:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "Sz&erkesztés"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Válasszon szkriptet"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Szkript (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML-fájl (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Hibák: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "Válassza ki, hová kerüljön a renderelt ábra"
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Képfájl\n"
+"*.svg|SVG-fájl"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Kész"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Változó hozzáadása"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Adja meg az új változó nevét"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Számolóhép"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "© Aleix Pol Gonzalez, 2006-2010."
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kiszel Kristóf,Úr Balázs"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ulysses@kubuntu.org,urbalazs@gmail.com"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Változó hozzáadása/szerkesztése"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Változó eltávolítása"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "„%1” érték szerkesztése"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "nem érhető el"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>HIBA</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Balra:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Fent:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Szélesség:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Magasság:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Alkalmazás"
+
+#, fuzzy
+#~| msgid ""
+#~| "*.png|PNG File\n"
+#~| "*.pdf|PDF Document\n"
+#~| "*.x3d|X3D Document"
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "*.png|PNG fájl\n"
+#~ "*.pdf|PDF dokumentum\n"
+#~ "*.x3d|X3D dokumentum"
+
+#~ msgid "C&onsole"
+#~ msgstr "K&onzol"
+
+#~ msgid "&Console"
+#~ msgstr "&Konzol"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Szolgáltatás fejlesztése implicit görbék rajzolásához, javításokok a "
+#~ "függvényábrázolásban."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formula</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Hiba: rossz függvénytípus"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Kész: %1 ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Hiba: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Törlés"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG-fájl"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1…"
+
+#~ msgid "&Transparency"
+#~ msgstr "Á&tlátszóság"
+
+#~ msgid "Type"
+#~ msgstr "Típus"

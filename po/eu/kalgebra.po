@@ -1,0 +1,864 @@
+# Translation of kalgebra.po to Basque/Euskera (eu).
+# Copyright (C) 2011, Free Software Foundation, Inc.
+# This file is distributed under the same license as the kdeedu package.
+#
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2011-10-08 23:35+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Aukerak: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Itsatsi \"%1\" sarreran"
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "Itsatsi \"%1\" sarreran"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Akatsa: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Inportatuta: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Akatsa: Ezin izan da %1 zamatu. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Informazioa"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Erantsi/Editatu funtzio bat"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Aurreikusi"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Nondik:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Nora:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Aukerak"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Ados"
+
+#: functionedit.cpp:111
+#, fuzzy, kde-format
+#| msgid "Remove '%1'"
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Kendu '%1'"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Zehaztu dituzun aukerak ez dira zuzenak"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Beheko muga ezin da goiko muga baino handiagoa izan"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Marraztu 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Marraztu 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Saioa"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Aldagaiak"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "Kalkulatu"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "Kalkulatu"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Zamatu script-a..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Oraintxuko script-ak"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Gorde script-a..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Esportatu egunkaria..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Exekuzio modua"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Kalkulatu"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Ebaluatu"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Funtzioak"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Zerrenda"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Erantsi"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D grafikoa"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D grafikoa"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Sareta"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Mantendu itxuraren erlazioa"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Bereizmena"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Kaskarra"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Ohikoa"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Ona"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Oso ona"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D grafikoa"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &grafikoa"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Berrezarri ikuspegia"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Puntuak"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Lerroak"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Solidoa"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Eragiketak"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Hiztegia"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Bilatu:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Editatzea"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Hautatu script bat"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Script (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML fitxategia (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Akatsa: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Irudi fitxategia\n"
+"*.svg|SVG fitxategia"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Prest"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Erantsi aldagaia"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Sartu izen bat aldagai berriarentzako"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Kalkulagailu bat"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Erantsi/Editatu aldagai bat"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Aldagaiak"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Editatu '%1' balioa"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "Eskuraezina"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>OKER</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Ezkerra:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Goia:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Zabalera:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Altuera:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Ezarri"
+
+#~ msgid "C&onsole"
+#~ msgstr "K&ontsola"
+
+#~ msgid "&Console"
+#~ msgstr "&Kontsola"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formula</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Akatsa: Funtzio mota okerra"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Eginda: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Akatsa: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Garbitu"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG fitxategia"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Gardentasuna"
+
+#~ msgid "Type"
+#~ msgstr "Mota"
+
+#~ msgid "Result: %1"
+#~ msgstr "Emaitza: %1"
+
+#~ msgid "To MathML"
+#~ msgstr "MathML-ra"
+
+#~ msgid "Simplify"
+#~ msgstr "Sinplifikatu"
+
+#~ msgid "Examples"
+#~ msgstr "Adibideak"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Emaitza errealak baino ezin ditugu marraztu."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Adierazpena ez da zuzena"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Funtzio mota ez da ezagutzen"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Izena"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Funtzioa"
+
+#~ msgid "%1 function added"
+#~ msgstr "%1 funtzioa erantsita"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Ezkutatu '%1'"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Erakutsi '%1'"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Deskribapena"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parametroak"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Adibidea"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=hontatik..hontara"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... parametroak, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Batuketa"
+
+#~ msgid "Multiplication"
+#~ msgstr "Biderkaketa"
+
+#~ msgid "Division"
+#~ msgstr "Zatiketa"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Kenketa. Balio guztiak lehenengotik kenduko ditu."
+
+#~ msgid "Power"
+#~ msgstr "Berreketa"
+
+#~ msgid "Remainder"
+#~ msgstr "Hondarra"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Faktoriala. faktoriala(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Emandako angeluaren sinua kalkulatzeko funtzioa"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Emandako angeluaren kosinua kalkulatzeko funtzioa"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Emandako angeluaren tangentea kalkulatzeko funtzioa"
+
+#~ msgid "Secant"
+#~ msgstr "Sekantea"
+
+#~ msgid "Cosecant"
+#~ msgstr "Kosekantea"
+
+#~ msgid "Cotangent"
+#~ msgstr "Kotangentea"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Sinu hiperbolikoa"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Kosinu hiperbolikoa"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Tangente hiperbolikoa"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Sekante hiperbolikoa"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Kosekante hiperbolikoa"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Kotangente hiperbolikoa"
+
+#~ msgid "Arc sine"
+#~ msgstr "Ark sinua"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Ark kosinua"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Ark tangentea"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Ark kotangentea"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Ark tangente hiperbolikoa"
+
+#~ msgid "Summatory"
+#~ msgstr "Batukaria"
+
+#~ msgid "Exists"
+#~ msgstr "Existitzen da"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Ark sinu hiperbolikoa"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Ark kosinu hiperbolikoa"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Ark kosekantea"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Ark kosekante hiperbolikoa"
+
+#~ msgid "Arc secant"
+#~ msgstr "Ark sekantea"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Ark sekante hiperbolikoa"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Logaritmoa e oinarrian"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Logaritmoa 10 oinarrian"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Balio absolutua. abs(n)=|n|"
+
+#~ msgid "Minimum"
+#~ msgstr "Gutxienezkoa"
+
+#~ msgid "Maximum"
+#~ msgstr "Gehienezkoa"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Handiago baino. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Txikiago baino. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Berdina. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Hurbilketa. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Ezberdin. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Handiago edo berdin. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Txikiago edo berdin. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Eta boolearra"
+
+#~ msgid "Boolean not"
+#~ msgstr "Ez boolearra"
+
+#~ msgid "Boolean or"
+#~ msgstr "Edo boolearra"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Xor boolearra"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Zatitzaile komunetako handiena"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Multiplo komunetako txikiena"
+
+#~ msgid "Root"
+#~ msgstr "Erroa"
+
+#~ msgid "Cardinal"
+#~ msgstr "Kardinala"
+
+#~ msgid "Scalar product"
+#~ msgstr "Biderkadura eskalarra"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Mota berdineko zenbait elementu biltzen ditu"
+
+#~ msgid "Applies a function to every element in a list"
+#~ msgstr "Funtzio bat ezartzen die zerrenda bateko elementu guztiei"
+
+#~ msgid "Removes all elements that don't fit a condition"
+#~ msgstr "Baldintza bat betetzen ez duten elementu guztiak kentzen ditu"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Balioa"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Eragiketa zuzen bat zehaztu behar da"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Identifikatzaile ezezaguna: '%1'"
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Beheko muga goiko muga baino handiago da"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Goi muga edo behe muga okerra."
+
+#~ msgid "The result is not a number"
+#~ msgstr "Emaitza ez da zenbaki bat"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em>-(e)k gutxienez 2 parametro behar ditu"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em>-(e)k %2 parametro behar ditu"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Deklarazio okerra"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Edukitzaile hutsa: %1"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Solik aldagaiak deklaratu ditzakegu"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Akatsa azterketa sintaktikoan: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Edukitzaile ezezaguna: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Ezin da %1 balioa kodetu."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "'%1' elementua ez da eragile bat."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Ez da bektore hutsik nahi"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Ez onartua/ezezaguna: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "%1 espero zen '%2' ordez"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Eskuineko parentesia falta da"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Orekatu gabeko eskuin parentesia"
+
+#~ msgid "The domain should be either a vector or a list"
+#~ msgstr "Domeinua bektore bat edo zerrenda bat izan beharko litzateke"
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Ezin izan da '%1' deitu"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Ezin izan da '%1' ebatzi"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Ustekabeko mota"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Ezin bihurtu '%1' '%2'-ra"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Ezin kalkulatu 0-ren hondarra."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Ezin da 0-rekiko faktorea kalkulatu."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Ezin kalkulatu 0-ren multiplo komunetako txikiena."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Ezin kalkulatu %1 balio bat"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Indize baliogabea edukitzaile batentzako"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Ezin eragiketa egin neurri ezberdineko bektoreetan."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Ezin kalkulatu bektore baten %1"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Ezin kalkulatu zerrenda baten %1"

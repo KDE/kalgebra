@@ -1,0 +1,250 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# Marek Laane <qiilaq69@gmail.com>, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2020-03-02 14:10+0200\n"
+"Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
+"Language-Team: Estonian <kde-et@lists.linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.1\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "KAlgebra Mobile"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "Lihtne teaduskalkulaator"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, fuzzy, kde-format
+#| msgid "Calculate..."
+msgid "Calculator"
+msgstr "Arvuta ..."
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr ""
+
+#: content/ui/Console.qml:67
+#, fuzzy, kde-format
+#| msgid "Load Script..."
+msgid "Load Script"
+msgstr "Skripti laadimine ..."
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skript (*.kal)"
+
+#: content/ui/Console.qml:77
+#, fuzzy, kde-format
+#| msgid "Save Script..."
+msgid "Save Script"
+msgstr "Skripti salvestamine ..."
+
+#: content/ui/Console.qml:88
+#, fuzzy, kde-format
+#| msgid "Export Log..."
+msgid "Export Log"
+msgstr "Logi eksport ..."
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, fuzzy, kde-format
+#| msgid "Evaluate..."
+msgid "Evaluate"
+msgstr "Hinda ..."
+
+#: content/ui/Console.qml:99
+#, fuzzy, kde-format
+#| msgid "Calculate..."
+msgid "Calculate"
+msgstr "Arvuta ..."
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "Puhasta logi"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "2D joonis"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "3D joonis"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "kopeeri \"%1\""
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "Puhasta kõik"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "Arvutatav avaldis ..."
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr ""
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr ""
+
+#: content/ui/main.qml:55
+#, fuzzy, kde-format
+#| msgid "KAlgebra Mobile"
+msgid "KAlgebra"
+msgstr "KAlgebra Mobile"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr ""
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr ""
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr ""
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr ""
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr ""
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, fuzzy, kde-format
+#| msgid "Save..."
+msgid "Save"
+msgstr "Salvesta ..."
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "Alusvõrgu näitamine"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "Lähtesta vaatepunkt"
+
+#: content/ui/TableResultPage.qml:11
+#, fuzzy, kde-format
+#| msgid "Results:"
+msgid "Results"
+msgstr "Tulemused:"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr ""
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "Vead: samm ei saa olla 0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "Vead: algus ja lõpp on samad"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "Vead:%1"
+
+#: content/ui/Tables.qml:84
+#, fuzzy, kde-format
+#| msgid "Input:"
+msgid "Input"
+msgstr "Sisend:"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "Alates:"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "Kuni:"
+
+#: content/ui/Tables.qml:107
+#, fuzzy, kde-format
+#| msgid "Step:"
+msgid "Step"
+msgstr "Samm:"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "Käivita"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "Kaasaskantav kalkulaator"
+
+#: main.cpp:53
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2020: Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2020: Aleix Pol i Gonzalez"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "qiilaq69@gmail.com"

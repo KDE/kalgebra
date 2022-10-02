@@ -1,0 +1,239 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# A S Alam <aalam.yellow@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2021-06-08 22:05-0700\n"
+"Last-Translator: A S Alam <aalam@satluj.org>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.12.2\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "ਕੇ-ਐਲਜਬਰਾ ਮੋਬਾਇਲ"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "ਸਰਲ ਵਿਗਿਆਨਕ ਕੈਲਕੂਲੇਟਰ"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, kde-format
+msgid "Calculator"
+msgstr "ਕੈਲਕੂਲੇਟਰ"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr "ਵੇਰੀਬਲ"
+
+#: content/ui/Console.qml:67
+#, kde-format
+msgid "Load Script"
+msgstr "ਸਕ੍ਰਿਪਟ ਲੋਡ ਕਰੋ"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "ਸਕ੍ਰਿਪਟ (*.kal)"
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "Save Script"
+msgstr "ਸਕ੍ਰਿਪਟ ਸੰਭਾਲੋ"
+
+#: content/ui/Console.qml:88
+#, kde-format
+msgid "Export Log"
+msgstr ""
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Evaluate"
+msgstr "ਮੁਲਾਂਕਣ"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Calculate"
+msgstr "ਕੈਲਕੂਲੇਟ"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "ਲਾਗ ਮਿਟਾਓ"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "2ਡੀ ਵਾਹੋ"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "3ਡੀ ਵਾਹੋ"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "\"%1\" ਕਾਪੀ ਕਰੋ"
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "ਸਭ ਮਿਟਾਓ"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr ""
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr "ਨਾਂ:"
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: content/ui/main.qml:55
+#, kde-format
+msgid "KAlgebra"
+msgstr "ਕੇ-ਐਲਜਬਰਾ"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr "ਗਰਾਫ 2ਡੀ"
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr "ਗਰਾਫ 3ਡੀ"
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr "ਮੁੱਲ ਸਾਰਣੀਆਂ"
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr "ਡਿਕਸ਼ਨਰੀ"
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr "ਕੇ-ਐਲਜਬਰਾ ਬਾਰੇ"
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, kde-format
+msgid "Save"
+msgstr "ਸੰਭਾਲੋ"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "ਗਰਿੱਡ ਵੇਖੋ"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr ""
+
+#: content/ui/TableResultPage.qml:11
+#, kde-format
+msgid "Results"
+msgstr "ਨਤੀਜੇ"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr "ਮੁੱਲ ਸਾਰਣੀਆਂ"
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr ""
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "ਗਲਤੀਆਂ: ਸ਼ੁਰੂ ਤੇ ਅੰਤ ਇੱਕ ਹੀ ਹਨ"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "ਗ਼ਲਤੀਆਂ: %1"
+
+#: content/ui/Tables.qml:84
+#, kde-format
+msgid "Input"
+msgstr "ਇਨਪੁਟ"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "ਤੋਂ:"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "ਤੱਕ:"
+
+#: content/ui/Tables.qml:107
+#, kde-format
+msgid "Step"
+msgstr "ਪੜਾਅ"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "ਚਲਾਓ"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "ਪੋਰਟੇਬਲ ਕੈਲਕੂਲੇਟਰ"
+
+#: main.cpp:53
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006 Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006 Aleix Pol i Gonzalez"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ ੨੦੨੧"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alam.yellow@gmail.com"

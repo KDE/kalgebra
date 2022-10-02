@@ -1,0 +1,553 @@
+# translation of kalgebra.po to Occitan (lengadocian)
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2008-08-05 22:26+0200\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan (lengadocian) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"Language: oc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+#| msgid "Operations"
+msgid "Options: %1"
+msgstr "Operacions"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr ""
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Entresenhas"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr ""
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr ""
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr ""
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#: functionedit.cpp:104
+#, fuzzy, kde-format
+#| msgid "Operations"
+msgid "Options"
+msgstr "Operacions"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Validar"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr ""
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Variables"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr ""
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr ""
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr ""
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr ""
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr ""
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr ""
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+#| msgctxt "@title:column"
+#| msgid "Value"
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Valor"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Foncions"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Tièra"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Apondre"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr ""
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr ""
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr ""
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Resolucion"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr ""
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normal"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr ""
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr ""
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr ""
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr ""
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Punts"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Linhas"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Operacions"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr ""
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr ""
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr ""
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr ""
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr ""
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgctxt "Function parameter separator"
+#| msgid ", "
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Error : %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Prèst"
+
+#: kalgebra.cpp:683
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Add variable"
+msgstr "Variables"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr ""
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yannig Marchegay (Kokoyaya)"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yannig@marchegay.org"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr ""
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Variables"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr ""
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "pas disponible"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr ""
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr ""
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr ""
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr ""
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr ""
+
+#~ msgid "Error: %1"
+#~ msgstr "Error : %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Netejar"
+
+#~ msgid "Type"
+#~ msgstr "Tipe"
+
+#, fuzzy
+#~| msgctxt "@title:column"
+#~| msgid "Example"
+#~ msgid "Examples"
+#~ msgstr "Exemple"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Foncion"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Descripcion"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Paramètres"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Exemple"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "Addition"
+#~ msgstr "Adicion"
+
+#~ msgid "Multiplication"
+#~ msgstr "Multiplicacion"
+
+#~ msgid "Division"
+#~ msgstr "Division"
+
+#~ msgid "Power"
+#~ msgstr "Poténcia"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "Normal"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "Tièra"
+
+#, fuzzy
+#~| msgctxt "@title:column"
+#~| msgid "Description"
+#~ msgid "Differentiation"
+#~ msgstr "Descripcion"
+
+#~ msgid "Minimum"
+#~ msgstr "Minim"
+
+#~ msgid "Maximum"
+#~ msgstr "Maxim"
+
+#, fuzzy
+#~| msgid "Multiplication"
+#~ msgid "Boolean implication"
+#~ msgstr "Multiplicacion"
+
+#~ msgid "Root"
+#~ msgstr "Raiç"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Valor"
+
+#, fuzzy
+#~| msgctxt "Function parameter separator"
+#~| msgid ", "
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr ", "
+
+#~ msgid "Subtraction"
+#~ msgstr "Sostraccion"
+
+#~ msgid "Mode"
+#~ msgstr "Mòde"
+
+#~ msgid "%1, "
+#~ msgstr "%1, "

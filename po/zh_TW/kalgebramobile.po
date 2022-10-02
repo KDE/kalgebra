@@ -1,0 +1,251 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# pan93412 <pan93412@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2019-03-12 22:06+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "KAlgebra 行動版"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "簡單的科學計算機"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, fuzzy, kde-format
+#| msgid "Calculate..."
+msgid "Calculator"
+msgstr "計算…"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr ""
+
+#: content/ui/Console.qml:67
+#, fuzzy, kde-format
+#| msgid "Load Script..."
+msgid "Load Script"
+msgstr "載入指令碼…"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "指令碼 (*.kal)"
+
+#: content/ui/Console.qml:77
+#, fuzzy, kde-format
+#| msgid "Save Script..."
+msgid "Save Script"
+msgstr "儲存指令碼…"
+
+#: content/ui/Console.qml:88
+#, fuzzy, kde-format
+#| msgid "Export Log..."
+msgid "Export Log"
+msgstr "匯出記錄…"
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, fuzzy, kde-format
+#| msgid "Evaluate..."
+msgid "Evaluate"
+msgstr "估算…"
+
+#: content/ui/Console.qml:99
+#, fuzzy, kde-format
+#| msgid "Calculate..."
+msgid "Calculate"
+msgstr "計算…"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "清除記錄"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "2D 圖形"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "3D 圖形"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "複製「%1」"
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "全部清除"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "欲計算之表達式…"
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr ""
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr ""
+
+#: content/ui/main.qml:55
+#, fuzzy, kde-format
+#| msgid "KAlgebra Mobile"
+msgid "KAlgebra"
+msgstr "KAlgebra 行動版"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr ""
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr ""
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr ""
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr ""
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr ""
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, fuzzy, kde-format
+#| msgid "Save..."
+msgid "Save"
+msgstr "儲存…"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "顯示網格"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "重設檢視"
+
+#: content/ui/TableResultPage.qml:11
+#, fuzzy, kde-format
+#| msgid "Results:"
+msgid "Results"
+msgstr "結果："
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr ""
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "錯誤：步驟數不得為 0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "錯誤：起點與終點值相同"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "錯誤：%1"
+
+#: content/ui/Tables.qml:84
+#, fuzzy, kde-format
+#| msgid "Input:"
+msgid "Input"
+msgstr "輸入："
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "起點："
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "終點："
+
+#: content/ui/Tables.qml:107
+#, fuzzy, kde-format
+#| msgid "Step:"
+msgid "Step"
+msgstr "部署：1"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "執行"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "可攜型計算機"
+
+#: main.cpp:53
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "pan93412"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "pan93412@gmail.com"

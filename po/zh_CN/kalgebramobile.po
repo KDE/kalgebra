@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-09-20 01:55\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kalgebra/kalgebramobile.pot\n"
+"X-Crowdin-File-ID: 7511\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "KAlgebra 移动版"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "一个简单的科学计算器"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, kde-format
+msgid "Calculator"
+msgstr "计算器"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr "变量"
+
+#: content/ui/Console.qml:67
+#, kde-format
+msgid "Load Script"
+msgstr "加载脚本"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "脚本 (*.kal)"
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "Save Script"
+msgstr "保存脚本"
+
+#: content/ui/Console.qml:88
+#, kde-format
+msgid "Export Log"
+msgstr "导出日志"
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Evaluate"
+msgstr "求值"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Calculate"
+msgstr "计算"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "清除日志"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "2D 绘图"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "3D 绘图"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "复制“%1”"
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "清除全部"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "要计算的表达式…"
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr "名称："
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr "%1："
+
+#: content/ui/main.qml:55
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr "二维图"
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr "三维图"
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr "数值表"
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr "词典"
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr "关于 KAlgebra"
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, kde-format
+msgid "Save"
+msgstr "保存"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "查看网格"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "重置可视区域"
+
+#: content/ui/TableResultPage.qml:11
+#, kde-format
+msgid "Results"
+msgstr "结果"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr "数值表"
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "错误: 步长不能为0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "错误：起始和终止相同"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "错误：%1"
+
+#: content/ui/Tables.qml:84
+#, kde-format
+msgid "Input"
+msgstr "输入"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "从："
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "到:"
+
+#: content/ui/Tables.qml:107
+#, kde-format
+msgid "Step"
+msgstr "步长"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "执行"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "一个轻便的计算器"
+
+#: main.cpp:53
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE 中国"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-china@kde.org"

@@ -1,0 +1,985 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>Руководство пользователя &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+><surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Николай</firstname
+><surname
+>Шафоростов</surname
+><affiliation
+><address
+><email
+>shaforostoff@kde.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Максим</firstname
+><surname
+>Воробьёв</surname
+><affiliation
+><address
+><email
+>vmax0770@gmail.com</email
+></address
+></affiliation
+><contrib
+>Дополнение и исправление перевода на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Олеся</firstname
+><surname
+>Герасименко</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Дополнение и исправление перевода на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Дополнение и исправление перевода на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>17 декабря 2020 г.</date>
+<releaseinfo
+>Приложения KDE 20.12</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; — это программа-калькулятор с функцией построения графиков. Позволяет вычислять значения выражений и строить двумерные и трёхмерные графики функций. В основе &kalgebra; лежит язык математической разметки &MathML;, однако его знания не требуется для использования программы &kalgebra;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>график</keyword>
+<keyword
+>математика</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Введение</title>
+
+<para
+>С помощью &kalgebra; возможно выполнять различные математические операции и строить графики. Программа позволяет решать как простые, так и сложные задачи, при этом пользователю не требуется знать язык &MathML; или обладать глубокими познаниями в математике. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Среди возможностей программы: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Калькулятор для быстрого и простого упрощения математических функций. </para
+></listitem>
+<listitem
+><para
+>Возможность создания сценариев для сложных последовательностей вычислений. </para
+></listitem>
+<listitem
+><para
+>Языковые возможности, в том числе определение функций и автодополнение синтаксиса. </para
+></listitem>
+<listitem
+><para
+>Возможности исчисления, в том числе символическое дифференцирование, векторное исчисление и управление списками. </para
+></listitem>
+<listitem
+><para
+>Построение графиков функций с показом координат при наведении курсора для поиска корней графическим способом и другие типы анализа. </para
+></listitem>
+<listitem
+><para
+>Построение объёмных графиков для визуализации трёхмерных функций. </para
+></listitem>
+<listitem
+><para
+>Встроенный словарь операций для быстрого поиска справочной информации о доступных функциях. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Ниже представлено окно программы &kalgebra;: </para>
+
+<screenshot>
+<screeninfo
+>Главное окно &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Главное окно &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Главное окно &kalgebra; состоит из четырёх вкладок: <guilabel
+>Калькулятор</guilabel
+>, <guilabel
+>Плоский график</guilabel
+>, <guilabel
+>Объёмный график</guilabel
+> и <guilabel
+>Словарь</guilabel
+>. Под каждой вкладкой находится поле для ввода функций и выполнения вычислений, а также поле, в котором отображаются результаты. </para>
+
+<para
+>Для управления сеансом предназначены параметры меню <guilabel
+>Сеанс</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Сеанс</guimenu
+><guimenuitem
+>Создать</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Открывает новое окно &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Сеанс</guimenu
+><guimenuitem
+>Полноэкранный режим</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Включение и отключение полноэкранного режима для окна &kalgebra;. Полноэкранный режим также возможно включать и отключать с помощью кнопки <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> в верхнем правом углу окна &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Сеанс</guimenu
+><guimenuitem
+>Выход</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Завершает работу программы.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Синтаксис</title>
+<para
+>В &kalgebra; для ввода пользовательских функций используется интуитивно понятный алгебраический синтаксис, похожий на тот, который применяется в большинстве современных графических калькуляторов. В этом разделе перечислены основные встроенные операции, доступные в &kalgebra;. Автор &kalgebra; взял за основу синтаксис программ <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> и <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+>, что упростит работу знакомым с ними пользователям. </para>
+
+<para
+>Внутренняя служба преобразует введённые пользователем выражения в формат &MathML; — пользователи, которые обладают начальными знаниями о поддерживаемых &MathML; возможностях, при желании смогут разобраться во внутреннем устройстве &kalgebra;. </para>
+
+<para
+>Вот список доступных в этой версии операций:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: Сложение, вычитание, умножение и деление.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: Возведение в степень. Возможно использовать символы Unicode — <literal
+>²</literal
+> и так далее. Операция взятия корня обратна операции возведения в степень: <literal
+>a**(1/b)</literal
+></para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: лямбда. Способ указать одну или несколько свободных переменных, которые будут связаны в функции. Например, в выражении <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+> лямбда-оператор позволяет обозначить, что переменные <literal
+>x</literal
+> и <literal
+>y</literal
+> будут связаны при использовании функции length. </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: Эта конструкция используется, если нужно задать диапазон значений переменной (связанная переменная + ограничение снизу + ограничение сверху). Это означает, что <literal
+>x</literal
+> изменяется в интервале от <literal
+>a</literal
+> до <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: Скобки используются для явного задания приоритета вычислений.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(параметры) </literal
+>: Функции. В роли <literal
+>abc</literal
+> может быть згнак оператора или имя функции.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: Определение. Задаёт значение переменной. Допустимы выражения наподобие <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+> (даже если <literal
+>y</literal
+>не определена), <userinput
+>perimeter:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>:  Условный оператор для задания кусочно-заданных функций в  &kalgebra;. Другими словами, это способ указания условия «if», «elseif», «else». Если указать условие перед знаком «<literal
+>?</literal
+>», то следующее за ним значение будет использовано только в том случае, если условие выполняется, а если перед «<literal
+>?</literal
+>» не будет условия, будет использовано предыдущее условие. Пример: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{ } </literal
+>: Блок &MathML;. Позволяет указывать произвольный код на &MathML; внутри. Полезно для работы с кусочно-заданными функциями. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: Операции сравнения «равно», «больше», «больше или равно», «меньше», «меньше или равно».</para
+></listitem>
+</itemizedlist>
+
+<para
+>Зачем вообще использовать блок &MathML;? Ответ прост. С его помощью возможно выполнять операции наподобие <function
+>cos()</function
+>, <function
+>sin()</function
+> и любые тригонометрические функции, <function
+>sum()</function
+> и <function
+>product()</function
+>. Характер самой функции не важен. Возможно использовать <function
+>plus()</function
+> (сложение), <function
+>times()</function
+> (умножение) и любые другие функции, которым соответствует определённый оператор. Также реализованы булевские функции, что позволяет выполнять операции наподобие <function
+>or(1,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>Использование калькулятора</title>
+<para
+>Калькулятор &kalgebra; обладает очень широкими возможностями. Ввод выражений доступен в режиме <guimenu
+>Вычислить</guimenu
+> или <guimenu
+>Упростить</guimenu
+> (в зависимости от варианта, который выбран в меню <guimenu
+>Калькулятор</guimenu
+>). </para>
+<para
+>В режиме упрощения &kalgebra; упрощает выражение даже при наличии неопределённой переменной. В режиме вычисления &kalgebra; производит вычисление и отображает ошибку при обнаружении неопределённой переменной. </para>
+<para
+>В области калькулятора показаны уравнения, которые были введены пользователем, и результаты вычислений, а в закреплённой области в правой части окна — все объявленные переменные. Двойной щелчок по переменной позволяет открыть диалог редактирования её значения (способ «обойти» журнал). </para>
+
+<para
+>Переменная <quote
+><varname
+>ans</varname
+></quote
+> является особой: при вводе каждого нового выражения её значение будет заменяться на последний результат. </para>
+
+<para
+>Далее приводятся примеры функций, которые возможно указывать в поле ввода окна калькулятора:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Далее показано окно калькулятора после ввода приведённых ранее примеров выражений: </para>
+<screenshot>
+<screeninfo
+>Окно калькулятора &kalgebra; с примерами выражений</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Окно калькулятора &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>Параметры меню <guimenu
+>Калькулятор</guimenu
+> позволяют управлять выполнением последовательности вычислений:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Открыть сценарий...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Последовательно выполняет инструкции из файла. Подходит для определения библиотек или возобновления работы.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Калькулятор</guimenu
+><guisubmenu
+>Последние сценарии</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Отображает вложенное меню, позволяющее выбрать один из недавно использованных сценариев.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Сохранить сценарий...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Сохраняет инструкции, набранные пользователем с начала работы для возможности их повторного использования. Генерирует текстовые файлы, легко редактируемые любым текстовым редактором (например, &kate;).</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Экспорт журнала...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Сохраняет журнал с результатами в файл &HTML; для распечатки или публикации.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Вставить ответ...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Вставляет переменную <quote
+><varname
+>ans</varname
+></quote
+>, упрощая возможность повторного использования предыдущих значений.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Вычислить</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Переключатель для параметра <guilabel
+>Режим выполнения</guilabel
+> на «Вычислить».</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Калькулятор</guimenu
+><guimenuitem
+>Упростить</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Переключатель для параметра <guilabel
+>Режим выполнения</guilabel
+> на «Упростить»</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>Двумерные графики </title>
+<para
+>Чтобы добавить новый двумерный график в &kalgebra;, перейдите на вкладку <guilabel
+>Плоский график</guilabel
+> и нажмите кнопку <guilabel
+>Добавить</guilabel
+> для добавления новой функции. После этого фокус будет перенесён в поле ввода, в котором возможно указать функцию.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Синтаксис</title>
+<para
+>Если следует использовать простую форму задания функций <function
+>f(x)</function
+>, не требуется отдельно задавать её, но если следует определить <function
+>f(y)</function
+> или функцию в полярных координатах, необходимо указать <literal
+>y-&gt;</literal
+> и <literal
+>q-&gt;</literal
+> в качестве связанных переменных.</para>
+
+<para
+>Примеры:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sіn(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sіn(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>После ввода функции нажмите кнопку <guibutton
+>OK</guibutton
+> для просмотра графика в главном окне.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Возможности</title>
+<para
+>Возможно начертить несколько графиков в одном окне. Воспользуйтесь кнопкой <guilabel
+>Добавить</guilabel
+> в режиме списка. Для каждого из графиков возможно указать цвет.</para>
+
+<para
+>Размер и расположение области просмотра возможно изменять с помощью мыши. Колесо мыши позволяет увеличивать и уменьшать область просмотра. Если выделить часть области с помощью левой кнопки мыши, она будет растянута до размеров области просмотра. Для перемещения области просмотра используются клавиши со стрелками.</para>
+
+<note>
+ <para
+>Область просмотра двумерных графиков возможно явно определить на вкладке <guilabel
+>Область просмотра</guilabel
+> вкладки <guilabel
+>Плоский график</guilabel
+>.</para>
+</note>
+ 
+<para
+>На вкладке <guilabel
+>Список</guilabel
+> в правой нижней части окна доступна вкладка <guilabel
+>Редактирование</guilabel
+>: двойной щелчок позволяет изменить или удалить её, а снятие или установка флажка рядом с названием функции — показать или скрыть её.</para>
+<para
+>В меню <guimenu
+>Плоский график</guimenu
+> доступны следующие параметры:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Сетка</guimenuitem
+>: Показать или скрыть сетку</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Сохранять пропорции</guimenuitem
+>: Сохранять пропорции при увеличении</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Сохранить</guimenuitem
+>: Сохранить (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) график в файл изображения</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Увеличить/уменьшить</guimenuitem
+>: Увеличить (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) или уменьшить (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>) масштаб</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Фактический размер</guimenuitem
+>: Сбросить масштаб в изначальное значение</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Разрешение</guilabel
+>: Далее следует список переключателей для выбора разрешения для графиков</para
+></listitem>
+</itemizedlist>
+
+<para
+>Ниже представлено окно программы, в котором курсор пользователя находится на самом правом корне функции, <function
+>sin(1/x)</function
+>. При построении графика было выбрано очень высокое разрешение (так как частота колебаний функций увеличивается рядом с началом координат). Также показан «живой курсор» — если навести курсор на какое-либо место области просмотра графика, в нижнем левом углу окна отобразятся соответствующие координаты <literal
+>x</literal
+> и <literal
+>y</literal
+>. По месту расположения «живого курсора» строится <quote
+>касательная</quote
+> к графику функции. </para>
+
+<screenshot>
+<screeninfo
+>Окно &kalgebra; с двумерным графиком</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Окно &kalgebra; с двумерным графиком</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>Трёхмерные графики</title>
+
+<para
+>Чтобы построить трёхмерный график с помощью &kalgebra;, перейдите на вкладку <guilabel
+>Объёмный график</guilabel
+>. Внизу будет доступно поле ввода, куда и следует ввести функцию. В этой версии нельзя определить третью координату, <literal
+>Z</literal
+>. Поддерживаются только функции, которые явно зависят только от <literal
+>x</literal
+> и <literal
+>y</literal
+>, например: <userinput
+>(x,y)->x*y</userinput
+>, где <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>Примеры:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Размер и расположение области просмотра возможно изменять с помощью мыши. Колесо мыши позволяет увеличивать и уменьшать область просмотра. Чтобы вращать график, удерживайте нажатой левую кнопку мыши при её перемещении.</para>
+
+<para
+>Клавиши со стрелками влево и вправо проворачивают график вокруг оси <literal
+>z</literal
+>, клавиши со стрелками вверх и вниз поворачивают его вокруг горизонтальной оси. Нажмите клавишу <keycap
+>W</keycap
+>, чтобы увеличить масштаб графика, или клавишу <keycap
+>S</keycap
+>, чтобы уменьшить его.</para>
+
+<para
+>Пункты в меню <guimenu
+>Объёмный график</guimenu
+>:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Сохранить</guimenuitem
+>: Сохранить (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) график в файл изображения или в поддерживаемый документ.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Сбросить масштаб</guimenuitem
+>: Сбросить масштаб в изначальное значение, установленное в меню  <guimenu
+>Объёмный график</guimenu
+></para
+></listitem>
+<listitem
+><para
+>Для построения графика доступны такие стили как <guimenuitem
+>Пунктир</guimenuitem
+>, <guimenuitem
+>Штрих</guimenuitem
+> и <guimenuitem
+>Сплошная</guimenuitem
+> в меню <guimenu
+>Объёмный график</guimenu
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Ниже представлена так называемая функция <quote
+>сомбреро</quote
+>. Её график показан в трёхмерном виде. </para>
+
+<screenshot>
+<screeninfo
+>Окно &kalgebra; с трёхмерным графиком</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Окно &kalgebra; с трёхмерным графиком</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Словарь</title>
+
+<para
+>Словарь является сборником всех доступных действий &kalgebra;. Он позволяет найти и просмотреть определение операции и её входные параметры. </para>
+
+ <para
+>Ниже представлено окно &kalgebra; с выполнением поиска функции косинуса в словаре. </para>
+
+<screenshot>
+<screeninfo
+>Окно &kalgebra; со словарём</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Окно &kalgebra; со словарём</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Авторские права и лицензия</title>
+
+<itemizedlist>
+<listitem
+><para
+>Авторские права на программу принадлежат &Aleix.Pol;, 2005–2009.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Авторские права на документацию к программе принадлежат &Aleix.Pol; &Aleix.Pol.mail;, 2007 </para>
+
+<para
+>Перевод на русский язык: Николай Шафоростов<email
+>shaforostoff@kde.ru</email
+></para
+> <para
+>Дополнения и исправления перевода на русский язык: Максим Воробьёв<email
+>vmax0770@gmail.com</email
+></para
+><para
+>Дополнения и исправления перевода на русский язык: Олеся Герасименко<email
+>translation-team@basealt.ru</email
+></para
+><para
+>Дополнения и исправления перевода на русский язык: Мария Шикунова<email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

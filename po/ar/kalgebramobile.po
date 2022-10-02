@@ -1,0 +1,239 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-06-18 19:24+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: Arabic <kde-l10n-ar@kde.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "جبرك للمحمول"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "حاسبة علمية بسيطة"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, kde-format
+msgid "Calculator"
+msgstr "آلة حاسبة"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr "المتغيّرات"
+
+#: content/ui/Console.qml:67
+#, kde-format
+msgid "Load Script"
+msgstr "حمّل سكرِبتًا"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "سكرِبت (‎*.kal)"
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "Save Script"
+msgstr "احفظ السكربت"
+
+#: content/ui/Console.qml:88
+#, kde-format
+msgid "Export Log"
+msgstr "صدّر السجلّ"
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "اتش ام ال (*.html)"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Evaluate"
+msgstr "قدّر"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Calculate"
+msgstr "احسب"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "امحُ السجل"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "رسم ثنائيّ الأبعاد"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "رسم ثلاثي الأبعاد"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "انسخ \"%1\""
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "امسح الكلّ"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "التعبير لحسابه..."
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr "الاسم:"
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr "‏%1:"
+
+#: content/ui/main.qml:55
+#, kde-format
+msgid "KAlgebra"
+msgstr "جبرك"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr "رسم ثنائي الأبعد"
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr "رسم ثلاثي الأبعاد"
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr "جداول القيمة"
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr "القاموس"
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr "عن جبرك"
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, kde-format
+msgid "Save"
+msgstr "احفظ"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "اعرض الشبكة"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "صفّر العرض"
+
+#: content/ui/TableResultPage.qml:11
+#, kde-format
+msgid "Results"
+msgstr "النّتائج"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr "جداول القيمة"
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "خطأ: لا يمكن أن تكون الخطوة 0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "خطأ: البداية والنهاية نفس الشيء"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "الأخطاء: %1"
+
+#: content/ui/Tables.qml:84
+#, kde-format
+msgid "Input"
+msgstr "الدّخل"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "من:"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "إلى:"
+
+#: content/ui/Tables.qml:107
+#, kde-format
+msgid "Step"
+msgstr "خطوة"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "شغّل"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "حاسبة متنقلة"
+
+#: main.cpp:53
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "زايد السعيدي"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zayed.alsaidi@gmail.com"

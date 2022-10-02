@@ -1,0 +1,948 @@
+# Translation of kalgebra to Croatian
+#
+# Andrej Dundovic <adundovi@gmail.com>, 2010.
+# Ivo Ugrina <ivo@iugrina.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2010-02-25 21:28+0100\n"
+"Last-Translator: Ivo Ugrina <ivo@iugrina.com>\n"
+"Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.0\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+#| msgid "Options"
+msgid "Options: %1"
+msgstr "Opcije"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, fuzzy, kde-format
+#| msgid "<ul class='error'>Error: %1<li>%2</li></ul>"
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Pogreška: %1<li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, fuzzy, kde-format
+#| msgid "<ul class='error'>Error: %1<li>%2</li></ul>"
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Pogreška: %1<li>%2</li></ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Informacije"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Dodaj/Editiraj funkciju"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Pretpregled"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Od:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Za:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Opcije"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "U redu"
+
+#: functionedit.cpp:111
+#, fuzzy, kde-format
+#| msgid "Remove '%1'"
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Ukloni '%1'"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Opcije koje ste podesili nisu točne"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr ""
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Varijable"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "&Calculator"
+msgstr "Kalkulator"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "C&alculator"
+msgstr "Kalkulator"
+
+#: kalgebra.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Load Script"
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Učitaj skriptu"
+
+#: kalgebra.cpp:174
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgid "Recent Scripts"
+msgstr "&Spremi skriptu"
+
+#: kalgebra.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Spremi skriptu"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Kalkulator"
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+#| msgctxt "@title:column"
+#| msgid "Value"
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Vrijednost"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Funkcije"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Lista"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Dodaj"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Točka gledišta"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D graf"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D graf"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr ""
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Rezolucija"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Siromašno"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normalno"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Fino"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Vrlo fino"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D graf"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &graf"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Točke"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Linije"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Čvrto"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Operacije"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Rječnik"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Traži: "
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Uređivanje"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Izaberi skriptu"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr ""
+
+#: kalgebra.cpp:531
+#, fuzzy, kde-format
+#| msgid "Text File (*)"
+msgid "HTML File (*.html)"
+msgstr "Tekstualna datoteka (*)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ""
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Pogreška: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|PNG datoteka\n"
+"*.svg|SVG datoteka"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Spremno"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Dodaj varijablu"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Unesi ime za novu varijablu"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Kalkulator"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2009 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "© 2006–2009 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Dodaj/Uredi varijablu"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Varijable"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Uredi '%1' vrijednost"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "nije dostupno"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>Pogrešno</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Lijevo:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Vrh:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Širina:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Visina:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Primijeni"
+
+#~ msgid "C&onsole"
+#~ msgstr "K&onzola"
+
+#~ msgid "&Console"
+#~ msgstr "&Konzola"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formula</b>"
+
+#~ msgid "&Transparency"
+#~ msgstr "&Transparentnost"
+
+#~ msgid "Type"
+#~ msgstr "Tip"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG datoteka"
+
+#~ msgid "Result: %1"
+#~ msgstr "Rezultati: %1"
+
+#~ msgid "To MathML"
+#~ msgstr "U MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Pojednostavni"
+
+#, fuzzy
+#~| msgctxt "@title:column"
+#~| msgid "Example"
+#~ msgid "Examples"
+#~ msgstr "Primjeri"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Jedino se mogu crtati realni rezultati."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Izraz je netočan"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Očisti"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1…"
+
+#~ msgid "center"
+#~ msgstr "centar"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Ime"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Funkcija"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Sakrij '%1'"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Prikaži '%1'"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Izabrana točka gledišta je premala"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parametri"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Primjeri"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1… parametri, …%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Zbrajanje"
+
+#~ msgid "Multiplication"
+#~ msgstr "Množenje"
+
+#~ msgid "Division"
+#~ msgstr "Dijeljenje"
+
+#~ msgid "Power"
+#~ msgstr "Eksponent"
+
+#~ msgid "Remainder"
+#~ msgstr "Ostatak"
+
+#~ msgid "Quotient"
+#~ msgstr "Kvocijent"
+
+#~ msgid "The factor of"
+#~ msgstr "Faktor od"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Faktorijela. factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Funkcija za računanje sinusa danog kuta"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Funkcija za računanje kosinusa danog kuta"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Funkcija za računanje tangensa danog kuta"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Sinus hiperbolni"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hiperbolički kosinus"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Hiperbolički tangens"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arkus sinus"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arkus kosinus"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arkus tangens"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "Normalno"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "Lista"
+
+#~ msgid "Differentiation"
+#~ msgstr "Deriviranje"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "prirodni logaritam (baza e)"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "logaritam s bazom 10"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Apsolutna vrijednost. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Najveće cijelo (pod). floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Najmanje cijelo (strop). ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimum:"
+
+#~ msgid "Maximum"
+#~ msgstr "Maksimum:"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Veći od. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Manji od. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Jednako. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Aproksimacija. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Nejednakost. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Veće ili jednako. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Manje ili jednako. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Boolovo i"
+
+#~ msgid "Boolean not"
+#~ msgstr "Boolovo ne"
+
+#~ msgid "Boolean or"
+#~ msgstr "Boolovo ili"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Boolovo isključivo ili"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Boolova implikacija"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Najveći zajednički dijelitelj"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Najmanji zajednički nazivnik"
+
+#~ msgid "Root"
+#~ msgstr "Korijen"
+
+#~ msgid "Scalar product"
+#~ msgstr "Skalarni produkt"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Spaja nekoliko elemenata istog tipa"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(…, <b>par%2</b>, …)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : granice"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Vrijednost"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Morate specifirati ispravnu operaciju"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Nepoznat identifikator: %1"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Rezultat nije broj"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> treba barem 2 parametra"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> treba %2 parametra"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "Nedostaje granica za '%1'"
+
+#, fuzzy
+#~| msgid "Missing boundary for '%1'"
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Nedostaje granica za '%1'"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em> nedostaju granice na '%2'"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Pogrešna deklaracija"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Prazan spremnik: %1"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Deklarirati se mogu samo varijable"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Samo su ograničene varijable dopuštene"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Pogreška pri parsiranju: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Spremnik nepoznat: %1"
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Element '%1' nije operator."
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Nepodržan/nepoznat: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Očekivao %1 umjesto '%2'"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Nedostaje desna zagrada"
+
+#, fuzzy
+#~| msgid "Cannot calculate the remainder on 0."
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Ne mogu izračunati ostatak na 0."
+
+#, fuzzy
+#~| msgid "Wrong parameter count, had 1 parameter for '%2'"
+#~| msgid_plural "Wrong parameter count, had %1 parameters for '%2'"
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Pogrešan broj parametara. Dobio %1 parametar za '%2'"
+#~ msgstr[1] "Pogrešan broj parametara. Dobio %1 parametra za '%2'"
+#~ msgstr[2] "Pogrešan broj parametara. Dobio %1 parametara za '%2'"
+
+#, fuzzy
+#~| msgid "Cannot call '%1'"
+#~ msgid "Could not call '%1'"
+#~ msgstr "Neuspješno pozivanje '%1'"
+
+#, fuzzy
+#~| msgid "Cannot call '%1'"
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Neuspješno pozivanje '%1'"
+
+#, fuzzy
+#~| msgid "Enter a name for the new variable"
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Unesi ime za novu varijablu"
+
+#, fuzzy
+#~| msgid "Missing boundary for '%1'"
+#~ msgid "Unexpected type"
+#~ msgstr "Nedostaje granica za '%1'"
+
+#, fuzzy
+#~| msgid "Cannot convert %1 to %2"
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Ne mogu konvertirati %1 u %2."
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#, fuzzy
+#~| msgctxt "html representation of an operator"
+#~| msgid "<span class='op'>%1</span>"
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Ne mogu izračunati ostatak na 0."
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Neispravan indeks za spremnik"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Izvršavanje operacija na vektorima različitih duljina nije moguće."
+
+#, fuzzy
+#~| msgid "Cannot calculate the remainder on 0."
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Ne mogu izračunati ostatak na 0."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Neispravna domena."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Potreban je dvodimenzionalan vektor"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "%1. derivacija nije implementirana"
+
+#~ msgid "Subtraction"
+#~ msgstr "Oduzimanje"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "Pogreška: %2"
+
+#~ msgid "Select an element from a container"
+#~ msgstr "Izaberite element iz spremnika"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Pogreška: potebne su vrijednosti za nacrtati graf"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Generira se… Molim pričekajte"
+
+#~ msgid "Wrong parameter count, had 1 parameter for '%2'"
+#~ msgid_plural "Wrong parameter count, had %1 parameters for '%2'"
+#~ msgstr[0] "Pogrešan broj parametara. Dobio %1 parametar za '%2'"
+#~ msgstr[1] "Pogrešan broj parametara. Dobio %1 parametra za '%2'"
+#~ msgstr[2] "Pogrešan broj parametara. Dobio %1 parametara za '%2'"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Spremi dnevnik"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Fine"
+#~ msgid "File"
+#~ msgstr "Fino"
+
+#~ msgid "We can only call functions"
+#~ msgstr "Jedino se funkcije mogu pozivati"
+
+#~ msgid "Wrong parameter count"
+#~ msgstr "Pogrešan broj parametara"
+
+#~ msgctxt ""
+#~ "html representation of a true. please don't translate the true for "
+#~ "consistency"
+#~ msgid "<span class='const'>true</span>"
+#~ msgstr "<span class='const'>true</span>"
+
+#~ msgctxt ""
+#~ "html representation of a false. please don't translate the false for "
+#~ "consistency"
+#~ msgid "<span class='const'>false</span>"
+#~ msgstr "<span class='const'>false</span>"
+
+#~ msgctxt "html representation of a number"
+#~ msgid "<span class='num'>%1</span>"
+#~ msgstr "<span class='num'>%1</span>"
+
+#, fuzzy
+#~| msgid "Wrong parameter count"
+#~ msgid "Invalid parameter count."
+#~ msgstr "Pogrešan broj parametara"
+
+#~ msgid "Mode"
+#~ msgstr "Način rada"
+
+#~ msgid "Save the expression"
+#~ msgstr "Snimi izraz"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "Izračunaj izraz"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#~ msgid "Cannot apply '%1' to '%2'"
+#~ msgstr "Nije moguće primjeniti '%1'na '%2'."
+
+#~ msgid "Cannot check '%1' type"
+#~ msgstr "Neuspješna provjera tipa '%1'"
+
+#~ msgid "Wrong number of parameters when calling '%1'"
+#~ msgstr "Pogrešan broj parametara pri pozivanju '%1'"

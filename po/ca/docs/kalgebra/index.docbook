@@ -1,0 +1,917 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>El manual del &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>17 de desembre de 2020</date>
+<releaseinfo
+>Aplicacions 20.12</releaseinfo>
+
+<abstract>
+<para
+>El &kalgebra; és una aplicació que pot substituir la calculadora gràfica. Té característiques numèriques, lògiques, simbòliques i d'anàlisi que us permetran calcular expressions matemàtiques a la calculadora i traçar gràfiques dels resultats en 2D o 3D. El &kalgebra; té les seves arrels en el llenguatge de marques matemàtic (Mathematical Markup Language -&MathML;-). Però un no us caldrà saber &MathML; per a emprar el &kalgebra;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>gràfica</keyword>
+<keyword
+>matemàtiques</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introducció</title>
+
+<para
+>El &kalgebra; té nombroses característiques que permeten a l'usuari realitzar tota mena d'operacions matemàtiques i mostrar-les gràficament. Alhora, aquest programa ha estat orientat a &MathML;. Ara el pot utilitzar qualsevol persona amb una mica de coneixements matemàtics per a resoldre problemes senzills i avançats per igual. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Inclou característiques com: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Una calculadora per a l'avaluació ràpida i fàcil de les funcions matemàtiques. </para
+></listitem>
+<listitem
+><para
+>Capacitat de crear scripts per a sèries de càlculs avançats. </para
+></listitem>
+<listitem
+><para
+>Capacitats de llenguatge, incloent-hi la compleció automàtica de la definició i sintaxi de les funcions. </para
+></listitem>
+<listitem
+><para
+>Funcions de càlcul, incloent-hi els derivats de càlcul simbòlic, càlcul vectorial, manipulació de les llistes. </para
+></listitem>
+<listitem
+><para
+>Gràfiques de les funcions amb cursor dinàmic per a trobar l'arrel gràfica i altres tipus d'anàlisi. </para
+></listitem>
+<listitem
+><para
+>Gràfiques en 3D per a una visualització útil de les funcions en 3D. </para
+></listitem>
+<listitem
+><para
+>Un diccionari integrat en construir d'operadors per a una referència ràpida de les funcions disponibles. </para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuació es mostra una captura de pantalla de l'aplicació &kalgebra; en acció: </para>
+
+<screenshot>
+<screeninfo
+>Aquí hi ha una captura de pantalla de la finestra principal del &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>La finestra principal del &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Quan l'usuari inicia una sessió del &kalgebra;, es presentarà amb una sola finestra que consisteix en les pestanyes <guilabel
+>Calculadora</guilabel
+>, <guilabel
+>Gràfica en 2D</guilabel
+>, <guilabel
+>Gràfica en 3D</guilabel
+> i <guilabel
+>Diccionari</guilabel
+>. Dins de cada pestanya, trobareu un camp d'entrada per a introduir les vostres funcions o càlculs, i un camp de vista que mostrarà els resultats. </para>
+
+<para
+>En qualsevol moment l'usuari pot gestionar la seva sessió amb les opcions en el menú principal <guilabel
+>Sessió</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessió</guimenu
+><guimenuitem
+>Nou</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Obre una finestra nova del &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Maj; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessió</guimenu
+><guimenuitem
+>Mode de pantalla completa</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Alterna el mode de pantalla completa per a la finestra del &kalgebra;. El mode de pantalla completa també es pot activar i desactivar utilitzant el botó <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> a la part superior dreta de la finestra del &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessió</guimenu
+><guimenuitem
+>Surt</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Surt del programa.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Sintaxi</title>
+<para
+>El &kalgebra; utilitza una sintaxi algebraica intuïtiva per a la introducció de funcions d'usuari, similar a la utilitzada en les calculadores gràfiques més modernes. En aquesta secció s'enumeren els operadors fonamentals integrats en construir que hi ha disponibles en el &kalgebra;. L'autor del &kalgebra; modela aquesta sintaxi basant-se en el <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> i el <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> per als usuaris que estiguin familiaritzats amb aquests programes. </para>
+
+<para
+>Per als usuaris que estiguin interessats en el funcionament intern del &kalgebra;, les expressions introduïdes per l'usuari es converteixen a &MathML; sobre el dorsal. Una comprensió rudimentària de les capacitats de suport de &MathML; donen un gran avenç a les capacitats internes del &kalgebra;. </para>
+
+<para
+>Aquí hi ha una llista dels operadors disponibles que tenim per ara:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: Suma, resta, multiplicació i divisió.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: Potència, pot utilitzar ambdós. També és possible utilitzar caràcters Unicode <literal
+>²</literal
+>. Les potències són una manera de calcular arrels, podeu fer-ho com: <literal
+>a**(1/b)</literal
+></para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: lambda. És la manera d'especificar una o més variables lliures que seran acotades a una funció. Per exemple, en l'expressió, <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+>, l'operador «lambda» s'utilitza per a indicar que «<literal
+>x</literal
+>» i «<literal
+>y</literal
+>» s'acoten quan s'utilitza la funció de longitud («length»). </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: S'utilitza quan necessitem delimitar un abast (variable acotada+límit superior+límit inferior). Això vol dir que «<literal
+>x</literal
+>» anirà des de «<literal
+>a</literal
+>» a «<literal
+>b</literal
+>».</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: S'utilitza per a especificar una prioritat més alta.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(params) </literal
+>: Funcions. Quan l'analitzador troba una funció, comprovarà si «<literal
+>abc</literal
+>» és un operador. Si ho és, el tractarà com a tal, si no ho és, el tractarà com una funció d'usuari.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: Definició. S'utilitza per a definir un valor variable. Podeu fer coses com <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+>, la «<literal
+>y</literal
+>» es pot definir o no, o <userinput
+>perimeter:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: Definició de condicions. Aquesta és la manera com podem definir les operacions condicionals al &kalgebra;. Dit d'una altra manera, aquesta és una forma d'especificar una condició «if», «elseif», «else». Si presentem la condició abans del caràcter «<literal
+>?</literal
+>» només s'utilitzarà aquesta condició si és veritat, si troba un caràcter «<literal
+>?</literal
+>» sense cap condició, introduirà l'última instància. Exemple: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{} </literal
+>: Contenidor de &MathML;. Es pot utilitzar per a definir un contenidor. Principalment útil per a treballar amb les definicions d'operacions condicionals. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: Comparadors de valor per a «igual que», «més gran que», «més gran o igual que», «més petit que» i «més petit o igual que», respectivament.</para
+></listitem>
+</itemizedlist>
+
+<para
+>Ara us podeu preguntar, què fa llavors el &MathML;? És molt senzill. Amb ell, podem operar amb funcions com <function
+>cos()</function
+>, <function
+>sin()</function
+>, altres funcions trigonomètriques, <function
+>sum()</function
+> o <function
+>product()</function
+>. No importa de quin tipus siguin. Podem utilitzar <function
+>plus()</function
+>, <function
+>times()</function
+> i tot el que té el seu operador. Les funcions booleanes també s'apliquen, de manera que no podem fer quelcom semblant a <function
+>or(1,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>Ús de la calculadora</title>
+<para
+>La calculadora del &kalgebra; és útil com una calculadora amb esteroides. L'usuari pot introduir expressions per a avaluar en el mode <guimenu
+>Calcula</guimenu
+> o <guimenu
+>Avalua</guimenu
+>, depenent de la selecció al menú <guimenu
+>Calculadora</guimenu
+>. </para>
+<para
+>En el mode avaluació, el &kalgebra; simplifica l'expressió fins i tot si veu una variable sense definir. En el mode càlcul, el &kalgebra; ho calcula tot i si troba una variable sense definir, mostrarà un error. </para>
+<para
+>A més de mostrar a la pantalla de la calculadora les equacions i resultats introduïts per l'usuari, totes les variables que es declaren es mostren en un quadre persistent de la dreta. Fent doble clic sobre una variable, veureu un diàleg que us permetrà canviar els seus valors (només una manera d'enganyar al registre). </para>
+
+<para
+>La variable <quote
+><varname
+>ans</varname
+></quote
+> és especial, cada vegada que introduïu una expressió, el valor de la variable <quote
+><varname
+>ans</varname
+></quote
+> canviarà el resultat final. </para>
+
+<para
+>Els següents exemples són de funcions que es poden introduir en el camp d'entrada de la finestra de la calculadora:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuació es mostra una captura de pantalla de la finestra de la calculadora després d'introduir les expressions d'exemple de dalt: </para>
+<screenshot>
+<screeninfo
+>Captura de pantalla de la finestra «Calculadora» del &kalgebra; amb expressions d'exemple</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>La finestra «Calculadora» del &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>Un usuari pot controlar l'execució d'una sèrie de càlculs utilitzant les opcions del menú <guimenu
+>Calculadora</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Carrega un script...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Executa les instruccions en un fitxer seqüencial. Útil si es volen definir algunes biblioteques o reprendre algun treball anterior.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guisubmenu
+>Scripts recents</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Mostra un submenú que permetrà triar entre els scripts executats recentment.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Desa un script...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Desa les instruccions que heu escrit des que es va iniciar la sessió per a poder-les tornar a utilitzar. Genera fitxers de text de manera que siguin fàcils de corregir utilitzant qualsevol editor de text, com el &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Exporta el registre...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Desa el registre amb tots els resultats en un fitxer &HTML; per a poder-lo imprimir o publicar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Insereix «ANS»...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Insereix la variable <quote
+><varname
+>ans</varname
+></quote
+> i facilita la reutilització dels valors més antics.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Calcula</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Un botó d'opció per a establir el <guilabel
+>Mode d'execució</guilabel
+> a càlcul.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Avalua</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Un botó d'opció per a establir el <guilabel
+>Mode d'execució</guilabel
+> a avaluació.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>Gràfiques en 2D</title>
+<para
+>Per a afegir una nova gràfica en 2D en el &kalgebra;, seleccioneu la pestanya <guilabel
+>Gràfica en 2D</guilabel
+> i feu clic a la pestanya <guilabel
+>Afegeix</guilabel
+> per a afegir una nova funció. El vostre focus anirà a un quadre de text des d'on podreu escriure la funció.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Sintaxi</title>
+<para
+>Si voleu utilitzar una funció típica <function
+>f(x)</function
+>, no és necessari especificar-la, però si voleu <function
+>f(y)</function
+> o una funció polar, haureu d'afegir <literal
+>y-&gt;</literal
+> i <literal
+>q-&gt;</literal
+> com en les variables acotades.</para>
+
+<para
+>Exemples:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>Si heu introduït la funció, feu clic al botó <guibutton
+>D'acord</guibutton
+> per a visualitzar la gràfica a la finestra principal.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Característiques</title>
+<para
+>Podeu ajustar diverses gràfiques en la mateixa vista. Només heu d'utilitzar el botó <guilabel
+>Afegeix</guilabel
+> quan es troba en mode de llista. Podeu ajustar cada gràfica amb el seu propi color.</para>
+
+<para
+>La vista es pot apropar i moure amb el ratolí. Utilitzant la roda podeu apropar i allunyar. També podeu seleccionar una zona amb el &BER; i aquesta àrea serà ampliada. Moureu la vista amb les tecles de fletxa del teclat.</para>
+
+<note>
+ <para
+>El camp de visió de les gràfiques en 2D es pot definir de forma explícita utilitzant la pestanya <guilabel
+>Camp de visió</guilabel
+> sobre una pestanya <guilabel
+>Gràfica en 2D</guilabel
+>.</para>
+</note>
+ 
+<para
+>A la pestanya <guilabel
+>Llista</guilabel
+> a la part inferior dreta, podreu obrir una pestanya <guilabel
+>Editant</guilabel
+> per a editar o eliminar una funció amb doble clic i marcar o desmarcar la casella de selecció al costat del nom de la funció per a mostrar-la o ocultar-la.</para>
+<para
+>Al menú <guimenu
+>Gràfica en 2D</guimenu
+> trobareu aquestes opcions:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Quadrícula</guimenuitem
+>: Mostra o oculta la quadrícula</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Mantén la relació d'aspecte</guimenuitem
+>: Mantén la relació d'aspecte mentre es fa zoom</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Desa</guimenuitem
+>: Desa (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) la gràfica com un fitxer d'imatge</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Apropa/Allunya</guimenuitem
+>: Apropa (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) i allunya (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Mida real</guimenuitem
+>: Reinicia la vista a l'apropament original</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Resolució</guilabel
+>: Seguit d'una llista de botons d'opció per a seleccionar una resolució per a les gràfiques</para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuació es mostra una captura de pantalla d'un usuari en què el cursor es troba en l'arrel a la dreta de la funció, <function
+>sin(1/x)</function
+>. L'usuari utilitza una resolució molt alta per a crear aquesta gràfica (atès que una funció amb una freqüència cada vegada major acaba oscil·lant al voltant de les coordenades d'origen). També hi ha una funció de cursor en viu, on cada vegada que moveu el cursor sobre un punt, es mostren els valors de «<literal
+>x</literal
+>» i «<literal
+>y</literal
+>» a la cantonada inferior esquerra de la pantalla. També s'ha dibuixat una <quote
+>línia tangent</quote
+> sobre la funció a la posició on es troba el cursor. </para>
+
+<screenshot>
+<screeninfo
+>Aquí hi ha una captura de pantalla de la finestra «Gràfica en 2D» del &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>La finestra «Gràfica en 2D» del &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>Gràfiques en 3D</title>
+
+<para
+>Per a dibuixar una gràfica en 3D amb el &kalgebra;, seleccioneu la pestanya <guilabel
+>Gràfica en 3D</guilabel
+> i veureu un camp d'entrada a la part inferior on escriureu la funció. <literal
+>Z</literal
+> encara no es pot definir. De moment, el &kalgebra; només admet gràfiques en 3D explícitament que depenen únicament de la «<literal
+>x</literal
+>» i «<literal
+>y</literal
+>», com ara <userinput
+>(x,y)->x*y, on z=x*y</userinput
+>. </para>
+
+<para
+>Exemples:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>La vista es pot apropar i moure amb el ratolí. Utilitzant la roda podeu apropar i allunyar. Manteniu premut el &BER; i moveu el ratolí per a fer girar la gràfica.</para>
+
+<para
+>Les tecles &Left; i &Right; giren la gràfica al voltant de l'eix «<literal
+>z</literal
+>», les tecles &Up; i &Down; la giren al voltant de l'eix horitzontal de la vista. Premeu <keycap
+>W</keycap
+> per a ampliar i <keycap
+>S</keycap
+> per a allunyar dins de la gràfica.</para>
+
+<para
+>Al menú <guimenu
+>Gràfica en 3D</guimenu
+> trobareu aquestes opcions:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Desa</guimenuitem
+>: Desa (<keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+>) la gràfica com un fitxer d'imatge o document admès</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Restableix la vista</guimenuitem
+>: Reinicia la vista a l'apropament original al menú <guimenu
+>Gràfica en 3D</guimenu
+></para
+></listitem>
+<listitem
+><para
+>Podeu dibuixar les gràfiques amb els estils <guimenuitem
+>Punts</guimenuitem
+>, <guimenuitem
+>Línies</guimenuitem
+> o <guimenuitem
+>Sòlid</guimenuitem
+> al menú <guimenu
+>Gràfica en 3D</guimenu
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuació es mostra una captura de pantalla de l'anomenada funció <quote
+>sombrero</quote
+>. En aquesta gràfica en particular es mostra la gràfica en 3D utilitzant l'estil de línies. </para>
+
+<screenshot>
+<screeninfo
+>Aquí hi ha una captura de pantalla de la finestra «Gràfica en 3D» del &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>La finestra «Gràfica en 3D» del &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Diccionari</title>
+
+<para
+>El diccionari conté una llista de totes les funcions integrades en construir el &kalgebra;. Es pot utilitzar per a trobar la definició d'una operació i els seus paràmetres d'entrada. És un lloc útil per a cercar les moltes capacitats del &kalgebra;. </para>
+
+ <para
+>A continuació es mostra una captura de pantalla de la cerca al diccionari del &kalgebra; de la funció cosinus. </para>
+
+<screenshot>
+<screeninfo
+>Aquí hi ha una captura de pantalla de la finestra «Diccionari» del &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>La finestra «Diccionari» del &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Crèdits i llicència</title>
+
+<itemizedlist>
+<listitem
+><para
+>Copyright del programa 2005-2009 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Copyright de la documentació 2007 &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+<para
+>Traductor/Revisor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

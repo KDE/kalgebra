@@ -1,0 +1,1035 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sairan Kikkarin <sairan@computer.org>, 2011, 2012, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2013-09-14 04:31+0600\n"
+"Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
+"Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Амалдар: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "\"%1\" шығысына орналастырылмады"
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "\"%1\" шығысына орналастырылмады"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr " <ul class='error'>Қате: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Импортталғаны: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Қате: %1 деген жүктелмеді. <br />%2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Мәлімет"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Функцияны қосу/өзгерту"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Қарау"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Мынадан:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Мынаған дейін:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Параметрлері"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "ОК"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Өшіру"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Келтірілген параметрлері дұрыс емес"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Төменгі шегі жоғарғыдан асуға тиіс емес"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "2 өлшемді график"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "3 өлшемді график"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Сеанс"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Айнымалылары"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "Есептеу"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "Есептеу"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "Скриптті &жүктеу..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Жуырдағы скрипттер"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "Скриптті &сақтау..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "Журналды э&кспорттау..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Орындау режімі"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Есептеу"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Бағалау"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Функциялар"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Тізім"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr " Қ&осу"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Қарау терезесі"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&Екі өлшемді график"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "Е&кі өлшемді график"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Тор"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "Ара қатынасын &сақтау"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Айырымдылығы"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Шамалы"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Орташа"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Айқын"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Ап-айқын"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&Үш өлшемді график"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "Ү&ш өлшемді график"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Ысырып тастау"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Нүктелі"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Үзінді"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Сызықты"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Амалдар"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Сөздік"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Іздейтіні:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Өңдеу"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Скриптті таңдау"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Скрипт (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML файлы (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Қателер: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Кескін файлы\n"
+"*.svg|Сызба файлы"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Дайын"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Айнымалыны қосу"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Жаңа айнымалының атауын келтіру"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Калькулятор"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Сайран Киккарин"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sairan@computer.org"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Айнымалыны қосу/өзгерту"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Айнымалыны өшіру"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "'%1' мәнің өзгерту"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "жоқ"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr " <b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>ҚАТЕ</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Сол жағы:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Жоғары жағы:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Ені:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Биіктігі:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Іске асыру"
+
+#, fuzzy
+#~| msgid ""
+#~| "*.png|PNG File\n"
+#~| "*.pdf|PDF Document"
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "*.png|PNG файлы\n"
+#~ "*.pdf|PDF құжаты"
+
+#~ msgid "C&onsole"
+#~ msgstr "К&онсоль"
+
+#~ msgid "&Console"
+#~ msgstr "&Консоль"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Айқындалмаған түрде берілген функцияларды салу мүмкіндігін қосқан. "
+#~ "Функцияларды сызуын жетілдіріткен."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr " <b>Формула</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Қате: Функциясы дұрыс емес"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Дайын: %1"
+
+#~ msgid "Error: %1"
+#~ msgstr "Қате: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Тазалау"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG файлы"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Мөлдірлігі"
+
+#~ msgid "Type"
+#~ msgstr "Түрі"
+
+#~ msgid "Result: %1"
+#~ msgstr "Нәтижесі: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "Өрнекке"
+
+#~ msgid "To MathML"
+#~ msgstr "MathML-ге"
+
+#~ msgid "Simplify"
+#~ msgstr "Ықшамдату"
+
+#~ msgid "Examples"
+#~ msgstr "Мысалдар"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Тек нақты (real) бөлігін сала аламыз.  "
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Өрнегі дұрыс емес"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Функцияның түрі түсініксіз"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "%1 дегеннен тәуелді функция үшін оның түрі дұрыс емес"
+
+#~ msgctxt ""
+#~ "This function can't be represented as a curve. To draw implicit curve, "
+#~ "the function has to satisfy the implicit function theorem."
+#~ msgid "Implicit function undefined in the plane"
+#~ msgstr "Айқындалмаған функция бұл жазықтыта анықталмаған"
+
+#~ msgid "center"
+#~ msgstr "ортасы"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Атауы"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Функция"
+
+#~ msgid "%1 function added"
+#~ msgstr "%1 функциясы қосылды"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "'%1' дегенді жасыру"
+
+#~ msgid "Show '%1'"
+#~ msgstr "'%1' дегенді көрсету"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Қарау терезесі тым тар"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Түсініктеме"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Параметрлер"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Мысал"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : var"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=мынадан..мынаған дейін"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... параметpлері, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Қосу"
+
+#~ msgid "Multiplication"
+#~ msgstr "Көбейту"
+
+#~ msgid "Division"
+#~ msgstr "Бөлу"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Азайту. Мәндерін біріншісінен алынып тасталады."
+
+#~ msgid "Power"
+#~ msgstr "Дәреже"
+
+#~ msgid "Remainder"
+#~ msgstr "Қалдық"
+
+#~ msgid "Quotient"
+#~ msgstr "Бөлінді"
+
+#~ msgid "The factor of"
+#~ msgstr "Келесінің көбейткіші"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Факториал, factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Синус"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Косинус"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Тангенс"
+
+#~ msgid "Secant"
+#~ msgstr "Секанс"
+
+#~ msgid "Cosecant"
+#~ msgstr "Косеканс"
+
+#~ msgid "Cotangent"
+#~ msgstr "Котангенс"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Гиперболалық синус"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Гиперболалық косинус"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Гиперболалық тангенс"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Гиперболалық секанс"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Гиперболалық косеканс"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Гиперболалық котангенс"
+
+#~ msgid "Arc sine"
+#~ msgstr "Арксинус"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Арксосинус"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Арктангенс"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Арккотангенс"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Гиперболалық арктангенс"
+
+#~ msgid "Summatory"
+#~ msgstr "Қосындыны санауыш"
+
+#~ msgid "Productory"
+#~ msgstr "Көбейткіш"
+
+#~ msgid "For all"
+#~ msgstr "Бүкілдеріне"
+
+#~ msgid "Exists"
+#~ msgstr "Бар"
+
+#~ msgid "Differentiation"
+#~ msgstr "Дифференциалдау"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Гиперболалық арксинус"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Гиперболалық арккосинус"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Арккосеканс"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Гиперболалық арккосеканс"
+
+#~ msgid "Arc secant"
+#~ msgstr "Арксеканс"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Гиперболалық арксеканс"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Экспонента (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Натурал логарифм"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Ондық логарифм"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Модулі, abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Ең жақын кішірек бүтін саны, floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Ең жақын үлкенрек бүтін саны, ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Минимумы"
+
+#~ msgid "Maximum"
+#~ msgstr "Максимумы"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Келесіден артық, gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Келесіден кем, lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Тең, eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Жуықтауы, approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Тең емес,. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Келесіден артық не тең, geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Келесіден кем не тең, leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Логикалық \"және\""
+
+#~ msgid "Boolean not"
+#~ msgstr "Логикалық терістеу"
+
+#~ msgid "Boolean or"
+#~ msgstr "Логикалық \"немесе\""
+
+#~ msgid "Boolean xor"
+#~ msgstr "Логикалық \"сыйыспайтын немесе\""
+
+#~ msgid "Boolean implication"
+#~ msgstr "Логикалық импликация"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Ең үлкен ортақ бөлгіші"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Ең кіші ортақ еселігі"
+
+#~ msgid "Root"
+#~ msgstr "Түбірі"
+
+#~ msgid "Cardinal"
+#~ msgstr "Кардинал саны"
+
+#~ msgid "Scalar product"
+#~ msgstr "Скалярдық көбейту"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr ""
+#~ "Екінші параметр белгілеген тізімден не вектордан, біріншісі белгілеген "
+#~ "нөмірлі элементін таңдау"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Бірнеше типтес аталымдарды біріктіру"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : шегі"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Мәні"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Дұрыс амалды келтіру керек"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr " ', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Беймәлім идентификатор: '%1'"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Шартқа келетіні табылмады."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Шек үшін қолданбайтын түрі"
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Төменгі шегі жоғарғыдан асып тұр"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Төменгі не жоғарғы шегі дұрыс емес"
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Тұйықтық айнымалының өз-өзінен тәуелдігі"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Нәтижесі сан емес"
+
+#~ msgid "Unexpectedly arrived to the end of the input"
+#~ msgstr "Күтпегенде кіріс бітті"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "%1 беймәлім нәрсе"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> кемінде екі параметрді қажет етеді"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> кемінде %2 параметрді қажет етеді"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "'%1' дегеннің шегі келтірілмеген"
+
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "'%1' үшін күтпеген шегі келтірілген"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em> дегеннің '%2' дегені шектелмеген"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Анықтама қате"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Бос контейнер: %1"
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr "Шарттар тек қана құрама құрылымдарында болуға тиіс. "
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr "'%1' сияқты бірдей аталған екі параметр болуға тиіс емес."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "<em>otherwise</em> параметрі соңғы болуға тиіс "
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "%1 деген шарт емес, ол бұл құрамада жарамайды"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Айнымалыларды жариялау ғана болады"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Айнымалылар шектелген ғана болады"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Мынаны талдау қатесі: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Беймәлім контейнер: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "%1 мәні кодтауға келмеді."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "%1 операторы туынды контексттерге ие бола алмайды."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "'%1' элементі оператор емес."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Бос вектор жөнсіз"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Танылмайтын/беймәлім: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "ы'%2' орнында %1 күтілген еді"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Оң жақ жақшасы жетіспейді"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Жабылмаған оң жақ жақшасы"
+
+#, fuzzy
+#~| msgid "Unexpected token %1"
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "%1 деген күтпеген нәрсе"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "%1 деген күтпеген нәрсе"
+
+#, fuzzy
+#~| msgid "Could not calculate the derivative for '%1'"
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "'%1' дегеннің тұындысы есептеуге келмейді"
+
+#, fuzzy
+#~| msgid "The domain should be either a vector or a list."
+#~ msgid "The domain should be either a vector or a list"
+#~ msgstr "Анықталу аймағы вектор немесе тізім болу керек."
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "'%2' дегенде параметр саны дұрыс емес. Ол %1 болуға тиіс."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "'%1' шақырылмады"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "'%1' шешілмеді"
+
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "'%1' айнымалының түрі анықсыз"
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "Құрама функцияның түрі анықталмады"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Күтпеген түрі"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr " '%1' деген'%2' дегенге аударылмады"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "%1 деген беймәлім нәрсе"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "0-ден қалдық есептеуге келмейді"
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "0-дің көбейткіші есептеуге келмейді"
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "0-дің ең кіші ортақ еселігі есептеуге келмейді"
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "%1 мәні есептеуге келмейді"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Контейнерінің индексі дұрыс емес"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Түрлі өлшмді векторлар бір амалда үйлеспейді."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Вектордың  %1 есептеуге келмейді"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Тізімдің %1 есептеуге келмейді"
+
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "'%1' дегеннің тұындысы есептеуге келмейді"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr " '%1' және '%2' ықшамдатуға келмейді."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Параметрлік функция векторды қайтармайды "
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Екі өлшемді векторы керек"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Параметрлік функцияның параметрлері скаляр болуға тиіс"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "%1 туындысы әлі іске асырылмаған"
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Аумағы дұрыс емес."

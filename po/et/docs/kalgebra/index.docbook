@@ -1,0 +1,729 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&kalgebra;">
+  <!ENTITY package "kdeedu">
+
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>&kalgebra; käsiraamat</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>2013-06-27</date>
+<releaseinfo
+>0.11 (&kde; 4.11)</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; on rakendus, mis võib asendada su senist graafikalkulaatorit. Sel on arvulisi, loogilisi, sümbolilisi ja analüüsiomadusi, mis võimaldavad arvutada matemaatilisi avaldisi konsoolis ja lasta tulemusi kujutada graafiliselt nii tasapinnaliselt (2D) kui ka ruumiliselt (3D). &kalgebra; juured on matemaatilises märkekeeles (MathML), kuid &kalgebra; kasutamiseks ei ole MathML-i tundmine sugugi vajalik. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>diagramm</keyword>
+<keyword
+>matemaatika</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>mathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Sissejuhatus</title>
+
+<para
+>&kalgebra;l on arvukalt omadusi, mis lubavad kasutajal ette võtta kõikvõimalikke matemaatilisi tehteid ja neid graafiliselt kujutada. Algselt oli rakendus orienteeritud MathMl-i kasutamisele. Praegu aga võivad ka väheste matemaatiliste teadmistega inimesed selle abil lahendada nii lihtsamaid kui ka päris keerulisi probleeme. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: http://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Kasutada saab selliseid võimalusi: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Konsool matemaatiliste funktsioonide kiireks ja lihtsaks hindamiseks </para
+></listitem>
+<listitem
+><para
+>Skriptimisvõimalused pikemateks arvutusteks </para
+></listitem>
+<listitem
+><para
+>Keelevõimalused, sealhulgas funktsiooni definitsiooni ja süntaksi automaatne lõpetamine </para
+></listitem>
+<listitem
+><para
+>Arvutusvõimalused, sealhulgas algebra, vektorarvutus ja loendite käsitlemine </para
+></listitem>
+<listitem
+><para
+>Funktsioonide joonistamine, sealhulgas mittelineaarsetele võrranditele ja muudele </para
+></listitem>
+<listitem
+><para
+>Ruumiliste graafide loomine 3D funktsioonide kuvamiseks </para
+></listitem>
+<listitem
+><para
+>Sisseehitatud operandide sõnaraamat paljude funktsioonide kohta kiire abi leidmiseks </para
+></listitem>
+</itemizedlist>
+
+<para
+>Allpool on pilt &kalgebra;st töös: </para>
+
+<screenshot>
+<screeninfo
+>&kalgebra; peaaken</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; peaaken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>&kalgebra; seanssi käivitades näeb üht akent mitmest kaardiga: <guilabel
+>Konsool</guilabel
+>, <guilabel
+>2D graafik</guilabel
+>, <guilabel
+>3D graafik</guilabel
+> ja <guilabel
+> Sõnaraamat</guilabel
+>. Kõigil kaartidel leiab sisestusvälja, kus saab sisestada funktsioone või arvutusi, ning kuvavälja, kus näeb tulemusi. </para>
+
+<para
+>Kasutaja saab alati võtta midagi ette oma seansiga menüü <guilabel
+>Seanss</guilabel
+> käskude vahendusel:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seanss</guimenu
+><guimenuitem
+>Uus</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Avab uue &kalgebra; akna.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seanss</guimenu
+><guimenuitem
+>Täisekraanirežiim</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab lülitada &kalgebra; akna täisekraanirežiimi. Samuti saab sellesse režiimi lülituda ja sellest väljuda nupu <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> abil, mille leiab &kalgebra; akna ülemisest parempoolsest osast.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seanss</guimenu
+><guimenuitem
+>Välju</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lõpetab rakenduse töö.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Süntaks</title>
+<para
+>&kalgebra; kasutab kasutaja funktsioonide sisestamiseks intuitiivset algebralist süntaksi, mis sarnaneb enamikus tänapäeva graafikalkulaatorites kasutusel oleva süntaksiga. Allpool loetletakse tähtsaimad &kalgebra;s saadaolevad operandid. &kalgebra;  autor võttis süntaksi loomisel eeskuju programmidest  <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> ja <ulink url="http://www.maplesoft.com/products/maple/"
+>maple</ulink
+>, pidades silmas kasutajaid, kes võivad olla nendega juba tuttavad. </para>
+
+<para
+>Kui kedagi peaks huvitama &kalgebra; siseelu, siis kasutaja sisestatud avaldised teisendab taustaprogramm MathML-i. See tähendab, et &kalgebra; sisemiste omaduste korralikuks mõistmiseks on vajalik vähemalt pinnapealnegi arusaam MathML-o toetatud võimalustest. </para>
+
+<para
+>Nimekiri praegu kasutada olevatest tehetest:</para>
+<itemizedlist>
+<listitem
+><para
+>+ - * / : liitmine, lahutamine, korrutamine ja jagamine.</para
+> </listitem>
+<listitem
+><para
+>^, **: astendamine, kasutada võib mõlemat viisi. Samuti võib kasutada Unicode ² märki. Astmemärkide abil saab ka juurida, näiteks nii: a**(1/b)a</para
+></listitem>
+<listitem
+><para
+>-&gt; : lambda. Sellega saab määrata ühe või rohkem vabu muutujaid, mis on funktsioonis piiratud. Näiteks avaldises <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+> kasutatakse lambdaoperandi märkimaks, et x ja y on piiratud, kui kasutatakse funktsioon length. </para
+></listitem>
+<listitem
+><para
+>x=a..b : seda saab kasutada vajaduse korral määrata kindlaks vahemik (piiratud muutuja+ülemraja+alamraja). See tähendab, et x on vahemikud a kuni b.</para
+></listitem>
+<listitem
+><para
+>() : sellega saab määrata kõrgema prioriteedi.</para
+></listitem>
+<listitem
+><para
+>abc(parameetrid) : funktsioonid. Kui parser leiab funktsiooni, kontrollib ta, kas abc on operaator. Kui jah, siis nii seda käsitletaksegi, kui ei, siis võetakse seda kui kasutaja funktsiooni.</para
+></listitem>
+<listitem
+><para
+>:= : definitsioon. Nii saab defineerida muutuja väärtuse. Saab teha selliseid asju nagu x:=3, x:=y, kus y on defineeritud või defineerimata, või ümbermõõt:=r->2*pi*r. </para
+></listitem>
+<listitem
+><para
+>? : tükiti (piecewise) tingimuse definitsioon. Sel moel saab &kalgebra;s defineerida tingimuslikke tehteid. Või kui teisiti öelda, siis saab nii määrata if, elseif ja else tingimust. Kui lisame tingimuse '?' ette, kasutatakse seda tingimust ainult siis, kui see on tõene, kui leitakse '?' ilma tingimuseta, lisatakse see viimasena. Näide: kui on tõene kui a iga asukohas Näide: piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 } </para
+></listitem>
+<listitem
+><para
+>{ } : MathML konteiner. Nii saab defineerida konteineri. Peamiselt on sellest kasu tükiti tehete puhul. </para
+></listitem>
+<listitem
+><para
+>= &gt; &gt;= &lt; &lt;= : väärtuste võrdlejad vastavalt võrdse, suurema, suurema või võrdse, väiksema ning väiksema või võrdse jaoks</para
+></listitem>
+</itemizedlist>
+
+<para
+>Võib tekkida küsimus, milleks peaks üldse MathML-i peale mõtlema? Vastus on lihtne: nii saab kasutada selliseid fuktsioone nagu cos(), sin() või muid trigonomeetrilisi funktsioone, sum() or product(). Pole vahet, mis tüüpi see on. Kasutada saab plus(), times() ja kõike muud, millel on oma operaator. Võimalikud on ka tõeväärtustega funktsioonid, nii et kasutada saab ka sellist asja nagu or(1,0,0,0,0).</para>
+
+</chapter>
+
+<chapter id="using-console">
+<title
+>Konsooli kasutamine</title>
+<para
+>&kalgebra; konsool on tõeliselt võimas kalkulaator. Kasutaja saab avaldisi hindamiseks sisestada <guimenu
+>arvutamise</guimenu
+> või <guimenu
+>hindamise</guimenu
+> režiimis sõltuvalt sellest, milline režiim on valitud menüüs <guimenu
+>Konsool</guimenu
+>. </para>
+<para
+>Hindamisrežiimis lihtsustab &kalgebra; avaldist, isegi kui selles esineb defineerimata muutuja. Arvutamisrežiimis arvutab &kalgebra; kõik välja ja kui leiab defineerimata muutuja, annab teada veast. </para>
+<para
+>Lisaks kasutaja sisestatud võrrandite ja tulemuste kuvamisele konsoolis näeb paremal asuvas paneelis kõiki deklareeritud muutujaid. Topeltklõpsuga mõnele muutujale ilmub dialoog, kus saab muuta nende väärtust. </para>
+
+<para
+>Muutuja "ans" on eriline: iga kord, kui see avaldisse sisestada, antakse sellele viimase tulemuse väärtus. </para>
+
+<para
+>Järgnevalt mõned näitefunktsioonid, mida saab sisestada konsooliakna sisendiväljale:</para>
+<itemizedlist>
+<listitem
+><para
+>sin(pi)</para
+></listitem>
+<listitem
+><para
+>k:=33</para
+></listitem>
+<listitem
+><para
+>sum(k*x : x=0..10)</para
+></listitem>
+<listitem
+><para
+>f:=p->p*k</para
+></listitem>
+<listitem
+><para
+>f(pi)</para
+></listitem>
+</itemizedlist>
+
+<para
+>Nüüd ka pilt konsooliaknast pärast ülal toodud näidisavaldiste sisestamist: </para>
+<screenshot>
+<screeninfo
+>&kalgebra; konsooliaken näidisavaldistega</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; konsooliaken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>Kasutaja saab arvutuste jada täitmist juhtida menüü <guimenu
+>Konsool</guimenu
+> käskudega:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Konsool</guimenu
+><guimenuitem
+>Laadi skript</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Käivitab järgemööda failis antud juhised. Sellest on abi, kui on vaja defineerida teeke või taastada varasemat tegevust.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Konsool</guimenu
+><guimenuitem
+>Salvesta skript</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Salvestab juhised, mida oled alates seansi algusest sisestanud, et neid saaks uuesti kasutada. Loob tekstifailid, mida saab vajaduse korral hõlpsasti parandada suvalises tekstiredaktoris, näiteks Kates.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Konsool</guimenu
+><guimenuitem
+>Ekspordi logi</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Salvestab logi koos kõigi tulemustega &HTML;-failina, mida saab trükkida või avaldada.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>2D graafikud</title>
+<para
+>Uue 2D graafiku lisamiseks &kalgebra;s tuleb valida kaart <guilabel
+>2D graafik</guilabel
+> ja klõpsata uue funktsiooni lisamiseks <guilabel
+>Lisa</guilabel
+>. Seejärel saab nähtavale ilmunud sisestuskasti kirjutada vajaliku funktsiooni.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Süntaks</title>
+<para
+>Kui soovid kasutada tüüpilist f(x) funktsiooni, ei ole seda tingimata vaja määrata, aga kui soovid f(y) või polaarfunktsiooni, peab lisama tõkestatud muutujatena y-&gt; ja q-&gt;.</para>
+
+<para
+>Näited:</para>
+<itemizedlist>
+<listitem
+><para
+>sin(x)</para
+></listitem>
+<listitem
+><para
+>x²</para
+></listitem>
+<listitem
+><para
+>y->sin(y)</para
+></listitem>
+<listitem
+><para
+>q->3*sin(7*q)</para
+></listitem>
+<listitem
+><para
+>t->vector{sin t, t**2}</para
+></listitem>
+</itemizedlist>
+<para
+>Kui oled funktsiooni sisestanud, klõpsa <guibutton
+>OK</guibutton
+> ja näedki graafikut peaaknas.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Võimalused</title>
+<para
+>Samasse vaatesse saab paigutada mitu graafikut. Kasuta lihtsalt nuppu <guilabel
+>Lisa</guilabel
+>. Igale graafikule võib anda oma värvi.</para>
+
+<para
+>Vaadet saab hiirega suurendada ja liigutada. Hiirerattaga saab suurendada ja vähendada. Samuti võib hiire vasaku nupuga valida piirkonnaga, mida siis näidatakse suurendatult. Vaadet saab liigutada nooleklahvidega.</para>
+
+<note>
+ <para
+>2D graafide vaateava saab otseselt määrata kaardi <guilabel
+>2D graaf</guilabel
+> alamkaardil <guilabel
+>Vaateava</guilabel
+>.</para>
+</note>
+ 
+<para
+>Kaardil <guilabel
+>Nimekiri</guilabel
+> saab avada kaardi <guilabel
+>Redigeerimine</guilabel
+> funktsiooni muutmiseks või eemaldamiseks topeltklõpsuga. Samuti saab seal lasta funktsiooni nime näidata või see peita, kui märkida kastike või eemaldada märge kastikesest funktsiooni nime ees.</para>
+<para
+>Menüüs <guimenu
+>2D graafik</guimenu
+> leiab järgmised valikud:</para>
+<itemizedlist>
+<listitem
+><para
+>Alusvõrgu näitamine või peitmine</para
+></listitem>
+<listitem
+><para
+>Proportsioonide säilitamine suurendamisel/vähendamisel</para
+></listitem>
+<listitem
+><para
+>Suurendamine (<keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+>) ja vähendamine (<keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+>Graafiku salvestamine pildina (<keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+>Vaate algse suurenduse lähtestamine</para
+></listitem>
+<listitem
+><para
+>Graafiku eraldusvõime valimine</para
+></listitem>
+</itemizedlist>
+
+<para
+>Allpool on näide kasutajast, kelle kursor asub paremas servas, otse funktsiooni sin(1/x) peal. Kasutaja on tarvitanud graafi loomisel väga suurt lahutust (ostsillatsioon toimub kõrgetel sagedustel allika lähedal). Kasutada saab ka reaalajas kursori võimalust, mis tähendab, et kui viid kursori mõne punkti peale, näed ekraani alumises vasakus nurgas X- ja Y-väärtusi. Reaalajas kursori asukohta on funktsioonile tõmmatud "puutuja". </para>
+
+<screenshot>
+<screeninfo
+>&kalgebra; 2D graafiku aken</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; 2D graafiku aken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>3D graafikud</title>
+
+<para
+>3D graafiku loomiseks &kalgebra;s tuleb valida kaart <guilabel
+>3D graafik</guilabel
+>, mille allosas on sisestusväli, kuhu saab kirjutada funktsiooni. Z ei ole veel defineeritav, praegu toetab &kalgebra; ainult 3D graafikuid, mis sõltuvad ainult x-ist ja y-st, näiteks (x,y)->x*y, kus z=x*y. </para>
+
+<para
+>Näited:</para>
+<itemizedlist>
+<listitem
+><para
+>(x,y)->sin(x)*sin(y)</para
+></listitem>
+<listitem
+><para
+>(x,y)->x/y</para
+></listitem>
+</itemizedlist>
+
+<para
+>Vaadet saab hiirega suurendada ja vähendada ning liigutada. Hiirerattaga saab suurendada ja vähendada. Kui hoida all &HPN; ja liigutada hiirt, saab graafikut pöörata.</para>
+
+ <para
+>Nool vasakule ja paremale pööravad graafikut Z-telje ümber, nool üles ja alla ümber vaate rõhttelje. Joonise suurendamiseks vajuta klahvi <keycap
+>W</keycap
+> ja vähendamiseks klahvi <keycap
+>S</keycap
+>.</para>
+
+<para
+>Menüüs <guimenu
+>3D graafik</guimenu
+> leiab järgmised valikud:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D graph menu</para
+></listitem>
+-->
+<listitem
+><para
+>Graafiku salvestamine pildina (<keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+>Vaate algse suurenduse lähtestamine</para
+></listitem>
+<listitem
+><para
+>Graafiku esitamine punktide, joonte või ühtlasena</para
+></listitem>
+</itemizedlist>
+
+<para
+>Allpool on niinimetatud sombreerofunktsiooni näide. Siinsel graafil on kasutatud ruumiliselt jooni. </para>
+
+<screenshot>
+<screeninfo
+>&kalgebra; 3D graafiku aken</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; 3D graafiku aken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Sõnaraamat</title>
+
+<para
+>Sõnaraamat sisaldab kõiki &kalgebra;s saadaolevaid funktsioone. Väga mõistlik on sõnaraamatus üle kontrollida, milleks mõnda tehet kasutada saab ja kui palju parameetreid funktsioonid vajavad. Samuti saab siin tõeliselt aimu, milleks on &kalgebra; võimeline. </para>
+
+ <para
+>Allpool on näide &kalgebra; sõnaraamatust, kus on otsitud teavet koosinuse kohta. </para>
+
+<screenshot>
+<screeninfo
+>&kalgebra; sõnaraamatu aken</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; sõnaraamatu aken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Autorid ja litsents</title>
+
+<itemizedlist>
+<listitem
+><para
+>Rakenduse autoriõigus 2005-2009: &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Dokumentatsiooni autoriõigus 2007: &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; &underGPL; </chapter>
+
+
+<appendix id="installation">
+<title
+>Paigaldamine</title>
+
+<sect1 id="getting-kapptemplate">
+<title
+>&kalgebra; hankimine</title>
+&install.intro.documentation; </sect1>
+
+<sect1 id="compilation">
+<title
+>Kompileerimine ja paigaldamine</title>
+&install.compile.documentation; </sect1>
+
+</appendix>
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

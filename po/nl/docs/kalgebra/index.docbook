@@ -1,0 +1,903 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>Het handboek van &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+&Jaap.Woldringh; 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>2020-12-17</date>
+<releaseinfo
+>Applicaties 20.12</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; kan uw grafische rekenmachine vervangen. Het heeft numerieke, logische, symbolische en analytische functies waarmee u wiskundige uitdrukkingen kunt berekenen, en de resultaten in 2D of 3D kunt plotten. &kalgebra; is gebaseerd op de Mathematical Markup Language (&MathML;), maar kennis daarvan is niet nodig om &kalgebra; te kunnen gebruiken. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>grafiek</keyword>
+<keyword
+>wiskunde</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inleiding</title>
+
+<para
+>&kalgebra; heeft talloze eigenschappen die de gebruiker kan gebruiken voor allerlei wiskundige bewerkingen, en het grafisch weergeven van de resultaten. Aanvankelijk was dit programma op &MathML;  gericht. Tegenwoordig kan het door iedereen worden gebruikt met enige wiskundige kennis, voor het oplossen van zowel eenvoudige als minder eenvoudige problemen. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Het heeft eigenschappen zoals: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Een rekenmachine waarin wiskundige functies snel en eenvoudig kunnen worden berekend. </para
+></listitem>
+<listitem
+><para
+>Scriptmogelijkheden voor gevorderde reeksen van berekeningen </para
+></listitem>
+<listitem
+><para
+>Taalmogelijkheden zoals definiëren van functies en automatisch syntaxisaanvullen. </para
+></listitem>
+<listitem
+><para
+>Analysefuncties, zoals symbolisch differentiëren, vectoranalyse, en manipuleren van lijsten. </para
+></listitem>
+<listitem
+><para
+>Functieplotten met een actieve muisaanwijzer voor het grafisch vinden van nulpunten, en andere. </para
+></listitem>
+<listitem
+><para
+>3D plotten voor het visualiseren van 3D functies. </para
+></listitem>
+<listitem
+><para
+>Een woordenlijst van bewerkingen waarin vlot de vele aanwezige functies kunnen worden gevonden. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Hier ziet u een schermbeeld van &kalgebra; in actie: </para>
+
+<screenshot>
+<screeninfo
+>Hier ziet u een schermbeeld van het hoofdvenster van &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Hoofdvenster van &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Bij het starten van &kalgebra; ziet de gebruiker een enkel venster, dat de tabbladen bevat voor<guilabel
+>Rekenmachine</guilabel
+>, <guilabel
+>2D-grafiek</guilabel
+> , <guilabel
+>3D-grafiek</guilabel
+> en <guilabel
+>Woordenlijst</guilabel
+>. In deze tabbladen vindt u een invoerveld waarin u functies kunt typen, en een veld waarin de antwoorden worden getoond. </para>
+
+<para
+>Altijd kan de gebruiker een sessie beheren met de opties in het hoofdmenu <guilabel
+>Sessie</guilabel
+> options:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessie</guimenu
+><guimenuitem
+>Nieuw</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Opent een nieuw venster van &kalgebra;</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessie</guimenu
+><guimenuitem
+>Volledig scherm</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Volledig scherm in &kalgebra; aan- en uitzetten. Dit kan ook met de knop <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> rechts boven in het venster van &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sessie</guimenu
+><guimenuitem
+>Afsluiten</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Sluit het programma af.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Syntaxis</title>
+<para
+>In &kalgebra; kent een intuïtieve algebraïsche syntaxis voor het invoeren van functies, gelijk aan die van de meeste moderne grafische rekenmachines. U vindt hier een  lijst van de fundamentele ingebouwde bewerkingen in &kalgebra;. De auteur van &kalgebra; modelleerde de syntaxis naar <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> en <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> om tegemoet te komen aan  gebruikers van deze programma's. </para>
+
+<para
+>Voor hen die belang stellen in hoe &kalgebra; werkt: door de gebruiker ingevoerde expressies worden in de backend geconverteerd naar &MathML;. Een rudimentair begrip van de mogelijkheden van &MathML; kan al veel duidelijk maken van de interne mogelijkheden van &kalgebra;. </para>
+
+<para
+>Hier is een lijst van de tot nu toe beschikbare bewerkingen:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: Optellen, aftrekken, vermenigvuldigen en delen.</para
+> </listitem>
+<listitem
+><para
+>^, **: Machtverheffen, u kunt ze allebei gebruiken. Het is ook mogelijk de unicode ² -karakters te gebruiken. U kunt machten ook gebruiken voor het berekenen van wortels zoals: a**(1/b)</para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: lambda. Dit is hoe een of meer vrije variabelen worden opgegeven  in een functie. Bijvoorbeeld, in de expressie <userinput
+>lengte:=(x,y)->(x*x+y*y)^0.5</userinput
+>, wordt de bewerking lambda gebruikt om aan te geven dat <literal
+>x</literal
+> en <literal
+>y</literal
+> in de functie  lengte zullen worden gebruikt. </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: Wordt gebruikt wanneer het nodig is om een interval te begrenzen  (begrensde variabele+bovengrens+ondergrens). Dit betekent dat <literal
+>x</literal
+> verloopt van  <literal
+>a</literal
+> naar <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>:  Wat tussen haakjes staat eerst berekenen.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(params)</literal
+> :  Functies. Wanneer bij het inlezen een functie wordt gevonden,  wordt nagegaan of <literal
+>abc</literal
+> een interne bewerking is. Indien dit zo is, dan wordt het als zodanig beschouwd, en anders als een door de gebruiker gemaakte functie.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: Waardetoekenning. Wordt gebruikt om aan een variabele een waarde te geven. U kunt dingen doen als <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+>, waarin <literal
+>y</literal
+> al of niet een waarde heeft,  of <userinput
+>omtrek:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: piecewise: voorwaarden in gedeelten. Hiermee kunnen we in &kalgebra; voorwaardelijke bewerkingen definiëren. Anders gezegd: dit iseen andere manier voor het opgeven van voorwaarden dan in de vorm van if, elseif, else. Geven we de voorwaarde op  voor het symbool  '<literal
+>?</literal
+>' dan geldt die alleen als die waar is.  Bij een '<literal
+>?</literal
+>' zonder een voorwaarde, dan wordt die alsnog ingevoerd. Voorbeeld: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+>{ } : plaatshouder in &MathML;. Kan worden gebruikt om een plaatshouder te definiëren. Wordt het meest met piecewise worden gebruikt. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;=</literal
+> : Vergelijking van getallen, in de genoemde volgorde gelijk aan, groter dan of gelijk aan, kleiner dan en kleiner dan of gelijk aan.</para
+></listitem>
+</itemizedlist>
+
+<para
+>U zou mij nu kunnen vragen wat een gebruiker te maken heeft met &MathML;. Nou, dat is eenvoudig te beantwoorden. Hiermee kunnen we werken met functies zoals <function
+>cos()</function
+>, <function
+>sin()</function
+>, en andere goniometrische functies, <function
+>sum()</function
+> of <function
+>product()</function
+>. (optellen en vermenigvuldigen). Het doet er niet toe wat. We kunnen <function
+>plus()</function
+>, <function
+>times()</function
+> (keer) gebruiken, en verder alles waarvoor er een bewerking is. Booleaanse functies zijn ook aanwezig, zodat we zoiets kunnen gebruiken als <function
+>or(1,0,0,0,0)</function
+> (de or-functie)</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>De rekenmachine gebruiken</title>
+<para
+>De rekenmachine van &kalgebra; is supersnel. De gebruiker kan hierin te berekenen expressies invoeren in de modus <guimenu
+>Berekenen</guimenu
+> of <guimenu
+>Evaluatie</guimenu
+>, afhankelijk van de keuze in het menu <guimenu
+>Rekenmachine</guimenu
+>. </para>
+<para
+>In de evaluatiemodus vereenvoudigt &kalgebra; de uitdrukking, zelfs als er een niet gedefinieerde variabele in voorkomt. In de berekeningsmodus berekent &kalgebra; alles, en geeft het een foutmelding wanneer een variabele niet is gedefinieerd. </para>
+<para
+>Naast het in het rekenmachinescherm tonen  van de door de gebruiker ingevoerde vergelijkingen en de antwoorden, worden alle gedeclareerde variabelen getoond in een vast scherm rechts. Na dubbelklikken op een variabele ziet u een dialoog waarin u de waarde ervan kunt wijzigen. </para>
+
+<para
+>De variabele <quote
+><varname
+>ans</varname
+></quote
+> (van answer, is antwoord) is speciaal.  Hierin wordt het antwoord van de laatste berekening bewaard, zodat die daarna gebruikt kan worden. </para>
+
+<para
+>Hier volgen wat voorbeelden van functies die in het invoerveld van de rekenmachine kunnen worden ingevoerd: </para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Hier volgt een schermafbeelding van het rekenmachinevenster na het invoeren van de bovenstaande voorbeelden: </para>
+<screenshot>
+<screeninfo
+>Schermbeeld van de rekenmachine van &kalgebra; met voorbeelden van expressies</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Venster van de rekenmachine van &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>Een gebruiker kan het uitvoeren van een lijst van berekeningen regelen met de menu-opties in het menu <guimenu
+>Rekenmachine</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>Script lezen...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Voert de instructies in een bestand na elkaar uit. Handig om bijvoorbeeld een aantal bibliotheken te definiëren, of met vorig werk verder te kunnen gaan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Rekenmachine</guimenu
+><guisubmenu
+>Recente scripts</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Toont een submenu waarin u recent gebruikte scripts kunt selecteren.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>Script opslaan...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Bewaart alle in deze sessie ingetypte instructies voor later hergebruik. Hiervoor wordt een tekstbestand aangemaakt, dat eenvoudig kan worden bewerkt met een tekstverwerker, zoals &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>Log exporteren...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Slaat de log (logboek) van alle resultaten op in een &HTML;-bestand, zodat u die kunt afdrukken of publiceren.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>ans invoegen...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Voeg de variabele  <quote
+><varname
+>ans</varname
+></quote
+> in voor het eenvoudiger maken oudere waarden opnieuw te gebruiken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>Berekenen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Een radioknop voor het instellen van de <guilabel
+>Rekenmethode</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Rekenmachine</guimenu
+><guimenuitem
+>Berekenen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Een radioknop voor het instellen van de <guilabel
+>Rekenmethode</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>2D-grafieken</title>
+<para
+>U kunt een 2D-grafiek in &kalgebra; toevoegen in het tabblad <guilabel
+>2D-grafiek</guilabel
+>. Klik hierin op de knop <guilabel
+>Toevoegen</guilabel
+>, u kunt dan een nieuwe functie intypen in het invoerveld.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Syntaxis</title>
+<para
+>Indien u een gebruikelijke functie <function
+>f(x)</function
+> wilt gebruiken, dan is het niet nodig die nader te omschrijven, maar is het een functie <function
+>f(y)</function
+> of een functie in poolcoördinaten, dan is het nodig om <literal
+>y-&gt;</literal
+> en <literal
+>q-&gt;</literal
+> toe te voegen als begrensde variabelen.</para>
+
+<para
+>Voorbeelden:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>Na het invoeren van een functie klikt u op de knop <guibutton
+>OK</guibutton
+>, de grafiek wordt dan in het hoofvenster getoond.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Eigenschappen</title>
+<para
+>U kunt meerdere grafieken tegelijk plotten. In de Lijst-modus kunt u dit gewoon met de knop <guilabel
+>Toevoegen</guilabel
+> doen. U kunt elke grafiek een eigen kleur geven.</para>
+
+<para
+>U kunt in de grafieken zoomen en het beeld verplaatsen met behulp van de muis. Met het muiswiel kunt u in- en uitzoomen. Met de &LMB; kunt u ook een gebied selecteren waarna op dit gebied wordt in- en uitgezoomd. Het beeld kan worden verplaatst met behulp van de pijltjes-toetsen.</para>
+
+<note>
+ <para
+>Het afbeeldingsgebied voor 2D-grafieken kan expliciet worden aangegeven in het tabblad <guilabel
+>Afbeeldingsgebied</guilabel
+> in het tabblad <guilabel
+>2D-grafiek</guilabel
+>.</para>
+</note>
+ 
+<para
+>In het tabblad <guilabel
+>Lijst</guilabel
+> rechtsonder, kunt u een tabblad <guilabel
+>Bewerken</guilabel
+> openen, waarin u met dubbelklikken een functie kunt bewerken of verwijderen, en middels het keuzevakje  het tonen van de functienaam aan of uit zetten.</para>
+<para
+>In het menu <guimenu
+>2D-grafiek</guimenu
+> zijn de volgende opties:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Rooster</guimenuitem
+>: Rooster tonen/verbergen</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Aspectverhouding behouden</guimenuitem
+>: Bij het zoomen de aspectverhouding behouden.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Opslaan</guimenuitem
+>:  Slaat (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) de grafiek op als een afbeeldingsbestand.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Zoom in/uit</guimenuitem
+>: Zoom in (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) en zoom uit (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Actuele grootte</guimenuitem
+>: Terug naar beginwaarde zoomen</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Resolutie</guilabel
+>: Gevolgd door een lijst van radioknoppen waarmee u een resolutie kunt selecteren voor de grafieken</para
+></listitem>
+</itemizedlist>
+
+<para
+>Hieronder een schermbeeld van een gebruiker waarin zijn muisaanwijzer geplaatst is op het meest rechtse nulpunt van de functie <function
+>sin(1/x)</function
+>.  Deze grafiek werd met een hoge resolutie gemaakt (omdat die steeds sneller op- en neergaat nabij de oorsprong). Er is ook een actieve muisaanwijzer beschikbaar waarvan u, als u die over de plot verplaatst, de bijbehorende <literal
+>x</literal
+> en <literal
+>y</literal
+>-coördinaten kunt aflezen links onder in het scherm. Op de plaats van deze muisaanwijzer wordt ook een actuele <quote
+>raaklijn</quote
+> aan de grafiek van de functie getekend op de plaats van de muisaanwijzer. </para>
+
+<screenshot>
+<screeninfo
+>Hier is een schermbeeld van het 2D-venster van &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>2D-venster van &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>3D-grafieken</title>
+
+<para
+>In &kalgebra; kunt u 3D-grafieken tekenen. Hiertoe kiest u het tabblad <guilabel
+>3D-grafiek</guilabel
+>.  U ziet dan hieronder een invoerveld waarin u de functie kunt typen. <literal
+>Z</literal
+> kan nog niet worden gegeven. Voorlopig kan &kalgebra; alleen nog grafieken tekenen die alleen expliciet afhankelijk zijn van <literal
+>x</literal
+> en <literal
+>y</literal
+>, zoals <userinput
+>(x,y)->x*y</userinput
+>, waarin <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>Voorbeelden:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>U kunt in de grafieken zoomen en het beeld verplaatsen met behulp van de muis. Met het muiswiel kunt u in- en uitzoomen. Als u de &LMB; ingedrukt houdt kunt u de grafiek roteren (draaien) door de muis te verplaatsen.</para>
+
+<para
+>Met de pijltoetsen &Left; en &Right; kunt u de grafiek roteren (draaien) om de z-as, met de &Up; en &Down;  pijltjestoetsen roteert u de grafiek om de horizontale as.  Met  de toets  <keycap
+>W</keycap
+>  kunt u in de plot inzoomen, en met de toets <keycap
+>S</keycap
+> uitzoomen.</para>
+
+<para
+>In het menu <guimenu
+>3D-grafiek</guimenu
+> zijn deze opties:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Opslaan</guimenuitem
+>: Slaat (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) de grafiek op als afbeeldingsbestand, of ondersteund document</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Beeld herstellen</guimenuitem
+>: Herstelt het beeld tot de originele zoomin het menu van  <guimenu
+>3D-grafiek</guimenu
+></para
+></listitem>
+<listitem
+><para
+>U kunt grafieken tekenen met <guimenuitem
+>Puntlijnen</guimenuitem
+>, <guimenuitem
+>Streepjeslijnen</guimenuitem
+> , of <guimenuitem
+>Aaneengesloten lijnen</guimenuitem
+>,  in het menu <guimenu
+>3D-Grafiek</guimenu
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Hieronder een schermbeeld van de zogenaamde <quote
+>sombrero</quote
+>-functie.  In dit geval is de grafiek getekend met de lijnstijl voor 3D-grafieken. </para>
+
+<screenshot>
+<screeninfo
+>Hier een schermbeeld van het 3D-venster van &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Venster van &kalgebra; voor 3D-grafieken</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Woordenlijst</title>
+
+<para
+>De woordenlijst bevat een lijst van alle bewerkingen die in &kalgebra; mogelijk zijn. U kunt hierin vinden hoe u een bewerking kunt gebruiken en welke parameters een functie nodig heeft. Hierin kunt u de vele mogelijkheden van &kalgebra; ontdekken. </para>
+
+ <para
+>Hieronder is een schermbeeld van het opzoeken van de functie cosinus in de woordenlijst. </para>
+
+<screenshot>
+<screeninfo
+>Hier ziet u een schermbeeld van de woordenlijst van &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Venster van de woordenlijst van &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Dankbetuigingen en Licentie</title>
+
+<itemizedlist>
+<listitem
+><para
+>Programma copyright 2005-2009 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Documentatie copyright 2007 &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+&meld.fouten;&vertaling.jaap; &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

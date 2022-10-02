@@ -1,0 +1,240 @@
+# Translation of kalgebramobile to Norwegian Nynorsk
+#
+# Karl Ove Hufthammer <karl@huftis.org>, 2019, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-07-03 00:41+0000\n"
+"PO-Revision-Date: 2022-06-19 13:55+0200\n"
+"Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
+"Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.04.2\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "KAlgebra mobil"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "Enkel vitskapleg kalkulator"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, kde-format
+msgid "Calculator"
+msgstr "Kalkulator"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr "Variablar"
+
+#: content/ui/Console.qml:67
+#, kde-format
+msgid "Load Script"
+msgstr "Opna skript"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skript (*.kal)"
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "Save Script"
+msgstr "Lagra skript"
+
+#: content/ui/Console.qml:88
+#, kde-format
+msgid "Export Log"
+msgstr "Eksporter logg"
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Evaluate"
+msgstr "Evaluer"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Calculate"
+msgstr "Rekn ut"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "Tøm logg"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "2D-plott"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "3D-plott"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "Kopier «%1»"
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "Tøm alt"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "Uttrykk å rekna ut …"
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr "Namn:"
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: content/ui/main.qml:55
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr "2D-graf"
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr "3D-graf"
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr "Verditabellar"
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr "Ordbok"
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr "Om KAlgebra"
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, kde-format
+msgid "Save"
+msgstr "Lagra"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "Vis rutenett"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "Tilbakestill visingsrute"
+
+#: content/ui/TableResultPage.qml:11
+#, kde-format
+msgid "Results"
+msgstr "Resultat"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr "Verditabellar"
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "Feil: Steget kan ikkje vera 0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "Feil: Start- og sluttverdiane er like"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "Feil: %1"
+
+#: content/ui/Tables.qml:84
+#, kde-format
+msgid "Input"
+msgstr "Inndata"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "Frå:"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "Til:"
+
+#: content/ui/Tables.qml:107
+#, kde-format
+msgid "Step"
+msgstr "Steg"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "Køyr"
+
+#: main.cpp:58
+#, kde-format
+msgid "A portable calculator"
+msgstr "Portabel kalkulator"
+
+#: main.cpp:59
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "© 2006–2020 Aleix Pol i Gonzalez"
+
+#: main.cpp:60
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:61
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Karl Ove Hufthammer"
+
+#: main.cpp:61
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "karl@huftis.org"

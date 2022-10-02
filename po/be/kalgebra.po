@@ -1,0 +1,547 @@
+# translation of kalgebra.po to Belarusian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Darafei Praliaskouski <komzpa@licei2.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2007-06-22 20:25+0300\n"
+"Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
+"Language-Team: Belarusian <i18n@mova.org>\n"
+"Language: be\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || n%10>=5 && n%10<=9 || n"
+"%100>=11 && n%100<=14 ? 2 : 3);\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options: %1"
+msgstr "Функцыі"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr ""
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr ""
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr ""
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr ""
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr ""
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#: functionedit.cpp:104
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options"
+msgstr "Функцыі"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Добра"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr ""
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, fuzzy, kde-format
+msgid "Variables"
+msgstr "Пераменныя"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr ""
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr ""
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr ""
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr ""
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr ""
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr ""
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+#| msgid "Value"
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Значэнне"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Функцыі"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Спіс"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Дадаць"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr ""
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr ""
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr ""
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:269
+#, fuzzy, kde-format
+msgid "Resolution"
+msgstr "Распазнаванне"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr ""
+
+#: kalgebra.cpp:271
+#, fuzzy, kde-format
+#| msgid "Normal"
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Звычайны"
+
+#: kalgebra.cpp:272
+#, fuzzy, kde-format
+#| msgid "Lines"
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Лініі"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr ""
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr ""
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr ""
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr ""
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Лініі"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Працяглы"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr ""
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Слоўнік"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr ""
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr ""
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr ""
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr ""
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ""
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Памылка: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+
+#: kalgebra.cpp:649
+#, fuzzy, kde-format
+#| msgid "Ready"
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Гатовы"
+
+#: kalgebra.cpp:683
+#, fuzzy, kde-format
+msgid "Add variable"
+msgstr "Пераменныя"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr ""
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Дарафей Праляскоўскі"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "komzpa@licei2.com"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr ""
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+msgid "Remove Variable"
+msgstr "Пераменныя"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr ""
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr ""
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr ""
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr ""
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr ""
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr ""
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr ""
+
+#~ msgid "Error: %1"
+#~ msgstr "Памылка: %1"
+
+#, fuzzy
+#~| msgid "Clear"
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Ачысціць"
+
+#~ msgid "Type"
+#~ msgstr "Тып"
+
+#, fuzzy
+#~| msgid "Name"
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Назва"
+
+#, fuzzy
+#~| msgid "Function"
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Функцыя"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Апісанне"
+
+#, fuzzy
+#~| msgid "Parameters"
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Параметры"
+
+#, fuzzy
+#~| msgid "&Quit"
+#~ msgid "Quotient"
+#~ msgstr "&Выхад"
+
+#, fuzzy
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "Звычайны"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "Спіс"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Differentiation"
+#~ msgstr "Апісанне"
+
+#~ msgid "Root"
+#~ msgstr "Корань"
+
+#, fuzzy
+#~| msgid "Value"
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Значэнне"
+
+#, fuzzy
+#~| msgid "Function"
+#~ msgid "Subtraction"
+#~ msgstr "Функцыя"
+
+#, fuzzy
+#~| msgid "Error: %1"
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr "Памылка: %1"
+
+#, fuzzy
+#~| msgid "&Save"
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Запісаць"
+
+#, fuzzy
+#~| msgid "Lines"
+#~ msgid "File"
+#~ msgstr "Лініі"
+
+#~ msgid "Mode"
+#~ msgstr "Рэжым"
+
+#, fuzzy
+#~| msgid "&New"
+#~ msgctxt "@item:inmenu"
+#~ msgid "&New"
+#~ msgstr "&Новы"
+
+#~ msgid "&Save"
+#~ msgstr "&Запісаць"

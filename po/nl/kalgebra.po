@@ -1,0 +1,1134 @@
+# translation of kalgebraN.po to Nederlands
+# KTranslator Generated File
+# Nederlandse vertaling van korganizer.po
+# Copyright (c) 2000-2007 KDE e.v.
+# Copyright (C) 2000-2007 KDE-Nederlands team <i18n@kde.nl>.
+# Niels Reedijk <n.reedijk@planet.nl>, 2000.
+# Wilbert Berendsen <wbsoft@xs4all.nl>, 2003, 2004.
+# Bram Schoenmakers <bramschoenmakers@kde.nl>, 2004, 2005, 2006, 2007, 2008.
+# Tom Albers <tomalbers@kde.nl>, 2004.
+# Rinse de Vries <rinsedevries@kde.nl>,2000-2002, 2003, 2004, 2005, 2006, 2007, 2008.
+# Antoon Tolboom <atolboo@gmail.com>, 2008.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2014, 2015, 2016.
+# Jaap Woldringh <jjhwoldringh@kde.nl>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebraN\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-06-12 20:25+0200\n"
+"Last-Translator: Jaap Woldringh <jjhwoldrinngh@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 21.12.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Opties: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Plak \"%1\" voor invoer"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "Plakken voor invoer"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Fout: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Geïmporteerd: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Fout: Kan %1 niet lezen. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Informatie"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Een functie toevoegen/wijzigen"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Voorbeeld"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Van:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Tot:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Opties"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "De door u opgegeven opties zijn niet goed"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Ondergrens kan niet groter zijn dan de bovengrens"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Plot 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Plot 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Sessie"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Variabelen"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "&Rekenmachine"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "Rekenm&achine"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "Script in&lezen..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Recente scripts"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Script opslaan..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "Log &exporteren..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "ans &invoegen..."
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Uitvoeringsmodus"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Berekenen"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Berekenen"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Functies"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Lijst"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Toevoegen"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Op in te zoomen gebied"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D-grafiek"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D-grafiek"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Rooster"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "Aspectverhouding &behouden"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Resolutie"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Laag"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normaal"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Hoog"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Erg hoog"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D-grafiek"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D-&grafiek"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "Beeld he&rstellen"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Stippels"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Lijnen"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Aaneengesloten"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Bewerkingen"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Woordenlijst"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Zoek op:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "B&ewerken"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Kies een script"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Script (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML-bestand (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Fouten: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "Selecteer bestemming van de plot"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "Afbeeldingsbestand (*.png);;SVG-bestand (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Klaar"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Variabele toevoegen"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Voer een naam in voor de nieuwe variabele"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "Een multiplatform rekenmachine"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+"Niels Reedijk,Wilbert Berendsen,Bram Schoenmakers,Tom Albers,Rinse de Vries,"
+"Antoon Tolboom,Freek de Kruijf,Jaap Woldringh"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"n.reedijk@planet.nl,wbsoft@xs4all.nl,bramschoenmakers@kde.nl,tomalbers@kde."
+"nl,rinsedevries@kde.nl,atolboo@gmail.com,freekdekruijf@kde.nl,"
+"jjhwoldringh@kde.nl"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Een variabele toevoegen/bewerken"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Variabele verwijderen"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "De waarde '%1' bewerken"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "niet beschikbaar"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>FOUT</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Links:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Boven:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Breedte:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Hoogte:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Toepassen"
+
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+
+#~ msgid "C&onsole"
+#~ msgstr "C&onsole"
+
+#~ msgid "KAlgebra"
+#~ msgstr "KAlgebra"
+
+#~ msgid "&Console"
+#~ msgstr "&Console"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Ontwikkelde de mogelijkheid impliciete krommen te tekenen. Verbeteringen  "
+#~ "van het plotten van functies"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formule</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Fout: verkeerd type functie"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Klaar: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Fout: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Wissen"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG-bestand"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Transparantie"
+
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#~ msgid "Result: %1"
+#~ msgstr "Antwoord: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "Naar expressie"
+
+#~ msgid "To MathML"
+#~ msgstr "Naar MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Vereenvoudigen"
+
+#~ msgid "Examples"
+#~ msgstr "Voorbeelden"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Alleen reële resultaten kunnen worden weergegeven."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "De uitdrukking is niet goed"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Onbekend functietype"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "Onjuist type voor functies afhankelijk van %1"
+
+#~ msgctxt ""
+#~ "This function can't be represented as a curve. To draw implicit curve, "
+#~ "the function has to satisfy the implicit function theorem."
+#~ msgid "Implicit function undefined in the plane"
+#~ msgstr "Impliciete functie niet gedefinieerd in het vlak"
+
+#~ msgid "center"
+#~ msgstr "midden"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Functie"
+
+#~ msgid "%1 function added"
+#~ msgstr "functie %1 toegevoegd"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "'%1' verbergen"
+
+#~ msgid "Show '%1'"
+#~ msgstr "'%1' tonen"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Het geselecteerde op in te zoomen gebied is te klein"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Beschrijving"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parameters"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Voorbeeld"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : var"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=van..naar"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... parameters, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Optellen"
+
+#~ msgid "Multiplication"
+#~ msgstr "Vermenigvuldigen"
+
+#~ msgid "Division"
+#~ msgstr "Delen"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Aftrekken. Trekt alle waarden van de eerste waarde af."
+
+#~ msgid "Power"
+#~ msgstr "Macht"
+
+#~ msgid "Remainder"
+#~ msgstr "Rest"
+
+#~ msgid "Quotient"
+#~ msgstr "Deling"
+
+#~ msgid "The factor of"
+#~ msgstr "De factor van"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Faculteit. factorial(n)=n faculteit=1*2*3*...*n=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Functie voor het berekenen van de sinus van een gegeven hoek"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Functie voor het berekenen van de cosinus van een gegeven hoek"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Functie voor het berekenen van de tangens van een gegeven hoek"
+
+#~ msgid "Secant"
+#~ msgstr "Secans"
+
+#~ msgid "Cosecant"
+#~ msgstr "Cosecans"
+
+#~ msgid "Cotangent"
+#~ msgstr "Cotangens"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Hyperbolische sinus"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hyperbolische cosinus"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Hyperbolische tangens"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Hyperbolische secans"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Hyperbolische cosecans"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Hyperbolische cotangens"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arcsinus"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arccosinus"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arctangens"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Arccotangens"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Hyperbolische arctangens"
+
+#~ msgid "Summatory"
+#~ msgstr "Somfunctie"
+
+#~ msgid "Productory"
+#~ msgstr "Productfunctie"
+
+#~ msgid "For all"
+#~ msgstr "Voor alle"
+
+#~ msgid "Exists"
+#~ msgstr "Bestaat"
+
+#~ msgid "Differentiation"
+#~ msgstr "Differentiëren"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Hyperbolische arcsinus"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Hyperbolische arccosinus"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Arccosecans"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Hyperbolische arccosecans"
+
+#~ msgid "Arc secant"
+#~ msgstr "Arcsecans"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Hyperbolische arcsecans"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Exponent (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Logaritme met grondtal e"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Logaritme met grondtal 10"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Absolute waarde: abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Floor. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Ceil. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimum"
+
+#~ msgid "Maximum"
+#~ msgstr "Maximum"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Groter dan. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Kleiner dan. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Gelijk aan. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Benadering. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Niet gelijk aan. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Groter of gelijk aan. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Kleiner of gelijk aan. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Booleaanse and (EN)"
+
+#~ msgid "Boolean not"
+#~ msgstr "Booleaanse not (NIET)"
+
+#~ msgid "Boolean or"
+#~ msgstr "Booleaanse or (OF)"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Booleaanse xor (XOF)"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Booleaanse implicatie"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Grootste gemene deler (GGD)"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Kleinste gemene veelvoud (KGV)"
+
+#~ msgid "Root"
+#~ msgstr "Wortel"
+
+#~ msgid "Cardinal"
+#~ msgstr "Kardinaalgetal"
+
+#~ msgid "Scalar product"
+#~ msgstr "Scalair product (inproduct)"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr "Selecteer het par1de element van de par2-lijst of -vector"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Verbindt diverse elementen van hetzelfde type"
+
+#~ msgid "Applies a function to every element in a list"
+#~ msgstr "Past een functie toe op elk element in de lijst"
+
+#~ msgid "Removes all elements that don't fit a condition"
+#~ msgstr "Verwijdert elk element dat niet aan een voorwaarde voldoet"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : grenzen"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Waarde"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Geef een correcte bewerking op"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Onbekende naam: '%1'"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Kon niet vinden wat te doen na een voorwaarde."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Voor dit type zijn er geen grenzen"
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "De ondergrens is groter dan de bovengrens"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Onder- of bovengrens is niet goed."
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Gedefinieerde variabele is cyclisch (afhankleijk van zichzelf)"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Het antwoord is geen getal"
+
+#~ msgid "Unexpectedly arrived to the end of the input"
+#~ msgstr "Onverwacht einde aan de invoer"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Onbekend teken: %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "Voor <em>%1</em> zijn minstens 2 parameters nodig"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "Voor <em>%1</em> zijn %2 parameters nodig"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "Grens onbreekt voor '%1'"
+
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Onbekende begrenzing voor  '%1'"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em> grenzen ontbreken voor '%2'"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Foute declaratie"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Lege plaatshouder: %1"
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr ""
+#~ "Er kunnen alleen voorwaarden voorkomen binnen structuren in gedeelten."
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr "Twee parameters met dezelfde naam zoals '%1' niet toegestaan."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "De parameter <em>anders</em> moet de laatste zijn"
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "%1 is geen goede voorwaarde binnen gedeelte van een structuur"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Er kunnen alleen variabelen worden gedeclareerd"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Alleen begrensde variabelen zijn mogelijk"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Fout bij het inlezen: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Plaatshouder onbekend: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Kan de waarde %1 niet intern weergeven."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "Er kunnen geen van %1 afgeleide bewerkingen zijn."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "'%1' is geen bewerking."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Lege vectoren zijn niet toegestaan"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Niet ondersteund/onbekend: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "%1 verwacht en niet '%2'"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Rechterhaakje ontbreekt"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Aantal rechter haakjes klopt niet"
+
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "Onverwacht teken: %1"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Onbekend teken %1"
+
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Kon geen type vinden voor '%1'"
+
+#~ msgid "The domain should be either a vector or a list"
+#~ msgstr "Het domein moet een vector zijn of een lijst."
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Fout aantal parameters voor '%2'. Moet 1 parameter zijn."
+#~ msgstr[1] "Fout aantal parameters voor '%2'. Moet %1 parameters zijn."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Kan '%1' niet aanroepen"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Kan '%1' niet oplossen"
+
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Het type van de variabele '%1' klopt niet"
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "Kan het type van de structuur in gedeelten niet vaststellen"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Onverwacht type"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Kan '%1' niet naar '%2' omzetten"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Onbekend teken %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Kan de rest van 0 niet berekenen."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Kan 0 niet in factoren ontbinden."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Kan de KGV van 0 niet berekenen."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Kan een waarde %1 niet berekenen"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Ongeldige index voor een plaatshouder"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr ""
+#~ "Kan de bewerking niet uivoeren op vectoren met een verschillend aantal "
+#~ "componenten."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Kon de %1 van een vector niet berekenen"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Kon de %1 van een lijst niet berekenen"
+
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Kon de afgeleide van '%1' niet berekenen"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Kon '%1'en '%2' niet vereenvoudigen."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Domein is niet juist."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "De parametrische functie geeft geen vector terug"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Er is een twee-dimensionale vector nodig"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr ""
+#~ "De afzonderlijke functies van een parametrische functie moeten scalair "
+#~ "zijn"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "De %1 afgeleide is niet geïmplementeerd."
+
+#~ msgctxt "Error message"
+#~ msgid "Did not understand the real value: %1"
+#~ msgstr "Begrijp de reële waarde niet: %1"
+
+#~ msgid "Subtraction"
+#~ msgstr "Aftrekken"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "Fout: %2"
+
+#~ msgid "Select an element from a container"
+#~ msgstr "Selecteer een element in een plaatshouder"
+
+#~ msgid " <a href='%1'>Plot 3D</a>"
+#~ msgstr " <a href='%1'>Plot 3D</a>"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Fout: Er zijn waarden nodig om een grafiek te kunnen tekenen"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Wordt aangemaakt... even geduld alstublieft"
+
+#~ msgid "Wrong parameter count, had 1 parameter for '%2'"
+#~ msgid_plural "Wrong parameter count, had %1 parameters for '%2'"
+#~ msgstr[0] "Fout aantal parameters, 1 parameter voor '%2'"
+#~ msgstr[1] "Fout aantal parameters, %1 parameters voor '%2'"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "Log Op&slaan"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Fine"
+#~ msgid "File"
+#~ msgstr "Hoog"
+
+#~ msgid "We can only call functions"
+#~ msgstr "Alleen functies kunnen worden weergegeven."
+
+#~ msgid "Wrong parameter count"
+#~ msgstr "Fout aantal parameters"
+
+#~ msgctxt ""
+#~ "html representation of a true. please don't translate the true for "
+#~ "consistency"
+#~ msgid "<span class='const'>true</span>"
+#~ msgstr "<span class='const'>waar</span>"
+
+#~ msgctxt ""
+#~ "html representation of a false. please don't translate the false for "
+#~ "consistency"
+#~ msgid "<span class='const'>false</span>"
+#~ msgstr "<span class='const'>onwaar</span>"
+
+#~ msgctxt "html representation of a number"
+#~ msgid "<span class='num'>%1</span>"
+#~ msgstr "<span class='getal'>%1</span>"
+
+#~ msgid "Invalid parameter count."
+#~ msgstr "Fout aantal parameters."
+
+#~ msgid "Mode"
+#~ msgstr "Modus"
+
+#~ msgid "Save the expression"
+#~ msgstr "De expressie opslaan"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "De expressie berekenen"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#~ msgid "Cannot apply '%1' to '%2'"
+#~ msgstr "Kan '%1' niet op '%2' toepassen"
+
+#~ msgid "Cannot operate '%1'"
+#~ msgstr "Kan bewerking niet op '%1' toepassen"
+
+#~ msgid "Cannot check '%1' type"
+#~ msgstr "Kan type van '%1' niet controleren"
+
+#~ msgid "Wrong number of parameters when calling '%1'"
+#~ msgstr "Verkeerd aantal parameters bij het aanroepen van '%1'"
+
+#~ msgid "Cannot have downlimit ≥ uplimit"
+#~ msgstr "Ondergrens mag niet ≥ bovengrens zijn"
+
+#~ msgid "Trying to call an invalid function"
+#~ msgstr "Een ongeldige functie wordt aangeroepen"

@@ -1,0 +1,935 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>Handbok &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>2020-12-17</date>
+<releaseinfo
+>Program 20.12</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; är ett program som kan ersätta en grafisk miniräknare. Det har numeriska, logiska, symboliska och analytiska funktioner som gör det möjligt att beräkna matematiska uttryck med räknaren och rita upp resultatet grafiskt i två eller tre dimensioner. &kalgebra; är grundat på det matematiska taggspråket (&MathML;), men man behöver dock inte känna till &MathML; för att använda &kalgebra;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>graf</keyword>
+<keyword
+>matematik</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inledning</title>
+
+<para
+>&kalgebra; har en mängd funktioner som låter användare utföra alla sorters matematiska operationer och visa dem grafiskt. Tidigare var programmet grundat på &MathML;, men nu kan det användas av vem som helst med en viss kunskap om matematik för att lösa likväl enkla som avancerade problem. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Det innehåller funktioner som: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>En räknare för snabb och enkel utvärdering av matematiska funktioner. </para
+></listitem>
+<listitem
+><para
+>Skriptmöjligheter för avancerade beräkningsserier. </para
+></listitem>
+<listitem
+><para
+>Språkmöjligheter inklusive funktionsdefinitioner och automatisk komplettering av syntax. </para
+></listitem>
+<listitem
+><para
+>Analytiska funktioner inklusive symbolisk derivering, vektoranalys och listhantering. </para
+></listitem>
+<listitem
+><para
+>Uppritning av funktioner med rörlig markör för grafisk rotsökning och andra typer av analys. </para
+></listitem>
+<listitem
+><para
+>Tredimensionell uppritning för användbar återgivning av tredimensionella funktioner. </para
+></listitem>
+<listitem
+><para
+>Ett inbyggt lexikon med operatorer för snabb referens till de många tillgängliga funktionerna. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Här är en skärmbild av programmet &kalgebra; i arbete: </para>
+
+<screenshot>
+<screeninfo
+>Här är en skärmbild av huvudfönstret i &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Huvudfönstret i &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>När användaren påbörjar en session i &kalgebra;, visas ett enda fönster som består av fliken <guilabel
+>Räknare</guilabel
+>, en flik med ett <guilabel
+>tvådimensionellt diagram</guilabel
+>, en flik med ett <guilabel
+>tredimensionellt diagram</guilabel
+>, och fliken <guilabel
+>Lexikon</guilabel
+>. I varje flik finns ett inmatningsfält för att mata in funktioner eller beräkningar, och ett visningsfält som visar resultaten. </para>
+
+<para
+>Användaren kan när som helst hantera sessioner med alternativen i huvudmenyn <guilabel
+>Session</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Session</guimenu
+><guimenuitem
+>Ny</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Öppnar ett nytt fönster i &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Session</guimenu
+><guimenuitem
+>Fullskärmsläge</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Ändra fullskärmsläge fönstret i &kalgebra;. Fullskärmsläge kan också sättas på eller stängas av genom att använda knappen <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> längst upp till höger i &kalgebra;s fönster.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Session</guimenu
+><guimenuitem
+>Avsluta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Stänger av programmet.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Syntax</title>
+<para
+>&kalgebra; använder intuitiv algebraisk syntax för att mata in användarfunktioner, som liknar det som används av de flesta moderna grafiska miniräknare. Det här avsnittet listar de grundläggande inbyggda operatorer som är tillgängliga i &kalgebra;. Upphovsmannen till &kalgebra; modellerade syntaxen efter <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> och <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> för användare som eventuellt är bekanta med dessa program. </para>
+
+<para
+>För användare som är intresserade av hur &kalgebra; fungerar internt, konverteras uttryck som matas in av användare till &MathML; i bakgrunden. En rudimentär förståelse av möjligheterna i &MathML; räcker långt för att avslöja de interna möjligheterna i &kalgebra;. </para>
+
+<para
+>Här är en lista av operatorer vi har sett nu:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: Addition, subtraktion, multiplikation och division.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: Upphöjt till, där endera formen kan användas. Dessutom är det möjligt att använda Unicode-tecknet <literal
+>²</literal
+>. Upphöjt till är också ett sätt att skriva rötter. Det kan göras som <literal
+>a**(1/b)</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: lambda. Detta är sättet en eller flera oberoende variabler anges som ska kopplas till en funktion. Exempelvis används lambda operatorn för att ange att <literal
+>x</literal
+> och <literal
+>y</literal
+> kopplas när funktionen length används i uttrycket <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: Detta används när man behöver begränsa ett intervall (begränsad variabel+övre gräns+undre gräns). Det betyder att <literal
+>x</literal
+> går från <literal
+>a</literal
+> till <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: Används för att ange högre prioritet.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(parametrar) </literal
+>: Funktioner. När tolken hittar en funktion, kontrolleras om <literal
+>abc</literal
+> är en operator. Om den är det, behandlas den som en operator. Om den inte är det, behandlas den som en användarfunktion.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: Definition. Det används för att definiera ett variabelvärde. Man kan skriva uttryck som <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+> (vare sig <literal
+>y</literal
+> är definierad eller inte), eller <userinput
+>omkrets:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: Villkorsdefinition del för del. Vi kan definiera villkorsoperationer i &kalgebra; del för del. Med andra ord, är det ett sätt att ange villkoren om, annars om och annars. Om villkoret anges före '<literal
+>?</literal
+>' används uttrycket bara om det är sant. Om ett '<literal
+>?</literal
+>' utan något villkor hittas, används den sista instansen. Till exempel: <userinput
+>piecewise { eq (x,0) ? 0, eq(x,1) ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{ } </literal
+>: &MathML;-omgivning. Den kan användas för att definiera en omgivning. I huvudsak användbar för att arbeta del för del. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: Jämförelse av värden för respektive lika med, större än, större än eller lika med, mindre än, mindre än eller lika med</para
+></listitem>
+</itemizedlist>
+
+<para
+>Nu kan man ställa sig frågan varför användaren ska bry sig om &MathML;? Det är enkelt. Med det kan man utnyttja funktioner som <function
+>cos()</function
+>, <function
+>sin()</function
+> och övriga trigonometriska funktioner, <function
+>sum()</function
+> eller <function
+>product()</function
+>. Det spelar ingen roll vilken sort den är. Man kan använda <function
+>plus()</function
+>, <function
+>times()</function
+> och allt som har en operator. Booleska funktioner är också implementerade, så man kan exempelvis skriva något som liknar <function
+>or(1,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>Använda räknaren</title>
+<para
+>&kalgebra;s räknare är användbar som en miniräknare med superstyrka. Användaren kan skriva in uttryck att utvärdera med inställningarna <guimenu
+>Beräkna</guimenu
+> eller <guimenu
+>Utvärdera</guimenu
+>, beroende på menyvalet <guimenu
+>Räknare</guimenu
+>. </para>
+<para
+>I utvärderingsläge förenklar &kalgebra; uttrycket även när det ser en odefinierad variabel. I beräkningsläge beräknar &kalgebra; allting, och om en odefinierad variabel påträffas, visas ett fel. </para>
+<para
+>Förutom att visa ekvationerna som användaren matat in och resultaten i räknaren, visas alla variabler som är deklarerade i en bestående ram till höger. Genom att dubbelklicka på en variabel visas en dialogruta som låter dig ändra värdena (bara ett sätt att gå runt loggen). </para>
+
+<para
+>Variabeln <quote
+><varname
+>ans</varname
+></quote
+> är speciell. Varje gång ett uttryck skrivs in kommer variabeln <quote
+><varname
+>ans</varname
+></quote
+> värde att ändras till det senaste resultatet. </para>
+
+<para
+>Det följande är exempelfunktioner som kan matas in i inmatningsfältet på räknarfönstret:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Det följande visar en skärmbild av räknarfönstret efter att de ovanstående exempeluttrycken har matats in: </para>
+<screenshot>
+<screeninfo
+>Skärmbild av &kalgebra;s räknarfönster med exempel på uttryck</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Räknarfönstret i &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>En användare kan styra hur en serie beräkningar utförs med alternativen i menyn <guimenu
+>Räknare</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Räknare</guimenu
+><guimenuitem
+>Ladda skript...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Kör instruktioner i en fil i tur och ordning. Användbart om man vill definiera några bibliotek eller återuppta något tidigare arbete.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Räknare</guimenu
+><guisubmenu
+>Senaste skript</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Visar en undermeny som gör att du kan välja senast körda skript.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Räknare</guimenu
+><guimenuitem
+>Spara skript...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Sparar instruktionerna som har skrivits in sedan sessionen påbörjades, för att kunna återanvända dem. Skapar textfiler, som bör vara enkla att ändra med vilken texteditor som helst, såsom &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Räknare</guimenu
+><guimenuitem
+>Exportera logg...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Sparar loggen med alla resultat i en &HTML;-fil, för att kunna skriva ut dem eller publicera dem.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Räknare</guimenu
+><guimenuitem
+>Infoga ans...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Infoga variabeln <quote
+><varname
+>ans</varname
+></quote
+> som gör det enklare att återanvända äldre värden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Räknare</guimenu
+><guimenuitem
+>Beräkna</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>En alternativknapp för att ställa in <guilabel
+>Körningsläge</guilabel
+> till beräkning.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Räknare</guimenu
+><guimenuitem
+>Utvärdera</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>En alternativknapp för att ställa in <guilabel
+>Körningsläge</guilabel
+> till utvärdering.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>Tvådimensionella diagram</title>
+<para
+>För att lägga till en ny tvådimensionell graf i &kalgebra;, välj den tvådimensionella fliken och klicka på fliken <guilabel
+>Lägg till</guilabel
+> för att lägga till en ny funktion. Då ges fokus till en textruta för inmatning där funktionen kan skrivas in.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Syntax</title>
+<para
+>Om en typisk <function
+>f(x)</function
+>-funktion ska användas, är det inte nödvändigt att ange det, men om en <function
+>f(y)</function
+>-funktion eller polär funktion önskas, måste <literal
+>y-&gt;</literal
+> och <literal
+>q-&gt;</literal
+> anges som bundna variabler.</para>
+
+<para
+>Exempel:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>Om du har skrivit in funktionen, klicka på knappen <guibutton
+>Ok</guibutton
+> för att visa grafen i huvudfönstret.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Funktioner</title>
+<para
+>Flera grafer kan visas i samma diagram. Använd bara knappen <guilabel
+>Lägg till</guilabel
+> i listläge. Varje graf kan få en egen färg.</para>
+
+<para
+>Vyn kan zoomas och flyttas med musen. Genom att använda mushjulet kan man zooma in eller ut. Man kan också markera ett område med musens vänsterknapp, så zoomas området in. Flytta vyn med tangentbordets piltangenter.</para>
+
+<note>
+ <para
+>Vyn för tvådimensionellt diagram kan definieras explicit genom att använda fliken <guilabel
+>Vy</guilabel
+> under någon av flikarna <guilabel
+>Tredimensionellt diagram</guilabel
+>.</para>
+</note>
+ 
+<para
+>Under fliken <guilabel
+>Lista</guilabel
+> längst ner till höger, kan en flik benämnd <guilabel
+>Redigering</guilabel
+> öppnas med ett dubbelklick för att redigera eller ta bort en funktion, samt  visa eller dölja den genom att markera eller avmarkera kryssrutan intill funktionen.</para>
+<para
+>I menyn <guimenu
+>Tvådimensionellt diagram</guimenu
+> hittar du följande alternativ:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Rutnät</guimenuitem
+>: Visa eller dölj rutnätet</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Behåll proportion</guimenuitem
+>: Behåll proportion vid zoomning</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Spara</guimenuitem
+>: Spara (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>)  grafen som en bildfil</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Zooma in</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) och <guimenuitem
+>Zooma ut</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Verklig storlek</guimenuitem
+>: Återställ vyn till ursprunglig zoomning</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Upplösning</guilabel
+>: Följs av en lista med alternativknappar för att välja en upplösning för diagrammen.</para
+></listitem>
+</itemizedlist>
+
+<para
+>Nedan är en skärmbild av en användare vars markör är vid roten längst till höger för funktionen <function
+>sin(1/x)</function
+>. Användaren som ritade upp den använde mycket hög upplösning för att skapa grafen (eftersom den oscillerar med allt högre frekvens nära origo). Det finns också en rörlig markörfunktion som visar <literal
+>x</literal
+>- och <literal
+>y</literal
+>-värden längst ner till vänster på skärmen när markören hålls över en punkt. En rörlig <quote
+>tangentlinje</quote
+> ritas vid funktionen på platsen för den rörliga markören. </para>
+
+<screenshot>
+<screeninfo
+>Här är en skärmbild av fönstret för tvådimensionella diagram i &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Fönstret för tvådimensionella diagram i &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>Tredimensionella diagram</title>
+
+<para
+>För att rita en tredimensionell graf i &kalgebra;, välj fliken <guilabel
+>Tredimensionellt diagram</guilabel
+>. Längst ner finns ett inmatningsfält där funktionen kan skrivas in. <literal
+>Z</literal
+> kan ännu inte definieras. För närvarande stöder &kalgebra; bara tredimensionella diagram som bara beror explicit på <literal
+>x</literal
+> och <literal
+>y</literal
+>, såsom <userinput
+>(x,y)->x*y</userinput
+>, där <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>Exempel:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Vyn kan zoomas och flyttas med musen. Genom att använda mushjulet kan man zooma in eller ut. Håll nere vänster musknapp och flytta musen för att rotera diagrammet.</para>
+
+<para
+>Vänster och höger piltangenter roterar diagrammet omkring <literal
+>Z</literal
+>-axeln, medan uppåt- och neråttangenterna roterar omkring vyns horisontella axel. Tryck på <keycap
+>W</keycap
+> för att zooma in i diagrammet och <keycap
+>S</keycap
+> för att zooma ut.</para>
+
+<para
+>I menyn <guimenu
+>Tredimensionellt diagram</guimenu
+> hittar du följande alternativ:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Spara</guimenuitem
+>: Spara (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>)  grafen som en bildfil eller ett dokument som stöds</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Återställ vy</guimenuitem
+>: Återställ vyn till ursprunglig zoomning i menyn <guimenu
+>Tredimensionellt diagram</guimenu
+></para
+></listitem>
+<listitem
+><para
+>Du kan rita diagrammet med <guimenuitem
+>Punkter</guimenuitem
+>, <guimenuitem
+>Linjer</guimenuitem
+> eller <guimenuitem
+>Ytor</guimenuitem
+> i menyn <guimenu
+>Tredimensionellt diagram</guimenu
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Nedan finns en skärmbild av den så kallade <quote
+>sombrero-funktionen</quote
+>. Just den här grafen visas med linjestil i det tredimensionella diagrammet. </para>
+
+<screenshot>
+<screeninfo
+>Här är en skärmbild av fönstret för tredimensionella diagram i &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Fönstret för tredimensionella diagram i &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Lexikon</title>
+
+<para
+>Lexikonet är en samling av alla inbyggda funktioner i &kalgebra;. Det kan vara användbart för att hitta definitionen av en operation och dess inparametrar. Det är en användbar plats för att få reda på de många möjligheterna i &kalgebra;. </para>
+
+ <para
+>Nedan visas en skärmbild av uppslagning av funktionen cosinus i &kalgebra;s lexikon. </para>
+
+<screenshot>
+<screeninfo
+>Här är en skärmbild av lexikonfönstret i &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Lexikonfönstret i &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Tack till och licens</title>
+
+<itemizedlist>
+<listitem
+><para
+>Program copyright 2005-2009 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Dokumentation copyright 2007 &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

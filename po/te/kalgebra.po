@@ -1,0 +1,478 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the kalgebra package.
+#
+# GVS.Giri <gvs.giri@swecha.net>, 2013.
+# Bhuvan Krishna <bhuvan@swecha.org>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2013-11-11 22:08+0630\n"
+"Last-Translator: \n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"Language: te\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Lokalize 1.4\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "ఇచ్ఛాపూర్వకాలు: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "ఎగుబడి కు \"%1\" అతికించు"
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "ఎగుబడి కు \"%1\" అతికించు"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>దోషం: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "దిగుమతి: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+"<ul class='error'>దోషం: %1 భారం చెయ్యడం సాధ్యం కాలేదు.l   <b>%1</b><li>%2</li></ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "సమాచారం"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "ఒక కార్యం జోడించు / సవరించు"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "ఉపదర్శనం"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr " నుండి:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "వరకు:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "ఇచ్ఛాపూర్వకాలు"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "సరే"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "తీసివేయు"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "మీరు పేర్కొన్న ఇచ్ఛాపూర్వకాలు సరిగ్గా లేవు "
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "క్రిందిహద్దు పరిమితి ఎగువహద్దు  కంటే ఎక్కువ ఉండకూడదు"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "ఇతివృత్తం 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "ఇతివృత్తం 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "సమకూర్పు"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "చరరాశిలు"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "లెక్కించేందుకు"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "లెక్కించేందుకు"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&లిపి భారం..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "ఇంతుకుముందు లిపి"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&లిపిన్ని దాచు..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&ఎగుమతి నమోదు..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "అమలు విధం"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "లెక్కించేందుకు"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "అంచనావెయ్యి"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "కార్యంలు"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "జాబితా"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&జోడించు"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "దర్శనరేవు"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D రేఖాపటం"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D రేఖాపటం"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&గ్రిడ్"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&దృశ్య నిష్పత్తి ఉంచండి"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "పర్మినం"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "పేద"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "సాధారణ"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "బాగుంది "
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "చాలా బాగుంది "
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D రేఖాపటం"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &రేఖాపటం"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&దర్శనం పునః ప్రారంభం"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "బిందువులు"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "లైనులు"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "గట్టి"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "కార్యంలు"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&నిఘంటువు"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "చూచు కొరకు:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&సవరించడం"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "ఒక లిపి ఎంచుకోండి"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "లిపి (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML దస్త్రం (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ","
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "దోషలు: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Image దస్త్రం\n"
+"*.svg|SVG దస్త్రం"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "సిద్ధం"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "చరరాశిని  జోడించు"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "కొత్త చరరాశి కొరకు ఒక పేరును నమోదు చేయండి"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "ఒక గణనయంత్రం"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix  పాల్ గొంజాలెజ్"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix  పాల్ గొంజాలెజ్"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "GVS Giri, Bhuvan Krishna "
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "gvs.giri@swecha.net, bhuvan@swecha.net"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "ఒక కార్యం జోడించు / సవరించు"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "కార్యం తీసివేయు "
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "సవరించు '%1'  విలువ"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "లభ్యత లేదు"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>తప్పు</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "ఎడమ:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "ఎగువన:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "వెడెల్పు:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "ఎత్తు"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "అనుసంధించు"
+
+#, fuzzy
+#~| msgid ""
+#~| "*.png|PNG File\n"
+#~| "*.pdf|PDF Document"
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "*.png|PNG దస్త్రం\n"
+#~ "*.pdf|PDF పత్రం"
+
+#~ msgid "C&onsole"
+#~ msgstr "C&కన్సోల్"
+
+#~ msgid "&Console"
+#~ msgstr "&కన్సోల్"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "పెర్సీ కామిలో త్రీవేనొ ఔకహూసి "
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr "అవ్యక్త వక్రతలు గీయడం కోసం విశిష్ఠ అభివృద్ధి. ఇతివృత్తం కోసం అభివృద్ధివిధులు."

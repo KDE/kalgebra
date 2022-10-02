@@ -1,0 +1,1086 @@
+# translation of kalgebra.po to Latvian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Maris Nartiss <maris.kde@gmail.com>, 2007, 2008.
+# Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2008.
+# Viesturs Zariņš <viesturs.zarins@algorego.com>, 2008.
+# Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
+# Einars Sprugis <einars8@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2011-07-06 01:24+0300\n"
+"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: consolehtml.cpp:173
+#, fuzzy, kde-format
+#| msgid " <a href='%1'>%2</a>"
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Opcijas: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Ievietot \"%1\" ievadē"
+
+#: consolemodel.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paste \"%1\" to input"
+msgid "Paste to Input"
+msgstr "Ievietot \"%1\" ievadē"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Kļūda: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Importēts: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Kļūda: neizdevās ielādēt %1. <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Informācija"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Pielikt/labot funkciju"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Priekšskatījums"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "No:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Līdz:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Opcijas"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "Labi"
+
+#: functionedit.cpp:111
+#, fuzzy, kde-format
+#| msgid "Remove '%1'"
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Noņemt '%1'"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Jūsu norādītās opcijas nav pareizas"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Apakšējā robeža nevar būt lielāka nekā augšējā robeža"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "Grafiks 2D"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "Grafiks 3D"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Sesija"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Mainīgie"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "&Calculator"
+msgstr "Aprēķināt"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "Calculate"
+msgid "C&alculator"
+msgstr "Aprēķināt"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "Ie&lādēt skriptu..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Nesenie skripti"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Saglabāt skriptu..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Eksportēt žurnālu..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Izpildes režīms"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Aprēķināt"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Novērtēt"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Funkcijas"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Saraksts"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Pievienot"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Skats"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D grafiks"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D grafiks"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Rūtiņas"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "Saglabāt &attiecību"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Izšķirtspēja"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Zema"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normāla"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Augsta"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Ļoti augsta"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D grafiks"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D &grafiks"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Atiestatīt skatu"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Punktu"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Līniju"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Aizpildīts"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Darbības"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "Vār&dnīca"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Meklēt:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "R&ediģēšana"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Izvēlieties skriptu"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skripts (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML fails (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Kļūda: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Attēla fails\n"
+"*.svg|SVG fails"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Gatavs"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Pievienot mainīgo"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Ievadiet jaunā mainīgā nosaukumu"
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Kalkulators"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleikss Pols Gozaless (Aleix Pol Gonzalez)"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Pievienot/Labot mainīgo"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Mainīgie"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Labot '%1' vērtību"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "nav pieejams"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>APLAMI</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "No kreisās:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "No augšas:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Platums:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Augstums:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Pielietot"
+
+#~ msgid "C&onsole"
+#~ msgstr "K&onsole"
+
+#~ msgid "&Console"
+#~ msgstr "&Konsole"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Formula</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Kļūda: nepareizs funkcijas tips"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Pabeigts: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Kļūda: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Attīrīt"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG Fails"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Caurspīdīgums"
+
+#~ msgid "Type"
+#~ msgstr "Veids"
+
+#~ msgid "Result: %1"
+#~ msgstr "Rezultāts: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "Uz izteiksmi"
+
+#~ msgid "To MathML"
+#~ msgstr "Uz MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Vienkāršot"
+
+#~ msgid "Examples"
+#~ msgstr "Piemēri"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Mēs mākam zīmēt tikai reālus skaitļus."
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Funkcijas tips nav atpazīts"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "Funkcijas tips nav pareizs funkcijām, kas atkarīgas no %1"
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Izteiksme nav pareiza"
+
+#~ msgid "center"
+#~ msgstr "centrs"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Nosaukums"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Funkcija"
+
+#~ msgid "%1 function added"
+#~ msgstr "%1 funkcija pielikta"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Slēpt '%1'"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Rādīt '%1'"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Izvēlētais skats ir pārāk mazs"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Apraksts"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parametri"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Piemērs"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : var"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=no..līdz"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... parametri, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Saskaitīšana"
+
+#~ msgid "Multiplication"
+#~ msgstr "Reizināšana"
+
+#~ msgid "Division"
+#~ msgstr "Dalīšana"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Atņemšana. Noņems visas vērtības no pirmās."
+
+#~ msgid "Power"
+#~ msgstr "Kāpināšana"
+
+#~ msgid "Remainder"
+#~ msgstr "Atlikums"
+
+#~ msgid "Quotient"
+#~ msgstr "Kvocients"
+
+#~ msgid "The factor of"
+#~ msgstr "Dalītājs "
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Faktoriāls. faktoriāls(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Funkcija sinusa aprēķināšanai dotajam leņķim"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Funkcija kosinusa aprēķināšanai dotajam leņķim"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Funkcija tangensa aprēķināšanai dotajam leņķim"
+
+#~ msgid "Secant"
+#~ msgstr "Sekants"
+
+#~ msgid "Cosecant"
+#~ msgstr "Kosekants"
+
+#~ msgid "Cotangent"
+#~ msgstr "Kotangenss"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Hiperboliskais sinuss"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hiperboliskais kosinuss"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Hiperboliskais tangenss"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Hiperboliskais sekants"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Hiperboliskais kosekants"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Hiperboliskais kotangenss"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arksinuss"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arkkosīnuss"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arktangenss"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Arkkotangenss"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Hiperboliskais arktangenss"
+
+#~ msgid "Summatory"
+#~ msgstr "Summa"
+
+#~ msgid "Productory"
+#~ msgstr "Reizinājums"
+
+#~ msgid "For all"
+#~ msgstr "Visiem"
+
+#~ msgid "Exists"
+#~ msgstr "Pastāv"
+
+#~ msgid "Differentiation"
+#~ msgstr "Diferencēšana"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Hiperboliskais arksinuss"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Hiperboliskais arkkosinuss"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Arkkosekants"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Hiperboliskais arkkosekants"
+
+#~ msgid "Arc secant"
+#~ msgstr "Arksekants"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Hiperboliskais arksekants"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Eksponente (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Naturāllogaritms"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Decimāllogaritms"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Absolūtā vērtība. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Grīdas funkcija. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Griestu funkcija. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimums"
+
+#~ msgid "Maximum"
+#~ msgstr "Maksimums"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Lielāks par. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Mazāks par. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Vienāds. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Aproksimācija. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Nav vienāds. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Lielāks vai vienāds. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Mazāks vai vienāds. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Bula UN"
+
+#~ msgid "Boolean not"
+#~ msgstr "Bula NE"
+
+#~ msgid "Boolean or"
+#~ msgstr "Bula VAI"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Bula XOR"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Bula implikācija"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Lielākais kopīgais dalītājs"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Mazākais kopīgais dalāmais"
+
+#~ msgid "Root"
+#~ msgstr "Sakne"
+
+#~ msgid "Cardinal"
+#~ msgstr "Kardinālis"
+
+#~ msgid "Scalar product"
+#~ msgstr "Skalārais reizinājums"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr "Izvēlēties par1-to elementu no par2-ā saraksta vai vektora"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Savieno vairākus viena un tā paša tipa punktus"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Vērtība"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Jānorāda derīga darbība"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Nezināms identifikators: '%1'"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Neizdevās atrast pareizu izvēli nosacījuma izteikumam."
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Apakšējā robeža ir lielāka nekā augšējā robeža"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Nekorekta augšējā vai apakšējā robeža."
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Definēts mainīgs cikls"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Rezultāts nav skaitlis"
+
+#~ msgid "Unexpectedly arrived to the end of the input"
+#~ msgstr "Negaidīti nonāca līdz ievades beigām"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Nezināms elements %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> nepieciešami vismaz 2 parametri"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> nepieciešami %2 parametri"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Nepareiza deklarācija"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Tukšs konteiners: %1"
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr "Nevar būt divi parametri ar vienādu nosaukumu kā '%1'."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "Parametram <em>savādāk</em> būtu jābūt pēdējam"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Mēs mākam deklarēt tikai mainīgos"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Mums var būt tikai piesaistītie mainīgie"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Kļūda analizējot: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Nezināms konteiners: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Neizdevās kodificēt %1 vērtību."
+
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "%1 operatoram nevar būt bērna konteksti."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Elements '%1' nav operators."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Nevēlos tukšus vektorus"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Nav atbalstīts/nezināms: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Gaidīts '%1' nevis '%2'"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Trūkst labās iekavas"
+
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Lieka labā iekava"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Negaidīts elements %1"
+
+#~ msgid "The domain should be either a vector or a list."
+#~ msgstr "Definīcijas apgabalam būtu jābūt vai nu vektoram vai sarakstam."
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Nederīgs parametru skaits priekš '%2'. Jābūt %1 parametram."
+#~ msgstr[1] "Nederīgs parametru skaits priekš '%2'. Jābūt %1 parametriem."
+#~ msgstr[2] "Nederīgs parametru skaits priekš '%2'. Jābūt %1 parametriem."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Neizdevās izsaukt '%1'"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Neizdevās aprēķināt '%1'"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Negaidīts tips"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Nevar pārveidot '%1' uz '%2'"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Nezināms elements %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Nevar aprēķināt atlikumu nullei (0)."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Nevar aprēķināt reizinātāju nullei (0)."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Nevar aprēķināt nulles (0) mazāko kopīgo dalāmo."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Neizdevās aprēķināt vērtību %1"
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Neizdevās reducēt '%1' un '%2'."
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Nederīgs konteinera indekss"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Nevar darboties uz dažāda izmēra vektoriem."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Nevar aprēķināt vektora %1"
+
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Nevar aprēķināt saraksta %1"
+
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Neizdevās aprēķināt '%1' atvasinājumu"
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Parametriskā funkcija neatgriež vektoru"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Vajadzīgs divdimensionālais vektors"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Parametriskās funkcijas punktiem vajadzētu būt skalāriem"
+
+#~ msgid "The %1 derivative has not been implemented."
+#~ msgstr "%1 atvasinājums nav realizēts."
+
+#~ msgid "Incorrect domain."
+#~ msgstr "Nepareizs domēns."
+
+#~ msgctxt "Error message"
+#~ msgid "Did not understand the real value: %1"
+#~ msgstr "Nesapratu reālo vērtību: %1"
+
+#~ msgid "Subtraction"
+#~ msgstr "Atņemšana"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "Kļūda: %2"
+
+#~ msgid "Error: We need values to draw a graph"
+#~ msgstr "Kļūda: nepieciešamas vērtības grafika zīmēšanai"
+
+#~ msgid "Select an element from a container"
+#~ msgstr "Izvēlieties elementu no konteinera"
+
+#~ msgid "Cannot have downlimit ≥ uplimit"
+#~ msgstr "Nedrīkst apakšējā robeža ≥ augšējā robeža"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Ģenerē... Lūdzu gaidiet"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Saglabāt žurnālu"
+
+#~ msgid "Mode"
+#~ msgstr "Režīms"
+
+#~ msgid "Save the expression"
+#~ msgstr "Saglabāt izteiksmi"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "Aprēķināt izteiksmi"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#, fuzzy
+#~| msgid "We can only draw Real results."
+#~ msgid "We can only call functions"
+#~ msgstr "Mēs mākam zīmēt tikai reālus skaitļus."
+
+#~ msgctxt ""
+#~ "html representation of a true. please don't translate the true for "
+#~ "consistency"
+#~ msgid "<span class='const'>true</span>"
+#~ msgstr "<span class='const'>patiess</span>"
+
+#~ msgctxt ""
+#~ "html representation of a false. please don't translate the false for "
+#~ "consistency"
+#~ msgid "<span class='const'>false</span>"
+#~ msgstr "<span class='const'>aplams</span>"
+
+#~ msgctxt "html representation of a number"
+#~ msgid "<span class='num'>%1</span>"
+#~ msgstr "<span class='num'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown bounded variable: %1"
+#~ msgstr "Nezināms piesaistītais mainīgais: %1"
+
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>%1</b>"
+
+#~ msgid "Need a var name and a value"
+#~ msgstr "Nepieciešams mainīgā nosaukums un vērtība"
+
+#~ msgid "The function <em>%1</em> does not exist"
+#~ msgstr "Funkcija <em>%1</em> nepastāv"
+
+#~ msgid "The variable <em>%1</em> does not exist"
+#~ msgstr "Mainīgais <em>%1</em> nepastāv"
+
+#, fuzzy
+#~| msgid "We can only select a containers value with its integer index"
+#~ msgid "We can only select a container's value with its integer index"
+#~ msgstr ""
+#~ "Jūs varat izvēlēties vērtību no konteinera ar vesela skaitļa indeksu."
+
+#~ msgid "From parser:"
+#~ msgstr "No parsētāja:"
+
+#~ msgctxt ""
+#~ "%1 the operation name, %2 and %3 is the opearation we wanted to calculate"
+#~ msgid "Cannot calculate the %1(%2, %3)"
+#~ msgstr "Nevar aprēķināt %1(%2, %3)"
+
+#~ msgctxt "Error message"
+#~ msgid "Trying to codify an unknown value: %1"
+#~ msgstr "Mēģina mainīt nezināmu vērtību: %1"
+
+#, fuzzy
+#~| msgid "Hyperbolic arc tangent"
+#~ msgid "Hyperbolic arc cotangent"
+#~ msgstr "Hiperboliskais arktangenss"
+
+#, fuzzy
+#~| msgctxt "@info:status"
+#~| msgid "Ready"
+#~ msgid "Real"
+#~ msgstr "Gatavs"

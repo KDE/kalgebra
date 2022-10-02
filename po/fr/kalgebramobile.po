@@ -1,0 +1,269 @@
+# Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
+# Xavier Besnard <xavier.besnard@neuf.fr>, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebramobile\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2022-06-12 20:57+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 22.04.2\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: content/ui/About.qml:27
+#, kde-format
+msgid "KAlgebra Mobile"
+msgstr "KAlgebra Mobile"
+
+#: content/ui/About.qml:30
+#, kde-format
+msgid "A simple scientific calculator"
+msgstr "Une calculatrice scientifique simple"
+
+#: content/ui/Console.qml:31 content/ui/main.qml:65
+#, kde-format
+msgid "Calculator"
+msgstr "Calculateur"
+
+#: content/ui/Console.qml:49 content/ui/main.qml:91
+#: content/ui/VariablesView.qml:27
+#, kde-format
+msgid "Variables"
+msgstr "Variables"
+
+#: content/ui/Console.qml:67
+#, kde-format
+msgid "Load Script"
+msgstr "Charger un script"
+
+#: content/ui/Console.qml:71 content/ui/Console.qml:81
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Script (*.kal)"
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "Save Script"
+msgstr "Enregistrer le script"
+
+#: content/ui/Console.qml:88
+#, kde-format
+msgid "Export Log"
+msgstr "Exporter un journal"
+
+#: content/ui/Console.qml:92
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Evaluate"
+msgstr "Évaluer"
+
+#: content/ui/Console.qml:99
+#, kde-format
+msgid "Calculate"
+msgstr "Calculer"
+
+#: content/ui/Console.qml:105
+#, kde-format
+msgid "Clear Log"
+msgstr "Effacer le journal"
+
+#: content/ui/Console.qml:127
+#, kde-format
+msgid "2D Plot"
+msgstr "Tracé 2D"
+
+#: content/ui/Console.qml:135
+#, kde-format
+msgid "3D Plot"
+msgstr "Tracé 3D"
+
+#: content/ui/Console.qml:143
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "Copier « %1 »"
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "Tout effacer"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "Expressions à calculer..."
+
+#: content/ui/Dictionary.qml:43
+#, kde-format
+msgid "Name:"
+msgstr "Nom :"
+
+#: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
+#: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
+#, kde-format
+msgid "%1:"
+msgstr "%1 :"
+
+#: content/ui/main.qml:55
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/main.qml:72
+#, kde-format
+msgid "Graph 2D"
+msgstr "Graphe 2D"
+
+#: content/ui/main.qml:79
+#, kde-format
+msgid "Graph 3D"
+msgstr "Graphe 3D"
+
+#: content/ui/main.qml:85
+#, kde-format
+msgid "Value Tables"
+msgstr "Tables de valeurs"
+
+#: content/ui/main.qml:97
+#, kde-format
+msgid "Dictionary"
+msgstr "Dictionnaire"
+
+#: content/ui/main.qml:103
+#, kde-format
+msgid "About KAlgebra"
+msgstr "À propos de KAlgebra"
+
+#: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
+#, kde-format
+msgid "Save"
+msgstr "Enregistrer"
+
+#: content/ui/Plot2D.qml:59
+#, kde-format
+msgid "View Grid"
+msgstr "Afficher la grille"
+
+#: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
+#, kde-format
+msgid "Reset Viewport"
+msgstr "Réinitialiser l'affichage"
+
+#: content/ui/TableResultPage.qml:11
+#, kde-format
+msgid "Results"
+msgstr "Résultats"
+
+#: content/ui/Tables.qml:27
+#, kde-format
+msgid "Value tables"
+msgstr "Tables de valeurs"
+
+#: content/ui/Tables.qml:45
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "Erreur : le pas doit être différent de 0"
+
+#: content/ui/Tables.qml:47
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "Erreur : le départ et l'arrivée sont identiques"
+
+#: content/ui/Tables.qml:49
+#, kde-format
+msgid "Errors: %1"
+msgstr "Erreur : %1"
+
+#: content/ui/Tables.qml:84
+#, kde-format
+msgid "Input"
+msgstr "Entrée"
+
+# unreviewed-context
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "From:"
+msgstr "De :"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "To:"
+msgstr "À :"
+
+#: content/ui/Tables.qml:107
+#, kde-format
+msgid "Step"
+msgstr "Pas"
+
+#: content/ui/Tables.qml:113
+#, kde-format
+msgid "Run"
+msgstr "Exécuter"
+
+#: main.cpp:52
+#, kde-format
+msgid "A portable calculator"
+msgstr "Une calculatrice portable"
+
+#: main.cpp:53
+#, kde-format
+msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+
+#: main.cpp:54
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Geoffray Levasseur, Matthieu Robin, Simon Depiets"
+
+#: main.cpp:55
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"geoffray.levasseurbrandin@numericable.fr, kde@macolu.org, sdepiets@gmail.com"
+
+#~ msgid "Results:"
+#~ msgstr "Résultats :"
+
+#~ msgid ""
+#~ "KAlgebra is brought to you by the lovely community of <a href='http://kde."
+#~ "org'>KDE</a> and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free "
+#~ "Software environment."
+#~ msgstr ""
+#~ "KAlgebra est développé par la communauté chaleureuse de <a href='http://"
+#~ "kde.org'>KDE</a> et <a href='http://edu.kde.org/'>KDE Edu</a> qui "
+#~ "soutient le logiciel libre."
+
+#~ msgid ""
+#~ "In case you want to learn more about KAlgebra, you can find more "
+#~ "information <a href='https://edu.kde.org/applications/mathematics/"
+#~ "kalgebra/'>in the official site</a> and in the <a href='https://userbase."
+#~ "kde.org/KAlgebra'>users wiki</a>.<br/>If you have any problem with your "
+#~ "software, please report it to <a href='https://bugs.kde.org'>our bug "
+#~ "tracker</a>."
+#~ msgstr ""
+#~ "Si vous souhaitez en apprendre davantage au sujet de KAlgebra, vous "
+#~ "pourrez trouver davantage d'informations <a href='https://edu.kde.org/"
+#~ "applications/mathematics/kalgebra/'>sur notre site officiel</a> et sur le "
+#~ "<a href='https://userbase.kde.org/KAlgebra'>wiki des utilisateurs</a>.<br/"
+#~ "> Si vous rencontrez le moindre problème avec votre logiciel, veuillez le "
+#~ "signaler sur <a href='https://bugs.kde.org'>notre système de suivi de "
+#~ "bogues</a>."

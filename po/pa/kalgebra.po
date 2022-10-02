@@ -1,0 +1,640 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2009, 2011, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2021-01-23 15:39-0800\n"
+"Last-Translator: A S Alam <aalam.yellow@gmail.com>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.08.1\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "ਚੋਣਾਂ: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "ਇੰਪੁੱਟ ਲਈ \"%1\" ਚੇਪੋ"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "ਇਨਪੁੱਟ ਲਈ ਚੇਪੋ"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>ਗਲਤੀ: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "ਇੰਪੋਰਟ ਕੀਤੇ: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>ਗਲਤੀ: %1 ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। <br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "ਜਾਣਕਾਰੀ"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "ਫੰਕਸ਼ਨ ਸ਼ਾਮਲ ਕਰੋ/ਸੋਧੋ"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "ਝਲਕ"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "ਤੋਂ:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "ਵੱਲ:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "ਚੋਣਾਂ"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "ਠੀਕ ਹੈ"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "ਹਟਾਓ"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "2D ਵਾਹੋ"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "3D ਵਾਹੋ"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "ਸ਼ੈਸ਼ਨ"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "ਵੇਰੀਬਲ"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "ਕੈਲਕੂਲੇਟਰ(&C)"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "ਕੈਲਕੂਲੇਟਰ(&c)"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "ਸਕ੍ਰਿਪਟ ਲੋਡ ਕਰੋ(&L)..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "ਤਾਜ਼ਾ ਸਕ੍ਰਿਪਟਾਂ"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "ਸਕ੍ਰਿਪਟ ਸੰਭਾਲੋ(&S)..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "ਚਲਾਉਣ ਢੰਗ"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "ਗਣਨਾ"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "ਮੁੱਲਾਂਕਣ"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "ਫੰਕਸ਼ਨ"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "ਲਿਸਟ"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "ਸ਼ਾਮਲ(&A)"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "ਵਿਊਪੋਰਟ"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D ਗਰਾਫ਼"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D ਗਰਾਫ਼"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "ਗਰਿੱਡ(&G)"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "ਅਕਾਰ ਅਨੁਪਾਤ ਰੱਖੋ(&K)"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "ਰੈਜ਼ੋਲੁਸ਼ਨ"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "ਘੱਟ"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "ਸਧਾਰਨ"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "ਵਧੀਆ"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "ਬਹੁਤ ਵਧੀਆ"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D ਗਰਾਫ਼"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D ਗਰਾਫ਼(&G)"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "ਬਿੰਦੀਆਂ"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "ਲਾਈਨਾਂ"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "ਗੂੜ੍ਹਾ"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "ਓਪਰੇਸ਼ਨ"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "ਡਿਕਸ਼ਨਰੀ(&D)"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "ਖੋਜ:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "ਸੋਧ ਜਾਰੀ(&E)"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "ਸਕ੍ਰਿਪਟ ਚੁਣੋ"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "ਸਕ੍ਰਿਪਟ (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML ਫਾਇਲ (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "ਗਲਤੀਆਂ: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "ਚਿੱਤਰ ਫਾਇਲ (*.png);;SVG ਫਾਇਲ (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "ਤਿਆਰ"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "ਵੇਰੀਬਲ ਜੋੜੋ"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "ਨਵਾਂ ਵੇਰੀਬਲ ਲਈ ਨਾਂ ਦਿਓ"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "ਪੋਰਟੇਬਲ ਕੈਲਕੂਲੇਟਰ"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ ੨੦੨੧"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alam.yellow@gmail.com"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "ਵੇਰੀਬਲ ਨੂੰ ਜੋੜੋ/ਸੋਧੋ"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "ਵੇਰੀਬਲ ਨੂੰ ਹਟਾਓ"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "'%1' ਮੁੱਲ ਸੋਧੋ"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>*ਗਲਤ*</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "ਖੱਬਾ:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "ਉੱਤੇ:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "ਚੌੜਾਈ:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "ਉਚਾਈ:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "ਲਾਗੂ ਕਰੋ"
+
+#~ msgid "C&onsole"
+#~ msgstr "ਕਨਸੋਲ(&o)"
+
+#~ msgid "&Console"
+#~ msgstr "ਕਨਸੋਲ(&C)"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>ਫਾਰਮੂਲਾ</b>"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "ਮੁਕੰਮਲ: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "ਗਲਤੀ: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "ਸਾਫ਼ ਕਰੋ"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG ਫਾਇਲ"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "ਟਰਾਂਸਪਰੇਸੀ(&T)"
+
+#~ msgid "Type"
+#~ msgstr "ਕਿਸਮ"
+
+#~ msgid "Result: %1"
+#~ msgstr "ਨਤੀਜਾ: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "ਸਮੀਕਰਨ ਲਈ"
+
+#~ msgid "Simplify"
+#~ msgstr "ਸਧਾਰਨ ਕਰੋ"
+
+#~ msgid "Examples"
+#~ msgstr "ਉਦਾਹਰਨਾਂ"
+
+#~ msgid "center"
+#~ msgstr "ਸੈਂਟਰ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "ਨਾਂ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "ਫੰਕਸ਼ਨ"
+
+#~ msgid "%1 function added"
+#~ msgstr "%1 ਫੰਕਸ਼ਨ ਸ਼ਾਮਲ ਕੀਤਾ"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "'%1' ਓਹਲੇ"
+
+#~ msgid "Show '%1'"
+#~ msgstr "'%1' ਵੇਖੋ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "ਵੇਰਵਾ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "ਪੈਰਾਮੀਟਰ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "ਉਦਾਹਰਨ"
+
+#, fuzzy
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "ਪੈਰਾਮੀਟਰ"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "ਜੋੜ"
+
+#~ msgid "Multiplication"
+#~ msgstr "ਗੁਣਾ"
+
+#~ msgid "Division"
+#~ msgstr "ਭਾਗ"
+
+#~ msgid "Power"
+#~ msgstr "ਪਾਵਰ"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "ਹਾਈਪਰਬੋਲ ਸਾਈਨ"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hyperbolic cosine"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "ਹਾਈਪਰਬੋਲਿਕ ਟੇਜੈਂਟ"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arc sine"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arc cosine"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arc tangent"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "ਸਧਾਰਨ"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "ਬਾਹਰ"
+
+#~ msgid "Minimum"
+#~ msgstr "ਘੱਟੋ-ਘੱਟ"
+
+#~ msgid "Maximum"
+#~ msgstr "ਵੱਧੋ-ਵੱਧ"
+
+#~ msgid "Root"
+#~ msgstr "ਰੂਟ"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr ": ਬਾਊਂਡ"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "ਮੁੱਲ"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "', '"
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#, fuzzy
+#~| msgctxt "@title:column"
+#~| msgid "Function"
+#~ msgid "Subtraction"
+#~ msgstr "ਫੰਕਸ਼ਨ"
+
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr ""
+#~ "%1\n"
+#~ "ਗਲਤੀ: %2"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ... ਉਡੀਕੋ"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "ਲਾਗ ਸੰਭਾਲੋ(&S)"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Fine"
+#~ msgid "File"
+#~ msgstr "ਵਧੀਆ"
+
+#~ msgid "Mode"
+#~ msgstr "ਮੋਡ"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"

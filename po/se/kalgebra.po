@@ -1,0 +1,439 @@
+# Translation of kalgebra to Northern Sami
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-07-03 00:41+0000\n"
+"PO-Revision-Date: 2007-09-11 22:44+0200\n"
+"Last-Translator: Northern Sami translation team <i18n-sme@lister.ping.uio."
+"no>\n"
+"Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
+"Language: se\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: consolehtml.cpp:175
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:180
+#, kde-format
+msgid "Options: %1"
+msgstr ""
+
+#: consolehtml.cpp:230
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr ""
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr ""
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr ""
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr ""
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr ""
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr ""
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr ""
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:75
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:96
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:121
+#, kde-format
+msgid "Session"
+msgstr "Bargovuorru"
+
+#: kalgebra.cpp:140 kalgebra.cpp:239
+#, kde-format
+msgid "Variables"
+msgstr ""
+
+#: kalgebra.cpp:159
+#, kde-format
+msgid "&Calculator"
+msgstr ""
+
+#: kalgebra.cpp:171
+#, kde-format
+msgid "C&alculator"
+msgstr ""
+
+#: kalgebra.cpp:173
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr ""
+
+#: kalgebra.cpp:175
+#, kde-format
+msgid "Recent Scripts"
+msgstr ""
+
+#: kalgebra.cpp:179
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr ""
+
+#: kalgebra.cpp:181
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:184
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:186
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr ""
+
+#: kalgebra.cpp:189
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr ""
+
+#: kalgebra.cpp:209
+#, kde-format
+msgid "Functions"
+msgstr ""
+
+#: kalgebra.cpp:221
+#, kde-format
+msgid "List"
+msgstr ""
+
+#: kalgebra.cpp:227 kalgebra.cpp:459
+#, kde-format
+msgid "&Add"
+msgstr ""
+
+#: kalgebra.cpp:243
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:247
+#, kde-format
+msgid "&2D Graph"
+msgstr ""
+
+#: kalgebra.cpp:259
+#, kde-format
+msgid "2&D Graph"
+msgstr ""
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Grid"
+msgstr ""
+
+#: kalgebra.cpp:262
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:270
+#, kde-format
+msgid "Resolution"
+msgstr ""
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr ""
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr ""
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr ""
+
+#: kalgebra.cpp:274
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr ""
+
+#: kalgebra.cpp:308
+#, kde-format
+msgid "&3D Graph"
+msgstr ""
+
+#: kalgebra.cpp:316
+#, kde-format
+msgid "3D &Graph"
+msgstr ""
+
+#: kalgebra.cpp:319
+#, kde-format
+msgid "&Reset View"
+msgstr ""
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Dots"
+msgstr ""
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Lines"
+msgstr ""
+
+#: kalgebra.cpp:323
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#: kalgebra.cpp:340
+#, kde-format
+msgid "Operations"
+msgstr ""
+
+#: kalgebra.cpp:344
+#, kde-format
+msgid "&Dictionary"
+msgstr ""
+
+#: kalgebra.cpp:355
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:448
+#, kde-format
+msgid "&Editing"
+msgstr ""
+
+#: kalgebra.cpp:505
+#, kde-format
+msgid "Choose a script"
+msgstr ""
+
+#: kalgebra.cpp:505 kalgebra.cpp:521
+#, kde-format
+msgid "Script (*.kal)"
+msgstr ""
+
+#: kalgebra.cpp:532
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr ""
+
+#: kalgebra.cpp:555
+#, kde-format
+msgid ", "
+msgstr ""
+
+#: kalgebra.cpp:555
+#, kde-format
+msgid "Errors: %1"
+msgstr ""
+
+#: kalgebra.cpp:593
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:593
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+
+#: kalgebra.cpp:650
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr ""
+
+#: kalgebra.cpp:684
+#, kde-format
+msgid "Add variable"
+msgstr ""
+
+#: kalgebra.cpp:688
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr ""
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:32
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr ""
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr ""
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr ""
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr ""
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr ""
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr ""
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr ""
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr ""
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr ""

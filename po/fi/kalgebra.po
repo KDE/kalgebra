@@ -1,0 +1,1023 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Tommi Nieminen <translator@legisign.org>, 2011, 2018, 2020.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
+#
+# KDE Finnish translation sprint participants:
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2020-07-06 10:38+0300\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-POT-Import-Date: 2012-12-01 22:22:54+0000\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "Asetukset: %1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "Liitä ”%1” syötteeseen"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "Liitä syötteeseen"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>Virhe: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "Tuotiin: %1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Virhe: ei voitu ladata: %1.<br /> %2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Tietoja"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Lisää funktio tai muokkaa funktiota"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "Alaraja:"
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "Yläraja:"
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "Asetukset"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Poista"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "Määrittämäsi asetukset eivät ole oikein"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "Alaraja ei voi olla ylärajaa suurempi"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "2D-kaavio"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "3D-kaavio"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "Istunto"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Muuttujat"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "&Laskin"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "&Laskin"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Avaa skripti…"
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "Viimeaikaiset skriptit"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Tallenna skripti…"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "&Vie loki…"
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "L&isää vastaus…"
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "Laskutapa"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Laske"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Sievennä"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Funktiot"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Luettelo"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Lisää"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "Näkymä"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2D-kuvaaja"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2&D-kuvaaja"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Ruudukko"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&Säilytä kuvasuhde"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Tarkkuus"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Huono"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Tavallinen"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Hyvä"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Erittäin hyvä"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3D-kuvaaja"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "3D-&kuvaaja"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Alusta näkymä"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Pisteet"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Viivat"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Tasainen"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "Toiminnot"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Sanasto"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "Etsi:"
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Muokkaus"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Valitse skripti"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skripti (*.kal)"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML-tiedosto (*.html)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "Virheet: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "Valitse minne piirretty kaavio laitetaan"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "Kuvatiedosto (*.png);;SVG-tiedosto (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Valmis"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "Lisää muuttuja"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "Anna uuden muuttujan nimi"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "Kannettava laskin"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "© 2006–2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Lasse Liehu,Tommi Nieminen"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "lasse.liehu@gmail.com,translator@legisign.org"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Lisää muuttuja tai muokkaa muuttujaa"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "Poista muuttuja"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Muokkaa arvoa: ”%1”"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "ei käytettävissä"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>VÄÄRIN</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "Vasen:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "Ylä:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "Leveys:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "Korkeus:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "Käytä"
+
+#~ msgid ""
+#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
+#~ "(*.stl)"
+#~ msgstr ""
+#~ "PNG-tiedosto (*.png);;PDF-tiedosto (*.pdf);;X3D-tiedosto (*.x3d);;STL-"
+#~ "tiedosto (*.stl)"
+
+#~ msgid "C&onsole"
+#~ msgstr "K&onsoli"
+
+#~ msgid "KAlgebra"
+#~ msgstr "KAlgebra"
+
+#~ msgid "&Console"
+#~ msgstr "&Konsoli"
+
+#~ msgid "Percy Camilo Triveño Aucahuasi"
+#~ msgstr "Percy Camilo Triveño Aucahuasi"
+
+#~ msgid ""
+#~ "Developed feature for drawing implicit curves. Improvements for plotting "
+#~ "functions."
+#~ msgstr ""
+#~ "Kehitti implisiittisten käyrien piirtämisominaisuuden. Parannuksia "
+#~ "kaavionpiirtofunktioihin."
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>Kaava</b>"
+
+#~ msgid "Error: Wrong type of function"
+#~ msgstr "Virhe: Väärä funktiotyyppi"
+
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Valmis: %1 ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Virhe: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Tyhjennä"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|PNG-tiedosto"
+
+#~ msgctxt "text ellipsis"
+#~ msgid "%1..."
+#~ msgstr "%1..."
+
+#~ msgid "&Transparency"
+#~ msgstr "&Läpinäkyvyys"
+
+#~ msgid "Type"
+#~ msgstr "Tyyppi"
+
+#~ msgid "Result: %1"
+#~ msgstr "Tulos: %1"
+
+#~ msgid "To Expression"
+#~ msgstr "Lausekkeeksi"
+
+#~ msgid "To MathML"
+#~ msgstr "MathML:ksi"
+
+#~ msgid "Simplify"
+#~ msgstr "Sievennä"
+
+#~ msgid "Examples"
+#~ msgstr "Esimerkit"
+
+#~ msgid "We can only draw Real results."
+#~ msgstr "Vain reaalituloksia voi piirtää."
+
+#~ msgid "The expression is not correct"
+#~ msgstr "Lauseke ei ole oikein"
+
+#~ msgid "Function type not recognized"
+#~ msgstr "Funktiotyyppiä ei tunnistettu"
+
+#~ msgid "Function type not correct for functions depending on %1"
+#~ msgstr "Funktiotyyppi ei ole oikein funktioille, jonka riippuvuuksina on %1"
+
+#~ msgctxt ""
+#~ "This function can't be represented as a curve. To draw implicit curve, "
+#~ "the function has to satisfy the implicit function theorem."
+#~ msgid "Implicit function undefined in the plane"
+#~ msgstr "Tason implisiittinen funktio määrittelemättä"
+
+#~ msgid "center"
+#~ msgstr "keskusta"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Funktio"
+
+#~ msgid "%1 function added"
+#~ msgstr "Lisätty funktio %1"
+
+#~ msgid "Hide '%1'"
+#~ msgstr "Piilota ”%1”"
+
+#~ msgid "Show '%1'"
+#~ msgstr "Näytä ”%1”"
+
+#~ msgid "Selected viewport too small"
+#~ msgstr "Valittu näkymä on liian pieni"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "Kuvaus"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Parametrit"
+
+#~ msgctxt "@title:column"
+#~ msgid "Example"
+#~ msgstr "Esimerkki"
+
+#~ msgctxt "Syntax for function bounding"
+#~ msgid " : var"
+#~ msgstr " : muuttuja"
+
+#~ msgctxt "Syntax for function bounding values"
+#~ msgid "=from..to"
+#~ msgstr "=mistä..mihin"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... parametrit, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Summa"
+
+#~ msgid "Multiplication"
+#~ msgstr "Tulo"
+
+#~ msgid "Division"
+#~ msgstr "Jako"
+
+#~ msgid "Subtraction. Will remove all values from the first one."
+#~ msgstr "Vähennys. Vähentää kaikki arvot ensimmäisestä."
+
+#~ msgid "Power"
+#~ msgstr "Potenssi"
+
+#~ msgid "Remainder"
+#~ msgstr "Jakojäännös"
+
+#~ msgid "Quotient"
+#~ msgstr "Osamäärä"
+
+#~ msgid "The factor of"
+#~ msgstr "Tekijä"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Kertoma. factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Funktio annetun kulman sinin laskemiseksi"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Funktio annetun kulman kosinin laskemiseksi"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Funktio annetun kulman tangentin laskemiseksi"
+
+#~ msgid "Secant"
+#~ msgstr "Sekantti"
+
+#~ msgid "Cosecant"
+#~ msgstr "Kosekantti"
+
+#~ msgid "Cotangent"
+#~ msgstr "Kotangentti"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Hyperbolinen sini"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hyperbolinen kosini"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Hyperbolinen tangentti"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Hyperbolinen sekantti"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Hyperbolinen kosekantti"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Hyperbolinen kotangentti"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arkussini"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arkuskosini"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arkustangentti"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Arkuskotangentti"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Hyperbolinen arkustangentti"
+
+#~ msgid "Summatory"
+#~ msgstr "Summamerkintä"
+
+#~ msgid "Productory"
+#~ msgstr "Tulomerkintä"
+
+#~ msgid "For all"
+#~ msgstr "Kaikille"
+
+#~ msgid "Exists"
+#~ msgstr "On olemassa"
+
+#~ msgid "Differentiation"
+#~ msgstr "Derivaatta"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Hyperbolinen arkussini"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Hyperbolinen arkuskosini"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Arkuskosekantti"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Hyperbolinen arkuskosekantti"
+
+#~ msgid "Arc secant"
+#~ msgstr "Arkussekantti"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Hyperbolinen arkussekantti"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Eksponentti (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "e-kantainen logaritmi"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "10-kantainen logaritmi"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Itseisarvo: abs(n) = |n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Lattia-arvo. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Katto-arvo. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimi"
+
+#~ msgid "Maximum"
+#~ msgstr "Maksimi"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Suurempi kuin: gt(a,b) = a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Pienempi kuin: lt(a,b) = a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Yhtä kuin: eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Approksimaatio. approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Eri suuri kuin: neq(a,b) = a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Suurempi tai yhtä kuin: geq(a,b) = a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Pienempi tai yhtä kuin: leq(a,b) = a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Boolen ja"
+
+#~ msgid "Boolean not"
+#~ msgstr "Boolen ei"
+
+#~ msgid "Boolean or"
+#~ msgstr "Boolen tai"
+
+#~ msgid "Boolean xor"
+#~ msgstr "Boolen xor"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Boolen implikaatio"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Suurin yhteinen nimittäjä"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Pienin yhteinen jaettava"
+
+#~ msgid "Root"
+#~ msgstr "Juuri"
+
+#~ msgid "Cardinal"
+#~ msgstr "Mahtavuus"
+
+#~ msgid "Scalar product"
+#~ msgstr "Skalaaritulo"
+
+#~ msgid "Select the par1-th element of par2 list or vector"
+#~ msgstr "Valitse par1:s alkio par2:n luettelosta tai vektorista"
+
+#~ msgid "Joins several items of the same type"
+#~ msgstr "Yhdistä samantyyppisiä alkioita"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr " : rajat"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Arvo"
+
+#~ msgid "Must specify a correct operation"
+#~ msgstr "Vaaditaan kelvollinen toiminnot"
+
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr "”, ”"
+
+#~ msgid "Unknown identifier: '%1'"
+#~ msgstr "Tuntematon tunniste: ”%1”"
+
+#~ msgctxt "Error message, no proper condition found."
+#~ msgid "Could not find a proper choice for a condition statement."
+#~ msgstr "Ehtolauseesta ei löytynyt sopivaa vaihtoehtoa."
+
+#~ msgid "Type not supported for bounding."
+#~ msgstr "Tyyppiä ei tueta rajana"
+
+#~ msgid "The downlimit is greater than the uplimit"
+#~ msgstr "Alaraja on ylärajaa suurempi"
+
+#~ msgid "Incorrect uplimit or downlimit."
+#~ msgstr "Väärä ala- tai yläraja."
+
+#~ msgctxt "By a cycle i mean a variable that depends on itself"
+#~ msgid "Defined a variable cycle"
+#~ msgstr "Muuttujan kehämäärittely"
+
+#~ msgid "The result is not a number"
+#~ msgstr "Tulos ei ole luku"
+
+#~ msgid "Unexpectedly arrived to the end of the input"
+#~ msgstr "Odottamaton syötteen loppu"
+
+#~ msgid "Unknown token %1"
+#~ msgstr "Virheellinen merkki %1"
+
+#~ msgid "<em>%1</em> needs at least 2 parameters"
+#~ msgstr "<em>%1</em> tarvitsee vähintään 2 parametria"
+
+#~ msgid "<em>%1</em> requires %2 parameters"
+#~ msgstr "<em>%1</em> tarvitsee %2 parametria"
+
+#~ msgid "Missing boundary for '%1'"
+#~ msgstr "Puuttuva raja funktiossa %1"
+
+#~ msgid "Unexpected bounding for '%1'"
+#~ msgstr "Odottamaton raja funktiossa %1"
+
+#~ msgid "<em>%1</em> missing bounds on '%2'"
+#~ msgstr "<em>%1</em> puuttuvat rajat funktiossa %2"
+
+#~ msgid "Wrong declare"
+#~ msgstr "Väärä esittely"
+
+#~ msgid "Empty container: %1"
+#~ msgstr "Tyhjä tietorakenne: %1"
+
+#~ msgctxt "there was a conditional outside a condition structure"
+#~ msgid "We can only have conditionals inside piecewise structures."
+#~ msgstr "Vain piecewise-rakenteissa voi olla ehtoja."
+
+#~ msgid "Cannot have two parameters with the same name like '%1'."
+#~ msgstr "Kahdella parametrilla ei voi olla samaa nimeä, esim. ”%1”."
+
+#~ msgctxt ""
+#~ "this is an error message. otherwise is the else in a mathml condition"
+#~ msgid "The <em>otherwise</em> parameter should be the last one"
+#~ msgstr "<em>otherwise</em>-parametrin tulee olla viimeisenä"
+
+#~ msgctxt "there was an element that was not a conditional inside a condition"
+#~ msgid "%1 is not a proper condition inside the piecewise"
+#~ msgstr "%1 ei ole kelvollinen ehto piecewise-rakenteessa"
+
+#~ msgid "We can only declare variables"
+#~ msgstr "Vain muuttujia voi esitellä"
+
+#~ msgid "We can only have bounded variables"
+#~ msgstr "Tietorakenteessa voi olla vain rajamuuttujia"
+
+#~ msgid "Error while parsing: %1"
+#~ msgstr "Virhe jäsennettäessä: %1"
+
+#~ msgctxt "An error message"
+#~ msgid "Container unknown: %1"
+#~ msgstr "Tuntematon tietorakenne: %1"
+
+#~ msgid "Cannot codify the %1 value."
+#~ msgstr "Arvoa %1 ei voida koodata."
+
+# En tajua itsekään mitä tämä tarkoittaa. Liittyy MathML:n jäsentämiseen (lähdekoodi).
+#~ msgid "The %1 operator cannot have child contexts."
+#~ msgstr "Operaattorilla %1 ei voi olla lapsikonteksteja."
+
+#~ msgid "The element '%1' is not an operator."
+#~ msgstr "Elementti ”%1” ei ole operaattori."
+
+#~ msgid "Do not want empty vectors"
+#~ msgstr "Ei halua tyhjiä vektoreita"
+
+#~ msgctxt "Error message due to an unrecognized input"
+#~ msgid "Not supported/unknown: %1"
+#~ msgstr "Ei tuettu/tuntematon: %1"
+
+#~ msgctxt "error message"
+#~ msgid "Expected %1 instead of '%2'"
+#~ msgstr "Odotettiin %1 eikä ”%2”"
+
+#~ msgid "Missing right parenthesis"
+#~ msgstr "Oikea sulje puuttuu"
+
+# Merkitys tarkistettu lähdekoodista.
+#~ msgid "Unbalanced right parenthesis"
+#~ msgstr "Ylimääräinen oikea sulje"
+
+#, fuzzy
+#~| msgid "Unexpected token %1"
+#~ msgid "Unexpected token identifier: %1"
+#~ msgstr "Odottamaton merkki %1"
+
+#~ msgid "Unexpected token %1"
+#~ msgstr "Odottamaton merkki %1"
+
+#, fuzzy
+#~| msgid "Could not calculate the derivative for '%1'"
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Arvon ”%1” derivaattaa ei voi laskea."
+
+#, fuzzy
+#~| msgid "The domain should be either a vector or a list."
+#~ msgid "The domain should be either a vector or a list"
+#~ msgstr "Määrittelyjoukon tulee olla joko vektori tai luettelo."
+
+#~ msgid "Invalid parameter count for '%2'. Should have 1 parameter."
+#~ msgid_plural "Invalid parameter count for '%2'. Should have %1 parameters."
+#~ msgstr[0] "Väärä parametrien määrä (”%2”). Tulisi olla 1 parametri."
+#~ msgstr[1] "Väärä parametrien määrä (”%2”). Tulisi olla %1 parametria."
+
+#~ msgid "Could not call '%1'"
+#~ msgstr "Ei voi kutsua: ”%1”"
+
+#~ msgid "Could not solve '%1'"
+#~ msgstr "Ei voi ratkaista: ”%1”"
+
+#, fuzzy
+#~| msgid "Enter a name for the new variable"
+#~ msgid "Incoherent type for the variable '%1'"
+#~ msgstr "Anna uuden muuttujan nimi"
+
+#~ msgid "Could not determine the type for piecewise"
+#~ msgstr "piecewise-rakenteen tyyppiä ei voitu selvittää"
+
+#~ msgid "Unexpected type"
+#~ msgstr "Odottamaton tyyppi"
+
+#~ msgid "Cannot convert '%1' to '%2'"
+#~ msgstr "Ei voi muuntaa ”%1” -> ”%2”"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='op'>%1</span>"
+#~ msgstr "<span class='op'>%1</span>"
+
+#~ msgctxt "html representation of an operator"
+#~ msgid "<span class='keyword'>%1</span>"
+#~ msgstr "<span class='keyword'>%1</span>"
+
+#~ msgctxt "Error message"
+#~ msgid "Unknown token %1"
+#~ msgstr "Virheellinen merkki %1"
+
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Nollalla jakamisen jakojäännöstä ei voi laskea."
+
+#~ msgid "Cannot calculate the factor on 0."
+#~ msgstr "Ei voi laskea, onko luku nollan tekijä."
+
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr ""
+#~ "Toisen luvuista ollessa nolla, ei pienintä yhteistä jaettavaa voi laskea."
+
+#~ msgid "Could not calculate a value %1"
+#~ msgstr "Arvoa %1 ei voi laskea"
+
+#~ msgid "Invalid index for a container"
+#~ msgstr "Virheellinen tietorakenteen indeksi"
+
+#~ msgid "Cannot operate on different sized vectors."
+#~ msgstr "Ei voi käsitellä erikokoisia vektoreita."
+
+#~ msgid "Could not calculate a vector's %1"
+#~ msgstr "Toiminnon %1 suorittaminen vektorille ei onnistunut."
+
+# ”Toiminto” ei liene kovin matemaattista kieltä.
+#~ msgid "Could not calculate a list's %1"
+#~ msgstr "Toiminnon %1 suorittaminen luettelolle ei onnistunut."
+
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Arvon ”%1” derivaattaa ei voi laskea."
+
+#~ msgid "Could not reduce '%1' and '%2'."
+#~ msgstr "Arvoja ”%1” ja ”%2” ei voi sieventää."
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgctxt "if the specified function is not a vector"
+#~ msgid "The parametric function does not return a vector"
+#~ msgstr "Parametrinen funktio ei palauta vektoria"
+
+#~ msgctxt "If it is a vector but the wrong size. We work in R2 here"
+#~ msgid "A two-dimensional vector is needed"
+#~ msgstr "Kaksiulotteista vektoria tarvitaan"
+
+#~ msgctxt "The vector has to be composed by integer members"
+#~ msgid "The parametric function items should be scalars"
+#~ msgstr "Parametrisen funktion kohtien tulee olla skalaareja"

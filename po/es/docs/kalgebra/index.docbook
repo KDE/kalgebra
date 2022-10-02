@@ -1,0 +1,941 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>El manual de &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Leticia</firstname
+><surname
+>Martín Hernández</surname
+><affiliation
+><address
+><email
+>leticia.martin@gmail.com</email
+></address
+></affiliation
+><contrib
+>Traductor</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Eloy</firstname
+><surname
+>Cuadra</surname
+><affiliation
+><address
+><email
+>ecuadra@eloihr.net</email
+></address
+></affiliation
+><contrib
+>Traductor</contrib
+></othercredit
+>  
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>2020-12-17</date>
+<releaseinfo
+>Aplicaciones 20.12</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; es una aplicación que puede sustituir su calculadora gráfica. Posee funciones numéricas, lógicas, simbólicas y de análisis que le permiten calcular expresiones matemáticas en la calculadora y trazar gráficamente el resultado en 2D o 3D. &kalgebra; está arraigada al lenguaje de marcas matemáticas (&MathML;); no obstante, no es necesario saber &MathML; para usar &kalgebra;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>gráfica</keyword>
+<keyword
+>matemáticas</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introducción</title>
+
+<para
+>&kalgebra; contiene numerosas funciones que permiten al usuario realizar todo tipo de operaciones matemáticas y mostrarlas gráficamente. Originalmente, este programa estaba orientado a &MathML;. En la actualidad lo puede usar cualquier persona con pocos conocimientos matemáticos para resolver problemas sencillos o avanzados. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Incluye funcionalidades como las siguientes: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Una calculadora para una fácil y rápida evaluación de funciones matemáticas. </para
+></listitem>
+<listitem
+><para
+>Posibilidad de usar guiones para series avanzadas de cálculos. </para
+></listitem>
+<listitem
+><para
+>Posibilidades lingüísticas, como la definición de funciones y la terminación automática. </para
+></listitem>
+<listitem
+><para
+>Funciones de cálculo, como la diferenciación simbólica, cálculo vectorial y manipulación de listas. </para
+></listitem>
+<listitem
+><para
+>Trazado de funciones con cursor activo para encontrar raíces gráficas y otros tipos de análisis. </para
+></listitem>
+<listitem
+><para
+>Trazado en 3D para la visualización útil de funciones en 3D. </para
+></listitem>
+<listitem
+><para
+>Un diccionario de operadores integrado para la rápida referencia de las diversas funciones disponibles. </para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuación se muestra una imagen de la aplicación &kalgebra; en acción: </para>
+
+<screenshot>
+<screeninfo
+>Aquí se muestra una captura de la ventana principal de &kalgebra;.</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ventana principal de &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Cuando el usuario comienza una sesión con &kalgebra; se le muestra una única ventana que contiene cuatro pestañas: <guilabel
+>Calculadora</guilabel
+>, <guilabel
+>Gráfica 2D</guilabel
+>, <guilabel
+>Gráfica 3D</guilabel
+> y <guilabel
+>Diccionario</guilabel
+>. Dentro de estas pestañas encontrará un campo de entrada donde podrá introducir sus funciones o cálculos, y un campo de visualización que muestra el resultado. </para>
+
+<para
+>El usuario puede gestionar la sesión en cualquier momento con las opciones del menú principal <guilabel
+>Sesión</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sesión</guimenu
+><guimenuitem
+>Nueva</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Abre una nueva ventana de &kalgebra;</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sesión</guimenu
+><guimenuitem
+>Modo de pantalla completa</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Conmuta el modo de pantalla completa para la ventana de &kalgebra;. El modo de pantalla completa también se puede activar o desactivar mediante el botón <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> situado en la parte superior derecha de la ventana de &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Sesión</guimenu
+><guimenuitem
+>Salir</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Cierra el programa.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Sintaxis</title>
+<para
+>&kalgebra; usa una sintaxis algebraica intuitiva para introducir las funciones del usuario de forma similar a la que usan la mayor parte de las calculadoras gráficas modernas. Esta sección lista las operaciones fundamentales que proporciona &kalgebra;. El autor de &kalgebra; ha modelado la sintaxis según <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> y <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> para los usuarios que estén familiarizados con estos programas. </para>
+
+<para
+>Para los usuarios interesados en el funcionamiento interno de &kalgebra;, las funciones introducidas por el usuario se convierten a &MathML; en el motor. Un conocimiento rudimentario de las posibilidades proporcionadas por &MathML; le servirá de ayuda para revelar las funcionalidades internas de &kalgebra;. </para>
+
+<para
+>Aquí tiene una lista de los operadores disponibles hasta el momento:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: suma, resta, multiplicación y división.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: potencia, puede usar cualquiera de las dos formas. Asimismo, puede usar los caracteres unicode <literal
+>²</literal
+>. Las potencias son también una forma de expresar raíces, lo que puede hacer de la siguiente forma: <literal
+>a**(1/b)</literal
+></para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: lambda. Es el modo de especificar una o más variables libres que estarán ligadas a una función. Por ejemplo, en la expresión <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+>, el operador lambda se usa para indicar que <literal
+>x</literal
+> e <literal
+>y</literal
+> estarán ligadas cuando se usa la función «length». </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: se usa cuando necesitamos delimitar un intervalo (variable limitada + límite superior + límite inferior). Esto significa que <literal
+>x</literal
+> va de <literal
+>a</literal
+> a <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: se usa para especificar una prioridad mayor.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(parámetros) </literal
+>: funciones. Cuando el analizador sintáctico encuentra una función, comprueba si <literal
+>abc</literal
+> es un operador. Si lo es, lo trata como un operador; si no lo es, lo trata como una función de usuario.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: definición. Se usa para definir el valor de una variable. Puede escribir cosas como <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+>, donde <literal
+>y</literal
+> puede estar definido o no, o como <userinput
+>perímetro:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: definición de condiciones en funciones definidas a trozos («piecewise»). Permite definir operaciones condicionales en &kalgebra;. Dicho de otro modo, es otra forma de especificar una condición «if, elseif, else». Cuando introducimos la condición antes del símbolo <literal
+>?</literal
+>, se utilizará dicha condición solo si es verdadera; en cambio, si encuentra un símbolo <literal
+>?</literal
+> sin ninguna condición, se tendrá en cuenta el último caso. Por ejemplo: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{ } </literal
+>: contenedor &MathML;. Puede usarse para definir un contenedor. Es muy útil a la hora de trabajar con funciones definidas a trozos. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: operadores relacionales que indican «igual», «mayor», «mayor o igual», «menor» o «menor o igual», respectivamente.</para
+></listitem>
+</itemizedlist>
+
+<para
+>Ahora puede preguntarme por qué debería el usuario preocuparse por &MathML;. La respuesta es fácil. Con esto podremos realizar operaciones con funciones como <function
+>cos()</function
+>, <function
+>sin()</function
+> (o cualquier otra función trigonométrica), <function
+>sum()</function
+> o <function
+>product()</function
+>. No importa el tipo de función que sea. Podremos usar <function
+>plus()</function
+>, <function
+>times()</function
+> y cualquier cosa a la que le corresponda un operador. También se han implementado funciones lógicas, por lo que podremos hacer cosas como <function
+>or(1,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>Uso de la calculadora</title>
+<para
+>La calculadora de &kalgebra; es útil como una calculadora a lo grande. El usuario puede introducir expresiones a evaluar en los modos <guimenu
+>Calcular</guimenu
+> y <guimenu
+>Evaluar</guimenu
+>, según la selección del menú <guimenu
+>Calculadora</guimenu
+>. </para>
+<para
+>En el modo de evaluación, &kalgebra; simplifica la expresión incluso si se encuentra una variable indefinida. Cuando está en modo de cálculo, &kalgebra; calcula todo y si encuentra una variable indefinida muestra un error. </para>
+<para
+>Además de mostrar las ecuaciones introducidas por el usuario y el resultado en la pantalla de la calculadora, también se muestran todas las variables declaradas en un cuadro persistente en la parte de la derecha. Si hace doble clic sobre una variable se mostrará un diálogo que le permitirá modificar su valor (solo es un modo de engañar al registro). </para>
+
+<para
+>La variable «<varname
+>ans</varname
+>» es especial; cada vez que introduzca una expresión, la variable «<varname
+>ans</varname
+>» cambiará su valor al del último resultado. </para>
+
+<para
+>A continuación se muestran funciones de ejemplo que se pueden introducir en el campo de entrada de la ventana de la calculadora:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuación se muestra una captura de la ventana de la calculadora tras introducir las expresiones de ejemplo anteriores: </para>
+<screenshot>
+<screeninfo
+>Captura de la ventana de la calculadora de &kalgebra; con expresiones de ejemplo</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ventana de la calculadora de &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>El usuario puede controlar la ejecución de una serie de cálculos usando las opciones del menú <guimenu
+>Calculadora</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Cargar guion...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Ejecuta las instrucciones de un archivo de forma secuencial. Es útil si desea definir bibliotecas o reanudar un trabajo anterior.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guisubmenu
+>Guiones recientes</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Muestra un submenú que le permitirá escoger los guiones usados recientemente.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Guardar guion...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Guarda las instrucciones que ha introducido desde que comenzó la sesión, con lo que podrá reutilizarlas. Genera un archivo de texto que podrá corregir usando cualquier editor de texto, por ejemplo &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Exportar registro...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Guarda el registro con todos los resultados en un archivo &HTML; que podrá imprimir o publicar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Insertar ans...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Insertar la variable «<varname
+>ans</varname
+>» y facilitar la reutilización de valores anteriores.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Calcular</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Un botón de opción para definir el <guilabel
+>Modo de ejecución</guilabel
+> a cálculo.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Evaluar</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Un botón de opción para definir el <guilabel
+>Modo de ejecución</guilabel
+> a evaluación.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>Gráficas 2D</title>
+<para
+>Para añadir un gráfica 2D en &kalgebra;, seleccione la pestaña <guilabel
+>Gráfica 2D</guilabel
+> y pulse la pestaña <guilabel
+>Añadir</guilabel
+>, que le permitirá añadir una nueva función. A continuación tendrá dirigirse al cuadro de texto de entrada, donde podrá introducir la función.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Sintaxis</title>
+<para
+>Si quiere usar una función <function
+>f(x)</function
+> típica, no es necesario que la especifique; en cambio, si quiere usar una función <function
+>f(y)</function
+> o una función polar, tendrá que añadir <literal
+>y-&gt;</literal
+> y <literal
+>q-&gt;</literal
+> como variables limitadas.</para>
+
+<para
+>Ejemplos:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>Después de haber introducido la función, pulse el botón <guibutton
+>Aceptar</guibutton
+> para dibujar la gráfica en la ventana principal.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Características</title>
+<para
+>Es posible dibujar varias gráficas en la misma vista. Para esto use simplemente el botón <guilabel
+>Añadir</guilabel
+> cuando se encuentre en el modo Lista. Puede ajustar el color de cada gráfica.</para>
+
+<para
+>Puede ampliar la vista y desplazarla con el ratón. Con la rueda del ratón podrá ampliar o reducir la vista. Puede también seleccionar un área con el &LMB;, y el área se ampliará. Desplace la vista con las teclas de dirección del teclado.</para>
+
+<note>
+ <para
+>La ventana de gráficos 2D se puede definir de manera explícita mediante la pestaña <guilabel
+>Ventana</guilabel
+> en una pestaña <guilabel
+>Gráfico 2D</guilabel
+>.</para>
+</note>
+ 
+<para
+>En la pestaña <guilabel
+>Lista</guilabel
+> de la parte inferior derecha puede abrir una pestaña de <guilabel
+>Edición</guilabel
+> para editar o eliminar una función mediante doble clic y poner o quitar la marca de la casilla de verificación situada junto al nombre de la función para mostrarla u ocultarla.</para>
+<para
+>En el menú <guimenu
+>Gráfica 2D</guimenu
+> dispone de las siguientes opciones:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Cuadrícula</guimenuitem
+>: Mostrar u ocultar la cuadrícula.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Mantener las proporciones</guimenuitem
+>: Mantener las proporciones mientras amplía o reduce la vista.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Guardar</guimenuitem
+>: Guardar (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) la gráfica como un archivo de imagen.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Ampliar/reducir</guimenuitem
+>: Ampliar (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) y reducir (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>).</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Tamaño real</guimenuitem
+>: Reiniciar la vista a la ampliación original.</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Resolución</guilabel
+>: Seguida por una lista de botones de opciones para seleccionar una resolución para los gráficos.</para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuación se muestra una captura de pantalla de un usuario cuyo cursor está en la raíz del extremo derecho de la función, <function
+>sen(1/x)</function
+>. El usuario ha utilizado una resolución muy alta para mostrar el grafo (ya que oscila al frecuencias muy altas cerca del origen). También dispone de la funcionalidad de cursor vivo, mediante la cual se muestran los valores <literal
+>x</literal
+> e <literal
+>y</literal
+> en la esquina inferior izquierda de la pantalla cada vez que mueva el cursor a un nuevo punto. Se traza una «línea tangente» viva sobre la función en la posición del cursor vivo. </para>
+
+<screenshot>
+<screeninfo
+>Aquí se muestra una captura de la ventana gráfica 2D de &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ventana gráfica 2D de &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>Gráficas 3D</title>
+
+<para
+>Para dibujar una grafica 3D con &kalgebra;, seleccione la pestaña <guilabel
+>Gráfica 3D</guilabel
+>, donde verá un campo de entrada en la parte inferior que le permitirá introducir la función. Aún no podrá definir <literal
+>Z</literal
+>. Por ahora, &kalgebra; solo admite gráficas 3D que dependen de <literal
+>x</literal
+> e <literal
+>y</literal
+>, como <userinput
+>(x,y)->x*y</userinput
+>, donde <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>Ejemplos:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Puede ampliar o reducir la vista con el ratón. Use la rueda del ratón para ampliarla o reducirla. Si mantiene pulsado el &LMB; y se desplaza con el ratón, la gráfica rotará.</para>
+
+<para
+>Las teclas de las flechas &Left; y &Right; rotan el grafo alrededor del eje <literal
+>z</literal
+>. Las teclas de las flechas &Up; y &Down; rotan la vista alrededor del eje horizontal. Pulse <keycap
+>W</keycap
+> para ampliar el gráfico y <keycap
+>S</keycap
+> para reducirlo.</para>
+
+<para
+>En el menú <guimenu
+>Gráfica 3D</guimenu
+> dispone de las siguientes opciones:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Guardar</guimenuitem
+>: Guardar (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) la gráfica como un archivo de imagen o un documento permitido.</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Reiniciar la vista</guimenuitem
+>: Reiniciar la vista a la ampliación original en el menú <guimenu
+>Gráfico 3D</guimenu
+>.</para
+></listitem>
+<listitem
+><para
+>Puede dibujar los gráficos con los estilos de <guimenuitem
+>Puntos</guimenuitem
+>, <guimenuitem
+>Líneas</guimenuitem
+> o <guimenuitem
+>Sólido</guimenuitem
+> en el menú <guimenu
+>Gráfico 3D</guimenu
+>.</para
+></listitem>
+</itemizedlist>
+
+<para
+>A continuación se muestra una captura de la función denominada «sombrero». Esta gráfica particular se muestra usando el estilo 3D. </para>
+
+<screenshot>
+<screeninfo
+>Aquí se muestra una captura de la ventana gráfica 3D de &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ventana gráfica 3D de &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Diccionario</title>
+
+<para
+>El diccionario proporciona una lista de todas las funciones integradas en &kalgebra;. Se puede usar para encontrar la definición de una operación y sus parámetros de entrada. Es un lugar útil para encontrar las muchas funcionalidades que posee &kalgebra;. </para>
+
+ <para
+>A continuación se muestra una captura de la ventana de la búsqueda de la función coseno en el diccionario de &kalgebra;. </para>
+
+<screenshot>
+<screeninfo
+>Aquí se muestra una captura de la ventana del diccionario de &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ventana del diccionario de &kalgebra;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Créditos y licencia</title>
+
+<itemizedlist>
+<listitem
+><para
+>Derechos de autor del programa 2005-2009 &Aleix.Pol;.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Derechos de autor de la documentación 2007 &Aleix.Pol; &Aleix.Pol.mail;. </para>
+
+<para
+>Traducido por Leticia Martín Hernández <email
+>leticia.martin@gmail.com</email
+> y Eloy Cuadra <email
+>ecuadra@eloihr.net</email
+>.</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

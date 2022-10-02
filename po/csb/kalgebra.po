@@ -1,0 +1,851 @@
+# translation of kalgebra.po to Kashubian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Michôł Òstrowsczi <michol@linuxcsb.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2008-01-02 18:44+0100\n"
+"Last-Translator: Michôł Òstrowsczi <michol@linuxcsb.org>\n"
+"Language-Team: Kashubian\n"
+"Language: csb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options: %1"
+msgstr "Fùnkcje"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr ""
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "Wëdowiédza"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "Dodôj/Editëjë fùnkcjã"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr ""
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#: functionedit.cpp:104
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options"
+msgstr "Fùnkcje"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, fuzzy, kde-format
+#| msgid "To Expression"
+msgid "Session"
+msgstr "Do wësłowù"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "Zmieniwne"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "&Calculator"
+msgstr "Kalkùlatora"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "C&alculator"
+msgstr "Kalkùlatora"
+
+#: kalgebra.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Load Script"
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&Wladëjë skript"
+
+#: kalgebra.cpp:174
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgid "Recent Scripts"
+msgstr "&Zapiszë skript"
+
+#: kalgebra.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&Zapiszë skript"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "Kalkùlatora"
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+#| msgctxt "@title:column"
+#| msgid "Value"
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "Wôrtnota"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "Fùnkcje"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "Lësta"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "&Dodôj"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "Graf &2D"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "Graf 2&D"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "&Mrzéżka"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "Rozdzelnota"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "Lëchô"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "Normalnô"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "Dobrô"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "Barô dobrô"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "Graf &3D"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "&Graf 3D"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "&Wëczëszczë wëzdrzatk"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "Pùnktë"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "Linie"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "Nieprzeriwnô"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr ""
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "&Słowôrz"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "&Editowanié"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "Wëbiérzë skript"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skript (*.kal)"
+
+#: kalgebra.cpp:531
+#, fuzzy, kde-format
+#| msgid "Text File (*)"
+msgid "HTML File (*.html)"
+msgstr "Tekstowi lopk (*)"
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgctxt "Function parameter separator"
+#| msgid ", "
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "Fela: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|Lopk òbrazu\n"
+"*.svg|Lopk SVG"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "Parôt"
+
+#: kalgebra.cpp:683
+#, fuzzy, kde-format
+#| msgid "Add/Edit a variable"
+msgid "Add variable"
+msgstr "Dodôj/Editëjë zmieniwną"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "Kalkùlatora"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006 Aleix Pol Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Michôł Òstrowsczi"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "michol@linuxcsb.org"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "Dodôj/Editëjë zmieniwną"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "Zmieniwne"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "Editëjë wôrtnotã '%1'"
+
+#: varedit.cpp:65
+#, fuzzy, kde-format
+#| msgid "Add/Edit a variable"
+msgid "not available"
+msgstr "Dodôj/Editëjë zmieniwną"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>LËCHÒ</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr ""
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr ""
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr ""
+
+#~ msgid "C&onsole"
+#~ msgstr "Kò&nsola"
+
+#~ msgid "&Console"
+#~ msgstr "&Kònsola"
+
+#, fuzzy
+#~| msgid "<b>%1</b>"
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>%1</b>"
+
+#, fuzzy
+#~| msgid "Done: %1ms"
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "Parôt: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "Fela: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "Wëczëszczë"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|Lopk PNG"
+
+#~ msgid "&Transparency"
+#~ msgstr "Przezérnota"
+
+#~ msgid "Type"
+#~ msgstr "Ôrt"
+
+#~ msgid "To Expression"
+#~ msgstr "Do wësłowù"
+
+#~ msgid "To MathML"
+#~ msgstr "Do MathML"
+
+#~ msgid "Simplify"
+#~ msgstr "Ùproszczë"
+
+#~ msgid "center"
+#~ msgstr "wëstrzódk"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "Miono"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "Fùnkcja"
+
+#~ msgid "%1 function added"
+#~ msgstr "Fùnkcjô %1 dodónô"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "òpisënk"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "Paramétrë"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#, fuzzy
+#~| msgid "%1... parameters, ...)"
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... paramétrë, ...)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "Dodôwanié"
+
+#~ msgid "Multiplication"
+#~ msgstr "Wielenié"
+
+#~ msgid "Division"
+#~ msgstr "Dzelenié"
+
+#~ msgid "Power"
+#~ msgstr "Zwielëna"
+
+#~ msgid "Remainder"
+#~ msgstr "Reszta"
+
+#~ msgid "Quotient"
+#~ msgstr "Dzél"
+
+#~ msgid "The factor of"
+#~ msgstr "Dzélnik"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "Sëlnia, sëlnia(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "Fùnkcjô do rëchòwaniô synusa dónégò nórtu"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "Fùnkcjô do rëchòwaniô kòsynusa dónégò nórtu"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "Fùnkcjô do rëchòwaniô tangenta dónégò nórtu"
+
+#~ msgid "Secant"
+#~ msgstr "Sekans"
+
+#~ msgid "Cosecant"
+#~ msgstr "Kòsekans"
+
+#~ msgid "Cotangent"
+#~ msgstr "Kòtangens"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "Hiperbòlikòwi synus"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "Hiperbòlikòwi kòsynus"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "Hiperbòlikòwi tangens"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "Hiperbòlikòwi sekans"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "Hiperbòlikòwi kòsekans"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "Hiperbòlikòwi kòtangtens"
+
+#~ msgid "Arc sine"
+#~ msgstr "Arkùs synus"
+
+#~ msgid "Arc cosine"
+#~ msgstr "Arkùs kòsynus"
+
+#~ msgid "Arc tangent"
+#~ msgstr "Arkùs tangens"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "Arkùs kòtangens"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "Hiperbòlikòwi arkùs tangens"
+
+#~ msgid "Summatory"
+#~ msgstr "Pòdrëchùjący"
+
+#~ msgid "Productory"
+#~ msgstr "Wielący"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "Normalnô"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "Lësta"
+
+#~ msgid "Differentiation"
+#~ msgstr "Òdprôwôdnô"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "Hiperbòlikòwi arkùs synus"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "Hiperbòlikòwi arkùs kòsynus"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "Arkùs kòsekans"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "Hiperbòlikòwi arkùs kòsekans"
+
+#~ msgid "Arc secant"
+#~ msgstr "Arkùs sekans"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "Hiperbòlikòwi arkùs kòsekans"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "Pòkôzywôczowô fùnkcjô (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "Naturalny logaritm"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "Dzesãtny logaritm"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "Absolutnô wôrtnota. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "Zaòkrãglënié w dół. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "Zaòkrãglënié w górã. ceil(n)=⌊n⌋"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimum"
+
+#~ msgid "Maximum"
+#~ msgstr "Maksimum"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "Wiksze jak. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "Mniésze jak. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "Równe. eq(a,b) = a=b"
+
+#, fuzzy
+#~| msgid "Approximation approx(a)=a±n"
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "Przëkrodzenié approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "Nie równe. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "Wiksze abò równe. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "Mniésze abò równe. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "Logiczné ë"
+
+#~ msgid "Boolean not"
+#~ msgstr "Logiczné nié"
+
+#~ msgid "Boolean or"
+#~ msgstr "Logiczné abò"
+
+#~ msgid "Boolean xor"
+#~ msgstr "logiczné xabò (xor)"
+
+#~ msgid "Boolean implication"
+#~ msgstr "Logiczné nastãpstwò"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "Nôwikszi wespólny dzélnik"
+
+#~ msgid "Least common multiple"
+#~ msgstr "Nômniészô wespólnô wielenô"
+
+#~ msgid "Root"
+#~ msgstr "Pierwińc"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ", "
+
+#, fuzzy
+#~| msgctxt "Current parameter is the bounding"
+#~| msgid "bounds"
+#~ msgctxt "Current parameter is the bounding"
+#~ msgid " : bounds"
+#~ msgstr "greńce"
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "Wôrtnota"
+
+#, fuzzy
+#~| msgctxt "Function parameter separator"
+#~| msgid ", "
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr ", "
+
+#, fuzzy
+#~| msgid "Calculate the expression"
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "Rachùjë wësłów"
+
+#, fuzzy
+#~| msgid "Calculate the expression"
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "Rachùjë wësłów"
+
+#, fuzzy
+#~| msgid "Calculate the expression"
+#~ msgid "Cannot calculate the lcm of 0."
+#~ msgstr "Rachùjë wësłów"
+
+#, fuzzy
+#~| msgid "Calculate the expression"
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "Rachùjë wësłów"
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgid "Subtraction"
+#~ msgstr "Òdjimanié"
+
+#, fuzzy
+#~| msgid "Error: %1"
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr "Fela: %1"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "Generowanié... Proszã żdac"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "&Zapiszë log"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Fine"
+#~ msgid "File"
+#~ msgstr "Dobrô"
+
+#~ msgid "Mode"
+#~ msgstr "Trib"
+
+#~ msgid "Save the expression"
+#~ msgstr "Zapiszë wësłów"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "Rachùjë wësłów"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#, fuzzy
+#~| msgid "<b style='color:red'>WRONG</b>"
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>LËCHÒ</b>"
+
+#~ msgid "From parser:"
+#~ msgstr "Òd parsera:"
+
+#~ msgid "Hyperbolic arc cotangent"
+#~ msgstr "Hiperbòlikòwi arkùs kòtangens"
+
+#~ msgid "Real"
+#~ msgstr "Realné"
+
+#~ msgid "%1, "
+#~ msgstr "%1, "
+
+#~ msgid "Conjugate"
+#~ msgstr "Sprzëgłé"
+
+#~ msgid "Imaginary"
+#~ msgstr "Mëkcëznô"

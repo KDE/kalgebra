@@ -1,0 +1,837 @@
+# translation of kalgebra.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+# Ravishankar Shrivastava <raviratlami@aol.in>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2009-02-21 19:55+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
+"Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
+"Language: hne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr ""
+
+#: consolehtml.cpp:178
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options: %1"
+msgstr "फंक्सन्स"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr ""
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr ""
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr ""
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr ""
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr ""
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "जानकारी"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "फंक्सन जोड़व/संपादित करव"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr ""
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#: functionedit.cpp:104
+#, fuzzy, kde-format
+#| msgid "Functions"
+msgid "Options"
+msgstr "फंक्सन्स"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "ठीक"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr ""
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr ""
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr ""
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr ""
+
+#: kalgebra.cpp:120
+#, fuzzy, kde-format
+#| msgid "To Expression"
+msgid "Session"
+msgstr "को एक्सप्रेसन"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "चर"
+
+#: kalgebra.cpp:158
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "&Calculator"
+msgstr "एक गनक"
+
+#: kalgebra.cpp:170
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "C&alculator"
+msgstr "एक गनक"
+
+#: kalgebra.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Load Script"
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "स्क्रिप्ट लोड करव (&L)"
+
+#: kalgebra.cpp:174
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgid "Recent Scripts"
+msgstr "स्क्रिप्ट सहेजव (&S)"
+
+#: kalgebra.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@item:inmenu"
+#| msgid "&Save Script"
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "स्क्रिप्ट सहेजव (&S)"
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr ""
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr ""
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr ""
+
+#: kalgebra.cpp:187
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "एक गनक"
+
+#: kalgebra.cpp:188
+#, fuzzy, kde-format
+#| msgctxt "@title:column"
+#| msgid "Value"
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "मान"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "फंक्सन्स"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "सूची"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "जोड़व (&A)"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr ""
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "&2डी ग्राफ "
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "2डी ग्राफ (&D)"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "ग्रिड (&G)"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "रिसाल्यूसन"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "खराब"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "सामान्य"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "बढ़िया"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "बहुत बढ़िया"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "&3डी ग्राफ"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "३डी ग्राफ (&G)"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "दृस्य रीसेट करव (&R)"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "बिन्दुव"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "पंक्तियाँ"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "ठोस"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr ""
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "सब्दकोस (&D)"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr ""
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "संपादन (&E)"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "स्क्रिप्ट चुनव"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "स्क्रिप्ट (*.kal)"
+
+#: kalgebra.cpp:531
+#, fuzzy, kde-format
+#| msgid "Text File (*)"
+msgid "HTML File (*.html)"
+msgstr "पाठ फाइल (*)"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ","
+
+#: kalgebra.cpp:554
+#, fuzzy, kde-format
+#| msgid "Error: %1"
+msgid "Errors: %1"
+msgstr "गलती: %1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr ""
+
+#: kalgebra.cpp:592
+#, fuzzy, kde-format
+#| msgid ""
+#| "*.png|Image File\n"
+#| "*.svg|SVG File"
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr ""
+"*.png|फोटू फाइल\n"
+"*.svg|एसवीजी फाइल"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "तैयार"
+
+#: kalgebra.cpp:683
+#, fuzzy, kde-format
+msgid "Add variable"
+msgstr "कोई चर जोड़व/संपादित करव"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr ""
+
+#: main.cpp:30
+#, fuzzy, kde-format
+#| msgid "A calculator"
+msgid "A portable calculator"
+msgstr "एक गनक"
+
+#: main.cpp:31
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2008 Aleix Pol Gonzalez"
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2008 अलेक्स पोल गोंजालेज"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "Aleix Pol Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "एलेक्स पोल गोंजालेज"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविसंकर सिरीवास्तव, जी. करूनाकर"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in,"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "कोई चर जोड़व/संपादित करव"
+
+#: varedit.cpp:38
+#, fuzzy, kde-format
+#| msgid "Variables"
+msgid "Remove Variable"
+msgstr "चर"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "मूल्य '%1' संपादित करव"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "नइ मिलत"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>गलत</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr ""
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr ""
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr ""
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr ""
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr ""
+
+#~ msgid "C&onsole"
+#~ msgstr "कंसोल (&o)"
+
+#~ msgid "&Console"
+#~ msgstr "कंसोल (&C)"
+
+#~ msgid "<b>Formula</b>"
+#~ msgstr "<b>सूत्र</b>"
+
+#, fuzzy
+#~| msgctxt "3D graph done in x miliseconds"
+#~| msgid "Done: %1ms"
+#~ msgctxt "3D graph done in x milliseconds"
+#~ msgid "Done: %1ms"
+#~ msgstr "पूरा: %1ms"
+
+#~ msgid "Error: %1"
+#~ msgstr "गलती: %1"
+
+#~ msgctxt "@action:button"
+#~ msgid "Clear"
+#~ msgstr "साफ करव"
+
+#~ msgid "*.png|PNG File"
+#~ msgstr "*.png|पीएनजी फाइल"
+
+#~ msgid "&Transparency"
+#~ msgstr "पारदर्सिता (&T)"
+
+#~ msgid "Type"
+#~ msgstr "किसिम"
+
+#~ msgid "To Expression"
+#~ msgstr "को एक्सप्रेसन"
+
+#~ msgid "To MathML"
+#~ msgstr "को मैथएमएल"
+
+#~ msgid "Simplify"
+#~ msgstr "सरल करव"
+
+#~ msgid "center"
+#~ msgstr "बीच में"
+
+#~ msgctxt "@title:column"
+#~ msgid "Name"
+#~ msgstr "नाम"
+
+#~ msgctxt "@title:column"
+#~ msgid "Function"
+#~ msgstr "फंक्सन"
+
+#~ msgid "%1 function added"
+#~ msgstr "%1 फंक्सन जोड़े"
+
+#~ msgctxt "@title:column"
+#~ msgid "Description"
+#~ msgstr "वर्नन"
+
+#~ msgctxt "@title:column"
+#~ msgid "Parameters"
+#~ msgstr "पैरामीटर्स"
+
+#~ msgid "%1("
+#~ msgstr "%1("
+
+#~ msgid "%1... parameters, ...%2)"
+#~ msgstr "%1... पैरामीटर्स, ...%2)"
+
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgid "Addition"
+#~ msgstr "जोड़व"
+
+#~ msgid "Multiplication"
+#~ msgstr "गुना"
+
+#~ msgid "Division"
+#~ msgstr "भाग"
+
+#~ msgid "Power"
+#~ msgstr "पावर"
+
+#~ msgid "Remainder"
+#~ msgstr "सेसफल"
+
+#~ msgid "Quotient"
+#~ msgstr "भागफल"
+
+#~ msgid "The factor of"
+#~ msgstr "का फैक्टर हे"
+
+#~ msgid "Factorial. factorial(n)=n!"
+#~ msgstr "फैक्टोरियल. factorial(n)=n!"
+
+#~ msgid "Function to calculate the sine of a given angle"
+#~ msgstr "दे गे कोन के ज्या के गनन करे के फंक्सन"
+
+#~ msgid "Function to calculate the cosine of a given angle"
+#~ msgstr "दे गे कोन के कोज्या के गनन करे के फंक्सन"
+
+#~ msgid "Function to calculate the tangent of a given angle"
+#~ msgstr "दे गे कोन के स्पर्सज्या के गनन करे के फंक्सन"
+
+#~ msgid "Secant"
+#~ msgstr "सीकेन्ट"
+
+#~ msgid "Cosecant"
+#~ msgstr "कोसीकेन्ट"
+
+#~ msgid "Cotangent"
+#~ msgstr "कोस्पर्सज्या"
+
+#~ msgid "Hyperbolic sine"
+#~ msgstr "हाइपरबोलिक ज्या"
+
+#~ msgid "Hyperbolic cosine"
+#~ msgstr "हाइपरबोलिक कोज्या"
+
+#~ msgid "Hyperbolic tangent"
+#~ msgstr "हाइपरबोलिक स्पर्सज्या"
+
+#~ msgid "Hyperbolic secant"
+#~ msgstr "हाइपरबोलिक सीकेन्ट"
+
+#~ msgid "Hyperbolic cosecant"
+#~ msgstr "हाइपरबोलिक कोसीकेन्ट"
+
+#~ msgid "Hyperbolic cotangent"
+#~ msgstr "हाइपरबोलिक कोटिस्पर्सज्या"
+
+#~ msgid "Arc sine"
+#~ msgstr "आर्क ज्या"
+
+#~ msgid "Arc cosine"
+#~ msgstr "आर्क कोज्या"
+
+#~ msgid "Arc tangent"
+#~ msgstr "आर्क स्पर्सज्या"
+
+#~ msgid "Arc cotangent"
+#~ msgstr "आर्क कोटिस्पर्सज्या"
+
+#~ msgid "Hyperbolic arc tangent"
+#~ msgstr "अतिपरवलय चाप स्पर्सज्या"
+
+#~ msgid "Summatory"
+#~ msgstr "समेटरी"
+
+#~ msgid "Productory"
+#~ msgstr "प्रोडक्टरी"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Normal"
+#~ msgid "For all"
+#~ msgstr "सामान्य"
+
+#, fuzzy
+#~| msgid "List"
+#~ msgid "Exists"
+#~ msgstr "सूची"
+
+#~ msgid "Differentiation"
+#~ msgstr "अवकलन"
+
+#~ msgid "Hyperbolic arc sine"
+#~ msgstr "अतिपरवलय चाप ज्या"
+
+#~ msgid "Hyperbolic arc cosine"
+#~ msgstr "अतिपरवलय चाप कोज्या"
+
+#~ msgid "Arc cosecant"
+#~ msgstr "चाप कोसीकेन्ट"
+
+#~ msgid "Hyperbolic arc cosecant"
+#~ msgstr "अतिपरवलय चाप कोसीकेन्ट"
+
+#~ msgid "Arc secant"
+#~ msgstr "चाप सीकेन्ट"
+
+#~ msgid "Hyperbolic arc secant"
+#~ msgstr "अतिपरवलय चाप सीकेन्ट"
+
+#~ msgid "Exponent (e^x)"
+#~ msgstr "एक्सपोनेंट (e^x)"
+
+#~ msgid "Base-e logarithm"
+#~ msgstr "बेस-e के लघुगनक"
+
+#~ msgid "Base-10 logarithm"
+#~ msgstr "बेस-10 के लघुगनक"
+
+#~ msgid "Absolute value. abs(n)=|n|"
+#~ msgstr "निरपेक्छ मूल्य. abs(n)=|n|"
+
+#~ msgid "Floor value. floor(n)=⌊n⌋"
+#~ msgstr "फ्लोर मूल्य. floor(n)=⌊n⌋"
+
+#~ msgid "Ceil value. ceil(n)=⌈n⌉"
+#~ msgstr "सील मूल्य. ceil(n)=⌈n⌉"
+
+#~ msgid "Minimum"
+#~ msgstr "सबसे कम"
+
+#~ msgid "Maximum"
+#~ msgstr "सबसे अधिक"
+
+#~ msgid "Greater than. gt(a,b)=a>b"
+#~ msgstr "से बड़ा हे. gt(a,b)=a>b"
+
+#~ msgid "Less than. lt(a,b)=a<b"
+#~ msgstr "से कम हे. lt(a,b)=a<b"
+
+#~ msgid "Equal. eq(a,b) = a=b"
+#~ msgstr "के बराबर. eq(a,b) = a=b"
+
+#~ msgid "Approximation. approx(a)=a±n"
+#~ msgstr "एप्राक्सीमेसन approx(a)=a±n"
+
+#~ msgid "Not equal. neq(a,b)=a≠b"
+#~ msgstr "से समान नइ हे. neq(a,b)=a≠b"
+
+#~ msgid "Greater or equal. geq(a,b)=a≥b"
+#~ msgstr "से बड़ा हे या समान हे. geq(a,b)=a≥b"
+
+#~ msgid "Less or equal. leq(a,b)=a≤b"
+#~ msgstr "से कम हे या समान हे. leq(a,b)=a≤b"
+
+#~ msgid "Boolean and"
+#~ msgstr "बूलिए एन्ड"
+
+#~ msgid "Boolean not"
+#~ msgstr "बूलिए नाट"
+
+#~ msgid "Boolean or"
+#~ msgstr "बूलिए आर"
+
+#~ msgid "Boolean xor"
+#~ msgstr "बूलिए एक्सआर"
+
+#~ msgid "Boolean implication"
+#~ msgstr "बूलियन इम्प्लिकेसन"
+
+#~ msgid "Greatest common divisor"
+#~ msgstr "महत्तम समापवर्त्य"
+
+#~ msgid "Least common multiple"
+#~ msgstr "लघुत्तम समापवर्त्य"
+
+#~ msgid "Root"
+#~ msgstr "रूट"
+
+#~ msgctxt "n-ary function prototype"
+#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
+#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
+
+#~ msgctxt "Function name in function prototype"
+#~ msgid "<em>%1</em>("
+#~ msgstr "<em>%1</em>("
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'><b>%1</b></em>("
+#~ msgstr "<em style='color:red'><b>%1</b></em>("
+
+#~ msgctxt "Parameter in function prototype"
+#~ msgid "par%1"
+#~ msgstr "par%1"
+
+#~ msgctxt "Current parameter in function prototype"
+#~ msgid "<b>%1</b>"
+#~ msgstr "<b>%1</b>"
+
+#~ msgctxt "Function parameter separator"
+#~ msgid ", "
+#~ msgstr ","
+
+#~ msgctxt "@title:column"
+#~ msgid "Value"
+#~ msgstr "मान"
+
+#, fuzzy
+#~| msgid ", "
+#~ msgctxt "identifier separator in error message"
+#~ msgid "', '"
+#~ msgstr ","
+
+#, fuzzy
+#~ msgid "Could not find a type that unifies '%1'"
+#~ msgstr "एक्सप्रेसन के गनना करव"
+
+#, fuzzy
+#~ msgid "Cannot calculate the remainder on 0."
+#~ msgstr "एक्सप्रेसन के गनना करव"
+
+#, fuzzy
+#~ msgid "Could not calculate the derivative for '%1'"
+#~ msgstr "एक्सप्रेसन के गनना करव"
+
+#~ msgctxt "Uncorrect function name in function prototype"
+#~ msgid "<em style='color:red'>%1</em>("
+#~ msgstr "<em style='color:red'>%1</em>("
+
+#~ msgid "Subtraction"
+#~ msgstr "रिन"
+
+#, fuzzy
+#~ msgid ""
+#~ "%1\n"
+#~ "Error: %2"
+#~ msgstr "गलती: %1"
+
+#~ msgid "Generating... Please wait"
+#~ msgstr "बनात हे... किरपा करके, अगोरव."
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Save Log"
+#~ msgstr "लाग सहेजव...(&S)"
+
+#, fuzzy
+#~| msgctxt "@item:inmenu"
+#~| msgid "Fine"
+#~ msgid "File"
+#~ msgstr "बढ़िया"
+
+#~ msgid "Mode"
+#~ msgstr "मोड"
+
+#~ msgid "Save the expression"
+#~ msgstr "एक्सप्रेसन सहेजव"
+
+#~ msgid "Calculate the expression"
+#~ msgstr "एक्सप्रेसन के गनना करव"
+
+#~ msgid "%1:=%2"
+#~ msgstr "%1:=%2"
+
+#~ msgid "<b style='color:red'>%1</b>"
+#~ msgstr "<b style='color:red'>%1</b>"
+
+#~ msgid "From parser:"
+#~ msgstr "पारसर से:"
+
+#~ msgid "Hyperbolic arc cotangent"
+#~ msgstr "अतिपरवलय चाप कोस्पर्सज्या"
+
+#~ msgid "Real"
+#~ msgstr "रीयल"
+
+#, fuzzy
+#~| msgctxt "Function parameter separator"
+#~| msgid ", "
+#~ msgid "%1, "
+#~ msgstr ","
+
+#~ msgid "Conjugate"
+#~ msgstr "कान्जुगेट"
+
+#~ msgid "Imaginary"
+#~ msgstr "इमेजऊनरी"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&New"
+#~ msgstr "नवा (&N)"
+
+#~ msgctxt "@item:inmenu"
+#~ msgid "&Quit"
+#~ msgstr "बाहिर जाव (&Q)"
+
+#~ msgid "&Save"
+#~ msgstr "सहेजव (&S)"

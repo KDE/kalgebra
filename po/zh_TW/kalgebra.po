@@ -1,0 +1,445 @@
+# translation of kalgebra.po to Chinese Traditional
+# translation of kalgebra.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2007, 2010, 2011, 2012, 2013, 2014, 2015, 2017.
+# Frank Weng (a.k.a. Franklin) <franklin@goodhorse.idv.tw>, 2009.
+# Jeff Huang <s8321414@gmail.com>, 2016.
+# pan93412 <pan93412@gmail.com>, 2018.
+#
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"PO-Revision-Date: 2018-12-26 18:23+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 18.12.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: consolehtml.cpp:173
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:178
+#, kde-format
+msgid "Options: %1"
+msgstr "選項：%1"
+
+#: consolehtml.cpp:228
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "貼上 %1 以輸入"
+
+#: consolemodel.cpp:87
+#, kde-format
+msgid "Paste to Input"
+msgstr "貼上以輸入"
+
+#: consolemodel.cpp:89
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>錯誤：<b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:111
+#, kde-format
+msgid "Imported: %1"
+msgstr "已匯入：%1"
+
+#: consolemodel.cpp:113
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>錯誤：無法載入 %1。<br />%2</ul>"
+
+#: dictionary.cpp:44
+#, kde-format
+msgid "Information"
+msgstr "資訊"
+
+#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:47
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "新增/編輯函數"
+
+#: functionedit.cpp:92
+#, kde-format
+msgid "Preview"
+msgstr "預覽"
+
+#: functionedit.cpp:99
+#, kde-format
+msgid "From:"
+msgstr "從："
+
+#: functionedit.cpp:101
+#, kde-format
+msgid "To:"
+msgstr "到："
+
+#: functionedit.cpp:104
+#, kde-format
+msgid "Options"
+msgstr "選項"
+
+#: functionedit.cpp:109
+#, kde-format
+msgid "OK"
+msgstr "確定"
+
+#: functionedit.cpp:111
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "移除"
+
+#: functionedit.cpp:238
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "您指定的選項不正確"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "下載限制不能大於上傳限制"
+
+#: kalgebra.cpp:74
+#, kde-format
+msgid "Plot 2D"
+msgstr "繪製平面圖"
+
+#: kalgebra.cpp:95
+#, kde-format
+msgid "Plot 3D"
+msgstr "繪製立體圖"
+
+#: kalgebra.cpp:120
+#, kde-format
+msgid "Session"
+msgstr "工作階段"
+
+#: kalgebra.cpp:139 kalgebra.cpp:238
+#, kde-format
+msgid "Variables"
+msgstr "變數"
+
+#: kalgebra.cpp:158
+#, kde-format
+msgid "&Calculator"
+msgstr "計算機(&C)"
+
+#: kalgebra.cpp:170
+#, kde-format
+msgid "C&alculator"
+msgstr "計算機(&A)"
+
+#: kalgebra.cpp:172
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "載入文稿(&L)..."
+
+#: kalgebra.cpp:174
+#, kde-format
+msgid "Recent Scripts"
+msgstr "最近的文稿"
+
+#: kalgebra.cpp:178
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "儲存文稿(&S)..."
+
+#: kalgebra.cpp:180
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "匯出紀錄(&E)..."
+
+#: kalgebra.cpp:183
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "插入 ans(&I)…"
+
+#: kalgebra.cpp:185
+#, kde-format
+msgid "Execution Mode"
+msgstr "執行模式"
+
+#: kalgebra.cpp:187
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "計算"
+
+#: kalgebra.cpp:188
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "估算"
+
+#: kalgebra.cpp:208
+#, kde-format
+msgid "Functions"
+msgstr "函數"
+
+#: kalgebra.cpp:220
+#, kde-format
+msgid "List"
+msgstr "列表"
+
+#: kalgebra.cpp:226 kalgebra.cpp:458
+#, kde-format
+msgid "&Add"
+msgstr "新增(&A)"
+
+#: kalgebra.cpp:242
+#, kde-format
+msgid "Viewport"
+msgstr "檢視埠"
+
+#: kalgebra.cpp:246
+#, kde-format
+msgid "&2D Graph"
+msgstr "平面圖(&2)"
+
+#: kalgebra.cpp:258
+#, kde-format
+msgid "2&D Graph"
+msgstr "平面圖(&D)"
+
+#: kalgebra.cpp:260
+#, kde-format
+msgid "&Grid"
+msgstr "格線(&G)"
+
+#: kalgebra.cpp:261
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "保持比例(&K)"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Resolution"
+msgstr "解析度"
+
+#: kalgebra.cpp:270
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "低"
+
+#: kalgebra.cpp:271
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "正常"
+
+#: kalgebra.cpp:272
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "高"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "非常高"
+
+#: kalgebra.cpp:307
+#, kde-format
+msgid "&3D Graph"
+msgstr "立體圖(&3)"
+
+#: kalgebra.cpp:315
+#, kde-format
+msgid "3D &Graph"
+msgstr "立體圖(&G)"
+
+#: kalgebra.cpp:318
+#, kde-format
+msgid "&Reset View"
+msgstr "重置檢視(&R)"
+
+#: kalgebra.cpp:320
+#, kde-format
+msgid "Dots"
+msgstr "點"
+
+#: kalgebra.cpp:321
+#, kde-format
+msgid "Lines"
+msgstr "線"
+
+#: kalgebra.cpp:322
+#, kde-format
+msgid "Solid"
+msgstr "立體"
+
+#: kalgebra.cpp:339
+#, kde-format
+msgid "Operations"
+msgstr "操作"
+
+#: kalgebra.cpp:343
+#, kde-format
+msgid "&Dictionary"
+msgstr "字典(&D)"
+
+#: kalgebra.cpp:354
+#, kde-format
+msgid "Look for:"
+msgstr "尋找："
+
+#: kalgebra.cpp:447
+#, kde-format
+msgid "&Editing"
+msgstr "編輯(&E)"
+
+#: kalgebra.cpp:504
+#, kde-format
+msgid "Choose a script"
+msgstr "請選擇文稿"
+
+#: kalgebra.cpp:504 kalgebra.cpp:520
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "文稿（*.kal）"
+
+#: kalgebra.cpp:531
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "HTML 檔（*.html）"
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid ", "
+msgstr ","
+
+#: kalgebra.cpp:554
+#, kde-format
+msgid "Errors: %1"
+msgstr "錯誤：%1"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "選擇要在哪裡放置已繪製之圖形"
+
+#: kalgebra.cpp:592
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "圖片檔 (*.png);;SVG 檔 (*.svg)"
+
+#: kalgebra.cpp:649
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "就緒"
+
+#: kalgebra.cpp:683
+#, kde-format
+msgid "Add variable"
+msgstr "新增/變數"
+
+#: kalgebra.cpp:687
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "請輸入新變數名稱"
+
+#: main.cpp:30
+#, kde-format
+msgid "A portable calculator"
+msgstr "計算機"
+
+#: main.cpp:31
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:32
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgid "Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Franklin Weng"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin@goodhorse.idv.tw"
+
+#: varedit.cpp:33
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "新增/編輯變數"
+
+#: varedit.cpp:38
+#, kde-format
+msgid "Remove Variable"
+msgstr "移除變數"
+
+#: varedit.cpp:63
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "編輯 %1 數值"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "not available"
+msgstr "N/A"
+
+#: varedit.cpp:98
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:101
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>錯誤</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "左："
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "頂端："
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "寬度："
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "高度："
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "套用"
