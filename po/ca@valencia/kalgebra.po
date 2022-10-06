@@ -202,7 +202,7 @@ msgstr "Llista"
 #: kalgebra.cpp:226 kalgebra.cpp:458
 #, kde-format
 msgid "&Add"
-msgstr "&Afig"
+msgstr "Afi&g"
 
 #: kalgebra.cpp:242
 #, kde-format
@@ -227,7 +227,7 @@ msgstr "&Quadrícula"
 #: kalgebra.cpp:261
 #, kde-format
 msgid "&Keep Aspect Ratio"
-msgstr "&Mantín la relació d'aspecte"
+msgstr "Man&tín la relació d'aspecte"
 
 #: kalgebra.cpp:269
 #, kde-format
