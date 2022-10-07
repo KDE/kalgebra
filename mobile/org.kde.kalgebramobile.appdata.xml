@@ -19,6 +19,7 @@
   <name xml:lang="gl">KAlgebra Mobile</name>
   <name xml:lang="id">KAlgebra Mobile</name>
   <name xml:lang="it">KAlgebra Mobile</name>
+  <name xml:lang="ka">მობილური KAlgebra</name>
   <name xml:lang="ko">KAlgebra 모바일</name>
   <name xml:lang="nl">KAlgebra-mobiel</name>
   <name xml:lang="nn">KAlgebra mobil</name>
@@ -50,6 +51,7 @@
   <summary xml:lang="gl">Calculadora gráfica</summary>
   <summary xml:lang="id">Kalkulator Grafik</summary>
   <summary xml:lang="it">Calcolatrice grafica</summary>
+  <summary xml:lang="ka">გრაფიკული კალკულატორი</summary>
   <summary xml:lang="ko">그래핑 계산기</summary>
   <summary xml:lang="nl">Rekenmachine met grafieken</summary>
   <summary xml:lang="nn">Grafkalkulator</summary>

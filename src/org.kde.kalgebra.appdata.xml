@@ -21,6 +21,7 @@
   <name xml:lang="hu">KAlgebra</name>
   <name xml:lang="id">KAlgebra</name>
   <name xml:lang="it">KAlgebra</name>
+  <name xml:lang="ka">KAlgebra</name>
   <name xml:lang="ko">KAlgebra</name>
   <name xml:lang="lt">KAlgebra</name>
   <name xml:lang="nds">KAlgebra</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="hu">Grafikus számológép</summary>
   <summary xml:lang="id">Kalkulator Grafik</summary>
   <summary xml:lang="it">Calcolatrice grafica</summary>
+  <summary xml:lang="ka">გრაფიკული კალკულატორი</summary>
   <summary xml:lang="ko">그래핑 계산기</summary>
   <summary xml:lang="lt">Grafinis skaičiuotuvas</summary>
   <summary xml:lang="nds">Funkschonenreekner</summary>
