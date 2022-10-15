@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-07-03 00:41+0000\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
 "PO-Revision-Date: 2022-06-19 13:55+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -212,28 +212,28 @@ msgstr "Steg"
 msgid "Run"
 msgstr "Køyr"
 
-#: main.cpp:58
+#: main.cpp:52
 #, kde-format
 msgid "A portable calculator"
 msgstr "Portabel kalkulator"
 
-#: main.cpp:59
+#: main.cpp:53
 #, kde-format
 msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
 msgstr "© 2006–2020 Aleix Pol i Gonzalez"
 
-#: main.cpp:60
+#: main.cpp:54
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
-#: main.cpp:61
+#: main.cpp:55
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Karl Ove Hufthammer"
 
-#: main.cpp:61
+#: main.cpp:55
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

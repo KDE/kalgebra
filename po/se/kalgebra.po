@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-07-03 00:41+0000\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
 "PO-Revision-Date: 2007-09-11 22:44+0200\n"
 "Last-Translator: Northern Sami translation team <i18n-sme@lister.ping.uio."
 "no>\n"
@@ -19,17 +19,17 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: consolehtml.cpp:175
+#: consolehtml.cpp:173
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr ""
 
-#: consolehtml.cpp:180
+#: consolehtml.cpp:178
 #, kde-format
 msgid "Options: %1"
 msgstr ""
 
-#: consolehtml.cpp:230
+#: consolehtml.cpp:228
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr ""
@@ -110,248 +110,248 @@ msgstr ""
 msgid "Downlimit cannot be greater than uplimit"
 msgstr ""
 
-#: kalgebra.cpp:75
+#: kalgebra.cpp:74
 #, kde-format
 msgid "Plot 2D"
 msgstr ""
 
-#: kalgebra.cpp:96
+#: kalgebra.cpp:95
 #, kde-format
 msgid "Plot 3D"
 msgstr ""
 
-#: kalgebra.cpp:121
+#: kalgebra.cpp:120
 #, kde-format
 msgid "Session"
 msgstr "Bargovuorru"
 
-#: kalgebra.cpp:140 kalgebra.cpp:239
+#: kalgebra.cpp:139 kalgebra.cpp:238
 #, kde-format
 msgid "Variables"
 msgstr ""
 
-#: kalgebra.cpp:159
+#: kalgebra.cpp:158
 #, kde-format
 msgid "&Calculator"
 msgstr ""
 
-#: kalgebra.cpp:171
+#: kalgebra.cpp:170
 #, kde-format
 msgid "C&alculator"
 msgstr ""
 
-#: kalgebra.cpp:173
+#: kalgebra.cpp:172
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr ""
 
-#: kalgebra.cpp:175
+#: kalgebra.cpp:174
 #, kde-format
 msgid "Recent Scripts"
 msgstr ""
 
-#: kalgebra.cpp:179
+#: kalgebra.cpp:178
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr ""
 
-#: kalgebra.cpp:181
+#: kalgebra.cpp:180
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr ""
 
-#: kalgebra.cpp:184
+#: kalgebra.cpp:183
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr ""
 
-#: kalgebra.cpp:186
+#: kalgebra.cpp:185
 #, kde-format
 msgid "Execution Mode"
 msgstr ""
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:187
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr ""
 
-#: kalgebra.cpp:189
+#: kalgebra.cpp:188
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr ""
 
-#: kalgebra.cpp:209
+#: kalgebra.cpp:208
 #, kde-format
 msgid "Functions"
 msgstr ""
 
-#: kalgebra.cpp:221
+#: kalgebra.cpp:220
 #, kde-format
 msgid "List"
 msgstr ""
 
-#: kalgebra.cpp:227 kalgebra.cpp:459
+#: kalgebra.cpp:226 kalgebra.cpp:458
 #, kde-format
 msgid "&Add"
 msgstr ""
 
-#: kalgebra.cpp:243
+#: kalgebra.cpp:242
 #, kde-format
 msgid "Viewport"
 msgstr ""
 
-#: kalgebra.cpp:247
+#: kalgebra.cpp:246
 #, kde-format
 msgid "&2D Graph"
 msgstr ""
 
-#: kalgebra.cpp:259
+#: kalgebra.cpp:258
 #, kde-format
 msgid "2&D Graph"
 msgstr ""
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:260
 #, kde-format
 msgid "&Grid"
 msgstr ""
 
-#: kalgebra.cpp:262
+#: kalgebra.cpp:261
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr ""
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:269
 #, kde-format
 msgid "Resolution"
 msgstr ""
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:270
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr ""
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:271
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr ""
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:272
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr ""
 
-#: kalgebra.cpp:274
+#: kalgebra.cpp:273
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr ""
 
-#: kalgebra.cpp:308
+#: kalgebra.cpp:307
 #, kde-format
 msgid "&3D Graph"
 msgstr ""
 
-#: kalgebra.cpp:316
+#: kalgebra.cpp:315
 #, kde-format
 msgid "3D &Graph"
 msgstr ""
 
-#: kalgebra.cpp:319
+#: kalgebra.cpp:318
 #, kde-format
 msgid "&Reset View"
 msgstr ""
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:320
 #, kde-format
 msgid "Dots"
 msgstr ""
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:321
 #, kde-format
 msgid "Lines"
 msgstr ""
 
-#: kalgebra.cpp:323
+#: kalgebra.cpp:322
 #, kde-format
 msgid "Solid"
 msgstr ""
 
-#: kalgebra.cpp:340
+#: kalgebra.cpp:339
 #, kde-format
 msgid "Operations"
 msgstr ""
 
-#: kalgebra.cpp:344
+#: kalgebra.cpp:343
 #, kde-format
 msgid "&Dictionary"
 msgstr ""
 
-#: kalgebra.cpp:355
+#: kalgebra.cpp:354
 #, kde-format
 msgid "Look for:"
 msgstr ""
 
-#: kalgebra.cpp:448
+#: kalgebra.cpp:447
 #, kde-format
 msgid "&Editing"
 msgstr ""
 
-#: kalgebra.cpp:505
+#: kalgebra.cpp:504
 #, kde-format
 msgid "Choose a script"
 msgstr ""
 
-#: kalgebra.cpp:505 kalgebra.cpp:521
+#: kalgebra.cpp:504 kalgebra.cpp:520
 #, kde-format
 msgid "Script (*.kal)"
 msgstr ""
 
-#: kalgebra.cpp:532
+#: kalgebra.cpp:531
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr ""
 
-#: kalgebra.cpp:555
+#: kalgebra.cpp:554
 #, kde-format
 msgid ", "
 msgstr ""
 
-#: kalgebra.cpp:555
+#: kalgebra.cpp:554
 #, kde-format
 msgid "Errors: %1"
 msgstr ""
 
-#: kalgebra.cpp:593
+#: kalgebra.cpp:592
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr ""
 
-#: kalgebra.cpp:593
+#: kalgebra.cpp:592
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr ""
 
-#: kalgebra.cpp:650
+#: kalgebra.cpp:649
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr ""
 
-#: kalgebra.cpp:684
+#: kalgebra.cpp:683
 #, kde-format
 msgid "Add variable"
 msgstr ""
 
-#: kalgebra.cpp:688
+#: kalgebra.cpp:687
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr ""

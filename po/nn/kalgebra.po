@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-07-03 00:41+0000\n"
+"POT-Creation-Date: 2022-10-01 00:41+0000\n"
 "PO-Revision-Date: 2022-06-19 13:55+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -20,17 +20,17 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: consolehtml.cpp:175
+#: consolehtml.cpp:173
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:180
+#: consolehtml.cpp:178
 #, kde-format
 msgid "Options: %1"
 msgstr "Val: %1"
 
-#: consolehtml.cpp:230
+#: consolehtml.cpp:228
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "Lim inn «%1» til inndata"
@@ -111,248 +111,248 @@ msgstr "Val du oppgav er ikkje rette"
 msgid "Downlimit cannot be greater than uplimit"
 msgstr "Nedre grense kan ikkje vera større enn øvre grense"
 
-#: kalgebra.cpp:75
+#: kalgebra.cpp:74
 #, kde-format
 msgid "Plot 2D"
 msgstr "Plott i 2D"
 
-#: kalgebra.cpp:96
+#: kalgebra.cpp:95
 #, kde-format
 msgid "Plot 3D"
 msgstr "Plott i 3D"
 
-#: kalgebra.cpp:121
+#: kalgebra.cpp:120
 #, kde-format
 msgid "Session"
 msgstr "Økt"
 
-#: kalgebra.cpp:140 kalgebra.cpp:239
+#: kalgebra.cpp:139 kalgebra.cpp:238
 #, kde-format
 msgid "Variables"
 msgstr "Variablar"
 
-#: kalgebra.cpp:159
+#: kalgebra.cpp:158
 #, kde-format
 msgid "&Calculator"
 msgstr "&Kalkulator"
 
-#: kalgebra.cpp:171
+#: kalgebra.cpp:170
 #, kde-format
 msgid "C&alculator"
 msgstr "K&alkulator"
 
-#: kalgebra.cpp:173
+#: kalgebra.cpp:172
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "&Opna skript …"
 
-#: kalgebra.cpp:175
+#: kalgebra.cpp:174
 #, kde-format
 msgid "Recent Scripts"
 msgstr "Nyleg brukte skript"
 
-#: kalgebra.cpp:179
+#: kalgebra.cpp:178
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "&Lagra skript …"
 
-#: kalgebra.cpp:181
+#: kalgebra.cpp:180
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr "&Eksporter logg …"
 
-#: kalgebra.cpp:184
+#: kalgebra.cpp:183
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr "&Set inn svar …"
 
-#: kalgebra.cpp:186
+#: kalgebra.cpp:185
 #, kde-format
 msgid "Execution Mode"
 msgstr "Køyremodus"
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:187
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "Rekn ut"
 
-#: kalgebra.cpp:189
+#: kalgebra.cpp:188
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "Evaluer"
 
-#: kalgebra.cpp:209
+#: kalgebra.cpp:208
 #, kde-format
 msgid "Functions"
 msgstr "Funksjonar"
 
-#: kalgebra.cpp:221
+#: kalgebra.cpp:220
 #, kde-format
 msgid "List"
 msgstr "Liste"
 
-#: kalgebra.cpp:227 kalgebra.cpp:459
+#: kalgebra.cpp:226 kalgebra.cpp:458
 #, kde-format
 msgid "&Add"
 msgstr "&Legg til"
 
-#: kalgebra.cpp:243
+#: kalgebra.cpp:242
 #, kde-format
 msgid "Viewport"
 msgstr "Visingsrute"
 
-#: kalgebra.cpp:247
+#: kalgebra.cpp:246
 #, kde-format
 msgid "&2D Graph"
 msgstr "&2D-graf"
 
-#: kalgebra.cpp:259
+#: kalgebra.cpp:258
 #, kde-format
 msgid "2&D Graph"
 msgstr "2&D-graf"
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:260
 #, kde-format
 msgid "&Grid"
 msgstr "&Rutenett"
 
-#: kalgebra.cpp:262
+#: kalgebra.cpp:261
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "&Hald fast på høgd/breidd-forhold"
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:269
 #, kde-format
 msgid "Resolution"
 msgstr "Oppløysing"
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:270
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "Dårleg"
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:271
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "Vanleg"
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:272
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "Fin"
 
-#: kalgebra.cpp:274
+#: kalgebra.cpp:273
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "Veldig fin"
 
-#: kalgebra.cpp:308
+#: kalgebra.cpp:307
 #, kde-format
 msgid "&3D Graph"
 msgstr "&3D-graf"
 
-#: kalgebra.cpp:316
+#: kalgebra.cpp:315
 #, kde-format
 msgid "3D &Graph"
 msgstr "3D-&graf"
 
-#: kalgebra.cpp:319
+#: kalgebra.cpp:318
 #, kde-format
 msgid "&Reset View"
 msgstr "&Nullstill vising"
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:320
 #, kde-format
 msgid "Dots"
 msgstr "Prikkar"
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:321
 #, kde-format
 msgid "Lines"
 msgstr "Linjer"
 
-#: kalgebra.cpp:323
+#: kalgebra.cpp:322
 #, kde-format
 msgid "Solid"
 msgstr "Heiltrekt"
 
-#: kalgebra.cpp:340
+#: kalgebra.cpp:339
 #, kde-format
 msgid "Operations"
 msgstr "Operasjonar"
 
-#: kalgebra.cpp:344
+#: kalgebra.cpp:343
 #, kde-format
 msgid "&Dictionary"
 msgstr "&Ordliste"
 
-#: kalgebra.cpp:355
+#: kalgebra.cpp:354
 #, kde-format
 msgid "Look for:"
 msgstr "Sjå etter:"
 
-#: kalgebra.cpp:448
+#: kalgebra.cpp:447
 #, kde-format
 msgid "&Editing"
 msgstr "&Redigering"
 
-#: kalgebra.cpp:505
+#: kalgebra.cpp:504
 #, kde-format
 msgid "Choose a script"
 msgstr "Vel eit skript"
 
-#: kalgebra.cpp:505 kalgebra.cpp:521
+#: kalgebra.cpp:504 kalgebra.cpp:520
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "Skript (*.kal)"
 
-#: kalgebra.cpp:532
+#: kalgebra.cpp:531
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML-fil (*.html)"
 
-#: kalgebra.cpp:555
+#: kalgebra.cpp:554
 #, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:555
+#: kalgebra.cpp:554
 #, kde-format
 msgid "Errors: %1"
 msgstr "Feil: %1"
 
-#: kalgebra.cpp:593
+#: kalgebra.cpp:592
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr "Vel kor plottet skal visast"
 
-#: kalgebra.cpp:593
+#: kalgebra.cpp:592
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr "Biletfil (*.png);;SVG-fil (*.svg)"
 
-#: kalgebra.cpp:650
+#: kalgebra.cpp:649
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "Klar"
 
-#: kalgebra.cpp:684
+#: kalgebra.cpp:683
 #, kde-format
 msgid "Add variable"
 msgstr "Legg til variabel"
 
-#: kalgebra.cpp:688
+#: kalgebra.cpp:687
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "Skriv eit namn på den nye variabelen"
