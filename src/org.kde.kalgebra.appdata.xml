@@ -149,6 +149,7 @@
       <image>https://cdn.kde.org/screenshots/kalgebra/kalgebra.png</image>
     </screenshot>
   </screenshots>
+  <launchable type="desktop-id">org.kde.kalgebra.desktop</launchable>
   <project_group>KDE</project_group>
   <provides>
     <binary>kalgebra</binary>

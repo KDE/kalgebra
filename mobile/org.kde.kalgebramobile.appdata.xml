@@ -114,6 +114,7 @@
       <image>https://cdn.kde.org/screenshots/kalgebra/kalgebra-mobile.png</image>
     </screenshot>
   </screenshots>
+  <launchable type="desktop-id">org.kde.kalgebramobile.desktop</launchable>
   <project_group>KDE</project_group>
   <provides>
     <binary>kalgebramobile</binary>
@@ -127,4 +128,5 @@
     <release version="22.08.1" date="2022-09-08"/>
     <release version="22.08.0" date="2022-08-18"/>
   </releases>
+  <content_rating type="oars-1.1"/>
 </component>
