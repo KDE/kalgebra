@@ -12,3 +12,6 @@ Dependencies:
     'frameworks/kdoctools': '@stable'
     'frameworks/kio': '@stable'
     'education/analitza': '@same'
+
+Options:
+  require-passing-tests-on: [ '@all' ]
