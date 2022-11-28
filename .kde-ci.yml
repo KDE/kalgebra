@@ -8,7 +8,7 @@ Dependencies:
     'frameworks/ki18n': '@stable'
     'frameworks/kcoreaddons': '@stable'
     'frameworks/kconfigwidgets': '@stable'
-    'frameworks/kwidgetaddons': '@stable'
+    'frameworks/kwidgetsaddons': '@stable'
     'frameworks/kdoctools': '@stable'
     'frameworks/kio': '@stable'
     'education/analitza': '@same'
