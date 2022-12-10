@@ -15,6 +15,7 @@
   <name xml:lang="en-GB">KAlgebra</name>
   <name xml:lang="es">KAlgebra</name>
   <name xml:lang="et">KAlgebra</name>
+  <name xml:lang="eu">KAlgebra</name>
   <name xml:lang="fi">KAlgebra</name>
   <name xml:lang="fr">KAlgebra</name>
   <name xml:lang="gl">KAlgebra</name>
@@ -51,6 +52,7 @@
   <summary xml:lang="en-GB">Graph Calculator</summary>
   <summary xml:lang="es">Calculadora gráfica</summary>
   <summary xml:lang="et">Graafide arvutaja</summary>
+  <summary xml:lang="eu">Kalkulagailu grafikoa</summary>
   <summary xml:lang="fi">Graafinen laskin</summary>
   <summary xml:lang="fr">Calculatrice graphique</summary>
   <summary xml:lang="gl">Calculadora gráfica</summary>
@@ -86,6 +88,7 @@
     <p xml:lang="en-GB">KAlgebra is an application that can replace your graphing calculator. It has numerical, logical, symbolic, and analysis features that let you calculate mathematical expressions on the console and graphically plot the results in 2D or 3D. KAlgebra is rooted in the Mathematical Markup Language (MathML); however, one does not need to know MathML to use KAlgebra.</p>
     <p xml:lang="es">KAlgebra es una aplicación que puede sustituir su calculadora gráfica. Contiene funciones numéricas, lógicas, simbólicas y de análisis que le permiten calcular expresiones matemáticas en la consola y dibujar gráficamente su resultado en dos o tres dimensiones. KAlgebra se basa fuertemente en el «lenguaje de marcado matemático» (MathML); sin embargo, no es necesario saber MathML para usar KAlgebra.</p>
     <p xml:lang="et">KAlgebra on rakendus, mis võib asendada su senist graafikalkulaatorit Sel on arvulisi, loogilisi, sümbolilisi ja analüüsiomadusi, mis võimaldavad arvutada matemaatilisi avaldisi konsoolis ja lasta tulemusi kujutada graafiliselt nii tasapinnaliselt (2D) kui ka ruumiliselt (3D). KAlgebra juured on matemaatilises märkekeeles (MathML), kuid KAlgebra kasutamiseks ei ole MathML-i tundmine sugugi vajalik.</p>
+    <p xml:lang="eu">KAlgebra zure kalkulagailu grafikoa ordezka dezakeen aplikazio bat da. Kontsolan adierazpen matematikoak kalkulatzen eta emaitzak 2Dtan edo 3Dtan grafikoki trazatzen uzten dizuten ezaugarriak ditu, zenbakizkoak, logikoak, sinbolikoak, eta analisikoak. KAlgebra markatze lengoaia matematikoan (MathML) errotua dago; dena den, ez da MathML jakin behar KAlgebra erabiltzeko.</p>
     <p xml:lang="fi">KAlgebralla voi korvata graafisen laskimen. Siinä on numeeriset, loogiset, symboliset ja analyysiominaisuudet, jotka tarvitaan matemaattisten lausekkeiden laskemiseen sekä tulosten piirtämiseen kaksi- tai kolmiulotteisesti. KAlgebra perustuu MathML:ään (Mathematical Markup Language), mutta sitä ei tarvitse osata käyttääkseen KAlgebraa.</p>
     <p xml:lang="fr">KAlgebra est une application qui peut remplacer votre calculatrice graphique. Elle fournit des fonctions pour le calcul numérique, logique, symbolique et l'analyse qui vous permettent de calculer des expressions mathématiques dans la console et tracer graphiquement les résultats en 2D ou 3D. KAlgebra repose sur MathML, le langage de balise pour les mathématiques ; cependant, il n'est pas nécessaire de connaître MathML pour utiliser KAlgebra.</p>
     <p xml:lang="gl">KAlgebra é unha aplicación que pode substituír as calculadoras gráficas. Ten funcionalidades numéricas, lóxicas, simbólicas e de análise que permiten calcular expresións matemáticas na consola e trazar graficamente os resultados en 2D ou 3D. KAlgebra ten o seu alicerce na linguaxe de etiquetas matemática (MathML); porén, non hai que saber nada do MathML para poder empregar KAlgebra.</p>
@@ -125,6 +128,7 @@
       <caption xml:lang="en-GB">2D plot in KAlgebra</caption>
       <caption xml:lang="es">Gráfico 2D en KAlgebra</caption>
       <caption xml:lang="et">2D joonis KAlgebras</caption>
+      <caption xml:lang="eu">2Dko trazua KAlgebran</caption>
       <caption xml:lang="fi">2D-kaavio KAlgebrassa</caption>
       <caption xml:lang="fr">Graphique en 2 dimensions sur KAlgebra</caption>
       <caption xml:lang="gl">Gráfica 2D en KAlgebra</caption>
