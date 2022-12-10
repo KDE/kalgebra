@@ -1,28 +1,29 @@
-# Translation of kalgebra.po to Basque/Euskera (eu).
-# Copyright (C) 2011, Free Software Foundation, Inc.
-# This file is distributed under the same license as the kdeedu package.
+# Translation for kalgebra.po to Basque/Euskera (eu).
+# Copyright (C) 2011-2022 This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
 #
-# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2011.
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2011, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2011-10-08 23:35+0200\n"
-"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"PO-Revision-Date: 2022-12-09 22:01+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
+"Language-Team: Basque\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #: consolehtml.cpp:173
-#, fuzzy, kde-format
-#| msgid " <a href='%1'>%2</a>"
+#, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
-msgstr " <a href='%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
 
 #: consolehtml.cpp:178
 #, kde-format
@@ -35,10 +36,9 @@ msgid "Paste \"%1\" to input"
 msgstr "Itsatsi \"%1\" sarreran"
 
 #: consolemodel.cpp:87
-#, fuzzy, kde-format
-#| msgid "Paste \"%1\" to input"
+#, kde-format
 msgid "Paste to Input"
-msgstr "Itsatsi \"%1\" sarreran"
+msgstr "Itsatsi sarreran"
 
 #: consolemodel.cpp:89
 #, kde-format
@@ -53,7 +53,7 @@ msgstr "Inportatuta: %1"
 #: consolemodel.cpp:113
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
-msgstr "<ul class='error'>Akatsa: Ezin izan da %1 zamatu. <br /> %2</ul>"
+msgstr "<ul class='error'>Errorea: Ezin izan du %1 zamatu. <br /> %2</ul>"
 
 #: dictionary.cpp:44
 #, kde-format
@@ -68,7 +68,7 @@ msgstr "<b>%1</b>"
 #: functionedit.cpp:47
 #, kde-format
 msgid "Add/Edit a function"
-msgstr "Erantsi/Editatu funtzio bat"
+msgstr "Gehitu/Editatu funtzio bat"
 
 #: functionedit.cpp:92
 #, kde-format
@@ -96,11 +96,10 @@ msgid "OK"
 msgstr "Ados"
 
 #: functionedit.cpp:111
-#, fuzzy, kde-format
-#| msgid "Remove '%1'"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr "Kendu '%1'"
+msgstr "Kendu"
 
 #: functionedit.cpp:238
 #, kde-format
@@ -115,12 +114,12 @@ msgstr "Beheko muga ezin da goiko muga baino handiagoa izan"
 #: kalgebra.cpp:74
 #, kde-format
 msgid "Plot 2D"
-msgstr "Marraztu 2D"
+msgstr "2Dko trazua"
 
 #: kalgebra.cpp:95
 #, kde-format
 msgid "Plot 3D"
-msgstr "Marraztu 3D"
+msgstr "3Dko trazua"
 
 #: kalgebra.cpp:120
 #, kde-format
@@ -133,35 +132,31 @@ msgid "Variables"
 msgstr "Aldagaiak"
 
 #: kalgebra.cpp:158
-#, fuzzy, kde-format
-#| msgctxt "@item:inmenu"
-#| msgid "Calculate"
+#, kde-format
 msgid "&Calculator"
-msgstr "Kalkulatu"
+msgstr "&Kalkulagailua"
 
 #: kalgebra.cpp:170
-#, fuzzy, kde-format
-#| msgctxt "@item:inmenu"
-#| msgid "Calculate"
+#, kde-format
 msgid "C&alculator"
-msgstr "Kalkulatu"
+msgstr "K&alkulagailua"
 
 #: kalgebra.cpp:172
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
-msgstr "&Zamatu script-a..."
+msgstr "&Zamatu gidoia..."
 
 #: kalgebra.cpp:174
 #, kde-format
 msgid "Recent Scripts"
-msgstr "Oraintxuko script-ak"
+msgstr "Azkenaldiko gidoiak"
 
 #: kalgebra.cpp:178
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
-msgstr "&Gorde script-a..."
+msgstr "&Gorde gidoia..."
 
 #: kalgebra.cpp:180
 #, kde-format
@@ -173,7 +168,7 @@ msgstr "&Esportatu egunkaria..."
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr ""
+msgstr "&Txertatu «ANS»..."
 
 #: kalgebra.cpp:185
 #, kde-format
@@ -205,22 +200,22 @@ msgstr "Zerrenda"
 #: kalgebra.cpp:226 kalgebra.cpp:458
 #, kde-format
 msgid "&Add"
-msgstr "&Erantsi"
+msgstr "&Gehitu"
 
 #: kalgebra.cpp:242
 #, kde-format
 msgid "Viewport"
-msgstr ""
+msgstr "Ikuspegi azalera"
 
 #: kalgebra.cpp:246
 #, kde-format
 msgid "&2D Graph"
-msgstr "&2D grafikoa"
+msgstr "&2Dko grafikoa"
 
 #: kalgebra.cpp:258
 #, kde-format
 msgid "2&D Graph"
-msgstr "2&D grafikoa"
+msgstr "2&Dko grafikoa"
 
 #: kalgebra.cpp:260
 #, kde-format
@@ -230,7 +225,7 @@ msgstr "&Sareta"
 #: kalgebra.cpp:261
 #, kde-format
 msgid "&Keep Aspect Ratio"
-msgstr "&Mantendu itxuraren erlazioa"
+msgstr "&Mantendu itxura-erlazioa"
 
 #: kalgebra.cpp:269
 #, kde-format
@@ -247,7 +242,7 @@ msgstr "Kaskarra"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
-msgstr "Ohikoa"
+msgstr "Arrunta"
 
 #: kalgebra.cpp:272
 #, kde-format
@@ -264,17 +259,17 @@ msgstr "Oso ona"
 #: kalgebra.cpp:307
 #, kde-format
 msgid "&3D Graph"
-msgstr "&3D grafikoa"
+msgstr "&3Dko grafikoa"
 
 #: kalgebra.cpp:315
 #, kde-format
 msgid "3D &Graph"
-msgstr "3D &grafikoa"
+msgstr "3Dko &grafikoa"
 
 #: kalgebra.cpp:318
 #, kde-format
 msgid "&Reset View"
-msgstr "&Berrezarri ikuspegia"
+msgstr "Be&rrezarri ikuspegia"
 
 #: kalgebra.cpp:320
 #, kde-format
@@ -314,12 +309,12 @@ msgstr "&Editatzea"
 #: kalgebra.cpp:504
 #, kde-format
 msgid "Choose a script"
-msgstr "Hautatu script bat"
+msgstr "Hautatu gidoi bat"
 
 #: kalgebra.cpp:504 kalgebra.cpp:520
 #, kde-format
 msgid "Script (*.kal)"
-msgstr "Script (*.kal)"
+msgstr "Gidoia (*.kal)"
 
 #: kalgebra.cpp:531
 #, kde-format
@@ -332,25 +327,19 @@ msgid ", "
 msgstr ", "
 
 #: kalgebra.cpp:554
-#, fuzzy, kde-format
-#| msgid "Error: %1"
+#, kde-format
 msgid "Errors: %1"
-msgstr "Akatsa: %1"
+msgstr "Erroreak: %1"
 
 #: kalgebra.cpp:592
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr ""
+msgstr "Hautatu errendatutako trazuak non ipini"
 
 #: kalgebra.cpp:592
-#, fuzzy, kde-format
-#| msgid ""
-#| "*.png|Image File\n"
-#| "*.svg|SVG File"
+#, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
-msgstr ""
-"*.png|Irudi fitxategia\n"
-"*.svg|SVG fitxategia"
+msgstr "Irudi fitxategia (*.png);;SVG fitxategia (*.svg)"
 
 #: kalgebra.cpp:649
 #, kde-format
@@ -361,53 +350,49 @@ msgstr "Prest"
 #: kalgebra.cpp:683
 #, kde-format
 msgid "Add variable"
-msgstr "Erantsi aldagaia"
+msgstr "Gehitu aldagaia"
 
 #: kalgebra.cpp:687
 #, kde-format
 msgid "Enter a name for the new variable"
-msgstr "Sartu izen bat aldagai berriarentzako"
+msgstr "Sartu aldagai berriarentzako izen bat"
 
 #: main.cpp:30
-#, fuzzy, kde-format
-#| msgid "A calculator"
+#, kde-format
 msgid "A portable calculator"
-msgstr "Kalkulagailu bat"
+msgstr "Kalkulagailu eramangarri bat"
 
 #: main.cpp:31
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+#, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "Aleix Pol Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "Aleix Pol Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Iñigo Salvador Azurmendi"
 
 #: main.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "xalba@ni.eus"
 
 #: varedit.cpp:33
 #, kde-format
 msgid "Add/Edit a variable"
-msgstr "Erantsi/Editatu aldagai bat"
+msgstr "Gehitu/Editatu aldagai bat"
 
 #: varedit.cpp:38
-#, fuzzy, kde-format
-#| msgid "Variables"
+#, kde-format
 msgid "Remove Variable"
-msgstr "Aldagaiak"
+msgstr "Kendu aldagaia"
 
 #: varedit.cpp:63
 #, kde-format
@@ -417,7 +402,7 @@ msgstr "Editatu '%1' balioa"
 #: varedit.cpp:65
 #, kde-format
 msgid "not available"
-msgstr "Eskuraezina"
+msgstr "ez eskuragarri"
 
 #: varedit.cpp:98
 #, kde-format
