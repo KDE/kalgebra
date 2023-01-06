@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 #
-# Stelios <sstavra@gmail.com>, 2020, 2021.
+# Stelios <sstavra@gmail.com>, 2020, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2021-06-04 22:07+0300\n"
+"PO-Revision-Date: 2023-01-05 09:38+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
 "Language: el\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: content/ui/About.qml:27
 #, kde-format
@@ -221,10 +221,9 @@ msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
 
 #: main.cpp:54
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
