@@ -8,231 +8,234 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2022-06-12 00:40+0000\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2022-11-21 15:31+0200\n"
+"Last-Translator: Светослав Стефанов <svetlisashkov@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: content/ui/About.qml:27
 #, kde-format
 msgid "KAlgebra Mobile"
-msgstr ""
+msgstr "KAlgebra -  мобилна версия"
 
 #: content/ui/About.qml:30
 #, kde-format
 msgid "A simple scientific calculator"
-msgstr ""
+msgstr "Прост научен калкулатор"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, kde-format
 msgid "Calculator"
-msgstr ""
+msgstr "Калкулатор"
 
 #: content/ui/Console.qml:49 content/ui/main.qml:91
 #: content/ui/VariablesView.qml:27
 #, kde-format
 msgid "Variables"
-msgstr ""
+msgstr "Променливи"
 
 #: content/ui/Console.qml:67
 #, kde-format
 msgid "Load Script"
-msgstr ""
+msgstr "Зареждане на скрипт"
 
 #: content/ui/Console.qml:71 content/ui/Console.qml:81
 #, kde-format
 msgid "Script (*.kal)"
-msgstr ""
+msgstr "Скрипт (*.kal)"
 
 #: content/ui/Console.qml:77
 #, kde-format
 msgid "Save Script"
-msgstr ""
+msgstr "Запазване на скрипт"
 
 #: content/ui/Console.qml:88
 #, kde-format
 msgid "Export Log"
-msgstr ""
+msgstr "Изнасяне на журнал"
 
 #: content/ui/Console.qml:92
 #, kde-format
 msgid "HTML (*.html)"
-msgstr ""
+msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:99
 #, kde-format
 msgid "Evaluate"
-msgstr ""
+msgstr "Оценяване"
 
 #: content/ui/Console.qml:99
 #, kde-format
 msgid "Calculate"
-msgstr ""
+msgstr "Изчисляване"
 
 #: content/ui/Console.qml:105
 #, kde-format
 msgid "Clear Log"
-msgstr ""
+msgstr "Изчистване на журнала"
 
 #: content/ui/Console.qml:127
 #, kde-format
 msgid "2D Plot"
-msgstr ""
+msgstr "Двумерна графика"
 
 #: content/ui/Console.qml:135
 #, kde-format
 msgid "3D Plot"
-msgstr ""
+msgstr "Тримерна графика"
 
 #: content/ui/Console.qml:143
 #, kde-format
 msgid "Copy \"%1\""
-msgstr ""
+msgstr "Копиране на \"%1\""
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
 #, kde-format
 msgid "Clear All"
-msgstr ""
+msgstr "Изчистване на всичко"
 
 #: content/ui/controls/ExpressionInput.qml:72
 #, kde-format
 msgid "Expression to calculate..."
-msgstr ""
+msgstr "Изрази за изчисляване..."
 
 #: content/ui/Dictionary.qml:43
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Име:"
 
 #: content/ui/Dictionary.qml:56 content/ui/Dictionary.qml:60
 #: content/ui/Dictionary.qml:64 content/ui/Dictionary.qml:68
 #, kde-format
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: content/ui/main.qml:55
 #, kde-format
 msgid "KAlgebra"
-msgstr ""
+msgstr "KAlgebra"
 
 #: content/ui/main.qml:72
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "Двумерно изчертаване"
 
 #: content/ui/main.qml:79
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "Тримерно изчертаване"
 
 #: content/ui/main.qml:85
 #, kde-format
 msgid "Value Tables"
-msgstr ""
+msgstr "Таблици със стойности"
 
 #: content/ui/main.qml:97
 #, kde-format
 msgid "Dictionary"
-msgstr ""
+msgstr "Речник"
 
 #: content/ui/main.qml:103
 #, kde-format
 msgid "About KAlgebra"
-msgstr ""
+msgstr "Относно KAlgebra"
 
 #: content/ui/Plot2D.qml:46 content/ui/Plot3D.qml:45
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Запазване"
 
 #: content/ui/Plot2D.qml:59
 #, kde-format
 msgid "View Grid"
-msgstr ""
+msgstr "Показване на мрежата"
 
 #: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
 #, kde-format
 msgid "Reset Viewport"
-msgstr ""
+msgstr "Възстановяване на изгледа"
 
 #: content/ui/TableResultPage.qml:11
 #, kde-format
 msgid "Results"
-msgstr ""
+msgstr "Резултати"
 
 #: content/ui/Tables.qml:27
 #, kde-format
 msgid "Value tables"
-msgstr ""
+msgstr "Таблици със стойности"
 
 #: content/ui/Tables.qml:45
 #, kde-format
 msgid "Errors: The step cannot be 0"
-msgstr ""
+msgstr "Грешки: Стъпката не може да бъде 0"
 
 #: content/ui/Tables.qml:47
 #, kde-format
 msgid "Errors: The start and end are the same"
-msgstr ""
+msgstr "Грешки: Началото и края са едни и същи"
 
 #: content/ui/Tables.qml:49
 #, kde-format
 msgid "Errors: %1"
-msgstr ""
+msgstr "Грешки: %1"
 
 #: content/ui/Tables.qml:84
 #, kde-format
 msgid "Input"
-msgstr ""
+msgstr "Вход"
 
 #: content/ui/Tables.qml:93
 #, kde-format
 msgid "From:"
-msgstr ""
+msgstr "От:"
 
 #: content/ui/Tables.qml:100
 #, kde-format
 msgid "To:"
-msgstr ""
+msgstr "До:"
 
 #: content/ui/Tables.qml:107
 #, kde-format
 msgid "Step"
-msgstr ""
+msgstr "Стъпка"
 
 #: content/ui/Tables.qml:113
 #, kde-format
 msgid "Run"
-msgstr ""
+msgstr "Изпълнение"
 
 #: main.cpp:52
 #, kde-format
 msgid "A portable calculator"
-msgstr ""
+msgstr "Джобен калкулатор"
 
 #: main.cpp:53
 #, kde-format
 msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
 
 #: main.cpp:54
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Ясен Праматаров,Александър Шопов,Златко Попов,Светослав Стефанов"
 
 #: main.cpp:55
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
+"yasen@lindeas.com,ash@contact.bg,zlatkopopov@fsa-bg.org,svetlisashkov@yahoo."
+"com"

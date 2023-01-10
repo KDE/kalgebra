@@ -9,35 +9,35 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2012-06-20 11:46+0300\n"
-"Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
+"PO-Revision-Date: 2022-11-21 15:39+0200\n"
+"Last-Translator: Светослав Стефанов <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <dict@ludost.net>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: consolehtml.cpp:173
-#, fuzzy, kde-format
+#, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
-msgstr " <a href='%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
 
 #: consolehtml.cpp:178
-#, fuzzy, kde-format
+#, kde-format
 msgid "Options: %1"
-msgstr "Операции"
+msgstr "Настройки: %1"
 
 #: consolehtml.cpp:228
 #, kde-format
 msgid "Paste \"%1\" to input"
-msgstr ""
+msgstr "Поставете \"%1\" за вход"
 
 #: consolemodel.cpp:87
 #, kde-format
 msgid "Paste to Input"
-msgstr ""
+msgstr "Поставете за въвеждане"
 
 #: consolemodel.cpp:89
 #, kde-format
@@ -47,7 +47,7 @@ msgstr "<ul class='error'>Грешка: <b>%1</b><li>%2</li></ul>"
 #: consolemodel.cpp:111
 #, kde-format
 msgid "Imported: %1"
-msgstr ""
+msgstr "Внесени: %1"
 
 #: consolemodel.cpp:113
 #, kde-format
@@ -85,9 +85,9 @@ msgid "To:"
 msgstr "До:"
 
 #: functionedit.cpp:104
-#, fuzzy, kde-format
+#, kde-format
 msgid "Options"
-msgstr "Операции"
+msgstr "Настройки"
 
 #: functionedit.cpp:109
 #, kde-format
@@ -95,30 +95,30 @@ msgid "OK"
 msgstr "ОК"
 
 #: functionedit.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr "Премахване на \"%1\""
+msgstr "Премахване"
 
 #: functionedit.cpp:238
 #, kde-format
 msgid "The options you specified are not correct"
-msgstr ""
+msgstr "Зададените настройки не са правилни"
 
 #: functionedit.cpp:243
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
-msgstr ""
+msgstr "Долната граница не може да бъде по-голяма от горната"
 
 #: kalgebra.cpp:74
 #, kde-format
 msgid "Plot 2D"
-msgstr ""
+msgstr "Двумерно изчертаване"
 
 #: kalgebra.cpp:95
 #, kde-format
 msgid "Plot 3D"
-msgstr ""
+msgstr "Тримерно изчертаване"
 
 #: kalgebra.cpp:120
 #, kde-format
@@ -131,14 +131,14 @@ msgid "Variables"
 msgstr "Променливи"
 
 #: kalgebra.cpp:158
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Calculator"
-msgstr "Калкулатор"
+msgstr "&Калкулатор"
 
 #: kalgebra.cpp:170
-#, fuzzy, kde-format
+#, kde-format
 msgid "C&alculator"
-msgstr "Калкулатор"
+msgstr "К@алкулатор"
 
 #: kalgebra.cpp:172
 #, kde-format
@@ -161,13 +161,13 @@ msgstr "&Запис на скрипт..."
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
-msgstr ""
+msgstr "&Изнасяне на журнал..."
 
 #: kalgebra.cpp:183
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr ""
+msgstr "&Вмъкване на отговор..."
 
 #: kalgebra.cpp:185
 #, kde-format
@@ -175,16 +175,16 @@ msgid "Execution Mode"
 msgstr "Режим на изпълнение"
 
 #: kalgebra.cpp:187
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
-msgstr "Калкулатор"
+msgstr "Изчисляване"
 
 #: kalgebra.cpp:188
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
-msgstr "Стойност"
+msgstr "Оценяване"
 
 #: kalgebra.cpp:208
 #, kde-format
@@ -204,7 +204,7 @@ msgstr "&Добавяне"
 #: kalgebra.cpp:242
 #, kde-format
 msgid "Viewport"
-msgstr ""
+msgstr "Изглед"
 
 #: kalgebra.cpp:246
 #, kde-format
@@ -326,21 +326,19 @@ msgid ", "
 msgstr ", "
 
 #: kalgebra.cpp:554
-#, fuzzy, kde-format
+#, kde-format
 msgid "Errors: %1"
-msgstr "Грешка: %1"
+msgstr "Грешки: %1"
 
 #: kalgebra.cpp:592
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr ""
+msgstr "Изберете къде да бъде поставена визуализираната графика"
 
 #: kalgebra.cpp:592
-#, fuzzy, kde-format
+#, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
-msgstr ""
-"*.png|PNG изображение\n"
-"*.svg|SVG файл"
+msgstr "Файл с изображение(*.png);;файл SVG (*.svg)"
 
 #: kalgebra.cpp:649
 #, kde-format
@@ -359,31 +357,33 @@ msgid "Enter a name for the new variable"
 msgstr "Въведете име за новата променлива"
 
 #: main.cpp:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "A portable calculator"
-msgstr "Калкулатор"
+msgstr "Джобен калкулатор"
 
 #: main.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
 #: main.cpp:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Ясен Праматаров,Александър Шопов,Златко Попов,Светослав Стефанов"
 
 #: main.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
+"yasen@lindeas.com,ash@contact.bg,zlatkopopov@fsa-bg.org,svetlisashkov@yahoo."
+"com"
 
 #: varedit.cpp:33
 #, kde-format
@@ -391,9 +391,9 @@ msgid "Add/Edit a variable"
 msgstr "Добавяне/Редактиране на променлива"
 
 #: varedit.cpp:38
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Variable"
-msgstr "Променливи"
+msgstr "Премахване на променлива"
 
 #: varedit.cpp:63
 #, kde-format
@@ -418,12 +418,12 @@ msgstr "<b style='color:red'>ГРЕШНО</b>"
 #: viewportwidget.cpp:46
 #, kde-format
 msgid "Left:"
-msgstr ""
+msgstr "Отляво:"
 
 #: viewportwidget.cpp:47
 #, kde-format
 msgid "Top:"
-msgstr ""
+msgstr "Отгоре:"
 
 #: viewportwidget.cpp:48
 #, kde-format
