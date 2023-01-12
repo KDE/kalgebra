@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2022-10-06 23:09+0200\n"
+"PO-Revision-Date: 2023-01-11 10:33+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: consolehtml.cpp:173
 #, kde-format
@@ -31,12 +31,12 @@ msgstr "პარამეტრები: %1"
 #: consolehtml.cpp:228
 #, kde-format
 msgid "Paste \"%1\" to input"
-msgstr ""
+msgstr "%1-ის ჩასმა შესატანად"
 
 #: consolemodel.cpp:87
 #, kde-format
 msgid "Paste to Input"
-msgstr ""
+msgstr "ჩასვით შესატანად"
 
 #: consolemodel.cpp:89
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "შემოტანილია: %1"
 #: consolemodel.cpp:113
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
-msgstr ""
+msgstr "<ul class='error'>შეცდომა: %1-ის ჩატვირთვა შეუძლებელია. <br /> %2</ul>"
 
 #: dictionary.cpp:44
 #, kde-format
@@ -61,12 +61,12 @@ msgstr "ინფორმაცია"
 #: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
 #, kde-format
 msgid "<b>%1</b>"
-msgstr ""
+msgstr "<b>%1</b>"
 
 #: functionedit.cpp:47
 #, kde-format
 msgid "Add/Edit a function"
-msgstr ""
+msgstr "ფუნქციის დამატება/ჩასწორება"
 
 #: functionedit.cpp:92
 #, kde-format
@@ -102,22 +102,22 @@ msgstr "წაშლა"
 #: functionedit.cpp:238
 #, kde-format
 msgid "The options you specified are not correct"
-msgstr ""
+msgstr "მითითებული პარამეტრები არასწორია"
 
 #: functionedit.cpp:243
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
-msgstr ""
+msgstr "ქვედა ზღვარი ზედაზე დიდი არ შეიძლება, ყოს"
 
 #: kalgebra.cpp:74
 #, kde-format
 msgid "Plot 2D"
-msgstr ""
+msgstr "2D გრაფიკი"
 
 #: kalgebra.cpp:95
 #, kde-format
 msgid "Plot 3D"
-msgstr ""
+msgstr "3D გრაფიკი"
 
 #: kalgebra.cpp:120
 #, kde-format
@@ -183,7 +183,7 @@ msgstr "გამოთვლა"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
-msgstr ""
+msgstr "შეფასება"
 
 #: kalgebra.cpp:208
 #, kde-format
@@ -203,17 +203,17 @@ msgstr "&დამატება"
 #: kalgebra.cpp:242
 #, kde-format
 msgid "Viewport"
-msgstr ""
+msgstr "ჩვენების არე"
 
 #: kalgebra.cpp:246
 #, kde-format
 msgid "&2D Graph"
-msgstr ""
+msgstr "&2D გრაფიკი"
 
 #: kalgebra.cpp:258
 #, kde-format
 msgid "2&D Graph"
-msgstr ""
+msgstr "&2D გრაფიკი"
 
 #: kalgebra.cpp:260
 #, kde-format
@@ -223,7 +223,7 @@ msgstr "&ბადე"
 #: kalgebra.cpp:261
 #, kde-format
 msgid "&Keep Aspect Ratio"
-msgstr ""
+msgstr "საწყისი ფარდობის &შენარჩუნება"
 
 #: kalgebra.cpp:269
 #, kde-format
@@ -252,22 +252,22 @@ msgstr "დაწვრილებით"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
-msgstr ""
+msgstr "ძალიან ზუსტი"
 
 #: kalgebra.cpp:307
 #, kde-format
 msgid "&3D Graph"
-msgstr ""
+msgstr "&3D გრაფიკი"
 
 #: kalgebra.cpp:315
 #, kde-format
 msgid "3D &Graph"
-msgstr ""
+msgstr "&3D გრაფიკი"
 
 #: kalgebra.cpp:318
 #, kde-format
 msgid "&Reset View"
-msgstr ""
+msgstr "ხედის საწყის მნიშვნელობაზე დაბრუნება"
 
 #: kalgebra.cpp:320
 #, kde-format
@@ -297,7 +297,7 @@ msgstr "&ლექსიკონი"
 #: kalgebra.cpp:354
 #, kde-format
 msgid "Look for:"
-msgstr ""
+msgstr "მოძებნა:"
 
 #: kalgebra.cpp:447
 #, kde-format
@@ -307,7 +307,7 @@ msgstr "&ჩასწორება"
 #: kalgebra.cpp:504
 #, kde-format
 msgid "Choose a script"
-msgstr ""
+msgstr "აირჩიეთ სკრიპტი"
 
 #: kalgebra.cpp:504 kalgebra.cpp:520
 #, kde-format
@@ -332,12 +332,12 @@ msgstr "შეცდომები: %1"
 #: kalgebra.cpp:592
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr ""
+msgstr "დარენდერებული ნახაზების ჩასაწერი საქაღლდე"
 
 #: kalgebra.cpp:592
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
-msgstr ""
+msgstr "გამოსახულების ფაილი (*.png);;SVG ფაილი (*.svg)"
 
 #: kalgebra.cpp:649
 #, kde-format
@@ -353,17 +353,17 @@ msgstr "ცვლადის დამატება"
 #: kalgebra.cpp:687
 #, kde-format
 msgid "Enter a name for the new variable"
-msgstr ""
+msgstr "შეიყვანეთ ახალი ცვლადის სახელი"
 
 #: main.cpp:30
 #, kde-format
 msgid "A portable calculator"
-msgstr ""
+msgstr "პატარა კალკულატორი"
 
 #: main.cpp:31
 #, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
 #: main.cpp:32
 #, kde-format
@@ -395,7 +395,7 @@ msgstr "ცვლადის წაშლა"
 #: varedit.cpp:63
 #, kde-format
 msgid "Edit '%1' value"
-msgstr ""
+msgstr "%1 -ის მნიშვნელობის ჩასწორება"
 
 #: varedit.cpp:65
 #, kde-format

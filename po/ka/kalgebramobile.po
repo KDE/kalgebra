@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-01 00:41+0000\n"
-"PO-Revision-Date: 2022-10-06 23:12+0200\n"
+"PO-Revision-Date: 2023-01-11 10:30+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: content/ui/About.qml:27
 #, kde-format
@@ -26,7 +26,7 @@ msgstr "მობილური KAlgebra"
 #: content/ui/About.qml:30
 #, kde-format
 msgid "A simple scientific calculator"
-msgstr ""
+msgstr "მარტივი სამეცნიერო კალკულატორი"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, kde-format
@@ -82,12 +82,12 @@ msgstr "ჟურნალის გასუფთავება"
 #: content/ui/Console.qml:127
 #, kde-format
 msgid "2D Plot"
-msgstr ""
+msgstr "2D ნახაზი"
 
 #: content/ui/Console.qml:135
 #, kde-format
 msgid "3D Plot"
-msgstr ""
+msgstr "3D ნახაზი"
 
 #: content/ui/Console.qml:143
 #, kde-format
@@ -124,12 +124,12 @@ msgstr "KAlgebra"
 #: content/ui/main.qml:72
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "2D გრაფიკი"
 
 #: content/ui/main.qml:79
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "3D გრაფიკი"
 
 #: content/ui/main.qml:85
 #, kde-format
@@ -159,7 +159,7 @@ msgstr "ბადის ნახვა"
 #: content/ui/Plot2D.qml:65 content/ui/Plot3D.qml:58
 #, kde-format
 msgid "Reset Viewport"
-msgstr ""
+msgstr "ჩვენების არეს საწყის მნიშვნელობაზე დაბრუნება"
 
 #: content/ui/TableResultPage.qml:11
 #, kde-format
@@ -174,12 +174,12 @@ msgstr "მნიშვნელობის ცხრილები"
 #: content/ui/Tables.qml:45
 #, kde-format
 msgid "Errors: The step cannot be 0"
-msgstr ""
+msgstr "შეცდომა: ბიჯი 0-ის ტოლი ვერ იქნება"
 
 #: content/ui/Tables.qml:47
 #, kde-format
 msgid "Errors: The start and end are the same"
-msgstr ""
+msgstr "შეცდომა: დასაწყისი და დასასრული ტოლი ვერ ქნება"
 
 #: content/ui/Tables.qml:49
 #, kde-format
@@ -214,12 +214,12 @@ msgstr "გაშვება"
 #: main.cpp:52
 #, kde-format
 msgid "A portable calculator"
-msgstr ""
+msgstr "პატარა კალკულატორი"
 
 #: main.cpp:53
 #, kde-format
 msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
 
 #: main.cpp:54
 #, kde-format
