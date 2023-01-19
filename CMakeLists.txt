@@ -7,7 +7,7 @@ set(RELEASE_SERVICE_VERSION_MICRO "70")
 set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_VERSION_MINOR}.${RELEASE_SERVICE_VERSION_MICRO}")
 
 project(kalgebra VERSION ${RELEASE_SERVICE_VERSION})
-set(KF5_MIN_VERSION "5.90.0")
+set(KF5_MIN_VERSION "5.92.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
@@ -19,9 +19,15 @@ include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(FeatureSummary)
 include(ECMAddAppIcon)
+include(ECMDeprecationSettings)
 
 find_package(Qt${QT_MAJOR_VERSION} 5.15 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
 find_package(Analitza5 REQUIRED)
+
+ecm_set_disabled_deprecation_versions(QT 5.15.2
+    KF 5.101
+)
+
 
 set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
 
