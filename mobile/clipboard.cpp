@@ -81,25 +81,50 @@ QVariant Clipboard::content() const
 void Clipboard::setContent(const QVariant &content)
 {
     QMimeData* mimeData = new QMimeData;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     switch(content.type())
+#else
+    switch(content.userType())
+#endif
     {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         case QVariant::String:
+#else
+    case QMetaType::QString:
+#endif
             mimeData->setText(content.toString());
             break;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         case QVariant::Color:
+#else
+        case QMetaType::QColor:
+#endif
             mimeData->setColorData(content.toString());
             break;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         case QVariant::Pixmap:
         case QVariant::Image:
+#else
+        case QMetaType::QPixmap:
+        case QMetaType::QImage:
+#endif
             mimeData->setImageData(content);
             break;
         default:
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             if (content.type() == QVariant::List) {
+#else
+            if (content.userType() == QMetaType::QVariantList) {
+#endif
                 QVariantList list = content.toList();
                 QList<QUrl> urls;
                 bool wasUrlList = true;
                 foreach (const QVariant& url, list) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                     if (url.type() != QVariant::Url) {
+#else
+                    if (url.userType() != QMetaType::QUrl) {
+#endif
                         wasUrlList = false;
                         break;
                     }
@@ -110,8 +135,11 @@ void Clipboard::setContent(const QVariant &content)
                     break;
                 }
             }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             if (content.canConvert(QVariant::String)) {
+#else
+            if (content.canConvert<QString>()) {
+#endif
                 mimeData->setText(content.toString());
             } else {
                 mimeData->setData(QStringLiteral("application/octet-stream"), content.toByteArray());

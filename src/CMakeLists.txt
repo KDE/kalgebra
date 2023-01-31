@@ -23,11 +23,11 @@ target_sources(kalgebra PRIVATE
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*-apps-kalgebra.png")
 ecm_add_app_icon(kalgebra ICONS ${ICONS_SRCS})
 
-target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF5::I18n
-                               KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigWidgets
-                               KF5::XmlGui # HelpMenu
-                               KF5::KIOCore
-                               KF5::I18n
+target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF${KF_MAJOR_VERSION}::I18n
+                               KF${KF_MAJOR_VERSION}::CoreAddons KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::ConfigWidgets
+                               KF${KF_MAJOR_VERSION}::XmlGui # HelpMenu
+                               KF${KF_MAJOR_VERSION}::KIOCore
+                               KF${KF_MAJOR_VERSION}::I18n
                                KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
 
                            if (QT_MAJOR_VERSION STREQUAL "6")
