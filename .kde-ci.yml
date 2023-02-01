@@ -11,7 +11,7 @@ Dependencies:
     'frameworks/kwidgetsaddons': '@latest-kf6'
     'frameworks/kdoctools': '@latest-kf6'
     'frameworks/kio': '@latest-kf6'
-    'education/analitza': '@latest-kf6'
+    'education/analitza': '@same'
 
 - 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
   'require':
