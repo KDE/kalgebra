@@ -65,7 +65,7 @@ if (QT_MAJOR_VERSION STREQUAL "6")
 endif()
 
 
-if(KF5DocTools_FOUND AND Qt${QT_MAJOR_VERSION}WebEngineWidgets_FOUND AND KF5ConfigWidgets_FOUND AND KF5WidgetsAddons_FOUND AND KF5KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
+if(KF${KF_MAJOR_VERSION}DocTools_FOUND AND Qt${QT_MAJOR_VERSION}WebEngineWidgets_FOUND AND KF${KF_MAJOR_VERSION}ConfigWidgets_FOUND AND KF${KF_MAJOR_VERSION}WidgetsAddons_FOUND AND KF${KF_MAJOR_VERSION}KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(src)
     add_subdirectory(plasmoids)
 endif()
@@ -77,7 +77,7 @@ if(READLINE_FOUND AND CURSES_FOUND)
     add_subdirectory(calgebra)
 endif()
 
-if(KF5DocTools_FOUND)
+if(KF${KF_MAJOR_VERSION}DocTools_FOUND)
   add_subdirectory(utils)
 
   add_custom_target(commandsdoc
@@ -91,7 +91,7 @@ if(KF5DocTools_FOUND)
 endif()
 
 ki18n_install(po)
-if (KF5DocTools_FOUND)
+if (KF${KF_MAJOR_VERSION}DocTools_FOUND)
     kdoctools_install(po)
 endif()
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
