@@ -31,7 +31,7 @@ endif()
 find_package(Qt${QT_MAJOR_VERSION} 5.15 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
 find_package(Analitza5 REQUIRED)
 
-ecm_set_disabled_deprecation_versions(QT 6.4
+ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.101
 )
 
