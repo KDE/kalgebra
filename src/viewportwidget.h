@@ -26,7 +26,7 @@ class ViewportWidget : public QWidget
 {
     Q_OBJECT
     public:
-        explicit ViewportWidget(QWidget * parent = 0);
+        explicit ViewportWidget(QWidget * parent = nullptr);
         
         QRectF viewport() const;
         

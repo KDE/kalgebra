@@ -41,7 +41,7 @@ class VarEdit : public QDialog
     Q_OBJECT
     public:
         /** Constructor. Creates a variable editing dialog. */
-        explicit VarEdit(QWidget *parent = 0, bool modal = false);
+        explicit VarEdit(QWidget *parent = nullptr, bool modal = false);
         
         /** Sets the editing variable name */
         void setName(const QString& newVar);

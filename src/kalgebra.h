@@ -44,7 +44,7 @@ class KAlgebra : public QMainWindow
 {
     Q_OBJECT
     public:
-        KAlgebra ( QWidget *parent=0 );
+        KAlgebra ( QWidget *parent=nullptr );
         ~KAlgebra();
         
         void add2D(const Analitza::Expression& exp);

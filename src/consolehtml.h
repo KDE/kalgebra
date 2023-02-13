@@ -49,7 +49,7 @@ class ConsoleHtml : public QWebEngineView
     Q_OBJECT
     public:
         /** Constructor. Creates a console widget. */
-        ConsoleHtml(QWidget *parent = 0);
+        ConsoleHtml(QWidget *parent = nullptr);
         
         /** Destructor. */
         ~ConsoleHtml() override;

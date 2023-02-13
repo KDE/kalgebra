@@ -47,7 +47,7 @@ class FunctionEdit : public QWidget
 Q_OBJECT
 public:
     /** Constructor. */
-    explicit FunctionEdit(QWidget *parent=0);
+    explicit FunctionEdit(QWidget *parent=nullptr);
     
     /** Destructor. */
     ~FunctionEdit();

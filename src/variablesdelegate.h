@@ -24,7 +24,7 @@
 class VariablesDelegate : public QItemDelegate
 {
     public:
-        VariablesDelegate(QObject* parent=0) : QItemDelegate(parent) {}
+        VariablesDelegate(QObject* parent=nullptr) : QItemDelegate(parent) {}
         QWidget* createEditor (QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const override;
         void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 };
