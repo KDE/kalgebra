@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-02-14 00:54+0000\n"
 "PO-Revision-Date: 2018-12-26 18:23+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -130,7 +130,7 @@ msgstr "繪製立體圖"
 msgid "Session"
 msgstr "工作階段"
 
-#: kalgebra.cpp:139 kalgebra.cpp:238
+#: kalgebra.cpp:139 kalgebra.cpp:254
 #, kde-format
 msgid "Variables"
 msgstr "變數"
@@ -145,218 +145,218 @@ msgstr "計算機(&C)"
 msgid "C&alculator"
 msgstr "計算機(&A)"
 
-#: kalgebra.cpp:172
+#: kalgebra.cpp:172 kalgebra.cpp:175
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "載入文稿(&L)..."
 
-#: kalgebra.cpp:174
+#: kalgebra.cpp:178
 #, kde-format
 msgid "Recent Scripts"
 msgstr "最近的文稿"
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:183 kalgebra.cpp:188
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "儲存文稿(&S)..."
 
-#: kalgebra.cpp:180
+#: kalgebra.cpp:185 kalgebra.cpp:190
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr "匯出紀錄(&E)..."
 
-#: kalgebra.cpp:183
+#: kalgebra.cpp:195 kalgebra.cpp:198
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr "插入 ans(&I)…"
 
-#: kalgebra.cpp:185
+#: kalgebra.cpp:201
 #, kde-format
 msgid "Execution Mode"
 msgstr "執行模式"
 
-#: kalgebra.cpp:187
+#: kalgebra.cpp:203
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "計算"
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:204
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "估算"
 
-#: kalgebra.cpp:208
+#: kalgebra.cpp:224
 #, kde-format
 msgid "Functions"
 msgstr "函數"
 
-#: kalgebra.cpp:220
+#: kalgebra.cpp:236
 #, kde-format
 msgid "List"
 msgstr "列表"
 
-#: kalgebra.cpp:226 kalgebra.cpp:458
+#: kalgebra.cpp:242 kalgebra.cpp:474
 #, kde-format
 msgid "&Add"
 msgstr "新增(&A)"
 
-#: kalgebra.cpp:242
+#: kalgebra.cpp:258
 #, kde-format
 msgid "Viewport"
 msgstr "檢視埠"
 
-#: kalgebra.cpp:246
+#: kalgebra.cpp:262
 #, kde-format
 msgid "&2D Graph"
 msgstr "平面圖(&2)"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:274
 #, kde-format
 msgid "2&D Graph"
 msgstr "平面圖(&D)"
 
-#: kalgebra.cpp:260
+#: kalgebra.cpp:276
 #, kde-format
 msgid "&Grid"
 msgstr "格線(&G)"
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:277
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "保持比例(&K)"
 
-#: kalgebra.cpp:269
+#: kalgebra.cpp:285
 #, kde-format
 msgid "Resolution"
 msgstr "解析度"
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:286
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "低"
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:287
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "正常"
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:288
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "高"
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:289
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "非常高"
 
-#: kalgebra.cpp:307
+#: kalgebra.cpp:323
 #, kde-format
 msgid "&3D Graph"
 msgstr "立體圖(&3)"
 
-#: kalgebra.cpp:315
+#: kalgebra.cpp:331
 #, kde-format
 msgid "3D &Graph"
 msgstr "立體圖(&G)"
 
-#: kalgebra.cpp:318
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&Reset View"
 msgstr "重置檢視(&R)"
 
-#: kalgebra.cpp:320
+#: kalgebra.cpp:336
 #, kde-format
 msgid "Dots"
 msgstr "點"
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:337
 #, kde-format
 msgid "Lines"
 msgstr "線"
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:338
 #, kde-format
 msgid "Solid"
 msgstr "立體"
 
-#: kalgebra.cpp:339
+#: kalgebra.cpp:355
 #, kde-format
 msgid "Operations"
 msgstr "操作"
 
-#: kalgebra.cpp:343
+#: kalgebra.cpp:359
 #, kde-format
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
-#: kalgebra.cpp:354
+#: kalgebra.cpp:370
 #, kde-format
 msgid "Look for:"
 msgstr "尋找："
 
-#: kalgebra.cpp:447
+#: kalgebra.cpp:463
 #, kde-format
 msgid "&Editing"
 msgstr "編輯(&E)"
 
-#: kalgebra.cpp:504
+#: kalgebra.cpp:520
 #, kde-format
 msgid "Choose a script"
 msgstr "請選擇文稿"
 
-#: kalgebra.cpp:504 kalgebra.cpp:520
+#: kalgebra.cpp:520 kalgebra.cpp:536
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "文稿（*.kal）"
 
-#: kalgebra.cpp:531
+#: kalgebra.cpp:547
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML 檔（*.html）"
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, kde-format
 msgid ", "
 msgstr ","
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, kde-format
 msgid "Errors: %1"
 msgstr "錯誤：%1"
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr "選擇要在哪裡放置已繪製之圖形"
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr "圖片檔 (*.png);;SVG 檔 (*.svg)"
 
-#: kalgebra.cpp:649
+#: kalgebra.cpp:665
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "就緒"
 
-#: kalgebra.cpp:683
+#: kalgebra.cpp:699
 #, kde-format
 msgid "Add variable"
 msgstr "新增/變數"
 
-#: kalgebra.cpp:687
+#: kalgebra.cpp:703
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "請輸入新變數名稱"

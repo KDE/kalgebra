@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeedu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-02-14 00:54+0000\n"
 "PO-Revision-Date: 2013-11-03 08:42+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -128,7 +128,7 @@ msgstr "3D prikaz"
 msgid "Session"
 msgstr "Sesija"
 
-#: kalgebra.cpp:139 kalgebra.cpp:238
+#: kalgebra.cpp:139 kalgebra.cpp:254
 #, kde-format
 msgid "Variables"
 msgstr "Promjenljive"
@@ -147,202 +147,202 @@ msgstr "Izračunaj"
 msgid "C&alculator"
 msgstr "Izračunaj"
 
-#: kalgebra.cpp:172
+#: kalgebra.cpp:172 kalgebra.cpp:175
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "&Učitaj Skriptu..."
 
-#: kalgebra.cpp:174
+#: kalgebra.cpp:178
 #, kde-format
 msgid "Recent Scripts"
 msgstr "Posljednje skripte"
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:183 kalgebra.cpp:188
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "&Snimi skriptu..."
 
-#: kalgebra.cpp:180
+#: kalgebra.cpp:185 kalgebra.cpp:190
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr "&Eksportuj izvještaj..."
 
-#: kalgebra.cpp:183
+#: kalgebra.cpp:195 kalgebra.cpp:198
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr ""
 
-#: kalgebra.cpp:185
+#: kalgebra.cpp:201
 #, kde-format
 msgid "Execution Mode"
 msgstr "Režim izvršenja"
 
-#: kalgebra.cpp:187
+#: kalgebra.cpp:203
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "Izračunaj"
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:204
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "Procijeni"
 
-#: kalgebra.cpp:208
+#: kalgebra.cpp:224
 #, kde-format
 msgid "Functions"
 msgstr "Funkcije"
 
-#: kalgebra.cpp:220
+#: kalgebra.cpp:236
 #, kde-format
 msgid "List"
 msgstr "Lista"
 
-#: kalgebra.cpp:226 kalgebra.cpp:458
+#: kalgebra.cpp:242 kalgebra.cpp:474
 #, kde-format
 msgid "&Add"
 msgstr "&Dodaj"
 
-#: kalgebra.cpp:242
+#: kalgebra.cpp:258
 #, kde-format
 msgid "Viewport"
 msgstr "Tačka gledišta"
 
-#: kalgebra.cpp:246
+#: kalgebra.cpp:262
 #, kde-format
 msgid "&2D Graph"
 msgstr "&2D Grafik"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:274
 #, kde-format
 msgid "2&D Graph"
 msgstr "2&D Grafik"
 
-#: kalgebra.cpp:260
+#: kalgebra.cpp:276
 #, kde-format
 msgid "&Grid"
 msgstr "&Mreža"
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:277
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "&Zadrži omjer ekrana"
 
-#: kalgebra.cpp:269
+#: kalgebra.cpp:285
 #, kde-format
 msgid "Resolution"
 msgstr "Rezolucija"
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:286
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "Slabo"
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:287
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "Normalan"
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:288
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "Fin"
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:289
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "Veoma fino"
 
-#: kalgebra.cpp:307
+#: kalgebra.cpp:323
 #, kde-format
 msgid "&3D Graph"
 msgstr "&3D Grafik"
 
-#: kalgebra.cpp:315
+#: kalgebra.cpp:331
 #, kde-format
 msgid "3D &Graph"
 msgstr "3D &Grafik"
 
-#: kalgebra.cpp:318
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&Reset View"
 msgstr "&Resetuj Pogled"
 
-#: kalgebra.cpp:320
+#: kalgebra.cpp:336
 #, kde-format
 msgid "Dots"
 msgstr "Tačke"
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:337
 #, kde-format
 msgid "Lines"
 msgstr "Linije"
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:338
 #, kde-format
 msgid "Solid"
 msgstr "Čvrsto"
 
-#: kalgebra.cpp:339
+#: kalgebra.cpp:355
 #, kde-format
 msgid "Operations"
 msgstr "Operacije"
 
-#: kalgebra.cpp:343
+#: kalgebra.cpp:359
 #, kde-format
 msgid "&Dictionary"
 msgstr "&Rječnik"
 
-#: kalgebra.cpp:354
+#: kalgebra.cpp:370
 #, kde-format
 msgid "Look for:"
 msgstr "Traži:"
 
-#: kalgebra.cpp:447
+#: kalgebra.cpp:463
 #, kde-format
 msgid "&Editing"
 msgstr "&Izmjena"
 
-#: kalgebra.cpp:504
+#: kalgebra.cpp:520
 #, kde-format
 msgid "Choose a script"
 msgstr "Izaberite skriptu"
 
-#: kalgebra.cpp:504 kalgebra.cpp:520
+#: kalgebra.cpp:520 kalgebra.cpp:536
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "Skripta(*.kal)"
 
-#: kalgebra.cpp:531
+#: kalgebra.cpp:547
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML datoteka (*.html)"
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, kde-format
 msgid "Errors: %1"
 msgstr "Greške: %1"
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr ""
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, fuzzy, kde-format
 #| msgid ""
 #| "*.png|Image File\n"
@@ -352,18 +352,18 @@ msgstr ""
 "*.png|Slikovna datoteka\n"
 "*.svg|SVG datoteka"
 
-#: kalgebra.cpp:649
+#: kalgebra.cpp:665
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "Spreman"
 
-#: kalgebra.cpp:683
+#: kalgebra.cpp:699
 #, kde-format
 msgid "Add variable"
 msgstr "Dodaj promjenljivu"
 
-#: kalgebra.cpp:687
+#: kalgebra.cpp:703
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "Unesite ime za novu promjenljivu"

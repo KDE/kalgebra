@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-02-14 00:54+0000\n"
 "PO-Revision-Date: 2021-09-17 20:07+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Session"
 msgstr "को एक्सप्रेशन"
 
-#: kalgebra.cpp:139 kalgebra.cpp:238
+#: kalgebra.cpp:139 kalgebra.cpp:254
 #, kde-format
 msgid "Variables"
 msgstr "चर"
@@ -145,7 +145,7 @@ msgstr "एक गणक"
 msgid "C&alculator"
 msgstr "एक गणक"
 
-#: kalgebra.cpp:172
+#: kalgebra.cpp:172 kalgebra.cpp:175
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "&Load Script"
@@ -153,14 +153,14 @@ msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "स्क्रिप्ट लोड करें (&L)"
 
-#: kalgebra.cpp:174
+#: kalgebra.cpp:178
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "&Save Script"
 msgid "Recent Scripts"
 msgstr "स्क्रिप्ट सहेजें (&S)"
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:183 kalgebra.cpp:188
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "&Save Script"
@@ -168,31 +168,31 @@ msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "स्क्रिप्ट सहेजें (&S)"
 
-#: kalgebra.cpp:180
+#: kalgebra.cpp:185 kalgebra.cpp:190
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr ""
 
-#: kalgebra.cpp:183
+#: kalgebra.cpp:195 kalgebra.cpp:198
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr ""
 
-#: kalgebra.cpp:185
+#: kalgebra.cpp:201
 #, kde-format
 msgid "Execution Mode"
 msgstr ""
 
-#: kalgebra.cpp:187
+#: kalgebra.cpp:203
 #, fuzzy, kde-format
 #| msgid "A calculator"
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "एक गणक"
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:204
 #, fuzzy, kde-format
 #| msgctxt "@title:column"
 #| msgid "Value"
@@ -200,160 +200,160 @@ msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "मान"
 
-#: kalgebra.cpp:208
+#: kalgebra.cpp:224
 #, kde-format
 msgid "Functions"
 msgstr "फंक्शन्स"
 
-#: kalgebra.cpp:220
+#: kalgebra.cpp:236
 #, kde-format
 msgid "List"
 msgstr "सूची"
 
-#: kalgebra.cpp:226 kalgebra.cpp:458
+#: kalgebra.cpp:242 kalgebra.cpp:474
 #, kde-format
 msgid "&Add"
 msgstr "जोड़ें (&A)"
 
-#: kalgebra.cpp:242
+#: kalgebra.cpp:258
 #, kde-format
 msgid "Viewport"
 msgstr ""
 
-#: kalgebra.cpp:246
+#: kalgebra.cpp:262
 #, kde-format
 msgid "&2D Graph"
 msgstr "&2डी ग्राफ "
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:274
 #, kde-format
 msgid "2&D Graph"
 msgstr "2डी ग्राफ (&D)"
 
-#: kalgebra.cpp:260
+#: kalgebra.cpp:276
 #, kde-format
 msgid "&Grid"
 msgstr "ग्रिड (&G)"
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:277
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr ""
 
-#: kalgebra.cpp:269
+#: kalgebra.cpp:285
 #, kde-format
 msgid "Resolution"
 msgstr "रिसॉल्यूशन"
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:286
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "खराब"
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:287
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "सामान्य"
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:288
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "बढ़िया"
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:289
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "बहुत बढ़िया"
 
-#: kalgebra.cpp:307
+#: kalgebra.cpp:323
 #, kde-format
 msgid "&3D Graph"
 msgstr "&3डी ग्राफ"
 
-#: kalgebra.cpp:315
+#: kalgebra.cpp:331
 #, kde-format
 msgid "3D &Graph"
 msgstr "३डी ग्राफ (&G)"
 
-#: kalgebra.cpp:318
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&Reset View"
 msgstr "दृश्य रीसेट करें (&R)"
 
-#: kalgebra.cpp:320
+#: kalgebra.cpp:336
 #, kde-format
 msgid "Dots"
 msgstr "बिन्दुएँ"
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:337
 #, kde-format
 msgid "Lines"
 msgstr "पंक्तियाँ"
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:338
 #, kde-format
 msgid "Solid"
 msgstr "ठोस"
 
-#: kalgebra.cpp:339
+#: kalgebra.cpp:355
 #, kde-format
 msgid "Operations"
 msgstr ""
 
-#: kalgebra.cpp:343
+#: kalgebra.cpp:359
 #, kde-format
 msgid "&Dictionary"
 msgstr "शब्दकोष (&D)"
 
-#: kalgebra.cpp:354
+#: kalgebra.cpp:370
 #, kde-format
 msgid "Look for:"
 msgstr ""
 
-#: kalgebra.cpp:447
+#: kalgebra.cpp:463
 #, kde-format
 msgid "&Editing"
 msgstr "संपादन (&E)"
 
-#: kalgebra.cpp:504
+#: kalgebra.cpp:520
 #, kde-format
 msgid "Choose a script"
 msgstr "स्क्रिप्ट चुनें"
 
-#: kalgebra.cpp:504 kalgebra.cpp:520
+#: kalgebra.cpp:520 kalgebra.cpp:536
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "स्क्रिप्ट (*.kal)"
 
-#: kalgebra.cpp:531
+#: kalgebra.cpp:547
 #, fuzzy, kde-format
 #| msgid "Text File (*)"
 msgid "HTML File (*.html)"
 msgstr "पाठ फ़ाइल (*)"
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, fuzzy, kde-format
 #| msgctxt "Function parameter separator"
 #| msgid ", "
 msgid ", "
 msgstr ","
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, fuzzy, kde-format
 #| msgid "Error: %1"
 msgid "Errors: %1"
 msgstr "त्रुटि: %1"
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr ""
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, fuzzy, kde-format
 #| msgid ""
 #| "*.png|Image File\n"
@@ -363,19 +363,19 @@ msgstr ""
 "*.png|छवि फ़ाइल\n"
 "*.svg|एसवीजी फ़ाइल"
 
-#: kalgebra.cpp:649
+#: kalgebra.cpp:665
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "तैयार"
 
-#: kalgebra.cpp:683
+#: kalgebra.cpp:699
 #, fuzzy, kde-format
 #| msgid "Add/Edit a variable"
 msgid "Add variable"
 msgstr "कोई चर जोड़ें/संपादित करें"
 
-#: kalgebra.cpp:687
+#: kalgebra.cpp:703
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-02-14 00:54+0000\n"
 "PO-Revision-Date: 2008-10-07 04:34-0800\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: Tajik <>\n"
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Session"
 msgstr "Ифодаи Муқаррарӣ"
 
-#: kalgebra.cpp:139 kalgebra.cpp:238
+#: kalgebra.cpp:139 kalgebra.cpp:254
 #, fuzzy, kde-format
 msgid "Variables"
 msgstr "&Таъғирёбандаҳо"
@@ -138,20 +138,20 @@ msgstr "Калкулятор"
 msgid "C&alculator"
 msgstr "Калкулятор"
 
-#: kalgebra.cpp:172
+#: kalgebra.cpp:172 kalgebra.cpp:175
 #, fuzzy, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "Джава&Хат"
 
-#: kalgebra.cpp:174
+#: kalgebra.cpp:178
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "&Save Script"
 msgid "Recent Scripts"
 msgstr "&Захираи скрипт"
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:183 kalgebra.cpp:188
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "&Save Script"
@@ -159,30 +159,30 @@ msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "&Захираи скрипт"
 
-#: kalgebra.cpp:180
+#: kalgebra.cpp:185 kalgebra.cpp:190
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr ""
 
-#: kalgebra.cpp:183
+#: kalgebra.cpp:195 kalgebra.cpp:198
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr ""
 
-#: kalgebra.cpp:185
+#: kalgebra.cpp:201
 #, kde-format
 msgid "Execution Mode"
 msgstr ""
 
-#: kalgebra.cpp:187
+#: kalgebra.cpp:203
 #, fuzzy, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "Калкулятор"
 
-#: kalgebra.cpp:188
+#: kalgebra.cpp:204
 #, fuzzy, kde-format
 #| msgctxt "@title:column"
 #| msgid "Value"
@@ -190,172 +190,172 @@ msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "Миқдор"
 
-#: kalgebra.cpp:208
+#: kalgebra.cpp:224
 #, fuzzy, kde-format
 msgid "Functions"
 msgstr "Функсияҳо"
 
-#: kalgebra.cpp:220
+#: kalgebra.cpp:236
 #, kde-format
 msgid "List"
 msgstr "Рӯйхат "
 
-#: kalgebra.cpp:226 kalgebra.cpp:458
+#: kalgebra.cpp:242 kalgebra.cpp:474
 #, kde-format
 msgid "&Add"
 msgstr "&Илова"
 
-#: kalgebra.cpp:242
+#: kalgebra.cpp:258
 #, kde-format
 msgid "Viewport"
 msgstr ""
 
-#: kalgebra.cpp:246
+#: kalgebra.cpp:262
 #, kde-format
 msgid "&2D Graph"
 msgstr "&Намоиши 2D"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:274
 #, kde-format
 msgid "2&D Graph"
 msgstr "Намоиши 2&D"
 
-#: kalgebra.cpp:260
+#: kalgebra.cpp:276
 #, fuzzy, kde-format
 msgid "&Grid"
 msgstr "Шабақа"
 
-#: kalgebra.cpp:261
+#: kalgebra.cpp:277
 #, fuzzy, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "Нигоҳ доштани &муносибат"
 
-#: kalgebra.cpp:269
+#: kalgebra.cpp:285
 #, fuzzy, kde-format
 msgid "Resolution"
 msgstr "Иҷозат додан"
 
-#: kalgebra.cpp:270
+#: kalgebra.cpp:286
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr ""
 
-#: kalgebra.cpp:271
+#: kalgebra.cpp:287
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "Оддӣ"
 
-#: kalgebra.cpp:272
+#: kalgebra.cpp:288
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr ""
 
-#: kalgebra.cpp:273
+#: kalgebra.cpp:289
 #, fuzzy, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "Ҳалли мураттаб"
 
-#: kalgebra.cpp:307
+#: kalgebra.cpp:323
 #, kde-format
 msgid "&3D Graph"
 msgstr "&Намоиши 3D"
 
-#: kalgebra.cpp:315
+#: kalgebra.cpp:331
 #, kde-format
 msgid "3D &Graph"
 msgstr "&Намоиши 3D"
 
-#: kalgebra.cpp:318
+#: kalgebra.cpp:334
 #, fuzzy, kde-format
 msgid "&Reset View"
 msgstr "Намуди Ф&илтер"
 
-#: kalgebra.cpp:320
+#: kalgebra.cpp:336
 #, kde-format
 msgid "Dots"
 msgstr ""
 
-#: kalgebra.cpp:321
+#: kalgebra.cpp:337
 #, kde-format
 msgid "Lines"
 msgstr ""
 
-#: kalgebra.cpp:322
+#: kalgebra.cpp:338
 #, fuzzy, kde-format
 msgid "Solid"
 msgstr "Сохтро истифода намоед"
 
-#: kalgebra.cpp:339
+#: kalgebra.cpp:355
 #, fuzzy, kde-format
 msgid "Operations"
 msgstr "Амалиётҳо"
 
-#: kalgebra.cpp:343
+#: kalgebra.cpp:359
 #, kde-format
 msgid "&Dictionary"
 msgstr "&Луғат"
 
-#: kalgebra.cpp:354
+#: kalgebra.cpp:370
 #, fuzzy, kde-format
 msgid "Look for:"
 msgstr "Ҷустуҷӯи калиди додашуда"
 
-#: kalgebra.cpp:447
+#: kalgebra.cpp:463
 #, kde-format
 msgid "&Editing"
 msgstr "&Таҳрир кардан"
 
-#: kalgebra.cpp:504
+#: kalgebra.cpp:520
 #, fuzzy, kde-format
 msgid "Choose a script"
 msgstr "Джава&Хат"
 
-#: kalgebra.cpp:504 kalgebra.cpp:520
+#: kalgebra.cpp:520 kalgebra.cpp:536
 #, fuzzy, kde-format
 msgid "Script (*.kal)"
 msgstr "Джава&Хат"
 
-#: kalgebra.cpp:531
+#: kalgebra.cpp:547
 #, fuzzy, kde-format
 msgid "HTML File (*.html)"
 msgstr "Файли Матн"
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, fuzzy, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:554
+#: kalgebra.cpp:570
 #, fuzzy, kde-format
 msgid "Errors: %1"
 msgstr "Хатогӣ: %1"
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr ""
 
-#: kalgebra.cpp:592
+#: kalgebra.cpp:608
 #, fuzzy, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr "&Номи тасвири фйлро нишон диҳед"
 
-#: kalgebra.cpp:649
+#: kalgebra.cpp:665
 #, fuzzy, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "Тайёр аст"
 
-#: kalgebra.cpp:683
+#: kalgebra.cpp:699
 #, fuzzy, kde-format
 msgid "Add variable"
 msgstr "Илова кардан/Таҳрири Муштаракнамоӣ"
 
-#: kalgebra.cpp:687
+#: kalgebra.cpp:703
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr ""
