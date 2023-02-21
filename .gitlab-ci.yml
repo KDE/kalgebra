@@ -45,7 +45,7 @@ craft_android_arm64:
     # Archive the architecture-independent artifacts only for android-arm64-clang
     - ls -la ${buildDir}
     - ls -la ${buildApkDir}
-    - if [ ${KDECI_CRAFT_PLATFORM} = "android-arm64-clang" ]; then tar czf app-bundle-artifacts/common.tar.gz ${KDECI_CRAFT_PLATFORM}/src/android/java ${buildDir}/*.gradle ${buildApkDir}/{AndroidManifest.xml,assets,build.gradle,gradle,gradle.properties,gradlew,local.properties,res,src}; fi
+    - if [ ${KDECI_CRAFT_PLATFORM} = "android-arm64-clang" ]; then tar --ignore-failed-read -czf app-bundle-artifacts/common.tar.gz ${KDECI_CRAFT_PLATFORM}/src/android/java ${buildDir}/*.gradle ${buildApkDir}/{AndroidManifest.xml,assets,build.gradle,gradle,gradle.properties,gradlew,local.properties,res,src}; fi
     # Archive the architecture-specific artifacts (relative to the build_apk directory)
     - (cd ${buildApkDir} && tar czf ${CI_PROJECT_DIR}/app-bundle-artifacts/${KDECI_CRAFT_PLATFORM}.tar.gz libs)
     # Remember the build_apk path for subsequent jobs
