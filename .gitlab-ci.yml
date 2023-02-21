@@ -12,3 +12,12 @@ include:
       - /gitlab-templates/craft-android-arm64.yml
       - /gitlab-templates/craft-android-x86-64.yml
       - /gitlab-templates/craft-android-appbundle.yml
+
+craft_android_arm32:
+  needs: []
+
+craft_android_arm64:
+  needs: []
+
+craft_android_x86_64:
+  needs: []
