@@ -29,6 +29,9 @@ else()
 endif()
 
 find_package(Qt${QT_MAJOR_VERSION} 5.15 REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test)
+if (QT_MAJOR_VERSION STREQUAL "6")
+    find_package(Qt6Core5Compat)
+endif()
 find_package(Analitza5 REQUIRED)
 
 ecm_set_disabled_deprecation_versions(QT 6.4
