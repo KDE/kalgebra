@@ -11,6 +11,7 @@ Dependencies:
     'frameworks/kwidgetsaddons': '@latest-kf6'
     'frameworks/kdoctools': '@latest-kf6'
     'frameworks/kio': '@latest-kf6'
+    'frameworks/kxmlgui': '@latest-kf6'
     'education/analitza': '@same'
 
 - 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
@@ -22,6 +23,7 @@ Dependencies:
     'frameworks/kwidgetsaddons': '@stable'
     'frameworks/kdoctools': '@stable'
     'frameworks/kio': '@stable'
+    'frameworks/kxmlgui': '@stable'
     'education/analitza': '@same'
 
 Options:

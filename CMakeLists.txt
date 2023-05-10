@@ -61,7 +61,7 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_NO_CAST_TO_ASCII)
 
 find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
-find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools)
+find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools XmlGui)
 find_package(Qt${QT_MAJOR_VERSION}WebEngineWidgets)
 if (QT_MAJOR_VERSION STREQUAL "6")
     find_package(Qt6 REQUIRED NO_MODULE COMPONENTS OpenGLWidgets)
