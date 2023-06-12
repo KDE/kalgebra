@@ -14,6 +14,7 @@
   <name xml:lang="de">KAlgebra</name>
   <name xml:lang="el">KAlgebra</name>
   <name xml:lang="en-GB">KAlgebra</name>
+  <name xml:lang="eo">KAlgebra</name>
   <name xml:lang="es">KAlgebra</name>
   <name xml:lang="et">KAlgebra</name>
   <name xml:lang="eu">KAlgebra</name>
@@ -52,6 +53,7 @@
   <summary xml:lang="de">Graphenrechner</summary>
   <summary xml:lang="el">Υπολογιστής γραφικών παραστάσεων</summary>
   <summary xml:lang="en-GB">Graph Calculator</summary>
+  <summary xml:lang="eo">Grafea Kalkulilo</summary>
   <summary xml:lang="es">Calculadora gráfica</summary>
   <summary xml:lang="et">Graafide arvutaja</summary>
   <summary xml:lang="eu">Kalkulagailu grafikoa</summary>
@@ -131,6 +133,7 @@
       <caption xml:lang="de">2D-Plot in KAlgebra</caption>
       <caption xml:lang="el">2D σχεδίαση στην KAlgebra</caption>
       <caption xml:lang="en-GB">2D plot in KAlgebra</caption>
+      <caption xml:lang="eo">2D-diagramo en KAlgebra</caption>
       <caption xml:lang="es">Gráfico 2D en KAlgebra</caption>
       <caption xml:lang="et">2D joonis KAlgebras</caption>
       <caption xml:lang="eu">2Dko trazua KAlgebran</caption>
