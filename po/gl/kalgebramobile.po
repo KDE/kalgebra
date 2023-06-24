@@ -41,7 +41,7 @@ msgstr "Variábeis"
 #: content/ui/Console.qml:67
 #, kde-format
 msgid "Load Script"
-msgstr "Cargar un script"
+msgstr "Cargar un guión"
 
 #: content/ui/Console.qml:71 content/ui/Console.qml:81
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Script (*.kal)"
 #: content/ui/Console.qml:77
 #, kde-format
 msgid "Save Script"
-msgstr "Gardar o script"
+msgstr "Gardar o guión"
 
 #: content/ui/Console.qml:88
 #, kde-format

@@ -150,7 +150,7 @@ msgstr "C&alculadora"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
-msgstr "&Cargar un script…"
+msgstr "&Cargar un guión…"
 
 #: kalgebra.cpp:178
 #, kde-format
@@ -161,7 +161,7 @@ msgstr "Scripts recentes"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
-msgstr "&Gardar o script…"
+msgstr "&Gardar o guión…"
 
 #: kalgebra.cpp:185 kalgebra.cpp:190
 #, kde-format
@@ -314,7 +314,7 @@ msgstr "&Editar"
 #: kalgebra.cpp:520
 #, kde-format
 msgid "Choose a script"
-msgstr "Escoller un script"
+msgstr "Escoller un guión"
 
 #: kalgebra.cpp:520 kalgebra.cpp:536
 #, kde-format
