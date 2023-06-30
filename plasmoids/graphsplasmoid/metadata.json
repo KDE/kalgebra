@@ -4,6 +4,7 @@
             {
                 "Email": "aleixpol@kde.org",
                 "Name": "Aleix Pol Gonzalez",
+                "Name[bg]": "Aleix Pol Gonzalez",
                 "Name[ca@valencia]": "Aleix Pol Gonzalez",
                 "Name[ca]": "Aleix Pol Gonzalez",
                 "Name[cs]": "Aleix Pol Gonzalez",
@@ -21,6 +22,7 @@
         ],
         "Category": "Education",
         "Description": "Put the weirdest plots on your desktop!",
+        "Description[bg]": "Поставете най-яките графики на работния си плот!",
         "Description[ca@valencia]": "Poseu les gràfiques més estranyes al vostre escriptori!",
         "Description[ca]": "Poseu les gràfiques més estranyes al vostre escriptori!",
         "Description[cs]": "Přidejte na svou plochu ty nejdivnější grafy.",
