@@ -17,39 +17,10 @@
  *************************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.5
+import org.kde.kirigamiaddons.formcard 1.0 as FormCard
 import org.kde.analitza 1.0
-import org.kde.kirigami 2.6 as Kirigami
+import org.kde.kalgebra.mobile 1.0
 
-Kirigami.AboutPage {
-    aboutData: {
-        "displayName": i18n("KAlgebra Mobile"),
-        "productName": "kalgebramobile",
-        "componentName": "kalgebramobile",
-        "shortDescription": i18n("A simple scientific calculator"),
-        "programIconName": "kalgebra",
-        "homepage": "https://edu.kde.org/kalgebra/",
-        "bugAddress": "submit@bugs.kde.org",
-        "otherText": "",
-        "authors": [
-            {
-                "name": "Aleix Pol Gonzalez",
-                "task": "",
-                "emailAddress": "aleixpol@kde.org",
-                "webAddress": "https://proli.net",
-                "ocsUsername": ""
-            }
-        ],
-        "credits": [],
-        "translators": [],
-        "licenses": [
-            {
-                "name": "GPL v2",
-                "spdx": "GPL-2.0"
-            }
-        ],
-        "copyrightStatement": "© 2007-2019 by Aleix Pol Gonzalez",
-        "desktopFileName": "org.kde.kalgebramobile"
-    }
+FormCard.AboutPage {
+    aboutData: About
 }

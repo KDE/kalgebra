@@ -27,6 +27,7 @@
 #include <KLocalizedString>
 #include <KAboutData>
 
+#include <QIcon>
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -50,10 +51,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #endif
     KLocalizedString::setApplicationDomain("kalgebramobile");
     KAboutData about(QStringLiteral("kalgebramobile"), QStringLiteral("KAlgebra"), QStringLiteral(KALGEBRA_VERSION_STRING), i18n("A portable calculator"),
-             KAboutLicense::GPL, i18n("(C) 2006-2020 Aleix Pol i Gonzalez"));
-    about.addAuthor(i18n("Aleix Pol i Gonzalez"), QString(), QStringLiteral("aleixpol@kde.org"));
+             KAboutLicense::GPL, i18n("(C) 2006-2023 Aleix Pol i Gonzalez"));
+    about.addAuthor(i18n("Aleix Pol i Gonzalez"), i18nc("@info:credit", "Maintainer"), QStringLiteral("aleixpol@kde.org"));
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);
+    QGuiApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kalgebra")));
 
     {
         QCommandLineParser parser;
@@ -67,6 +69,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     qmlRegisterSingletonInstance("org.kde.kalgebra.mobile", 1, 0, "App", &widget);
+    qmlRegisterSingletonType("org.kde.kalgebra.mobile", 1, 0, "About", [](QQmlEngine *engine, QJSEngine *) -> QJSValue {
+        return engine->toScriptValue(KAboutData::applicationData());
+    });
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     return app.exec();
