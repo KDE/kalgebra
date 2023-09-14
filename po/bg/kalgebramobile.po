@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-09-14 00:40+0000\n"
 "PO-Revision-Date: 2022-11-21 15:31+0200\n"
 "Last-Translator: Светослав Стефанов <svetlisashkov@yahoo.com>\n"
 "Language-Team: none\n"
@@ -17,16 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.1.1\n"
-
-#: content/ui/About.qml:27
-#, kde-format
-msgid "KAlgebra Mobile"
-msgstr "KAlgebra -  мобилна версия"
-
-#: content/ui/About.qml:30
-#, kde-format
-msgid "A simple scientific calculator"
-msgstr "Прост научен калкулатор"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, kde-format
@@ -211,31 +201,44 @@ msgstr "Стъпка"
 msgid "Run"
 msgstr "Изпълнение"
 
-#: main.cpp:52
+#: main.cpp:53
 #, kde-format
 msgid "A portable calculator"
 msgstr "Джобен калкулатор"
 
-#: main.cpp:53
-#, kde-format
-msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#: main.cpp:54
+#, fuzzy, kde-format
+#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
 
-#: main.cpp:54
+#: main.cpp:55
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
+msgctxt "@info:credit"
+msgid "Maintainer"
+msgstr ""
+
+#: main.cpp:56
+#, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Ясен Праматаров,Александър Шопов,Златко Попов,Светослав Стефанов"
 
-#: main.cpp:55
+#: main.cpp:56
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "yasen@lindeas.com,ash@contact.bg,zlatkopopov@fsa-bg.org,svetlisashkov@yahoo."
 "com"
+
+#~ msgid "KAlgebra Mobile"
+#~ msgstr "KAlgebra -  мобилна версия"
+
+#~ msgid "A simple scientific calculator"
+#~ msgstr "Прост научен калкулатор"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-01 00:41+0000\n"
+"POT-Creation-Date: 2023-09-14 00:40+0000\n"
 "PO-Revision-Date: 2019-08-11 16:35+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -15,16 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 19.07.90\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-
-#: content/ui/About.qml:27
-#, kde-format
-msgid "KAlgebra Mobile"
-msgstr "KAlgebra Mobile"
-
-#: content/ui/About.qml:30
-#, kde-format
-msgid "A simple scientific calculator"
-msgstr "Jednoduchá vedecká kalkulačka"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, fuzzy, kde-format
@@ -219,18 +209,18 @@ msgstr "Krok:"
 msgid "Run"
 msgstr "Spustiť"
 
-#: main.cpp:52
+#: main.cpp:53
 #, kde-format
 msgid "A portable calculator"
 msgstr "Prenosná kalkulačka"
 
-#: main.cpp:53
+#: main.cpp:54
 #, fuzzy, kde-format
 #| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
-msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
 
-#: main.cpp:54
+#: main.cpp:55
 #, fuzzy, kde-format
 #| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
 msgid "Aleix Pol i Gonzalez"
@@ -238,15 +228,27 @@ msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
+msgctxt "@info:credit"
+msgid "Maintainer"
+msgstr ""
+
+#: main.cpp:56
+#, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Roman Paholík"
 
-#: main.cpp:55
+#: main.cpp:56
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "wizzardsk@gmail.com"
+
+#~ msgid "KAlgebra Mobile"
+#~ msgstr "KAlgebra Mobile"
+
+#~ msgid "A simple scientific calculator"
+#~ msgstr "Jednoduchá vedecká kalkulačka"
 
 #~ msgid "Results:"
 #~ msgstr "Výsledky:"
