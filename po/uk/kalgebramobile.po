@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-14 00:40+0000\n"
-"PO-Revision-Date: 2022-06-12 08:30+0300\n"
+"PO-Revision-Date: 2023-09-14 09:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -209,10 +209,9 @@ msgid "A portable calculator"
 msgstr "Портативний калькулятор"
 
 #: main.cpp:54
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "© Aleix Pol i Gonzalez, 2006–2020"
+msgstr "© Aleix Pol i Gonzalez, 2006–2023"
 
 #: main.cpp:55
 #, kde-format
@@ -223,7 +222,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Супровідник"
 
 #: main.cpp:56
 #, kde-format
