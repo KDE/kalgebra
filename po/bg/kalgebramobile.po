@@ -1,22 +1,23 @@
 # Bulgarian translations for kalgebra package.
 # Copyright (C) 2022 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-# Automatically generated, 2022.
 #
+# Automatically generated, 2022.
+# Mincho Kondarev <mkondarev@yahoo.de>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-14 00:40+0000\n"
-"PO-Revision-Date: 2022-11-21 15:31+0200\n"
-"Last-Translator: Светослав Стефанов <svetlisashkov@yahoo.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-09-15 18:57+0200\n"
+"Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, kde-format
@@ -207,10 +208,9 @@ msgid "A portable calculator"
 msgstr "Джобен калкулатор"
 
 #: main.cpp:54
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
@@ -221,7 +221,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Поддръжка"
 
 #: main.cpp:56
 #, kde-format
