@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2018, 2019, 2023.
+# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-14 00:40+0000\n"
-"PO-Revision-Date: 2023-05-01 11:04+0200\n"
+"PO-Revision-Date: 2023-09-17 15:47+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #: content/ui/Console.qml:31 content/ui/main.qml:65
 #, kde-format
@@ -36,7 +36,7 @@ msgstr "Cargar un guión"
 #: content/ui/Console.qml:71 content/ui/Console.qml:81
 #, kde-format
 msgid "Script (*.kal)"
-msgstr "Script (*.kal)"
+msgstr "Guión (*.kal)"
 
 #: content/ui/Console.qml:77
 #, kde-format
@@ -66,7 +66,7 @@ msgstr "Calcular"
 #: content/ui/Console.qml:105
 #, kde-format
 msgid "Clear Log"
-msgstr "Limpar o rexistro"
+msgstr "Baleirar o rexistro"
 
 #: content/ui/Console.qml:127
 #, kde-format
@@ -87,7 +87,7 @@ msgstr "Copiar «%1»"
 #: content/ui/controls/Add3DDialog.qml:55
 #, kde-format
 msgid "Clear All"
-msgstr "Limpar todo"
+msgstr "Baleiralo todo"
 
 #: content/ui/controls/ExpressionInput.qml:72
 #, kde-format
@@ -206,10 +206,9 @@ msgid "A portable calculator"
 msgstr "Unha calculadora portátil"
 
 #: main.cpp:54
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "© 2006-2020 Aleix Pol i Gonzalez"
+msgstr "© 2006-2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:55
 #, kde-format
@@ -220,7 +219,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Mantemento."
 
 #: main.cpp:56
 #, kde-format
