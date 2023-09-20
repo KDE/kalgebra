@@ -1,10 +1,10 @@
 # Translation for kalgebra.po to Basque/Euskera (eu).
-# Copyright (C) 2011-2022 This file is copyright:
+# Copyright (C) 2011-2023 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 # KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2011, 2022.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
