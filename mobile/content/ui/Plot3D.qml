@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: 2015 by Aleix Pol <aleixpol@kde.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Dialogs 1.0
-import org.kde.analitza 1.1
-import QtQuick.Controls 2.5
-import org.kde.kalgebra.mobile 1.0
-import org.kde.kirigami 2.5 as Kirigami
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import QtQuick.Controls
+import org.kde.kirigami as Kirigami
+import org.kde.analitza
+import org.kde.kalgebra.mobile
 
 KAlgebraPage {
     id: page
@@ -19,13 +20,18 @@ KAlgebraPage {
 
     FileDialog {
         id: fileDialog
-        folder: shortcuts.home
+        currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         onAccepted: proceed()
 
         property var proceed
     }
 
-    contextualActions: [
+    actions: [
+        Kirigami.Action {
+            icon.name: 'list-add'
+            text: i18n('Add Plot')
+            onTriggered: plotDialog.open()
+        },
         Kirigami.Action {
             text: i18n("Save")
             onTriggered: {
@@ -45,11 +51,6 @@ KAlgebraPage {
         }
     ]
 
-    actions.main: Kirigami.Action {
-        icon.name: 'list-add'
-        text: i18n('Add Plot')
-        onTriggered: plotDialog.open()
-    }
 
     Graph3D {
         id: view

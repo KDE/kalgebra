@@ -26,7 +26,7 @@ Item
 
     readonly property var act: Kirigami.Action {
         id: action
-        iconName: "list-add"
+        icon.name: "list-add"
         onTriggered: root.clicked()
     }
 

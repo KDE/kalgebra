@@ -26,6 +26,8 @@
 #include <QPalette>
 #include <QUrlQuery>
 
+using namespace Qt::Literals::StringLiterals;
+
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray, s_css, (
     "<style type=\"text/css\">\n"
         "\thtml { background-color: " + qGuiApp->palette().color(QPalette::Active, QPalette::Base).name().toLatin1() + "; }\n"
@@ -78,7 +80,7 @@ bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& in
     }
 
     if(a.isCorrect()) {
-        a.insertVariable(QStringLiteral("ans"), res);
+        a.insertVariable(u"ans"_s, res);
         m_script += e; //Script won't have the errors
         Q_EMIT operationSuccessful(e, res);
 
@@ -86,7 +88,7 @@ bool ConsoleModel::addOperation(const Analitza::Expression& e, const QString& in
         addMessage(QStringLiteral("<a title='%1' href='kalgebra:/query?id=copy&func=%2'><span class='exp'>%3</span></a><br />= <a title='kalgebra:%1' href='kalgebra:/query?id=copy&func=%4'><span class='result'>%5</span></a>")
                         .arg(i18n("Paste to Input"), e.toString(), e.toHtml(), res.toString(), result), e, res);
     } else {
-        addMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(QStringLiteral("</li>\n<li>"))), {}, {});
+        addMessage(i18n("<ul class='error'>Error: <b>%1</b><li>%2</li></ul>", input.toHtmlEscaped(), a.errors().join(u"</li>\n<li>"_s)), {}, {});
     }
 
     return a.isCorrect();
@@ -110,7 +112,7 @@ bool ConsoleModel::loadScript(const QUrl& path)
     if(correct)
         addMessage(i18n("Imported: %1", path.toDisplayString()), {}, {});
     else
-        addMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toDisplayString(), a.errors().join(QStringLiteral("<br/>"))), {}, {});
+        addMessage(i18n("<ul class='error'>Error: Could not load %1. <br /> %2</ul>", path.toDisplayString(), a.errors().join(u"<br/>"_s)), {}, {});
 
     return correct;
 }
@@ -124,8 +126,9 @@ bool ConsoleModel::saveScript(const QUrl& savePath)
 
     if(correct) {
         QTextStream out(&file);
-        foreach(const Analitza::Expression& exp, m_script)
+        for(const Analitza::Expression& exp : std::as_const(m_script)) {
             out << exp.toString() << QLatin1Char('\n');
+        }
     }
 
     return correct;
@@ -162,8 +165,9 @@ bool ConsoleModel::saveLog(const QUrl& savePath) const
         QTextStream out(&file);
         out << "<html>\n<head>" << *s_css << "</head>" << QLatin1Char('\n');
         out << "<body>" << QLatin1Char('\n');
-        foreach(const QString &entry, m_htmlLog)
+        for (const QByteArray &entry : std::as_const(m_htmlLog)) {
             out << "<p>" << entry << "</p>" << QLatin1Char('\n');
+        }
         out << "</body>\n</html>" << QLatin1Char('\n');
     }
 
@@ -183,5 +187,5 @@ QByteArray ConsoleModel::css() const
 
 QString ConsoleModel::readContent(const QUrl &url)
 {
-    return QUrlQuery(url).queryItemValue("func");
+    return QUrlQuery(url).queryItemValue(u"func"_s);
 }

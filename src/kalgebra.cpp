@@ -168,36 +168,19 @@ KAlgebra::KAlgebra(QWidget *parent)
     connect(c_variables, &QAbstractItemView::clicked, this, &KAlgebra::edit_var);
     ////////menu
     c_menu = menuBar()->addMenu(i18n("C&alculator"));
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@item:inmenu", "&Load Script..."),
-                        this, SLOT(loadScript()), Qt::CTRL | Qt::Key_L);
-#else
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@item:inmenu", "&Load Script..."), Qt::CTRL | Qt::Key_L,
                         this, SLOT(loadScript()));
-#endif
-    c_recentScripts=new KRecentFilesAction(QIcon::fromTheme(QStringLiteral("document-open-recent")), i18n("Recent Scripts"), this);
+    c_recentScripts = new KRecentFilesAction(QIcon::fromTheme(QStringLiteral("document-open-recent")), i18n("Recent Scripts"), this);
     connect(c_recentScripts, SIGNAL(urlSelected(QUrl)), this, SLOT(loadScript(QUrl)));
     c_menu->addAction(c_recentScripts);
     
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Save Script..."),
-                        this, &KAlgebra::saveScript, Qt::CTRL | Qt::Key_G);
-    c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Export Log..."),
-                        this, &KAlgebra::saveLog, QKeySequence::Save);
-#else
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Save Script..."), Qt::CTRL | Qt::Key_G,
                         this, &KAlgebra::saveScript);
     c_menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("@item:inmenu", "&Export Log..."), QKeySequence::Save,
                         this, &KAlgebra::saveLog);
-#endif
     c_menu->addSeparator();
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    c_menu->addAction(i18nc("@item:inmenu", "&Insert ans..."),
-                        this, &KAlgebra::insertAns, Qt::Key_F3);
-#else
     c_menu->addAction(i18nc("@item:inmenu", "&Insert ans..."),
                         Qt::Key_F3, this, &KAlgebra::insertAns);
-#endif
     c_menu->addSeparator()->setText(i18n("Execution Mode"));
     QActionGroup *execGroup = new QActionGroup(c_menu);
     QAction* calc = c_menu->addAction(i18nc("@item:inmenu", "Calculate"), this, &KAlgebra::consoleCalculate);

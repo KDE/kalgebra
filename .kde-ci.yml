@@ -15,18 +15,5 @@ Dependencies:
     'frameworks/plasma-framework': '@latest-kf6'
     'education/analitza': '@same'
 
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
-  'require':
-    'frameworks/extra-cmake-modules': '@stable'
-    'frameworks/ki18n': '@stable'
-    'frameworks/kcoreaddons': '@stable'
-    'frameworks/kconfigwidgets': '@stable'
-    'frameworks/kwidgetsaddons': '@stable'
-    'frameworks/kdoctools': '@stable'
-    'frameworks/kio': '@stable'
-    'frameworks/kxmlgui': '@stable'
-    'frameworks/plasma-framework': '@stable'
-    'education/analitza': '@same'
-
 Options:
   require-passing-tests-on: [ '@all' ]

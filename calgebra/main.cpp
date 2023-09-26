@@ -61,9 +61,9 @@ void calculate(const Expression& e, CalcType t)
         qDebug() << qPrintable(ans.toString());
         a.insertVariable(QStringLiteral("ans"), ans);
     } else {
-        QStringList errors = a.errors();
+        const QStringList errors = a.errors();
         qDebug() << "Error:";
-        foreach(const QString &err, errors)
+        for (const QString &err : errors)
             qDebug() << " -" << qPrintable(err);
     }
 }
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
             qDebug() << "\t...\t\tfiles that will be executed first";
             return 0;
         } else {
-            QFile f(arg);
+            QFile f(QString::fromUtf8(arg));
             if(!f.open(QIODevice::ReadOnly)) {
                 qWarning() << "File not found: " << arg;
                 return 1;
@@ -101,9 +101,9 @@ int main(int argc, char *argv[])
             a.importScript(&str);
             
             if(!a.isCorrect()) {
-                QStringList errors = a.errors();
+                const QStringList errors = a.errors();
                 qDebug() << "Error:";
-                foreach(const QString &err, errors)
+                for(const QString &err : errors)
                     qDebug() << " -" << qPrintable(err);
             }
         }

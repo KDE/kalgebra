@@ -33,7 +33,7 @@ class KAlgebraMobile : public QObject
     Q_OBJECT
     Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables NOTIFY variablesChanged)
     public:
-        explicit KAlgebraMobile(QObject* parent=0);
+        explicit KAlgebraMobile(QObject *parent = nullptr);
         
         static KAlgebraMobile* self();
         void notifyVariablesChanged() { variablesChanged(); }

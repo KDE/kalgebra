@@ -60,7 +60,8 @@ QVariant Clipboard::contentFormat(const QString &format) const
     QVariant ret;
     if(format == QStringLiteral("text/uri-list")) {
         QVariantList retList;
-        foreach(const QUrl& url, data->urls())
+        const auto urls = data->urls();
+        for(const QUrl& url : urls)
             retList += url;
         ret = retList;
     } else if(format.startsWith(QStringLiteral("text/"))) {
@@ -81,71 +82,41 @@ QVariant Clipboard::content() const
 void Clipboard::setContent(const QVariant &content)
 {
     QMimeData* mimeData = new QMimeData;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    switch(content.type())
-#else
-    switch(content.userType())
-#endif
-    {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        case QVariant::String:
-#else
+    switch(content.userType()) {
     case QMetaType::QString:
-#endif
-            mimeData->setText(content.toString());
-            break;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        case QVariant::Color:
-#else
-        case QMetaType::QColor:
-#endif
-            mimeData->setColorData(content.toString());
-            break;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        case QVariant::Pixmap:
-        case QVariant::Image:
-#else
-        case QMetaType::QPixmap:
-        case QMetaType::QImage:
-#endif
-            mimeData->setImageData(content);
-            break;
-        default:
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-            if (content.type() == QVariant::List) {
-#else
-            if (content.userType() == QMetaType::QVariantList) {
-#endif
-                QVariantList list = content.toList();
-                QList<QUrl> urls;
-                bool wasUrlList = true;
-                foreach (const QVariant& url, list) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-                    if (url.type() != QVariant::Url) {
-#else
-                    if (url.userType() != QMetaType::QUrl) {
-#endif
-                        wasUrlList = false;
-                        break;
-                    }
-                    urls += url.toUrl();
-                }
-                if(wasUrlList) {
-                    mimeData->setUrls(urls);
+        mimeData->setText(content.toString());
+        break;
+    case QMetaType::QColor:
+        mimeData->setColorData(content.toString());
+        break;
+    case QMetaType::QPixmap:
+    case QMetaType::QImage:
+        mimeData->setImageData(content);
+        break;
+    default:
+        if (content.userType() == QMetaType::QVariantList) {
+            const QVariantList list = content.toList();
+            QList<QUrl> urls;
+            bool wasUrlList = true;
+            for (const QVariant& url : list) {
+                if (url.userType() != QMetaType::QUrl) {
+                    wasUrlList = false;
                     break;
                 }
+                urls += url.toUrl();
             }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-            if (content.canConvert(QVariant::String)) {
-#else
-            if (content.canConvert<QString>()) {
-#endif
-                mimeData->setText(content.toString());
-            } else {
-                mimeData->setData(QStringLiteral("application/octet-stream"), content.toByteArray());
-                qWarning() << "Couldn't figure out the content type, storing as application/octet-stream";
+            if(wasUrlList) {
+                mimeData->setUrls(urls);
+                break;
             }
-            break;
+        }
+        if (content.canConvert<QString>()) {
+            mimeData->setText(content.toString());
+        } else {
+            mimeData->setData(QStringLiteral("application/octet-stream"), content.toByteArray());
+            qWarning() << "Couldn't figure out the content type, storing as application/octet-stream";
+        }
+        break;
     }
     m_clipboard->setMimeData(mimeData, m_mode);
 }

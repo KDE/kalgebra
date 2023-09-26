@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2015 by Aleix Pol <aleixpol@kde.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
-import org.kde.analitza 1.0
-import QtQuick.Controls 2.5
-import org.kde.kirigami 2.14 as Kirigami
-import org.kde.kalgebra.mobile 1.0
+import QtQuick
+import QtQuick.Layouts
+import org.kde.analitza
+import QtQuick.Controls
+import org.kde.kirigami as Kirigami
+import org.kde.kalgebra.mobile
 
 Kirigami.ScrollablePage {
     title: i18n("Value tables")
@@ -53,9 +53,9 @@ Kirigami.ScrollablePage {
         }
     }
 
-    actions.main: Kirigami.Action {
+    actions: Kirigami.Action {
         icon.name: 'dialog-ok'
-        text: i18n('Run')
+        text: i18nc("@action:button Run table", "Run")
         onTriggered: calculateTable()
     }
 

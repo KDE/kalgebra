@@ -15,28 +15,24 @@
 
 using namespace Analitza;
 
-KAlgebraMobile* KAlgebraMobile::s_self=0;
+KAlgebraMobile* KAlgebraMobile::s_self = nullptr;
 KAlgebraMobile* KAlgebraMobile::self() { return s_self; }
 
 Q_DECLARE_METATYPE(QSharedPointer<Analitza::Variables>)
 
 KAlgebraMobile::KAlgebraMobile(QObject* parent)
-    : QObject(parent), m_functionsModel(0), m_vars(new Analitza::Variables)
+    : QObject(parent), m_functionsModel(nullptr), m_vars(new Analitza::Variables)
 {
-    Q_ASSERT(s_self==0);
+    Q_ASSERT(s_self == nullptr);
     s_self=this;
     
     const auto uri = "org.kde.kalgebra.mobile";
     qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
-    qmlRegisterUncreatableType<QAbstractItemModel>("org.kde.kalgebra.mobile", 1, 0, "QAbstractItemModel", "no");
+    qmlRegisterUncreatableType<QAbstractItemModel>("org.kde.kalgebra.mobile", 1, 0, "QAbstractItemModel", QStringLiteral("no"));
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    qmlRegisterType<QStandardItemModel>();
-#else
     qmlRegisterAnonymousType<QStandardItemModel>("Kalgebra", 1);
-#endif
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", QStringLiteral("because"));
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
 }

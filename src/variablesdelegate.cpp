@@ -23,11 +23,7 @@
 QWidget* VariablesDelegate::createEditor(QWidget* p, const QStyleOptionViewItem& opt, const QModelIndex& idx) const
 {
     QVariant val=idx.model()->data(idx);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    if(val.type()==QVariant::Double) {
-#else
     if(val.metaType().id()==QMetaType::Double) {
-#endif
         QDoubleSpinBox* spin=new QDoubleSpinBox(p);
         spin->setDecimals(10);
         return spin;

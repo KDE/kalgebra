@@ -1,14 +1,15 @@
 // SPDX-FileCopyrightText: 2015 by Aleix Pol <aleixpol@kde.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import org.kde.kirigami 2.14 as Kirigami
-import QtQuick 2.2
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.5 as QQC2
-import QtQml.Models 2.10
-import QtQuick.Dialogs 1.0
-import org.kde.analitza 1.0
-import org.kde.kalgebra.mobile 1.0
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import QtQml.Models
+import QtQuick.Dialogs
+import org.kde.kirigami as Kirigami
+import org.kde.analitza
+import org.kde.kalgebra.mobile
 
 Kirigami.ScrollablePage {
     id: page
@@ -47,9 +48,9 @@ Kirigami.ScrollablePage {
         }
     }
 
-    contextualActions: [
+    actions: [
         Kirigami.Action {
-            text: i18n("Load Script")
+            text: i18nc("@action:button", "Load Script")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.loadScript(fileDialog.fileUrl) }
@@ -59,7 +60,7 @@ Kirigami.ScrollablePage {
             }
         },
         Kirigami.Action {
-            text: i18n("Save Script")
+            text: i18nc("@action:button", "Save Script")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveScript(fileDialog.fileUrl) }
@@ -70,7 +71,7 @@ Kirigami.ScrollablePage {
         },
         //TODO: Recent scripts
         Kirigami.Action {
-            text: i18n("Export Log")
+            text: i18nc("@action:button", "Export Log")
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveLog(fileDialog.fileUrl) }
@@ -81,18 +82,18 @@ Kirigami.ScrollablePage {
         },
         // --
         Kirigami.Action {
-            text: consoleModel.mode === ConsoleModel.Calculate ? i18n("Evaluate") : i18n("Calculate")
+            text: consoleModel.mode === ConsoleModel.Calculate ? i18nc("@action:button", "Evaluate") : i18nc("@action:button", "Calculate")
             onTriggered: consoleModel.mode = consoleModel.mode === ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
         },
         // --
         Kirigami.Action {
-            iconName: "edit-clear-history"
-            text: i18n("Clear Log")
+            icon.name: "edit-clear-history"
+            text: i18nc("@action:button", "Clear Log")
             onTriggered: itemModel.clear()
-            enabled: itemModel.count != 0
+            enabled: itemModel.count !== 0
         }
     ]
-    
+
     Kirigami.CardsListView {
         id: view
         model: itemModel
@@ -151,7 +152,7 @@ Kirigami.ScrollablePage {
 
         FileDialog {
             id: fileDialog
-            folder: shortcuts.home
+            currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
             onAccepted: proceed()
 
             property var proceed
