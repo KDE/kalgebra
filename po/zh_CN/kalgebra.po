@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2023-09-16 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -17,17 +17,17 @@ msgstr ""
 "X-Crowdin-File: /kf5-trunk/messages/kalgebra/kalgebra.pot\n"
 "X-Crowdin-File-ID: 5120\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, kde-format
 msgid "Options: %1"
 msgstr "选项：%1"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "粘贴“%1”到输入内容"

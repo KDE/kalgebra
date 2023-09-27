@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2022-09-06 11:59+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -28,17 +28,17 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, kde-format
 msgid "Options: %1"
 msgstr "Действия: %1"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "Вставить «%1» в поле ввода"

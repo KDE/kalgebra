@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2021-09-17 20:07+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -19,18 +19,18 @@ msgstr ""
 "X-Generator: Lokalize 21.08.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr ""
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Options: %1"
 msgstr "फंक्शन्स"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr ""

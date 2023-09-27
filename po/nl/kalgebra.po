@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebraN\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2022-06-12 20:25+0200\n"
 "Last-Translator: Jaap Woldringh <jjhwoldrinngh@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
@@ -26,17 +26,17 @@ msgstr ""
 "X-Generator: Lokalize 21.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, kde-format
 msgid "Options: %1"
 msgstr "Opties: %1"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "Plak \"%1\" voor invoer"

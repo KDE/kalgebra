@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2013-01-04 14:25+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -22,18 +22,18 @@ msgstr ""
 "X-Generator: WordForge 0.8 RC1\n"
 "X-Language: km-KH\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, fuzzy, kde-format
 #| msgid " <a href='%1'>%2</a>"
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='%1'>%2</a>"
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, kde-format
 msgid "Options: %1"
 msgstr "ជម្រើស​ ៖ %1"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "បិទ​ភ្ជាប់​ \"%1\" ដើម្បី​បញ្ចូល"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:54+0000\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
 "PO-Revision-Date: 2022-06-15 19:10+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -15,17 +15,17 @@ msgstr ""
 "X-POFile-SpellExtra: Coseno aprox otherwise lt ceil floor Percy Aucahuasi\n"
 "X-POFile-SpellExtra: Triveño KAlgebra STL stl\n"
 
-#: consolehtml.cpp:173
+#: consolehtml.cpp:158
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:178
+#: consolehtml.cpp:163
 #, kde-format
 msgid "Options: %1"
 msgstr "Opções: %1"
 
-#: consolehtml.cpp:228
+#: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "Colar o \"%1\" ao texto introduzido"
