@@ -1,0 +1,234 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# giovanni <g.sora@tiscali.it>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"PO-Revision-Date: 2023-09-28 12:53+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
+
+#: content/ui/Console.qml:16 content/ui/main.qml:50
+#, kde-format
+msgid "Calculator"
+msgstr "Calculator"
+
+#: content/ui/Console.qml:34 content/ui/main.qml:76
+#: content/ui/VariablesView.qml:12
+#, kde-format
+msgid "Variables"
+msgstr "Variabiles"
+
+#: content/ui/Console.qml:52
+#, kde-format
+msgid "Load Script"
+msgstr "Carga script"
+
+#: content/ui/Console.qml:56 content/ui/Console.qml:66
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Script (*.kal)"
+
+#: content/ui/Console.qml:62
+#, kde-format
+msgid "Save Script"
+msgstr "Salveguarda Script"
+
+#: content/ui/Console.qml:73
+#, kde-format
+msgid "Export Log"
+msgstr ""
+
+#: content/ui/Console.qml:77
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:84
+#, kde-format
+msgid "Evaluate"
+msgstr "Evaluta"
+
+#: content/ui/Console.qml:84
+#, kde-format
+msgid "Calculate"
+msgstr "Calcula"
+
+#: content/ui/Console.qml:90
+#, kde-format
+msgid "Clear Log"
+msgstr "Netta registro (log)"
+
+#: content/ui/Console.qml:112
+#, kde-format
+msgid "2D Plot"
+msgstr "2D Plot"
+
+#: content/ui/Console.qml:120
+#, kde-format
+msgid "3D Plot"
+msgstr "3D Plot"
+
+#: content/ui/Console.qml:128
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "Copia \"%1\""
+
+#: content/ui/controls/Add2DDialog.qml:51
+#: content/ui/controls/Add3DDialog.qml:55
+#, kde-format
+msgid "Clear All"
+msgstr "Netta omne"
+
+#: content/ui/controls/ExpressionInput.qml:72
+#, kde-format
+msgid "Expression to calculate..."
+msgstr ""
+
+#: content/ui/Dictionary.qml:28
+#, kde-format
+msgid "Name:"
+msgstr "Nomine:"
+
+#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
+#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: content/ui/main.qml:40
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/main.qml:57
+#, kde-format
+msgid "Graph 2D"
+msgstr ""
+
+#: content/ui/main.qml:64
+#, kde-format
+msgid "Graph 3D"
+msgstr ""
+
+#: content/ui/main.qml:70
+#, kde-format
+msgid "Value Tables"
+msgstr ""
+
+#: content/ui/main.qml:82
+#, kde-format
+msgid "Dictionary"
+msgstr "Dictionario"
+
+#: content/ui/main.qml:88
+#, kde-format
+msgid "About KAlgebra"
+msgstr "A proposito de KAlgebra"
+
+#: content/ui/Plot2D.qml:31 content/ui/Plot3D.qml:30
+#, kde-format
+msgid "Save"
+msgstr "Salveguarda"
+
+#: content/ui/Plot2D.qml:44
+#, kde-format
+msgid "View Grid"
+msgstr "Vide Grillia"
+
+#: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
+#, kde-format
+msgid "Reset Viewport"
+msgstr ""
+
+#: content/ui/TableResultPage.qml:8
+#, kde-format
+msgid "Results"
+msgstr "Resultatos"
+
+#: content/ui/Tables.qml:12
+#, kde-format
+msgid "Value tables"
+msgstr ""
+
+#: content/ui/Tables.qml:30
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr ""
+
+#: content/ui/Tables.qml:32
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr ""
+
+#: content/ui/Tables.qml:34
+#, kde-format
+msgid "Errors: %1"
+msgstr "Errores: %1"
+
+#: content/ui/Tables.qml:69
+#, kde-format
+msgid "Input"
+msgstr "Ingresso"
+
+#: content/ui/Tables.qml:78
+#, kde-format
+msgid "From:"
+msgstr "Ex:"
+
+#: content/ui/Tables.qml:85
+#, kde-format
+msgid "To:"
+msgstr "A:"
+
+#: content/ui/Tables.qml:92
+#, kde-format
+msgid "Step"
+msgstr "Passo"
+
+#: content/ui/Tables.qml:98
+#, kde-format
+msgid "Run"
+msgstr "Exeque"
+
+#: main.cpp:38
+#, kde-format
+msgid "A portable calculator"
+msgstr ""
+
+#: main.cpp:39
+#, kde-format
+msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
+
+#: main.cpp:40
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:40
+#, kde-format
+msgctxt "@info:credit"
+msgid "Maintainer"
+msgstr "Mantenitor"
+
+#: main.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Giovanni Sora"
+
+#: main.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "g.sora@tiscali.it"
