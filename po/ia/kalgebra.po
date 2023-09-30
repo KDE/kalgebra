@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-27 00:39+0000\n"
-"PO-Revision-Date: 2023-09-28 12:47+0200\n"
+"PO-Revision-Date: 2023-09-29 09:50+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -30,12 +30,12 @@ msgstr "Optiones: %1"
 #: consolehtml.cpp:213
 #, kde-format
 msgid "Paste \"%1\" to input"
-msgstr ""
+msgstr "Colla \"%1\" a ingresso"
 
 #: consolemodel.cpp:87
 #, kde-format
 msgid "Paste to Input"
-msgstr ""
+msgstr "Colla a Ingresso"
 
 #: consolemodel.cpp:89
 #, kde-format
@@ -50,7 +50,7 @@ msgstr "importate: %1"
 #: consolemodel.cpp:113
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
-msgstr ""
+msgstr "<ul class='error'>Error: Non pote cargar %1. <br /> %2</ul>"
 
 #: dictionary.cpp:44
 #, kde-format
@@ -60,12 +60,12 @@ msgstr "Information"
 #: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
 #, kde-format
 msgid "<b>%1</b>"
-msgstr ""
+msgstr "<b>%1</b>"
 
 #: functionedit.cpp:47
 #, kde-format
 msgid "Add/Edit a function"
-msgstr ""
+msgstr "Adde/Modifica un function"
 
 #: functionedit.cpp:92
 #, kde-format
@@ -101,12 +101,12 @@ msgstr "Remove"
 #: functionedit.cpp:238
 #, kde-format
 msgid "The options you specified are not correct"
-msgstr ""
+msgstr "Le optiones que tu specificava non es correcte"
 
 #: functionedit.cpp:243
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
-msgstr ""
+msgstr "Limite inferior nonpote esser major que le limite superior"
 
 #: kalgebra.cpp:74
 #, kde-format
@@ -142,12 +142,12 @@ msgstr "C&alculator"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
-msgstr ""
+msgstr "&Carga script..."
 
 #: kalgebra.cpp:178
 #, kde-format
 msgid "Recent Scripts"
-msgstr ""
+msgstr "Scripts Recente"
 
 #: kalgebra.cpp:183 kalgebra.cpp:188
 #, kde-format
@@ -159,18 +159,18 @@ msgstr "&Salveguarda Script..."
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
-msgstr ""
+msgstr "&Exporta file de registro..."
 
 #: kalgebra.cpp:195 kalgebra.cpp:198
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr ""
+msgstr "&Inserta ans..."
 
 #: kalgebra.cpp:201
 #, kde-format
 msgid "Execution Mode"
-msgstr ""
+msgstr "Modo de execution"
 
 #: kalgebra.cpp:203
 #, kde-format
@@ -202,17 +202,17 @@ msgstr "&Adde"
 #: kalgebra.cpp:258
 #, kde-format
 msgid "Viewport"
-msgstr ""
+msgstr "Viewport"
 
 #: kalgebra.cpp:262
 #, kde-format
 msgid "&2D Graph"
-msgstr ""
+msgstr "Graphico &2D"
 
 #: kalgebra.cpp:274
 #, kde-format
 msgid "2&D Graph"
-msgstr ""
+msgstr "Graphico 2&D"
 
 #: kalgebra.cpp:276
 #, kde-format
@@ -245,28 +245,28 @@ msgstr "Normal"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
-msgstr ""
+msgstr "Subtil"
 
 #: kalgebra.cpp:289
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
-msgstr ""
+msgstr "Multe Subtil"
 
 #: kalgebra.cpp:323
 #, kde-format
 msgid "&3D Graph"
-msgstr ""
+msgstr "Graphico &3D"
 
 #: kalgebra.cpp:331
 #, kde-format
 msgid "3D &Graph"
-msgstr ""
+msgstr "&Graphico 3D"
 
 #: kalgebra.cpp:334
 #, kde-format
 msgid "&Reset View"
-msgstr ""
+msgstr "&Reinitialisa vista"
 
 #: kalgebra.cpp:336
 #, kde-format
@@ -296,7 +296,7 @@ msgstr "&Dictionario"
 #: kalgebra.cpp:370
 #, kde-format
 msgid "Look for:"
-msgstr ""
+msgstr "Cerca:"
 
 #: kalgebra.cpp:463
 #, kde-format
@@ -331,7 +331,7 @@ msgstr "Errores: %1"
 #: kalgebra.cpp:608
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr ""
+msgstr "Selige ubi poner le tracia reproducite"
 
 #: kalgebra.cpp:608
 #, kde-format
@@ -357,7 +357,7 @@ msgstr "Inserta un nomine pro le nove variabile"
 #: main.cpp:30
 #, kde-format
 msgid "A portable calculator"
-msgstr ""
+msgstr "Un Calculator portabile"
 
 #: main.cpp:31
 #, kde-format
@@ -384,17 +384,17 @@ msgstr "g.sora@tiscali.it"
 #: varedit.cpp:33
 #, kde-format
 msgid "Add/Edit a variable"
-msgstr ""
+msgstr "Adde/Modifica un variabile"
 
 #: varedit.cpp:38
 #, kde-format
 msgid "Remove Variable"
-msgstr ""
+msgstr "Remove variabile"
 
 #: varedit.cpp:63
 #, kde-format
 msgid "Edit '%1' value"
-msgstr ""
+msgstr "Modifica valor '%1'"
 
 #: varedit.cpp:65
 #, kde-format
@@ -404,12 +404,12 @@ msgstr "Non disponibile"
 #: varedit.cpp:98
 #, kde-format
 msgid "<b style='color:#090'>%1 := %2</b>"
-msgstr ""
+msgstr "<b style='color:#090'>%1 := %2</b>"
 
 #: varedit.cpp:101
 #, kde-format
 msgid "<b style='color:red'>WRONG</b>"
-msgstr ""
+msgstr "<b style='color:red'>ERRATE</b>"
 
 #: viewportwidget.cpp:46
 #, kde-format

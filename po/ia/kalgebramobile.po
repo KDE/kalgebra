@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-27 00:39+0000\n"
-"PO-Revision-Date: 2023-09-28 12:53+0200\n"
+"PO-Revision-Date: 2023-09-29 09:42+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -46,7 +46,7 @@ msgstr "Salveguarda Script"
 #: content/ui/Console.qml:73
 #, kde-format
 msgid "Export Log"
-msgstr ""
+msgstr "Exporta file de registro"
 
 #: content/ui/Console.qml:77
 #, kde-format
@@ -92,7 +92,7 @@ msgstr "Netta omne"
 #: content/ui/controls/ExpressionInput.qml:72
 #, kde-format
 msgid "Expression to calculate..."
-msgstr ""
+msgstr "Expression a calcular ..."
 
 #: content/ui/Dictionary.qml:28
 #, kde-format
@@ -113,17 +113,17 @@ msgstr "KAlgebra"
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "Graphico 2D"
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "Graphico 3D"
 
 #: content/ui/main.qml:70
 #, kde-format
 msgid "Value Tables"
-msgstr ""
+msgstr "Tabellas de Valor"
 
 #: content/ui/main.qml:82
 #, kde-format
@@ -148,7 +148,7 @@ msgstr "Vide Grillia"
 #: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
 #, kde-format
 msgid "Reset Viewport"
-msgstr ""
+msgstr "Reinitialisa viewport"
 
 #: content/ui/TableResultPage.qml:8
 #, kde-format
@@ -158,17 +158,17 @@ msgstr "Resultatos"
 #: content/ui/Tables.qml:12
 #, kde-format
 msgid "Value tables"
-msgstr ""
+msgstr "Tabellas de Valor"
 
 #: content/ui/Tables.qml:30
 #, kde-format
 msgid "Errors: The step cannot be 0"
-msgstr ""
+msgstr "Errore. Le passo non pote esser 0"
 
 #: content/ui/Tables.qml:32
 #, kde-format
 msgid "Errors: The start and end are the same"
-msgstr ""
+msgstr "Errores: Le initio e le fin es le mesme"
 
 #: content/ui/Tables.qml:34
 #, kde-format
@@ -203,7 +203,7 @@ msgstr "Exeque"
 #: main.cpp:38
 #, kde-format
 msgid "A portable calculator"
-msgstr ""
+msgstr "Un Calculator portabile"
 
 #: main.cpp:39
 #, kde-format
