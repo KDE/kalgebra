@@ -22,6 +22,7 @@
   <name xml:lang="fr">KAlgebra</name>
   <name xml:lang="gl">KAlgebra</name>
   <name xml:lang="hu">KAlgebra</name>
+  <name xml:lang="ia">KAlgebra</name>
   <name xml:lang="id">KAlgebra</name>
   <name xml:lang="it">KAlgebra</name>
   <name xml:lang="ka">KAlgebra</name>
@@ -61,6 +62,7 @@
   <summary xml:lang="fr">Calculatrice graphique</summary>
   <summary xml:lang="gl">Calculadora gráfica</summary>
   <summary xml:lang="hu">Grafikus számológép</summary>
+  <summary xml:lang="ia">Calculator Graphic</summary>
   <summary xml:lang="id">Kalkulator Grafik</summary>
   <summary xml:lang="it">Calcolatrice grafica</summary>
   <summary xml:lang="ka">გრაფიკული კალკულატორი</summary>
@@ -99,6 +101,7 @@
     <p xml:lang="fr">KAlgebra est une application qui peut remplacer votre calculatrice graphique. Elle fournit des fonctions pour le calcul numérique, logique, symbolique et l'analyse qui vous permettent de calculer des expressions mathématiques dans la console et tracer graphiquement les résultats en 2D ou 3D. KAlgebra repose sur MathML, le langage de balise pour les mathématiques ; cependant, il n'est pas nécessaire de connaître MathML pour utiliser KAlgebra.</p>
     <p xml:lang="gl">KAlgebra é unha aplicación que pode substituír as calculadoras gráficas. Ten funcionalidades numéricas, lóxicas, simbólicas e de análise que permiten calcular expresións matemáticas na consola e trazar graficamente os resultados en 2D ou 3D. KAlgebra ten o seu alicerce na linguaxe de etiquetas matemática (MathML); porén, non hai que saber nada do MathML para poder usar KAlgebra.</p>
     <p xml:lang="hu">A KAlgebra a grafikus számológépe helyébe léphet. Numerikus, logikai, szimbolikus és analízis képességei lehetővé teszik matematikai kifejezések kiértékelését a konzolon, majd grafikus ábrázolását 2D-ben vagy 3D-ben. A KAlgebra erősen épít a MathML matematikai leírónyelv használatára, ugyanakkor nem szükséges MathML ismeret a KAlgebra használatához.</p>
+    <p xml:lang="ia">KAlgebra es un application que pote reimplaciare tu calculator graphic. Il ha characteristicas numeric, logic, symbolic, e de analysis que te permitte calcular expressiones mathematic expressions sur le consolle e traciar  graphicamente le resultatos in 2D o 3D. KAlgebra ha radices in le Mathematical Markup Language (MathML), totevia, un non necessita cognoscer MathML per usar KAlgebra.</p>
     <p xml:lang="id">KAlgebra adalah aplikasi yang dapat menggantikan kalkulator grafikmu. Ini memiliki fitur numerik, logis, simbolis, dan analisis yang memungkinkanmu menghitung ekspresi matematis pada konsol dan secara grafik memplot hasilnya dalam 2D atau 3D. KAlgebra berakar pada Mathematical Markup Language (MathML); namun, kita tidak perlu tahu MathML untuk menggunakan KAlgebra.</p>
     <p xml:lang="it">KAlgebra è un'applicazione che può sostituire la tua calcolatrice grafica. Ha funzionalità numeriche, logiche, simboliche e di analisi che ti permettono di calcolare le espressioni matematiche sulla console e di visualizzarne il grafico in 2D o 3D. KAlgebra si basa sul linguaggio a marcatori di matematica («Mathematical Markup Language», MathML), tuttavia non è necessario conoscerlo per poter usare KAlgebra.</p>
     <p xml:lang="ka">KAlgebra აპლიკაციაა, რომელსაც თქვენი კალკულატორის ჩანაცვლება შეუძლია. მას გააჩნია რიცხვითი, ლოგიკური, სიმბოლური და ანალიზის თვისებები, რომლებიც საშუალებას გაძლევთ, მათემატიკური გამოსახულებები კონსოლში გამოთვალოთ და მათი გრაფიკები 2 ან 3 განზომილებიან სივრცეში დახატოთ. KAlgebra მიბმულია მათემატიკის ენაზე (MathML); მაგრამ KAlgebra-ის გამოსაყენებლად MathML-ის ცოდნა არ გჭირდებათ.</p>
@@ -141,6 +144,7 @@
       <caption xml:lang="fi">2D-kaavio KAlgebrassa</caption>
       <caption xml:lang="fr">Graphique en 2 dimensions sur KAlgebra</caption>
       <caption xml:lang="gl">Gráfica 2D en KAlgebra</caption>
+      <caption xml:lang="ia">Tracia 2D  in KAlgebra</caption>
       <caption xml:lang="id">Plot 2D di KAlgebra</caption>
       <caption xml:lang="it">Grafico 2D in KAlgebra</caption>
       <caption xml:lang="ka">2D გრაფიკები KAlgebra-ში</caption>
