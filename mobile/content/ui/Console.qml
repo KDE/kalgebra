@@ -9,6 +9,7 @@ import QtQml.Models
 import QtQuick.Dialogs
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
+import org.kde.kirigamiaddons.formcard as FormCard
 import org.kde.analitza
 import org.kde.kalgebra.mobile
 
@@ -102,46 +103,62 @@ Kirigami.ScrollablePage {
         }
     ]
 
-    Kirigami.CardsListView {
+    ListView {
         id: view
         model: itemModel
 
-        delegate: Kirigami.Card {
-            contentItem: QQC2.Label {
-                text: model.result
-                onLinkActivated: {
-                    input.remove(input.selectionStart, input.selectionEnd)
-                    input.insert(input.cursorPosition, consoleModel.readContent(link))
+        bottomMargin: Kirigami.Units.largeSpacing
+        topMargin: Kirigami.Units.largeSpacing
+        spacing: Kirigami.Units.largeSpacing
+
+        delegate: FormCard.FormCard {
+            width: ListView.view.width
+            FormCard.AbstractFormDelegate {
+                background: null
+                contentItem: RowLayout {
+                    QQC2.Label {
+                        text: model.result
+                        onLinkActivated: {
+                            input.remove(input.selectionStart, input.selectionEnd)
+                            input.insert(input.cursorPosition, consoleModel.readContent(link))
+                        }
+
+                        Layout.fillWidth: true
+                    }
+
+                    QQC2.ToolButton {
+                        visible: App.functionsModel().canAddFunction(expression, 2, App.variables)
+                        text: i18n("2D Plot")
+                        onClicked: {
+                            App.functionsModel().addFunction(expression, 2, App.variables)
+                            show2dPlotAction.trigger();
+                        }
+                    }
+
+                    QQC2.ToolButton {
+                        visible: App.functionsModel().canAddFunction(expression, 4, App.variables)
+                        text: i18n("3D Plot")
+                        onClicked: {
+                            App.functionsModel().addFunction(expression, 4, App.variables)
+                            show3dPlotAction.trigger();
+                        }
+                    }
+
+                    QQC2.ToolButton {
+                        readonly property string value: result.replace(/<[^>]*>/g, '');
+                        text: i18n("Copy \"%1\"", value)
+                        icon.name: "edit-copy"
+                        display: QQC2.ToolButton.IconOnly
+                        onClicked: {
+                            clipboard.content = value
+                        }
+
+                        QQC2.ToolTip.text: text
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+                    }
                 }
             }
-
-            actions: [
-                Kirigami.Action {
-                    visible: App.functionsModel().canAddFunction(expression, 2, App.variables)
-                    text: i18n("2D Plot")
-                    onTriggered: {
-                        App.functionsModel().addFunction(expression, 2, App.variables)
-                        show2dPlotAction.trigger();
-                    }
-                },
-                Kirigami.Action {
-                    visible: App.functionsModel().canAddFunction(expression, 4, App.variables)
-                    text: i18n("3D Plot")
-                    onTriggered: {
-                        App.functionsModel().addFunction(expression, 4, App.variables)
-                        show3dPlotAction.trigger();
-                    }
-                },
-                Kirigami.Action {
-                    readonly property string value: result.replace(/<[^>]*>/g, '');
-                    text: i18n("Copy \"%1\"", value)
-                    icon.name: "edit-copy"
-                    displayHint: Kirigami.DisplayHint.AlwaysHide
-                    onTriggered: {
-                        clipboard.content = value
-                    }
-                }
-            ]
         }
         Clipboard {
             id: clipboard
@@ -150,7 +167,7 @@ Kirigami.ScrollablePage {
         ConsoleModel {
             id: consoleModel
             variables: App.variables
-            onMessage: {
+            onMessage: (msg, operation, result) => {
                 itemModel.append({ result: msg, expression: result.toString()  })
                 input.selectAll()
                 view.currentIndex = view.count-1
@@ -166,6 +183,12 @@ Kirigami.ScrollablePage {
             property var proceed
         }
 
+        Kirigami.PlaceholderMessage {
+            text: i18nc("@info", "Empty console history")
+            visible: view.count === 0
+            anchors.centerIn: parent
+            width: parent.width - Kirigami.Units.gridUnit * 4
+        }
     }
 
     footer: ExpressionInput {
