@@ -28,7 +28,7 @@ class ConsoleModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode NOTIFY modeChanged)
-    Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables WRITE setVariables)
+    Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables WRITE setVariables NOTIFY variablesChanged)
 public:
     ConsoleModel(QObject* parent = nullptr);
 
@@ -65,6 +65,7 @@ Q_SIGNALS:
     void updateView();
     void modeChanged(ConsoleModel::ConsoleMode mode);
     void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
+    void variablesChanged();
 
 private:
     void addMessage(const QString &msg, const Analitza::Expression& operation, const Analitza::Expression& result);

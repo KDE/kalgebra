@@ -19,6 +19,8 @@
 #include <analitza/variables.h>
 #include <analitza/expression.h>
 
+using namespace Qt::Literals::StringLiterals;
+
 static QUrl temporaryPath()
 {
     QTemporaryFile temp(QStringLiteral("consolelog"));
@@ -84,7 +86,7 @@ void ConsoleHtml::openClickedUrl(const QUrl& url)
     
     if(id==QLatin1String("copy")) {
         Q_EMIT paste(exp);
-    } else foreach(InlineOptions* opt, m_options) {
+    } else for(InlineOptions* opt : std::as_const(m_options)) {
         if(opt->id() == id) {
             opt->triggerOption(Analitza::Expression(exp, false));
         }
@@ -147,7 +149,7 @@ void ConsoleHtml::includeOperation(const Analitza::Expression& /*e*/, const Anal
         Analitza::Expression lambdaexp = lambdifier.dependenciesToLambda();
         lambdifier.setExpression(lambdaexp);
 
-        foreach(InlineOptions* opt, m_options) {
+        for(InlineOptions* opt : std::as_const(m_options)) {
             if(opt->matchesExpression(lambdaexp)) {
                 QUrl url(QStringLiteral("/query"));
                 QUrlQuery query(url);
@@ -160,7 +162,7 @@ void ConsoleHtml::includeOperation(const Analitza::Expression& /*e*/, const Anal
         }
 
         if(!m_optionsString.isEmpty()) {
-            m_optionsString = "<div class='options'>"+i18n("Options: %1", m_optionsString)+"</div>";
+            m_optionsString = u"<div class='options'>"_s +i18n("Options: %1", m_optionsString) + u"</div>"_s;
         }
     }
 }
@@ -176,8 +178,8 @@ void ConsoleHtml::updateView()
     auto log = m_model->htmlLog();
     if (!log.isEmpty()) {
         const auto newEntry = log.takeLast();
-        foreach(const QString &entry, log)
-            code += "<p class='normal'>" + entry.toUtf8() + "</p>\n";
+        for(const QByteArray &entry : std::as_const(log))
+            code += "<p class='normal'>" + entry + "</p>\n";
 
         code += m_optionsString.toUtf8();
         if (newEntry.startsWith("<ul class='error'>"))
@@ -187,7 +189,7 @@ void ConsoleHtml::updateView()
     }
     code += "</body></html>";
 
-    page()->setHtml(code);
+    page()->setHtml(QString::fromUtf8(code));
 
     Q_EMIT changed();
 

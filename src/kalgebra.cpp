@@ -57,7 +57,10 @@
 #include <QTableView>
 #include <QToolButton>
 #include <QVBoxLayout>
-#include <klocalizedstring.h>
+#include <KStandardAction>
+#include <KLocalizedString>
+
+using namespace Qt::Literals::StringLiterals;
 
 class Add2DOption : public InlineOptions
 {
@@ -378,7 +381,8 @@ KAlgebra::~KAlgebra()
     KConfig conf(QStringLiteral("kalgebrarc"));
     KConfigGroup config(&conf, "Default");
     QStringList urls;
-    foreach(const QUrl& url, c_recentScripts->urls())
+    const auto recentScripts = c_recentScripts->urls();
+    for(const QUrl& url : recentScripts)
         urls += url.toDisplayString();
     
     config.writeEntry("recent", urls);
@@ -389,8 +393,8 @@ void KAlgebra::initializeRecentScripts()
     KConfig conf(QStringLiteral("kalgebrarc"));
     KConfigGroup config(&conf, "Default");
     
-    QStringList urls=config.readEntry("recent", QStringList());
-    foreach(const QString& url, urls) {
+    const QStringList urls = config.readEntry("recent", QStringList());
+    for(const QString& url : urls) {
         c_recentScripts->addUrl(QUrl(url));
     }
 }
@@ -477,7 +481,7 @@ void KAlgebra::edit_var(const QModelIndex &idx)
         e->setName(var);
         
         if(e->exec() == QDialog::Accepted) {
-            QString str=var+" := "+e->val().toString();
+            QString str = var + u" := "_s + e->val().toString();
             c_results->addOperation(Analitza::Expression(str, false), str);
         }
         delete e;
@@ -604,7 +608,8 @@ void KAlgebra::saveGraph()
 void menuEnabledHelper(QMenu* m, bool enabled)
 {
     m->setEnabled(enabled);
-    foreach(QAction* action, m->actions()) {
+    const auto actions = m->actions();
+    for(QAction* action : actions) {
         action->setEnabled(enabled);
     }
 }
@@ -620,7 +625,7 @@ void KAlgebra::tabChanged(int n)
     menuEnabledHelper(t_menu, n==2);
 
     m_status->clear();
-    
+
     switch(n) {
         case 0:
             c_dock_vars->show();
@@ -672,7 +677,7 @@ void KAlgebra::consoleEvaluate()
 void KAlgebra::valueChanged()
 {
     //FIXME: Should only repaint the affected ones.
-    if(b_funcsModel->rowCount()>0)
+    if(b_funcsModel->rowCount() > 0)
         m_graph2d->updateFunctions(QModelIndex(), 0, b_funcsModel->rowCount()-1);
 }
 
@@ -683,7 +688,7 @@ void KAlgebra::varsContextMenu(const QPoint& p)
     QAction* ac=m->exec(b_dock_funcs->widget()->mapToGlobal(p));
     
     if(ac) {
-        QPointer<AskName> a=new AskName(i18n("Enter a name for the new variable"), 0);
+        QPointer<AskName> a=new AskName(i18n("Enter a name for the new variable"), nullptr);
         
         if(a->exec()==QDialog::Accepted)
             b_varsModel->insertVariable(a->name(), Analitza::Expression(Analitza::Cn(0)));
@@ -713,8 +718,8 @@ void KAlgebra::fullScreen(bool isFull)
     m_tabs->setTabEnabled(3, !isFull);
     if(isFull) {
         hide();
-        m_tabs->setParent(0);
-        setCentralWidget(0);
+        m_tabs->setParent(nullptr);
+        setCentralWidget(nullptr);
         m_tabs->showFullScreen();
     } else {
         setCentralWidget(m_tabs);

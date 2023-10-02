@@ -23,16 +23,12 @@ target_sources(kalgebra PRIVATE
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*-apps-kalgebra.png")
 ecm_add_app_icon(kalgebra ICONS ${ICONS_SRCS})
 
-target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF${KF_MAJOR_VERSION}::I18n
-                               KF${KF_MAJOR_VERSION}::CoreAddons KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::ConfigWidgets
-                               KF${KF_MAJOR_VERSION}::XmlGui # HelpMenu
-                               KF${KF_MAJOR_VERSION}::KIOCore
-                               KF${KF_MAJOR_VERSION}::I18n
-                               KF5::Analitza KF5::AnalitzaWidgets KF5::AnalitzaGui KF5::AnalitzaPlot)
-
-                           if (QT_MAJOR_VERSION STREQUAL "6")
-                               target_link_libraries(kalgebra Qt6::OpenGLWidgets)
-                           endif()
+target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF6::I18n
+                               KF6::CoreAddons KF6::WidgetsAddons KF6::ConfigWidgets
+                               KF6::XmlGui # HelpMenu
+                               KF6::KIOCore
+                               KF6::I18n
+                               KF6::Analitza KF6::AnalitzaWidgets KF6::AnalitzaGui KF6::AnalitzaPlot Qt6::OpenGLWidgets)
 
 install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )

@@ -290,7 +290,8 @@ PlaneCurve* FunctionEdit::createFunction() const
     PlaneCurve* curve = static_cast<PlaneCurve*>(req.create(color(), name()));
     curve->setResolution(resolution);
     if(m_calcUplimit != m_calcDownlimit) {
-        foreach(const QString& var, curve->parameters())
+        const auto parameters = curve->parameters();
+        for(const QString& var : parameters)
             curve->setInterval(var, m_calcUplimit, m_calcDownlimit);
     }
     return curve;

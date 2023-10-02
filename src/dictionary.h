@@ -40,7 +40,7 @@ class Dictionary : public QWidget
 {
 Q_OBJECT
     public:
-        Dictionary(QWidget *p=0);
+        Dictionary(QWidget *p = nullptr);
         virtual ~Dictionary();
         
         QSortFilterProxyModel* model() const { return m_sortProxy; }
