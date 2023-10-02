@@ -19,35 +19,40 @@
 #ifndef ASKNAME_H
 #define ASKNAME_H
 
-#include <QLineEdit>
-#include <QLabel>
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
 #include <QRegularExpressionValidator>
+#include <QVBoxLayout>
 
 class AskName : public QDialog
 {
-    public:
-        AskName(const QString& text, QWidget* parent) : QDialog(parent)
-        {
-            edit=new QLineEdit(this);
-            edit->setValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z][\\w]*")), edit));
-            
-            QDialogButtonBox * buttonBox;
-            QVBoxLayout *items=new QVBoxLayout(this);
-            items->addWidget(new QLabel(text, this));
-            items->addWidget(edit);
-//             items->addItem(new QSpacerItem());
-            items->addWidget(buttonBox=new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal, this));
-            
-            connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-            connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-        }
-        
-        QString name() const { return edit->text(); }
-    private:
-        QLineEdit *edit;
+public:
+    AskName(const QString &text, QWidget *parent)
+        : QDialog(parent)
+    {
+        edit = new QLineEdit(this);
+        edit->setValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z][\\w]*")), edit));
+
+        QDialogButtonBox *buttonBox;
+        QVBoxLayout *items = new QVBoxLayout(this);
+        items->addWidget(new QLabel(text, this));
+        items->addWidget(edit);
+        //             items->addItem(new QSpacerItem());
+        items->addWidget(buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal, this));
+
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    }
+
+    QString name() const
+    {
+        return edit->text();
+    }
+
+private:
+    QLineEdit *edit;
 };
 
 #endif

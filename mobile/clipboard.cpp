@@ -23,7 +23,7 @@
 #include <QMimeData>
 #include <QUrl>
 
-Clipboard::Clipboard(QObject* parent)
+Clipboard::Clipboard(QObject *parent)
     : QObject(parent)
     , m_clipboard(QGuiApplication::clipboard())
     , m_mode(QClipboard::Clipboard)
@@ -56,20 +56,20 @@ QClipboard::Mode Clipboard::mode() const
 
 QVariant Clipboard::contentFormat(const QString &format) const
 {
-    const QMimeData* data = m_clipboard->mimeData(m_mode);
+    const QMimeData *data = m_clipboard->mimeData(m_mode);
     QVariant ret;
-    if(format == QStringLiteral("text/uri-list")) {
+    if (format == QStringLiteral("text/uri-list")) {
         QVariantList retList;
         const auto urls = data->urls();
-        for(const QUrl& url : urls)
+        for (const QUrl &url : urls)
             retList += url;
         ret = retList;
-    } else if(format.startsWith(QStringLiteral("text/"))) {
+    } else if (format.startsWith(QStringLiteral("text/"))) {
         ret = data->text();
-    } else if(format.startsWith(QStringLiteral("image/"))) {
+    } else if (format.startsWith(QStringLiteral("image/"))) {
         ret = data->imageData();
     } else
-        ret = data->data(format.isEmpty() ? data->formats().first(): format);
+        ret = data->data(format.isEmpty() ? data->formats().first() : format);
 
     return ret;
 }
@@ -81,8 +81,8 @@ QVariant Clipboard::content() const
 
 void Clipboard::setContent(const QVariant &content)
 {
-    QMimeData* mimeData = new QMimeData;
-    switch(content.userType()) {
+    QMimeData *mimeData = new QMimeData;
+    switch (content.userType()) {
     case QMetaType::QString:
         mimeData->setText(content.toString());
         break;
@@ -98,14 +98,14 @@ void Clipboard::setContent(const QVariant &content)
             const QVariantList list = content.toList();
             QList<QUrl> urls;
             bool wasUrlList = true;
-            for (const QVariant& url : list) {
+            for (const QVariant &url : list) {
                 if (url.userType() != QMetaType::QUrl) {
                     wasUrlList = false;
                     break;
                 }
                 urls += url.toUrl();
             }
-            if(wasUrlList) {
+            if (wasUrlList) {
                 mimeData->setUrls(urls);
                 break;
             }

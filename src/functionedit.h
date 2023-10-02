@@ -20,9 +20,9 @@
 #define FUNCTIONEDIT_H
 
 #include <QLabel>
-#include <QWidget>
-#include <QPushButton>
 #include <QLineEdit>
+#include <QPushButton>
+#include <QWidget>
 
 #include <KColorCombo>
 
@@ -44,71 +44,89 @@ class ExpressionEdit;
 
 class FunctionEdit : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /** Constructor. */
-    explicit FunctionEdit(QWidget *parent=nullptr);
-    
+    explicit FunctionEdit(QWidget *parent = nullptr);
+
     /** Destructor. */
     ~FunctionEdit();
-    
+
     /** Retrieves the resulting expression text. */
     Analitza::Expression expression() const;
-    
-    Analitza::PlaneCurve* createFunction() const;
-    
+
+    Analitza::PlaneCurve *createFunction() const;
+
     /** Sets an expression text to the ExpressionEdit widget. */
     void setFunction(const QString &newText);
-    
+
     /** Retrieves the selected color for the function */
-    QColor color() const { return m_color->color(); }
-    
+    QColor color() const
+    {
+        return m_color->color();
+    }
+
     /** Sets the selected color for the function.*/
     void setColor(const QColor &newColor);
-    
+
     /** Returns whether we are editing or adding a function. */
-    bool editing() const { return m_modmode; }
-    
+    bool editing() const
+    {
+        return m_modmode;
+    }
+
     /** Sets whether we are editing or adding a function. */
     void setEditing(bool m);
-    
+
     /** Sets a name to the function. (Not used YET) */
-    void setName(const QString& name) { m_name->setText(name); }
-    
+    void setName(const QString &name)
+    {
+        m_name->setText(name);
+    }
+
     /** Retrieves a name for the function. (Not used YET) */
-    QString name() const { return m_name->text(); }
-    
+    QString name() const
+    {
+        return m_name->text();
+    }
+
     /** Sets the variables class to be used with the graph functions*/
-    void setVariables(const QSharedPointer<Analitza::Variables> &v) { m_vars=v; }
-    
-    QSharedPointer<Analitza::Variables> variables() const { return m_vars; }
-    
+    void setVariables(const QSharedPointer<Analitza::Variables> &v)
+    {
+        m_vars = v;
+    }
+
+    QSharedPointer<Analitza::Variables> variables() const
+    {
+        return m_vars;
+    }
+
     void setOptionsShown(bool shown);
-    
-    void resizeEvent(QResizeEvent* ev) override;
-    
+
+    void resizeEvent(QResizeEvent *ev) override;
+
 public Q_SLOTS:
     /** Clears the dialog. */
     void clear();
-    
+
 Q_SIGNALS:
     /** Tells that the result has been accepted. */
     void accept();
-    
+
     /** asks the currently edited plot to be removed. */
     void removeEditingPlot();
-    
+
 private Q_SLOTS:
     void edit();
     void ok();
     void colorChange(int);
     void updateUplimit();
     void updateDownlimit();
-    
+
 private:
-    void setState(const QString& text, bool negative);
-    void focusInEvent(QFocusEvent*) override;
-    
+    void setState(const QString &text, bool negative);
+    void focusInEvent(QFocusEvent *) override;
+
     Analitza::ExpressionEdit *m_func;
     Analitza::ExpressionEdit *m_uplimit, *m_downlimit;
     double m_calcUplimit, m_calcDownlimit;
@@ -120,10 +138,10 @@ private:
     KColorCombo *m_color;
     Analitza::PlotsModel *m_funcsModel;
     QSharedPointer<Analitza::Variables> m_vars;
-    
+
     bool m_modmode;
-    QTabWidget* m_viewTabs;
-    QPushButton* m_remove;
+    QTabWidget *m_viewTabs;
+    QPushButton *m_remove;
 };
 
 #endif

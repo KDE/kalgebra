@@ -19,8 +19,8 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include <QWidget>
 #include <QWebEngineView>
+#include <QWidget>
 
 #include "consolemodel.h"
 #include <analitza/analyzer.h>
@@ -29,13 +29,15 @@ class ConsoleModel;
 
 class InlineOptions
 {
-    public:
-        virtual ~InlineOptions() {}
-        
-        virtual QString id() const = 0;
-        virtual QString caption() const = 0;
-        virtual bool matchesExpression(const Analitza::Expression& exp) const = 0;
-        virtual void triggerOption(const Analitza::Expression& exp) = 0;
+public:
+    virtual ~InlineOptions()
+    {
+    }
+
+    virtual QString id() const = 0;
+    virtual QString caption() const = 0;
+    virtual bool matchesExpression(const Analitza::Expression &exp) const = 0;
+    virtual void triggerOption(const Analitza::Expression &exp) = 0;
 };
 
 /**
@@ -47,72 +49,75 @@ class InlineOptions
 class ConsoleHtml : public QWebEngineView
 {
     Q_OBJECT
-    public:
-        /** Constructor. Creates a console widget. */
-        ConsoleHtml(QWidget *parent = nullptr);
-        
-        /** Destructor. */
-        ~ConsoleHtml() override;
-        
-        /** Retrieves a pointer to the Analitza calculator associated. */
-        Analitza::Analyzer* analitza();
-        
-        /** Sets a @p newMode console mode. */
-        void setMode(ConsoleModel::ConsoleMode newMode);
-        
-        /** Retrieves the console mode. */
-        ConsoleModel::ConsoleMode mode() const;
-        
-        void addOptionsObserver(InlineOptions* opt) { m_options += opt; }
+public:
+    /** Constructor. Creates a console widget. */
+    ConsoleHtml(QWidget *parent = nullptr);
 
-        void contextMenuEvent(QContextMenuEvent* ev) override;
+    /** Destructor. */
+    ~ConsoleHtml() override;
 
-    public Q_SLOTS:
-        /** Adds the operation defined by the expression @p e. */
-        bool addOperation(const Analitza::Expression& e, const QString& input);
-        
-        /** Loads a script from @p path. */
-        bool loadScript(const QUrl& path);
-        
-        /** Save a script yo @p path. */
-        bool saveScript(const QUrl& path) const;
-        
-        /** Saves a log to @p path. */
-        bool saveLog(const QUrl& path) const;
-        
-        /** Flushes the contents. */
-        void clear();
-        
-        /** Copies the selected text to the clipboard */
-        void copy() const;
-        
-        void openClickedUrl(const QUrl& url);
+    /** Retrieves a pointer to the Analitza calculator associated. */
+    Analitza::Analyzer *analitza();
 
-        void setActualUrl(const QUrl& url);
-        
-    Q_SIGNALS:
-        /** Emits a notification that tells that the widget status. */
-        void status(const QString &msg);
-        
-        /** Emits that something has changed. */
-        void changed();
-        
-        /** Emits the selected code to be pasted somewhere */
-        void paste(const QString& code);
-        
-    private Q_SLOTS:
-        void modifyVariable(const QString& name, const Analitza::Expression& exp);
-        void removeVariable(const QString& name);
-        void paste();
-        
-    private:
-        void includeOperation(const Analitza::Expression &expression, const Analitza::Expression &result);
-        void updateView();
+    /** Sets a @p newMode console mode. */
+    void setMode(ConsoleModel::ConsoleMode newMode);
 
-        QString m_optionsString;
-        QUrl m_actualUrl;
-        QList<InlineOptions*> m_options;
-        QScopedPointer<ConsoleModel> m_model;
+    /** Retrieves the console mode. */
+    ConsoleModel::ConsoleMode mode() const;
+
+    void addOptionsObserver(InlineOptions *opt)
+    {
+        m_options += opt;
+    }
+
+    void contextMenuEvent(QContextMenuEvent *ev) override;
+
+public Q_SLOTS:
+    /** Adds the operation defined by the expression @p e. */
+    bool addOperation(const Analitza::Expression &e, const QString &input);
+
+    /** Loads a script from @p path. */
+    bool loadScript(const QUrl &path);
+
+    /** Save a script yo @p path. */
+    bool saveScript(const QUrl &path) const;
+
+    /** Saves a log to @p path. */
+    bool saveLog(const QUrl &path) const;
+
+    /** Flushes the contents. */
+    void clear();
+
+    /** Copies the selected text to the clipboard */
+    void copy() const;
+
+    void openClickedUrl(const QUrl &url);
+
+    void setActualUrl(const QUrl &url);
+
+Q_SIGNALS:
+    /** Emits a notification that tells that the widget status. */
+    void status(const QString &msg);
+
+    /** Emits that something has changed. */
+    void changed();
+
+    /** Emits the selected code to be pasted somewhere */
+    void paste(const QString &code);
+
+private Q_SLOTS:
+    void modifyVariable(const QString &name, const Analitza::Expression &exp);
+    void removeVariable(const QString &name);
+    void paste();
+
+private:
+    void includeOperation(const Analitza::Expression &expression, const Analitza::Expression &result);
+    void updateView();
+
+    QString m_optionsString;
+    QUrl m_actualUrl;
+    QList<InlineOptions *> m_options;
+    QScopedPointer<ConsoleModel> m_model;
 };
 
 #endif

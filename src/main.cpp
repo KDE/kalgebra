@@ -16,19 +16,23 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <QApplication>
-#include <QCommandLineParser>
-#include <KAboutData>
-#include <KLocalizedString>
 #include "kalgebra.h"
 #include "kalgebra_version.h"
+#include <KAboutData>
+#include <KLocalizedString>
+#include <QApplication>
+#include <QCommandLineParser>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kalgebra");
-    KAboutData about(QStringLiteral("kalgebra"), QStringLiteral("KAlgebra"), QStringLiteral(KALGEBRA_VERSION_STRING), i18n("A portable calculator"),
-             KAboutLicense::GPL, i18n("(C) 2006-2016 Aleix Pol i Gonzalez"));
+    KAboutData about(QStringLiteral("kalgebra"),
+                     QStringLiteral("KAlgebra"),
+                     QStringLiteral(KALGEBRA_VERSION_STRING),
+                     i18n("A portable calculator"),
+                     KAboutLicense::GPL,
+                     i18n("(C) 2006-2016 Aleix Pol i Gonzalez"));
     about.addAuthor(i18n("Aleix Pol i Gonzalez"), QString(), QStringLiteral("aleixpol@kde.org"));
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);
@@ -42,6 +46,6 @@ int main(int argc, char *argv[])
 
     KAlgebra widget;
     widget.show();
-    
+
     return app.exec();
 }

@@ -18,37 +18,37 @@
 
 #include "viewportwidget.h"
 
-#include <QFormLayout>
 #include <QDoubleSpinBox>
+#include <QFormLayout>
 #include <QPushButton>
 #include <klocalizedstring.h>
 #include <limits>
 
-ViewportWidget::ViewportWidget(QWidget * parent)
-    : QWidget (parent)
+ViewportWidget::ViewportWidget(QWidget *parent)
+    : QWidget(parent)
 {
-    m_top=new QDoubleSpinBox(this);
-    m_left=new QDoubleSpinBox(this);
-    m_width=new QDoubleSpinBox(this);
-    m_height=new QDoubleSpinBox(this);
+    m_top = new QDoubleSpinBox(this);
+    m_left = new QDoubleSpinBox(this);
+    m_width = new QDoubleSpinBox(this);
+    m_height = new QDoubleSpinBox(this);
 
-//     const double LIMIT=std::numeric_limits<double>::max();
-    //Can't use limit, because otherwise Qt uses the value for the sizeHint and
-    //we get a huge window
-    const double LIMIT=5000;
+    //     const double LIMIT=std::numeric_limits<double>::max();
+    // Can't use limit, because otherwise Qt uses the value for the sizeHint and
+    // we get a huge window
+    const double LIMIT = 5000;
     m_top->setRange(-LIMIT, LIMIT);
     m_left->setRange(-LIMIT, LIMIT);
     m_width->setRange(0, LIMIT);
     m_height->setRange(0, LIMIT);
 
-    QVBoxLayout* upperLayout=new QVBoxLayout;
-    QFormLayout* layout=new QFormLayout;
+    QVBoxLayout *upperLayout = new QVBoxLayout;
+    QFormLayout *layout = new QFormLayout;
     layout->addRow(i18n("Left:"), m_left);
     layout->addRow(i18n("Top:"), m_top);
     layout->addRow(i18n("Width:"), m_width);
     layout->addRow(i18n("Height:"), m_height);
 
-    QPushButton *apply=new QPushButton(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18n("Apply"), this);
+    QPushButton *apply = new QPushButton(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18n("Apply"), this);
     connect(apply, &QAbstractButton::clicked, this, &ViewportWidget::emitViewport);
 
     upperLayout->addLayout(layout);
@@ -58,11 +58,10 @@ ViewportWidget::ViewportWidget(QWidget * parent)
 
 QRectF ViewportWidget::viewport() const
 {
-    return QRectF(m_left->value(), m_top->value(),
-                  m_width->value(), -m_height->value());
+    return QRectF(m_left->value(), m_top->value(), m_width->value(), -m_height->value());
 }
 
-void ViewportWidget::setViewport(const QRectF& current)
+void ViewportWidget::setViewport(const QRectF &current)
 {
     m_top->setValue(current.top());
     m_left->setValue(current.left());
@@ -70,7 +69,7 @@ void ViewportWidget::setViewport(const QRectF& current)
     m_height->setValue(-current.height());
 }
 
-void ViewportWidget::emitViewport ()
+void ViewportWidget::emitViewport()
 {
     Q_EMIT viewportChange(viewport());
 }

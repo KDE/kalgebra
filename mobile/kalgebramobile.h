@@ -24,37 +24,41 @@
 #include <analitza/variables.h>
 
 class QModelIndex;
-namespace Analitza {
-    class PlotsModel;
+namespace Analitza
+{
+class PlotsModel;
 }
 
 class KAlgebraMobile : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables NOTIFY variablesChanged)
-    public:
-        explicit KAlgebraMobile(QObject *parent = nullptr);
-        
-        static KAlgebraMobile* self();
-        void notifyVariablesChanged() { variablesChanged(); }
-        
-    public Q_SLOTS:
-        Analitza::PlotsModel* functionsModel();
-        QSharedPointer<Analitza::Variables> variables() const;
-        
-    private Q_SLOTS:
-        void functionRemoved(const QModelIndex& parent, int start, int end);
-        void functionModified(const QModelIndex& idxA, const QModelIndex& idxB);
-        void functionInserted(const QModelIndex& parent, int start, int end);
-        
-    Q_SIGNALS:
-        void variablesChanged();
-        
-    private:
-        static KAlgebraMobile* s_self;
-        
-        Analitza::PlotsModel* m_functionsModel;
-        QSharedPointer<Analitza::Variables> m_vars;
+public:
+    explicit KAlgebraMobile(QObject *parent = nullptr);
+
+    static KAlgebraMobile *self();
+    void notifyVariablesChanged()
+    {
+        variablesChanged();
+    }
+
+public Q_SLOTS:
+    Analitza::PlotsModel *functionsModel();
+    QSharedPointer<Analitza::Variables> variables() const;
+
+private Q_SLOTS:
+    void functionRemoved(const QModelIndex &parent, int start, int end);
+    void functionModified(const QModelIndex &idxA, const QModelIndex &idxB);
+    void functionInserted(const QModelIndex &parent, int start, int end);
+
+Q_SIGNALS:
+    void variablesChanged();
+
+private:
+    static KAlgebraMobile *s_self;
+
+    Analitza::PlotsModel *m_functionsModel;
+    QSharedPointer<Analitza::Variables> m_vars;
 };
 
 #endif // KALGEBRAMOBILE_H

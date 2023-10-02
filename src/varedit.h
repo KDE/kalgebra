@@ -39,35 +39,35 @@ class ExpressionEdit;
 class VarEdit : public QDialog
 {
     Q_OBJECT
-    public:
-        /** Constructor. Creates a variable editing dialog. */
-        explicit VarEdit(QWidget *parent = nullptr, bool modal = false);
-        
-        /** Sets the editing variable name */
-        void setName(const QString& newVar);
-        
-        /** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
-        void setAnalitza(Analitza::Analyzer *na);
-        
-        /** Returns the resulting variable expression */
-        Analitza::Expression val();
-        
-    private:
-        bool canRemove(const QString& name) const;
-        
-        Analitza::ExpressionEdit *m_exp;
-        
-        QLabel *m_valid;
-        QSharedPointer<Analitza::Variables> vars;
-        bool m_correct;
-        QString m_var;
-        QDialogButtonBox* m_buttonBox;
-        QPushButton* m_removeBtn;
+public:
+    /** Constructor. Creates a variable editing dialog. */
+    explicit VarEdit(QWidget *parent = nullptr, bool modal = false);
 
-    private Q_SLOTS:
-        void edit();
-        void ok();
-        void removeVariable();
+    /** Sets the editing variable name */
+    void setName(const QString &newVar);
+
+    /** Sets an Analitza which will evaluate it. It may be interesting because variables can change. */
+    void setAnalitza(Analitza::Analyzer *na);
+
+    /** Returns the resulting variable expression */
+    Analitza::Expression val();
+
+private:
+    bool canRemove(const QString &name) const;
+
+    Analitza::ExpressionEdit *m_exp;
+
+    QLabel *m_valid;
+    QSharedPointer<Analitza::Variables> vars;
+    bool m_correct;
+    QString m_var;
+    QDialogButtonBox *m_buttonBox;
+    QPushButton *m_removeBtn;
+
+private Q_SLOTS:
+    void edit();
+    void ok();
+    void removeVariable();
 };
 
 #endif

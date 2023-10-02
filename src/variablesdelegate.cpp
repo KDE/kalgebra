@@ -20,21 +20,21 @@
 
 #include <QDoubleSpinBox>
 
-QWidget* VariablesDelegate::createEditor(QWidget* p, const QStyleOptionViewItem& opt, const QModelIndex& idx) const
+QWidget *VariablesDelegate::createEditor(QWidget *p, const QStyleOptionViewItem &opt, const QModelIndex &idx) const
 {
-    QVariant val=idx.model()->data(idx);
-    if(val.metaType().id()==QMetaType::Double) {
-        QDoubleSpinBox* spin=new QDoubleSpinBox(p);
+    QVariant val = idx.model()->data(idx);
+    if (val.metaType().id() == QMetaType::Double) {
+        QDoubleSpinBox *spin = new QDoubleSpinBox(p);
         spin->setDecimals(10);
         return spin;
     } else
         return QItemDelegate::createEditor(p, opt, idx);
 }
 
-void VariablesDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+void VariablesDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    QDoubleSpinBox* spin=qobject_cast<QDoubleSpinBox*>(editor);
-    if(spin)
+    QDoubleSpinBox *spin = qobject_cast<QDoubleSpinBox *>(editor);
+    if (spin)
         spin->setValue(index.model()->data(index).value<double>());
     else
         QItemDelegate::setEditorData(editor, index);

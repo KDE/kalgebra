@@ -27,30 +27,30 @@ class Clipboard : public QObject
      */
     Q_PROPERTY(QStringList formats READ formats NOTIFY contentChanged)
 
-    public:
-        explicit Clipboard(QObject* parent = nullptr);
+public:
+    explicit Clipboard(QObject *parent = nullptr);
 
-        QClipboard::Mode mode() const;
-        void setMode(QClipboard::Mode mode);
+    QClipboard::Mode mode() const;
+    void setMode(QClipboard::Mode mode);
 
-        Q_SCRIPTABLE QVariant contentFormat(const QString &format) const;
-        QVariant content() const;
-        void setContent(const QVariant &content);
+    Q_SCRIPTABLE QVariant contentFormat(const QString &format) const;
+    QVariant content() const;
+    void setContent(const QVariant &content);
 
-        QStringList formats() const;
+    QStringList formats() const;
 
-        Q_SCRIPTABLE void clear();
+    Q_SCRIPTABLE void clear();
 
-    Q_SIGNALS:
-        void modeChanged(QClipboard::Mode mode);
-        void contentChanged();
+Q_SIGNALS:
+    void modeChanged(QClipboard::Mode mode);
+    void contentChanged();
 
-    private Q_SLOTS:
-        void clipboardChanged(QClipboard::Mode m);
+private Q_SLOTS:
+    void clipboardChanged(QClipboard::Mode m);
 
-    private:
-        QClipboard* m_clipboard;
-        QClipboard::Mode m_mode;
+private:
+    QClipboard *m_clipboard;
+    QClipboard::Mode m_mode;
 };
 
 #endif

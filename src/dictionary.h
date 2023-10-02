@@ -19,8 +19,8 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-#include <QWidget>
 #include <QSortFilterProxyModel>
+#include <QWidget>
 
 namespace Analitza
 {
@@ -38,28 +38,31 @@ class OperatorsModel;
 */
 class Dictionary : public QWidget
 {
-Q_OBJECT
-    public:
-        Dictionary(QWidget *p = nullptr);
-        virtual ~Dictionary();
-        
-        QSortFilterProxyModel* model() const { return m_sortProxy; }
-        
-    public Q_SLOTS:
-        void activated(const QModelIndex& prev, const QModelIndex& );
-        void setFilter(const QString&);
-        
-    private:
-        QLabel *m_name;
-        QLabel *m_descr;
-        QLabel *m_sample;
-        QLabel *m_example;
-        
-        Analitza::PlotsView2D *m_graph;
-        Analitza::PlotsModel *m_funcs;
-        OperatorsModel *m_ops;
-        QSharedPointer<Analitza::Variables> m_vars;
-        QSortFilterProxyModel *m_sortProxy;
+    Q_OBJECT
+public:
+    Dictionary(QWidget *p = nullptr);
+    virtual ~Dictionary();
+
+    QSortFilterProxyModel *model() const
+    {
+        return m_sortProxy;
+    }
+
+public Q_SLOTS:
+    void activated(const QModelIndex &prev, const QModelIndex &);
+    void setFilter(const QString &);
+
+private:
+    QLabel *m_name;
+    QLabel *m_descr;
+    QLabel *m_sample;
+    QLabel *m_example;
+
+    Analitza::PlotsView2D *m_graph;
+    Analitza::PlotsModel *m_funcs;
+    OperatorsModel *m_ops;
+    QSharedPointer<Analitza::Variables> m_vars;
+    QSortFilterProxyModel *m_sortProxy;
 };
 
 #endif

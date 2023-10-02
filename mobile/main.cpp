@@ -8,18 +8,18 @@
 #include <QApplication>
 #endif
 
+#include <KAboutData>
 #include <KLocalizedContext>
 #include <KLocalizedString>
-#include <KAboutData>
 
-#include <QIcon>
 #include <QCommandLineParser>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QStandardPaths>
 
-#include "kalgebramobile.h"
 #include "kalgebra_version.h"
+#include "kalgebramobile.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -32,8 +32,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
     KLocalizedString::setApplicationDomain("kalgebramobile");
-    KAboutData about(QStringLiteral("kalgebramobile"), QStringLiteral("KAlgebra"), QStringLiteral(KALGEBRA_VERSION_STRING), i18n("A portable calculator"),
-             KAboutLicense::GPL, i18n("(C) 2006-2023 Aleix Pol i Gonzalez"));
+    KAboutData about(QStringLiteral("kalgebramobile"),
+                     QStringLiteral("KAlgebra"),
+                     QStringLiteral(KALGEBRA_VERSION_STRING),
+                     i18n("A portable calculator"),
+                     KAboutLicense::GPL,
+                     i18n("(C) 2006-2023 Aleix Pol i Gonzalez"));
     about.addAuthor(i18n("Aleix Pol i Gonzalez"), i18nc("@info:credit", "Maintainer"), QStringLiteral("aleixpol@kde.org"));
     about.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(about);

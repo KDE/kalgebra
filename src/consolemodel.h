@@ -20,8 +20,8 @@
 #define CONSOLEMODEL_H
 
 #include <QObject>
-#include <analitza/expression.h>
 #include <analitza/analyzer.h>
+#include <analitza/expression.h>
 #include <analitza/variables.h>
 
 class ConsoleModel : public QObject
@@ -30,7 +30,7 @@ class ConsoleModel : public QObject
     Q_PROPERTY(ConsoleMode mode READ mode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables WRITE setVariables NOTIFY variablesChanged)
 public:
-    ConsoleModel(QObject* parent = nullptr);
+    ConsoleModel(QObject *parent = nullptr);
 
     /** This enumeration controles the way the console will calculate and show his results. */
     enum ConsoleMode {
@@ -39,36 +39,48 @@ public:
     };
     Q_ENUM(ConsoleMode)
 
-    Q_SCRIPTABLE bool addOperation(const QString& input);
-    bool addOperation(const Analitza::Expression& e, const QString& input);
+    Q_SCRIPTABLE bool addOperation(const QString &input);
+    bool addOperation(const Analitza::Expression &e, const QString &input);
 
     Q_SCRIPTABLE bool loadScript(const QUrl &path);
     Q_SCRIPTABLE bool saveScript(const QUrl &path);
     Q_SCRIPTABLE void clear();
-    Q_SCRIPTABLE bool saveLog(const QUrl& path) const;
+    Q_SCRIPTABLE bool saveLog(const QUrl &path) const;
 
     Q_SCRIPTABLE static QString readContent(const QUrl &url);
 
     QByteArray css() const;
 
-    ConsoleMode mode() const { return m_mode; }
+    ConsoleMode mode() const
+    {
+        return m_mode;
+    }
     void setMode(ConsoleMode mode);
 
-    QSharedPointer<Analitza::Variables> variables() const { return a.variables(); }
+    QSharedPointer<Analitza::Variables> variables() const
+    {
+        return a.variables();
+    }
     void setVariables(const QSharedPointer<Analitza::Variables> &vars);
-    Analitza::Analyzer* analyzer() { return &a; }
+    Analitza::Analyzer *analyzer()
+    {
+        return &a;
+    }
 
-    QList<QByteArray> htmlLog() const { return m_htmlLog; }
+    QList<QByteArray> htmlLog() const
+    {
+        return m_htmlLog;
+    }
 
 Q_SIGNALS:
-    void message(const QString &msg, const Analitza::Expression& operation, const Analitza::Expression& result);
+    void message(const QString &msg, const Analitza::Expression &operation, const Analitza::Expression &result);
     void updateView();
     void modeChanged(ConsoleModel::ConsoleMode mode);
     void operationSuccessful(const Analitza::Expression &expression, const Analitza::Expression &result);
     void variablesChanged();
 
 private:
-    void addMessage(const QString &msg, const Analitza::Expression& operation, const Analitza::Expression& result);
+    void addMessage(const QString &msg, const Analitza::Expression &operation, const Analitza::Expression &result);
 
     QList<QByteArray> m_htmlLog;
     Analitza::Analyzer a;
