@@ -1,8 +1,9 @@
 // SPDX-FileCopyrightText: Carl Schwan <carl@carlschwan.eu>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import QtQuick 2.0
-import org.kde.kirigami 2.14 as Kirigami
+import QtQuick
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 Kirigami.ScrollablePage {
     title: i18n("Results")
@@ -12,8 +13,11 @@ Kirigami.ScrollablePage {
     ListView {
         currentIndex: -1
         model: results
-        delegate: Kirigami.BasicListItem {
-            label: model.element
+        delegate: Delegates.RoundedItemDelegate {
+            required property int index
+            required property string element
+
+            text: element
         }
     }
 }

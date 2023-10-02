@@ -1,11 +1,14 @@
 // SPDX-FileCopyrightText: 2015 by Aleix Pol <aleixpol@kde.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.2
-import org.kde.kirigami 2.14 as Kirigami
-import org.kde.analitza 1.0
-import org.kde.kalgebra.mobile 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import QtQuick.Templates as T
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
+import org.kde.analitza
+import org.kde.kalgebra.mobile
 
 Kirigami.ApplicationWindow
 {
@@ -21,30 +24,27 @@ Kirigami.ApplicationWindow
         id: mainPagePool
     }
 
-    globalDrawer: Kirigami.GlobalDrawer {
+    globalDrawer: Kirigami.OverlayDrawer {
         id: drawer
+
+        edge: Qt.application.layoutDirection === Qt.RightToLeft ? Qt.RightEdge : Qt.LeftEdge
 
         modal: !rootItem.wideScreen
         onModalChanged: drawerOpen = !modal
         handleVisible: modal
         width: contentItem ? columnWidth : 0
 
-        header: Kirigami.AbstractApplicationHeader {
-            topPadding: Kirigami.Units.smallSpacing
-            bottomPadding: Kirigami.Units.largeSpacing
-            leftPadding: Kirigami.Units.smallSpacing
-            rightPadding: Kirigami.Units.smallSpacing
-            implicitHeight: Kirigami.Units.gridUnit * 2
-            Kirigami.Heading {
-                level: 1
-                text: i18n("KAlgebra")
-                Layout.fillWidth: true
-            }
-        }
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
+
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Kirigami.Theme.inherit: false
 
         drawerOpen: true
 
-        actions: [
+        readonly property list<T.Action> actions: [
             Kirigami.PagePoolAction {
                 icon.name: "utilities-terminal"
                 text: i18n("Calculator")
@@ -90,6 +90,38 @@ Kirigami.ApplicationWindow
                 pagePool: mainPagePool
             }
         ]
+
+        contentItem: ColumnLayout {
+            spacing: 0
+
+            QQC2.ToolBar {
+                Layout.fillWidth: true
+                Layout.preferredHeight: rootItem.pageStack.globalToolBar.preferredHeight
+                Layout.bottomMargin: Math.round(Kirigami.Units.smallSpacing / 2)
+
+                leftPadding: Kirigami.Units.smallSpacing
+                rightPadding: Kirigami.Units.smallSpacing
+                topPadding: Kirigami.Units.smallSpacing
+                bottomPadding: Kirigami.Units.smallSpacing
+
+                contentItem: Kirigami.Heading {
+                    text: i18n("KAlgebra")
+                }
+            }
+
+            Repeater {
+                delegate: Delegates.RoundedItemDelegate {
+                    required property var modelData
+                    action: modelData
+                    Layout.fillWidth: true
+                }
+                model: drawer.actions
+            }
+
+            Item {
+                Layout.fillHeight: true
+            }
+        }
     }
 
     readonly property Component customDrawer: Kirigami.OverlayDrawer {
@@ -109,6 +141,9 @@ Kirigami.ApplicationWindow
 
         contentItem: mainPagePool.lastLoadedItem.drawerContent ?? null
         handleVisible: mainPagePool.lastLoadedItem.drawerContent !== undefined
+
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Kirigami.Theme.inherit: false
     }
 
     readonly property Component normalDrawer: Kirigami.ContextDrawer {}

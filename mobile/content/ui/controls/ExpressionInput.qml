@@ -16,66 +16,102 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Controls 2.14 as QQC2
-import org.kde.kirigami 2.14 as Kirigami
-import org.kde.analitza 1.0
-import QtQuick.Layouts 1.2
-import org.kde.kalgebra.mobile 1.0
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
+import org.kde.analitza
+import QtQuick.Layouts
+import org.kde.kalgebra.mobile
 
-QQC2.TextField {
-    id: field
-    readonly property string currentWord: operators.lastWord(field.cursorPosition, field.text)
+ColumnLayout {
+    spacing: 0
 
-    QQC2.Popup {
-        id: popupCompletion
-        x: 0
-        y: -height - Kirigami.Units.smallSpacing
-        width: parent.width
-        visible: view.count > 0 && field.activeFocus && field.currentWord.length > 0
-        topPadding: 0
-        leftPadding: 0
-        bottomPadding: 0
-        rightPadding: 0
-        height: Math.min(Kirigami.Units.gridUnit * 10, view.contentHeight)
-        contentItem: QQC2.ScrollView {
-            ListView {
-                id: view
-                currentIndex: 0
-                keyNavigationWraps: true
-                model: QSortFilterProxyModel {
-                    sourceModel: OperatorsModel { id: operators }
-                    filterRegularExpression: new RegExp("^" + field.currentWord)
-                    filterCaseSensitivity: Qt.CaseInsensitive
-                }
+    signal addOperation(operation: string)
 
-                delegate: Kirigami.BasicListItem {
-                    text: model.display + " - " + description
-                    highlighted: view.currentIndex === index
-                    width: ListView.view.width
+    function selectAll(): void {
+        field.selectAll();
+    }
 
-                    function complete() {
-                        var toInsert = model.display.substr(field.currentWord.length);
-                        if(isVariable)
-                            toInsert += '(';
-                        field.insert(field.cursorPosition, toInsert)
-                    }
+    function remove(start: int, end: int): void {
+        field.remove(start, end);
+    }
 
-                    onClicked: complete()
-                    Keys.onReturnPressed: complete()
-                }
+    function insert(start: int, text: string): void {
+        field.insert(start, text);
+    }
+
+    Kirigami.Separator {
+        Layout.fillWidth: true
+    }
+
+    ListView {
+        id: view
+        currentIndex: -1
+        keyNavigationWraps: true
+        Layout.fillWidth: true
+        Layout.preferredHeight: Math.min(contentHeight, Kirigami.Units.gridUnit * 10)
+        clip: true
+        model: field.currentWord.length > 0 ? filterModel : []
+
+        QSortFilterProxyModel {
+            id: filterModel
+            sourceModel: OperatorsModel { id: operators }
+            filterRegularExpression: new RegExp("^" + field.currentWord)
+            filterCaseSensitivity: Qt.CaseInsensitive
+        }
+
+        delegate: Delegates.RoundedItemDelegate {
+            required property int index
+            required property string description
+            required property string name
+            required property bool isVariable
+
+            text: name + " - " + description
+            highlighted: view.currentIndex === index
+            width: ListView.view.width
+
+            function complete() {
+                let toInsert = name.substr(field.currentWord.length);
+                if(isVariable)
+                    toInsert += '(';
+                field.insert(field.cursorPosition, toInsert)
             }
+
+            onClicked: complete()
+            Keys.onReturnPressed: complete()
         }
     }
 
-    placeholderText: i18n("Expression to calculate...")
-    inputMethodHints: /*Qt.ImhPreferNumbers |*/ Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+    Kirigami.Separator {
+        Layout.fillWidth: true
+        visible: view.count > 0
+    }
 
-    Keys.forwardTo: view.visible && view.currentItem ? [ view.currentItem ] : null
-    Keys.onTabPressed: view.incrementCurrentIndex()
-    Keys.onUpPressed: view.decrementCurrentIndex()
-    Keys.onDownPressed: view.incrementCurrentIndex()
-    Keys.onReturnPressed: view.currentIndex = -1
+    QQC2.TextField {
+        id: field
+
+        focus: true
+
+        readonly property string currentWord: operators.lastWord(field.cursorPosition, field.text)
+
+        Layout.minimumWidth: parent.width
+        Layout.preferredHeight: Kirigami.Units.gridUnit * 2
+
+        background: null
+
+        placeholderText: i18n("Expression to calculate...")
+        inputMethodHints: /*Qt.ImhPreferNumbers |*/ Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+
+        Keys.forwardTo: view.visible && view.currentIndex >= 0 ? [ view.currentItem ] : null
+        Keys.onTabPressed: view.incrementCurrentIndex()
+        Keys.onUpPressed: view.decrementCurrentIndex()
+        Keys.onDownPressed: view.incrementCurrentIndex()
+        Keys.onReturnPressed: {
+            view.currentIndex = -1;
+            addOperation(text);
+        }
+    }
 }
 

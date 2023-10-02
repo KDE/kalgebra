@@ -8,6 +8,7 @@ import QtQuick.Controls as QQC2
 import QtQml.Models
 import QtQuick.Dialogs
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.analitza
 import org.kde.kalgebra.mobile
 
@@ -23,26 +24,33 @@ Kirigami.ScrollablePage {
     readonly property Item drawerContent : ColumnLayout {
         visible: true
         width: 300
-        Kirigami.AbstractApplicationHeader {
+        spacing: 0
+
+        QQC2.ToolBar {
             Layout.fillWidth: true
-            topPadding: Kirigami.Units.smallSpacing
-            bottomPadding: Kirigami.Units.largeSpacing
+            Layout.preferredHeight: applicationWindow().pageStack.globalToolBar.preferredHeight
+
             leftPadding: Kirigami.Units.smallSpacing
             rightPadding: Kirigami.Units.smallSpacing
-            Layout.preferredHeight: Kirigami.Units.gridUnit * 2
-            Kirigami.Heading {
-                level: 1
-                text: i18n("Variables")
-                Layout.fillWidth: true
+            topPadding: Kirigami.Units.smallSpacing
+            bottomPadding: Kirigami.Units.smallSpacing
+
+            contentItem: Kirigami.Heading {
+                text: i18n("KAlgebra")
             }
         }
+
         QQC2.ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             ListView {
                 model: VariablesModel { variables: App.variables }
-                delegate: Kirigami.BasicListItem {
-                    label: model.whatsThis
+                delegate: Delegates.RoundedItemDelegate {
+                    required property string whatsThis
+                    required property int index
+
+                    text: whatsThis
                 }
             }
         }
@@ -82,8 +90,8 @@ Kirigami.ScrollablePage {
         },
         // --
         Kirigami.Action {
-            text: consoleModel.mode === ConsoleModel.Calculate ? i18nc("@action:button", "Evaluate") : i18nc("@action:button", "Calculate")
-            onTriggered: consoleModel.mode = consoleModel.mode === ConsoleModel.Calculate ? ConsoleModel.Evaluate : ConsoleModel.Calculate
+            text: consoleModel.mode === 1 ? i18nc("@action:button", "Evaluate") : i18nc("@action:button", "Calculate")
+            onTriggered: consoleModel.mode = consoleModel.mode === 1 ? 0 : 1
         },
         // --
         Kirigami.Action {
@@ -164,8 +172,10 @@ Kirigami.ScrollablePage {
         id: input
         focus: true
 
-        Keys.onReturnPressed: {
-            consoleModel.addOperation(text)
+        width: page.width
+
+        onAddOperation: (content) => {
+            consoleModel.addOperation(content)
         }
     }
 }

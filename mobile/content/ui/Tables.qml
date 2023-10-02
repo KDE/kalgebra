@@ -42,15 +42,9 @@ Kirigami.ScrollablePage {
         }
 
         a.removeVariable(tmp);
-        if (applicationWindow().pageStack.depth > 1) {
-            applicationWindow().pageStack.replace("qrc:/TableResultPage.qml", {
-                'results': resultsModel
-            });
-        } else {
-            applicationWindow().pageStack.push("qrc:/TableResultPage.qml", {
-                'results': resultsModel
-            });
-        }
+        applicationWindow().pageStack.push("qrc:/TableResultPage.qml", {
+            'results': resultsModel
+        });
     }
 
     actions: Kirigami.Action {
