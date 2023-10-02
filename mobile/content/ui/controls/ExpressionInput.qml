@@ -111,6 +111,7 @@ ColumnLayout {
         Keys.onReturnPressed: {
             view.currentIndex = -1;
             addOperation(text);
+            field.text = '';
         }
     }
 }
