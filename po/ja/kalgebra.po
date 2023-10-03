@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2014-09-21 00:27-0700\n"
 "Last-Translator: Fumiaki Okushi <okushi@kde.gr.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -19,328 +19,328 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: consolehtml.cpp:158
+#: consolehtml.cpp:167
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr ""
 
-#: consolehtml.cpp:163
+#: consolehtml.cpp:172
 #, kde-format
 msgid "Options: %1"
 msgstr "オプション: %1"
 
-#: consolehtml.cpp:213
+#: consolehtml.cpp:222
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr ""
 
-#: consolemodel.cpp:87
+#: consolemodel.cpp:95
 #, kde-format
 msgid "Paste to Input"
 msgstr ""
 
-#: consolemodel.cpp:89
+#: consolemodel.cpp:99
 #, kde-format
 msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
 msgstr "<ul class='error'>エラー: <b>%1</b><li>%2</li></ul>"
 
-#: consolemodel.cpp:111
+#: consolemodel.cpp:121
 #, kde-format
 msgid "Imported: %1"
 msgstr ""
 
-#: consolemodel.cpp:113
+#: consolemodel.cpp:123
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
 msgstr ""
 "<ul class='error'>エラー: %1 を読み込むことができません。<br /> %2</ul>"
 
-#: dictionary.cpp:44
+#: dictionary.cpp:45
 #, kde-format
 msgid "Information"
 msgstr "情報"
 
-#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#: dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70 dictionary.cpp:71
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: functionedit.cpp:47
+#: functionedit.cpp:51
 #, kde-format
 msgid "Add/Edit a function"
 msgstr "関数を追加/編集"
 
-#: functionedit.cpp:92
+#: functionedit.cpp:96
 #, kde-format
 msgid "Preview"
 msgstr ""
 
-#: functionedit.cpp:99
+#: functionedit.cpp:103
 #, kde-format
 msgid "From:"
 msgstr ""
 
-#: functionedit.cpp:101
+#: functionedit.cpp:105
 #, kde-format
 msgid "To:"
 msgstr ""
 
-#: functionedit.cpp:104
+#: functionedit.cpp:108
 #, kde-format
 msgid "Options"
 msgstr "オプション"
 
-#: functionedit.cpp:109
+#: functionedit.cpp:113
 #, kde-format
 msgid "OK"
 msgstr "OK"
 
-#: functionedit.cpp:111
+#: functionedit.cpp:115
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
 msgstr "削除"
 
-#: functionedit.cpp:238
+#: functionedit.cpp:243
 #, kde-format
 msgid "The options you specified are not correct"
 msgstr ""
 
-#: functionedit.cpp:243
+#: functionedit.cpp:248
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
 msgstr ""
 
-#: kalgebra.cpp:74
+#: kalgebra.cpp:83
 #, kde-format
 msgid "Plot 2D"
 msgstr ""
 
-#: kalgebra.cpp:95
+#: kalgebra.cpp:114
 #, kde-format
 msgid "Plot 3D"
 msgstr ""
 
-#: kalgebra.cpp:120
+#: kalgebra.cpp:144
 #, kde-format
 msgid "Session"
 msgstr "セッション"
 
-#: kalgebra.cpp:139 kalgebra.cpp:254
+#: kalgebra.cpp:163 kalgebra.cpp:265
 #, kde-format
 msgid "Variables"
 msgstr "変数"
 
-#: kalgebra.cpp:158
+#: kalgebra.cpp:182
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "Calculate"
 msgid "&Calculator"
 msgstr "計算"
 
-#: kalgebra.cpp:170
+#: kalgebra.cpp:194
 #, fuzzy, kde-format
 #| msgctxt "@item:inmenu"
 #| msgid "Calculate"
 msgid "C&alculator"
 msgstr "計算"
 
-#: kalgebra.cpp:172 kalgebra.cpp:175
+#: kalgebra.cpp:196
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "スクリプトを読み込み(&L)..."
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:200
 #, kde-format
 msgid "Recent Scripts"
 msgstr "最近のスクリプト"
 
-#: kalgebra.cpp:183 kalgebra.cpp:188
+#: kalgebra.cpp:205
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "スクリプトを保存(&S)..."
 
-#: kalgebra.cpp:185 kalgebra.cpp:190
+#: kalgebra.cpp:209
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr ""
 
-#: kalgebra.cpp:195 kalgebra.cpp:198
+#: kalgebra.cpp:211
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr ""
 
-#: kalgebra.cpp:201
+#: kalgebra.cpp:212
 #, kde-format
 msgid "Execution Mode"
 msgstr ""
 
-#: kalgebra.cpp:203
+#: kalgebra.cpp:214
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "計算"
 
-#: kalgebra.cpp:204
+#: kalgebra.cpp:215
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "評価"
 
-#: kalgebra.cpp:224
+#: kalgebra.cpp:235
 #, kde-format
 msgid "Functions"
 msgstr "関数"
 
-#: kalgebra.cpp:236
+#: kalgebra.cpp:247
 #, kde-format
 msgid "List"
 msgstr "リスト"
 
-#: kalgebra.cpp:242 kalgebra.cpp:474
+#: kalgebra.cpp:253 kalgebra.cpp:487
 #, kde-format
 msgid "&Add"
 msgstr "追加(&A)"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:269
 #, kde-format
 msgid "Viewport"
 msgstr ""
 
-#: kalgebra.cpp:262
+#: kalgebra.cpp:273
 #, kde-format
 msgid "&2D Graph"
 msgstr "2D グラフ(&2)"
 
-#: kalgebra.cpp:274
+#: kalgebra.cpp:285
 #, kde-format
 msgid "2&D Graph"
 msgstr "2D グラフ(&D)"
 
-#: kalgebra.cpp:276
+#: kalgebra.cpp:287
 #, kde-format
 msgid "&Grid"
 msgstr "グリッド(&G)"
 
-#: kalgebra.cpp:277
+#: kalgebra.cpp:288
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "アスペクト比を保つ(&K)"
 
-#: kalgebra.cpp:285
+#: kalgebra.cpp:296
 #, kde-format
 msgid "Resolution"
 msgstr "解像度"
 
-#: kalgebra.cpp:286
+#: kalgebra.cpp:297
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "低"
 
-#: kalgebra.cpp:287
+#: kalgebra.cpp:298
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "中"
 
-#: kalgebra.cpp:288
+#: kalgebra.cpp:299
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "高"
 
-#: kalgebra.cpp:289
+#: kalgebra.cpp:300
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "超高"
 
-#: kalgebra.cpp:323
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&3D Graph"
 msgstr "3D グラフ(&3)"
 
-#: kalgebra.cpp:331
+#: kalgebra.cpp:342
 #, kde-format
 msgid "3D &Graph"
 msgstr "3D グラフ(&G)"
 
-#: kalgebra.cpp:334
+#: kalgebra.cpp:345
 #, kde-format
 msgid "&Reset View"
 msgstr "ビューをリセット(&R)"
 
-#: kalgebra.cpp:336
+#: kalgebra.cpp:349
 #, kde-format
 msgid "Dots"
 msgstr "点"
 
-#: kalgebra.cpp:337
+#: kalgebra.cpp:350
 #, kde-format
 msgid "Lines"
 msgstr "線"
 
-#: kalgebra.cpp:338
+#: kalgebra.cpp:351
 #, kde-format
 msgid "Solid"
 msgstr "実線"
 
-#: kalgebra.cpp:355
+#: kalgebra.cpp:368
 #, kde-format
 msgid "Operations"
 msgstr "演算"
 
-#: kalgebra.cpp:359
+#: kalgebra.cpp:372
 #, kde-format
 msgid "&Dictionary"
 msgstr "辞書(&D)"
 
-#: kalgebra.cpp:370
+#: kalgebra.cpp:383
 #, kde-format
 msgid "Look for:"
 msgstr "検索:"
 
-#: kalgebra.cpp:463
+#: kalgebra.cpp:476
 #, kde-format
 msgid "&Editing"
 msgstr "編集(&E)"
 
-#: kalgebra.cpp:520
+#: kalgebra.cpp:533
 #, kde-format
 msgid "Choose a script"
 msgstr "スクリプトを選択"
 
-#: kalgebra.cpp:520 kalgebra.cpp:536
+#: kalgebra.cpp:533 kalgebra.cpp:549
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "スクリプト (*.kal)"
 
-#: kalgebra.cpp:547
+#: kalgebra.cpp:560
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML ファイル (*.html)"
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid "Errors: %1"
 msgstr "エラー: %1"
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr ""
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, fuzzy, kde-format
 #| msgid ""
 #| "*.png|Image File\n"
@@ -350,76 +350,76 @@ msgstr ""
 "*.png|画像ファイル\n"
 "*.svg|SVG ファイル"
 
-#: kalgebra.cpp:665
+#: kalgebra.cpp:692
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "準備完了"
 
-#: kalgebra.cpp:699
+#: kalgebra.cpp:726
 #, kde-format
 msgid "Add variable"
 msgstr "変数を追加"
 
-#: kalgebra.cpp:703
+#: kalgebra.cpp:730
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "新しい変数の名前を入力します"
 
-#: main.cpp:30
+#: main.cpp:33
 #, kde-format
 msgid "A portable calculator"
 msgstr ""
 
-#: main.cpp:31
+#: main.cpp:35
 #, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
 msgstr ""
 
-#: main.cpp:32
+#: main.cpp:36
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr ""
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Yukiko Bando"
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "ybando@k6.dion.ne.jp"
 
-#: varedit.cpp:33
+#: varedit.cpp:35
 #, kde-format
 msgid "Add/Edit a variable"
 msgstr "変数を追加/編集"
 
-#: varedit.cpp:38
+#: varedit.cpp:40
 #, kde-format
 msgid "Remove Variable"
 msgstr "変数を削除"
 
-#: varedit.cpp:63
+#: varedit.cpp:65
 #, kde-format
 msgid "Edit '%1' value"
 msgstr "'%1' の値を編集"
 
-#: varedit.cpp:65
+#: varedit.cpp:67
 #, kde-format
 msgid "not available"
 msgstr "ありません"
 
 # |,no-bad-patterns
-#: varedit.cpp:98
+#: varedit.cpp:100
 #, kde-format
 msgid "<b style='color:#090'>%1 := %2</b>"
 msgstr "<b style='color:#090'>%1 := %2</b>"
 
-#: varedit.cpp:101
+#: varedit.cpp:103
 #, kde-format
 msgid "<b style='color:red'>WRONG</b>"
 msgstr "<b style='color:red'>不正</b>"

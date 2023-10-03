@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeedu-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2023-03-17 12:47+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -26,396 +26,396 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: consolehtml.cpp:158
+#: consolehtml.cpp:167
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:163
+#: consolehtml.cpp:172
 #, kde-format
 msgid "Options: %1"
 msgstr "Seçenekler: %1"
 
-#: consolehtml.cpp:213
+#: consolehtml.cpp:222
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "\"%1\" metnini girdiye yapıştır"
 
-#: consolemodel.cpp:87
+#: consolemodel.cpp:95
 #, kde-format
 msgid "Paste to Input"
 msgstr "Girdiye Yapıştır"
 
-#: consolemodel.cpp:89
+#: consolemodel.cpp:99
 #, kde-format
 msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
 msgstr "<ul class='error'>Hata: <b>%1</b><li>%2</li></ul>"
 
-#: consolemodel.cpp:111
+#: consolemodel.cpp:121
 #, kde-format
 msgid "Imported: %1"
 msgstr "İçe aktarıldı: %1"
 
-#: consolemodel.cpp:113
+#: consolemodel.cpp:123
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
 msgstr "<ul class='error'>Hata: %1 yüklenemedi. <br /> %2</ul>"
 
-#: dictionary.cpp:44
+#: dictionary.cpp:45
 #, kde-format
 msgid "Information"
 msgstr "Bilgi"
 
-#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#: dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70 dictionary.cpp:71
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: functionedit.cpp:47
+#: functionedit.cpp:51
 #, kde-format
 msgid "Add/Edit a function"
 msgstr "İşlev ekle veya düzenle"
 
-#: functionedit.cpp:92
+#: functionedit.cpp:96
 #, kde-format
 msgid "Preview"
 msgstr "Önizleme"
 
-#: functionedit.cpp:99
+#: functionedit.cpp:103
 #, kde-format
 msgid "From:"
 msgstr "Kimden:"
 
-#: functionedit.cpp:101
+#: functionedit.cpp:105
 #, kde-format
 msgid "To:"
 msgstr "Alıcı:"
 
-#: functionedit.cpp:104
+#: functionedit.cpp:108
 #, kde-format
 msgid "Options"
 msgstr "Seçenekler"
 
-#: functionedit.cpp:109
+#: functionedit.cpp:113
 #, kde-format
 msgid "OK"
 msgstr "Tamam"
 
-#: functionedit.cpp:111
+#: functionedit.cpp:115
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
 msgstr "Sil"
 
-#: functionedit.cpp:238
+#: functionedit.cpp:243
 #, kde-format
 msgid "The options you specified are not correct"
 msgstr "Verdiğiniz seçenek doğru değil"
 
-#: functionedit.cpp:243
+#: functionedit.cpp:248
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
 msgstr "Alt sınır üst sınırdan büyük olamaz"
 
-#: kalgebra.cpp:74
+#: kalgebra.cpp:83
 #, kde-format
 msgid "Plot 2D"
 msgstr "2B Çizim"
 
-#: kalgebra.cpp:95
+#: kalgebra.cpp:114
 #, kde-format
 msgid "Plot 3D"
 msgstr "3B Çizim"
 
-#: kalgebra.cpp:120
+#: kalgebra.cpp:144
 #, kde-format
 msgid "Session"
 msgstr "Oturum"
 
-#: kalgebra.cpp:139 kalgebra.cpp:254
+#: kalgebra.cpp:163 kalgebra.cpp:265
 #, kde-format
 msgid "Variables"
 msgstr "Değişkenler"
 
-#: kalgebra.cpp:158
+#: kalgebra.cpp:182
 #, kde-format
 msgid "&Calculator"
 msgstr "&Hesap Makinesi"
 
-#: kalgebra.cpp:170
+#: kalgebra.cpp:194
 #, kde-format
 msgid "C&alculator"
 msgstr "Hes&aplayıcı"
 
-#: kalgebra.cpp:172 kalgebra.cpp:175
+#: kalgebra.cpp:196
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "&Betik Yükle..."
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:200
 #, kde-format
 msgid "Recent Scripts"
 msgstr "Güncel Betikler"
 
-#: kalgebra.cpp:183 kalgebra.cpp:188
+#: kalgebra.cpp:205
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "Betiği &Kaydet"
 
-#: kalgebra.cpp:185 kalgebra.cpp:190
+#: kalgebra.cpp:209
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr "&Sistem Günlüğünü Dışa Aktar..."
 
-#: kalgebra.cpp:195 kalgebra.cpp:198
+#: kalgebra.cpp:211
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr "&ans Ekle..."
 
-#: kalgebra.cpp:201
+#: kalgebra.cpp:212
 #, kde-format
 msgid "Execution Mode"
 msgstr "Çalıştırma Kipi"
 
-#: kalgebra.cpp:203
+#: kalgebra.cpp:214
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "Hesapla"
 
-#: kalgebra.cpp:204
+#: kalgebra.cpp:215
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "Hesapla"
 
-#: kalgebra.cpp:224
+#: kalgebra.cpp:235
 #, kde-format
 msgid "Functions"
 msgstr "İşlevler"
 
-#: kalgebra.cpp:236
+#: kalgebra.cpp:247
 #, kde-format
 msgid "List"
 msgstr "Liste"
 
-#: kalgebra.cpp:242 kalgebra.cpp:474
+#: kalgebra.cpp:253 kalgebra.cpp:487
 #, kde-format
 msgid "&Add"
 msgstr "&Ekle"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:269
 #, kde-format
 msgid "Viewport"
 msgstr "Görüş alanı"
 
-#: kalgebra.cpp:262
+#: kalgebra.cpp:273
 #, kde-format
 msgid "&2D Graph"
 msgstr "&2B Grafik"
 
-#: kalgebra.cpp:274
+#: kalgebra.cpp:285
 #, kde-format
 msgid "2&D Graph"
 msgstr "2&B Grafik"
 
-#: kalgebra.cpp:276
+#: kalgebra.cpp:287
 #, kde-format
 msgid "&Grid"
 msgstr "Iz&gara"
 
-#: kalgebra.cpp:277
+#: kalgebra.cpp:288
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "&Görünüm Oranını Koru"
 
-#: kalgebra.cpp:285
+#: kalgebra.cpp:296
 #, kde-format
 msgid "Resolution"
 msgstr "Çözünürlük"
 
-#: kalgebra.cpp:286
+#: kalgebra.cpp:297
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "Zayıf"
 
-#: kalgebra.cpp:287
+#: kalgebra.cpp:298
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "Normal"
 
-#: kalgebra.cpp:288
+#: kalgebra.cpp:299
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "İyi"
 
-#: kalgebra.cpp:289
+#: kalgebra.cpp:300
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "Çok İyi"
 
-#: kalgebra.cpp:323
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&3D Graph"
 msgstr "&3B Grafik"
 
-#: kalgebra.cpp:331
+#: kalgebra.cpp:342
 #, kde-format
 msgid "3D &Graph"
 msgstr "3B &Grafik"
 
-#: kalgebra.cpp:334
+#: kalgebra.cpp:345
 #, kde-format
 msgid "&Reset View"
 msgstr "Görünümü Sıfı&rla"
 
-#: kalgebra.cpp:336
+#: kalgebra.cpp:349
 #, kde-format
 msgid "Dots"
 msgstr "Noktalar"
 
-#: kalgebra.cpp:337
+#: kalgebra.cpp:350
 #, kde-format
 msgid "Lines"
 msgstr "Çizgiler"
 
-#: kalgebra.cpp:338
+#: kalgebra.cpp:351
 #, kde-format
 msgid "Solid"
 msgstr "Katı"
 
-#: kalgebra.cpp:355
+#: kalgebra.cpp:368
 #, kde-format
 msgid "Operations"
 msgstr "İşlemler"
 
-#: kalgebra.cpp:359
+#: kalgebra.cpp:372
 #, kde-format
 msgid "&Dictionary"
 msgstr "S&özlük"
 
-#: kalgebra.cpp:370
+#: kalgebra.cpp:383
 #, kde-format
 msgid "Look for:"
 msgstr "Aranacak:"
 
-#: kalgebra.cpp:463
+#: kalgebra.cpp:476
 #, kde-format
 msgid "&Editing"
 msgstr "Dü&zenleme"
 
-#: kalgebra.cpp:520
+#: kalgebra.cpp:533
 #, kde-format
 msgid "Choose a script"
 msgstr "Bir betik seçin"
 
-#: kalgebra.cpp:520 kalgebra.cpp:536
+#: kalgebra.cpp:533 kalgebra.cpp:549
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "Betik (*.kal)"
 
-#: kalgebra.cpp:547
+#: kalgebra.cpp:560
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML Dosyası(*.html)"
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid "Errors: %1"
 msgstr "Hatalar: %1"
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr "Sunulan çizimin nereye konacağını seçin"
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr "Resim Dosyası (*.png);;SVG Dosyası (*.svg)"
 
-#: kalgebra.cpp:665
+#: kalgebra.cpp:692
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "Hazır"
 
-#: kalgebra.cpp:699
+#: kalgebra.cpp:726
 #, kde-format
 msgid "Add variable"
 msgstr "Değişken ekle"
 
-#: kalgebra.cpp:703
+#: kalgebra.cpp:730
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "Yeni değişkenin adını girin"
 
-#: main.cpp:30
+#: main.cpp:33
 #, kde-format
 msgid "A portable calculator"
 msgstr "Taşınabilir bir hesap makinesi"
 
-#: main.cpp:31
+#: main.cpp:35
 #, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
-#: main.cpp:32
+#: main.cpp:36
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Necdet Yücel, Serdar Soytetir, Ahmet Duran"
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "necdetyucel@gmail.com, tulliana@gmail.com, paradoxical.boy@gmail.com"
 
-#: varedit.cpp:33
+#: varedit.cpp:35
 #, kde-format
 msgid "Add/Edit a variable"
 msgstr "Bir değişken ekle/değiştir"
 
-#: varedit.cpp:38
+#: varedit.cpp:40
 #, kde-format
 msgid "Remove Variable"
 msgstr "Değişken Kaldır"
 
-#: varedit.cpp:63
+#: varedit.cpp:65
 #, kde-format
 msgid "Edit '%1' value"
 msgstr "'%1' değerini değiştir"
 
-#: varedit.cpp:65
+#: varedit.cpp:67
 #, kde-format
 msgid "not available"
 msgstr "kullanılabilir değil"
 
-#: varedit.cpp:98
+#: varedit.cpp:100
 #, kde-format
 msgid "<b style='color:#090'>%1 := %2</b>"
 msgstr "<b style='color:#090'>%1 := %2</b>"
 
-#: varedit.cpp:101
+#: varedit.cpp:103
 #, kde-format
 msgid "<b style='color:red'>WRONG</b>"
 msgstr "<b style='color:red'>YANLIŞ</b>"

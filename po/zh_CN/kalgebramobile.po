@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2023-09-16 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -17,71 +17,88 @@ msgstr ""
 "X-Crowdin-File: /kf5-trunk/messages/kalgebra/kalgebramobile.pot\n"
 "X-Crowdin-File-ID: 7511\n"
 
-#: content/ui/Console.qml:16 content/ui/main.qml:50
+#: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
 msgid "Calculator"
 msgstr "计算器"
 
-#: content/ui/Console.qml:34 content/ui/main.qml:76
-#: content/ui/VariablesView.qml:12
+#: content/ui/Console.qml:40 content/ui/main.qml:108
 #, kde-format
-msgid "Variables"
-msgstr "变量"
+msgid "KAlgebra"
+msgstr "KAlgebra"
 
-#: content/ui/Console.qml:52
-#, kde-format
+#: content/ui/Console.qml:62
+#, fuzzy, kde-format
+#| msgid "Load Script"
+msgctxt "@action:button"
 msgid "Load Script"
 msgstr "加载脚本"
 
-#: content/ui/Console.qml:56 content/ui/Console.qml:66
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "脚本 (*.kal)"
 
-#: content/ui/Console.qml:62
-#, kde-format
+#: content/ui/Console.qml:72
+#, fuzzy, kde-format
+#| msgid "Save Script"
+msgctxt "@action:button"
 msgid "Save Script"
 msgstr "保存脚本"
 
-#: content/ui/Console.qml:73
-#, kde-format
+#: content/ui/Console.qml:83
+#, fuzzy, kde-format
+#| msgid "Export Log"
+msgctxt "@action:button"
 msgid "Export Log"
 msgstr "导出日志"
 
-#: content/ui/Console.qml:77
+#: content/ui/Console.qml:87
 #, kde-format
 msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Evaluate"
+msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "求值"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Calculate"
+msgctxt "@action:button"
 msgid "Calculate"
 msgstr "计算"
 
-#: content/ui/Console.qml:90
-#, kde-format
+#: content/ui/Console.qml:100
+#, fuzzy, kde-format
+#| msgid "Clear Log"
+msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "清除日志"
 
-#: content/ui/Console.qml:112
+#: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
 msgstr "2D 绘图"
 
-#: content/ui/Console.qml:120
+#: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
 msgstr "3D 绘图"
 
-#: content/ui/Console.qml:128
+#: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
 msgstr "复制“%1”"
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr ""
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -89,7 +106,7 @@ msgstr "复制“%1”"
 msgid "Clear All"
 msgstr "清除全部"
 
-#: content/ui/controls/ExpressionInput.qml:72
+#: content/ui/controls/ExpressionInput.qml:104
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "要计算的表达式…"
@@ -104,11 +121,6 @@ msgstr "名称："
 #, kde-format
 msgid "%1:"
 msgstr "%1："
-
-#: content/ui/main.qml:40
-#, kde-format
-msgid "KAlgebra"
-msgstr "KAlgebra"
 
 #: content/ui/main.qml:57
 #, kde-format
@@ -125,6 +137,11 @@ msgstr "三维图"
 msgid "Value Tables"
 msgstr "数值表"
 
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#, kde-format
+msgid "Variables"
+msgstr "变量"
+
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
@@ -135,22 +152,22 @@ msgstr "词典"
 msgid "About KAlgebra"
 msgstr "关于 KAlgebra"
 
-#: content/ui/Plot2D.qml:31 content/ui/Plot3D.qml:30
+#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
 #, kde-format
 msgid "Save"
 msgstr "保存"
 
-#: content/ui/Plot2D.qml:44
+#: content/ui/Plot2D.qml:50
 #, kde-format
 msgid "View Grid"
 msgstr "查看网格"
 
-#: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
+#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
 #, kde-format
 msgid "Reset Viewport"
 msgstr "重置可视区域"
 
-#: content/ui/TableResultPage.qml:8
+#: content/ui/TableResultPage.qml:9
 #, kde-format
 msgid "Results"
 msgstr "结果"
@@ -175,27 +192,34 @@ msgstr "错误：起始和终止相同"
 msgid "Errors: %1"
 msgstr "错误：%1"
 
-#: content/ui/Tables.qml:69
+#: content/ui/Tables.qml:52
+#, fuzzy, kde-format
+#| msgid "Run"
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "执行"
+
+#: content/ui/Tables.qml:63
 #, kde-format
 msgid "Input"
 msgstr "输入"
 
-#: content/ui/Tables.qml:78
+#: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
 msgstr "从："
 
-#: content/ui/Tables.qml:85
+#: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
 msgstr "到:"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "Step"
 msgstr "步长"
 
-#: content/ui/Tables.qml:98
+#: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
 msgstr "执行"
@@ -205,29 +229,29 @@ msgstr "执行"
 msgid "A portable calculator"
 msgstr "一个轻便的计算器"
 
-#: main.cpp:39
+#: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr ""
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr ""
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
 msgstr ""
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "KDE 中国"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

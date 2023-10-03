@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2020-03-02 14:10+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -17,77 +17,90 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 19.08.1\n"
 
-#: content/ui/Console.qml:16 content/ui/main.qml:50
+#: content/ui/Console.qml:19 content/ui/main.qml:50
 #, fuzzy, kde-format
 #| msgid "Calculate..."
 msgid "Calculator"
 msgstr "Arvuta ..."
 
-#: content/ui/Console.qml:34 content/ui/main.qml:76
-#: content/ui/VariablesView.qml:12
-#, kde-format
-msgid "Variables"
-msgstr ""
+#: content/ui/Console.qml:40 content/ui/main.qml:108
+#, fuzzy, kde-format
+#| msgid "KAlgebra Mobile"
+msgid "KAlgebra"
+msgstr "KAlgebra Mobile"
 
-#: content/ui/Console.qml:52
+#: content/ui/Console.qml:62
 #, fuzzy, kde-format
 #| msgid "Load Script..."
+msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Skripti laadimine ..."
 
-#: content/ui/Console.qml:56 content/ui/Console.qml:66
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "Skript (*.kal)"
 
-#: content/ui/Console.qml:62
+#: content/ui/Console.qml:72
 #, fuzzy, kde-format
 #| msgid "Save Script..."
+msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Skripti salvestamine ..."
 
-#: content/ui/Console.qml:73
+#: content/ui/Console.qml:83
 #, fuzzy, kde-format
 #| msgid "Export Log..."
+msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Logi eksport ..."
 
-#: content/ui/Console.qml:77
+#: content/ui/Console.qml:87
 #, kde-format
 msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
-#: content/ui/Console.qml:84
+#: content/ui/Console.qml:94
 #, fuzzy, kde-format
 #| msgid "Evaluate..."
+msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Hinda ..."
 
-#: content/ui/Console.qml:84
+#: content/ui/Console.qml:94
 #, fuzzy, kde-format
 #| msgid "Calculate..."
+msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Arvuta ..."
 
-#: content/ui/Console.qml:90
-#, kde-format
+#: content/ui/Console.qml:100
+#, fuzzy, kde-format
+#| msgid "Clear Log"
+msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Puhasta logi"
 
-#: content/ui/Console.qml:112
+#: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
 msgstr "2D joonis"
 
-#: content/ui/Console.qml:120
+#: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
 msgstr "3D joonis"
 
-#: content/ui/Console.qml:128
+#: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
 msgstr "kopeeri \"%1\""
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr ""
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -95,7 +108,7 @@ msgstr "kopeeri \"%1\""
 msgid "Clear All"
 msgstr "Puhasta kõik"
 
-#: content/ui/controls/ExpressionInput.qml:72
+#: content/ui/controls/ExpressionInput.qml:104
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Arvutatav avaldis ..."
@@ -110,12 +123,6 @@ msgstr ""
 #, kde-format
 msgid "%1:"
 msgstr ""
-
-#: content/ui/main.qml:40
-#, fuzzy, kde-format
-#| msgid "KAlgebra Mobile"
-msgid "KAlgebra"
-msgstr "KAlgebra Mobile"
 
 #: content/ui/main.qml:57
 #, kde-format
@@ -132,6 +139,11 @@ msgstr ""
 msgid "Value Tables"
 msgstr ""
 
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#, kde-format
+msgid "Variables"
+msgstr ""
+
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
@@ -142,23 +154,23 @@ msgstr ""
 msgid "About KAlgebra"
 msgstr ""
 
-#: content/ui/Plot2D.qml:31 content/ui/Plot3D.qml:30
+#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
 #, fuzzy, kde-format
 #| msgid "Save..."
 msgid "Save"
 msgstr "Salvesta ..."
 
-#: content/ui/Plot2D.qml:44
+#: content/ui/Plot2D.qml:50
 #, kde-format
 msgid "View Grid"
 msgstr "Alusvõrgu näitamine"
 
-#: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
+#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
 #, kde-format
 msgid "Reset Viewport"
 msgstr "Lähtesta vaatepunkt"
 
-#: content/ui/TableResultPage.qml:8
+#: content/ui/TableResultPage.qml:9
 #, fuzzy, kde-format
 #| msgid "Results:"
 msgid "Results"
@@ -184,29 +196,36 @@ msgstr "Vead: algus ja lõpp on samad"
 msgid "Errors: %1"
 msgstr "Vead:%1"
 
-#: content/ui/Tables.qml:69
+#: content/ui/Tables.qml:52
+#, fuzzy, kde-format
+#| msgid "Run"
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "Käivita"
+
+#: content/ui/Tables.qml:63
 #, fuzzy, kde-format
 #| msgid "Input:"
 msgid "Input"
 msgstr "Sisend:"
 
-#: content/ui/Tables.qml:78
+#: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
 msgstr "Alates:"
 
-#: content/ui/Tables.qml:85
+#: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
 msgstr "Kuni:"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:86
 #, fuzzy, kde-format
 #| msgid "Step:"
 msgid "Step"
 msgstr "Samm:"
 
-#: content/ui/Tables.qml:98
+#: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
 msgstr "Käivita"
@@ -216,31 +235,31 @@ msgstr "Käivita"
 msgid "A portable calculator"
 msgstr "Kaasaskantav kalkulaator"
 
-#: main.cpp:39
+#: main.cpp:40
 #, fuzzy, kde-format
 #| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2020: Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, fuzzy, kde-format
 #| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
 msgid "Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2020: Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
 msgstr ""
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Marek Laane"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

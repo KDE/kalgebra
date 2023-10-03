@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2023-09-15 05:51+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -18,71 +18,88 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: content/ui/Console.qml:16 content/ui/main.qml:50
+#: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
 msgid "Calculator"
 msgstr "კალკულატორი"
 
-#: content/ui/Console.qml:34 content/ui/main.qml:76
-#: content/ui/VariablesView.qml:12
+#: content/ui/Console.qml:40 content/ui/main.qml:108
 #, kde-format
-msgid "Variables"
-msgstr "ცვლადები"
+msgid "KAlgebra"
+msgstr "KAlgebra"
 
-#: content/ui/Console.qml:52
-#, kde-format
+#: content/ui/Console.qml:62
+#, fuzzy, kde-format
+#| msgid "Load Script"
+msgctxt "@action:button"
 msgid "Load Script"
 msgstr "სკრიპტის ჩატვირთვა"
 
-#: content/ui/Console.qml:56 content/ui/Console.qml:66
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "სკრიპტი (*.kal)"
 
-#: content/ui/Console.qml:62
-#, kde-format
+#: content/ui/Console.qml:72
+#, fuzzy, kde-format
+#| msgid "Save Script"
+msgctxt "@action:button"
 msgid "Save Script"
 msgstr "სკრიპტის შენახვა"
 
-#: content/ui/Console.qml:73
-#, kde-format
+#: content/ui/Console.qml:83
+#, fuzzy, kde-format
+#| msgid "Export Log"
+msgctxt "@action:button"
 msgid "Export Log"
 msgstr "ჟურნალის გატანა"
 
-#: content/ui/Console.qml:77
+#: content/ui/Console.qml:87
 #, kde-format
 msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Evaluate"
+msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "შეფასება"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Calculate"
+msgctxt "@action:button"
 msgid "Calculate"
 msgstr "გამოთვლა"
 
-#: content/ui/Console.qml:90
-#, kde-format
+#: content/ui/Console.qml:100
+#, fuzzy, kde-format
+#| msgid "Clear Log"
+msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "ჟურნალის გასუფთავება"
 
-#: content/ui/Console.qml:112
+#: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
 msgstr "2D ნახაზი"
 
-#: content/ui/Console.qml:120
+#: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
 msgstr "3D ნახაზი"
 
-#: content/ui/Console.qml:128
+#: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
 msgstr "\"%1\"-ის კოპირება"
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr ""
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -90,7 +107,7 @@ msgstr "\"%1\"-ის კოპირება"
 msgid "Clear All"
 msgstr "ყველას გასუფთავება"
 
-#: content/ui/controls/ExpressionInput.qml:72
+#: content/ui/controls/ExpressionInput.qml:104
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "გამოსათვლელი გამოსახულება..."
@@ -105,11 +122,6 @@ msgstr "სახელი:"
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
-
-#: content/ui/main.qml:40
-#, kde-format
-msgid "KAlgebra"
-msgstr "KAlgebra"
 
 #: content/ui/main.qml:57
 #, kde-format
@@ -126,6 +138,11 @@ msgstr "3D გრაფიკი"
 msgid "Value Tables"
 msgstr "მნიშვნელობის ცხრილები"
 
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#, kde-format
+msgid "Variables"
+msgstr "ცვლადები"
+
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
@@ -136,22 +153,22 @@ msgstr "ლექსიკონი"
 msgid "About KAlgebra"
 msgstr "KAlgebra-ის შესახებ"
 
-#: content/ui/Plot2D.qml:31 content/ui/Plot3D.qml:30
+#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
 #, kde-format
 msgid "Save"
 msgstr "შენახვა"
 
-#: content/ui/Plot2D.qml:44
+#: content/ui/Plot2D.qml:50
 #, kde-format
 msgid "View Grid"
 msgstr "ბადის ნახვა"
 
-#: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
+#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
 #, kde-format
 msgid "Reset Viewport"
 msgstr "ჩვენების არეს საწყის მნიშვნელობაზე დაბრუნება"
 
-#: content/ui/TableResultPage.qml:8
+#: content/ui/TableResultPage.qml:9
 #, kde-format
 msgid "Results"
 msgstr "შედეგები"
@@ -176,27 +193,34 @@ msgstr "შეცდომა: დასაწყისი და დასა�
 msgid "Errors: %1"
 msgstr "შეცდომები: %1"
 
-#: content/ui/Tables.qml:69
+#: content/ui/Tables.qml:52
+#, fuzzy, kde-format
+#| msgid "Run"
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "გაშვება"
+
+#: content/ui/Tables.qml:63
 #, kde-format
 msgid "Input"
 msgstr "შეყვანა"
 
-#: content/ui/Tables.qml:78
+#: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
 msgstr "ვისგან:"
 
-#: content/ui/Tables.qml:85
+#: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
 msgstr "ვის:"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "Step"
 msgstr "ბიჯი"
 
-#: content/ui/Tables.qml:98
+#: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
 msgstr "გაშვება"
@@ -206,29 +230,29 @@ msgstr "გაშვება"
 msgid "A portable calculator"
 msgstr "პატარა კალკულატორი"
 
-#: main.cpp:39
+#: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
 msgstr "წამყვანი პროგრამისტი"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "რუსუდან ცისკრელი"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

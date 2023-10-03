@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeedu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2022-07-13 14:14+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -19,396 +19,396 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 21.12.3\n"
 
-#: consolehtml.cpp:158
+#: consolehtml.cpp:167
 #, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
 msgstr " <a href='kalgebra:%1'>%2</a>"
 
-#: consolehtml.cpp:163
+#: consolehtml.cpp:172
 #, kde-format
 msgid "Options: %1"
 msgstr "옵션: %1"
 
-#: consolehtml.cpp:213
+#: consolehtml.cpp:222
 #, kde-format
 msgid "Paste \"%1\" to input"
 msgstr "\"%1\"을(를) 입력으로 붙여넣기"
 
-#: consolemodel.cpp:87
+#: consolemodel.cpp:95
 #, kde-format
 msgid "Paste to Input"
 msgstr "입력으로 붙여넣기"
 
-#: consolemodel.cpp:89
+#: consolemodel.cpp:99
 #, kde-format
 msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
 msgstr "<ul class='error'>오류: <b>%1</b><li>%2</li></ul>"
 
-#: consolemodel.cpp:111
+#: consolemodel.cpp:121
 #, kde-format
 msgid "Imported: %1"
 msgstr "가져옴: %1"
 
-#: consolemodel.cpp:113
+#: consolemodel.cpp:123
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
 msgstr "<ul class='error'>오류: %1을(를) 불러올 수 없음. <br />%2</ul>"
 
-#: dictionary.cpp:44
+#: dictionary.cpp:45
 #, kde-format
 msgid "Information"
 msgstr "정보"
 
-#: dictionary.cpp:67 dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70
+#: dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70 dictionary.cpp:71
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: functionedit.cpp:47
+#: functionedit.cpp:51
 #, kde-format
 msgid "Add/Edit a function"
 msgstr "함수 추가/편집"
 
-#: functionedit.cpp:92
+#: functionedit.cpp:96
 #, kde-format
 msgid "Preview"
 msgstr "미리 보기"
 
-#: functionedit.cpp:99
+#: functionedit.cpp:103
 #, kde-format
 msgid "From:"
 msgstr "시작:"
 
-#: functionedit.cpp:101
+#: functionedit.cpp:105
 #, kde-format
 msgid "To:"
 msgstr "끝:"
 
-#: functionedit.cpp:104
+#: functionedit.cpp:108
 #, kde-format
 msgid "Options"
 msgstr "설정"
 
-#: functionedit.cpp:109
+#: functionedit.cpp:113
 #, kde-format
 msgid "OK"
 msgstr "확인"
 
-#: functionedit.cpp:111
+#: functionedit.cpp:115
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
 msgstr "삭제"
 
-#: functionedit.cpp:238
+#: functionedit.cpp:243
 #, kde-format
 msgid "The options you specified are not correct"
 msgstr "지정한 옵션이 올바르지 않습니다"
 
-#: functionedit.cpp:243
+#: functionedit.cpp:248
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
 msgstr "최솟값이 최댓값보다 클 수 없음"
 
-#: kalgebra.cpp:74
+#: kalgebra.cpp:83
 #, kde-format
 msgid "Plot 2D"
 msgstr "2차원으로 그리기"
 
-#: kalgebra.cpp:95
+#: kalgebra.cpp:114
 #, kde-format
 msgid "Plot 3D"
 msgstr "3차원으로 그리기"
 
-#: kalgebra.cpp:120
+#: kalgebra.cpp:144
 #, kde-format
 msgid "Session"
 msgstr "세션"
 
-#: kalgebra.cpp:139 kalgebra.cpp:254
+#: kalgebra.cpp:163 kalgebra.cpp:265
 #, kde-format
 msgid "Variables"
 msgstr "변수"
 
-#: kalgebra.cpp:158
+#: kalgebra.cpp:182
 #, kde-format
 msgid "&Calculator"
 msgstr "계산기(&C)"
 
-#: kalgebra.cpp:170
+#: kalgebra.cpp:194
 #, kde-format
 msgid "C&alculator"
 msgstr "계산기(&A)"
 
-#: kalgebra.cpp:172 kalgebra.cpp:175
+#: kalgebra.cpp:196
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
 msgstr "스크립트 열기(&L)..."
 
-#: kalgebra.cpp:178
+#: kalgebra.cpp:200
 #, kde-format
 msgid "Recent Scripts"
 msgstr "최근 스크립트"
 
-#: kalgebra.cpp:183 kalgebra.cpp:188
+#: kalgebra.cpp:205
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
 msgstr "스크립트 저장(&S)..."
 
-#: kalgebra.cpp:185 kalgebra.cpp:190
+#: kalgebra.cpp:209
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
 msgstr "로그 내보내기(&E)..."
 
-#: kalgebra.cpp:195 kalgebra.cpp:198
+#: kalgebra.cpp:211
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
 msgstr "직전 계산값(ans) 삽입(&I)..."
 
-#: kalgebra.cpp:201
+#: kalgebra.cpp:212
 #, kde-format
 msgid "Execution Mode"
 msgstr "실행 모드"
 
-#: kalgebra.cpp:203
+#: kalgebra.cpp:214
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
 msgstr "계산"
 
-#: kalgebra.cpp:204
+#: kalgebra.cpp:215
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
 msgstr "평가"
 
-#: kalgebra.cpp:224
+#: kalgebra.cpp:235
 #, kde-format
 msgid "Functions"
 msgstr "함수"
 
-#: kalgebra.cpp:236
+#: kalgebra.cpp:247
 #, kde-format
 msgid "List"
 msgstr "목록"
 
-#: kalgebra.cpp:242 kalgebra.cpp:474
+#: kalgebra.cpp:253 kalgebra.cpp:487
 #, kde-format
 msgid "&Add"
 msgstr "추가(&A)"
 
-#: kalgebra.cpp:258
+#: kalgebra.cpp:269
 #, kde-format
 msgid "Viewport"
 msgstr "뷰포트"
 
-#: kalgebra.cpp:262
+#: kalgebra.cpp:273
 #, kde-format
 msgid "&2D Graph"
 msgstr "2D 그래프(&2)"
 
-#: kalgebra.cpp:274
+#: kalgebra.cpp:285
 #, kde-format
 msgid "2&D Graph"
 msgstr "2D 그래프(&D)"
 
-#: kalgebra.cpp:276
+#: kalgebra.cpp:287
 #, kde-format
 msgid "&Grid"
 msgstr "격자(&G)"
 
-#: kalgebra.cpp:277
+#: kalgebra.cpp:288
 #, kde-format
 msgid "&Keep Aspect Ratio"
 msgstr "가로 세로 비율 유지(&K)"
 
-#: kalgebra.cpp:285
+#: kalgebra.cpp:296
 #, kde-format
 msgid "Resolution"
 msgstr "해상도"
 
-#: kalgebra.cpp:286
+#: kalgebra.cpp:297
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
 msgstr "나쁨"
 
-#: kalgebra.cpp:287
+#: kalgebra.cpp:298
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
 msgstr "보통"
 
-#: kalgebra.cpp:288
+#: kalgebra.cpp:299
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
 msgstr "좋음"
 
-#: kalgebra.cpp:289
+#: kalgebra.cpp:300
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
 msgstr "매우 좋음"
 
-#: kalgebra.cpp:323
+#: kalgebra.cpp:334
 #, kde-format
 msgid "&3D Graph"
 msgstr "3D 그래프(&3)"
 
-#: kalgebra.cpp:331
+#: kalgebra.cpp:342
 #, kde-format
 msgid "3D &Graph"
 msgstr "3D 그래프(&G)"
 
-#: kalgebra.cpp:334
+#: kalgebra.cpp:345
 #, kde-format
 msgid "&Reset View"
 msgstr "보기 초기화(&R)"
 
-#: kalgebra.cpp:336
+#: kalgebra.cpp:349
 #, kde-format
 msgid "Dots"
 msgstr "점"
 
-#: kalgebra.cpp:337
+#: kalgebra.cpp:350
 #, kde-format
 msgid "Lines"
 msgstr "선"
 
-#: kalgebra.cpp:338
+#: kalgebra.cpp:351
 #, kde-format
 msgid "Solid"
 msgstr "실선"
 
-#: kalgebra.cpp:355
+#: kalgebra.cpp:368
 #, kde-format
 msgid "Operations"
 msgstr "연산"
 
-#: kalgebra.cpp:359
+#: kalgebra.cpp:372
 #, kde-format
 msgid "&Dictionary"
 msgstr "사전(&D)"
 
-#: kalgebra.cpp:370
+#: kalgebra.cpp:383
 #, kde-format
 msgid "Look for:"
 msgstr "찾을 단어:"
 
-#: kalgebra.cpp:463
+#: kalgebra.cpp:476
 #, kde-format
 msgid "&Editing"
 msgstr "편집(&E)"
 
-#: kalgebra.cpp:520
+#: kalgebra.cpp:533
 #, kde-format
 msgid "Choose a script"
 msgstr "스크립트를 선택하십시오"
 
-#: kalgebra.cpp:520 kalgebra.cpp:536
+#: kalgebra.cpp:533 kalgebra.cpp:549
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "스크립트 (*.kal)"
 
-#: kalgebra.cpp:547
+#: kalgebra.cpp:560
 #, kde-format
 msgid "HTML File (*.html)"
 msgstr "HTML 파일 (*.html)"
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid ", "
 msgstr ", "
 
-#: kalgebra.cpp:570
+#: kalgebra.cpp:595
 #, kde-format
 msgid "Errors: %1"
 msgstr "오류: %1"
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, kde-format
 msgid "Select where to put the rendered plot"
 msgstr "렌더링한 결과를 출력할 위치를 선택하십시오"
 
-#: kalgebra.cpp:608
+#: kalgebra.cpp:634
 #, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
 msgstr "그림 파일 (*.png);;SVG 파일 (*.svg)"
 
-#: kalgebra.cpp:665
+#: kalgebra.cpp:692
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
 msgstr "준비"
 
-#: kalgebra.cpp:699
+#: kalgebra.cpp:726
 #, kde-format
 msgid "Add variable"
 msgstr "변수 추가"
 
-#: kalgebra.cpp:703
+#: kalgebra.cpp:730
 #, kde-format
 msgid "Enter a name for the new variable"
 msgstr "새 변수 이름을 입력하십시오"
 
-#: main.cpp:30
+#: main.cpp:33
 #, kde-format
 msgid "A portable calculator"
 msgstr "포터블 계산기"
 
-#: main.cpp:31
+#: main.cpp:35
 #, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
-#: main.cpp:32
+#: main.cpp:36
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "박신조"
 
-#: main.cpp:33
+#: main.cpp:37
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde@peremen.name"
 
-#: varedit.cpp:33
+#: varedit.cpp:35
 #, kde-format
 msgid "Add/Edit a variable"
 msgstr "변수 추가/편집"
 
-#: varedit.cpp:38
+#: varedit.cpp:40
 #, kde-format
 msgid "Remove Variable"
 msgstr "변수 삭제"
 
-#: varedit.cpp:63
+#: varedit.cpp:65
 #, kde-format
 msgid "Edit '%1' value"
 msgstr "'%1' 값 편집"
 
-#: varedit.cpp:65
+#: varedit.cpp:67
 #, kde-format
 msgid "not available"
 msgstr "사용할 수 없음"
 
-#: varedit.cpp:98
+#: varedit.cpp:100
 #, kde-format
 msgid "<b style='color:#090'>%1 := %2</b>"
 msgstr "<b style='color:#090'>%1 := %2</b>"
 
-#: varedit.cpp:101
+#: varedit.cpp:103
 #, kde-format
 msgid "<b style='color:red'>WRONG</b>"
 msgstr "<b style='color:red'>오류</b>"

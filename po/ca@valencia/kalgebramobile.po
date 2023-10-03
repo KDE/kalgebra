@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-27 00:39+0000\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
 "PO-Revision-Date: 2023-09-14 11:35+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -21,71 +21,88 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: content/ui/Console.qml:16 content/ui/main.qml:50
+#: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
 msgid "Calculator"
 msgstr "Calculadora"
 
-#: content/ui/Console.qml:34 content/ui/main.qml:76
-#: content/ui/VariablesView.qml:12
+#: content/ui/Console.qml:40 content/ui/main.qml:108
 #, kde-format
-msgid "Variables"
-msgstr "Variables"
+msgid "KAlgebra"
+msgstr "KAlgebra"
 
-#: content/ui/Console.qml:52
-#, kde-format
+#: content/ui/Console.qml:62
+#, fuzzy, kde-format
+#| msgid "Load Script"
+msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Carrega un script"
 
-#: content/ui/Console.qml:56 content/ui/Console.qml:66
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
 msgstr "Script (*.kal)"
 
-#: content/ui/Console.qml:62
-#, kde-format
+#: content/ui/Console.qml:72
+#, fuzzy, kde-format
+#| msgid "Save Script"
+msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Guarda l'script"
 
-#: content/ui/Console.qml:73
-#, kde-format
+#: content/ui/Console.qml:83
+#, fuzzy, kde-format
+#| msgid "Export Log"
+msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Exporta el registre"
 
-#: content/ui/Console.qml:77
+#: content/ui/Console.qml:87
 #, kde-format
 msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Evaluate"
+msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Avalua"
 
-#: content/ui/Console.qml:84
-#, kde-format
+#: content/ui/Console.qml:94
+#, fuzzy, kde-format
+#| msgid "Calculate"
+msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Calcula"
 
-#: content/ui/Console.qml:90
-#, kde-format
+#: content/ui/Console.qml:100
+#, fuzzy, kde-format
+#| msgid "Clear Log"
+msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Neteja el registre"
 
-#: content/ui/Console.qml:112
+#: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
 msgstr "Gràfica en 2D"
 
-#: content/ui/Console.qml:120
+#: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
 msgstr "Gràfica en 3D"
 
-#: content/ui/Console.qml:128
+#: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
 msgstr "Copia «%1»"
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr ""
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -93,7 +110,7 @@ msgstr "Copia «%1»"
 msgid "Clear All"
 msgstr "Neteja-ho tot"
 
-#: content/ui/controls/ExpressionInput.qml:72
+#: content/ui/controls/ExpressionInput.qml:104
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Expressió per a calcular..."
@@ -108,11 +125,6 @@ msgstr "Nom:"
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
-
-#: content/ui/main.qml:40
-#, kde-format
-msgid "KAlgebra"
-msgstr "KAlgebra"
 
 #: content/ui/main.qml:57
 #, kde-format
@@ -129,6 +141,11 @@ msgstr "Gràfica en 3D"
 msgid "Value Tables"
 msgstr "Taules de valors"
 
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#, kde-format
+msgid "Variables"
+msgstr "Variables"
+
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
@@ -139,22 +156,22 @@ msgstr "Diccionari"
 msgid "About KAlgebra"
 msgstr "Quant a KAlgebra"
 
-#: content/ui/Plot2D.qml:31 content/ui/Plot3D.qml:30
+#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
 #, kde-format
 msgid "Save"
 msgstr "Guarda"
 
-#: content/ui/Plot2D.qml:44
+#: content/ui/Plot2D.qml:50
 #, kde-format
 msgid "View Grid"
 msgstr "Veure la quadrícula"
 
-#: content/ui/Plot2D.qml:50 content/ui/Plot3D.qml:43
+#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
 #, kde-format
 msgid "Reset Viewport"
 msgstr "Restablix l'àrea de visualització"
 
-#: content/ui/TableResultPage.qml:8
+#: content/ui/TableResultPage.qml:9
 #, kde-format
 msgid "Results"
 msgstr "Resultats"
@@ -179,27 +196,34 @@ msgstr "Errors: L'inici i el final és el mateix"
 msgid "Errors: %1"
 msgstr "Errors: %1"
 
-#: content/ui/Tables.qml:69
+#: content/ui/Tables.qml:52
+#, fuzzy, kde-format
+#| msgid "Run"
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "Executa"
+
+#: content/ui/Tables.qml:63
 #, kde-format
 msgid "Input"
 msgstr "Entrada"
 
-#: content/ui/Tables.qml:78
+#: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
 msgstr "De:"
 
-#: content/ui/Tables.qml:85
+#: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
 msgstr "A:"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "Step"
 msgstr "Pas"
 
-#: content/ui/Tables.qml:98
+#: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
 msgstr "Executa"
@@ -209,29 +233,29 @@ msgstr "Executa"
 msgid "A portable calculator"
 msgstr "Una calculadora portàtil"
 
-#: main.cpp:39
+#: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "Aleix Pol i Gonzalez"
 
-#: main.cpp:40
+#: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
 msgstr "Mantenidor"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Aleix Pol Gonzalez"
 
-#: main.cpp:41
+#: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
