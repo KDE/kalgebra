@@ -6,7 +6,6 @@ import org.kde.analitza
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.kalgebra.mobile
-import QtQuick.Controls as QQC2
 
 Kirigami.ScrollablePage {
     title: i18n("Variables")
