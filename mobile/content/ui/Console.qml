@@ -64,7 +64,7 @@ Kirigami.ScrollablePage {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.loadScript(fileDialog.fileUrl) }
                 fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
-                fileDialog.selectExisting = true
+		fileDialog.fileMode = FileDialog.OpenFile
                 fileDialog.open()
             }
         },
@@ -74,7 +74,7 @@ Kirigami.ScrollablePage {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveScript(fileDialog.fileUrl) }
                 fileDialog.nameFilters = [ i18n("Script (*.kal)") ]
-                fileDialog.selectExisting = false
+		fileDialog.fileMode = FileDialog.SaveFile
                 fileDialog.open()
             }
         },
@@ -84,8 +84,8 @@ Kirigami.ScrollablePage {
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() { consoleModel.saveLog(fileDialog.fileUrl) }
-                fileDialog.nameFilters = [ i18n("HTML (*.html)") ]
-                fileDialog.selectExisting = false
+		fileDialog.nameFilters = [ i18n("HTML (*.html)") ]
+		fileDialog.fileMode = FileDialog.SaveFile
                 fileDialog.open()
             }
         },
