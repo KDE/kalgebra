@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-03 01:37+0000\n"
+"POT-Creation-Date: 2023-10-04 01:37+0000\n"
 "PO-Revision-Date: 2023-09-14 20:30+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -137,7 +137,7 @@ msgstr "Tredimensionell graf"
 msgid "Value Tables"
 msgstr "Värdetabeller"
 
-#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
 msgstr "Variabler"

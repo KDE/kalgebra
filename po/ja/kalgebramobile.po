@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-03 01:37+0000\n"
+"POT-Creation-Date: 2023-10-04 01:37+0000\n"
 "PO-Revision-Date: 2018-08-01 23:02-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Value Tables"
 msgstr ""
 
-#: content/ui/main.qml:76 content/ui/VariablesView.qml:12
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
 msgstr ""

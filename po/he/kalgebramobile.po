@@ -1,59 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-# pan93412 <pan93412@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2019-03-12 22:06+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
-"Language: zh_TW\n"
+"PO-Revision-Date: 2023-10-03 08:43+0300\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <kde-i18n-doc@kde.org>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 18.12.3\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgid "Calculator"
-msgstr "計算…"
+msgstr "מחשבון"
 
 #: content/ui/Console.qml:40 content/ui/main.qml:108
-#, fuzzy, kde-format
-#| msgid "KAlgebra Mobile"
+#, kde-format
 msgid "KAlgebra"
-msgstr "KAlgebra 行動版"
+msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr "載入指令碼…"
+msgstr "טעינת סקריפט"
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
-msgstr "指令碼 (*.kal)"
+msgstr "סקריפט (‎*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr "儲存指令碼…"
+msgstr "שמירת סקריפט"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr "匯出記錄…"
+msgstr "ייצוא יומן"
 
 #: content/ui/Console.qml:87
 #, kde-format
@@ -61,212 +56,196 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr "估算…"
+msgstr "שערוך"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr "計算…"
+msgstr "חישוב"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr "清除記錄"
+msgstr "ניקוי יומן"
 
 #: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
-msgstr "2D 圖形"
+msgstr "שרטוט דו־ממדי"
 
 #: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
-msgstr "3D 圖形"
+msgstr "שרטוט תלת־ממדי"
 
 #: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
-msgstr "複製「%1」"
+msgstr "העתקת „%1”"
 
 #: content/ui/Console.qml:187
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "פינוי ההיסטוריה במסוף"
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
 #, kde-format
 msgid "Clear All"
-msgstr "全部清除"
+msgstr "לפנות הכול"
 
 #: content/ui/controls/ExpressionInput.qml:104
 #, kde-format
 msgid "Expression to calculate..."
-msgstr "欲計算之表達式…"
+msgstr "ביטוי לחישוב…"
 
 #: content/ui/Dictionary.qml:28
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
 #: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
 #, kde-format
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "רישום בדו־ממד"
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "רישום בתלת־ממד"
 
 #: content/ui/main.qml:70
 #, kde-format
 msgid "Value Tables"
-msgstr ""
+msgstr "טבלאות ערכים"
 
 #: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
-msgstr ""
+msgstr "משתנים"
 
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
-msgstr ""
+msgstr "מילון"
 
 #: content/ui/main.qml:88
 #, kde-format
 msgid "About KAlgebra"
-msgstr ""
+msgstr "על KAlgebra"
 
 #: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
-#, fuzzy, kde-format
-#| msgid "Save..."
+#, kde-format
 msgid "Save"
-msgstr "儲存…"
+msgstr "שמירה"
 
 #: content/ui/Plot2D.qml:50
 #, kde-format
 msgid "View Grid"
-msgstr "顯示網格"
+msgstr "הצגת רשת"
 
 #: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
 #, kde-format
 msgid "Reset Viewport"
-msgstr "重設檢視"
+msgstr "איפוס חרך תצוגה"
 
 #: content/ui/TableResultPage.qml:9
-#, fuzzy, kde-format
-#| msgid "Results:"
+#, kde-format
 msgid "Results"
-msgstr "結果："
+msgstr "תוצאות"
 
 #: content/ui/Tables.qml:12
 #, kde-format
 msgid "Value tables"
-msgstr ""
+msgstr "טבלאות ערכים"
 
 #: content/ui/Tables.qml:30
 #, kde-format
 msgid "Errors: The step cannot be 0"
-msgstr "錯誤：步驟數不得為 0"
+msgstr "שגיאות: הצעד לא יכול להיות 0"
 
 #: content/ui/Tables.qml:32
 #, kde-format
 msgid "Errors: The start and end are the same"
-msgstr "錯誤：起點與終點值相同"
+msgstr "שגיאות: ההתחלה והסיום זהים"
 
 #: content/ui/Tables.qml:34
 #, kde-format
 msgid "Errors: %1"
-msgstr "錯誤：%1"
+msgstr "שגיאות: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
-msgstr "執行"
+msgstr "הרצה"
 
 #: content/ui/Tables.qml:63
-#, fuzzy, kde-format
-#| msgid "Input:"
+#, kde-format
 msgid "Input"
-msgstr "輸入："
+msgstr "קלט"
 
 #: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
-msgstr "起點："
+msgstr "מ־:"
 
 #: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
-msgstr "終點："
+msgstr "עד:"
 
 #: content/ui/Tables.qml:86
-#, fuzzy, kde-format
-#| msgid "Step:"
+#, kde-format
 msgid "Step"
-msgstr "部署：1"
+msgstr "צעד"
 
 #: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
-msgstr "執行"
+msgstr "הרצה"
 
 #: main.cpp:38
 #, kde-format
 msgid "A portable calculator"
-msgstr "可攜型計算機"
+msgstr "מחשבון כיס"
 
 #: main.cpp:40
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgstr "(C) 2006‏-2023 אלש פול י גונזלז"
 
 #: main.cpp:41
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgstr "אלש פול י גונזלז"
 
 #: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "מתחזק"
 
 #: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "pan93412"
+msgstr "צוות התרגום של KDE ישראל"
 
 #: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pan93412@gmail.com"
-
-#~ msgid "KAlgebra Mobile"
-#~ msgstr "KAlgebra 行動版"
-
-#~ msgid "A simple scientific calculator"
-#~ msgstr "簡單的科學計算機"
+msgstr "kde-l10n-he@kde.org"

@@ -1,0 +1,438 @@
+# Copyright (C) 2023 This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# SPDX-FileCopyrightText: 2023 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-10-03 01:37+0000\n"
+"PO-Revision-Date: 2023-10-03 08:27+0300\n"
+"Last-Translator: \n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
+"2 : 3);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: consolehtml.cpp:167
+#, kde-format
+msgid " <a href='kalgebra:%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
+
+#: consolehtml.cpp:172
+#, kde-format
+msgid "Options: %1"
+msgstr "אפשרויות: %1"
+
+#: consolehtml.cpp:222
+#, kde-format
+msgid "Paste \"%1\" to input"
+msgstr "הדבקת „%1” לקלט"
+
+#: consolemodel.cpp:95
+#, kde-format
+msgid "Paste to Input"
+msgstr "הדבקה לקלט"
+
+#: consolemodel.cpp:99
+#, kde-format
+msgid "<ul class='error'>Error: <b>%1</b><li>%2</li></ul>"
+msgstr "<ul class='error'>שגיאה: <b>%1</b><li>%2</li></ul>"
+
+#: consolemodel.cpp:121
+#, kde-format
+msgid "Imported: %1"
+msgstr "ייובא: %1"
+
+#: consolemodel.cpp:123
+#, kde-format
+msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
+msgstr "<ul class='error'>שגיאה: לא ניתן לטעון את %1. <br /> %2</ul>"
+
+#: dictionary.cpp:45
+#, kde-format
+msgid "Information"
+msgstr "מידע"
+
+#: dictionary.cpp:68 dictionary.cpp:69 dictionary.cpp:70 dictionary.cpp:71
+#, kde-format
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: functionedit.cpp:51
+#, kde-format
+msgid "Add/Edit a function"
+msgstr "הוספת/עריכת פונקציה"
+
+#: functionedit.cpp:96
+#, kde-format
+msgid "Preview"
+msgstr "תצוגה מקדימה"
+
+#: functionedit.cpp:103
+#, kde-format
+msgid "From:"
+msgstr "מ־:"
+
+#: functionedit.cpp:105
+#, kde-format
+msgid "To:"
+msgstr "עד:"
+
+#: functionedit.cpp:108
+#, kde-format
+msgid "Options"
+msgstr "אפשרויות"
+
+#: functionedit.cpp:113
+#, kde-format
+msgid "OK"
+msgstr "אישור"
+
+#: functionedit.cpp:115
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "הסרה"
+
+#: functionedit.cpp:243
+#, kde-format
+msgid "The options you specified are not correct"
+msgstr "האפשרויות שציינת לא נכונות"
+
+#: functionedit.cpp:248
+#, kde-format
+msgid "Downlimit cannot be greater than uplimit"
+msgstr "הגבול התחתון לא יכול להיות גדול מהגבול העליון"
+
+#: kalgebra.cpp:83
+#, kde-format
+msgid "Plot 2D"
+msgstr "שרטוט דו־ממדי"
+
+#: kalgebra.cpp:114
+#, kde-format
+msgid "Plot 3D"
+msgstr "שרטוט תלת־ממדי"
+
+#: kalgebra.cpp:144
+#, kde-format
+msgid "Session"
+msgstr "הפעלה"
+
+#: kalgebra.cpp:163 kalgebra.cpp:265
+#, kde-format
+msgid "Variables"
+msgstr "משתנים"
+
+#: kalgebra.cpp:182
+#, kde-format
+msgid "&Calculator"
+msgstr "מ&חשבון"
+
+#: kalgebra.cpp:194
+#, kde-format
+msgid "C&alculator"
+msgstr "מח&שבון"
+
+#: kalgebra.cpp:196
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Load Script..."
+msgstr "&טעינת סקריפט…"
+
+#: kalgebra.cpp:200
+#, kde-format
+msgid "Recent Scripts"
+msgstr "סקריפטים אחרונים"
+
+#: kalgebra.cpp:205
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Save Script..."
+msgstr "&שמירת סקריפט…"
+
+#: kalgebra.cpp:209
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Export Log..."
+msgstr "יי&צוא יומן…"
+
+#: kalgebra.cpp:211
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Insert ans..."
+msgstr "ה&עברת התשובה…"
+
+#: kalgebra.cpp:212
+#, kde-format
+msgid "Execution Mode"
+msgstr "מצב הפעלה"
+
+#: kalgebra.cpp:214
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Calculate"
+msgstr "חישוב"
+
+#: kalgebra.cpp:215
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Evaluate"
+msgstr "שערוך"
+
+#: kalgebra.cpp:235
+#, kde-format
+msgid "Functions"
+msgstr "פונקציות"
+
+#: kalgebra.cpp:247
+#, kde-format
+msgid "List"
+msgstr "רשימה"
+
+#: kalgebra.cpp:253 kalgebra.cpp:487
+#, kde-format
+msgid "&Add"
+msgstr "הו&ספה"
+
+#: kalgebra.cpp:269
+#, kde-format
+msgid "Viewport"
+msgstr "חרך תצוגה"
+
+#: kalgebra.cpp:273
+#, kde-format
+msgid "&2D Graph"
+msgstr "תרשים &דו־ממדי"
+
+#: kalgebra.cpp:285
+#, kde-format
+msgid "2&D Graph"
+msgstr "ת&רשים דו־ממדי"
+
+#: kalgebra.cpp:287
+#, kde-format
+msgid "&Grid"
+msgstr "&רשת"
+
+#: kalgebra.cpp:288
+#, kde-format
+msgid "&Keep Aspect Ratio"
+msgstr "&שימור יחס תצוגה"
+
+#: kalgebra.cpp:296
+#, kde-format
+msgid "Resolution"
+msgstr "רזולוציה"
+
+#: kalgebra.cpp:297
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Poor"
+msgstr "גרועה"
+
+#: kalgebra.cpp:298
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Normal"
+msgstr "רגילה"
+
+#: kalgebra.cpp:299
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Fine"
+msgstr "מעודנת"
+
+#: kalgebra.cpp:300
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Very Fine"
+msgstr "מעודנת מאוד"
+
+#: kalgebra.cpp:334
+#, kde-format
+msgid "&3D Graph"
+msgstr "תרשים &תלת־ממדי"
+
+#: kalgebra.cpp:342
+#, kde-format
+msgid "3D &Graph"
+msgstr "תר&שים תלת־ממדי"
+
+#: kalgebra.cpp:345
+#, kde-format
+msgid "&Reset View"
+msgstr "&איפוס תצוגה"
+
+#: kalgebra.cpp:349
+#, kde-format
+msgid "Dots"
+msgstr "נקודות"
+
+#: kalgebra.cpp:350
+#, kde-format
+msgid "Lines"
+msgstr "קווים"
+
+#: kalgebra.cpp:351
+#, kde-format
+msgid "Solid"
+msgstr "אחיד"
+
+#: kalgebra.cpp:368
+#, kde-format
+msgid "Operations"
+msgstr "פעולות"
+
+#: kalgebra.cpp:372
+#, kde-format
+msgid "&Dictionary"
+msgstr "&מילון"
+
+#: kalgebra.cpp:383
+#, kde-format
+msgid "Look for:"
+msgstr "חיפוש אחר:"
+
+#: kalgebra.cpp:476
+#, kde-format
+msgid "&Editing"
+msgstr "&עריכה"
+
+#: kalgebra.cpp:533
+#, kde-format
+msgid "Choose a script"
+msgstr "בחירת סקריפט"
+
+#: kalgebra.cpp:533 kalgebra.cpp:549
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "סקריפט (‎*.kal)"
+
+#: kalgebra.cpp:560
+#, kde-format
+msgid "HTML File (*.html)"
+msgstr "קובץ HTML‏ (‎*.html)"
+
+#: kalgebra.cpp:595
+#, kde-format
+msgid ", "
+msgstr ", "
+
+#: kalgebra.cpp:595
+#, kde-format
+msgid "Errors: %1"
+msgstr "שגיאות: %1"
+
+#: kalgebra.cpp:634
+#, kde-format
+msgid "Select where to put the rendered plot"
+msgstr "נא לבחור איפה לשים את השרטוט שצויר"
+
+#: kalgebra.cpp:634
+#, kde-format
+msgid "Image File (*.png);;SVG File (*.svg)"
+msgstr "קובץ תמונה (‎*.png);;קובץ SVG‏ (‎*.svg)"
+
+#: kalgebra.cpp:692
+#, kde-format
+msgctxt "@info:status"
+msgid "Ready"
+msgstr "מוכן"
+
+#: kalgebra.cpp:726
+#, kde-format
+msgid "Add variable"
+msgstr "הוספת משתנה"
+
+#: kalgebra.cpp:730
+#, kde-format
+msgid "Enter a name for the new variable"
+msgstr "נא למלא שם למשתנה החדש"
+
+#: main.cpp:33
+#, kde-format
+msgid "A portable calculator"
+msgstr "מחשבון כיס"
+
+#: main.cpp:35
+#, kde-format
+msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2016 אלש פול י גונזלז"
+
+#: main.cpp:36
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "אלש פול י גונזלז"
+
+#: main.cpp:37
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "צוות התרגום של KDE ישראל"
+
+#: main.cpp:37
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-l10n-he@kde.org"
+
+#: varedit.cpp:35
+#, kde-format
+msgid "Add/Edit a variable"
+msgstr "הוספת/עריכת משתנה"
+
+#: varedit.cpp:40
+#, kde-format
+msgid "Remove Variable"
+msgstr "הסרת משתנה"
+
+#: varedit.cpp:65
+#, kde-format
+msgid "Edit '%1' value"
+msgstr "עריכת הערך ‚%1’"
+
+#: varedit.cpp:67
+#, kde-format
+msgid "not available"
+msgstr "לא זמין"
+
+#: varedit.cpp:100
+#, kde-format
+msgid "<b style='color:#090'>%1 := %2</b>"
+msgstr "<b style='color:#090'>%1 := %2</b>"
+
+#: varedit.cpp:103
+#, kde-format
+msgid "<b style='color:red'>WRONG</b>"
+msgstr "<b style='color:red'>שגוי</b>"
+
+#: viewportwidget.cpp:46
+#, kde-format
+msgid "Left:"
+msgstr "שמאל:"
+
+#: viewportwidget.cpp:47
+#, kde-format
+msgid "Top:"
+msgstr "למעלה:"
+
+#: viewportwidget.cpp:48
+#, kde-format
+msgid "Width:"
+msgstr "רוחב:"
+
+#: viewportwidget.cpp:49
+#, kde-format
+msgid "Height:"
+msgstr "גובה:"
+
+#: viewportwidget.cpp:51
+#, kde-format
+msgid "Apply"
+msgstr "החלה"
