@@ -17,6 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import org.kde.plasma.plasmoid 2.0
 import QtQuick 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.analitza 1.0
@@ -25,7 +26,7 @@ Item {
     property Component compactRepresentation: Component {
         PlasmaComponents.Button {
             iconSource: "kalgebra"
-            onClicked: plasmoid.togglePopup()
+            onClicked: Plasmoid.togglePopup()
         }
     }
     property string displayedFunction
@@ -43,13 +44,13 @@ Item {
         }
         onAccepted: {
             displayedFunction = text
-            plasmoid.writeConfig("function", text)
+            Plasmoid.writeConfig("function", text)
         }
     }
     
     Component.onCompleted: {
-        plasmoid.addEventListener('ConfigChanged', function() {
-            displayedFunction = plasmoid.readConfig("function")
+        Plasmoid.addEventListener('ConfigChanged', function() {
+            displayedFunction = Plasmoid.readConfig("function")
             input.text = displayedFunction
         });
     }
