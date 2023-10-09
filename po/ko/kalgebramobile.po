@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-# Shinjo Park <kde@peremen.name>, 2020, 2021, 2022.
+# Shinjo Park <kde@peremen.name>, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2022-07-13 15:36+0200\n"
+"PO-Revision-Date: 2023-10-08 22:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -28,8 +28,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "스크립트 열기"
@@ -40,15 +39,13 @@ msgid "Script (*.kal)"
 msgstr "스크립트 (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "스크립트 저장"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "로그 내보내기"
@@ -59,22 +56,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "평가"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "계산"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "기록 비우기"
@@ -98,7 +92,7 @@ msgstr "\"%1\" 복사"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "콘솔 기록 비우기"
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -193,8 +187,7 @@ msgid "Errors: %1"
 msgstr "오류: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "실행"
@@ -230,10 +223,9 @@ msgid "A portable calculator"
 msgstr "포터블 계산기"
 
 #: main.cpp:40
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2020 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
 #, kde-format
@@ -244,7 +236,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "관리자"
 
 #: main.cpp:42
 #, kde-format
