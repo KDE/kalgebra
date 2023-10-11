@@ -28,11 +28,10 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr "Načíst skript"
+msgstr ""
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
@@ -40,18 +39,16 @@ msgid "Script (*.kal)"
 msgstr "Skript (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr "Uložit skript"
+msgstr ""
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr "Exportovat záznam"
+msgstr ""
 
 #: content/ui/Console.qml:87
 #, kde-format
@@ -59,25 +56,22 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr "Vyhodnotit"
+msgstr ""
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr "Spočítat"
+msgstr ""
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr "Vyprázdnit záznam"
+msgstr ""
 
 #: content/ui/Console.qml:131
 #, kde-format
@@ -193,11 +187,10 @@ msgid "Errors: %1"
 msgstr "Chyby: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
-msgstr "Spustit"
+msgstr ""
 
 #: content/ui/Tables.qml:63
 #, kde-format
