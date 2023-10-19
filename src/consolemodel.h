@@ -85,7 +85,7 @@ private:
     QList<QByteArray> m_htmlLog;
     Analitza::Analyzer a;
     ConsoleMode m_mode = Evaluation;
-    QVector<Analitza::Expression> m_script;
+    QList<Analitza::Expression> m_script;
 };
 
 #endif
