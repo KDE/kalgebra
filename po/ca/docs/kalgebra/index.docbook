@@ -363,15 +363,11 @@
 >A més de mostrar a la pantalla de la calculadora les equacions i resultats introduïts per l'usuari, totes les variables que es declaren es mostren en un quadre persistent de la dreta. Fent doble clic sobre una variable, veureu un diàleg que us permetrà canviar els seus valors (només una manera d'enganyar al registre). </para>
 
 <para
->La variable <quote
-><varname
+>La variable «<varname
 >ans</varname
-></quote
-> és especial, cada vegada que introduïu una expressió, el valor de la variable <quote
-><varname
+>» és especial, cada vegada que introduïu una expressió, el valor de la variable «<varname
 >ans</varname
-></quote
-> canviarà el resultat final. </para>
+>» canviarà el resultat final. </para>
 
 <para
 >Els següents exemples són de funcions que es poden introduir en el camp d'entrada de la finestra de la calculadora:</para>
@@ -525,11 +521,9 @@
 ></term>
 <listitem
 ><para
->Insereix la variable <quote
-><varname
+>Insereix la variable «<varname
 >ans</varname
-></quote
-> i facilita la reutilització dels valors més antics.</para
+>» i facilita la reutilització dels valors més antics.</para
 ></listitem>
 </varlistentry>
 
@@ -723,9 +717,7 @@
 >x</literal
 >» i «<literal
 >y</literal
->» a la cantonada inferior esquerra de la pantalla. També s'ha dibuixat una <quote
->línia tangent</quote
-> sobre la funció a la posició on es troba el cursor. </para>
+>» a la cantonada inferior esquerra de la pantalla. També s'ha dibuixat una «línia tangent» sobre la funció a la posició on es troba el cursor. </para>
 
 <screenshot>
 <screeninfo
@@ -836,9 +828,7 @@
 </itemizedlist>
 
 <para
->A continuació es mostra una captura de pantalla de l'anomenada funció <quote
->sombrero</quote
->. En aquesta gràfica en particular es mostra la gràfica en 3D utilitzant l'estil de línies. </para>
+>A continuació es mostra una captura de pantalla de l'anomenada funció «sombrero». En aquesta gràfica en particular es mostra la gràfica en 3D utilitzant l'estil de línies. </para>
 
 <screenshot>
 <screeninfo
