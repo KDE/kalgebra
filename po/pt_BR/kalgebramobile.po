@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2023-09-18 09:42-0300\n"
+"PO-Revision-Date: 2023-11-08 16:18-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -30,8 +30,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Carregar script"
@@ -42,15 +41,13 @@ msgid "Script (*.kal)"
 msgstr "Script (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Salvar script"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Exportar log"
@@ -61,22 +58,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Avaliar"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Calcular"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Limpar log"
@@ -100,7 +94,7 @@ msgstr "Copiar \"%1\""
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Limpar histórico do console"
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -195,8 +189,7 @@ msgid "Errors: %1"
 msgstr "Erros: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Executar"
