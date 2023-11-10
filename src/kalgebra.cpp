@@ -405,7 +405,7 @@ KAlgebra::KAlgebra(QWidget *parent)
 KAlgebra::~KAlgebra()
 {
     KConfig conf(QStringLiteral("kalgebrarc"));
-    KConfigGroup config(&conf, "Default");
+    KConfigGroup config(&conf, QStringLiteral("Default"));
     QStringList urls;
     const auto recentScripts = c_recentScripts->urls();
     for (const QUrl &url : recentScripts)
@@ -417,7 +417,7 @@ KAlgebra::~KAlgebra()
 void KAlgebra::initializeRecentScripts()
 {
     KConfig conf(QStringLiteral("kalgebrarc"));
-    KConfigGroup config(&conf, "Default");
+    KConfigGroup config(&conf, QStringLiteral("Default"));
 
     const QStringList urls = config.readEntry("recent", QStringList());
     for (const QString &url : urls) {
