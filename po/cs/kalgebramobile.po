@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Vit Pelcak <vit@pelcak.org>, 2018, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2021-03-24 16:14+0100\n"
+"PO-Revision-Date: 2023-11-02 14:00+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.3\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -31,7 +31,7 @@ msgstr "KAlgebra"
 #, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr ""
+msgstr "Načíst skript"
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
@@ -42,13 +42,13 @@ msgstr "Skript (*.kal)"
 #, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr ""
+msgstr "Uložit skript"
 
 #: content/ui/Console.qml:83
 #, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr ""
+msgstr "Exportovat záznam"
 
 #: content/ui/Console.qml:87
 #, kde-format
@@ -59,19 +59,19 @@ msgstr "HTML (*.html)"
 #, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr ""
+msgstr "Vyhodnotit"
 
 #: content/ui/Console.qml:94
 #, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr ""
+msgstr "Spočítat"
 
 #: content/ui/Console.qml:100
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr ""
+msgstr "Vyprázdnit záznam"
 
 #: content/ui/Console.qml:131
 #, kde-format
@@ -92,7 +92,7 @@ msgstr "Kopírovat \"%1\""
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Vyprázdnit historii konzole"
 
 #: content/ui/controls/Add2DDialog.qml:51
 #: content/ui/controls/Add3DDialog.qml:55
@@ -190,7 +190,7 @@ msgstr "Chyby: %1"
 #, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
-msgstr ""
+msgstr "Spustit"
 
 #: content/ui/Tables.qml:63
 #, kde-format
@@ -225,7 +225,7 @@ msgstr "Přenosná kalkulačka"
 #: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
 #, kde-format
