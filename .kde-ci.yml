@@ -12,7 +12,7 @@ Dependencies:
     'frameworks/kdoctools': '@latest-kf6'
     'frameworks/kio': '@latest-kf6'
     'frameworks/kxmlgui': '@latest-kf6'
-    'plasma/plasma-framework': '@latest-kf6'
+    'plasma/libplasma': '@latest-kf6'
     'education/analitza': '@same'
 
 - 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
@@ -25,7 +25,7 @@ Dependencies:
     'frameworks/kdoctools': '@stable'
     'frameworks/kio': '@stable'
     'frameworks/kxmlgui': '@stable'
-    'plasma/plasma-framework': '@stable'
+    'plasma/libplasma': '@stable'
     'education/analitza': '@same'
 
 Options:
