@@ -4,7 +4,7 @@
 import QtQuick
 import QtQuick.Layouts
 import org.kde.analitza
-import QtQuick.Controls
+import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.kalgebra.mobile
 
@@ -47,7 +47,7 @@ Kirigami.ScrollablePage {
         });
     }
 
-    actions: Kirigami.Action {
+    actions: QQC2.Action {
         icon.name: 'dialog-ok'
         text: i18nc("@action:button Run table", "Run")
         onTriggered: calculateTable()
@@ -59,7 +59,7 @@ Kirigami.ScrollablePage {
     }
 
     Kirigami.FormLayout {
-        ExpressionInput {
+        QQC2.TextField {
             Kirigami.FormData.label: i18n("Input")
             id: input
             text: "sin x";
@@ -88,7 +88,7 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true;
             onAccepted: calculateTable()
         }
-        Button {
+        QQC2.Button {
             text: i18n("Run")
             onClicked: calculateTable()
             visible: !Kirigami.Settings.isMobile
