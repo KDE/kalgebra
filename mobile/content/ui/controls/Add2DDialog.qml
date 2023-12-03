@@ -1,14 +1,14 @@
 // SPDX-FileCopyrightText: 2021 Swapnil Tripathi <swapnil06.st@gmail.com>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-import QtQuick 2.0
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
-import org.kde.kirigami 2.8 as Kirigami
+import org.kde.kirigami as Kirigami
 
-import org.kde.analitza 1.0
-import org.kde.kalgebra.mobile 1.0
+import org.kde.analitza
+import org.kde.kalgebra.mobile
 
 Kirigami.OverlayDrawer {
     id: drawer

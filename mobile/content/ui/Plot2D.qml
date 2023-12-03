@@ -10,7 +10,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.analitza
 import org.kde.kalgebra.mobile
 
-KAlgebraPage {
+Kirigami.Page {
     id: page
 
     leftPadding: 0
@@ -18,6 +18,7 @@ KAlgebraPage {
     topPadding: 0
     bottomPadding: 0
 
+    title: i18nc("@title:window", "2D Plot")
 
     FileDialog {
         id: fileDialog

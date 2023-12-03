@@ -12,7 +12,6 @@
     <file alias="Plot3D.qml">content/ui/Plot3D.qml</file>
     <file alias="Tables.qml">content/ui/Tables.qml</file>
     <file alias="VariablesView.qml">content/ui/VariablesView.qml</file>
-    <file alias="KAlgebraPage.qml">content/ui/KAlgebraPage.qml</file>
     <file alias="RealInput.qml">content/ui/controls/RealInput.qml</file>
     <file alias="ExpressionInput.qml">content/ui/controls/ExpressionInput.qml</file>
     <file alias="AddButton.qml">content/ui/controls/AddButton.qml</file>
