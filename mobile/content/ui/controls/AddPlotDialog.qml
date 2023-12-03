@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2021 Swapnil Tripathi <swapnil06.st@gmail.com>
+// SPDX-FileCopyrightText: 2023 Carl Schwan <carl@carlschwan.eu>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 import QtQuick
@@ -14,6 +15,9 @@ import org.kde.kalgebra.mobile
 
 QQC2.Dialog {
     id: root
+
+    property alias text: input.text
+    required property int dimension
 
     width: Math.min(parent.width - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 30)
     height: Math.min(parent.height - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 30)
@@ -39,12 +43,11 @@ QQC2.Dialog {
             QQC2.TextField {
                 id: input
                 Layout.fillWidth: true
-                text: "sin x"
                 focus: true
                 Component.onCompleted: selectAll()
                 Keys.onReturnPressed: {
                     input.selectAll()
-                    view.addFunction(input.text, App.variables)
+                    App.functionsModel().addFunction(input.text, root.dimension, App.variables)
                 }
             }
 
@@ -54,7 +57,7 @@ QQC2.Dialog {
                 display: QQC2.Button.IconOnly
                 onClicked: {
                     input.selectAll()
-                    view.addFunction(input.text, App.variables)
+                    App.functionsModel().addFunction(input.text, root.dimension, App.variables)
                 }
 
                 QQC2.ToolTip.text: text

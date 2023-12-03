@@ -65,15 +65,16 @@ Kirigami.Page {
 
     Rectangle {
         anchors.fill: parent
-        height: 200
         color: 'white'
 
         Graph2D {
             id: view
             anchors.fill: parent
             model: App.functionsModel()
-            Add2DDialog {
+            AddPlotDialog {
                 id: plotDialog
+                text: "sin x"
+                dimension: 2
             }
         }
     }

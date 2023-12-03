@@ -36,6 +36,7 @@ Kirigami.Page {
         },
         Kirigami.Action {
             text: i18n("Save")
+            icon.name: 'document-save'
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() {
@@ -48,6 +49,7 @@ Kirigami.Page {
             }
         },
         Kirigami.Action {
+            icon.name: 'view-restore'
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()
         }
@@ -58,8 +60,10 @@ Kirigami.Page {
         id: view
         anchors.fill: parent
         model: App.functionsModel()
-        Add3DDialog {
+        AddPlotDialog {
             id: plotDialog
+            text: "sin x*sin y"
+            dimension: 4
         }
     }
 }

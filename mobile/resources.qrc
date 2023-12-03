@@ -15,7 +15,6 @@
     <file alias="RealInput.qml">content/ui/controls/RealInput.qml</file>
     <file alias="ExpressionInput.qml">content/ui/controls/ExpressionInput.qml</file>
     <file alias="AddButton.qml">content/ui/controls/AddButton.qml</file>
-    <file alias="Add2DDialog.qml">content/ui/controls/Add2DDialog.qml</file>
-    <file alias="Add3DDialog.qml">content/ui/controls/Add3DDialog.qml</file>
+    <file alias="AddPlotDialog.qml">content/ui/controls/AddPlotDialog.qml</file>
   </qresource>
 </RCC>
