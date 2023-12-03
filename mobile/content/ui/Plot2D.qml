@@ -5,7 +5,7 @@ import QtCore
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Dialogs
-import QtQuick.Controls
+import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.analitza
 import org.kde.kalgebra.mobile
@@ -29,13 +29,14 @@ Kirigami.Page {
     }
 
     actions: [
-        Kirigami.Action {
+        QQC2.Action {
             icon.name: 'list-add'
             text: i18n('Add Plot')
             onTriggered: plotDialog.open()
         },
-        Kirigami.Action {
+        QQC2.Action {
             text: i18n("Save")
+            icon.name: 'document-save'
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() {
@@ -47,13 +48,15 @@ Kirigami.Page {
                 fileDialog.open()
             }
         },
-        Kirigami.Action {
+        QQC2.Action {
             text: i18n("View Grid")
+            icon.name: 'view-grid'
             checkable: true
             checked: view.showGrid
             onToggled: view.showGrid = checked
         },
-        Kirigami.Action {
+        QQC2.Action {
+            icon.name: 'view-restore'
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()
         }
