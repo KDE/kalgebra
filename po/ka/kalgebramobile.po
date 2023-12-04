@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-04 01:37+0000\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
 "PO-Revision-Date: 2023-10-04 05:39+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -95,24 +95,56 @@ msgctxt "@info"
 msgid "Empty console history"
 msgstr "კონსოლის სტორია ცარიელია"
 
-#: content/ui/controls/Add2DDialog.qml:51
-#: content/ui/controls/Add3DDialog.qml:55
+#: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, fuzzy, kde-format
+#| msgid "Clear All"
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "ყველას გასუფთავება"
 
-#: content/ui/controls/ExpressionInput.qml:104
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr ""
+
+#: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "გამოსათვლელი გამოსახულება..."
 
-#: content/ui/Dictionary.qml:28
+#: content/ui/Dictionary.qml:14
+#, fuzzy, kde-format
+#| msgid "Dictionary"
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "ლექსიკონი"
+
+#: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
 msgstr "სახელი:"
 
-#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
-#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -147,20 +179,34 @@ msgstr "ლექსიკონი"
 msgid "About KAlgebra"
 msgstr "KAlgebra-ის შესახებ"
 
-#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
+#: content/ui/Plot2D.qml:21
+#, fuzzy, kde-format
+#| msgid "2D Plot"
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "2D ნახაზი"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
 msgstr "შენახვა"
 
-#: content/ui/Plot2D.qml:50
+#: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
 msgstr "ბადის ნახვა"
 
-#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
 msgstr "ჩვენების არეს საწყის მნიშვნელობაზე დაბრუნება"
+
+#: content/ui/Plot3D.qml:21
+#, fuzzy, kde-format
+#| msgid "3D Plot"
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "3D ნახაზი"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format

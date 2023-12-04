@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-04 01:37+0000\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
 "PO-Revision-Date: 2023-10-03 08:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -97,24 +97,56 @@ msgctxt "@info"
 msgid "Empty console history"
 msgstr "Порожній журнал консолі"
 
-#: content/ui/controls/Add2DDialog.qml:51
-#: content/ui/controls/Add3DDialog.qml:55
+#: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, fuzzy, kde-format
+#| msgid "Clear All"
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Вилучити все"
 
-#: content/ui/controls/ExpressionInput.qml:104
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr ""
+
+#: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Вираз для обчислення…"
 
-#: content/ui/Dictionary.qml:28
+#: content/ui/Dictionary.qml:14
+#, fuzzy, kde-format
+#| msgid "Dictionary"
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "Словник"
+
+#: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
 msgstr "Назва:"
 
-#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
-#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -149,20 +181,34 @@ msgstr "Словник"
 msgid "About KAlgebra"
 msgstr "Про KAlgebra"
 
-#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
+#: content/ui/Plot2D.qml:21
+#, fuzzy, kde-format
+#| msgid "2D Plot"
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "Двовимірне креслення"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
 msgstr "Зберегти"
 
-#: content/ui/Plot2D.qml:50
+#: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
 msgstr "Перегляд ґратки"
 
-#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
 msgstr "Відновити початковий стан панелі перегляду"
+
+#: content/ui/Plot3D.qml:21
+#, fuzzy, kde-format
+#| msgid "3D Plot"
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "Тривимірне креслення"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
