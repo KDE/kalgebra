@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-03 13:53+0200\n"
+"PO-Revision-Date: 2023-12-04 12:38+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -102,11 +102,10 @@ msgstr "Buida l'historial de la consola"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Afegeix"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Neteja-ho tot"
@@ -115,28 +114,27 @@ msgstr "Neteja-ho tot"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Tanca el diàleg"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Elimina la gràfica"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "No hi ha cap gràfica disponible"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
-msgstr "Expressió per a calcular..."
+msgstr "Expressió a calcular..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Diccionari"
@@ -183,8 +181,7 @@ msgid "About KAlgebra"
 msgstr "Quant al KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "Gràfica en 2D"
@@ -205,8 +202,7 @@ msgid "Reset Viewport"
 msgstr "Restableix l'àrea de visualització"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "Gràfica en 3D"
@@ -299,9 +295,3 @@ msgstr "Aleix Pol Gonzalez"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "aleixpol@kde.org"
-
-#~ msgid "KAlgebra Mobile"
-#~ msgstr "KAlgebra mòbil"
-
-#~ msgid "A simple scientific calculator"
-#~ msgstr "Una calculadora científica senzilla"

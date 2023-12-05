@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-04 00:20+0200\n"
+"PO-Revision-Date: 2023-12-05 02:05+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -100,11 +100,10 @@ msgstr "Vaciar el historial de la consola"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Borrar todo"
@@ -113,19 +112,19 @@ msgstr "Borrar todo"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Cerrar diálogo"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Eliminar gráfico"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Ningún gráfico disponible"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -133,8 +132,7 @@ msgid "Expression to calculate..."
 msgstr "Expresión a calcular..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Diccionario"
@@ -181,8 +179,7 @@ msgid "About KAlgebra"
 msgstr "Acerca de KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "Gráfico en 2D"
@@ -203,8 +200,7 @@ msgid "Reset Viewport"
 msgstr "Reiniciar el área visible"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "Gráfico en 3D"

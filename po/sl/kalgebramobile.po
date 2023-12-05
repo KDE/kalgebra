@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-03 09:13+0200\n"
+"PO-Revision-Date: 2023-12-04 21:25+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -78,12 +78,12 @@ msgstr "Očisti dnevnik"
 #: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
-msgstr "2D risba"
+msgstr "2D grafikon"
 
 #: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
-msgstr "3D risba"
+msgstr "3D grafikon"
 
 #: content/ui/Console.qml:149
 #, kde-format
@@ -100,11 +100,10 @@ msgstr "Izprazni konzolino zgodovino"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Očisti vse"
@@ -113,19 +112,19 @@ msgstr "Očisti vse"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Zapri dialog"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Odstrani grafikon"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Grafikona ni na voljo"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -133,8 +132,7 @@ msgid "Expression to calculate..."
 msgstr "Izraz za izračun..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Slovar"
@@ -181,11 +179,10 @@ msgid "About KAlgebra"
 msgstr "O Kalgebri"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
-msgstr "2D risba"
+msgstr "2D graf"
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
@@ -203,11 +200,10 @@ msgid "Reset Viewport"
 msgstr "Ponastavi točko pogleda"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
-msgstr "3D risba"
+msgstr "3D graf"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format

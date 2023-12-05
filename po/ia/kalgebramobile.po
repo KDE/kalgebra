@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-03 12:02+0200\n"
+"PO-Revision-Date: 2023-12-04 10:53+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -98,11 +98,10 @@ msgstr "Vacua Chronologia de consolle"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Adde"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Netta omne"
@@ -111,19 +110,19 @@ msgstr "Netta omne"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Claude dialogo"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Remove tracia (plot)"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Nulle traciua (plot) disponibile"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -131,8 +130,7 @@ msgid "Expression to calculate..."
 msgstr "Expression a calcular ..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Dictionario"
@@ -179,8 +177,7 @@ msgid "About KAlgebra"
 msgstr "A proposito de KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D Plot"
@@ -201,8 +198,7 @@ msgid "Reset Viewport"
 msgstr "Reinitialisa viewport"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D Plot"

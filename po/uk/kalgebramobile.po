@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-03 08:32+0300\n"
+"PO-Revision-Date: 2023-12-04 08:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -101,11 +101,10 @@ msgstr "Порожній журнал консолі"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Вилучити все"
@@ -114,19 +113,19 @@ msgstr "Вилучити все"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Закрити діалогове вікно"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Вилучити креслення"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Немає доступних креслень"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -134,8 +133,7 @@ msgid "Expression to calculate..."
 msgstr "Вираз для обчислення…"
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Словник"
@@ -182,8 +180,7 @@ msgid "About KAlgebra"
 msgstr "Про KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "Двовимірне креслення"
@@ -204,8 +201,7 @@ msgid "Reset Viewport"
 msgstr "Відновити початковий стан панелі перегляду"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "Тривимірне креслення"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-03 06:08+0100\n"
+"PO-Revision-Date: 2023-12-04 15:25+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -99,32 +99,31 @@ msgstr "Malplena konzol-historio"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Aldoni"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr "Forigi Ĉion"
+msgstr "Viŝi Ĉion"
 
 #: content/ui/controls/AddPlotDialog.qml:82
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Fermi dialogon"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Forigi grafikon"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Neniu grafiko disponebla"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -132,8 +131,7 @@ msgid "Expression to calculate..."
 msgstr "Esprimo kalkulenda..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Vortaro"
@@ -152,12 +150,12 @@ msgstr "%1:"
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr "Grafiko 2D"
+msgstr "Grafeo 2D"
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr "Grafiko 3D"
+msgstr "Grafeo 3D"
 
 #: content/ui/main.qml:70
 #, kde-format
@@ -180,11 +178,10 @@ msgid "About KAlgebra"
 msgstr "Pri KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
-msgstr "2D Grafiko"
+msgstr "2D-Grafiko"
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
@@ -202,11 +199,10 @@ msgid "Reset Viewport"
 msgstr "Restarigi Vidujon"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
-msgstr "3D Grafiko"
+msgstr "3D-Grafiko"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
