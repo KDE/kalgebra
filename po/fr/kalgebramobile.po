@@ -5,15 +5,15 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-10-04 08:06+0200\n"
+"PO-Revision-Date: 2023-12-05 11:53+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
-"Language-Team: fr\n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -99,11 +99,10 @@ msgstr "Historique vide de console"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Tout effacer"
@@ -112,19 +111,19 @@ msgstr "Tout effacer"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Fermer la boîte de dialogue"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Supprimer un tracé"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Aucune tracé disponible"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -132,8 +131,7 @@ msgid "Expression to calculate..."
 msgstr "Expressions à calculer..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Dictionnaire"
@@ -180,11 +178,10 @@ msgid "About KAlgebra"
 msgstr "À propos de KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
-msgstr "Tracé 2D"
+msgstr "Tracé en 2D"
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
@@ -202,11 +199,10 @@ msgid "Reset Viewport"
 msgstr "Réinitialiser l'affichage"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
-msgstr "Tracé 3D"
+msgstr "Tracé en 3D"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
