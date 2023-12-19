@@ -115,7 +115,7 @@
     <p xml:lang="zh-CN">KAlgebra可以代替您的其他图形计算器。它包含数值计算、逻辑计算、符号计算，以及分析功能，能让您在控制台中计算数学表达式，并将函数结果绘制为2D或3D图像。</p>
     <p xml:lang="zh-TW">KAlgebra 是個能替代繪圖計算機的應用程式，它包含數字、邏輯、符號以及分析功能，讓您能在終端計算數學表達式，並用圖形化的方式以 2D 或 3D 繪製結果。</p>
   </description>
-  <url type="homepage">https://edu.kde.org/kalgebra/</url>
+  <url type="homepage">https://apps.kde.org/kalgebra</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kalgebra</url>
   <url type="help">https://docs.kde.org/?application=kalgebra</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kalgebra&amp;source=appdata</url>
