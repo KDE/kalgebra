@@ -98,7 +98,7 @@ msgstr "Vyprázdnit historii konzole"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, fuzzy, kde-format
