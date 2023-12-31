@@ -30,7 +30,8 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[tr]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
-                "Name[x-test]": "xxAleix Pol Gonzalezxx"
+                "Name[x-test]": "xxAleix Pol Gonzalezxx",
+                "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
         "Category": "Education",
@@ -61,6 +62,7 @@
         "Description[tr]": "Masaüstüne en tuhaf çizimleri koy!",
         "Description[uk]": "Розташуйте на вашій стільниці найвигадливіше креслення!",
         "Description[x-test]": "xxPut the weirdest plots on your desktop!xx",
+        "Description[zh_TW]": "把您所想得到的詭異繪圖放在桌面上吧！",
         "EnabledByDefault": true,
         "Icon": "kalgebra",
         "Id": "org.kde.graphsplasmoid",
