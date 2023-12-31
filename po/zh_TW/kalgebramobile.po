@@ -1,40 +1,38 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 #
 # pan93412 <pan93412@gmail.com>, 2019.
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2019-03-12 22:06+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"PO-Revision-Date: 2023-12-30 18:03+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 18.12.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgid "Calculator"
-msgstr "計算…"
+msgstr "計算機"
 
 #: content/ui/Console.qml:40 content/ui/main.qml:108
-#, fuzzy, kde-format
-#| msgid "KAlgebra Mobile"
+#, kde-format
 msgid "KAlgebra"
-msgstr "KAlgebra 行動版"
+msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr "載入指令碼…"
+msgstr "載入指令碼"
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
@@ -42,18 +40,16 @@ msgid "Script (*.kal)"
 msgstr "指令碼 (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr "儲存指令碼…"
+msgstr "儲存指令碼"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr "匯出記錄…"
+msgstr "匯出紀錄"
 
 #: content/ui/Console.qml:87
 #, kde-format
@@ -61,25 +57,22 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr "估算…"
+msgstr "估算"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr "計算…"
+msgstr "計算"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr "清除記錄"
+msgstr "清除紀錄"
 
 #: content/ui/Console.qml:131
 #, kde-format
@@ -100,17 +93,16 @@ msgstr "複製「%1」"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "主控台歷史空白"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "全部清除"
@@ -119,19 +111,19 @@ msgstr "全部清除"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "關閉對話框"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "移除圖形"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "沒有可用的圖形"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -142,61 +134,59 @@ msgstr "欲計算之表達式…"
 #, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
-msgstr ""
+msgstr "字典"
 
 #: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "名稱："
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
 #: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "2D 圖表"
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "3D 圖表"
 
 #: content/ui/main.qml:70
 #, kde-format
 msgid "Value Tables"
-msgstr ""
+msgstr "數值表格"
 
 #: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
-msgstr ""
+msgstr "變數"
 
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
-msgstr ""
+msgstr "字典"
 
 #: content/ui/main.qml:88
 #, kde-format
 msgid "About KAlgebra"
-msgstr ""
+msgstr "關於 KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D 圖形"
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
-#, fuzzy, kde-format
-#| msgid "Save..."
+#, kde-format
 msgid "Save"
-msgstr "儲存…"
+msgstr "儲存"
 
 #: content/ui/Plot2D.qml:52
 #, kde-format
@@ -209,22 +199,20 @@ msgid "Reset Viewport"
 msgstr "重設檢視"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D 圖形"
 
 #: content/ui/TableResultPage.qml:9
-#, fuzzy, kde-format
-#| msgid "Results:"
+#, kde-format
 msgid "Results"
-msgstr "結果："
+msgstr "結果"
 
 #: content/ui/Tables.qml:12
 #, kde-format
 msgid "Value tables"
-msgstr ""
+msgstr "數值表格"
 
 #: content/ui/Tables.qml:30
 #, kde-format
@@ -242,17 +230,15 @@ msgid "Errors: %1"
 msgstr "錯誤：%1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "執行"
 
 #: content/ui/Tables.qml:63
-#, fuzzy, kde-format
-#| msgid "Input:"
+#, kde-format
 msgid "Input"
-msgstr "輸入："
+msgstr "輸入"
 
 #: content/ui/Tables.qml:72
 #, kde-format
@@ -265,10 +251,9 @@ msgid "To:"
 msgstr "終點："
 
 #: content/ui/Tables.qml:86
-#, fuzzy, kde-format
-#| msgid "Step:"
+#, kde-format
 msgid "Step"
-msgstr "部署：1"
+msgstr "間隔值"
 
 #: content/ui/Tables.qml:92
 #, kde-format
@@ -281,22 +266,20 @@ msgid "A portable calculator"
 msgstr "可攜型計算機"
 
 #: main.cpp:40
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgstr "(C) 2006-2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "維護者"
 
 #: main.cpp:42
 #, kde-format
