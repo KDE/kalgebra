@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: 2022, 2023 Paolo Zamponi <feus73@gmail.com>
 # This file is distributed under the same license as the kalgebra package.
 # Pino Toscano <toscano.pino@tiscali.it>, 2018, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2023 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
 msgstr ""
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: content/ui/About.qml:27
 #, kde-format
