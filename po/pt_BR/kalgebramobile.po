@@ -2,14 +2,14 @@
 # Copyright (C) 2018 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2018, 2019, 2020, 2021, 2022, 2023.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-11-08 16:18-0300\n"
+"PO-Revision-Date: 2024-01-11 20:53-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -100,11 +100,10 @@ msgstr "Limpar histórico do console"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Limpar tudo"
@@ -113,19 +112,19 @@ msgstr "Limpar tudo"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Fechar janela"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Remover gráfico"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Nenhum gráfico disponível"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -133,8 +132,7 @@ msgid "Expression to calculate..."
 msgstr "Expressão a calcular..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Dicionário"
@@ -181,8 +179,7 @@ msgid "About KAlgebra"
 msgstr "Sobre o KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "Gráfico 2D"
@@ -203,8 +200,7 @@ msgid "Reset Viewport"
 msgstr "Limpar a área de visualização"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "Gráfico 3D"
