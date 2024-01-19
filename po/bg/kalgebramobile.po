@@ -295,9 +295,3 @@ msgid "Your emails"
 msgstr ""
 "yasen@lindeas.com,ash@contact.bg,zlatkopopov@fsa-bg.org,svetlisashkov@yahoo."
 "com"
-
-#~ msgid "KAlgebra Mobile"
-#~ msgstr "KAlgebra -  мобилна версия"
-
-#~ msgid "A simple scientific calculator"
-#~ msgstr "Прост научен калкулатор"
