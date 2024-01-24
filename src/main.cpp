@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
         parser.process(app);
         about.processCommandLine(&parser);
     }
+    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kalgebra")));
 
     KAlgebra widget;
     widget.show();
