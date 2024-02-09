@@ -101,11 +101,10 @@ msgid "Add"
 msgstr "Přidat"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr "Smazat vše"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:82
 #, kde-format
@@ -131,11 +130,10 @@ msgid "Expression to calculate..."
 msgstr "Výraz pro výpočet..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
-msgstr "Slovník"
+msgstr ""
 
 #: content/ui/Dictionary.qml:30
 #, kde-format
@@ -179,11 +177,10 @@ msgid "About KAlgebra"
 msgstr "O aplikaci KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
-msgstr "2D graf"
+msgstr ""
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
@@ -201,11 +198,10 @@ msgid "Reset Viewport"
 msgstr ""
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
-msgstr "3D graf"
+msgstr ""
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
