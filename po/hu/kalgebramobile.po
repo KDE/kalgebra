@@ -1,0 +1,293 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# SPDX-FileCopyrightText: 2024 Kristof Kiszel <ulysses@fsf.hu>
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"PO-Revision-Date: 2024-03-04 21:32+0100\n"
+"Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
+
+#: content/ui/Console.qml:19 content/ui/main.qml:50
+#, kde-format
+msgid "Calculator"
+msgstr "Számológép"
+
+#: content/ui/Console.qml:40 content/ui/main.qml:108
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/Console.qml:62
+#, kde-format
+msgctxt "@action:button"
+msgid "Load Script"
+msgstr "Szkript betöltése"
+
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Szkript (*.kal)"
+
+#: content/ui/Console.qml:72
+#, kde-format
+msgctxt "@action:button"
+msgid "Save Script"
+msgstr "Szkript mentése"
+
+#: content/ui/Console.qml:83
+#, kde-format
+msgctxt "@action:button"
+msgid "Export Log"
+msgstr "Napló exportálása"
+
+#: content/ui/Console.qml:87
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:94
+#, kde-format
+msgctxt "@action:button"
+msgid "Evaluate"
+msgstr "Kiértékelés"
+
+#: content/ui/Console.qml:94
+#, kde-format
+msgctxt "@action:button"
+msgid "Calculate"
+msgstr "Számolás"
+
+#: content/ui/Console.qml:100
+#, kde-format
+msgctxt "@action:button"
+msgid "Clear Log"
+msgstr "Napló törlése"
+
+#: content/ui/Console.qml:131
+#, kde-format
+msgid "2D Plot"
+msgstr "2D görbe"
+
+#: content/ui/Console.qml:140
+#, kde-format
+msgid "3D Plot"
+msgstr "3D görbe"
+
+#: content/ui/Console.qml:149
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "„%1” másolása"
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr "Üres konzolelőzmények"
+
+#: content/ui/controls/AddPlotDialog.qml:56
+#, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, kde-format
+msgctxt "@action:button"
+msgid "Clear All"
+msgstr "Összes törlése"
+
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr "Ablak bezárása"
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr "Ábra eltávolítása"
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr "Nem érhető el ábra"
+
+#: content/ui/controls/ExpressionInput.qml:106
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "Számolandó kifejezés…"
+
+#: content/ui/Dictionary.qml:14
+#, kde-format
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "Szótár"
+
+#: content/ui/Dictionary.qml:30
+#, kde-format
+msgid "Name:"
+msgstr "Név:"
+
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: content/ui/main.qml:57
+#, kde-format
+msgid "Graph 2D"
+msgstr "2D grafikon"
+
+#: content/ui/main.qml:64
+#, kde-format
+msgid "Graph 3D"
+msgstr "3D grafikon"
+
+#: content/ui/main.qml:70
+#, kde-format
+msgid "Value Tables"
+msgstr "Értéktáblázatok"
+
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:11
+#, kde-format
+msgid "Variables"
+msgstr "Változók"
+
+#: content/ui/main.qml:82
+#, kde-format
+msgid "Dictionary"
+msgstr "Szótár"
+
+#: content/ui/main.qml:88
+#, kde-format
+msgid "About KAlgebra"
+msgstr "A KAlgebra névjegye"
+
+#: content/ui/Plot2D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "2D ábra"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
+#, kde-format
+msgid "Save"
+msgstr "Mentés"
+
+#: content/ui/Plot2D.qml:52
+#, kde-format
+msgid "View Grid"
+msgstr "Rács megjelenítése"
+
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
+#, kde-format
+msgid "Reset Viewport"
+msgstr "Nézet visszaállítása"
+
+#: content/ui/Plot3D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "3D ábra"
+
+#: content/ui/TableResultPage.qml:9
+#, kde-format
+msgid "Results"
+msgstr "Eredmények"
+
+#: content/ui/Tables.qml:12
+#, kde-format
+msgid "Value tables"
+msgstr "Értéktáblázatok"
+
+#: content/ui/Tables.qml:30
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "Hiba: A lépés nem lehet 0"
+
+#: content/ui/Tables.qml:32
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "Hiba: A kezdés és a befejezés ugyanaz"
+
+#: content/ui/Tables.qml:34
+#, kde-format
+msgid "Errors: %1"
+msgstr "Hibák: %1"
+
+#: content/ui/Tables.qml:52
+#, kde-format
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "Futtatás"
+
+#: content/ui/Tables.qml:63
+#, kde-format
+msgid "Input"
+msgstr "Bemenet"
+
+#: content/ui/Tables.qml:72
+#, kde-format
+msgid "From:"
+msgstr "Ettől:"
+
+#: content/ui/Tables.qml:79
+#, kde-format
+msgid "To:"
+msgstr "Eddig:"
+
+#: content/ui/Tables.qml:86
+#, kde-format
+msgid "Step"
+msgstr "Lépés"
+
+#: content/ui/Tables.qml:92
+#, kde-format
+msgid "Run"
+msgstr "Futtatás"
+
+#: main.cpp:38
+#, kde-format
+msgid "A portable calculator"
+msgstr "Zsebszámológép"
+
+#: main.cpp:40
+#, kde-format
+msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
+msgstr "© Aleix Pol i Gonzalez, 2006-2023."
+
+#: main.cpp:41
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:41
+#, kde-format
+msgctxt "@info:credit"
+msgid "Maintainer"
+msgstr "Karbantartó"
+
+#: main.cpp:42
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kiszel Kristóf"
+
+#: main.cpp:42
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ulysses@fsf.hu"
