@@ -48,6 +48,21 @@
           ]
       },
       {
+          "name": "libplasma",
+          "config-opts": [
+              "-DBUILD_TESTING=OFF"
+          ],
+          "buildsystem": "cmake-ninja",
+          "builddir": true,
+          "sources": [
+              {
+                  "type": "git",
+                  "url": "https://invent.kde.org/plasma/libplasma.git",
+                  "branch": "master"
+              }
+          ]
+      },
+      {
           "name": "kalgebra",
           "buildsystem": "cmake-ninja",
           "sources": [

@@ -58,11 +58,6 @@ add_definitions(-DQT_NO_CAST_TO_ASCII)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
 find_package(KF6 ${KF_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools XmlGui)
 find_package(Plasma)
-set_package_properties(Plasma PROPERTIES
-    TYPE OPTIONAL
-    PURPOSE "Allows KAlgebra to provide an plasma applet (build time dependency only)"
-    URL "https://invent.kde.org/plasma/libplasma"
-)
 find_package(Qt6WebEngineWidgets)
 
 if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
