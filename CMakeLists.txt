@@ -60,8 +60,11 @@ find_package(KF6 ${KF_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddo
 find_package(Plasma)
 find_package(Qt6WebEngineWidgets)
 
-if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
+if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(src)
+endif()
+
+if (Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(plasmoids)
 endif()
 
