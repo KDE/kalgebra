@@ -29,8 +29,8 @@ set(QT_REQUIRED_VERSION "6.5.0")
 find_package(Qt6 ${QT_REQUIRED_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test OpenGLWidgets)
 find_package(Analitza6 REQUIRED)
 
-ecm_set_disabled_deprecation_versions(QT 6.4
-    KF 5.101
+ecm_set_disabled_deprecation_versions(QT 6.6
+    KF 6.0.0
 )
 
 
