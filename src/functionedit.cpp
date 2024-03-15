@@ -250,7 +250,7 @@ void FunctionEdit::edit()
     }
     bool added = false;
 
-    PlaneCurve *f = 0;
+    PlaneCurve *f = nullptr;
     PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D, m_vars);
     if (req.canDraw())
         f = createFunction();
