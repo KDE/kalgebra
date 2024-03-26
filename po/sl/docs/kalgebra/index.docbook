@@ -1,0 +1,935 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>Priročnik &kalgebra;</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Luka</firstname
+><surname
+>Puhar</surname
+><affiliation
+><address
+><email
+>puhar.luka@gmail.com</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>17.12.2020</date>
+<releaseinfo
+>Aplikacije 20.12</releaseinfo>
+
+<abstract>
+<para
+>&kalgebra; je aplikacija, ki lahko nadomesti grafični kalkulator. Ima numerične, logične, simbolne in analitične funkcije, ki omogočajo izračunavanje matematičnih izrazov na kalkulatorju in grafični prikaz rezultatov v 2D ali 3D. &kalgebra; izhaja iz matematičnega označevalnega jezika (&MathML;); vendar za uporabo &kalgebra; ni treba poznati &MathML;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>graf</keyword>
+<keyword
+>matematika</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>MathML</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Uvod</title>
+
+<para
+>&kalgebra; ima številne funkcije, ki uporabniku omogočajo izvajanje vseh vrst matematičnih operacij in grafični prikaz. Nekoč je bil ta program usmerjen v &MathML;. Zdaj ga lahko uporablja vsakdo z nekaj matematičnega znanja za reševanje preprostih in naprednih problemov. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>Vključuje naslednje funkcije: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>Računalo za hitro in enostavno vrednotenje matematičnih funkcij. </para
+></listitem>
+<listitem
+><para
+>Možnost pisanja skript za napredne serije izračunov. </para
+></listitem>
+<listitem
+><para
+>Jezikovne zmožnosti, vključno z definicijo funkcij in samodejnim dokončanjem sintakse. </para
+></listitem>
+<listitem
+><para
+>Računske funkcije, vključno s simbolnim diferenciranjem, vektorskim računom in upravljanjem seznamov. </para
+></listitem>
+<listitem
+><para
+>Izrisovanje funkcij s kazalcem v živo za grafično iskanje korenov in druge vrste analiz. </para
+></listitem>
+<listitem
+><para
+>3D izris za uporabno vizualizacijo 3D funkcij. </para
+></listitem>
+<listitem
+><para
+>Vgrajen je slovar operatorjev za hitro sklicevanje na številne razpoložljive funkcije. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Spodaj je prikazana zaslonska slika aplikacije &kalgebra; v akciji: </para>
+
+<screenshot>
+<screeninfo
+>Tukaj je posnetek zaslona &kalgebra; glavnega okna</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; glavno okno</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Ko uporabnik začne sejo programa &kalgebra;, se mu prikaže eno samo okno, sestavljeno iz zavihka <guilabel
+>Računalo</guilabel
+>, zavihka <guilabel
+>2D Graf</guilabel
+>, zavihka <guilabel
+>3D Graf</guilabel
+> in zavihka <guilabel
+>Slovar</guilabel
+>. V vsakem zavihku najdete vnosno polje za vnos funkcij ali izračunov in polje za prikaz rezultatov. </para>
+
+<para
+>Uporabnik lahko kadar koli upravlja svojo sejo z možnostmi glavnega menija <guilabel
+>Seja</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seja</guimenu
+><guimenuitem
+>Nov</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Odpre novo okno &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seja</guimenu
+><guimenuitem
+>Celozaslonski način</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Preklopite celozaslonski način za &kalgebra; okno. Celozaslonski način lahko vklopite in izklopite tudi z uporabo <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> gumb v zgornjem desnem delu okna &kalgebra;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Seja</guimenu
+><guimenuitem
+>Izhod</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Izklopi program.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>Sintaksa</title>
+<para
+>&kalgebra; uporablja intuitivno algebrsko sintakso za vnos uporabniških funkcij, podobno tisti, ki se uporablja v večini sodobnih grafičnih računal. V tem razdelku so navedeni temeljni vgrajeni operatorji, ki so na voljo v programu &kalgebra;. Avtor programa &kalgebra; je to sintakso oblikoval po <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> in <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> za uporabnike, ki morda poznajo ta programa. </para>
+
+<para
+>Za uporabnike, ki jih zanima notranje delovanje sistema &kalgebra;, se uporabniško vneseni izrazi v zaledju pretvorijo v &MathML;. Osnovno razumevanje zmožnosti, ki jih podpira &MathML;, bo v veliki meri pomagalo razkriti notranje zmožnosti &kalgebra;. </para>
+
+<para
+>Tukaj je seznam operaterjev, ki so na voljo do zdaj:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: seštevanje, odštevanje, množenje in deljenje.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: Moč, lahko uporabite oba. Prav tako je mogoče uporabiti unicode znake <literal
+>²</literal
+>. Tudi moči so eden od načinov za ustvarjanje korenov, lahko naredite tako: <literal
+>a**(1/b)</literal
+></para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: lambda. To je način za določitev ene ali več prostih spremenljivk, ki bodo vezane v funkciji. Na primer, v izrazu <userinput
+>dolžina:=(x,y)->(x*x+y*y)^0,5</userinput
+> je operator lambda uporabljen za označevanje, da bosta <literal
+>x</literal
+> in <literal
+>y</literal
+> pri uporabi funkcije dolžina povezana. </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: Uporablja se, kadar moramo omejiti območje (omejena spremenljivka+zgornjameja+spodnjameja). To pomeni, da <literal
+>x</literal
+> pride od <literal
+>a</literal
+> do <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: Uporablja se za določitev višje prioritete.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(params) </literal
+>: Funkcije. Ko razčlenjevalnik najde funkcijo, preveri, ali je <literal
+>abc</literal
+> operator. Če je, bo obravnavan kot operator, če ni, bo obravnavan kot uporabniška funkcija.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: Opredelitev. Uporablja se za določitev vrednosti spremenljivke. Lahko naredite stvari, kot so <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+> je <literal
+>y</literal
+> določeno ali ne ali <userinput
+>perimeter:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: Delna definicija pogoja. Po delih je način, kako lahko definiramo pogojne operacije v &kalgebra;. Povedano drugače, to je način določanja pogojev if, elseif, else. Če pred '<literal
+>?</literal
+>' vpeljemo pogoj, bo ta pogoj uporabil le, če je resničen, če bo našel '<literal
+>?</literal
+>' brez pogoja, bo vnesel zadnji primerek. Primer: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{ } </literal
+>: &MathML; vsebnik. Uporablja se lahko za opredelitev vsebnika. Uporabno predvsem za delo s kosi. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: Primerjalniki vrednosti za enako, večje, večje ali enako, manj in manj ali enako.</para
+></listitem>
+</itemizedlist>
+
+<para
+>Zdaj bi me lahko vprašali, zakaj bi se moral uporabnik ukvarjati z &MathML;? To je preprosto. S tem lahko operiramo s funkcijami, kot so <function
+>cos()</function
+>, <function
+>sin()</function
+>, vse druge trigonometrične funkcije, <function
+>sum()</function
+> ali <function
+>produkt()</function
+>. Ni pomembno, kakšne vrste je. Uporabljamo lahko <function
+>plus()</function
+>, <function
+>times()</function
+> in vse, kar ima svoj operator. Implementirane so tudi logične funkcije, tako da lahko naredimo nekaj takega kot <function
+>ali(1,0,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>Uporaba računala</title>
+<para
+>&kalgebra; računalo je uporaben kot kalkulator na steroidih. Uporabnik lahko vnese izraze za vrednotenje v načinu <guimenu
+>Izračunaj</guimenu
+> ali <guimenu
+>Ovrednoti</guimenu
+>, odvisno od izbire menija <guimenu
+>Računalo</guimenu
+>. </para>
+<para
+>V načinu vrednotenja &kalgebra; poenostavi izraz, tudi če vidi nedefinirano spremenljivko. Ko je v načinu izračuna &kalgebra;, izračuna vse in če najde nedefinirano spremenljivko, pokaže napako. </para>
+<para
+>Poleg prikaza uporabnikovih vnesenih enačb in rezultatov na zaslonu računala se vse deklarirane spremenljivke prikažejo v trajnem okvirju na desni strani. Z dvojnim klikom na spremenljivko se prikaže pogovorno okno, v katerem lahko spremenite njene vrednosti (to je le način, kako prevarati dnevnik). </para>
+
+<para
+>Spremenljivka <quote
+><varname
+>ans</varname
+></quote
+> je posebna, saj se ob vsakem vnosu izraza vrednost spremenljivke <quote
+><varname
+>ans</varname
+></quote
+> spremeni v zadnji rezultat. </para>
+
+<para
+>V nadaljevanju so navedeni primeri funkcij, ki jih lahko vnesete v vnosno polje okna računala:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>V nadaljevanju je prikazana slika okna računala po vnosu zgornjih primerov izrazov: </para>
+<screenshot>
+<screeninfo
+>Zaslonska slika okna &kalgebra; računala s primeri izrazov</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; okno kalkulatorja</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>Uporabnik lahko nadzoruje izvajanje niza izračunov z uporabo možnosti menija <guimenu
+>Računalo</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Računalo</guimenu
+><guimenuitem
+>Naloži skript...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Zaporedno izvaja navodila v datoteki. Uporabno, če želite določiti nekatere knjižnice ali nadaljevati prejšnje delo.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Računalo</guimenu
+><guisubmenu
+>Nedavni skripti</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Prikaže podmeni, v katerem lahko izberete nedavno izvedene skripte.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Računalo</guimenu
+><guimenuitem
+>Shrani Skript...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Shranite navodila, ki ste jih vnesli od začetka seje, da jih lahko ponovno uporabite. Ustvari besedilne datoteke, tako da bi moralo biti enostavno popraviti s katerim koli urejevalnikom besedila, kot &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Računalo</guimenu
+><guimenuitem
+>Izvozi dnevnik...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Dnevnik z vsemi rezultati shrani v datoteko &HTML;, ki jo lahko natisnete ali objavite.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Računalo</guimenu
+><guimenuitem
+>Vstavi odg...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Vstavi spremenljivko <quote
+><varname
+>ans</varname
+></quote
+> in olajša ponovno uporabo starejših vrednosti.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Računalo</guimenu
+><guimenuitem
+>Računalo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Radijski gumb za nastavitev <guilabel
+>Način izvajanja</guilabel
+> na izračunaj.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Računalo</guimenu
+><guimenuitem
+>Ovrednoti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Radijski gumb za nastavitev <guilabel
+>Način izvajanja</guilabel
+> na ovrednoti.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>2D Graf</title>
+<para
+>Če želite dodati nov graf 2D v programu &kalgebra;, izberite zavihek <guilabel
+>Graf 2D</guilabel
+> in kliknite zavihek <guilabel
+>Dodaj</guilabel
+>, da dodate novo funkcijo. Osredotočili se boste na vnosno besedilno polje, v katerega lahko vnesete svojo funkcijo.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>Sintaksa</title>
+<para
+>Če želite uporabiti tipično funkcijo <function
+>f(x)</function
+>, je ni treba navesti, če pa želite funkcijo <function
+>f(y)</function
+> ali polarno funkcijo, boste morali dodati <literal
+>y-&gt;</literal
+> in <literal
+>q-&gt;</literal
+> kot omejeni spremenljivki.</para>
+
+<para
+>Primeri:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>Če ste vnesli funkcijo, kliknite gumb <guibutton
+>OK</guibutton
+>, da se graf prikaže v glavnem oknu.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>Značilnosti</title>
+<para
+>V istem pogledu lahko nastavite več grafov. Ko ste v načinu seznama, uporabite gumb <guilabel
+>Dodaj</guilabel
+>. Vsakemu grafu lahko nastavite svojo barvo.</para>
+
+<para
+>Pogled lahko povečate in premikate z miško. S kolescem lahko povečate in pomanjšate velikost. Območje lahko izberete tudi z &LMB; in to območje bo povečano. Pogled premikate s puščičnimi tipkami na tipkovnici.</para>
+
+<note>
+ <para
+>Vidno polje za 2D-grafe lahko izrecno določite z zavihkom <guilabel
+>Vidno polje</guilabel
+> na zavihku <guilabel
+>2D-graf</guilabel
+>.</para>
+</note>
+ 
+<para
+>V zavihku <guilabel
+>Seznam</guilabel
+> v spodnjem desnem delu lahko odprete zavihek <guilabel
+>Urejanje</guilabel
+>, da z dvojnim klikom uredite ali odstranite funkcijo in potrdite ali odstranite potrditveno polje poleg imena funkcije, da jo prikažete ali skrijete.</para>
+<para
+>V meniju <guimenu
+>2D Graf</guimenu
+> so te možnosti:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>Mreža</guimenuitem
+>: Prikažite ali skrijte mrežo</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Ohrani proporce</guimenuitem
+>: ohrani razmerje stranic med povečavo</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Shrani</guimenuitem
+>: shrani (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) graf kot slikovno datoteko</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Približaj/Oddalji</guimenuitem
+>: Približaj (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) in oddalji (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Prilagodi na dejansko velikost</guimenuitem
+>: Ponastavitev pogleda na prvotno povečavo</para
+></listitem>
+<listitem
+><para
+><guilabel
+>Ločljivost</guilabel
+>: Sledi seznam radijskih gumbov za izbiro ločljivosti grafov</para
+></listitem>
+</itemizedlist>
+
+<para
+>Spodaj je posnetek zaslona uporabnika, katerega kazalec je na skrajnem desnem korenu funkcije <function
+>sin(1/x)</function
+>. Uporabnik, ki ga je narisal, je pri izdelavi tega grafa uporabil zelo majhno ločljivost (saj graf niha z vedno večjo frekvenco v bližini izvora). Na voljo je tudi funkcija kurzorja v živo, ki vam ob vsakem premiku kurzorja nad točko v spodnjem levem kotu zaslona prikaže vrednosti <literal
+>x</literal
+> in <literal
+>y</literal
+>. Na funkciji na mestu kazalca v živo se izriše <quote
+>tangentna črta</quote
+>. </para>
+
+<screenshot>
+<screeninfo
+>Tukaj je posnetek zaslona okna &kalgebra; 2D Graf</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; 2D graf okno</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>3D Grafi</title>
+
+<para
+>Če želite s programom &kalgebra; narisati 3D-graf; izberite zavihek <guilabel
+>3D-graf</guilabel
+> in na dnu boste videli vnosno polje, v katerega boste vnesli svojo funkcijo. <literal
+>Z</literal
+> še ni mogoče določiti. Za zdaj &kalgebra; podpira le 3D-grafe, ki so izrecno odvisni le od <literal
+>x</literal
+> in <literal
+>y</literal
+>, na primer <userinput
+>(x,y)->x*y</userinput
+>, kjer <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>Primeri:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Pogled lahko povečate in premikate z miško. S kolescem lahko povečate in pomanjšate velikost. Držite &LMB; in premikajte miško, da zavrtite graf.</para>
+
+<para
+>Puščični tipki &Left; in &Right; vrtita graf okoli <literal
+>z</literal
+> osi, puščični tipki &Up; in &Down; pa se vrtita okoli vodoravne osi prikaza. Pritisnite <keycap
+>W</keycap
+> za povečavo ploskve in <keycap
+>S</keycap
+> za njeno pomanjšanje.</para>
+
+<para
+>V meniju <guimenu
+>3D Graf</guimenu
+> so te možnosti:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>Shrani</guimenuitem
+>: shrani (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) graf kot slikovno datoteko ali podprt dokument</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Ponastavi pogled</guimenuitem
+>: Ponastavitev pogleda na prvotno povečavo v meniju <guimenu
+>3D Graf</guimenu
+></para
+></listitem>
+<listitem
+><para
+>V meniju <guimenuitem
+>3D Graf</guimenuitem
+> lahko narišete grafe s slogi <guimenuitem
+>Pike</guimenuitem
+>, <guimenuitem
+>Črte</guimenuitem
+> ali <guimenuitem
+>Polno</guimenuitem
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>Spodaj je posnetek zaslona tako imenovane funkcije <quote
+>sombrero</quote
+>. Ta graf je prikazan v slogu črt 3D-grafa. </para>
+
+<screenshot>
+<screeninfo
+>Tukaj je posnetek zaslona okna &kalgebra; 3D Graf</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; okno 3D grafa</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>Slovar</title>
+
+<para
+>Slovar vsebuje seznam vseh &kalgebra; vgrajenih funkcij. Z njim lahko poiščete opredelitev operacije in njene vhodne parametre. To je koristen kraj, kjer lahko najdete številne zmožnosti &kalgebra;. </para>
+
+ <para
+>Spodaj je posnetek zaslona, ki prikazuje iskanje funkcije kosinusa v slovarju &kalgebra;. </para>
+
+<screenshot>
+<screeninfo
+>Tukaj je posnetek zaslona okna slovarja &kalgebra;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&kalgebra; slovarsko okno</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>Zasluge in licenca</title>
+
+<itemizedlist>
+<listitem
+><para
+>Avtorske pravice programa 2005-2009 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Avtorske pravice za dokumentacijo 2007 &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+<para
+>Prevod: Luka Puhar<email
+>puhar.luka@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
