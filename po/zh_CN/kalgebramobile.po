@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2024-01-06 03:32\n"
+"PO-Revision-Date: 2024-03-30 19:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kalgebra/kalgebramobile.pot\n"
-"X-Crowdin-File-ID: 46357\n"
+"X-Crowdin-File: /kf6-stable/messages/kalgebra/kalgebramobile.pot\n"
+"X-Crowdin-File-ID: 52728\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -92,13 +92,13 @@ msgstr "复制“%1”"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "清空控制台历史"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
@@ -110,19 +110,19 @@ msgstr "清除全部"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "关闭对话"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "移除图形"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "无可用图象"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
