@@ -86,3 +86,5 @@ QSharedPointer<Analitza::Variables> KAlgebraMobile::variables() const
 {
     return m_vars;
 }
+
+#include "moc_kalgebramobile.cpp"

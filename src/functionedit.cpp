@@ -322,3 +322,5 @@ void FunctionEdit::setEditing(bool m)
     m_modmode = m;
     m_remove->setVisible(m);
 }
+
+#include "moc_functionedit.cpp"

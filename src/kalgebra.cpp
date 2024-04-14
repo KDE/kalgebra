@@ -765,3 +765,5 @@ void KAlgebra::fullScreen(bool isFull)
         show();
     }
 }
+
+#include "moc_kalgebra.cpp"
