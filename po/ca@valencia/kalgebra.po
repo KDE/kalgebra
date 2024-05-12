@@ -147,7 +147,7 @@ msgstr "C&alculadora"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
-msgstr "&Carrega un script..."
+msgstr "&Carrega un script…"
 
 #: kalgebra.cpp:200
 #, kde-format
@@ -158,19 +158,19 @@ msgstr "Scripts recents"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
-msgstr "Guar&da un script..."
+msgstr "Guar&da un script…"
 
 #: kalgebra.cpp:209
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
-msgstr "&Exporta el registre..."
+msgstr "&Exporta el registre…"
 
 #: kalgebra.cpp:211
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr "&Inserix «ANS»..."
+msgstr "&Inserix «ANS»…"
 
 #: kalgebra.cpp:212
 #, kde-format
