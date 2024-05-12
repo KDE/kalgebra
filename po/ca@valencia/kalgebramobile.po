@@ -131,7 +131,7 @@ msgstr "No hi ha cap gràfica disponible"
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
-msgstr "Expressió que s'ha de calcular..."
+msgstr "Expressió que s'ha de calcular…"
 
 #: content/ui/Dictionary.qml:14
 #, kde-format
