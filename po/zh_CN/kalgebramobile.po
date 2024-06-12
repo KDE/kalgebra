@@ -122,7 +122,7 @@ msgstr "移除图形"
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr "无可用图象"
+msgstr "没有可用的图象"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
