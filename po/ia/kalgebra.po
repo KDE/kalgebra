@@ -106,7 +106,7 @@ msgstr "Le optiones que tu specificava non es correcte"
 #: functionedit.cpp:248
 #, kde-format
 msgid "Downlimit cannot be greater than uplimit"
-msgstr "Limite inferior nonpote esser major que le limite superior"
+msgstr "Limite inferior non pote esser major que le limite superior"
 
 #: kalgebra.cpp:83
 #, kde-format
