@@ -98,5 +98,6 @@
         "Website": "https://edu.kde.org/kalgebra"
     },
     "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-MainScript": "ui/main.qml"
 }
