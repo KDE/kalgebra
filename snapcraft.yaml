@@ -51,6 +51,9 @@ parts:
       - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - --log-level=STATUS
       - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+    override-stage: |
+        craftctl default
+        rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
   kalgebra:
     after:
       - analitza
