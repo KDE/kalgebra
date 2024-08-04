@@ -34,6 +34,8 @@ parts:
   analitza:
     source: https://invent.kde.org/education/analitza.git
     plugin: cmake
+    stage-packages:
+      - rsync
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
