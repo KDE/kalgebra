@@ -36,6 +36,7 @@ parts:
     plugin: cmake
     stage-packages:
       - rsync
+      - libpopt0
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
