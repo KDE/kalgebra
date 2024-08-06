@@ -16,11 +16,6 @@ apps:
     command: usr/bin/kalgebra
     plugs:
       - audio-record
-slots:
-  session-dbus-interface:
-    interface: dbus
-    name: org.kde.kalgebra
-    bus: session
 package-repositories:
   - type: apt
     components:
