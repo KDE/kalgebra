@@ -16,6 +16,7 @@ apps:
     command: usr/bin/kalgebra
     plugs:
       - audio-record
+      - browser-support
 package-repositories:
   - type: apt
     components:
