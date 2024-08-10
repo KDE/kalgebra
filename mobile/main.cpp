@@ -24,7 +24,7 @@
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
 #ifdef Q_OS_ANDROID
-    QQuickStyle::setStyle("Material");
+    QQuickStyle::setStyle(QStringLiteral("Material"));
 #endif
 #ifdef Q_OS_ANDROID
     QGuiApplication app(argc, argv);
