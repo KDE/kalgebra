@@ -17,14 +17,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.0
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.analitza 1.0
+import QtQuick
+import org.kde.plasma.plasmoid
+import org.kde.plasma.components as PlasmaComponents
+import org.kde.kirigami as Kirigami
+import org.kde.analitza
 
-Item {
+PlasmoidItem {
+    width: Kirigami.Units.gridUnit * 15
+    height: Kirigami.Units.gridUnit * 15
+
     property Component compactRepresentation: Component {
         PlasmaComponents.Button {
-            iconSource: "kalgebra"
+            icon.source: "kalgebra"
             onClicked: plasmoid.togglePopup()
         }
     }

@@ -12,7 +12,7 @@ Dependencies:
     'frameworks/kdoctools': '@latest-kf6'
     'frameworks/kio': '@latest-kf6'
     'frameworks/kxmlgui': '@latest-kf6'
-    'plasma/plasma-framework': '@latest-kf6'
+    'plasma/libplasma': '@latest-kf6'
     'education/analitza': '@same'
 
 Options:

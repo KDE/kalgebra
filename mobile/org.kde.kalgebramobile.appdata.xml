@@ -21,6 +21,7 @@
   <name xml:lang="fr">KAlgebra Mobile</name>
   <name xml:lang="gl">KAlgebra Mobile</name>
   <name xml:lang="he">KAlgebra לניידים</name>
+  <name xml:lang="hu">KAlgebra Mobile</name>
   <name xml:lang="ia">KAlgebra Mobile</name>
   <name xml:lang="id">KAlgebra Mobile</name>
   <name xml:lang="it">KAlgebra Mobile</name>
@@ -58,6 +59,7 @@
   <summary xml:lang="fr">Calculatrice graphique</summary>
   <summary xml:lang="gl">Calculadora gráfica</summary>
   <summary xml:lang="he">מחשבון תרשימים</summary>
+  <summary xml:lang="hu">Számológép</summary>
   <summary xml:lang="ia">Calculator Graphic</summary>
   <summary xml:lang="id">Kalkulator Grafik</summary>
   <summary xml:lang="it">Calcolatrice grafica</summary>
@@ -95,6 +97,7 @@
     <p xml:lang="fr">KAlgebra est une application qui peut remplacer votre calculatrice graphique. Elle fournit des fonctions pour le calcul numérique, logique, symbolique et l'analyse qui vous permettent de calculer des expressions mathématiques dans la console et tracer graphiquement les résultats en 2D ou 3D.</p>
     <p xml:lang="gl">KAlgebra é unha aplicación que pode substituír as calculadoras gráficas. Ten funcionalidades numéricas, lóxicas, simbólicas e de análise que permiten calcular expresións matemáticas na consola e trazar graficamente os resultados en 2D ou 3D.</p>
     <p xml:lang="he">KAlgebra הוא יישום שיכול להחליף את מחשבון התרשימים שלך. יש לו יכולות מספריות, לוגיות, סמליות וניתוח שיאפשרו לך לחשב ביטויים מתמטיים במסוף ולשרטט את התוצאות בצורה גרפית בדו־ממד או תלת־ממד.</p>
+    <p xml:lang="hu">A KAlgebra egy olyan alkalmazás, amely helyettesítheti a grafikus számológépet. Numerikus, logikai, szimbolikus és analízis funkciókkal rendelkezik, amelyek segítségével matematikai kifejezéseket számolhat a konzolon, és az eredményeket grafikusan ábrázolhatja 2D-ben vagy 3D-ben.</p>
     <p xml:lang="ia">KAlgebra es un application que pote reimplaciare tu calculator graphic. Il ha characteristicas numeric, logic, symbolic, e de analysis que te permitte calcular expressiones mathematic expressions sur le consolle e traciar  graphicamente le resultatos in 2D o 3D.</p>
     <p xml:lang="id">KAlgebra adalah aplikasi yang dapat menggantikan kalkulator grafikmu. Ini memiliki fitur numerik, logis, simbolis, dan analisis yang memungkinkanmu menghitung ekspresi matematis pada konsol dan secara grafik memplot hasilnya dalam 2D atau 3D.</p>
     <p xml:lang="it">KAlgebra è un'applicazione che può sostituire la tua calcolatrice grafica. Ha funzionalità numeriche, logiche, simboliche e di analisi che ti permettono di calcolare le espressioni matematiche sulla console e di visualizzarne il grafico in 2D o 3D.</p>
@@ -115,7 +118,7 @@
     <p xml:lang="zh-CN">KAlgebra可以代替您的其他图形计算器。它包含数值计算、逻辑计算、符号计算，以及分析功能，能让您在控制台中计算数学表达式，并将函数结果绘制为2D或3D图像。</p>
     <p xml:lang="zh-TW">KAlgebra 是個能替代繪圖計算機的應用程式，它包含數字、邏輯、符號以及分析功能，讓您能在終端計算數學表達式，並用圖形化的方式以 2D 或 3D 繪製結果。</p>
   </description>
-  <url type="homepage">https://edu.kde.org/kalgebra/</url>
+  <url type="homepage">https://apps.kde.org/kalgebra</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kalgebra</url>
   <url type="help">https://docs.kde.org/?application=kalgebra</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kalgebra&amp;source=appdata</url>
@@ -139,10 +142,13 @@
     <value key="KDE::google_play">https://play.google.com/store/apps/details?id=org.kde.kalgebramobile</value>
   </custom>
   <releases>
-    <release version="23.08.3" date="2023-11-09"/>
-    <release version="23.08.2" date="2023-10-12"/>
-    <release version="23.08.1" date="2023-09-14"/>
-    <release version="23.08.0" date="2023-08-24"/>
+    <release version="24.05.2" date="2024-07-04"/>
+    <release version="24.05.1" date="2024-06-13"/>
+    <release version="24.05.0" date="2024-05-23"/>
+    <release version="24.02.2" date="2024-04-11"/>
+    <release version="24.02.1" date="2024-03-21"/>
+    <release version="24.02.0" date="2024-02-28"/>
+    <release version="23.08.5" date="2024-02-15"/>
   </releases>
   <content_rating type="oars-1.1"/>
 </component>

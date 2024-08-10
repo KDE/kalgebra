@@ -2,14 +2,14 @@
 # Copyright (C) 2018 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2018, 2019, 2020, 2021, 2022, 2023.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2023-09-18 09:42-0300\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"PO-Revision-Date: 2024-01-11 20:53-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -30,8 +30,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Carregar script"
@@ -42,15 +41,13 @@ msgid "Script (*.kal)"
 msgstr "Script (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Salvar script"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Exportar log"
@@ -61,22 +58,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Avaliar"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Calcular"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Limpar log"
@@ -100,26 +94,56 @@ msgstr "Copiar \"%1\""
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Limpar histórico do console"
 
-#: content/ui/controls/Add2DDialog.qml:51
-#: content/ui/controls/Add3DDialog.qml:55
+#: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr "Adicionar"
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Limpar tudo"
 
-#: content/ui/controls/ExpressionInput.qml:104
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr "Fechar janela"
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr "Remover gráfico"
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr "Nenhum gráfico disponível"
+
+#: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Expressão a calcular..."
 
-#: content/ui/Dictionary.qml:28
+#: content/ui/Dictionary.qml:14
+#, kde-format
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "Dicionário"
+
+#: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
 msgstr "Nome:"
 
-#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
-#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -154,20 +178,32 @@ msgstr "Dicionário"
 msgid "About KAlgebra"
 msgstr "Sobre o KAlgebra"
 
-#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
+#: content/ui/Plot2D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "Gráfico 2D"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
 msgstr "Salvar"
 
-#: content/ui/Plot2D.qml:50
+#: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
 msgstr "Exibir grade"
 
-#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
 msgstr "Limpar a área de visualização"
+
+#: content/ui/Plot3D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "Gráfico 3D"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
@@ -195,8 +231,7 @@ msgid "Errors: %1"
 msgstr "Erros: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Executar"

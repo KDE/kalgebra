@@ -1,21 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2023 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2023-10-03 08:43+0300\n"
-"Last-Translator: \n"
-"Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"PO-Revision-Date: 2023-12-04 22:33+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -96,24 +95,54 @@ msgctxt "@info"
 msgid "Empty console history"
 msgstr "פינוי ההיסטוריה במסוף"
 
-#: content/ui/controls/Add2DDialog.qml:51
-#: content/ui/controls/Add3DDialog.qml:55
+#: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr "הוספה"
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "לפנות הכול"
 
-#: content/ui/controls/ExpressionInput.qml:104
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr "סגירת החלונית"
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr "הסרת שרטוט"
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr "אין שרטוט זמין"
+
+#: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "ביטוי לחישוב…"
 
-#: content/ui/Dictionary.qml:28
+#: content/ui/Dictionary.qml:14
+#, kde-format
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "מילון"
+
+#: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
 msgstr "שם:"
 
-#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
-#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -148,20 +177,32 @@ msgstr "מילון"
 msgid "About KAlgebra"
 msgstr "על KAlgebra"
 
-#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
+#: content/ui/Plot2D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "שרטוט דו־ממדי"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
 msgstr "שמירה"
 
-#: content/ui/Plot2D.qml:50
+#: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
 msgstr "הצגת רשת"
 
-#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
 msgstr "איפוס חרך תצוגה"
+
+#: content/ui/Plot3D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "שרטוט תלת־ממדי"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format

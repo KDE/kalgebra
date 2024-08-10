@@ -250,7 +250,7 @@ void FunctionEdit::edit()
     }
     bool added = false;
 
-    PlaneCurve *f = 0;
+    PlaneCurve *f = nullptr;
     PlotBuilder req = PlotsFactory::self()->requestPlot(expression(), Dim2D, m_vars);
     if (req.canDraw())
         f = createFunction();
@@ -322,3 +322,5 @@ void FunctionEdit::setEditing(bool m)
     m_modmode = m;
     m_remove->setVisible(m);
 }
+
+#include "moc_functionedit.cpp"

@@ -9,19 +9,20 @@
 #
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2008, 2009, 2010.
+# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-03 01:37+0000\n"
-"PO-Revision-Date: 2018-12-26 18:23+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"PO-Revision-Date: 2024-04-04 17:49+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 18.12.0\n"
+"X-Generator: Lokalize 24.04.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: consolehtml.cpp:167
@@ -273,7 +274,7 @@ msgstr "立體圖(&G)"
 #: kalgebra.cpp:345
 #, kde-format
 msgid "&Reset View"
-msgstr "重置檢視(&R)"
+msgstr "重設檢視(&R)"
 
 #: kalgebra.cpp:349
 #, kde-format
@@ -318,12 +319,12 @@ msgstr "請選擇文稿"
 #: kalgebra.cpp:533 kalgebra.cpp:549
 #, kde-format
 msgid "Script (*.kal)"
-msgstr "文稿（*.kal）"
+msgstr "文稿 (*.kal)"
 
 #: kalgebra.cpp:560
 #, kde-format
 msgid "HTML File (*.html)"
-msgstr "HTML 檔（*.html）"
+msgstr "HTML 檔 (*.html)"
 
 #: kalgebra.cpp:595
 #, kde-format
@@ -372,10 +373,9 @@ msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2016 Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:37
 #, kde-format

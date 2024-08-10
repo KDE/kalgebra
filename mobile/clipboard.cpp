@@ -125,3 +125,5 @@ QStringList Clipboard::formats() const
 {
     return m_clipboard->mimeData(m_mode)->formats();
 }
+
+#include "moc_clipboard.cpp"

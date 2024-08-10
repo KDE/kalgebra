@@ -28,6 +28,8 @@ import org.kde.kalgebra.mobile
 ColumnLayout {
     spacing: 0
 
+    property alias text: field.text
+
     signal addOperation(operation: string)
 
     function selectAll(): void {

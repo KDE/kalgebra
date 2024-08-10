@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
 # KDE Application Version, managed by release script
-set(RELEASE_SERVICE_VERSION_MAJOR "23")
+set(RELEASE_SERVICE_VERSION_MAJOR "24")
 set(RELEASE_SERVICE_VERSION_MINOR "11")
 set(RELEASE_SERVICE_VERSION_MICRO "70")
 set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_VERSION_MINOR}.${RELEASE_SERVICE_VERSION_MICRO}")
 
 project(kalgebra VERSION ${RELEASE_SERVICE_VERSION})
-set(KF_MIN_VERSION "5.240.0")
-set(KDE_COMPILERSETTINGS_LEVEL "5.240.0")
+set(KF_MIN_VERSION "6.3.0")
+set(KDE_COMPILERSETTINGS_LEVEL "6.3.0")
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
@@ -26,11 +26,11 @@ if (NOT ANDROID)
 endif()
 set(QT_REQUIRED_VERSION "6.5.0")
 
-find_package(Qt6 ${QT_REQUIRED_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test Core5Compat OpenGLWidgets)
+find_package(Qt6 ${QT_REQUIRED_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Xml Svg PrintSupport Test OpenGLWidgets)
 find_package(Analitza6 REQUIRED)
 
-ecm_set_disabled_deprecation_versions(QT 6.4
-    KF 5.101
+ecm_set_disabled_deprecation_versions(QT 6.7
+    KF 6.4.0
 )
 
 
@@ -57,11 +57,14 @@ add_definitions(-DQT_NO_CAST_TO_ASCII)
 
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
 find_package(KF6 ${KF_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools XmlGui)
-find_package(KF6Plasma)
+find_package(Plasma)
 find_package(Qt6WebEngineWidgets)
 
-if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND KF6Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
+if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(src)
+endif()
+
+if (Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(plasmoids)
 endif()
 

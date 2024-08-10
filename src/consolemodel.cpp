@@ -197,3 +197,5 @@ QString ConsoleModel::readContent(const QUrl &url)
 {
     return QUrlQuery(url).queryItemValue(u"func"_s);
 }
+
+#include "moc_consolemodel.cpp"

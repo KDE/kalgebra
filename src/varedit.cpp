@@ -131,3 +131,5 @@ void VarEdit::removeVariable()
     vars->remove(m_var);
     close();
 }
+
+#include "moc_varedit.cpp"

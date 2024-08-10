@@ -10,13 +10,15 @@ import org.kde.kirigami as Kirigami
 import org.kde.analitza
 import org.kde.kalgebra.mobile
 
-KAlgebraPage {
+Kirigami.Page {
     id: page
 
     leftPadding: 0
     rightPadding: 0
     topPadding: 0
     bottomPadding: 0
+
+    title: i18nc("@title:window", "3D Plot")
 
     FileDialog {
         id: fileDialog
@@ -34,6 +36,7 @@ KAlgebraPage {
         },
         Kirigami.Action {
             text: i18n("Save")
+            icon.name: 'document-save'
             onTriggered: {
                 fileDialog.title = text
                 fileDialog.proceed = function() {
@@ -46,6 +49,7 @@ KAlgebraPage {
             }
         },
         Kirigami.Action {
+            icon.name: 'view-restore'
             text: i18n("Reset Viewport")
             onTriggered: view.resetViewport()
         }
@@ -56,8 +60,10 @@ KAlgebraPage {
         id: view
         anchors.fill: parent
         model: App.functionsModel()
-        Add3DDialog {
+        AddPlotDialog {
             id: plotDialog
+            text: "sin x*sin y"
+            dimension: 4
         }
     }
 }

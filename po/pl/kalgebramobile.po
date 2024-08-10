@@ -1,14 +1,14 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 #
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2018, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-04 01:37+0000\n"
-"PO-Revision-Date: 2023-10-07 07:46+0200\n"
-"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"PO-Revision-Date: 2023-12-23 13:37+0100\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmai.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.04.3\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -95,24 +94,54 @@ msgctxt "@info"
 msgid "Empty console history"
 msgstr "Pusta historia konsoli"
 
-#: content/ui/controls/Add2DDialog.qml:51
-#: content/ui/controls/Add3DDialog.qml:55
+#: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr "Dodaj"
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Wyczyść wszystko"
 
-#: content/ui/controls/ExpressionInput.qml:104
+#: content/ui/controls/AddPlotDialog.qml:82
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr "Zamknij okno"
+
+#: content/ui/controls/AddPlotDialog.qml:122
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr "Usuń wykres"
+
+#: content/ui/controls/AddPlotDialog.qml:137
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr "Nie jest dostępny żaden wykres"
+
+#: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Wyrażenie do obliczenia..."
 
-#: content/ui/Dictionary.qml:28
+#: content/ui/Dictionary.qml:14
+#, kde-format
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "Słownik"
+
+#: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: content/ui/Dictionary.qml:41 content/ui/Dictionary.qml:45
-#: content/ui/Dictionary.qml:49 content/ui/Dictionary.qml:53
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -147,20 +176,32 @@ msgstr "Słownik"
 msgid "About KAlgebra"
 msgstr "O KAlgebrze"
 
-#: content/ui/Plot2D.qml:37 content/ui/Plot3D.qml:36
+#: content/ui/Plot2D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "Wykres 2D"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
 msgstr "Zapisz"
 
-#: content/ui/Plot2D.qml:50
+#: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
 msgstr "Pokaż siatkę"
 
-#: content/ui/Plot2D.qml:56 content/ui/Plot3D.qml:49
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
 msgstr "Wyzeruj pole widzenia"
+
+#: content/ui/Plot3D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "Wykres 3D"
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format

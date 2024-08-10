@@ -249,3 +249,5 @@ void ConsoleHtml::paste()
 {
     Q_EMIT paste(selectedText().trimmed());
 }
+
+#include "moc_consolehtml.cpp"

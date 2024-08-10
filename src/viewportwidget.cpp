@@ -73,3 +73,5 @@ void ViewportWidget::emitViewport()
 {
     Q_EMIT viewportChange(viewport());
 }
+
+#include "moc_viewportwidget.cpp"
