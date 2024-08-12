@@ -30,7 +30,7 @@ find_package(Qt6 ${QT_REQUIRED_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick 
 find_package(Analitza6 REQUIRED)
 
 ecm_set_disabled_deprecation_versions(QT 6.7
-    KF 6.4.0
+    KF 6.5.0
 )
 
 
