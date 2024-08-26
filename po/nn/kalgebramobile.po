@@ -31,7 +31,6 @@ msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
 #, fuzzy, kde-format
-#| msgid "Load Script"
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Opna skript"
@@ -43,14 +42,12 @@ msgstr "Skript (*.kal)"
 
 #: content/ui/Console.qml:72
 #, fuzzy, kde-format
-#| msgid "Save Script"
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Lagra skript"
 
 #: content/ui/Console.qml:83
 #, fuzzy, kde-format
-#| msgid "Export Log"
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Eksporter logg"
@@ -62,21 +59,18 @@ msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
 #, fuzzy, kde-format
-#| msgid "Evaluate"
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Evaluer"
 
 #: content/ui/Console.qml:94
 #, fuzzy, kde-format
-#| msgid "Calculate"
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Rekn ut"
 
 #: content/ui/Console.qml:100
 #, fuzzy, kde-format
-#| msgid "Clear Log"
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Tøm logg"
@@ -110,7 +104,6 @@ msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, fuzzy, kde-format
-#| msgid "Clear All"
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Tøm alt"
@@ -140,7 +133,6 @@ msgstr "Uttrykk å rekna ut …"
 
 #: content/ui/Dictionary.qml:14
 #, fuzzy, kde-format
-#| msgid "Dictionary"
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Ordbok"
@@ -188,7 +180,6 @@ msgstr "Om KAlgebra"
 
 #: content/ui/Plot2D.qml:21
 #, fuzzy, kde-format
-#| msgid "2D Plot"
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D-plott"
@@ -210,7 +201,6 @@ msgstr "Tilbakestill visingsrute"
 
 #: content/ui/Plot3D.qml:21
 #, fuzzy, kde-format
-#| msgid "3D Plot"
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D-plott"
@@ -242,7 +232,6 @@ msgstr "Feil: %1"
 
 #: content/ui/Tables.qml:52
 #, fuzzy, kde-format
-#| msgid "Run"
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Køyr"
