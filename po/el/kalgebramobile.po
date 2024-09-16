@@ -28,8 +28,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Φόρτωση σεναρίου"
@@ -40,15 +39,13 @@ msgid "Script (*.kal)"
 msgstr "Σενάριο (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Αποθήκευση σεναρίου"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Εξαγωγή καταγραφής"
@@ -59,22 +56,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Αξιολόγηση"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Υπολογισμός"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Καθαρισμός καταγραφής"
@@ -107,8 +101,7 @@ msgid "Add"
 msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Καθαρισμός όλων"
@@ -137,8 +130,7 @@ msgid "Expression to calculate..."
 msgstr "Έκφραση για υπολογισμό..."
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Λεξικό"
@@ -185,8 +177,7 @@ msgid "About KAlgebra"
 msgstr "Σχετικά με το KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D γραφική παράσταση"
@@ -207,8 +198,7 @@ msgid "Reset Viewport"
 msgstr "Επαναφορά viewport"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D γραφική παράσταση"
@@ -239,8 +229,7 @@ msgid "Errors: %1"
 msgstr "Σφάλματα: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Εκτέλεση"
