@@ -1,12 +1,11 @@
 # Translation of kalgebramobile to Norwegian Nynorsk
 #
-# Karl Ove Hufthammer <karl@huftis.org>, 2019, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2022-06-19 13:55+0200\n"
+"PO-Revision-Date: 2024-09-27 20:45+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -14,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -30,7 +29,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Opna skript"
@@ -41,13 +40,13 @@ msgid "Script (*.kal)"
 msgstr "Skript (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Lagra skript"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Eksporter logg"
@@ -58,19 +57,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Evaluer"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Rekn ut"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Tøm logg"
@@ -94,16 +93,16 @@ msgstr "Kopier «%1»"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Tom konsoll-logg"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Legg til"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Tøm alt"
@@ -112,19 +111,19 @@ msgstr "Tøm alt"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Lukk dialogvindauget"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Fjern plott"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Inkje plott tilgjengeleg"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -132,7 +131,7 @@ msgid "Expression to calculate..."
 msgstr "Uttrykk å rekna ut …"
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Ordbok"
@@ -179,7 +178,7 @@ msgid "About KAlgebra"
 msgstr "Om KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D-plott"
@@ -200,7 +199,7 @@ msgid "Reset Viewport"
 msgstr "Tilbakestill visingsrute"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D-plott"
@@ -231,7 +230,7 @@ msgid "Errors: %1"
 msgstr "Feil: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Køyr"
@@ -269,7 +268,7 @@ msgstr "Portabel kalkulator"
 #: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr ""
+msgstr "© 2006–2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
 #, kde-format
@@ -280,7 +279,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Vedlikehaldar"
 
 #: main.cpp:42
 #, kde-format
