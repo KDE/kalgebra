@@ -30,7 +30,10 @@ using Analitza::Expression;
 
 Analitza::Analyzer a;
 
-enum CalcType { Evaluate, Calculate };
+enum CalcType {
+    Evaluate,
+    Calculate
+};
 
 static const char *prompt = ">>> ";
 static const char *insidePrompt = "... ";
