@@ -23,7 +23,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.analitza
 import QtQuick.Layouts
-import org.kde.kalgebra.mobile
+import org.kde.kalgebra
 
 ColumnLayout {
     spacing: 0

@@ -34,8 +34,6 @@ ecm_set_disabled_deprecation_versions(QT 6.8.0
 )
 
 
-set(MOBILE_BACKEND "kde" CACHE STRING "Backend to install, currently. Check /mobile/plugins/widgets/*")
-
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
 set(CURSES_NEED_NCURSES TRUE)
@@ -60,16 +58,13 @@ find_package(KF6 ${KF_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddo
 find_package(Plasma)
 find_package(Qt6WebEngineWidgets)
 
-if(KF6DocTools_FOUND AND Qt6WebEngineWidgets_FOUND AND KF6ConfigWidgets_FOUND AND KF6WidgetsAddons_FOUND AND KF6KIO_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
-    add_subdirectory(src)
-endif()
+add_subdirectory(src)
 
 if (Plasma_FOUND AND NOT CMAKE_SYSTEM MATCHES Android*)
     add_subdirectory(plasmoids)
 endif()
 
 add_subdirectory(icons)
-add_subdirectory(mobile)
 
 if(READLINE_FOUND AND CURSES_FOUND)
     add_subdirectory(calgebra)
@@ -100,3 +95,6 @@ if (NOT ANDROID)
 
     kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 endif()
+
+install(FILES org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR}})
+install(FILES org.kde.kalgebra.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})

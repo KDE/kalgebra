@@ -8,7 +8,7 @@ import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.analitza
-import org.kde.kalgebra.mobile
+import org.kde.kalgebra
 
 Kirigami.ApplicationWindow
 {

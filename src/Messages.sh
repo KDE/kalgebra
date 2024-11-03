@@ -1,2 +1,2 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kalgebra.pot
+$XGETTEXT `find . -name \*.cpp -o -name \*.qml -o -name \*.js` -o $podir/kalgebramobile.pot

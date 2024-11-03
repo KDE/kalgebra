@@ -11,7 +11,7 @@ import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.kirigamiaddons.components as Components
 
 import org.kde.analitza
-import org.kde.kalgebra.mobile
+import org.kde.kalgebra
 
 QQC2.Dialog {
     id: root

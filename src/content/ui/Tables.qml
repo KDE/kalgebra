@@ -6,7 +6,7 @@ import QtQuick.Layouts
 import org.kde.analitza
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
-import org.kde.kalgebra.mobile
+import org.kde.kalgebra
 
 Kirigami.ScrollablePage {
     title: i18n("Value tables")

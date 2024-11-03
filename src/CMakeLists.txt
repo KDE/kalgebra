@@ -1,37 +1,37 @@
-add_executable(kalgebra)
-target_sources(kalgebra PRIVATE
-    askname.h
-    consolehtml.cpp
-    consolehtml.h
-    consolemodel.cpp
-    consolemodel.h
-    dictionary.cpp
-    dictionary.h
-    functionedit.cpp
-    functionedit.h
-    kalgebra.cpp
-    kalgebra.h
+qt_add_resources(KALGEBRA_SRCS resources.qrc)
+
+add_executable(kalgebra
+    ../src/consolemodel.cpp
+    clipboard.cpp
+    kalgebraapp.cpp
     main.cpp
-    varedit.cpp
-    varedit.h
-    variablesdelegate.cpp
-    variablesdelegate.h
-    viewportwidget.cpp
-    viewportwidget.h
+    ${KALGEBRA_SRCS})
+
+target_link_libraries(kalgebra
+    PRIVATE
+        Qt6::Qml
+        Qt6::Quick
+        Qt6::Gui
+        KF6::CoreAddons
+        KF6::I18n
+        KF6::Analitza
+        KF6::AnalitzaGui
+        KF6::AnalitzaPlot
 )
 
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*-apps-kalgebra.png")
-ecm_add_app_icon(kalgebra ICONS ${ICONS_SRCS})
+set(DESKTOPFILE_INSTALL ${KDE_INSTALL_APPDIR})
 
-target_link_libraries(kalgebra Qt::Widgets Qt::PrintSupport Qt::WebEngineWidgets KF6::I18n
-                               KF6::CoreAddons KF6::WidgetsAddons KF6::ConfigWidgets
-                               KF6::XmlGui # HelpMenu
-                               KF6::KIOCore
-                               KF6::I18n
-                               KF6::Analitza KF6::AnalitzaWidgets KF6::AnalitzaGui KF6::AnalitzaPlot Qt6::OpenGLWidgets)
+if(ANDROID)
+#   Material requires QtSvg for icons
+#   if we don't link it here explicitly, androiddeployqt doesn't bring it
+    find_package(Qt6Svg REQUIRED)
+    find_package(Qt6QuickControls2 REQUIRED)
+    find_package(KF6Kirigami REQUIRED)
+    kirigami_package_breeze_icons(ICONS list-add)
+    target_link_libraries(kalgebra PRIVATE Qt::Svg KF6::Kirigami Qt::QuickControls2)
+else()
+    find_package(Qt6Widgets REQUIRED)
+    target_link_libraries(kalgebra PRIVATE Qt::Widgets)
+endif()
 
 install(TARGETS kalgebra ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS org.kde.kalgebra.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
-install(FILES kalgebra.xml DESTINATION ${KDE_INSTALL_DATADIR}/katepart5/syntax )
-install(FILES org.kde.kalgebra.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-

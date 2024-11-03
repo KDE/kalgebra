@@ -1,5 +1,5 @@
 /*************************************************************************************
- *  Copyright (C) 2009 by Aleix Pol <aleixpol@kde.org>                               *
+ *  Copyright (C) 2010 by Aleix Pol <aleixpol@kde.org>                               *
  *                                                                                   *
  *  This program is free software; you can redistribute it and/or                    *
  *  modify it under the terms of the GNU General Public License                      *
@@ -16,26 +16,49 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "variablesdelegate.h"
+#ifndef KALGEBRAAPP_H
+#define KALGEBRAAPP_H
 
-#include <QDoubleSpinBox>
+#include <QObject>
+#include <QSharedPointer>
+#include <analitza/variables.h>
 
-QWidget *VariablesDelegate::createEditor(QWidget *p, const QStyleOptionViewItem &opt, const QModelIndex &idx) const
+class QModelIndex;
+namespace Analitza
 {
-    QVariant val = idx.model()->data(idx);
-    if (val.metaType().id() == QMetaType::Double) {
-        QDoubleSpinBox *spin = new QDoubleSpinBox(p);
-        spin->setDecimals(10);
-        return spin;
-    } else
-        return QItemDelegate::createEditor(p, opt, idx);
+class PlotsModel;
 }
 
-void VariablesDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+class KAlgebraApp : public QObject
 {
-    QDoubleSpinBox *spin = qobject_cast<QDoubleSpinBox *>(editor);
-    if (spin)
-        spin->setValue(index.model()->data(index).value<double>());
-    else
-        QItemDelegate::setEditorData(editor, index);
-}
+    Q_OBJECT
+    Q_PROPERTY(QSharedPointer<Analitza::Variables> variables READ variables NOTIFY variablesChanged)
+public:
+    explicit KAlgebraApp(QObject *parent = nullptr);
+
+    static KAlgebraApp *self();
+    void notifyVariablesChanged()
+    {
+        variablesChanged();
+    }
+
+public Q_SLOTS:
+    Analitza::PlotsModel *functionsModel();
+    QSharedPointer<Analitza::Variables> variables() const;
+
+private Q_SLOTS:
+    void functionRemoved(const QModelIndex &parent, int start, int end);
+    void functionModified(const QModelIndex &idxA, const QModelIndex &idxB);
+    void functionInserted(const QModelIndex &parent, int start, int end);
+
+Q_SIGNALS:
+    void variablesChanged();
+
+private:
+    static KAlgebraApp *s_self;
+
+    Analitza::PlotsModel *m_functionsModel;
+    QSharedPointer<Analitza::Variables> m_vars;
+};
+
+#endif // KALGEBRAMOBILE_H

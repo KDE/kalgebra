@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.analitza
 import org.kde.kirigami as Kirigami
-import org.kde.kalgebra.mobile
+import org.kde.kalgebra
 import QtQuick.Controls
 
 Kirigami.Page {

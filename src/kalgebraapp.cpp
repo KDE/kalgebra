@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2010 by Aleix Pol <aleixpol@kde.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "kalgebramobile.h"
+#include "kalgebraapp.h"
 
 #include <analitza/expression.h>
 #include <analitzaplot/plotsmodel.h>
 
-#include "../src/consolemodel.h"
+#include "consolemodel.h"
 
 #include "clipboard.h"
 #include <QSortFilterProxyModel>
@@ -15,15 +15,15 @@
 
 using namespace Analitza;
 
-KAlgebraMobile *KAlgebraMobile::s_self = nullptr;
-KAlgebraMobile *KAlgebraMobile::self()
+KAlgebraApp *KAlgebraApp::s_self = nullptr;
+KAlgebraApp *KAlgebraApp::self()
 {
     return s_self;
 }
 
 Q_DECLARE_METATYPE(QSharedPointer<Analitza::Variables>)
 
-KAlgebraMobile::KAlgebraMobile(QObject *parent)
+KAlgebraApp::KAlgebraApp(QObject *parent)
     : QObject(parent)
     , m_functionsModel(nullptr)
     , m_vars(new Analitza::Variables)
@@ -31,30 +31,30 @@ KAlgebraMobile::KAlgebraMobile(QObject *parent)
     Q_ASSERT(s_self == nullptr);
     s_self = this;
 
-    const auto uri = "org.kde.kalgebra.mobile";
-    qmlRegisterType<ConsoleModel>("org.kde.kalgebra.mobile", 1, 0, "ConsoleModel");
-    qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
-    qmlRegisterUncreatableType<QAbstractItemModel>("org.kde.kalgebra.mobile", 1, 0, "QAbstractItemModel", QStringLiteral("no"));
+    const auto uri = "org.kde.kalgebra";
+    qmlRegisterType<ConsoleModel>(uri, 1, 0, "ConsoleModel");
+    qmlRegisterType<QSortFilterProxyModel>(uri, 1, 0, "QSortFilterProxyModel");
+    qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "QAbstractItemModel", QStringLiteral("no"));
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
 
     qmlRegisterAnonymousType<QStandardItemModel>("Kalgebra", 1);
-    qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", QStringLiteral("because"));
+    qmlRegisterUncreatableType<Analitza::Expression>(uri, 1, 0, "Expression", QStringLiteral("because"));
     qRegisterMetaType<QSharedPointer<Analitza::Variables>>("QSharedPointer<Analitza::Variables>");
 }
 
-PlotsModel *KAlgebraMobile::functionsModel()
+PlotsModel *KAlgebraApp::functionsModel()
 {
     if (!m_functionsModel) {
         m_functionsModel = new Analitza::PlotsModel(this);
-        connect(m_functionsModel, &QAbstractItemModel::rowsRemoved, this, &KAlgebraMobile::functionRemoved);
-        connect(m_functionsModel, &QAbstractItemModel::rowsInserted, this, &KAlgebraMobile::functionInserted);
-        connect(m_functionsModel, &QAbstractItemModel::dataChanged, this, &KAlgebraMobile::functionModified);
+        connect(m_functionsModel, &QAbstractItemModel::rowsRemoved, this, &KAlgebraApp::functionRemoved);
+        connect(m_functionsModel, &QAbstractItemModel::rowsInserted, this, &KAlgebraApp::functionInserted);
+        connect(m_functionsModel, &QAbstractItemModel::dataChanged, this, &KAlgebraApp::functionModified);
     }
 
     return m_functionsModel;
 }
 
-void KAlgebraMobile::functionInserted(const QModelIndex &parent, int start, int end)
+void KAlgebraApp::functionInserted(const QModelIndex &parent, int start, int end)
 {
     Q_ASSERT(!parent.isValid());
     for (int i = start; i <= end; i++) {
@@ -63,7 +63,7 @@ void KAlgebraMobile::functionInserted(const QModelIndex &parent, int start, int 
     }
 }
 
-void KAlgebraMobile::functionRemoved(const QModelIndex &parent, int start, int end)
+void KAlgebraApp::functionRemoved(const QModelIndex &parent, int start, int end)
 {
     Q_ASSERT(!parent.isValid());
     for (int i = start; i <= end; i++) {
@@ -72,7 +72,7 @@ void KAlgebraMobile::functionRemoved(const QModelIndex &parent, int start, int e
     }
 }
 
-void KAlgebraMobile::functionModified(const QModelIndex &idxA, const QModelIndex &idxB)
+void KAlgebraApp::functionModified(const QModelIndex &idxA, const QModelIndex &idxB)
 {
     if (idxB.column() == 1) {
         for (int i = idxA.row(); i < idxB.row(); ++i) {
@@ -82,9 +82,9 @@ void KAlgebraMobile::functionModified(const QModelIndex &idxA, const QModelIndex
     } // else TODO: figure out how to control a "rename"
 }
 
-QSharedPointer<Analitza::Variables> KAlgebraMobile::variables() const
+QSharedPointer<Analitza::Variables> KAlgebraApp::variables() const
 {
     return m_vars;
 }
 
-#include "moc_kalgebramobile.cpp"
+#include "moc_kalgebraapp.cpp"
