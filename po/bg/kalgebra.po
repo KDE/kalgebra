@@ -4,20 +4,21 @@
 # Svetoslav Alexandrov AKA Zvezdichko <saturn@gbg.bg>, 2008.
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2008.
 # Yasen Pramatarov <yasen@lindeas.com>, 2009, 2012.
+# SPDX-FileCopyrightText: 2024 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-03 01:37+0000\n"
-"PO-Revision-Date: 2022-11-21 15:39+0200\n"
-"Last-Translator: Светослав Стефанов <svetlisashkov@yahoo.com>\n"
-"Language-Team: Bulgarian <dict@ludost.net>\n"
+"PO-Revision-Date: 2024-11-09 20:04+0100\n"
+"Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: consolehtml.cpp:167
 #, kde-format
@@ -32,7 +33,7 @@ msgstr "Настройки: %1"
 #: consolehtml.cpp:222
 #, kde-format
 msgid "Paste \"%1\" to input"
-msgstr "Поставете \"%1\" за вход"
+msgstr "Поставете „%1“ за вход"
 
 #: consolemodel.cpp:95
 #, kde-format
@@ -398,7 +399,7 @@ msgstr "Премахване на променлива"
 #: varedit.cpp:65
 #, kde-format
 msgid "Edit '%1' value"
-msgstr "Редактиране на \"%1\""
+msgstr "Редактиране на „%1“"
 
 #: varedit.cpp:67
 #, kde-format
