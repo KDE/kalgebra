@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-# Tommi Nieminen <translator@legisign.org>, 2018, 2020, 2023.
+# SPDX-FileCopyrightText: 2018, 2020, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-02-26 19:23+0200\n"
+"PO-Revision-Date: 2024-10-29 19:55+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -28,8 +28,7 @@ msgid "KAlgebra"
 msgstr "KAlgebra"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Lataa skripti"
@@ -40,15 +39,13 @@ msgid "Script (*.kal)"
 msgstr "Komentojono (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script"
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Tallenna skripti"
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Vie loki"
@@ -59,22 +56,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Suorita"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Laske"
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Tyhjennä loki"
@@ -98,17 +92,16 @@ msgstr "Kopioi ”%1”"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Tyhjennä konsolin historia"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
 #: content/ui/controls/AddPlotDialog.qml:69
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Tyhjennä kaikki"
@@ -117,19 +110,19 @@ msgstr "Tyhjennä kaikki"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Sulje ikkuna"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Poista kaavio"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Kaavioita ei ole"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -137,8 +130,7 @@ msgid "Expression to calculate..."
 msgstr "Laskettava lauseke…"
 
 #: content/ui/Dictionary.qml:14
-#, fuzzy, kde-format
-#| msgid "Dictionary"
+#, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
 msgstr "Sanasto"
@@ -185,8 +177,7 @@ msgid "About KAlgebra"
 msgstr "Tietoa KAlgebrasta"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "Kaksiulotteinen kaavio"
@@ -207,8 +198,7 @@ msgid "Reset Viewport"
 msgstr "Tyhjennä ikkuna"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "Kolmiulotteinen kaavio"
@@ -239,8 +229,7 @@ msgid "Errors: %1"
 msgstr "Virheitä: %1"
 
 #: content/ui/Tables.qml:52
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Suorita"
@@ -276,10 +265,9 @@ msgid "A portable calculator"
 msgstr "Siirrettävissä oleva laskin"
 
 #: main.cpp:40
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2020 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "© 2006–2020 Aleix Pol i Gonzalez"
+msgstr "© 2006–2023 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
 #, kde-format
@@ -290,7 +278,7 @@ msgstr "Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Ylläpitäjä"
 
 #: main.cpp:42
 #, kde-format
