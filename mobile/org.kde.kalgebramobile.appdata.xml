@@ -34,6 +34,7 @@
   <name xml:lang="pt">KAlgebra Móvel</name>
   <name xml:lang="pt-BR">KAlgebra Móvel</name>
   <name xml:lang="ru">Мобильная KAlgebra</name>
+  <name xml:lang="sa">KAlgebra Mobile</name>
   <name xml:lang="sk">KAlgebra Mobile</name>
   <name xml:lang="sl">KAlgebra Mobile</name>
   <name xml:lang="sv">Mobil Kalgebra</name>
@@ -72,6 +73,7 @@
   <summary xml:lang="pt">Calculadora de Grafos</summary>
   <summary xml:lang="pt-BR">Calculadora gráfica</summary>
   <summary xml:lang="ru">Графический калькулятор</summary>
+  <summary xml:lang="sa">आलेख गणक</summary>
   <summary xml:lang="sk">Grafická kalkulačka</summary>
   <summary xml:lang="sl">Kalkulator grafov</summary>
   <summary xml:lang="sv">Grafräknare</summary>
@@ -109,6 +111,7 @@
     <p xml:lang="pt">O KAlgebra é uma aplicação que poderá substituir a sua calculadora gráfica. Tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas na consola e lhe permite desenhar de forma gráfica os resultados em 2D e 3D.</p>
     <p xml:lang="pt-BR">KAlgebra é um aplicativo que poderá substituir a sua calculadora gráfica. Tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas no console e também desenhar de forma gráfica os resultados em 2D e 3D.</p>
     <p xml:lang="ru">KAlgebra — программа-калькулятор с функцией построения графиков. Позволяет вычислять значения выражений и строить двумерные и трёхмерные графики функций.</p>
+    <p xml:lang="sa">KAlgebra इति एकः अनुप्रयोगः यः भवतः graphing calculator इत्यस्य स्थाने स्थापयितुं शक्नोति । अस्मिन् संख्यात्मकं, तार्किकं, प्रतीकात्मकं, विश्लेषणं च विशेषताः सन्ति ये भवन्तं कन्सोल् इत्यत्र गणितीयव्यञ्जनानां गणनां कर्तुं शक्नुवन्ति तथा च परिणामान् 2D अथवा 3D इत्यत्र चित्रात्मकरूपेण प्लॉट् कर्तुं शक्नुवन्ति ।</p>
     <p xml:lang="sk">KAlgebra je aplikácia, ktorá vie nahradiť vašu grafickú kalkulačku. Má numerické, logické, symbolické a analytické funkcie, ktoré vám umožnia vypočítať matematické výrazy na konzole a graficky znázorniť výsledky v 2D alebo 3D.</p>
     <p xml:lang="sl">KAlgebra je aplikacija, ki lahko nadomesti vaš grafični kalkulator. Ima numerične, logične, simbolične in analizne funkcije, ki omogočajo izračunavanje matematičnih izrazov na konzoli in rezultate narišejo v 2D ali 3D grafu.</p>
     <p xml:lang="sv">Kalgebra är en applikation som kan ersätta en grafräknare. Den har numeriska, logiska, symboliska och analytiska funktioner som låter dig beräkna matematiska uttryck i terminalen och rita upp resultaten grafiskt med två eller tre dimensioner.</p>
