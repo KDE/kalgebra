@@ -95,7 +95,7 @@ msgstr "अस्तु"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr ""
+msgstr "अपाकरोति"
 
 #: functionedit.cpp:243
 #, kde-format
@@ -141,7 +141,7 @@ msgstr "C&alculator"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Load Script..."
-msgstr ""
+msgstr "&स्क्रिप्ट् लोड् कुर्वन्तु..."
 
 #: kalgebra.cpp:200
 #, kde-format
@@ -152,19 +152,19 @@ msgstr "अद्यतन लिपि"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Save Script..."
-msgstr ""
+msgstr "&स्क्रिप्ट् रक्षतु..."
 
 #: kalgebra.cpp:209
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Export Log..."
-msgstr ""
+msgstr "&निर्यात लॉग..."
 
 #: kalgebra.cpp:211
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr ""
+msgstr "&Insert ans..."
 
 #: kalgebra.cpp:212
 #, kde-format
@@ -175,13 +175,13 @@ msgstr "निष्पादनविधिः"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Calculate"
-msgstr ""
+msgstr "गणयतु"
 
 #: kalgebra.cpp:215
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Evaluate"
-msgstr ""
+msgstr "गणयति"
 
 #: kalgebra.cpp:235
 #, kde-format
@@ -232,25 +232,25 @@ msgstr "प्रस्ताव"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Poor"
-msgstr ""
+msgstr "निर्धनः"
 
 #: kalgebra.cpp:298
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Normal"
-msgstr ""
+msgstr "सामान्य"
 
 #: kalgebra.cpp:299
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Fine"
-msgstr ""
+msgstr "दण्डः"
 
 #: kalgebra.cpp:300
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Very Fine"
-msgstr ""
+msgstr "अतीव सूक्ष्मम्"
 
 #: kalgebra.cpp:334
 #, kde-format
@@ -341,7 +341,7 @@ msgstr "चित्रसञ्चिका (*.png);;SVG सञ्चिका 
 #, kde-format
 msgctxt "@info:status"
 msgid "Ready"
-msgstr ""
+msgstr "आत्त"
 
 #: kalgebra.cpp:726
 #, kde-format
@@ -372,13 +372,13 @@ msgstr "अलेक्स पोल् तथा गोन्जालेज्
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #: main.cpp:37
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: varedit.cpp:35
 #, kde-format

@@ -33,7 +33,7 @@ msgstr "KAlgebra"
 #, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr ""
+msgstr "स्क्रिप्ट् लोड् कुर्वन्तु"
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
@@ -44,13 +44,13 @@ msgstr "स्क्रिप्ट(*.कल) २."
 #, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr ""
+msgstr "स्क्रिप्ट् रक्षतु"
 
 #: content/ui/Console.qml:83
 #, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr ""
+msgstr "निर्यात लॉग"
 
 #: content/ui/Console.qml:87
 #, kde-format
@@ -61,19 +61,19 @@ msgstr "एचटीएमएल (*.html) २."
 #, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr ""
+msgstr "गणयति"
 
 #: content/ui/Console.qml:94
 #, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr ""
+msgstr "गणयतु"
 
 #: content/ui/Console.qml:100
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr ""
+msgstr "Log स्पष्टं कुर्वन्तु"
 
 #: content/ui/Console.qml:131
 #, kde-format
@@ -94,37 +94,37 @@ msgstr "\"%1\" प्रतिलिपितु।"
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "रिक्तं कन्सोल् इतिहासम्"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "संयोजयति"
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr ""
+msgstr "सर्वं स्वच्छं कुर्वन्तु"
 
 #: content/ui/controls/AddPlotDialog.qml:82
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "संवादं बन्दं कुर्वन्तु"
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "कथानकं निष्कासयन्तु"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "कथानकं उपलब्धं नास्ति"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
@@ -280,16 +280,16 @@ msgstr "अलेक्स पोल् तथा गोन्जालेज्
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "परिपालकः"
 
 #: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
