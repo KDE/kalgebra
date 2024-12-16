@@ -1,295 +1,292 @@
-# Sanskrit translations for kalgebra package.
+# Hindi translations for kalgebra package.
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
-# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2024-12-13 20:20+0530\n"
-"Last-Translator: kali <skkalwar999@gmail.com>\n"
-"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
-"Language: sa\n"
+"PO-Revision-Date: 2024-12-15 15:57+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n>2);\n"
-"X-Generator: Lokalize 24.08.2\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
 msgid "Calculator"
-msgstr "गणकम्"
+msgstr ""
 
 #: content/ui/Console.qml:40 content/ui/main.qml:108
 #, kde-format
 msgid "KAlgebra"
-msgstr "KAlgebra"
+msgstr ""
 
 #: content/ui/Console.qml:62
 #, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
-msgstr "स्क्रिप्ट् लोड् कुर्वन्तु"
+msgstr ""
 
 #: content/ui/Console.qml:66 content/ui/Console.qml:76
 #, kde-format
 msgid "Script (*.kal)"
-msgstr "स्क्रिप्ट(*.कल) २."
+msgstr ""
 
 #: content/ui/Console.qml:72
 #, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
-msgstr "स्क्रिप्ट् रक्षतु"
+msgstr ""
 
 #: content/ui/Console.qml:83
 #, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
-msgstr "निर्यात लॉग"
+msgstr ""
 
 #: content/ui/Console.qml:87
 #, kde-format
 msgid "HTML (*.html)"
-msgstr "एचटीएमएल (*.html) २."
+msgstr ""
 
 #: content/ui/Console.qml:94
 #, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr "गणयति"
+msgstr ""
 
 #: content/ui/Console.qml:94
 #, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
-msgstr "गणयतु"
+msgstr ""
 
 #: content/ui/Console.qml:100
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
-msgstr "Log स्पष्टं कुर्वन्तु"
+msgstr ""
 
 #: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
-msgstr "2D प्लॉट"
+msgstr ""
 
 #: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
-msgstr "3D प्लॉट"
+msgstr ""
 
 #: content/ui/Console.qml:149
 #, kde-format
 msgid "Copy \"%1\""
-msgstr "\"%1\" प्रतिलिपितु।"
+msgstr ""
 
 #: content/ui/Console.qml:187
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr "रिक्तं कन्सोल् इतिहासम्"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr "संयोजयति"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr "सर्वं स्वच्छं कुर्वन्तु"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:82
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr "संवादं बन्दं कुर्वन्तु"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr "कथानकं निष्कासयन्तु"
+msgstr ""
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr "कथानकं उपलब्धं नास्ति"
+msgstr ""
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
 msgid "Expression to calculate..."
-msgstr "गणनां कर्तुं अभिव्यक्तिः..."
+msgstr ""
 
 #: content/ui/Dictionary.qml:14
 #, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
-msgstr "शब्दकोश"
+msgstr ""
 
 #: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
-msgstr "नामः:"
+msgstr ""
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
 #: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
 #, kde-format
 msgid "%1:"
-msgstr "%1: १."
+msgstr ""
 
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr "आलेख 2D"
+msgstr ""
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr "आलेख 3D"
+msgstr ""
 
 #: content/ui/main.qml:70
 #, kde-format
 msgid "Value Tables"
-msgstr "मूल्यसारणी"
+msgstr ""
 
 #: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
-msgstr "चराः"
+msgstr ""
 
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
-msgstr "शब्दकोश"
+msgstr ""
 
 #: content/ui/main.qml:88
 #, kde-format
 msgid "About KAlgebra"
-msgstr "KAlgebra विषये"
+msgstr ""
 
 #: content/ui/Plot2D.qml:21
 #, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
-msgstr "2D प्लॉट"
+msgstr ""
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
 #, kde-format
 msgid "Save"
-msgstr "रक्ष्"
+msgstr ""
 
 #: content/ui/Plot2D.qml:52
 #, kde-format
 msgid "View Grid"
-msgstr "View Grid"
+msgstr ""
 
 #: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
 #, kde-format
 msgid "Reset Viewport"
-msgstr "Viewport पुनः सेट् कुर्वन्तु"
+msgstr ""
 
 #: content/ui/Plot3D.qml:21
 #, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
-msgstr "3D प्लॉट"
+msgstr ""
 
 #: content/ui/TableResultPage.qml:9
 #, kde-format
 msgid "Results"
-msgstr "परिणामाः"
+msgstr ""
 
 #: content/ui/Tables.qml:12
 #, kde-format
 msgid "Value tables"
-msgstr "मूल्यसारणीः"
+msgstr ""
 
 #: content/ui/Tables.qml:30
 #, kde-format
 msgid "Errors: The step cannot be 0"
-msgstr "त्रुटयः : सोपानं 0 न भवितुम् अर्हति"
+msgstr ""
 
 #: content/ui/Tables.qml:32
 #, kde-format
 msgid "Errors: The start and end are the same"
-msgstr "दोषाः : आरम्भः अन्तः च समानौ स्तः"
+msgstr ""
 
 #: content/ui/Tables.qml:34
 #, kde-format
 msgid "Errors: %1"
-msgstr "त्रुटयः : %1"
+msgstr ""
 
 #: content/ui/Tables.qml:52
 #, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
-msgstr "धावनं करोतु"
+msgstr ""
 
 #: content/ui/Tables.qml:63
 #, kde-format
 msgid "Input"
-msgstr "निवेशः"
+msgstr ""
 
 #: content/ui/Tables.qml:72
 #, kde-format
 msgid "From:"
-msgstr "इत्यस्मात्‌:"
+msgstr ""
 
 #: content/ui/Tables.qml:79
 #, kde-format
 msgid "To:"
-msgstr "इत्यस्मै:"
+msgstr ""
 
 #: content/ui/Tables.qml:86
 #, kde-format
 msgid "Step"
-msgstr "चरण"
+msgstr ""
 
 #: content/ui/Tables.qml:92
 #, kde-format
 msgid "Run"
-msgstr "धावनं करोतु"
+msgstr ""
 
 #: main.cpp:38
 #, kde-format
 msgid "A portable calculator"
-msgstr "एकः पोर्टेबलः गणकः"
+msgstr ""
 
 #: main.cpp:40
 #, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2023 अलेक्स पोल एवं गोन्जालेज"
+msgstr ""
 
 #: main.cpp:41
 #, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "अलेक्स पोल् तथा गोन्जालेज्"
+msgstr ""
 
 #: main.cpp:41
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr "परिपालकः"
+msgstr ""
 
 #: main.cpp:42
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "भवतः नामानि"
+msgstr ""
 
 #: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "भवतः ईमेलपत्राणि"
+msgstr ""
