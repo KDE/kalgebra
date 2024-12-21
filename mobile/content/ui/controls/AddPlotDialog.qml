@@ -66,6 +66,37 @@ QQC2.Dialog {
             }
 
             QQC2.Button {
+                text: i18nc("@action:button", "Examples")
+                onClicked: {
+                    if (menu.visible) {
+                        menu.hide()
+                    } else {
+                        menu.popup(this, 0, height)
+                    }
+                }
+
+                QQC2.ToolTip.text: text
+                QQC2.ToolTip.visible: hovered
+                QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+
+                QQC2.Menu {
+                    id: menu
+                    Repeater {
+                        model: App.examples(root.dimension)
+                        delegate: QQC2.MenuItem {
+                            text: modelData
+                            onClicked: {
+                                input.text = modelData
+                                input.selectAll()
+                                input.focus = true
+                            }
+                        }
+                    }
+                }
+            }
+
+            QQC2.Button {
+                icon.name: "edit-clear-all"
                 text: i18nc("@action:button", "Clear All")
                 onClicked: {
                     App.functionsModel().clear();
