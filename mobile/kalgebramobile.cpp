@@ -11,6 +11,7 @@
 #include "clipboard.h"
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <analitzaplot/plotsfactory.h>
 #include <qqml.h>
 
 using namespace Analitza;
@@ -85,6 +86,11 @@ void KAlgebraMobile::functionModified(const QModelIndex &idxA, const QModelIndex
 QSharedPointer<Analitza::Variables> KAlgebraMobile::variables() const
 {
     return m_vars;
+}
+
+QStringList KAlgebraMobile::examples(Dimension dim) const
+{
+    return PlotsFactory::self()->examples(dim);
 }
 
 #include "moc_kalgebramobile.cpp"

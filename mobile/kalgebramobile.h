@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <analitza/variables.h>
+#include <analitzaplot/plottingenums.h>
 
 class QModelIndex;
 namespace Analitza
@@ -45,6 +46,7 @@ public:
 public Q_SLOTS:
     Analitza::PlotsModel *functionsModel();
     QSharedPointer<Analitza::Variables> variables() const;
+    QStringList examples(Analitza::Dimension dimension) const;
 
 private Q_SLOTS:
     void functionRemoved(const QModelIndex &parent, int start, int end);
