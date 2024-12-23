@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"POT-Creation-Date: 2024-12-23 00:37+0000\n"
 "PO-Revision-Date: 2023-12-04 12:38+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -107,22 +107,28 @@ msgstr "Afig"
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
+msgid "Examples"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:100
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Neteja-ho tot"
 
-#: content/ui/controls/AddPlotDialog.qml:82
+#: content/ui/controls/AddPlotDialog.qml:113
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
 msgstr "Tanca el diàleg"
 
-#: content/ui/controls/AddPlotDialog.qml:122
+#: content/ui/controls/AddPlotDialog.qml:153
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
 msgstr "Elimina la gràfica"
 
-#: content/ui/controls/AddPlotDialog.qml:137
+#: content/ui/controls/AddPlotDialog.qml:168
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"

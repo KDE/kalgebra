@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"POT-Creation-Date: 2024-12-23 00:37+0000\n"
 "PO-Revision-Date: 2024-04-30 15:47+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -103,22 +103,28 @@ msgstr "Přidat"
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
+msgid "Examples"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:100
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Smazat vše"
 
-#: content/ui/controls/AddPlotDialog.qml:82
+#: content/ui/controls/AddPlotDialog.qml:113
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
 msgstr "Zavřít dialog"
 
-#: content/ui/controls/AddPlotDialog.qml:122
+#: content/ui/controls/AddPlotDialog.qml:153
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
 msgstr "Odstranit graf"
 
-#: content/ui/controls/AddPlotDialog.qml:137
+#: content/ui/controls/AddPlotDialog.qml:168
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"

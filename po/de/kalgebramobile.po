@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-04 01:35+0000\n"
+"POT-Creation-Date: 2024-12-23 00:37+0000\n"
 "PO-Revision-Date: 2024-09-28 20:20+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -106,22 +106,28 @@ msgstr "Hinzufügen"
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
+msgid "Examples"
+msgstr ""
+
+#: content/ui/controls/AddPlotDialog.qml:100
+#, kde-format
+msgctxt "@action:button"
 msgid "Clear All"
 msgstr "Alles löschen"
 
-#: content/ui/controls/AddPlotDialog.qml:82
+#: content/ui/controls/AddPlotDialog.qml:113
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
 msgstr "Dialog schließen"
 
-#: content/ui/controls/AddPlotDialog.qml:122
+#: content/ui/controls/AddPlotDialog.qml:153
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
 msgstr "Plot entfernen"
 
-#: content/ui/controls/AddPlotDialog.qml:137
+#: content/ui/controls/AddPlotDialog.qml:168
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
