@@ -97,6 +97,8 @@ ColumnLayout {
         focus: true
 
         readonly property string currentWord: operators.lastWord(field.cursorPosition, field.text)
+        property var history: []
+        property int historyPos: 0
 
         Layout.minimumWidth: parent.width
         Layout.preferredHeight: Kirigami.Units.gridUnit * 2
@@ -108,10 +110,28 @@ ColumnLayout {
 
         Keys.forwardTo: view.visible && view.currentIndex >= 0 ? [ view.currentItem ] : null
         Keys.onTabPressed: view.incrementCurrentIndex()
-        Keys.onUpPressed: view.decrementCurrentIndex()
-        Keys.onDownPressed: view.incrementCurrentIndex()
+        Keys.onUpPressed: {
+            if (view.count > 0) {
+                view.decrementCurrentIndex()
+            } else {
+                if (historyPos < (history.length - 1))
+                    historyPos++
+                text = history[history.length - 1 - historyPos]
+            }
+        }
+        Keys.onDownPressed: {
+            if (view.count > 0) {
+                view.incrementCurrentIndex()
+            } else {
+                if (historyPos > 0)
+                    historyPos--
+                text = history[history.length - 1 - historyPos]
+            }
+        }
         Keys.onReturnPressed: {
             view.currentIndex = -1;
+            historyPos = -1
+            history.push(text)
             addOperation(text);
             field.text = '';
         }
