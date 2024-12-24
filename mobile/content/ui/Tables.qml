@@ -13,11 +13,23 @@ Kirigami.ScrollablePage {
 
     property ListModel resultsModel: ListModel {}
 
+    function showResults() {
+        applicationWindow().pageStack.push("qrc:/TableResultPage.qml", {
+            'results': resultsModel
+        });
+    }
+
     function calculateTable() {
         resultsModel.clear();
 
         var tmp = a.unusedVariableName()
-        var ret = a.insertVariable(tmp, a.dependenciesToLambda(input.text))
+        const lambda = a.dependenciesToLambda(input.text);
+        if (lambda === "") {
+            resultsModel.append( { element: i18n("Errors: Invalid expression %1", input.text) } );
+            showResults();
+            return;
+        }
+        var ret = a.insertVariable(tmp, lambda)
         var ffrom = from.realValue, fto=to.realValue, fstep=step.realValue;
 //         console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
         if((fto-ffrom>0)!=(fstep>0)) {
@@ -34,17 +46,17 @@ Kirigami.ScrollablePage {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
             for (var i=ffrom; i<=fto &&  i>=ffrom && a.isCorrect; i+=fstep) {
-                var args = new Array();
-                args[0]=i;
-                var expr = a.executeFunc(tmp, args);
-                resultsModel.append( { element: i +" = "+ expr.expression } );
+                const expr = a.executeFunc(tmp, [ i ]);
+                if (typeof(expr) === "string") {
+                    resultsModel.append( { element: i18n("error: %1", expr) } );
+                } else {
+                    resultsModel.append( { element: i +" = "+ expr.expression } );
+                }
             }
         }
 
         a.removeVariable(tmp);
-        applicationWindow().pageStack.push("qrc:/TableResultPage.qml", {
-            'results': resultsModel
-        });
+        showResults();
     }
 
     actions: QQC2.Action {
