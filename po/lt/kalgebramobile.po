@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:37+0000\n"
+"POT-Creation-Date: 2024-12-24 00:37+0000\n"
 "PO-Revision-Date: 2019-03-08 03:26+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -131,7 +131,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr ""
 
-#: content/ui/controls/ExpressionInput.qml:106
+#: content/ui/controls/ExpressionInput.qml:108
 #, kde-format
 msgid "Expression to calculate..."
 msgstr ""

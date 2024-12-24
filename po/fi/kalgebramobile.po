@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:37+0000\n"
+"POT-Creation-Date: 2024-12-24 00:37+0000\n"
 "PO-Revision-Date: 2024-10-29 19:55+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -130,7 +130,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "Kaavioita ei ole"
 
-#: content/ui/controls/ExpressionInput.qml:106
+#: content/ui/controls/ExpressionInput.qml:108
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Laskettava lauseke…"

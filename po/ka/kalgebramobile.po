@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:37+0000\n"
-"PO-Revision-Date: 2023-12-04 06:10+0100\n"
+"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"PO-Revision-Date: 2024-12-23 05:23+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -105,7 +105,7 @@ msgstr "დამატება"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "მაგალითები"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -131,7 +131,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "გრაფიკების გარეშე"
 
-#: content/ui/controls/ExpressionInput.qml:106
+#: content/ui/controls/ExpressionInput.qml:108
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "გამოსათვლელი გამოსახულება..."

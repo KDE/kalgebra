@@ -1,17 +1,17 @@
 # Translation of kalgebramobile.po to Catalan (Valencian)
-# Copyright (C) 2018-2023 This_file_is_part_of_KDE
+# Copyright (C) 2018-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Aleix <aleixpol@kde.org>, 2018.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
-# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:37+0000\n"
-"PO-Revision-Date: 2023-12-04 12:38+0100\n"
+"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"PO-Revision-Date: 2024-12-23 10:28+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -108,7 +108,7 @@ msgstr "Afig"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Exemples"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -134,7 +134,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "No hi ha cap gràfica disponible"
 
-#: content/ui/controls/ExpressionInput.qml:106
+#: content/ui/controls/ExpressionInput.qml:108
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Expressió que s'ha de calcular…"

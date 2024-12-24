@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2018, 2021, 2023 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2018, 2021, 2023, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
 # Jaap Woldringh <jjhwoldringh@kde.nl>, 2018, 2019, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-23 00:37+0000\n"
-"PO-Revision-Date: 2023-12-04 11:25+0100\n"
+"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"PO-Revision-Date: 2024-12-23 10:53+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -105,7 +105,7 @@ msgstr "Toevoegen"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Voorbeelden"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -131,7 +131,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "Geen plot beschikbaar"
 
-#: content/ui/controls/ExpressionInput.qml:106
+#: content/ui/controls/ExpressionInput.qml:108
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Te berekenen expressie..."
