@@ -59,12 +59,12 @@ Kirigami.ScrollablePage {
     }
 
     Kirigami.FormLayout {
-        QQC2.TextField {
+        ExpressionInput {
             Kirigami.FormData.label: i18n("Input")
             id: input
             text: "sin x";
             Layout.fillWidth: true
-            onAccepted: calculateTable();
+            onAddOperation: calculateTable();
         }
         RealInput {
             id: from;

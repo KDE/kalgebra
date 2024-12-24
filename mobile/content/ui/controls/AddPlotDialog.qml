@@ -40,14 +40,14 @@ QQC2.Dialog {
             Layout.margins: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.smallSpacing
 
-            QQC2.TextField {
+            ExpressionInput {
                 id: input
                 Layout.fillWidth: true
                 focus: true
                 Component.onCompleted: selectAll()
-                Keys.onReturnPressed: {
+                onAddOperation: {
                     input.selectAll()
-                    App.functionsModel().addFunction(input.text, root.dimension, App.variables)
+                    App.functionsModel().addFunction(operation, root.dimension, App.variables)
                 }
             }
 
