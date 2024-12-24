@@ -28,7 +28,7 @@ Kirigami.Page {
             ComboBox {
                 id: chosebox
                 Kirigami.FormData.label: i18n("Name:")
-                textRole: "display"
+                textRole: "name"
 
                 model: OperatorsModel {
                     id: operators
@@ -37,10 +37,6 @@ Kirigami.Page {
                 onCurrentIndexChanged: {
                     page.updateGraph();
                 }
-            }
-            Label {
-                text: operators.data(operators.index(chosebox.currentIndex,0))
-                Kirigami.FormData.label: i18n("%1:", operators.headerData(0,Qt.Horizontal))
             }
             Label {
                 text: operators.data(operators.index(chosebox.currentIndex,1))
