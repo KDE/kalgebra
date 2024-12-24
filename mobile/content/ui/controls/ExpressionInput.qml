@@ -39,6 +39,10 @@ QQC2.TextArea
     placeholderText: i18n("Expression to calculate...")
     inputMethodHints: /*Qt.ImhPreferNumbers |*/ Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 
+    AlgebraHighlighter {
+        textDocument: field.textDocument
+    }
+
     Keys.forwardTo: view.visible && view.currentIndex >= 0 ? [ view.currentItem ] : null
     Keys.onTabPressed: view.incrementCurrentIndex()
     Keys.onUpPressed: {
