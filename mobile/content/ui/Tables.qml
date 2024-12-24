@@ -34,7 +34,7 @@ Kirigami.ScrollablePage {
 //         console.log("chancho (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
         if((fto-ffrom>0)!=(fstep>0)) {
             fstep *= -1;
-            step.value = fstep
+            step.text = fstep
         }
 //         console.log("chancho2 (" + ffrom + ", " + fto + " : " + fstep + ") " + ret);
 
@@ -45,12 +45,14 @@ Kirigami.ScrollablePage {
         } else if(!a.isCorrect) {
             resultsModel.append( { element: i18n("Errors: %1", ret ? ret : a.errors) } );
         } else {
-            for (var i=ffrom; i<=fto &&  i>=ffrom && a.isCorrect; i+=fstep) {
-                const expr = a.executeFunc(tmp, [ i ]);
+
+            for (var i=0, c=Math.abs((ffrom-fto)/fstep); i<=c && a.isCorrect; i++) {
+                const idx = ffrom + i * fstep;
+                const expr = a.executeFunc(tmp, [ idx ]);
                 if (typeof(expr) === "string") {
                     resultsModel.append( { element: i18n("error: %1", expr) } );
                 } else {
-                    resultsModel.append( { element: i +" = "+ expr.expression } );
+                    resultsModel.append( { element: idx +" = "+ expr.expression } );
                 }
             }
         }
