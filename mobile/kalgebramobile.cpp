@@ -9,8 +9,10 @@
 #include "../src/consolemodel.h"
 
 #include "clipboard.h"
+#include <QQuickTextDocument>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <analitzagui/algebrahighlighter.h>
 #include <analitzaplot/plotsfactory.h>
 #include <qqml.h>
 
@@ -23,6 +25,38 @@ KAlgebraMobile *KAlgebraMobile::self()
 }
 
 Q_DECLARE_METATYPE(QSharedPointer<Analitza::Variables>)
+
+class AlgebraHighlighterQml : public AlgebraHighlighter
+{
+    Q_OBJECT
+    Q_PROPERTY(QQuickTextDocument *textDocument READ textDocument WRITE setTextDocument NOTIFY textDocumentChanged)
+public:
+    AlgebraHighlighterQml()
+        : AlgebraHighlighter(nullptr)
+    {
+    }
+
+    QQuickTextDocument *textDocument() const
+    {
+        return m_textDocument;
+    }
+    void setTextDocument(QQuickTextDocument *textDocument)
+    {
+        if (textDocument == m_textDocument) {
+            return;
+        }
+
+        m_textDocument = textDocument;
+        setDocument(m_textDocument->textDocument());
+        Q_EMIT textDocumentChanged(textDocument);
+    }
+
+Q_SIGNALS:
+    void textDocumentChanged(QQuickTextDocument *textDocument);
+
+private:
+    QQuickTextDocument *m_textDocument = nullptr;
+};
 
 KAlgebraMobile::KAlgebraMobile(QObject *parent)
     : QObject(parent)
@@ -37,6 +71,7 @@ KAlgebraMobile::KAlgebraMobile(QObject *parent)
     qmlRegisterType<QSortFilterProxyModel>("org.kde.kalgebra.mobile", 1, 0, "QSortFilterProxyModel");
     qmlRegisterUncreatableType<QAbstractItemModel>("org.kde.kalgebra.mobile", 1, 0, "QAbstractItemModel", QStringLiteral("no"));
     qmlRegisterType<Clipboard>(uri, 1, 0, "Clipboard");
+    qmlRegisterType<AlgebraHighlighterQml>(uri, 1, 0, "AlgebraHighlighter");
 
     qmlRegisterAnonymousType<QStandardItemModel>("Kalgebra", 1);
     qmlRegisterUncreatableType<Analitza::Expression>("org.kde.kalgebra.mobile", 1, 0, "Expression", QStringLiteral("because"));
@@ -93,4 +128,5 @@ QStringList KAlgebraMobile::examples(Dimension dim) const
     return PlotsFactory::self()->examples(dim);
 }
 
+#include "kalgebramobile.moc"
 #include "moc_kalgebramobile.cpp"
