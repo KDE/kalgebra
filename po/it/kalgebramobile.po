@@ -2,14 +2,14 @@
 # SPDX-FileCopyrightText: 2022, 2023 Paolo Zamponi <feus73@gmail.com>
 # This file is distributed under the same license as the kalgebra package.
 # Pino Toscano <toscano.pino@tiscali.it>, 2018, 2019, 2020, 2021.
-# SPDX-FileCopyrightText: 2023 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-12-24 04:42+0100\n"
+"PO-Revision-Date: 2024-12-25 12:40+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -61,7 +61,7 @@ msgstr "HTML (*.html)"
 #, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
-msgstr "Vàluta"
+msgstr "Valuta"
 
 #: content/ui/Console.qml:94
 #, kde-format
