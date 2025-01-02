@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2023-12-04 15:25+0100\n"
+"PO-Revision-Date: 2024-12-28 17:41+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -77,12 +77,12 @@ msgstr "Viŝi Protokolon"
 #: content/ui/Console.qml:131
 #, kde-format
 msgid "2D Plot"
-msgstr "2D Grafiko"
+msgstr "2D-Grafiko"
 
 #: content/ui/Console.qml:140
 #, kde-format
 msgid "3D Plot"
-msgstr "3D Grafiko"
+msgstr "3D-Grafiko"
 
 #: content/ui/Console.qml:149
 #, kde-format
