@@ -51,10 +51,6 @@ set_package_properties(Curses PROPERTIES TYPE OPTIONAL
                                          PURPOSE "Allows KAlgebra to provide a console interface."
                                          URL "https://www.gnu.org/software/ncurses/")
 
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
-add_definitions(-DQT_NO_CAST_TO_ASCII)
-
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
 find_package(KF6 ${KF_MIN_VERSION} OPTIONAL_COMPONENTS ConfigWidgets WidgetsAddons KIO DocTools XmlGui)
 find_package(Plasma)
