@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"POT-Creation-Date: 2025-01-13 00:37+0000\n"
 "PO-Revision-Date: 2024-12-26 08:22+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -131,7 +131,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "لا يوجد رسمة"
 
-#: content/ui/controls/ExpressionInput.qml:108
+#: content/ui/controls/ExpressionInput.qml:39
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "التعبير لحسابه..."
@@ -148,7 +148,7 @@ msgid "Name:"
 msgstr "الاسم:"
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
-#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
+#: content/ui/Dictionary.qml:51
 #, kde-format
 msgid "%1:"
 msgstr "‏%1:"
@@ -220,48 +220,59 @@ msgstr "النّتائج"
 msgid "Value tables"
 msgstr "جداول القيمة"
 
-#: content/ui/Tables.qml:30
+#: content/ui/Tables.qml:28
+#, kde-format
+msgid "Errors: Invalid expression %1"
+msgstr ""
+
+#: content/ui/Tables.qml:42
 #, kde-format
 msgid "Errors: The step cannot be 0"
 msgstr "خطأ: لا يمكن أن تكون الخطوة 0"
 
-#: content/ui/Tables.qml:32
+#: content/ui/Tables.qml:44
 #, kde-format
 msgid "Errors: The start and end are the same"
 msgstr "خطأ: البداية والنهاية نفس الشيء"
 
-#: content/ui/Tables.qml:34
+#: content/ui/Tables.qml:46
 #, kde-format
 msgid "Errors: %1"
 msgstr "الأخطاء: %1"
 
-#: content/ui/Tables.qml:52
+#: content/ui/Tables.qml:53
+#, fuzzy, kde-format
+#| msgid "Errors: %1"
+msgid "error: %1"
+msgstr "الأخطاء: %1"
+
+#: content/ui/Tables.qml:66
 #, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "شغّل"
 
-#: content/ui/Tables.qml:63
+#: content/ui/Tables.qml:77
 #, kde-format
 msgid "Input"
 msgstr "الدّخل"
 
-#: content/ui/Tables.qml:72
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "From:"
 msgstr "من:"
 
-#: content/ui/Tables.qml:79
+#: content/ui/Tables.qml:93
 #, kde-format
 msgid "To:"
 msgstr "إلى:"
 
-#: content/ui/Tables.qml:86
+#: content/ui/Tables.qml:100
 #, kde-format
 msgid "Step"
 msgstr "خطوة"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:106
 #, kde-format
 msgid "Run"
 msgstr "شغّل"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"POT-Creation-Date: 2025-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-01-05 09:38+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -130,7 +130,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr ""
 
-#: content/ui/controls/ExpressionInput.qml:108
+#: content/ui/controls/ExpressionInput.qml:39
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Έκφραση για υπολογισμό..."
@@ -147,7 +147,7 @@ msgid "Name:"
 msgstr "Όνομα:"
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
-#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
+#: content/ui/Dictionary.qml:51
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -219,48 +219,59 @@ msgstr "Αποτελέσματα"
 msgid "Value tables"
 msgstr "Πίνακες τιμών"
 
-#: content/ui/Tables.qml:30
+#: content/ui/Tables.qml:28
+#, kde-format
+msgid "Errors: Invalid expression %1"
+msgstr ""
+
+#: content/ui/Tables.qml:42
 #, kde-format
 msgid "Errors: The step cannot be 0"
 msgstr "Σφάλματα: το βήμα δεν γίνεται να είναι 0"
 
-#: content/ui/Tables.qml:32
+#: content/ui/Tables.qml:44
 #, kde-format
 msgid "Errors: The start and end are the same"
 msgstr "Σφάλματα: η αρχή και το τέλος είναι ίδια"
 
-#: content/ui/Tables.qml:34
+#: content/ui/Tables.qml:46
 #, kde-format
 msgid "Errors: %1"
 msgstr "Σφάλματα: %1"
 
-#: content/ui/Tables.qml:52
+#: content/ui/Tables.qml:53
+#, fuzzy, kde-format
+#| msgid "Errors: %1"
+msgid "error: %1"
+msgstr "Σφάλματα: %1"
+
+#: content/ui/Tables.qml:66
 #, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Εκτέλεση"
 
-#: content/ui/Tables.qml:63
+#: content/ui/Tables.qml:77
 #, kde-format
 msgid "Input"
 msgstr "Είσοδος"
 
-#: content/ui/Tables.qml:72
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "From:"
 msgstr "Από:"
 
-#: content/ui/Tables.qml:79
+#: content/ui/Tables.qml:93
 #, kde-format
 msgid "To:"
 msgstr "Σε:"
 
-#: content/ui/Tables.qml:86
+#: content/ui/Tables.qml:100
 #, kde-format
 msgid "Step"
 msgstr "Βήμα"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:106
 #, kde-format
 msgid "Run"
 msgstr "Εκτέλεση"

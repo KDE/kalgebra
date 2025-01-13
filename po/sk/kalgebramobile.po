@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"POT-Creation-Date: 2025-01-13 00:37+0000\n"
 "PO-Revision-Date: 2019-08-11 16:35+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -138,7 +138,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr ""
 
-#: content/ui/controls/ExpressionInput.qml:108
+#: content/ui/controls/ExpressionInput.qml:39
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Výraz na vypočítanie..."
@@ -155,7 +155,7 @@ msgid "Name:"
 msgstr ""
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
-#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
+#: content/ui/Dictionary.qml:51
 #, kde-format
 msgid "%1:"
 msgstr ""
@@ -230,51 +230,62 @@ msgstr "Výsledky"
 msgid "Value tables"
 msgstr ""
 
-#: content/ui/Tables.qml:30
+#: content/ui/Tables.qml:28
+#, kde-format
+msgid "Errors: Invalid expression %1"
+msgstr ""
+
+#: content/ui/Tables.qml:42
 #, kde-format
 msgid "Errors: The step cannot be 0"
 msgstr "Chyby: krok nemôže byť 0"
 
-#: content/ui/Tables.qml:32
+#: content/ui/Tables.qml:44
 #, kde-format
 msgid "Errors: The start and end are the same"
 msgstr "Chyby: Začiatok a koniec nemôže byť ten istý"
 
-#: content/ui/Tables.qml:34
+#: content/ui/Tables.qml:46
 #, kde-format
 msgid "Errors: %1"
 msgstr "Chyby: %1"
 
-#: content/ui/Tables.qml:52
+#: content/ui/Tables.qml:53
+#, fuzzy, kde-format
+#| msgid "Errors: %1"
+msgid "error: %1"
+msgstr "Chyby: %1"
+
+#: content/ui/Tables.qml:66
 #, fuzzy, kde-format
 #| msgid "Run"
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Spustiť"
 
-#: content/ui/Tables.qml:63
+#: content/ui/Tables.qml:77
 #, fuzzy, kde-format
 #| msgid "Input:"
 msgid "Input"
 msgstr "Vstup:"
 
-#: content/ui/Tables.qml:72
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "From:"
 msgstr "Od:"
 
-#: content/ui/Tables.qml:79
+#: content/ui/Tables.qml:93
 #, kde-format
 msgid "To:"
 msgstr "Pre:"
 
-#: content/ui/Tables.qml:86
+#: content/ui/Tables.qml:100
 #, fuzzy, kde-format
 #| msgid "Step:"
 msgid "Step"
 msgstr "Krok:"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:106
 #, kde-format
 msgid "Run"
 msgstr "Spustiť"

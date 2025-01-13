@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-24 00:37+0000\n"
+"POT-Creation-Date: 2025-01-13 00:37+0000\n"
 "PO-Revision-Date: 2024-12-23 10:28+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -134,7 +134,7 @@ msgctxt "@info"
 msgid "No plot available"
 msgstr "No hi ha cap gràfica disponible"
 
-#: content/ui/controls/ExpressionInput.qml:108
+#: content/ui/controls/ExpressionInput.qml:39
 #, kde-format
 msgid "Expression to calculate..."
 msgstr "Expressió a calcular..."
@@ -151,7 +151,7 @@ msgid "Name:"
 msgstr "Nom:"
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
-#: content/ui/Dictionary.qml:51 content/ui/Dictionary.qml:55
+#: content/ui/Dictionary.qml:51
 #, kde-format
 msgid "%1:"
 msgstr "%1:"
@@ -223,48 +223,59 @@ msgstr "Resultats"
 msgid "Value tables"
 msgstr "Taules de valors"
 
-#: content/ui/Tables.qml:30
+#: content/ui/Tables.qml:28
+#, kde-format
+msgid "Errors: Invalid expression %1"
+msgstr ""
+
+#: content/ui/Tables.qml:42
 #, kde-format
 msgid "Errors: The step cannot be 0"
 msgstr "Errors: El pas no pot ser 0"
 
-#: content/ui/Tables.qml:32
+#: content/ui/Tables.qml:44
 #, kde-format
 msgid "Errors: The start and end are the same"
 msgstr "Errors: L'inici i el final és el mateix"
 
-#: content/ui/Tables.qml:34
+#: content/ui/Tables.qml:46
 #, kde-format
 msgid "Errors: %1"
 msgstr "Errors: %1"
 
-#: content/ui/Tables.qml:52
+#: content/ui/Tables.qml:53
+#, fuzzy, kde-format
+#| msgid "Errors: %1"
+msgid "error: %1"
+msgstr "Errors: %1"
+
+#: content/ui/Tables.qml:66
 #, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Executa"
 
-#: content/ui/Tables.qml:63
+#: content/ui/Tables.qml:77
 #, kde-format
 msgid "Input"
 msgstr "Entrada"
 
-#: content/ui/Tables.qml:72
+#: content/ui/Tables.qml:86
 #, kde-format
 msgid "From:"
 msgstr "De:"
 
-#: content/ui/Tables.qml:79
+#: content/ui/Tables.qml:93
 #, kde-format
 msgid "To:"
 msgstr "A:"
 
-#: content/ui/Tables.qml:86
+#: content/ui/Tables.qml:100
 #, kde-format
 msgid "Step"
 msgstr "Pas"
 
-#: content/ui/Tables.qml:92
+#: content/ui/Tables.qml:106
 #, kde-format
 msgid "Run"
 msgstr "Executa"
