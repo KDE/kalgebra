@@ -1,17 +1,17 @@
 # Translation of kalgebramobile.po to Catalan (Valencian)
-# Copyright (C) 2018-2024 This_file_is_part_of_KDE
+# Copyright (C) 2018-2025 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Aleix <aleixpol@kde.org>, 2018.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
-# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2022, 2023, 2024.
+# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-23 10:28+0100\n"
+"PO-Revision-Date: 2025-01-13 10:00+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -226,7 +226,7 @@ msgstr "Taules de valors"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Errors: Expressió no vàlida %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -244,10 +244,9 @@ msgid "Errors: %1"
 msgstr "Errors: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Errors: %1"
+msgstr "s'ha produït un error: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

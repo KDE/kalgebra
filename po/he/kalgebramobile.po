@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-24 07:35+0200\n"
+"PO-Revision-Date: 2025-01-13 18:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -223,7 +223,7 @@ msgstr "טבלאות ערכים"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "שגיאות: ביטוי רגולרי שגוי %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -241,10 +241,9 @@ msgid "Errors: %1"
 msgstr "שגיאות: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "שגיאות: %1"
+msgstr "שגיאה: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

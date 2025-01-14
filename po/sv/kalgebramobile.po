@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2025-01-11 12:07+0100\n"
+"PO-Revision-Date: 2025-01-13 17:18+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -222,7 +222,7 @@ msgstr "Värdetabeller"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Fel: Ogiltigt uttryck %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -240,10 +240,9 @@ msgid "Errors: %1"
 msgstr "Fel: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Fel: %1"
+msgstr "fel: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

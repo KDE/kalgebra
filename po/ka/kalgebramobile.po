@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-23 05:23+0100\n"
+"PO-Revision-Date: 2025-01-13 05:15+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -223,7 +223,7 @@ msgstr "მნიშვნელობის ცხრილები"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "შეცდომა: არასწორი გამოსახულება %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -241,10 +241,9 @@ msgid "Errors: %1"
 msgstr "შეცდომები: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "შეცდომები: %1"
+msgstr "შეცდომა: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

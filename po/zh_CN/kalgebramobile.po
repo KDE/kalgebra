@@ -240,10 +240,9 @@ msgid "Errors: %1"
 msgstr "错误：%1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "错误：%1"
+msgstr ""
 
 #: content/ui/Tables.qml:66
 #, kde-format

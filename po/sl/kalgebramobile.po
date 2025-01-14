@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-23 06:29+0100\n"
+"PO-Revision-Date: 2025-01-13 05:43+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -224,7 +224,7 @@ msgstr "Tabele vrednosti"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Napake: Neveljavni izraz %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -242,10 +242,9 @@ msgid "Errors: %1"
 msgstr "Napake: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Napake: %1"
+msgstr "napaka: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format
