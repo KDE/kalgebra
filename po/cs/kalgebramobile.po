@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
 "PO-Revision-Date: 2024-04-30 15:47+0200\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -240,10 +240,9 @@ msgid "Errors: %1"
 msgstr "Chyby: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Chyby: %1"
+msgstr "chyba: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the kalgebra package.
 #
 # Automatically generated, 2022.
-# SPDX-FileCopyrightText: 2023, 2024 Mincho Kondarev <mkondarev@yahoo.de>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-24 16:18+0100\n"
+"PO-Revision-Date: 2025-01-15 00:12+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -224,7 +224,7 @@ msgstr "Таблици със стойности"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Грешки: Невалиден израз %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -242,10 +242,9 @@ msgid "Errors: %1"
 msgstr "Грешки: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Грешки: %1"
+msgstr "грешка: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format

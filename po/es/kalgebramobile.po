@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Automatically generated, 2018.
-# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-12-23 20:39+0100\n"
+"PO-Revision-Date: 2025-01-13 20:19+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -224,7 +224,7 @@ msgstr "Tablas de valores"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Errores: Expresión no válida %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -242,10 +242,9 @@ msgid "Errors: %1"
 msgstr "Errors: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Errors: %1"
+msgstr "error: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format
