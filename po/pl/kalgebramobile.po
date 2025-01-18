@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2025-01-11 12:07+0100\n"
+"PO-Revision-Date: 2025-01-18 11:47+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -223,7 +223,7 @@ msgstr "Tabela wartości"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Błędy: Nieprawidłowe wyrażenia %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -241,10 +241,9 @@ msgid "Errors: %1"
 msgstr "Błąd: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Błąd: %1"
+msgstr "błąd: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format
