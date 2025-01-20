@@ -116,13 +116,13 @@ msgstr "关闭对话"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr "移除图形"
+msgstr "移除图表"
 
 #: content/ui/controls/AddPlotDialog.qml:137
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr "没有可用的图象"
+msgstr "没有可用的图表"
 
 #: content/ui/controls/ExpressionInput.qml:106
 #, kde-format
