@@ -56,6 +56,9 @@ parts:
     override-stage: |
         craftctl default
         rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+    build-environment: &build-environment
+      - PKG_CONFIG_PATH: "/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig"
+      - LD_LIBRARY_PATH: "$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:${LD_LIBRARY_PATH}"
     prime:
       - -usr/bin/rsync
   kalgebra:
@@ -83,6 +86,7 @@ parts:
       - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - --log-level=STATUS
       - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+    build-environment: *build-environment
     prime:
       - -usr/lib/*/cmake/*
       - -usr/include/*
