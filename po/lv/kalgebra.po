@@ -7,27 +7,27 @@
 # Viesturs Zariņš <viesturs.zarins@algorego.com>, 2008.
 # Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
 # Einars Sprugis <einars8@gmail.com>, 2010, 2011.
+# SPDX-FileCopyrightText: 2025 Toms Trasuns <toms.trasuns@posteo.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-03 01:37+0000\n"
-"PO-Revision-Date: 2011-07-06 01:24+0300\n"
-"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
-"Language-Team: Latvian <locale@laka.lv>\n"
+"PO-Revision-Date: 2025-01-28 18:29+0200\n"
+"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 24.12.1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
 #: consolehtml.cpp:167
-#, fuzzy, kde-format
-#| msgid " <a href='%1'>%2</a>"
+#, kde-format
 msgid " <a href='kalgebra:%1'>%2</a>"
-msgstr " <a href='%1'>%2</a>"
+msgstr " <a href='kalgebra:%1'>%2</a>"
 
 #: consolehtml.cpp:172
 #, kde-format
@@ -37,13 +37,12 @@ msgstr "Opcijas: %1"
 #: consolehtml.cpp:222
 #, kde-format
 msgid "Paste \"%1\" to input"
-msgstr "Ievietot \"%1\" ievadē"
+msgstr "Ielīmēt „%1“ ievadē"
 
 #: consolemodel.cpp:95
-#, fuzzy, kde-format
-#| msgid "Paste \"%1\" to input"
+#, kde-format
 msgid "Paste to Input"
-msgstr "Ievietot \"%1\" ievadē"
+msgstr "Ielīmēt ievadē"
 
 #: consolemodel.cpp:99
 #, kde-format
@@ -58,7 +57,7 @@ msgstr "Importēts: %1"
 #: consolemodel.cpp:123
 #, kde-format
 msgid "<ul class='error'>Error: Could not load %1. <br /> %2</ul>"
-msgstr "<ul class='error'>Kļūda: neizdevās ielādēt %1. <br /> %2</ul>"
+msgstr "<ul class='error'>Kļūda: neizdevās ielādēt „%1“. <br /> %2</ul>"
 
 #: dictionary.cpp:45
 #, kde-format
@@ -73,7 +72,7 @@ msgstr "<b>%1</b>"
 #: functionedit.cpp:51
 #, kde-format
 msgid "Add/Edit a function"
-msgstr "Pielikt/labot funkciju"
+msgstr "Pievienot/rediģēt funkciju"
 
 #: functionedit.cpp:96
 #, kde-format
@@ -101,11 +100,10 @@ msgid "OK"
 msgstr "Labi"
 
 #: functionedit.cpp:115
-#, fuzzy, kde-format
-#| msgid "Remove '%1'"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr "Noņemt '%1'"
+msgstr "Noņemt"
 
 #: functionedit.cpp:243
 #, kde-format
@@ -120,12 +118,12 @@ msgstr "Apakšējā robeža nevar būt lielāka nekā augšējā robeža"
 #: kalgebra.cpp:83
 #, kde-format
 msgid "Plot 2D"
-msgstr "Grafiks 2D"
+msgstr "2D grafiks"
 
 #: kalgebra.cpp:114
 #, kde-format
 msgid "Plot 3D"
-msgstr "Grafiks 3D"
+msgstr "3D graiks"
 
 #: kalgebra.cpp:144
 #, kde-format
@@ -138,18 +136,14 @@ msgid "Variables"
 msgstr "Mainīgie"
 
 #: kalgebra.cpp:182
-#, fuzzy, kde-format
-#| msgctxt "@item:inmenu"
-#| msgid "Calculate"
+#, kde-format
 msgid "&Calculator"
-msgstr "Aprēķināt"
+msgstr "&Kalkulators"
 
 #: kalgebra.cpp:194
-#, fuzzy, kde-format
-#| msgctxt "@item:inmenu"
-#| msgid "Calculate"
+#, kde-format
 msgid "C&alculator"
-msgstr "Aprēķināt"
+msgstr "K&alkulators"
 
 #: kalgebra.cpp:196
 #, kde-format
@@ -178,7 +172,7 @@ msgstr "&Eksportēt žurnālu..."
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Insert ans..."
-msgstr ""
+msgstr "&Ievietot atb..."
 
 #: kalgebra.cpp:212
 #, kde-format
@@ -230,7 +224,7 @@ msgstr "2&D grafiks"
 #: kalgebra.cpp:287
 #, kde-format
 msgid "&Grid"
-msgstr "&Rūtiņas"
+msgstr "&Režģis"
 
 #: kalgebra.cpp:288
 #, kde-format
@@ -304,7 +298,7 @@ msgstr "Darbības"
 #: kalgebra.cpp:372
 #, kde-format
 msgid "&Dictionary"
-msgstr "Vār&dnīca"
+msgstr "&Vārdnīca"
 
 #: kalgebra.cpp:383
 #, kde-format
@@ -314,7 +308,7 @@ msgstr "Meklēt:"
 #: kalgebra.cpp:476
 #, kde-format
 msgid "&Editing"
-msgstr "R&ediģēšana"
+msgstr "&Rediģēšana"
 
 #: kalgebra.cpp:533
 #, kde-format
@@ -329,7 +323,7 @@ msgstr "Skripts (*.kal)"
 #: kalgebra.cpp:560
 #, kde-format
 msgid "HTML File (*.html)"
-msgstr "HTML fails (*.html)"
+msgstr "HTML datne (*.html)"
 
 #: kalgebra.cpp:595
 #, kde-format
@@ -337,25 +331,19 @@ msgid ", "
 msgstr ", "
 
 #: kalgebra.cpp:595
-#, fuzzy, kde-format
-#| msgid "Error: %1"
+#, kde-format
 msgid "Errors: %1"
 msgstr "Kļūda: %1"
 
 #: kalgebra.cpp:634
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr ""
+msgstr "Atlasiet, kur novietot uzzīmēto grafiku"
 
 #: kalgebra.cpp:634
-#, fuzzy, kde-format
-#| msgid ""
-#| "*.png|Image File\n"
-#| "*.svg|SVG File"
+#, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
-msgstr ""
-"*.png|Attēla fails\n"
-"*.svg|SVG fails"
+msgstr "Attēla datne (*.png);;SVG datne (*.svg)"
 
 #: kalgebra.cpp:692
 #, kde-format
@@ -371,53 +359,49 @@ msgstr "Pievienot mainīgo"
 #: kalgebra.cpp:730
 #, kde-format
 msgid "Enter a name for the new variable"
-msgstr "Ievadiet jaunā mainīgā nosaukumu"
+msgstr "Ierakstiet jaunā mainīgā nosaukumu"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "A calculator"
+#, kde-format
 msgid "A portable calculator"
-msgstr "Kalkulators"
+msgstr "Portatīvs kalkulators"
 
 #: main.cpp:35
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+#, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
-msgstr "(C) 2006-2010 Aleix Pol Gonzalez"
+msgstr "(C) 2006—2016 Aleix Pol i Gonzalez"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Aleix Pol Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "Aleikss Pols Gozaless (Aleix Pol Gonzalez)"
+msgstr "Aleix Pol i Gonzalez"
 
 #: main.cpp:37
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Toms Trasūns"
 
 #: main.cpp:37
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "toms.trasuns@posteo.net"
 
 #: varedit.cpp:35
 #, kde-format
 msgid "Add/Edit a variable"
-msgstr "Pievienot/Labot mainīgo"
+msgstr "Pievienot/rediģēt mainīgo"
 
 #: varedit.cpp:40
-#, fuzzy, kde-format
-#| msgid "Variables"
+#, kde-format
 msgid "Remove Variable"
-msgstr "Mainīgie"
+msgstr "Noņemt mainīgo"
 
 #: varedit.cpp:65
 #, kde-format
 msgid "Edit '%1' value"
-msgstr "Labot '%1' vērtību"
+msgstr "Rediģēt „%1“ vērtību"
 
 #: varedit.cpp:67
 #, kde-format

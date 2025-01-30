@@ -1,0 +1,310 @@
+# Copyright (C) 2025 This file is copyright:
+# This file is distributed under the same license as the kalgebra package.
+#
+# SPDX-FileCopyrightText: 2025 Toms Trasuns <toms.trasuns@posteo.net>
+msgid ""
+msgstr ""
+"Project-Id-Version: kalgebra\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2025-01-13 00:37+0000\n"
+"PO-Revision-Date: 2025-01-28 18:35+0200\n"
+"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 24.12.1\n"
+
+#: content/ui/Console.qml:19 content/ui/main.qml:50
+#, kde-format
+msgid "Calculator"
+msgstr "Kalkulators"
+
+#: content/ui/Console.qml:40 content/ui/main.qml:108
+#, kde-format
+msgid "KAlgebra"
+msgstr "KAlgebra"
+
+#: content/ui/Console.qml:62
+#, kde-format
+msgctxt "@action:button"
+msgid "Load Script"
+msgstr "Ielādēt skript"
+
+#: content/ui/Console.qml:66 content/ui/Console.qml:76
+#, kde-format
+msgid "Script (*.kal)"
+msgstr "Skripts (*.kal)"
+
+#: content/ui/Console.qml:72
+#, kde-format
+msgctxt "@action:button"
+msgid "Save Script"
+msgstr "Saglabāt skriptu"
+
+#: content/ui/Console.qml:83
+#, kde-format
+msgctxt "@action:button"
+msgid "Export Log"
+msgstr "Eksportēt žurnālu"
+
+#: content/ui/Console.qml:87
+#, kde-format
+msgid "HTML (*.html)"
+msgstr "HTML (*.html)"
+
+#: content/ui/Console.qml:94
+#, kde-format
+msgctxt "@action:button"
+msgid "Evaluate"
+msgstr "Novērtēt"
+
+#: content/ui/Console.qml:94
+#, kde-format
+msgctxt "@action:button"
+msgid "Calculate"
+msgstr "Aprēķināt"
+
+#: content/ui/Console.qml:100
+#, kde-format
+msgctxt "@action:button"
+msgid "Clear Log"
+msgstr "Notīrīt žurnālu"
+
+#: content/ui/Console.qml:131
+#, kde-format
+msgid "2D Plot"
+msgstr "2D grafiks"
+
+#: content/ui/Console.qml:140
+#, kde-format
+msgid "3D Plot"
+msgstr "3D grafiks"
+
+#: content/ui/Console.qml:149
+#, kde-format
+msgid "Copy \"%1\""
+msgstr "Kopēt „%1“"
+
+#: content/ui/Console.qml:187
+#, kde-format
+msgctxt "@info"
+msgid "Empty console history"
+msgstr "Iztukšot konsoles vēsturi"
+
+#: content/ui/controls/AddPlotDialog.qml:56
+#, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr "Pievienot"
+
+#: content/ui/controls/AddPlotDialog.qml:69
+#, kde-format
+msgctxt "@action:button"
+msgid "Examples"
+msgstr "Piemēri"
+
+#: content/ui/controls/AddPlotDialog.qml:100
+#, kde-format
+msgctxt "@action:button"
+msgid "Clear All"
+msgstr "Notīrīt visu"
+
+#: content/ui/controls/AddPlotDialog.qml:113
+#, kde-format
+msgctxt "@action:button"
+msgid "Close dialog"
+msgstr "Aizvērt lodziņu"
+
+#: content/ui/controls/AddPlotDialog.qml:153
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove plot"
+msgstr "Noņemt grafiku"
+
+#: content/ui/controls/AddPlotDialog.qml:168
+#, kde-format
+msgctxt "@info"
+msgid "No plot available"
+msgstr "Neviens grafiks nav pieejams"
+
+#: content/ui/controls/ExpressionInput.qml:39
+#, kde-format
+msgid "Expression to calculate..."
+msgstr "Aprēķināmā izteiksme..."
+
+#: content/ui/Dictionary.qml:14
+#, kde-format
+msgctxt "@title:window"
+msgid "Dictionary"
+msgstr "Vārdnīca"
+
+#: content/ui/Dictionary.qml:30
+#, kde-format
+msgid "Name:"
+msgstr "Nosaukums:"
+
+#: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
+#: content/ui/Dictionary.qml:51
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: content/ui/main.qml:57
+#, kde-format
+msgid "Graph 2D"
+msgstr "2D grafiks"
+
+#: content/ui/main.qml:64
+#, kde-format
+msgid "Graph 3D"
+msgstr "3D grafiks"
+
+#: content/ui/main.qml:70
+#, kde-format
+msgid "Value Tables"
+msgstr "Vērtību tabulas"
+
+#: content/ui/main.qml:76 content/ui/VariablesView.qml:11
+#, kde-format
+msgid "Variables"
+msgstr "Mainīgie"
+
+#: content/ui/main.qml:82
+#, kde-format
+msgid "Dictionary"
+msgstr "Vārdnīca"
+
+#: content/ui/main.qml:88
+#, kde-format
+msgid "About KAlgebra"
+msgstr "Par „KAlgebra“"
+
+#: content/ui/Plot2D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "2D Plot"
+msgstr "2D grafiks"
+
+#: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
+#, kde-format
+msgid "Save"
+msgstr "Saglabāt"
+
+#: content/ui/Plot2D.qml:52
+#, kde-format
+msgid "View Grid"
+msgstr "Skatīt režģi"
+
+#: content/ui/Plot2D.qml:60 content/ui/Plot3D.qml:53
+#, kde-format
+msgid "Reset Viewport"
+msgstr "Atiestatīt skatu"
+
+#: content/ui/Plot3D.qml:21
+#, kde-format
+msgctxt "@title:window"
+msgid "3D Plot"
+msgstr "3D grafiks"
+
+#: content/ui/TableResultPage.qml:9
+#, kde-format
+msgid "Results"
+msgstr "Rezultāti"
+
+#: content/ui/Tables.qml:12
+#, kde-format
+msgid "Value tables"
+msgstr "Vērtību tabulas"
+
+#: content/ui/Tables.qml:28
+#, kde-format
+msgid "Errors: Invalid expression %1"
+msgstr "Kļūdas: nederīga izteiksme %1"
+
+#: content/ui/Tables.qml:42
+#, kde-format
+msgid "Errors: The step cannot be 0"
+msgstr "Kļūdas: solis nevar būt 0"
+
+#: content/ui/Tables.qml:44
+#, kde-format
+msgid "Errors: The start and end are the same"
+msgstr "Kļūdas: sākums un beigas ir vienādas"
+
+#: content/ui/Tables.qml:46
+#, kde-format
+msgid "Errors: %1"
+msgstr "Kļūdas: %1"
+
+#: content/ui/Tables.qml:53
+#, kde-format
+msgid "error: %1"
+msgstr "kļūda: %1"
+
+#: content/ui/Tables.qml:66
+#, kde-format
+msgctxt "@action:button Run table"
+msgid "Run"
+msgstr "Palaist"
+
+#: content/ui/Tables.qml:77
+#, kde-format
+msgid "Input"
+msgstr "Ievade"
+
+#: content/ui/Tables.qml:86
+#, kde-format
+msgid "From:"
+msgstr "No:"
+
+#: content/ui/Tables.qml:93
+#, kde-format
+msgid "To:"
+msgstr "Līdz:"
+
+#: content/ui/Tables.qml:100
+#, kde-format
+msgid "Step"
+msgstr "Solis"
+
+#: content/ui/Tables.qml:106
+#, kde-format
+msgid "Run"
+msgstr "Palaist"
+
+#: main.cpp:38
+#, kde-format
+msgid "A portable calculator"
+msgstr "Portatīvs kalkulators"
+
+#: main.cpp:40
+#, kde-format
+msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
+msgstr "(C) 2006—2023 Aleix Pol i Gonzalez"
+
+#: main.cpp:41
+#, kde-format
+msgid "Aleix Pol i Gonzalez"
+msgstr "Aleix Pol i Gonzalez"
+
+#: main.cpp:41
+#, kde-format
+msgctxt "@info:credit"
+msgid "Maintainer"
+msgstr "Uzturētājs"
+
+#: main.cpp:42
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Toms Trasūns"
+
+#: main.cpp:42
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "toms.trasuns@posteo.net"
