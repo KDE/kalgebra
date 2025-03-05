@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-04 01:35+0000\n"
-"PO-Revision-Date: 2024-09-28 20:20+0200\n"
+"PO-Revision-Date: 2024-12-23 16:55+0100\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -287,13 +287,13 @@ msgstr "Betreuer"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Alois Spitzbart"
+msgstr "Deutsches KDE-Übersetzungsteam"
 
 #: main.cpp:42
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "spitz234@hotmail.com"
+msgstr "kde-i18n-de@kde.org"
 
 #~ msgid "KAlgebra Mobile"
 #~ msgstr "KAlgebra Mobil"
