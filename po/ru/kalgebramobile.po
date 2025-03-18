@@ -3,22 +3,22 @@
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2018.
 # SPDX-FileCopyrightText: 2020, 2024 Alexander Yavorsky <kekcuha@gmail.com>
-# Olesya Gerasimenko <translation-team@basealt.ru>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-02-10 13:42+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2025-03-17 10:34+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -107,7 +107,7 @@ msgstr "Добавить"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Примеры"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -225,7 +225,7 @@ msgstr "Таблицы значений"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Ошибки: недопустимое выражение %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -243,10 +243,9 @@ msgid "Errors: %1"
 msgstr "Ошибки: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Ошибки: %1"
+msgstr "ошибка: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format
