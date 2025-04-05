@@ -242,7 +242,6 @@ msgstr "Feil: %1"
 
 #: content/ui/Tables.qml:53
 #, fuzzy, kde-format
-#| msgid "Errors: %1"
 msgid "error: %1"
 msgstr "Feil: %1"
 
