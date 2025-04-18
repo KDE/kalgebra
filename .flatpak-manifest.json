@@ -1,10 +1,10 @@
 {
   "id": "org.kde.kalgebra",
   "runtime": "org.kde.Platform",
-  "runtime-version": "6.7",
+  "runtime-version": "6.9",
   "sdk": "org.kde.Sdk",
   "base": "io.qt.qtwebengine.BaseApp",
-  "base-version": "6.6",
+  "base-version": "6.9",
   "command": "kalgebra",
   "rename-icon": "kalgebra",
   "copy-icon": true,
