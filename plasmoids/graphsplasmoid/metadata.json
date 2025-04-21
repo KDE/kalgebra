@@ -1,4 +1,5 @@
 {
+    "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
         "Authors": [
             {
@@ -131,9 +132,6 @@
         "Name[x-test]": "xx2D Plotsxx",
         "Name[zh_CN]": "二维绘图",
         "Name[zh_TW]": "2D 繪圖",
-        "ServiceTypes": [
-            "Plasma/Applet"
-        ],
         "Version": "1.0",
         "Website": "https://edu.kde.org/kalgebra"
     },
