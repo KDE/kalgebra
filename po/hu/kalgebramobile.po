@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 #
-# SPDX-FileCopyrightText: 2024 Kristof Kiszel <ulysses@fsf.hu>
+# SPDX-FileCopyrightText: 2024, 2025 Kristof Kiszel <ulysses@fsf.hu>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2024-03-04 21:32+0100\n"
+"PO-Revision-Date: 2025-04-29 21:40+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -104,7 +104,7 @@ msgstr "Hozzáadás"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Példák"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -222,7 +222,7 @@ msgstr "Értéktáblázatok"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Hiba: érvénytelen kifejezés %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -240,10 +240,9 @@ msgid "Errors: %1"
 msgstr "Hibák: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
-msgstr "Hibák: %1"
+msgstr "hiba: %1"
 
 #: content/ui/Tables.qml:66
 #, kde-format
