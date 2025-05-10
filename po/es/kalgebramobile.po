@@ -1,15 +1,15 @@
 # Spanish translations for kalgebramobile.po package.
-# Copyright (C) 2018-2025 This_file_is_part_of_KDE
+# Copyright (C) 2018-2025 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
-#
 # Automatically generated, 2018.
+#
 # SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebramobile\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-13 00:37+0000\n"
-"PO-Revision-Date: 2025-02-18 02:33+0100\n"
+"PO-Revision-Date: 2025-05-10 00:50+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -309,36 +309,3 @@ msgstr "Eloy Cuadra"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "ecuadra@eloihr.net"
-
-#~ msgid "KAlgebra Mobile"
-#~ msgstr "KAlgebra Mobile"
-
-#~ msgid "A simple scientific calculator"
-#~ msgstr "Una sencilla calculadora científica"
-
-#~ msgid "Results:"
-#~ msgstr "Resultado:"
-
-#~ msgid ""
-#~ "KAlgebra is brought to you by the lovely community of <a href='http://kde."
-#~ "org'>KDE</a> and <a href='http://edu.kde.org/'>KDE Edu</a> from a Free "
-#~ "Software environment."
-#~ msgstr ""
-#~ "La encantadora comunidad de <a href='http://kde.org'>KDE</a> y de <a "
-#~ "href='http://edu.kde.org/'>KDE Edu</a> le proporcionan KAlgebra desde un "
-#~ "entorno de Software Libre."
-
-#~ msgid ""
-#~ "In case you want to learn more about KAlgebra, you can find more "
-#~ "information <a href='https://edu.kde.org/applications/mathematics/"
-#~ "kalgebra/'>in the official site</a> and in the <a href='https://userbase."
-#~ "kde.org/KAlgebra'>users wiki</a>.<br/>If you have any problem with your "
-#~ "software, please report it to <a href='https://bugs.kde.org'>our bug "
-#~ "tracker</a>."
-#~ msgstr ""
-#~ "Si desea saber más sobre KAlgebra, puede encontrar más información en el "
-#~ "<a href='https://edu.kde.org/applications/mathematics/kalgebra/'>sitio "
-#~ "oficial</a> y en la <a href='https://userbase.kde.org/KAlgebra'>wiki de "
-#~ "sus usuarios</a>.<br/>Si tiene algún problema con este software, "
-#~ "díganoslo mediante <a href='https://bugs.kde.org'>nuestro sistema de "
-#~ "seguimiento de errores</a>."
