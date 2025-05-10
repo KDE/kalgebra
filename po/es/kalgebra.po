@@ -1,5 +1,5 @@
-# Translation of kalgebra to Spanish
-# Copyright (C) 2007-2025 This_file_is_part_of_KDE
+# Spanish translations for kalgebra.po package.
+# Copyright (C) 2007-2025 This file is copyright:
 # This file is distributed under the same license as the kalgebra package.
 #
 # SPDX-FileCopyrightText: 2007, 2008 Santiago Fernández Sancho <santi@kde-es.org>
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-03 01:37+0000\n"
-"PO-Revision-Date: 2025-02-18 02:32+0100\n"
+"PO-Revision-Date: 2025-05-10 00:54+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -440,46 +440,3 @@ msgstr "Altura:"
 #, kde-format
 msgid "Apply"
 msgstr "Aplicar"
-
-#~ msgid ""
-#~ "PNG File (*.png);;PDF Document(*.pdf);;X3D Document (*.x3d);;STL Document "
-#~ "(*.stl)"
-#~ msgstr ""
-#~ "Archivo PNG (*.png);;Documento PDF (*.pdf);;Documento X3D (*.x3d);;"
-#~ "Documento STL (*.stl)"
-
-#~ msgid "C&onsole"
-#~ msgstr "C&onsola"
-
-#~ msgid "KAlgebra"
-#~ msgstr "KAlgebra"
-
-#~ msgid "&Console"
-#~ msgstr "&Consola"
-
-#~ msgid "Percy Camilo Triveño Aucahuasi"
-#~ msgstr "Percy Camilo Triveño Aucahuasi"
-
-#~ msgid ""
-#~ "Developed feature for drawing implicit curves. Improvements for plotting "
-#~ "functions."
-#~ msgstr ""
-#~ "Desarrollo de la funcionalidad para dibujar curvas implícitas. Mejoras en "
-#~ "las funciones de trazado."
-
-#~ msgid "<b>Formula</b>"
-#~ msgstr "<b>Fórmula</b>"
-
-#~ msgid "Error: Wrong type of function"
-#~ msgstr "Error: tipo de función incorrecto"
-
-#~ msgctxt "3D graph done in x milliseconds"
-#~ msgid "Done: %1ms"
-#~ msgstr "Hecho: %1ms"
-
-#~ msgid "Error: %1"
-#~ msgstr "Error: %1"
-
-#~ msgctxt "@action:button"
-#~ msgid "Clear"
-#~ msgstr "Borrar"
