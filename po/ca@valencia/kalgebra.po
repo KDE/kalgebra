@@ -311,7 +311,7 @@ msgstr "&Editant"
 #: kalgebra.cpp:533
 #, kde-format
 msgid "Choose a script"
-msgstr "Trieu un script"
+msgstr "Tria un script"
 
 #: kalgebra.cpp:533 kalgebra.cpp:549
 #, kde-format
