@@ -15,7 +15,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: más(... parámetros, ...)</para
+>Parámetros: más(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -37,7 +37,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: veces(... parámetros, ...)</para
+>Parámetros: veces(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -59,7 +59,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: menos(... parámetros, ...)</para
+>Parámetros: menos(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -191,7 +191,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: y(... parámetros, ...)</para
+>Parámetros: y(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -213,7 +213,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: o(... parámetros, ...)</para
+>Parámetros: o(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -235,7 +235,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: xor(... parámetros, ...)</para
+>Parámetros: xor(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -279,7 +279,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: mcd(... parámetros, ...)</para
+>Parámetros: mcd(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -301,7 +301,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: mcm(... parámetros, ...)</para
+>Parámetros: mcm(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -367,7 +367,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: max(... parámetros, ...)</para
+>Parámetros: max(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -389,7 +389,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: min(... parámetros, ...)</para
+>Parámetros: min(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -1401,7 +1401,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: scalarproduct(... parámetros, ...)</para
+>Parámetros: scalarproduct(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
@@ -1445,7 +1445,7 @@
 ></listitem>
 		<listitem
 ><para
->Parámetros: union(... parámetros, ...)</para
+>Parámetros: union(… parámetros, …)</para
 ></listitem>
 		<listitem
 ><para
