@@ -468,7 +468,7 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Cargar guion...</guimenuitem
+>Cargar guion…</guimenuitem
 > </menuchoice
 ></term>
 <listitem
@@ -504,7 +504,7 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Guardar guion...</guimenuitem
+>Guardar guion…</guimenuitem
 > </menuchoice
 ></term>
 <listitem
@@ -525,7 +525,7 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Exportar registro...</guimenuitem
+>Exportar registro…</guimenuitem
 > </menuchoice
 ></term>
 <listitem
@@ -544,7 +544,7 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Insertar ans...</guimenuitem
+>Insertar ans…</guimenuitem
 > </menuchoice
 ></term>
 <listitem
