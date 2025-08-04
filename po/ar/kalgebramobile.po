@@ -111,7 +111,7 @@ msgstr "أمثلة"
 #, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr "امسح الكلّ"
+msgstr "امحُ الكلّ"
 
 #: content/ui/controls/AddPlotDialog.qml:113
 #, kde-format
