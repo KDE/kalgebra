@@ -336,7 +336,7 @@ msgstr "Errors: %1"
 #: kalgebra.cpp:634
 #, kde-format
 msgid "Select where to put the rendered plot"
-msgstr "Seleccioneu a on s'ha de situar el gràfic renderitzat"
+msgstr "Trieu a on s'ha de situar el gràfic renderitzat"
 
 #: kalgebra.cpp:634
 #, kde-format
