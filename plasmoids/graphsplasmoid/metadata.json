@@ -38,7 +38,6 @@
                 "Name[sv]": "Aleix Pol Gonzalez",
                 "Name[tr]": "Aleix Pol Gonzalez",
                 "Name[uk]": "Aleix Pol Gonzalez",
-                "Name[x-test]": "xxAleix Pol Gonzalezxx",
                 "Name[zh_TW]": "Aleix Pol Gonzalez"
             }
         ],
@@ -77,7 +76,6 @@
         "Description[sv]": "Rita riktigt konstiga diagram på skrivbordet.",
         "Description[tr]": "Masaüstüne en tuhaf çizimleri koyun!",
         "Description[uk]": "Розташуйте на вашій стільниці найвигадливіше креслення!",
-        "Description[x-test]": "xxPut the weirdest plots on your desktop!xx",
         "Description[zh_TW]": "把您所想得到的詭異繪圖放在桌面上吧！",
         "EnabledByDefault": true,
         "Icon": "kalgebra",
@@ -129,7 +127,6 @@
         "Name[te]": "2D ప్లాట్",
         "Name[tr]": "2B Çizimler",
         "Name[uk]": "Плоскі графіки",
-        "Name[x-test]": "xx2D Plotsxx",
         "Name[zh_CN]": "二维绘图",
         "Name[zh_TW]": "2D 繪圖",
         "Version": "1.0",
