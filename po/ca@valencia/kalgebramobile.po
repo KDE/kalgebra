@@ -3,9 +3,9 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Aleix <aleixpol@kde.org>, 2018.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
-# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2022, 2023, 2024, 2025.
+# SPDX-FileCopyrightText: 2018 Aleix <aleixpol@kde.org>
+# SPDX-FileCopyrightText: 2018, 2020, 2021 Antoni Bella Pérez <antonibella5@yahoo.com>
+# SPDX-FileCopyrightText: 2018, 2019, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kalgebra\n"
