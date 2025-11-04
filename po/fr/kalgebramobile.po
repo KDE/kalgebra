@@ -117,7 +117,7 @@ msgstr "Tout effacer"
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr "Fermer la boîte de dialogue"
+msgstr "Fermer la boite de dialogue"
 
 #: content/ui/controls/AddPlotDialog.qml:153
 #, kde-format
