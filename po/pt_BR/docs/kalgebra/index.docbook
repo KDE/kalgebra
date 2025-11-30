@@ -1,8 +1,10 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&kalgebra;">
   <!ENTITY commands SYSTEM "commands.docbook">
 
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
@@ -67,13 +69,13 @@
 
 
 <date
->19/04/2016</date>
+>17/12/2020</date>
 <releaseinfo
->0.10 (Applications 16.04)</releaseinfo>
+>Applications 20.12</releaseinfo>
 
 <abstract>
 <para
->&kalgebra; é um aplicativo que pode substituir a sua calculadora gráfica. Ele tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas e desenhar graficamente os resultados em 2D ou 3D. O &kalgebra; é baseado na Mathematical Markup Language (MathML). Entretanto, não é preciso conhecer o MathML para usar o &kalgebra;. </para>
+>&kalgebra; é um aplicativo que pode substituir a sua calculadora gráfica. Ele tem funcionalidades numéricas, lógicas, simbólicas e analíticas que lhe permitem calcular expressões matemáticas e desenhar graficamente os resultados em 2D ou 3D. O &kalgebra; é baseado na Mathematical Markup Language (&MathML;). Entretanto, não é preciso conhecer o &MathML; para usar o &kalgebra;. </para>
 </abstract>
 
 <keywordset>
@@ -90,7 +92,7 @@
 <keyword
 >3D</keyword>
 <keyword
->mathML</keyword>
+>MathML</keyword>
 </keywordset>
 
 </bookinfo>
@@ -100,7 +102,7 @@
 >Introdução</title>
 
 <para
->O &kalgebra; tem diversas funcionalidades que permitem ao usuário efetuar todos os tipos de operações matemáticas e mostrá-las de forma gráfica. No passado, este programa foi orientado para o MathML. Agora ele pode ser usado por todos os que tenham algum conhecimentos de matemática para resolver problemas simples e avançados. </para>
+>O &kalgebra; tem diversas funcionalidades que permitem ao usuário efetuar todos os tipos de operações matemáticas e mostrá-las de forma gráfica. No passado, este programa foi orientado para o &MathML;. Agora ele pode ser usado por todos os que tenham algum conhecimentos de matemática para resolver problemas simples e avançados. </para>
 <!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
 <para
 >Ele inclui algumas funcionalidades como por exemplo: </para>
@@ -113,7 +115,7 @@
 ></listitem>
 <listitem
 ><para
->Capacidades de programação para séries avançadas de cálculos </para
+>Capacidades de programação para séries avançadas de cálculos. </para
 ></listitem>
 <listitem
 ><para
@@ -210,7 +212,7 @@
 ></term>
 <listitem
 ><para
->Alterna a janela do &kalgebra; para o modo em tela inteira. Também é possível usar este modo com <inlinemediaobject
+>Alterna a janela do &kalgebra; para o modo em tela cheia. Também é possível usar este modo com <inlinemediaobject
 > <imageobject
 > <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
 > </inlinemediaobject
@@ -254,57 +256,121 @@
 > para que os usuários possam se familiarizar com estes programas. </para>
 
 <para
->Para os usuários que estejam interessados no funcionamento interno do &kalgebra;, as expressões introduzidas pelo usuário são convertidas para MathML pela infraestrutura. Uma compreensão rudimentar das capacidades suportadas pelo MathML dará um grande avanço sobre as capacidades internas do &kalgebra;. </para>
+>Para os usuários que estejam interessados no funcionamento interno do &kalgebra;, as expressões introduzidas pelo usuário são convertidas para &MathML; pela infraestrutura. Uma compreensão rudimentar das capacidades suportadas pelo &MathML; dará um grande avanço sobre as capacidades internas do &kalgebra;. </para>
 
 <para
 >Aqui está uma lista dos operadores disponíveis que temos até agora:</para>
 <itemizedlist>
 <listitem
 ><para
->+ - * / : Soma, subtração, multiplicação e divisão.</para
+><literal
+>+ - * / </literal
+>: Soma, subtração, multiplicação e divisão.</para
 > </listitem>
 <listitem
 ><para
->^, **: Potência, você poderá usar qualquer um deles. Também é possível usar os caracteres unicode ². As potências também são uma forma de calcular raízes, como pode ser feito em a**(1/b)</para
+><literal
+>^, ** </literal
+>: Potência, você poderá usar qualquer um deles. Também é possível usar os caracteres unicode <literal
+>²</literal
+>. As potências também são uma forma de calcular raízes, como pode ser feito em <literal
+>a**(1/b)</literal
+></para
 ></listitem>
 <listitem
 ><para
->-&gt; : lambda. É a forma de indicar uma ou mais variáveis livres que serão associadas a uma função. Por exemplo, na expressão <userinput
+><literal
+>-&gt; </literal
+>: lambda. É a forma de indicar uma ou mais variáveis livres que serão associadas a uma função. Por exemplo, na expressão <userinput
 >comprimento:=(x,y)->(x*x+y*y)^0.5</userinput
->, o operador 'lambda' é usado para definir que o 'x' e o 'y' serão preenchidos quando for usada a função 'comprimento'. </para
+>, o operador 'lambda' é usado para definir que o <literal
+>x</literal
+> e o <literal
+>y</literal
+> serão preenchidos quando for usada a função 'comprimento'. </para
 ></listitem>
 <listitem
 ><para
->x=a..b : Isto é usado quando é necessário definir um intervalo [variável +limite-superior + limite-inferior). Isto significa que o 'x' vai de 'a' a 'b'.</para
+><literal
+>x=a..b </literal
+>: Isto é usado quando é necessário definir um intervalo [variável +limite-superior + limite-inferior). Isto significa que o <literal
+>x</literal
+> vai de <literal
+>a</literal
+> a <literal
+>b</literal
+>.</para
 ></listitem>
 <listitem
 ><para
->() : É usado para especificar uma maior prioridade.</para
+><literal
+>() </literal
+>: É usado para especificar uma maior prioridade.</para
 ></listitem>
 <listitem
 ><para
->abc(parâmetros) : Funções. Quando o processador encontrar uma função, verifica se o 'abc' é um operador. Se for, será tratado como tal; se não for, será tratado como uma função do usuário.</para
+><literal
+>abc(parâmetros) </literal
+>: Funções. Quando o processador encontrar uma função, verifica se o <literal
+>abc</literal
+> é um operador. Se for, será tratado como tal; se não for, será tratado como uma função do usuário.</para
 ></listitem>
 <listitem
 ><para
->:= : Definição. É usada para definir o valor de uma variável. Você poderá fazer coisas do tipo x:=3, x:=y, sendo que o y pode ser definido ou não, ou ainda perímetro:=r->2*pi*r. </para
+><literal
+>:= </literal
+>: Definição. É usada para definir o valor de uma variável. Você poderá fazer coisas do tipo <userinput
+>x:=3</userinput
+>, <userinput
+>x:=y</userinput
+>, sendo que o <literal
+>y</literal
+> pode ser definido ou não, ou ainda <userinput
+>perímetro:=r->2*pi*r</userinput
+>. </para
 ></listitem>
 <listitem
 ><para
->? : Definição de condições. Esta é a forma de definir operações condicionais no &kalgebra;. Dito de outra forma, esta é uma maneira de especificar uma condição if, elseif, else. Se introduzir a condição antes do ?, será usada apenas se for verdadeira; se encontrar um ? sem qualquer condição, irá entrar na última instância. Por exemplo: condição { x=0 ? 0, x=1 ? x+1, ? x**2 } </para
+><literal
+>? </literal
+>: Definição de condições. Esta é a forma de definir operações condicionais no &kalgebra;. Dito de outra forma, esta é uma maneira de especificar uma condição if, elseif, else. Se introduzir a condição antes do '<literal
+>?</literal
+>', será usada apenas se for verdadeira; se encontrar um '<literal
+>?</literal
+>' sem qualquer condição, irá entrar na última instância. Por exemplo: <userinput
+>condição { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
 ></listitem>
 <listitem
 ><para
->{ } : Contenedor MathML. Pode ser usado para definir um contenedor. É principalmente útil para lidar com as definições de operações condicionais. </para
+><literal
+>{ } </literal
+>: Contenedor MathML. Pode ser usado para definir um contenedor. É principalmente útil para lidar com as definições de operações condicionais. </para
 ></listitem>
 <listitem
 ><para
->= &gt; &gt;= &lt; &lt;= : Comparações dos valores para 'igual', 'maior', 'maior ou igual', 'menor' ou 'menor ou igual', respectivamente</para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: Comparações dos valores para 'igual', 'maior', 'maior ou igual', 'menor' ou 'menor ou igual', respectivamente.</para
 ></listitem>
 </itemizedlist>
 
 <para
->Agora poderá perguntar: para que interessa então o MathML? É simples: com ele, poderá usar funções como cos(), sin(), outras funções trigonométricas, o sum() ou o product(). Não interessa o seu tipo. Poderá usar o plus(), times() e tudo o que tiver o seu operador. As funções booleanas estão também implementadas, pelo que poderá fazer algo do gênero 'or(1,0,0,0,0)'.</para>
+>Agora poderá perguntar: para que interessa então o &MathML;? É simples: com ele, poderá usar funções como <function
+>cos()</function
+>, <function
+>sin()</function
+>, outras funções trigonométricas, o <function
+>sum()</function
+> ou o <function
+>product()</function
+>. Não interessa o seu tipo. Poderá usar o <function
+>plus()</function
+>, <function
+>times()</function
+> e tudo o que tiver o seu operador. As funções booleanas estão também implementadas, pelo que poderá fazer algo do gênero <function
+>or(1,0,0,0,0)</function
+>.</para>
 
 </chapter>
 
@@ -325,30 +391,48 @@
 >Além de mostrar as equações introduzidas pelo usuário e os resultados na área da Calculadora, todas as variáveis declaradas são apresentadas em uma área persistente à direita. Ao clicar duas vezes sobre uma variável, você poderá ver uma janela que lhe permite alterar os seus valores (apenas uma forma de enganar o registro). </para>
 
 <para
->A variável "ans" é especial. Sempre que introduzir uma expressão, o valor da variável "ans" será alterado para o último resultado. </para>
+>A variável <quote
+><varname
+>ans</varname
+></quote
+> é especial. Sempre que introduzir uma expressão, o valor da variável <quote
+><varname
+>ans</varname
+></quote
+> será alterado para o último resultado. </para>
 
 <para
 >As funções seguintes são exemplos que podem ser introduzidos no campo de texto da janela da calculadora:</para>
 <itemizedlist>
 <listitem
 ><para
->sin(pi)</para
+><userinput
+>sin(pi)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->k:=33</para
+><userinput
+>k:=33</userinput
+></para
 ></listitem>
 <listitem
 ><para
->sum(k*x : x=0..10)</para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->f:=p->p*k</para
+><userinput
+>f:=p->p*k</userinput
+></para
 ></listitem>
 <listitem
 ><para
->f(pi)</para
+><userinput
+>f(pi)</userinput
+></para
 ></listitem>
 </itemizedlist>
 
@@ -388,12 +472,27 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Carregar script</guimenuitem
+>Carregar script...</guimenuitem
 > </menuchoice
 ></term>
 <listitem
 ><para
 >Executa as instruções de forma sequencial a partir de um arquivo. Útil se você quiser definir algumas bibliotecas ou terminar algum trabalho anterior.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guisubmenu
+>Scripts recentes</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Exibe um submenu que permitirá escolher os scripts executados recentemente.</para
 ></listitem>
 </varlistentry>
 
@@ -409,12 +508,12 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Salvar script</guimenuitem
+>Salvar script...</guimenuitem
 > </menuchoice
 ></term>
 <listitem
 ><para
->Salva as instruções que escreveu desde o início da sessão, para poder reutilizá-las. Gera arquivos de texto, de modo a serem fáceis de alterar com qualquer editor de texto, como o Kate.</para
+>Salva as instruções que escreveu desde o início da sessão, para poder reutilizá-las. Gera arquivos de texto, de modo a serem fáceis de alterar com qualquer editor de texto, como o &kate;.</para
 ></listitem>
 </varlistentry>
 
@@ -430,7 +529,7 @@
 > <guimenu
 >Calculadora</guimenu
 ><guimenuitem
->Exportar registro</guimenuitem
+>Exportar registro...</guimenuitem
 > </menuchoice
 ></term>
 <listitem
@@ -439,8 +538,64 @@
 ></listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Inserir ans...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Insere a variável <quote
+><varname
+>ans</varname
+></quote
+> e isso tornará mais fácil reutilizar valores antigos.</para
+></listitem>
+</varlistentry>
 
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Calcular</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Um botão de opção para definir o <guilabel
+>Modo de execução</guilabel
+> para cálculo.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Calculadora</guimenu
+><guimenuitem
+>Avaliar</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Um botão de opção para definir o <guilabel
+>Modo de execução</guilabel
+> para avaliação.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
 </chapter>
 
 <chapter id="two-D-graphs">
@@ -457,30 +612,48 @@
 <title
 >Sintaxe</title>
 <para
->Se quiser usar uma função típica f(x), não é necessário especificá-la; mas se quiser uma função f(y) ou uma função polar, terá de adicionar y-&gt; e q-&gt; como variáveis de fronteira.</para>
+>Se quiser usar uma função típica <function
+>f(x)</function
+>, não é necessário especificá-la; mas se quiser uma função <function
+>f(y)</function
+> ou uma função polar, terá de adicionar <literal
+>y-&gt;</literal
+> e <literal
+>q-&gt;</literal
+> como variáveis de fronteira.</para>
 
 <para
 >Exemplos:</para>
 <itemizedlist>
 <listitem
 ><para
->sen(x)</para
+><userinput
+>sen(x)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->x²</para
+><userinput
+>x²</userinput
+></para
 ></listitem>
 <listitem
 ><para
->y->sen(y)</para
+><userinput
+>y->sen(y)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->q->3*sen(7*q)</para
+><userinput
+>q->3*sen(7*q)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->t->vector{sin t, t**2}</para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
 ></listitem>
 </itemizedlist>
 <para
@@ -499,7 +672,7 @@
 > quando estiver no modo de lista. Você poderá atribuir a cada gráfico a sua própria cor.</para>
 
 <para
->A janela poderá ser ampliada e movida com o mouse. Usando a roda do mouse você poderá ampliar e reduzir a mesma. Poderá também selecionar uma área com o botão esquerdo do mouse, ficando apenas esta área ampliada. Mova a visão com as teclas de seta.</para>
+>A janela poderá ser ampliada e movida com o mouse. Usando a roda do mouse você poderá ampliar e reduzir a mesma. Poderá também selecionar uma área com o &LMB;, ficando apenas esta área ampliada. Mova a visão com as teclas de seta do teclado.</para>
 
 <note>
  <para
@@ -513,7 +686,7 @@
 <para
 >Na aba <guilabel
 >Lista</guilabel
->, você pode abrir uma aba de <guilabel
+>, na parte inferior, você pode abrir uma aba de <guilabel
 >Edição</guilabel
 > para editar ou remover uma função com clique duplo e marcar ou desmarcar a opção após o nome da função para a mostrar ou ocultá-la.</para>
 <para
@@ -523,19 +696,35 @@
 <itemizedlist>
 <listitem
 ><para
->Exibe ou oculta a grade</para
+><guimenuitem
+>Grade</guimenuitem
+>: Mostra ou oculta a grade</para
 ></listitem>
 <listitem
 ><para
->Manter a taxa de proporção ao expandir</para
+><guimenuitem
+>Manter proporção</guimenuitem
+>: Mantém a proporção durante o zoom</para
 ></listitem>
 <listitem
 ><para
->Ampliar (<keycombo action="simul"
+><guimenuitem
+>Salvar</guimenuitem
+>: Salva (<keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+>) o gráfico como um arquivo de imagem</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>Ampliar/Reduzir</guimenuitem
+>: Amplia (<keycombo action="simul"
 >&Ctrl; <keycap
 >+</keycap
 ></keycombo
->) e reduzir (<keycombo action="simul"
+>) e reduz (<keycombo action="simul"
 >&Ctrl; <keycap
 >-</keycap
 ></keycombo
@@ -543,24 +732,28 @@
 ></listitem>
 <listitem
 ><para
->Salva (<keycombo action="simul"
->&Ctrl; <keycap
->S</keycap
-></keycombo
->) o gráfico como um arquivo de imagem</para
+><guimenuitem
+>Tamanho real</guimenuitem
+>: Restaura a janela com o nível de ampliação original</para
 ></listitem>
 <listitem
 ><para
->Restaurar a janela com o nível de ampliação original</para
-></listitem>
-<listitem
-><para
->Selecionar uma resolução para os gráficos</para
+><guilabel
+>Resolução</guilabel
+>: Seguido por uma lista de botões de opção para selecionar uma resolução para os gráficos</para
 ></listitem>
 </itemizedlist>
 
 <para
->Abaixo está uma captura de tela de um usuário cujo cursor está na raiz mais à direita da função sin(1/x). O usuário que gerou o gráfico usou uma resolução muito precisa para criar o desenho (conforme ele oscila em frequências cada vez mais altas próximo a origem). Existe também uma funcionalidade de cursor ao vivo em qualquer lugar que você mova o cursor sobre um ponto. Ela mostra os valores x e y no canto inferior esquerdo da tela. Uma "linha tangente" ao vivo é plotada na função na localização do cursor atual. </para>
+>Abaixo está uma captura de tela de um usuário cujo cursor está na raiz mais à direita da função <function
+>sin(1/x)</function
+>. O usuário que gerou o gráfico usou uma resolução muito precisa para criar o desenho (conforme ele oscila em frequências cada vez mais altas próximo a origem). Existe também uma funcionalidade de cursor ao vivo em qualquer lugar que você mova o cursor sobre um ponto. Ela mostra os valores <literal
+>x</literal
+> e <literal
+>y</literal
+> no canto inferior esquerdo da tela. Uma <quote
+>linha tangente</quote
+> ao vivo é plotada na função na localização do cursor atual. </para>
 
 <screenshot>
 <screeninfo
@@ -588,26 +781,42 @@
 <para
 >Para desenhar um gráfico 3D com o &kalgebra;, selecione a aba <guilabel
 >Gráficos 3D</guilabel
->, onde irá ver um campo de texto na base que será usado para digitar a sua função. O Z ainda não pode ser definido. Por enquanto o &kalgebra; só suporta gráficos 3D que dependam explicitamente apenas de x e y, como por exemplo (x,y)->x*y, onde o z=x*y. </para>
+>, onde irá ver um campo de texto na base que será usado para digitar a sua função. O <literal
+>Z</literal
+> ainda não pode ser definido. Por enquanto o &kalgebra; só suporta gráficos 3D que dependam explicitamente apenas de <literal
+>x</literal
+> e <literal
+>y</literal
+>, como por exemplo <userinput
+>(x,y)->x*y</userinput
+>, onde o <userinput
+>z=x*y</userinput
+>. </para>
 
 <para
 >Exemplos:</para>
 <itemizedlist>
 <listitem
 ><para
->(x,y)->sin(x)*sin(y)</para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
 ></listitem>
 <listitem
 ><para
->(x,y)->x/y</para
+><userinput
+>(x,y)->x/y</userinput
+></para
 ></listitem>
 </itemizedlist>
 
 <para
 >A janela pode ser ampliada e movida com o mouse. Usando a roda do mouse você poderá ampliar e reduzir a mesma. Mantenha o &LMB; clicado e mova o mouse para rodar o gráfico.</para>
 
- <para
->As teclas de cursores para a esquerda e direita giram o gráfico em torno do eixo Z, enquanto as teclas para cima e para baixo giram em torno do eixo horizontal da janela. Pressione a tecla <keycap
+<para
+>As teclas de cursores para a &Left; e &Right; giram o gráfico em torno do eixo <literal
+>Z</literal
+>, enquanto as teclas para &Up; e para &Down; giram em torno do eixo horizontal da janela. Pressione a tecla <keycap
 >W</keycap
 > para ampliar o gráfico e em <keycap
 >S</keycap
@@ -621,29 +830,45 @@
 <!-- not in master for 4.11
 <listitem
 ><para
->Enable or disable transparency in the 3D graph menu</para
+>Enable or disable transparency in the 3D Graph menu</para
 ></listitem>
 -->
 <listitem
 ><para
->Salva (<keycombo action="simul"
->&Ctrl; <keycap
+><guimenuitem
+>Salvar</guimenuitem
+>: Salva (<keycombo action="simul"
+>&Ctrl;<keycap
 >S</keycap
 ></keycombo
->) o gráfico como um arquivo de imagem</para
+>) o gráfico como um arquivo de imagem ou documento suportado</para
 ></listitem>
 <listitem
 ><para
->Restaurar a janela com o nível de ampliação original no menu de gráficos 3D</para
+><guimenuitem
+>Redefinir visualização</guimenuitem
+>: Restaura a janela com o nível de ampliação original no menu de <guimenu
+>Gráfico 3D</guimenu
+></para
 ></listitem>
 <listitem
 ><para
->Você pode desenhar os gráficos com estilos de pontos, linhas ou sólido no menu de gráficos 3D</para
+>Você pode desenhar os gráficos com os estilos de <guimenuitem
+>Pontos</guimenuitem
+>, <guimenuitem
+>Linhas</guimenuitem
+> ou <guimenuitem
+>Sólido</guimenuitem
+> no menu <guimenu
+>Gráfico 3D</guimenu
+></para
 ></listitem>
 </itemizedlist>
 
 <para
->Abaixo está uma imagem do função chamada "sombrero". Este gráfico em particular é mostrado usando o estilo em linha de gráfico 3D. </para>
+>Abaixo está uma imagem do função chamada <quote
+>sombrero</quote
+>. Este gráfico em particular é mostrado usando o estilo em linha de gráfico 3D. </para>
 
 <screenshot>
 <screeninfo
