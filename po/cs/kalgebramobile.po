@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024, 2025 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2024-04-30 15:47+0200\n"
+"PO-Revision-Date: 2025-12-02 11:35+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
@@ -104,7 +104,7 @@ msgstr "Přidat"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Příklady"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -222,7 +222,7 @@ msgstr "Tabulky hodnot"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Chyba: Neplatný výraz %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
