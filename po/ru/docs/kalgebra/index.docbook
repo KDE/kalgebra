@@ -353,7 +353,7 @@
 >x:=y</userinput
 > (даже если <literal
 >y</literal
->не определена), <userinput
+> не определена), <userinput
 >perimeter:=r->2*pi*r</userinput
 >. </para
 ></listitem>
