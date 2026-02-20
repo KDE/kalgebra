@@ -93,11 +93,10 @@ msgid "OK"
 msgstr "OK"
 
 #: functionedit.cpp:115
-#, fuzzy, kde-format
-#| msgid "Remove '%1'"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr "Bain '%1'"
+msgstr ""
 
 #: functionedit.cpp:243
 #, kde-format
@@ -130,16 +129,14 @@ msgid "Variables"
 msgstr "Athróga"
 
 #: kalgebra.cpp:182
-#, fuzzy, kde-format
-#| msgid "A calculator"
+#, kde-format
 msgid "&Calculator"
-msgstr "Áireamhán"
+msgstr ""
 
 #: kalgebra.cpp:194
-#, fuzzy, kde-format
-#| msgid "A calculator"
+#, kde-format
 msgid "C&alculator"
-msgstr "Áireamhán"
+msgstr ""
 
 #: kalgebra.cpp:196
 #, kde-format
@@ -337,10 +334,9 @@ msgid "Select where to put the rendered plot"
 msgstr ""
 
 #: kalgebra.cpp:634
-#, fuzzy, kde-format
-#| msgid "Image File (*.png)"
+#, kde-format
 msgid "Image File (*.png);;SVG File (*.svg)"
-msgstr "Comhad Íomhá (*.png)"
+msgstr ""
 
 #: kalgebra.cpp:692
 #, kde-format
@@ -364,16 +360,14 @@ msgid "A portable calculator"
 msgstr ""
 
 #: main.cpp:35
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2010 Aleix Pol Gonzalez"
+#, kde-format
 msgid "(C) 2006-2016 Aleix Pol i Gonzalez"
-msgstr "© 2006-2010 Aleix Pol Gonzalez"
+msgstr ""
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Aleix Pol Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
-msgstr "Aleix Pol Gonzalez"
+msgstr ""
 
 #: main.cpp:37
 #, kde-format
@@ -393,10 +387,9 @@ msgid "Add/Edit a variable"
 msgstr "Cuir athróg leis/in eagar"
 
 #: varedit.cpp:40
-#, fuzzy, kde-format
-#| msgid "Variables"
+#, kde-format
 msgid "Remove Variable"
-msgstr "Athróga"
+msgstr ""
 
 #: varedit.cpp:65
 #, kde-format
@@ -442,558 +435,3 @@ msgstr "Airde:"
 #, kde-format
 msgid "Apply"
 msgstr "Cuir i bhFeidhm"
-
-#~ msgid "C&onsole"
-#~ msgstr "C&onsól"
-
-#~ msgid "&Console"
-#~ msgstr "&Consól"
-
-#~ msgid ""
-#~ "*.png|Image File\n"
-#~ "*.svg|SVG File"
-#~ msgstr ""
-#~ "*.png|Comhad Íomhá\n"
-#~ "*.svg|Comhad SVG"
-
-#~ msgid "Percy Camilo Triveño Aucahuasi"
-#~ msgstr "Percy Camilo Triveño Aucahuasi"
-
-#~ msgid "<b>Formula</b>"
-#~ msgstr "<b>Foirmle</b>"
-
-#~ msgctxt "3D graph done in x milliseconds"
-#~ msgid "Done: %1ms"
-#~ msgstr "Críochnaithe: %1ms"
-
-#~ msgid "Error: %1"
-#~ msgstr "Earráid: %1"
-
-#~ msgctxt "@action:button"
-#~ msgid "Clear"
-#~ msgstr "Glan"
-
-#~ msgid "*.png|PNG File"
-#~ msgstr "*.png|Comhad PNG"
-
-#~ msgid "&Transparency"
-#~ msgstr "&Trédhearcacht"
-
-#~ msgid "Type"
-#~ msgstr "Cineál"
-
-#~ msgid "Result: %1"
-#~ msgstr "Toradh: %1"
-
-#~ msgid "To Expression"
-#~ msgstr "Go Slonn"
-
-#~ msgid "To MathML"
-#~ msgstr "Go MathML"
-
-#~ msgid "Simplify"
-#~ msgstr "Simpligh"
-
-#~ msgid "Examples"
-#~ msgstr "Samplaí"
-
-#~ msgid "We can only draw Real results."
-#~ msgstr "Ní féidir ach torthaí Réadacha a thaispeáint."
-
-#~ msgid "center"
-#~ msgstr "lár"
-
-#~ msgctxt "@title:column"
-#~ msgid "Name"
-#~ msgstr "Ainm"
-
-#~ msgctxt "@title:column"
-#~ msgid "Function"
-#~ msgstr "Feidhm"
-
-#~ msgid "%1 function added"
-#~ msgstr "Feidhm %1 curtha leis"
-
-#~ msgid "Hide '%1'"
-#~ msgstr "Folaigh '%1'"
-
-#~ msgid "Show '%1'"
-#~ msgstr "Taispeáin '%1'"
-
-#~ msgid "Selected viewport too small"
-#~ msgstr "Tá an t-amharc roghnaithe róbheag"
-
-#~ msgctxt "@title:column"
-#~ msgid "Description"
-#~ msgstr "Cur Síos"
-
-#~ msgctxt "@title:column"
-#~ msgid "Parameters"
-#~ msgstr "Paraiméadair"
-
-#~ msgctxt "@title:column"
-#~ msgid "Example"
-#~ msgstr "Sampla"
-
-#~ msgid "%1("
-#~ msgstr "%1("
-
-#~ msgid "%1... parameters, ...%2)"
-#~ msgstr "%1... paraiméadair, ...%2)"
-
-#~ msgid "par%1"
-#~ msgstr "par%1"
-
-#~ msgid "Addition"
-#~ msgstr "Suimiú"
-
-#~ msgid "Multiplication"
-#~ msgstr "Iolrú"
-
-#~ msgid "Division"
-#~ msgstr "Roinnt"
-
-#~ msgid "Power"
-#~ msgstr "Cumhacht"
-
-#~ msgid "Remainder"
-#~ msgstr "Fuílleach"
-
-#~ msgid "Quotient"
-#~ msgstr "Líon"
-
-#~ msgid "The factor of"
-#~ msgstr "An fachtóir de"
-
-#~ msgid "Factorial. factorial(n)=n!"
-#~ msgstr "Iolrán. factorial(n)=n!"
-
-#~ msgid "Function to calculate the sine of a given angle"
-#~ msgstr "Feidhm a áiríonn síneas den uillinn thugtha"
-
-#~ msgid "Function to calculate the cosine of a given angle"
-#~ msgstr "Feidhm a áiríonn comhshíneas den uillinn thugtha"
-
-#~ msgid "Function to calculate the tangent of a given angle"
-#~ msgstr "Feidhm a áiríonn tangant den uillinn thugtha"
-
-#~ msgid "Secant"
-#~ msgstr "Seiceant"
-
-#~ msgid "Cosecant"
-#~ msgstr "Comhsheiceant"
-
-#~ msgid "Cotangent"
-#~ msgstr "Comhthangant"
-
-#~ msgid "Hyperbolic sine"
-#~ msgstr "Síneas hipearbóileach"
-
-#~ msgid "Hyperbolic cosine"
-#~ msgstr "Comhshíneas hipearbóileach"
-
-#~ msgid "Hyperbolic tangent"
-#~ msgstr "Tangant hipearbóileach"
-
-#~ msgid "Hyperbolic secant"
-#~ msgstr "Seiceant hipearbóileach"
-
-#~ msgid "Hyperbolic cosecant"
-#~ msgstr "Comhsheiceant hipearbóileach"
-
-#~ msgid "Hyperbolic cotangent"
-#~ msgstr "Comhthangant hipearbóileach"
-
-#~ msgid "Arc sine"
-#~ msgstr "Arcshíneas"
-
-#~ msgid "Arc cosine"
-#~ msgstr "Arc-chomhshíneas"
-
-#~ msgid "Arc tangent"
-#~ msgstr "Arcthangant"
-
-#~ msgid "Arc cotangent"
-#~ msgstr "Arc-chomhthangant"
-
-#~ msgid "Hyperbolic arc tangent"
-#~ msgstr "Arcthangant hipearbóileach"
-
-#~ msgid "Summatory"
-#~ msgstr "Feidhm Shuimithe"
-
-#~ msgid "Productory"
-#~ msgstr "Feidhm Iolraithe"
-
-#~ msgid "Differentiation"
-#~ msgstr "Difreáil"
-
-#~ msgid "Hyperbolic arc sine"
-#~ msgstr "Arcshíneas hipearbóileach"
-
-#~ msgid "Hyperbolic arc cosine"
-#~ msgstr "Arc-chomhshíneas hipearbóileach"
-
-#~ msgid "Arc cosecant"
-#~ msgstr "Arc-chomhsheiceant"
-
-#~ msgid "Hyperbolic arc cosecant"
-#~ msgstr "Arc-chomhsheiceant hipearbóileach"
-
-#~ msgid "Arc secant"
-#~ msgstr "Arcsheiceant"
-
-#~ msgid "Hyperbolic arc secant"
-#~ msgstr "Arcsheiceant hipearbóileach"
-
-#~ msgid "Exponent (e^x)"
-#~ msgstr "Easpónant (e^x)"
-
-#~ msgid "Base-e logarithm"
-#~ msgstr "Logartam aiceanta"
-
-#~ msgid "Base-10 logarithm"
-#~ msgstr "Logartam le bunuimhir 10"
-
-#~ msgid "Absolute value. abs(n)=|n|"
-#~ msgstr "Luach uimhriúil. abs(n)=|n|"
-
-#~ msgid "Floor value. floor(n)=⌊n⌋"
-#~ msgstr "Luach urláir. floor(n)=⌊n⌋"
-
-#~ msgid "Ceil value. ceil(n)=⌈n⌉"
-#~ msgstr "Luach síleála. ceil(n)=⌈n⌉"
-
-#~ msgid "Minimum"
-#~ msgstr "Íosmhéid"
-
-#~ msgid "Maximum"
-#~ msgstr "Uasmhéid"
-
-#~ msgid "Greater than. gt(a,b)=a>b"
-#~ msgstr "Níos mó ná. gt(a,b)=a>b"
-
-#~ msgid "Less than. lt(a,b)=a<b"
-#~ msgstr "Níos lú ná. lt(a,b)=a<b"
-
-#~ msgid "Equal. eq(a,b) = a=b"
-#~ msgstr "Cothrom. eq(a,b) = a=b"
-
-#~ msgid "Approximation. approx(a)=a±n"
-#~ msgstr "Neastachán. approx(a)=a±n"
-
-#~ msgid "Not equal. neq(a,b)=a≠b"
-#~ msgstr "Ní cothrom. neq(a,b)=a≠b"
-
-#~ msgid "Greater or equal. geq(a,b)=a≥b"
-#~ msgstr "Níos mó ná nó cothrom. geq(a,b)=a≥b"
-
-#~ msgid "Less or equal. leq(a,b)=a≤b"
-#~ msgstr "Níos lú ná nó cothrom. leq(a,b)=a≤b"
-
-#~ msgid "Boolean and"
-#~ msgstr "AND Boole"
-
-#~ msgid "Boolean not"
-#~ msgstr "NOT Boole"
-
-#~ msgid "Boolean or"
-#~ msgstr "OR Boole"
-
-#~ msgid "Boolean xor"
-#~ msgstr "XOR Boole"
-
-#~ msgid "Boolean implication"
-#~ msgstr "Impleacht Boole"
-
-#~ msgid "Greatest common divisor"
-#~ msgstr "Comhfhachtóir is mó"
-
-#~ msgid "Least common multiple"
-#~ msgstr "Comhiolrú is lú"
-
-#~ msgid "Root"
-#~ msgstr "Fréamh"
-
-#~ msgid "Cardinal"
-#~ msgstr "Bunuimhir"
-
-#~ msgid "Scalar product"
-#~ msgstr "Iolrach scálach"
-
-#~ msgctxt "n-ary function prototype"
-#~ msgid "<em>%1</em>(..., <b>par%2</b>, ...)"
-#~ msgstr "<em>%1</em>(..., <b>par%2</b>, ...)"
-
-#~ msgctxt "Function name in function prototype"
-#~ msgid "<em>%1</em>("
-#~ msgstr "<em>%1</em>("
-
-#~ msgctxt "Uncorrect function name in function prototype"
-#~ msgid "<em style='color:red'><b>%1</b></em>("
-#~ msgstr "<em style='color:red'><b>%1</b></em>("
-
-#~ msgctxt "Parameter in function prototype"
-#~ msgid "par%1"
-#~ msgstr "par%1"
-
-#~ msgctxt "Current parameter in function prototype"
-#~ msgid "<b>%1</b>"
-#~ msgstr "<b>%1</b>"
-
-#~ msgctxt "Function parameter separator"
-#~ msgid ", "
-#~ msgstr ", "
-
-#~ msgctxt "Current parameter is the bounding"
-#~ msgid " : bounds"
-#~ msgstr " : teorainn"
-
-#~ msgctxt "@title:column"
-#~ msgid "Value"
-#~ msgstr "Luach"
-
-#~ msgid "Must specify a correct operation"
-#~ msgstr "Caithfidh tú oibríocht cheart a shonrú"
-
-#~ msgctxt "identifier separator in error message"
-#~ msgid "', '"
-#~ msgstr "', '"
-
-#~ msgctxt "Error message, no proper condition found."
-#~ msgid "Could not find a proper choice for a condition statement."
-#~ msgstr ""
-#~ "Níorbh fhéidir rogha oiriúnach a aimsiú le haghaidh ráitis choinníollaigh."
-
-#~ msgid "Incorrect uplimit or downlimit."
-#~ msgstr "Uasteorainn nó íosteorainn mhícheart."
-
-#~ msgctxt "By a cycle i mean a variable that depends on itself"
-#~ msgid "Defined a variable cycle"
-#~ msgstr "Sainíodh ciogal athróg"
-
-#~ msgid "Unknown token %1"
-#~ msgstr "Teaghrán anaithnid comharthach %1"
-
-#~ msgid "<em>%1</em> needs at least 2 parameters"
-#~ msgstr "Tá dhá pharaiméadar ar a laghad de dhíth ar <em>%1</em>"
-
-#~ msgid "<em>%1</em> requires %2 parameters"
-#~ msgstr "Tá %2 paraiméadar de dhíth ar <em>%1</em>"
-
-#~ msgid "Empty container: %1"
-#~ msgstr "Coimeádán folamh: %1"
-
-#~ msgctxt "there was a conditional outside a condition structure"
-#~ msgid "We can only have conditionals inside piecewise structures."
-#~ msgstr "Ní cheadaítear coinníollacha ach laistigh de bhreacstruchtúir."
-
-#~ msgctxt "there was an element that was not a conditional inside a condition"
-#~ msgid "%1 is not a proper condition inside the piecewise"
-#~ msgstr "Ní coinníoll oiriúnach laistigh den bhreacstruchtúr é %1"
-
-#~ msgid "We can only declare variables"
-#~ msgstr "Ní féidir ach athróga a fhógairt"
-
-#~ msgid "Error while parsing: %1"
-#~ msgstr "Earráid le linn parsála: %1"
-
-#~ msgctxt "An error message"
-#~ msgid "Container unknown: %1"
-#~ msgstr "Coimeádán anaithnid: %1"
-
-#~ msgid "Cannot codify the %1 value."
-#~ msgstr "Ní féidir an luach %1 a chódú."
-
-#~ msgid "The %1 operator cannot have child contexts."
-#~ msgstr "Ní féidir mac-chomhthéacsanna a bheith ag oibreoir %1."
-
-#~ msgctxt "Error message due to an unrecognized input"
-#~ msgid "Not supported/unknown: %1"
-#~ msgstr "Gan tacaíocht/anaithnid: %1"
-
-#~ msgctxt "error message"
-#~ msgid "Expected %1 instead of '%2'"
-#~ msgstr "Bhíothas ag súil le %1 in ionad '%2'"
-
-#~ msgid "Missing right parenthesis"
-#~ msgstr "Lúibín deas ar iarraidh"
-
-#~ msgid "Unbalanced right parenthesis"
-#~ msgstr "Lúibín deas neamhchothrom"
-
-#~ msgid "Unexpected token %1"
-#~ msgstr "Teaghrán comharthach %1 gan súil leis"
-
-#~ msgid "Could not call '%1'"
-#~ msgstr "Níorbh fhéidir '%1' a ghlao"
-
-#~ msgid "Could not solve '%1'"
-#~ msgstr "Níorbh fhéidir '%1' a réiteach"
-
-#~ msgctxt "html representation of an operator"
-#~ msgid "<span class='op'>%1</span>"
-#~ msgstr "<span class='op'>%1</span>"
-
-#~ msgctxt "html representation of an operator"
-#~ msgid "<span class='keyword'>%1</span>"
-#~ msgstr "<span class='keyword'>%1</span>"
-
-#~ msgctxt "Error message"
-#~ msgid "Unknown token %1"
-#~ msgstr "Teaghrán anaithnid comharthach %1"
-
-#~ msgid "Cannot calculate the remainder on 0."
-#~ msgstr "Ní féidir fuílleach ar 0 a áireamh."
-
-#~ msgid "Cannot calculate the factor on 0."
-#~ msgstr "Ní féidir an fachtóir ar 0 a áireamh."
-
-#~ msgid "Cannot calculate the lcm of 0."
-#~ msgstr "Ní féidir an comhiolrú is lú de 0 a áireamh."
-
-#~ msgid "Could not calculate a value %1"
-#~ msgstr "Níorbh fhéidir luach %1 a áireamh"
-
-#~ msgid "Invalid index for a container"
-#~ msgstr "Innéacs neamhbhailí ar choimeádán"
-
-#~ msgid "Cannot operate on different sized vectors."
-#~ msgstr "Ní féidir oibriú le veicteoirí de mhéideanna éagsúla."
-
-#~ msgid "Could not calculate a vector's %1"
-#~ msgstr "Níorbh fhéidir %1 an veicteora a áireamh"
-
-#~ msgctxt "Uncorrect function name in function prototype"
-#~ msgid "<em style='color:red'>%1</em>("
-#~ msgstr "<em style='color:red'>%1</em>("
-
-#~ msgid "The %1 derivative has not been implemented."
-#~ msgstr "Níl an díorthach %1 ar fáil."
-
-#~ msgctxt "Error message"
-#~ msgid "Did not understand the real value: %1"
-#~ msgstr "Níor tuigeadh an luach réadach: %1"
-
-#~ msgid "Subtraction"
-#~ msgstr "Dealú"
-
-#~ msgid ""
-#~ "%1\n"
-#~ "Error: %2"
-#~ msgstr ""
-#~ "%1\n"
-#~ "Earráid: %2"
-
-#~ msgid "Select an element from a container"
-#~ msgstr "Roghnaigh eilimint ó choimeádán"
-
-#~ msgid "Error: We need values to draw a graph"
-#~ msgstr "Earráid: Luachanna de dhíth chun graf a dhearadh"
-
-#~ msgid "Generating... Please wait"
-#~ msgstr "Á ghiniúint... fan go fóill"
-
-#~ msgctxt "@item:inmenu"
-#~ msgid "&Save Log"
-#~ msgstr "&Sábháil Logchomhad"
-
-#~ msgctxt ""
-#~ "html representation of a true. please don't translate the true for "
-#~ "consistency"
-#~ msgid "<span class='const'>true</span>"
-#~ msgstr "<span class='const'>true</span>"
-
-#~ msgctxt ""
-#~ "html representation of a false. please don't translate the false for "
-#~ "consistency"
-#~ msgid "<span class='const'>false</span>"
-#~ msgstr "<span class='const'>false</span>"
-
-#~ msgctxt "html representation of a number"
-#~ msgid "<span class='num'>%1</span>"
-#~ msgstr "<span class='num'>%1</span>"
-
-#~ msgid "Mode"
-#~ msgstr "Mód"
-
-#~ msgid "Save the expression"
-#~ msgstr "Sábháil an slonn"
-
-#~ msgid "Calculate the expression"
-#~ msgstr "Áirigh an slonn"
-
-#~ msgid "%1:=%2"
-#~ msgstr "%1:=%2"
-
-#~ msgid "Cannot have downlimit ≥ uplimit"
-#~ msgstr "Ní cheadaítear íosteorainn ≥ uasteorainn"
-
-#~ msgid "The function <em>%1</em> does not exist"
-#~ msgstr "Níl feidhm <em>%1</em> ann"
-
-#~ msgid "The variable <em>%1</em> does not exist"
-#~ msgstr "Níl athróg <em>%1</em> ann"
-
-#~ msgid "Need a var name and a value"
-#~ msgstr "Ainm athróige agus luach de dhíth"
-
-#~ msgid "We can only select a container's value with its integer index"
-#~ msgstr ""
-#~ "Is féidir luach coimeádáin a roghnú trína innéacs slánuimhreach amháin"
-
-#~ msgid "<b style='color:red'>%1</b>"
-#~ msgstr "<b style='color:red'>%1</b>"
-
-#~ msgctxt "Error message"
-#~ msgid "Unknown bounded variable: %1"
-#~ msgstr "Athróg anaithnid chuimsithe: %1"
-
-#~ msgid "From parser:"
-#~ msgstr "Ón pharsálaí:"
-
-#~ msgid ""
-#~ "Wrong parameter count in a selector, should have 2 parameters, the "
-#~ "selected index and the container."
-#~ msgstr ""
-#~ "Tá líon na bparaiméadar mícheart i roghnóir; ba chóir dhá pharaiméadar a "
-#~ "bheith ann, an t-innéacs roghnaithe agus an coimeádán."
-
-#~ msgid "piece or otherwise in the wrong place"
-#~ msgstr "píosa nó otherwise san áit mhícheart"
-
-#~ msgid "No bounding variables for this sum"
-#~ msgstr "Níl athróga teorantacha ag an tsuim seo"
-
-#~ msgid "Missing bounding limits on a sum operation"
-#~ msgstr "Teorainneacha ar iarraidh ar oibríocht suimithe"
-
-#~ msgid "Real"
-#~ msgstr "Fíor"
-
-#~ msgid "%1, "
-#~ msgstr "%1, "
-
-#~ msgctxt "Parameter in function prototype"
-#~ msgid "%1"
-#~ msgstr "%1"
-
-#~ msgctxt "@item:inmenu"
-#~ msgid "&New"
-#~ msgstr "&Nua"
-
-#~ msgctxt "@item:inmenu"
-#~ msgid "&Quit"
-#~ msgstr "&Scoir"
-
-#~ msgid "&Save"
-#~ msgstr "&Sábháil"
-
-#~ msgid "Sine"
-#~ msgstr "Síneas"
-
-#~ msgid "Cosine"
-#~ msgstr "Comhshíneas"
-
-#~ msgid "Tangent"
-#~ msgstr "Tangant"
