@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: kalgebra\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2024-09-27 20:45+0200\n"
+"PO-Revision-Date: 2026-02-26 18:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 26.03.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -105,7 +105,7 @@ msgstr "Legg til"
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Eksempel"
 
 #: content/ui/controls/AddPlotDialog.qml:100
 #, kde-format
@@ -223,7 +223,7 @@ msgstr "Verditabellar"
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Feil: Ugyldig uttrykk %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -241,7 +241,7 @@ msgid "Errors: %1"
 msgstr "Feil: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "error: %1"
 msgstr "Feil: %1"
 
