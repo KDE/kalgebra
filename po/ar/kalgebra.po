@@ -103,7 +103,7 @@ msgstr "أزل"
 #: functionedit.cpp:243
 #, kde-format
 msgid "The options you specified are not correct"
-msgstr "الخيارات الّتي حدّدتها غير صحيحة"
+msgstr "الخيارات التي حدّدتها غير صحيحة"
 
 #: functionedit.cpp:248
 #, kde-format
