@@ -13,24 +13,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.07.90\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 19.07.90\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgid "Calculator"
-msgstr "Spočítať..."
+msgstr "Kalkulačka"
 
 #: content/ui/Console.qml:40 content/ui/main.qml:108
-#, fuzzy, kde-format
-#| msgid "KAlgebra Mobile"
+#, kde-format
 msgid "KAlgebra"
 msgstr "KAlgebra Mobile"
 
 #: content/ui/Console.qml:62
-#, fuzzy, kde-format
-#| msgid "Load Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Load Script"
 msgstr "Načítať skript..."
@@ -41,15 +38,13 @@ msgid "Script (*.kal)"
 msgstr "Skript (*.kal)"
 
 #: content/ui/Console.qml:72
-#, fuzzy, kde-format
-#| msgid "Save Script..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Save Script"
 msgstr "Uložiť skript..."
 
 #: content/ui/Console.qml:83
-#, fuzzy, kde-format
-#| msgid "Export Log..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Export Log"
 msgstr "Exportovať záznam..."
@@ -60,22 +55,19 @@ msgid "HTML (*.html)"
 msgstr "HTML (*.html)"
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Evaluate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Evaluate"
 msgstr "Vyhodnotiť..."
 
 #: content/ui/Console.qml:94
-#, fuzzy, kde-format
-#| msgid "Calculate..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Calculate"
 msgstr "Spočítať..."
 
 #: content/ui/Console.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear Log"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear Log"
 msgstr "Vyčistiť záznam"
@@ -99,44 +91,43 @@ msgstr "Kopírovať \"%1\""
 #, kde-format
 msgctxt "@info"
 msgid "Empty console history"
-msgstr ""
+msgstr "Prázdna história konzoly"
 
 #: content/ui/controls/AddPlotDialog.qml:56
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Pridať"
 
 #: content/ui/controls/AddPlotDialog.qml:69
 #, kde-format
 msgctxt "@action:button"
 msgid "Examples"
-msgstr ""
+msgstr "Príklady"
 
 #: content/ui/controls/AddPlotDialog.qml:100
-#, fuzzy, kde-format
-#| msgid "Clear All"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clear All"
-msgstr "Vyčistiť všetko"
+msgstr "Vybrať všetko"
 
 #: content/ui/controls/AddPlotDialog.qml:113
 #, kde-format
 msgctxt "@action:button"
 msgid "Close dialog"
-msgstr ""
+msgstr "Zavrieť dialóg"
 
 #: content/ui/controls/AddPlotDialog.qml:153
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove plot"
-msgstr ""
+msgstr "Odstrániť graf"
 
 #: content/ui/controls/AddPlotDialog.qml:168
 #, kde-format
 msgctxt "@info"
 msgid "No plot available"
-msgstr ""
+msgstr "Žiadny graf nie je dostupný"
 
 #: content/ui/controls/ExpressionInput.qml:39
 #, kde-format
@@ -147,61 +138,59 @@ msgstr "Výraz na vypočítanie..."
 #, kde-format
 msgctxt "@title:window"
 msgid "Dictionary"
-msgstr ""
+msgstr "Slovník"
 
 #: content/ui/Dictionary.qml:30
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Názov:"
 
 #: content/ui/Dictionary.qml:43 content/ui/Dictionary.qml:47
 #: content/ui/Dictionary.qml:51
 #, kde-format
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: content/ui/main.qml:57
 #, kde-format
 msgid "Graph 2D"
-msgstr ""
+msgstr "2D graf"
 
 #: content/ui/main.qml:64
 #, kde-format
 msgid "Graph 3D"
-msgstr ""
+msgstr "3D graf"
 
 #: content/ui/main.qml:70
 #, kde-format
 msgid "Value Tables"
-msgstr ""
+msgstr "Tabuľky hodnôt"
 
 #: content/ui/main.qml:76 content/ui/VariablesView.qml:11
 #, kde-format
 msgid "Variables"
-msgstr ""
+msgstr "Premenné"
 
 #: content/ui/main.qml:82
 #, kde-format
 msgid "Dictionary"
-msgstr ""
+msgstr "Slovník"
 
 #: content/ui/main.qml:88
 #, kde-format
 msgid "About KAlgebra"
-msgstr ""
+msgstr "O programe KAlgebra"
 
 #: content/ui/Plot2D.qml:21
-#, fuzzy, kde-format
-#| msgid "2D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "2D Plot"
 msgstr "2D vykreslenie"
 
 #: content/ui/Plot2D.qml:38 content/ui/Plot3D.qml:38
-#, fuzzy, kde-format
-#| msgid "Save..."
+#, kde-format
 msgid "Save"
-msgstr "Uložiť..."
+msgstr "Uložiť"
 
 #: content/ui/Plot2D.qml:52
 #, kde-format
@@ -214,8 +203,7 @@ msgid "Reset Viewport"
 msgstr "Obnoviť zobrazenie"
 
 #: content/ui/Plot3D.qml:21
-#, fuzzy, kde-format
-#| msgid "3D Plot"
+#, kde-format
 msgctxt "@title:window"
 msgid "3D Plot"
 msgstr "3D vykreslenie"
@@ -228,12 +216,12 @@ msgstr "Výsledky"
 #: content/ui/Tables.qml:12
 #, kde-format
 msgid "Value tables"
-msgstr ""
+msgstr "Tabuľky hodnôt"
 
 #: content/ui/Tables.qml:28
 #, kde-format
 msgid "Errors: Invalid expression %1"
-msgstr ""
+msgstr "Chyby: Neplatný výraz %1"
 
 #: content/ui/Tables.qml:42
 #, kde-format
@@ -251,23 +239,20 @@ msgid "Errors: %1"
 msgstr "Chyby: %1"
 
 #: content/ui/Tables.qml:53
-#, fuzzy, kde-format
-#| msgid "Errors: %1"
+#, kde-format
 msgid "error: %1"
 msgstr "Chyby: %1"
 
 #: content/ui/Tables.qml:66
-#, fuzzy, kde-format
-#| msgid "Run"
+#, kde-format
 msgctxt "@action:button Run table"
 msgid "Run"
 msgstr "Spustiť"
 
 #: content/ui/Tables.qml:77
-#, fuzzy, kde-format
-#| msgid "Input:"
+#, kde-format
 msgid "Input"
-msgstr "Vstup:"
+msgstr "Vstup"
 
 #: content/ui/Tables.qml:86
 #, kde-format
@@ -280,10 +265,9 @@ msgid "To:"
 msgstr "Pre:"
 
 #: content/ui/Tables.qml:100
-#, fuzzy, kde-format
-#| msgid "Step:"
+#, kde-format
 msgid "Step"
-msgstr "Krok:"
+msgstr "Krok"
 
 #: content/ui/Tables.qml:106
 #, kde-format
@@ -296,14 +280,12 @@ msgid "A portable calculator"
 msgstr "Prenosná kalkulačka"
 
 #: main.cpp:40
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "(C) 2006-2023 Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
 
 #: main.cpp:41
-#, fuzzy, kde-format
-#| msgid "(C) 2006-2018 Aleix Pol i Gonzalez"
+#, kde-format
 msgid "Aleix Pol i Gonzalez"
 msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
 
@@ -311,7 +293,7 @@ msgstr "(C) 2006-2018 Aleix Pol i Gonzalez"
 #, kde-format
 msgctxt "@info:credit"
 msgid "Maintainer"
-msgstr ""
+msgstr "Správca"
 
 #: main.cpp:42
 #, kde-format
