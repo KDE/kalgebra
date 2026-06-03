@@ -40,6 +40,7 @@
   <name xml:lang="sl">KAlgebra Mobile</name>
   <name xml:lang="sv">Mobil Kalgebra</name>
   <name xml:lang="tr">K Cebir Cep</name>
+  <name xml:lang="ug">كۆچمە ئۈسكۈنىلەر ئۈچۈن KAlgebra</name>
   <name xml:lang="uk">Мобільна KAlgebra</name>
   <name xml:lang="zh-CN">KAlgebra 移动版</name>
   <name xml:lang="zh-TW">KAlgebra 行動版</name>
@@ -79,6 +80,7 @@
   <summary xml:lang="sl">Kalkulator grafov</summary>
   <summary xml:lang="sv">Grafräknare</summary>
   <summary xml:lang="tr">Grafik Hesap Makinesi</summary>
+  <summary xml:lang="ug">گىرافىكىلىق ھېسابلىغۇچ</summary>
   <summary xml:lang="uk">Графічний калькулятор</summary>
   <summary xml:lang="zh-CN">图形计算器</summary>
   <summary xml:lang="zh-TW">圖形計算機</summary>
