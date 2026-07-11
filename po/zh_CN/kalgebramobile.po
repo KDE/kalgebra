@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kalgebra/kalgebramobile.pot\n"
-"X-Crowdin-File-ID: 46357\n"
+"X-Crowdin-File: /kf6-stable/messages/kalgebra/kalgebramobile.pot\n"
+"X-Crowdin-File-ID: 52728\n"
 
 #: content/ui/Console.qml:19 content/ui/main.qml:50
 #, kde-format
