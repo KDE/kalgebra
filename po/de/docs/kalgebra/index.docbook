@@ -88,7 +88,7 @@
 >Einführung</title>
 
 <para
->&kalgebra; bietet zahlreiche Möglichkeiten, um alle Arten von mathematischen Operationen auszuführen und deren Ausgaben graphisch darzustellen. Früher war dieses Programm stark an &MathML; ausgerichtet, heute kann es von Personen mit ein wenig mathematischem Verständnis benutzt werden, um sowohl einfache als auch schwierige mathematische Aufgaben zu lösen.  </para>
+>&kalgebra; bietet zahlreiche Möglichkeiten, um alle Arten von mathematischen Operationen auszuführen und deren Ausgaben graphisch darzustellen. Früher war dieses Programm stark an &MathML; ausgerichtet, heute kann es von Personen mit ein wenig mathematischem Verständnis verwendet werden, um sowohl einfache als auch schwierige mathematische Aufgaben zu lösen.  </para>
 <!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
 <para
 >Das Programm bietet folgende Funktionsmerkmale: </para>
@@ -259,7 +259,7 @@
 >^, ** </literal
 >: Potenzen, beide Schreibweisen und auch das Unicodezeichen <literal
 >²</literal
-> sind erlaubt. Potenzen können auch als Wurzel benutzt werden, zum Beispiel: <literal
+> sind erlaubt. Potenzen können auch als Wurzel verwendet werden, zum Beispiel: <literal
 >a**(1/b)</literal
 ></para
 ></listitem>
@@ -269,7 +269,7 @@
 >-&gt; </literal
 >: Lambda-Funktion. Die Möglichkeit, eine oder mehrere freie Variablen zu definieren, die an eine Funktion gebunden werden. Im Ausdruck <userinput
 >length:=(x,y)->(x*x+y*y)^0.5</userinput
-> zum Beispiel wird der Lambda-Operator zur Kennzeichnung benutzt, dass <literal
+> zum Beispiel wird der Lambda-Operator zur Kennzeichnung verwendet, dass <literal
 >x</literal
 > und <literal
 >y</literal
