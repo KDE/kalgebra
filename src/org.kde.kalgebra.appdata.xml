@@ -138,6 +138,9 @@
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kalgebra</url>
   <url type="help">https://docs.kde.org/?application=kalgebra</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kalgebra&amp;source=appdata</url>
+  <custom>
+    <value key="KDE::mailinglist">kde-edu@kde.org</value>
+  </custom>
   <screenshots>
     <screenshot type="default">
       <caption>2D plot in KAlgebra</caption>
