@@ -1,7 +1,7 @@
 # translation of kalgebramobile.po to Italian
-# SPDX-FileCopyrightText: 2022, 2023 Paolo Zamponi <feus73@gmail.com>
 # This file is distributed under the same license as the kalgebra package.
 # Pino Toscano <toscano.pino@tiscali.it>, 2018, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2022, 2023 Paolo Zamponi <feus73@gmail.com>
 # SPDX-FileCopyrightText: 2023, 2024, 2025 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
