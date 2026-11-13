@@ -1,0 +1,935 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY commands SYSTEM "commands.docbook">
+
+  <!ENTITY MathML "<acronym
+>MathML</acronym
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+
+<book id="kalgebra" lang="&language;">
+
+<bookinfo>
+<title
+>دليل جبرك</title>
+
+<authorgroup>
+<author
+><firstname
+>Aleix</firstname
+> <surname
+>Pol</surname
+> <affiliation
+> <address
+>&Aleix.Pol.mail;</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2007</year>
+<holder
+>&Aleix.Pol;</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+
+<date
+>2020-12-17</date>
+<releaseinfo
+>تطبيقات 20.12</releaseinfo>
+
+<abstract>
+<para
+>جبرك هو أحد التطبيقات التي يمكن أن تحل محل آلة حاسبة الرسوم البيانية الخاصة بك. يحتوي على ميزات عددية ومنطقية ورمزية وتحليلية تتيح لك حساب التعبيرات الرياضية على الحاسبة ورسم النتائج بيانيًا ثنائي الأبعاد أو ثلاثي الأبعاد. جبرك متجذر في لغة التوصيف الرياضي (MathML)؛ ومع ذلك ، لا يحتاج المرء إلى معرفة MathML لاستخدام جبرك. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>كيدي</keyword>
+<keyword
+>kdeedu</keyword>
+<keyword
+>رسم بياني</keyword>
+<keyword
+>رياضيات</keyword>
+<keyword
+>2D</keyword>
+<keyword
+>3D</keyword>
+<keyword
+>ماث إم إل</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>مقدمة</title>
+
+<para
+>يتمتع جبرك بميزات عديدة تتيح للمستخدم أداء شتى أنواع العمليات الرياضية وعرضها بيانيًا. كان هذا البرنامج في وقتٍ ما موجّهًا نحو &MathML;. أما الآن، فيمكن لأي شخص لديه معرفة رياضية بسيطة استخدامه لحل المسائل البسيطة والمتقدمة على حد سواء. </para>
+<!--FIXME Ask Burkhard where to put tutorials and if it is worth efforts to do. Example from UB page: https://swiftscythe.blogspot.de/2011/02/how-to-work-with-complex-numbers-in.html-->
+<para
+>يتضمن ميزات مثل: </para>
+
+
+<itemizedlist>
+<listitem
+><para
+>آلة حاسبة لتقييم الدوال الرياضية بسرعة وسهولة. </para
+></listitem>
+<listitem
+><para
+>قدرة على البرمجة النصية لسلسلة متقدمة من الحسابات. </para
+></listitem>
+<listitem
+><para
+>قدرات لغوية تشمل تعريف الدوال والإكمال التلقائي للصياغة. </para
+></listitem>
+<listitem
+><para
+>دوال حساب التفاضل والتكامل تشمل التفاضل الرمزي وحساب المتجهات ومعالجة القوائم. </para
+></listitem>
+<listitem
+><para
+>رسم الدوال بمؤشر حي لإيجاد الجذور بيانيًا وأنواع أخرى من التحليل. </para
+></listitem>
+<listitem
+><para
+>رسم ثلاثي الأبعاد لتصور مفيد للدوال ثلاثية الأبعاد. </para
+></listitem>
+<listitem
+><para
+>قاموس عوامل تشغيل مدمج للمراجعة السريعة للعديد من الدوال المتاحة. </para
+></listitem>
+</itemizedlist>
+
+<para
+>فيما يلي لقطة شاشة لتطبيق جبرك أثناء العمل: </para>
+
+<screenshot>
+<screeninfo
+>هذه لقطة شاشة للنافذة الرئيسة لـ جبرك</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-main-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>النافذة الرئيسة لـ جبرك</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>عندما يبدأ المستخدم جلسة جبرك، تُعرض عليه نافذة واحدة تتكون من لسان <guilabel
+>آلة حاسبة</guilabel
+> ولسان <guilabel
+>رسم ثنائي الأبعاد</guilabel
+> ولسان <guilabel
+>رسم ثلاثي الأبعاد</guilabel
+> ولسان <guilabel
+>قاموس</guilabel
+>. داخل كل لسان، ستجد حقل إدخال لإدخال دوالك أو حساباتك، وحقل عرض يُظهر النتائج. </para>
+
+<para
+>في أي وقت، يمكن للمستخدم إدارة جلسته باستخدام خيارات القائمة الرئيسة <guilabel
+>جلسة</guilabel
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>جلسة</guimenu
+><guimenuitem
+>جديد</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>يفتح نافذة جديدة لـ جبرك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift; <keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>جلسة</guimenu
+><guimenuitem
+>وضع ملء الشاشة</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>بدّل وضع ملء الشاشة لنافذة جبرك. يمكن أيضًا تشغيل وضع ملء الشاشة وإيقافه باستخدام زر <inlinemediaobject
+> <imageobject
+> <imagedata fileref="view-fullscreen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> في الجزء العلوي الأيمن من نافذة جبرك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>جلسة</guimenu
+><guimenuitem
+>أنهِ</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>يُغلق البرنامج.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="syntax">
+<title
+>الصياغة</title>
+<para
+>يستخدم جبرك صياغة جبرية بديهية لإدخال دوال المستخدم، مماثلة لتلك المستخدمة في معظم الآلات الحاسبة البيانية الحديثة. يسرد هذا القسم العوامل الأساسية المدمجة المتاحة في جبرك. صمم مؤلف جبرك هذه الصياغة على غرار <ulink url="http://maxima.sourceforge.net/"
+>Maxima</ulink
+> و <ulink url="https://www.maplesoft.com/products/maple/"
+>Maple</ulink
+> للمستخدمين الذين قد يكونون على دراية بهذه البرامج. </para>
+
+<para
+>للمستخدمين المهتمين بالآليات الداخلية لـ جبرك، تُحوّل التعبيرات التي يدخلها المستخدم إلى &MathML; في النهاية الخلفية. سيساعد الفهم الأساسي للإمكانيات التي يدعمها &MathML; بشكل كبير في كشف الإمكانيات الداخلية لـ جبرك. </para>
+
+<para
+>إليك قائمة بالعوامل المتاحة لدينا حتى الآن:</para>
+<itemizedlist>
+<listitem
+><para
+><literal
+>+ - * / </literal
+>: الجمع والطرح والضرب والقسمة.</para
+> </listitem>
+<listitem
+><para
+><literal
+>^, ** </literal
+>: الأس، يمكنك استخدام كليهما. من الممكن أيضًا استخدام حرف اليونيكود <literal
+>²</literal
+>. الأسس هي إحدى طرق عمل الجذور أيضًا، يمكنك فعل ذلك مثل: <literal
+>a**(1/b)</literal
+></para
+></listitem>
+<listitem
+><para
+><literal
+>-&gt; </literal
+>: لامدا. هي طريقة لتحديد متغير أو أكثر حر سترتبط في دالة. على سبيل المثال، في التعبير <userinput
+>length:=(x,y)->(x*x+y*y)^0.5</userinput
+>، يُستخدم عامل لامدا للدلالة على أن <literal
+>x</literal
+> و <literal
+>y</literal
+> سيرتبطان عند استخدام دالة الطول. </para
+></listitem>
+<listitem
+><para
+><literal
+>x=a..b </literal
+>: يُستخدم هذا عندما نحتاج إلى تحديد نطاق (متغير مرتبط+حد أعلى+حد أدنى). هذا يعني أن <literal
+>x</literal
+> ينتقل من <literal
+>a</literal
+> إلى <literal
+>b</literal
+>.</para
+></listitem>
+<listitem
+><para
+><literal
+>() </literal
+>: يُستخدم لتحديد أولوية أعلى.</para
+></listitem>
+<listitem
+><para
+><literal
+>abc(params) </literal
+>: دوال. عندما يجد المحلل دالة، يتحقق مما إذا كان <literal
+>abc</literal
+> عاملًا. إذا كان كذلك، فسيُعامل كعامل، وإذا لم يكن، فسيُعامل كدالة مستخدم.</para
+></listitem>
+<listitem
+><para
+><literal
+>:= </literal
+>: تعريف. يُستخدم لتعريف قيمة متغير. يمكنك فعل أشياء مثل <userinput
+>x:=3</userinput
+>، <userinput
+>x:=y</userinput
+> حيث <literal
+>y</literal
+> معرّف أو لا، أو <userinput
+>perimeter:=r->2*pi*r</userinput
+>. </para
+></listitem>
+<listitem
+><para
+><literal
+>? </literal
+>: تعريف شرط متعدد الأجزاء. متعدد الأجزاء هو الطريقة التي يمكننا بها تعريف العمليات الشرطية في جبرك. بعبارة أخرى، هذه طريقة لتحديد شرط if، elseif، else. إذا أدخلنا الشرط قبل '<literal
+>?</literal
+>' فسيستخدم هذا الشرط فقط إذا كان صحيحًا، وإذا وجد '<literal
+>?</literal
+>' بدون أي شرط، فسيدخل في الحالة الأخيرة. مثال: <userinput
+>piecewise { x=0 ? 0, x=1 ? x+1, ? x**2 }</userinput
+> </para
+></listitem>
+<listitem
+><para
+><literal
+>{ } </literal
+>: حاوية &MathML;. يمكن استخدامها لتعريف حاوية. مفيدة بشكل أساسي للعمل مع متعدد الأجزاء. </para
+></listitem>
+<listitem
+><para
+><literal
+>= &gt; &gt;= &lt; &lt;= </literal
+>: مقارنات القيم للتساوي والأكبر والأكبر أو يساوي والأصغر والأصغر أو يساوي على التوالي.</para
+></listitem>
+</itemizedlist>
+
+<para
+>الآن قد تسألني، لماذا يجب على المستخدم الاهتمام بـ &MathML;؟ هذا سهل. بهذا، يمكننا العمل مع دوال مثل <function
+>cos()</function
+> و <function
+>sin()</function
+> وأي دوال مثلثية أخرى و <function
+>sum()</function
+> أو <function
+>product()</function
+>. لا يهم نوعها. يمكننا استخدام <function
+>plus()</function
+> و <function
+>times()</function
+> وكل ما له عامله. الدوال البوليانية مطبقة أيضًا، لذا يمكننا فعل شيء مثل <function
+>or(1,0,0,0,0)</function
+>.</para>
+
+</chapter>
+
+<chapter id="using-calculator">
+<title
+>استخدام الآلة الحاسبة</title>
+<para
+>آلة حاسبة جبرك مفيدة كآلة حاسبة معززة. يمكن للمستخدم إدخال تعبيرات للتقييم في وضع <guimenu
+>احسب</guimenu
+> أو <guimenu
+>قيّم</guimenu
+>، اعتمادًا على اختيار قائمة <guimenu
+>آلة حاسبة</guimenu
+>. </para>
+<para
+>في وضع التقييم، يُبسّط جبرك التعبير حتى لو رأى متغيرًا غير معرّف. عند وجوده في وضع الحساب، يحسب جبرك كل شيء وإذا وجد متغيرًا غير معرّف يُظهر خطأ. </para>
+<para
+>بالإضافة إلى عرض المعادلات والنتائج التي أدخلها المستخدم في شاشة الآلة الحاسبة، تُعرض جميع المتغيرات المُعلنة في إطار دائم على اليمين. بالنقر المزدوج على متغير، سترى حوارًا يتيح لك تغيير قيمها (مجرد طريقة لخداع السجل). </para>
+
+<para
+>المتغير <quote
+><varname
+>ans</varname
+></quote
+> مميز، ففي كل مرة تُدخل فيها تعبيرًا، ستتغير قيمة المتغير <quote
+><varname
+>ans</varname
+></quote
+> إلى آخر نتيجة. </para>
+
+<para
+>فيما يلي دوال أمثلة يمكن إدخالها في حقل الإدخال بنافذة الحاسبة:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(pi)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>k:=33</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>sum(k*x : x=0..10)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f:=p->p*k</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>f(pi)</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>فيما يلي لقطة شاشة لنافذة الحاسبة بعد إدخال تعابير الأمثلة أعلاه: </para>
+<screenshot>
+<screeninfo
+>لقطة شاشة لنافذة حاسبة جبرك مع تعابير أمثلة</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-console-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>نافذة حاسبة جبرك</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+<para
+>يمكن للمستخدم التحكم في تنفيذ سلسلة من الحسابات باستخدام خيارات القائمة <guimenu
+>حاسبة</guimenu
+>:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حاسبة</guimenu
+><guimenuitem
+>تحميل سكريبت...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>ينفذ التعليمات في ملف بالتسلسل. مفيد إذا أردت تعريف بعض المكتبات أو استئناف عمل سابق.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>حاسبة</guimenu
+><guisubmenu
+>سكريبتات حديثة</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>يعرض قائمة فرعية تتيح لك اختيار السكريبتات المنفذة مؤخرًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حاسبة</guimenu
+><guimenuitem
+>حفظ سكريبت...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>يحفظ التعليمات التي كتبتها منذ بدء الجلسة لإعادة استخدامها. يُنشئ ملفات نصية لذا يسهل تعديلها باستخدام أي محرر نصوص، مثل &kate;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حاسبة</guimenu
+><guimenuitem
+>تصدير السجل...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>يحفظ السجل بكل النتائج في ملف &HTML; للتمكن من طباعته أو نشره.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>حاسبة</guimenu
+><guimenuitem
+>إدراج ans...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>يدرج المتغير <quote
+><varname
+>ans</varname
+></quote
+> ويسهل إعادة استخدام القيم القديمة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>حاسبة</guimenu
+><guimenuitem
+>احسب</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>زر اختيار لضبط <guilabel
+>وضع التنفيذ</guilabel
+> على الحساب.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>حاسبة</guimenu
+><guimenuitem
+>قيّم</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>زر اختيار لضبط <guilabel
+>وضع التنفيذ</guilabel
+> على التقييم.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</chapter>
+
+<chapter id="two-D-graphs">
+<title
+>رسوم بيانية ثنائية الأبعاد</title>
+<para
+>لإضافة رسم بياني ثنائي الأبعاد جديد في جبرك، اختر اللسان <guilabel
+>رسم بياني ثنائي الأبعاد</guilabel
+> وانقر على اللسان <guilabel
+>إضافة</guilabel
+> لإضافة دالة جديدة. سينتقل التركيز إلى مربع نص إدخال حيث يمكنك كتابة الدالة.</para>
+
+<sect1 id="two-D-syntax">
+<title
+>الصياغة</title>
+<para
+>إذا أردت استخدام دالة نموذجية <function
+>f(x)</function
+> فليس من الضروري تحديدها، لكن إذا أردت دالة <function
+>f(y)</function
+> أو دالة قطبية، فسيتعين عليك إضافة <literal
+>y-&gt;</literal
+> و<literal
+>q-&gt;</literal
+> كمتغيرين مقيدين.</para>
+
+<para
+>أمثلة:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>sin(x)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>x²</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>y->sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>q->3*sin(7*q)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>t->vector{sin t, t**2}</userinput
+></para
+></listitem>
+</itemizedlist>
+<para
+>إذا أدخلت الدالة، فانقر على الزر <guibutton
+>موافق</guibutton
+> لعرض الرسم البياني في النافذة الرئيسة.</para>
+
+</sect1>
+
+<sect1 id="two-D-features">
+<title
+>الميزات</title>
+<para
+>يمكنك ضبط عدة رسوم بيانية على نفس المنظر. استخدم الزر <guilabel
+>إضافة</guilabel
+> عندما تكون في وضع القائمة. يمكنك ضبط لون خاص لكل رسم بياني.</para>
+
+<para
+>يمكن تكبير المنظر وتحريكه باستخدام الفأرة. باستخدام العجلة يمكنك التكبير والتصغير. يمكنك أيضًا تحديد منطقة بزر الفأرة الأيسر &LMB; وستُكبّر هذه المنطقة. حرّك المنظر باستخدام مفاتيح الأسهم في لوحة المفاتيح.</para>
+
+<note>
+ <para
+>يمكن تعريف منفذ عرض الرسوم البيانية ثنائية الأبعاد صراحة باستخدام اللسان <guilabel
+>منفذ العرض</guilabel
+> على لسان <guilabel
+>رسم بياني ثنائي الأبعاد</guilabel
+>.</para>
+</note>
+ 
+<para
+>في اللسان <guilabel
+>قائمة</guilabel
+> في الجزء السفلي الأيمن، يمكنك فتح لسان <guilabel
+>تحرير</guilabel
+> لتحرير دالة أو إزالتها بنقرة مزدوجة، وتحديد أو إلغاء تحديد خانة الاختيار بجانب اسم الدالة لإظهارها أو إخفائها.</para>
+<para
+>في القائمة <guimenu
+>رسم بياني ثنائي الأبعاد</guimenu
+> تجد هذه الخيارات:</para>
+<itemizedlist>
+<listitem
+><para
+><guimenuitem
+>شبكة</guimenuitem
+>: إظهار الشبكة أو إخفاؤها</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>الحفاظ على نسبة الأبعاد</guimenuitem
+>: الحفاظ على نسبة الأبعاد أثناء التكبير</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>حفظ</guimenuitem
+>: حفظ (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) الرسم البياني كملف صورة</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>تكبير/تصغير</guimenuitem
+>: تكبير (<keycombo action="simul"
+>&Ctrl; <keycap
+>+</keycap
+></keycombo
+>) وتصغير (<keycombo action="simul"
+>&Ctrl; <keycap
+>-</keycap
+></keycombo
+>)</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>الحجم الفعلي</guimenuitem
+>: إعادة المنظر إلى التكبير الأصلي</para
+></listitem>
+<listitem
+><para
+><guilabel
+>الدقة</guilabel
+>: متبوعة بقائمة من أزرار الاختيار لاختيار دقة للرسوم البيانية</para
+></listitem>
+</itemizedlist>
+
+<para
+>أدناه لقطة شاشة لمستخدم يكون مؤشره عند أقصى جذر يميني للدالة <function
+>sin(1/x)</function
+>. استخدم المستخدم الذي رسمها دقة عالية جدًا لإنشاء هذا الرسم (حيث تتذبذب بتردد أعلى فأعلى بالقرب من نقطة الأصل). توجد أيضًا ميزة المؤشر الحي حيث كلما حركت المؤشر فوق نقطة، تظهر لك قيم <literal
+>x</literal
+> و<literal
+>y</literal
+> في الزاوية السفلية اليسرى من الشاشة. يُرسم <quote
+>خط مماس</quote
+> حي على الدالة في موقع المؤشر الحي. </para>
+
+<screenshot>
+<screeninfo
+>هذه لقطة شاشة لنافذة الرسم البياني ثنائي الأبعاد في جبرك</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-2dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>نافذة الرسم البياني ثنائي الأبعاد في جبرك</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</sect1>
+
+</chapter>
+
+<chapter id="three-D-graphs">
+<title
+>رسوم بيانية ثلاثية الأبعاد</title>
+
+<para
+>لرسم رسم بياني ثلاثي الأبعاد باستخدام جبرك، اختر اللسان <guilabel
+>رسم بياني ثلاثي الأبعاد</guilabel
+> وسترى حقل إدخال في الأسفل حيث ستكتب الدالة. لا يمكن تعريف <literal
+>Z</literal
+> بعد. في الوقت الحالي، يدعم جبرك فقط الرسوم البيانية ثلاثية الأبعاد المعتمدة صراحة على <literal
+>x</literal
+> و<literal
+>y</literal
+> فقط، مثل <userinput
+>(x,y)->x*y</userinput
+>، حيث <userinput
+>z=x*y</userinput
+>. </para>
+
+<para
+>أمثلة:</para>
+<itemizedlist>
+<listitem
+><para
+><userinput
+>(x,y)->sin(x)*sin(y)</userinput
+></para
+></listitem>
+<listitem
+><para
+><userinput
+>(x,y)->x/y</userinput
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>يمكن تكبير/تصغير المنظر وتحريكه بالفأرة. باستخدام العجلة يمكنك التكبير والتصغير. اضغط مع الاستمرار على &LMB; وحرّك الفأرة لتدوير الرسم البياني.</para>
+
+<para
+>يدوّر المفتاحان &Left; و&Right; الرسم البياني حول المحور <literal
+>ع</literal
+>، ويدوّر المفتاحان &Up; و&Down; حول المحور الأفقي للمنظر. اضغط <keycap
+>W</keycap
+> لتكبير المخطط و<keycap
+>S</keycap
+> لتصغيره.</para>
+
+<para
+>في قائمة <guimenu
+>رسم بياني ثلاثي الأبعاد</guimenu
+> تجد هذه الخيارات:</para>
+<itemizedlist>
+<!-- not in master for 4.11
+<listitem
+><para
+>Enable or disable transparency in the 3D Graph menu</para
+></listitem>
+-->
+<listitem
+><para
+><guimenuitem
+>حفظ</guimenuitem
+>: حفظ (<keycombo action="simul"
+>&Ctrl; <keycap
+>S</keycap
+></keycombo
+>) الرسم البياني كملف صورة أو مستند مدعوم</para
+></listitem>
+<listitem
+><para
+><guimenuitem
+>إعادة ضبط المنظر</guimenuitem
+>: إعادة المنظر إلى التكبير الأصلي في قائمة <guimenu
+>رسم بياني ثلاثي الأبعاد</guimenu
+></para
+></listitem>
+<listitem
+><para
+>يمكنك رسم الرسوم البيانية بأنماط <guimenuitem
+>نقاط</guimenuitem
+> أو <guimenuitem
+>خطوط</guimenuitem
+> أو <guimenuitem
+>مصمت</guimenuitem
+> في قائمة <guimenu
+>رسم بياني ثلاثي الأبعاد</guimenu
+></para
+></listitem>
+</itemizedlist>
+
+<para
+>أدناه لقطة شاشة لدالة <quote
+>القبعة المكسيكية</quote
+> المسماة. يُعرض هذا الرسم البياني الخاص باستخدام نمط الخط للرسم البياني ثلاثي الأبعاد. </para>
+
+<screenshot>
+<screeninfo
+>هذه لقطة شاشة لنافذة الرسم البياني ثلاثي الأبعاد لـجبرك</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-3dgraph-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>نافذة الرسم البياني ثلاثي الأبعاد لـجبرك</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="dictionary">
+<title
+>قاموس</title>
+
+<para
+>يوفر القاموس قائمة بجميع الدوال المضمنة في جبرك. يمكن استخدامه لإيجاد تعريف عملية ما ومعاملات إدخالها. إنه مكان مفيد للذهاب إليه لإيجاد القدرات العديدة لـجبرك. </para>
+
+ <para
+>أدناه لقطة شاشة للبحث في قاموس جبرك عن دالة جيب التمام. </para>
+
+<screenshot>
+<screeninfo
+>هذه لقطة شاشة لنافذة قاموس جبرك</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="kalgebra-dictionary-window.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>نافذة قاموس جبرك</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+
+</chapter>
+
+&commands;
+
+<chapter id="credits">
+<title
+>الحقوق والترخيص</title>
+
+<itemizedlist>
+<listitem
+><para
+>حقوق نشر البرنامج 2005-2009 &Aleix.Pol;</para>
+</listitem>
+</itemizedlist>
+
+<para
+>حقوق نشر التوثيق 2007 &Aleix.Pol; &Aleix.Pol.mail; </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
