@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kalgebra/kalgebra.pot\n"
-"X-Crowdin-File-ID: 46327\n"
+"X-Crowdin-File: /kf6-stable/messages/kalgebra/kalgebra.pot\n"
+"X-Crowdin-File-ID: 49826\n"
 
 #: consolehtml.cpp:167
 #, kde-format
